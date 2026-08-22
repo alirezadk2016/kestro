@@ -40,6 +40,7 @@ const config: Config = {
       animation: {
         "fade-up": "fade-up 0.7s ease-out forwards",
         "fade-up-delayed": "fade-up 0.7s ease-out 0.15s forwards",
+        "fade-up-delayed-2": "fade-up 0.7s ease-out 0.4s forwards",
         "glow-drift": "glow-drift 12s ease-in-out infinite",
       },
     },

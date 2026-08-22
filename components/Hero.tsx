@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import CopyEmailButton from "./CopyEmailButton";
 
 export default function Hero() {
   return (
@@ -21,7 +22,7 @@ export default function Hero() {
             tastatur og opgraderet RAM. Testet og klargjort før levering, til konkurrencedygtige priser.
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-wrap gap-4 opacity-0 motion-safe:animate-fade-up-delayed-2 motion-reduce:opacity-100">
             <Link
               href="/ydelser"
               className="rounded-full bg-brand-600 px-7 py-3.5 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
@@ -34,6 +35,7 @@ export default function Hero() {
             >
               Kontakt os
             </Link>
+            <CopyEmailButton />
           </div>
         </div>
 
