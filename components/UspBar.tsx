@@ -1,6 +1,6 @@
 const items = [
-  { value: "100%", label: "Funktionstestet før levering" },
-  { value: "60%", label: "Billigere end nyt udstyr" },
+  { value: "Testet", label: "Og klargjort før levering" },
+  { value: "40–60%", label: "Typisk under nyprisen" },
   { value: "DK / NO", label: "Nordisk tastatur & sprog" },
   { value: "B2B", label: "Fokus på virksomhedskunder" },
 ];

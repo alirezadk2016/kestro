@@ -18,7 +18,7 @@ export default function Hero() {
           <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
             Kestro finder kvalitets bærbare og stationære computere fra Sydeuropa, opgraderer og
             funktionstester dem, og klargør hver enhed til det nordiske marked – med dansk/nordisk
-            tastatur og opgraderet RAM. Bæredygtig IT til konkurrencedygtige priser.
+            tastatur og opgraderet RAM. Testet og klargjort før levering, til konkurrencedygtige priser.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -63,8 +63,8 @@ export default function Hero() {
             </div>
 
             <div className="mt-6 rounded-xl bg-slate-900 p-4 text-white">
-              <p className="text-xs uppercase tracking-wide text-slate-400">Besparelse vs. nyt</p>
-              <p className="mt-1 text-2xl font-bold">Op til 60%</p>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Pris vs. nyt udstyr</p>
+              <p className="mt-1 text-2xl font-bold">Typisk 40–60% under nyprisen</p>
             </div>
           </div>
         </div>

@@ -50,9 +50,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 text-sm text-slate-500 sm:flex-row">
+        <div className="mt-12 border-t border-slate-800 pt-6 text-sm text-slate-500">
           <p>&copy; {new Date().getFullYear()} Kestro. Alle rettigheder forbeholdes.</p>
-          <p>CVR: XXXXXXXX</p>
         </div>
       </Container>
     </footer>

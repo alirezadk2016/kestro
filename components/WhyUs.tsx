@@ -2,9 +2,9 @@ import Container from "./Container";
 
 const benefits = [
   {
-    title: "Bæredygtighed",
+    title: "Længere levetid",
     description:
-      "Genbrug af eksisterende hardware reducerer elektronikaffald og CO2-aftryk sammenlignet med nyindkøb.",
+      "Renoveret hardware forlænger enhedernes levetid, i stedet for at de kasseres for tidligt.",
   },
   {
     title: "Kvalitet & tillid",

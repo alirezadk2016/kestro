@@ -6,7 +6,7 @@ export default function CtaSection() {
     <section className="bg-slate-900 py-20 sm:py-24">
       <Container className="flex flex-col items-center gap-6 text-center">
         <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Klar til at opgradere jeres IT-flåde bæredygtigt?
+          Klar til at opgradere jeres IT-flåde?
         </h2>
         <p className="max-w-xl text-base leading-7 text-slate-400">
           Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware
