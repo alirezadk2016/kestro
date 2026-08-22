@@ -41,7 +41,7 @@ export default function Services() {
           {services.map((service, i) => (
             <div
               key={service.title}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-sm font-bold text-brand-700">
                 {String(i + 1).padStart(2, "0")}

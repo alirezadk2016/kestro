@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       <Container className="grid grid-cols-1 items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:py-28">
-        <div>
+        <div className="opacity-0 motion-safe:animate-fade-up motion-reduce:opacity-100">
           <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
             B2B IT-hardware · Klar til det nordiske marked
           </span>
@@ -37,8 +37,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-tr from-brand-100 via-brand-50 to-transparent blur-2xl" />
+        <div className="relative mx-auto w-full max-w-md opacity-0 motion-safe:animate-fade-up-delayed motion-reduce:opacity-100 lg:max-w-none">
+          <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-tr from-brand-100 via-brand-50 to-transparent blur-2xl motion-safe:animate-glow-drift" />
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-8">
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold text-slate-500">Enhedsstatus</span>
