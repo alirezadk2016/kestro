@@ -66,13 +66,36 @@ export const categories: Category[] = [
       "RAM, SSD-størrelse, skærmstørrelse og CPU-generation tilpasses den enkelte ordre – fortæl os, hvad maskinerne skal bruges til, så finder vi det rette match.",
     example: {
       model: "Lenovo ThinkPad T480",
-      note: "En 14\" erhvervsbærbar, der er blandt de modeller, vi oftest bliver bedt om at skaffe. Robust kabinet, godt tastatur, og RAM og SSD kan skiftes – så maskinen kan opgraderes i stedet for at blive udskiftet. Vist som eksempel på maskintypen; den konkrete konfiguration aftaler vi ud fra jeres behov.",
+      note: "En 14\" erhvervsbærbar, der er blandt de modeller, vi oftest bliver bedt om at skaffe. Robust kabinet, godt tastatur og et fuldt portudvalg – HDMI, USB-A, netværk og kortlæser – så den kan sættes direkte på en dockingstation. RAM og SSD kan skiftes, så maskinen kan opgraderes i stedet for at blive udskiftet. Vist som eksempel på maskintypen; den konkrete konfiguration, tastaturlayout og Windows-installation aftaler vi ud fra jeres behov.",
       images: [
-        { src: "/thinkpad-t480-4.jpg", alt: "Lenovo ThinkPad T480 set forfra med åben skærm" },
-        { src: "/thinkpad-t480-3.jpg", alt: "ThinkPad T480 set skråt oppefra med tastatur og trackpoint" },
-        { src: "/thinkpad-t480-5.jpg", alt: "ThinkPad T480 i vinkel med skærm og tastatur synligt" },
-        { src: "/thinkpad-t480-2.jpg", alt: "Bagsiden af ThinkPad T480 med ThinkPad-logo og porte i siden" },
-        { src: "/thinkpad-t480-1.jpg", alt: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige" },
+        {
+          src: "/thinkpad-t480-6.jpg",
+          alt: "Lenovo ThinkPad T480 set forfra med Windows installeret og klar til brug",
+        },
+        {
+          src: "/thinkpad-t480-7.jpg",
+          alt: "Tastaturet på ThinkPad T480 set oppefra med trackpoint og fingeraftrykslæser",
+        },
+        {
+          src: "/thinkpad-t480-4.jpg",
+          alt: "ThinkPad T480 åbnet i vinkel med 14\" skærmen tændt",
+        },
+        {
+          src: "/thinkpad-t480-8.jpg",
+          alt: "Portene i siden af ThinkPad T480: hovedtelefonstik, USB-A, HDMI, netværk og kortlæser",
+        },
+        {
+          src: "/thinkpad-t480-2.jpg",
+          alt: "Bagsiden af ThinkPad T480 med ThinkPad-logo og porte i siden",
+        },
+        {
+          src: "/thinkpad-t480-3.jpg",
+          alt: "ThinkPad T480 set skråt oppefra med tastatur og trackpoint",
+        },
+        {
+          src: "/thinkpad-t480-1.jpg",
+          alt: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige",
+        },
       ],
     },
   },

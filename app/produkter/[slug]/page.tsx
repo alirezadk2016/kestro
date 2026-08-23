@@ -113,24 +113,40 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               </h2>
               <p className="mt-3 text-base leading-7 text-slate-600">{category.example.note}</p>
 
-              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-                {category.example.images.map((img, i) => (
-                  <div
-                    key={img.src}
-                    className={`overflow-hidden rounded-2xl border border-slate-200 bg-white ${
-                      i === 0 ? "col-span-2 lg:col-span-2 lg:row-span-2" : ""
-                    }`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      width={800}
-                      height={800}
-                      className="h-full w-full object-cover"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 45vw, 400px"
-                    />
-                  </div>
-                ))}
+              {/*
+                Lead image full width, the rest in an even grid – the renders
+                sit on white, so object-contain keeps ports and keyboard
+                uncropped, which is the part a buyer actually looks at.
+              */}
+              <div className="mt-8 space-y-3 sm:space-y-4">
+                <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-white sm:aspect-[16/10]">
+                  <Image
+                    src={category.example.images[0].src}
+                    alt={category.example.images[0].alt}
+                    width={1179}
+                    height={1120}
+                    className="h-full w-full object-contain p-3 sm:p-6"
+                    sizes="(max-width: 768px) 92vw, 768px"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+                  {category.example.images.slice(1).map((img) => (
+                    <div
+                      key={img.src}
+                      className="aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white"
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={1179}
+                        height={1120}
+                        className="h-full w-full object-contain p-2 sm:p-4"
+                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 45vw, 250px"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <p className="mt-4 text-sm leading-6 text-slate-500">
