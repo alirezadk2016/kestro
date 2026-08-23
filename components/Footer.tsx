@@ -30,7 +30,7 @@ export default function Footer({ lang }: { lang: Lang }) {
 
   return (
     <footer className="bg-brand-950 text-ink-300">
-      <Container className="py-12 sm:py-16">
+      <Container className="py-16 sm:py-20">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2">
             <Link

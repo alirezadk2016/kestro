@@ -124,7 +124,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-12 sm:py-20">
+      <section className="bg-paper-dim py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -151,7 +151,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       </section>
 
       {exampleModel?.images && (
-        <section className="py-12 sm:py-20">
+        <section className="py-16 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
@@ -213,7 +213,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-12 sm:py-20">
+        <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -254,7 +254,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-paper-edge py-12 sm:py-20">
+      <section className="border-t border-paper-edge py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -283,7 +283,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="border-t border-paper-edge bg-paper-dim py-12 sm:py-20">
+      <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.other}</h2>

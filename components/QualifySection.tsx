@@ -79,55 +79,48 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-paper-edge bg-paper-dim py-16 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28">
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
-                {c.eyebrow}
-              </span>
-              <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
-                {c.title}
-              </h2>
-              <p className="mt-5 max-w-md text-base leading-7 text-ink-600">{c.sub}</p>
-            </div>
-          </div>
-
-          {/* Rows on a hairline, not a grid of cards. The number carries the eye. */}
-          <ol className="lg:col-span-8">
-            {situations.map((item, i) => (
-              <li key={item.href} className="border-t border-ink-900/10 last:border-b">
-                <Link href={localePath(item.href, lang)} className="group block py-6 sm:py-8">
-                  <div className="flex gap-5 sm:gap-8">
-                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-brand-600">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-2xl">
-                        {item.question[lang]}
-                      </h3>
-                      <p className="mt-2.5 max-w-xl text-base leading-7 text-ink-600">
-                        {item.answer[lang]}
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-ink-900">
-                        {item.linkLabel[lang]}
-                        <ArrowRight
-                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                          strokeWidth={2}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ol>
+        <div className="max-w-3xl">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            {c.eyebrow}
+          </span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+            {c.title}
+          </h2>
+          <p className="mt-5 text-base leading-8 text-ink-600">{c.sub}</p>
         </div>
+
+        <ol className="mt-12 grid grid-cols-1 gap-x-12 border-t border-ink-900/12 md:grid-cols-2">
+          {situations.map((item, i) => (
+            <li key={item.href} className="border-b border-ink-900/10">
+              <Link href={localePath(item.href, lang)} className="group block py-7">
+                <div className="flex gap-5">
+                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-brand-600">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
+                      {item.question[lang]}
+                    </h3>
+                    <p className="mt-3 text-base leading-7 text-ink-600">{item.answer[lang]}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
+                      {item.linkLabel[lang]}
+                      <ArrowRight
+                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                        strokeWidth={2}
+                      />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ol>
 
         <p className="mt-10 max-w-2xl text-sm leading-7 text-ink-500">
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
-            className="font-semibold text-ink-900 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-accent-600"
+            className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-brand-800"
           >
             {c.footLink}
           </Link>{" "}

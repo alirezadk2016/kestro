@@ -24,7 +24,7 @@ const copy = {
 export default function TeamSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
   return (
-    <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
+    <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">

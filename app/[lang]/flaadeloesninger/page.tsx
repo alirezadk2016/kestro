@@ -315,7 +315,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="py-12 sm:py-20">
+      <section className="py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
@@ -347,7 +347,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
+      <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
@@ -383,7 +383,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section id="forespoergsel" className="scroll-mt-24 py-12 sm:py-20">
+      <section id="forespoergsel" className="scroll-mt-24 py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="flex items-start gap-4">
@@ -417,7 +417,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-brand-950 py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-16 sm:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"

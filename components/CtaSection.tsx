@@ -21,23 +21,16 @@ export default function CtaSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="relative overflow-hidden bg-brand-950 py-16 sm:py-24">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-brand-500/20 blur-[130px]"
-      />
+    <section className="bg-brand-950 py-16 sm:py-24">
+      <Container>
+        <div className="max-w-3xl">
+          <span className="h-px w-8 bg-brand-400" />
+          <h2 className="mt-6 text-balance font-display text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            {c.title}
+          </h2>
+          <p className="mt-5 text-base leading-8 text-paper/60">{c.body}</p>
 
-      <Container className="relative">
-        <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <span className="h-px w-10 bg-brand-400" />
-            <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold leading-[1.03] tracking-display text-paper">
-              {c.title}
-            </h2>
-            <p className="mt-5 max-w-lg text-base leading-7 text-paper/60 sm:text-lg">{c.body}</p>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href={localePath("/kontakt", lang)}
               className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"

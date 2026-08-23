@@ -55,29 +55,26 @@ export default function Services({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
       <Container>
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
-              {c.eyebrow}
-            </span>
-            <h2 className="mt-5 max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
-              {c.title}
-            </h2>
-          </div>
-          <p className="max-w-sm text-base leading-7 text-ink-600">{c.sub}</p>
+        <div className="max-w-3xl">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            {c.eyebrow}
+          </span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+            {c.title}
+          </h2>
+          <p className="mt-5 text-base leading-8 text-ink-600">{c.sub}</p>
         </div>
 
-        {/* Four columns split by hairlines, numbered in display type. No icon chips. */}
         <ol className="mt-12 grid grid-cols-1 border-t border-ink-900/12 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, i) => (
             <li
               key={service.title.da}
               className="border-b border-ink-900/10 py-7 pr-8 sm:border-b-0 sm:border-r sm:border-ink-900/10 sm:pl-8 sm:first:pl-0 lg:last:border-r-0"
             >
-              <span className="font-display text-4xl font-extrabold tabular-nums tracking-display text-ink-200">
+              <span className="font-display text-3xl font-extrabold tabular-nums tracking-display text-ink-200">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-5 font-display text-lg font-bold tracking-tight text-ink-900">
+              <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-ink-900">
                 {service.title[lang]}
               </h3>
               <p className="mt-3 text-sm leading-7 text-ink-600">{service.description[lang]}</p>
@@ -87,7 +84,7 @@ export default function Services({ lang }: { lang: Lang }) {
 
         <Link
           href={localePath("/ydelser", lang)}
-          className="group mt-12 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900"
+          className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
         >
           {c.link}
           <ArrowRight

@@ -52,33 +52,28 @@ export default function WhyUs({ lang }: { lang: Lang }) {
   return (
     <section className="bg-brand-950 py-16 text-paper sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300">
-              {c.eyebrow}
-            </span>
-            <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,3rem)] font-extrabold leading-[1.03] tracking-display text-paper">
-              {c.title}
-            </h2>
-            <p className="mt-6 max-w-md text-base leading-7 text-paper/60">{c.sub}</p>
-          </div>
-
-          <dl className="lg:col-span-7">
-            {benefits.map((benefit) => (
-              <div
-                key={benefit.title.da}
-                className="grid grid-cols-1 gap-2 border-t border-paper/15 py-6 last:border-b sm:grid-cols-12 sm:gap-8"
-              >
-                <dt className="font-display text-lg font-bold tracking-tight text-paper sm:col-span-4">
-                  {benefit.title[lang]}
-                </dt>
-                <dd className="text-base leading-7 text-paper/60 sm:col-span-8">
-                  {benefit.description[lang]}
-                </dd>
-              </div>
-            ))}
-          </dl>
+        <div className="max-w-3xl">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300">
+            {c.eyebrow}
+          </span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+            {c.title}
+          </h2>
+          <p className="mt-5 text-base leading-8 text-paper/60">{c.sub}</p>
         </div>
+
+        <dl className="mt-12 grid grid-cols-1 gap-x-12 border-t border-paper/15 md:grid-cols-2">
+          {benefits.map((benefit) => (
+            <div key={benefit.title.da} className="border-b border-paper/10 py-7">
+              <dt className="font-display text-lg font-bold tracking-tight text-paper">
+                {benefit.title[lang]}
+              </dt>
+              <dd className="mt-3 text-base leading-7 text-paper/60">
+                {benefit.description[lang]}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Container>
     </section>
   );

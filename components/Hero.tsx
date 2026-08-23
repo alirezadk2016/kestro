@@ -58,15 +58,11 @@ export default function Hero({ lang }: { lang: Lang }) {
       </div>
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-ink-950 via-ink-950/70 to-ink-950 md:bg-gradient-to-r md:from-ink-950 md:via-ink-950/85 md:to-ink-950/40"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-32 top-1/4 h-[30rem] w-[30rem] rounded-full bg-brand-500/25 blur-[130px]"
+        className="absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950/90 md:bg-gradient-to-r md:from-brand-950 md:via-brand-950/70 md:to-brand-950/25"
       />
 
       <MotionConfig reducedMotion="user">
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-14 pt-16 sm:px-6 sm:pt-24 md:py-28 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-20 sm:px-6 sm:py-24 md:py-28 lg:px-8">
           <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
             <div className="flex items-center gap-4">
               <span className="h-px w-10 bg-brand-400" />
@@ -75,7 +71,7 @@ export default function Hero({ lang }: { lang: Lang }) {
               </span>
             </div>
 
-            <h1 className="mt-7 max-w-4xl whitespace-pre-line font-display text-[clamp(2.25rem,8vw,5.25rem)] font-extrabold leading-[0.95] tracking-display text-paper">
+            <h1 className="mt-7 max-w-4xl whitespace-pre-line text-balance font-display text-[clamp(2.25rem,8vw,5.25rem)] font-extrabold leading-[0.95] tracking-display text-paper">
               {c.headline}
             </h1>
 

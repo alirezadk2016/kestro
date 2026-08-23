@@ -250,7 +250,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-12 sm:py-20 lg:py-24">
+      <section className="py-16 sm:py-24">
         <Container>
           <PageHeader
             title={c.title}
@@ -263,7 +263,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-12 sm:py-20">
+      <section className="bg-paper-dim py-16 sm:py-24">
         <Container>
           <h2 className="text-center text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
             {c.whatWeDo}
@@ -290,7 +290,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="py-12 sm:py-20">
+      <section className="py-16 sm:py-24">
         <Container>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -316,7 +316,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-12 sm:py-20">
+      <section className="bg-paper-dim py-16 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">

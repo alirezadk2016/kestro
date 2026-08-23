@@ -132,7 +132,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {model.images && (
-        <section className="py-12 sm:py-20">
+        <section className="py-16 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
               <div className="aspect-[4/3] overflow-hidden border border-paper-edge bg-white sm:aspect-[16/10]">
@@ -170,7 +170,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         </section>
       )}
 
-      <section className={`py-12 sm:py-20 ${model.images ? "border-t border-paper-edge" : ""}`}>
+      <section className={`py-16 sm:py-24 ${model.images ? "border-t border-paper-edge" : ""}`}>
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="overflow-hidden border border-paper-edge">
@@ -274,7 +274,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-12 sm:py-20">
+        <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-xl font-bold tracking-tight text-ink-900">

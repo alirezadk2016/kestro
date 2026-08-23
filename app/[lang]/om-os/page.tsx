@@ -77,7 +77,7 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-12 sm:py-20 lg:py-24">
+      <section className="py-16 sm:py-24">
         <Container>
           <PageHeader
             title={c.title}
@@ -100,7 +100,7 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-20">
+      <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
         <Container>
           <figure className="mx-auto max-w-3xl">
             <blockquote className="text-xl font-medium leading-9 text-ink-900 sm:text-2xl sm:leading-10">

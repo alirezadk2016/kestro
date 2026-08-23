@@ -27,25 +27,21 @@ export default function Statement({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-3">
-            <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-4">
-              <span className="h-px w-10 bg-brand-600 lg:w-full" />
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
-                {c.label}
-              </span>
-            </div>
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-8 bg-brand-600" />
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+              {c.label}
+            </span>
           </div>
 
-          <div className="lg:col-span-9">
-            <p className="font-display text-[clamp(2rem,5.5vw,4rem)] font-extrabold leading-[1.02] tracking-display text-ink-900">
-              {c.lead}
-            </p>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-600">{c.body}</p>
-            <p className="mt-7 max-w-2xl border-l-2 border-brand-600 pl-5 text-base leading-8 text-ink-800 sm:text-lg">
-              {c.kicker}
-            </p>
-          </div>
+          <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
+            {c.lead}
+          </p>
+          <p className="mt-6 text-lg leading-8 text-ink-600">{c.body}</p>
+          <p className="mt-6 border-l-2 border-brand-600 pl-5 text-base leading-8 text-ink-800">
+            {c.kicker}
+          </p>
         </div>
       </Container>
     </section>

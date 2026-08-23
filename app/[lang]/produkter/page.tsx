@@ -63,7 +63,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-12 sm:py-20 lg:py-24">
+      <section className="py-16 sm:py-24">
         <Container>
           <PageHeader
             title={c.title}
