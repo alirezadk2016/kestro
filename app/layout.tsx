@@ -17,6 +17,16 @@ export const metadata: Metadata = {
     "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder – klargjort til det nordiske marked med opgraderet RAM og nordisk tastatur.",
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Kestro",
+  url: "https://kestro.dk",
+  description:
+    "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder.",
+  areaServed: ["DK", "NO"],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,6 +35,10 @@ export default function RootLayout({
   return (
     <html lang="da">
       <body className={`${inter.variable} font-sans antialiased bg-white text-slate-900`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Header />
         <main>{children}</main>
         <Footer />

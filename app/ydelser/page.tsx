@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { PackageSearch, ShieldCheck, Keyboard, Truck } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
+import Faq from "@/components/Faq";
 
 export const metadata: Metadata = {
   title: "Ydelser | Kestro",
@@ -11,21 +13,25 @@ export const metadata: Metadata = {
 
 const steps = [
   {
+    icon: PackageSearch,
     title: "Sourcing & indkøb",
     description:
       "Vi arbejder som broker og finder brugte erhvervsbærbare og -stationære fra pålidelige leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
   },
   {
+    icon: ShieldCheck,
     title: "Klargøring & test",
     description:
       "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne, får eventuelt opgraderet RAM, og tidligere data slettes sikkert, før enheden nulstilles til fabriksstand.",
   },
   {
+    icon: Keyboard,
     title: "Nordisk tilpasning",
     description:
       "Enhederne klargøres til det nordiske marked med dansk/nordisk tastaturlayout og korrekt sprogopsætning, så de er klar til brug fra dag ét – uden ekstra opsætning på jeres side.",
   },
   {
+    icon: Truck,
     title: "Levering til virksomheder",
     description:
       "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for – fra enkelte enheder til større indkøb. Fordi vi sourcer per ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
@@ -43,10 +49,10 @@ export default function YdelserPage() {
           />
 
           <div className="mx-auto mt-16 max-w-3xl space-y-10">
-            {steps.map((step, i) => (
+            {steps.map((step) => (
               <div key={step.title} className="flex gap-6">
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand-50 text-sm font-bold text-brand-700">
-                  {String(i + 1).padStart(2, "0")}
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                  <step.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
                   <h2 className="text-lg font-semibold text-slate-900">{step.title}</h2>
@@ -86,6 +92,8 @@ export default function YdelserPage() {
           </div>
         </Container>
       </section>
+
+      <Faq />
 
       <CtaSection />
     </>
