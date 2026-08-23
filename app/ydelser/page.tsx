@@ -20,15 +20,15 @@ const steps = [
   },
   {
     icon: ShieldCheck,
-    title: "Klargøring & test",
+    title: "Klargøring, test og opgradering",
     description:
-      "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne, får eventuelt opgraderet RAM, og tidligere data slettes sikkert, før enheden nulstilles til fabriksstand.",
+      "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes sikkert, før enheden nulstilles.",
   },
   {
     icon: Keyboard,
-    title: "Nordisk tilpasning",
+    title: "Nordisk tilpasning og software",
     description:
-      "Enhederne klargøres til det nordiske marked med dansk/nordisk tastaturlayout og korrekt sprogopsætning, så de er klar til brug fra dag ét – uden ekstra opsætning på jeres side.",
+      "Tastaturet skiftes til dansk/nordisk layout, så æ, ø og å sidder korrekt. Windows installeres med drivere og sprogopsætning, og vi hjælper med at få licenserne på plads, så maskinerne kører lovligt fra dag ét.",
   },
   {
     icon: Truck,

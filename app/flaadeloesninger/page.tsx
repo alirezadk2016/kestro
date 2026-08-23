@@ -10,6 +10,8 @@ import {
   FileSpreadsheet,
   ArrowRight,
   Phone,
+  MonitorCog,
+  Keyboard,
 } from "lucide-react";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
@@ -41,6 +43,18 @@ const capabilities = [
     title: "Fra enkelte teams til hele virksomheden",
     description:
       "Om det er ti maskiner til et nyt team eller udskiftning af hele medarbejderflåden, tilpasser vi sourcingen til antallet. Fortæl os omfanget, så vender vi tilbage med, hvad vi kan skaffe.",
+  },
+  {
+    icon: MonitorCog,
+    title: "Windows, software og licenser",
+    description:
+      "Maskinerne leveres med Windows installeret, drivere på plads og dansk sprogopsætning. Vi hjælper med at få licenserne i orden – eller bruger jeres eksisterende aftaler – så flåden kører lovligt fra dag ét.",
+  },
+  {
+    icon: Keyboard,
+    title: "Nordisk tastatur i hele leverancen",
+    description:
+      "Importerede maskiner får skiftet tastatur til dansk/nordisk layout, så medarbejderne ikke skal lede efter æ, ø og å på maskiner købt i udlandet.",
   },
   {
     icon: CalendarClock,
@@ -98,6 +112,16 @@ const enterpriseFaqs = [
     question: "Laver I løbende aftaler frem for enkeltordrer?",
     answer:
       "Ja, det kan vi aftale. Har I løbende behov – f.eks. maskiner til nye medarbejdere – kan vi holde en fast konfiguration ved lige, så I ikke skal specificere det forfra hver gang.",
+  },
+  {
+    question: "Leveres maskinerne med Windows og licenser?",
+    answer:
+      "Ja. Maskinerne kan leveres med Windows installeret, drivere og dansk sprogopsætning. Har I egne licensaftaler eller et image, I ruller ud, bruger vi dem – ellers hjælper vi med at få licenserne på plads, så flåden kører lovligt.",
+  },
+  {
+    question: "Kan I skifte tastaturet til dansk layout på hele leverancen?",
+    answer:
+      "Ja. Det er en fast del af klargøringen, når maskinerne kommer fra udlandet – så medarbejderne ikke skal lede efter æ, ø og å.",
   },
   {
     question: "Hvad med garanti og fakturering?",

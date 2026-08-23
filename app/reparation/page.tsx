@@ -4,10 +4,14 @@ import {
   MemoryStick,
   MonitorSmartphone,
   Wrench,
+  Cog,
   Fan,
   HardDriveDownload,
   Cpu,
   Sparkles,
+  Keyboard,
+  MonitorCog,
+  BadgeCheck,
 } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
@@ -18,7 +22,7 @@ import CtaSection from "@/components/CtaSection";
 export const metadata: Metadata = {
   title: "Reparation og opgradering af computere | Kestro",
   description:
-    "Reparation, opgradering og samling af computere – batteriskift, RAM- og SSD-opgradering, skærmskift, rens og fejlfinding. For private og mindre virksomheder.",
+    "Reparation, opgradering og klargøring af computere – RAM og SSD, batteri, skærm, nordisk tastatur, reservedele, Windows-installation og licenser. For private og virksomheder.",
   alternates: { canonical: "/reparation" },
 };
 
@@ -41,10 +45,34 @@ const services = [
     description: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
   },
   {
+    icon: Keyboard,
+    title: "Tastaturskift og nordisk layout",
+    description:
+      "Defekt tastatur skiftes – og importerede maskiner kan få dansk/nordisk layout, så æ, ø og å sidder, hvor de skal.",
+  },
+  {
+    icon: Cog,
+    title: "Reservedele og komponentskift",
+    description:
+      "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
+  },
+  {
     icon: Fan,
     title: "Rens og køling",
     description:
       "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
+  },
+  {
+    icon: MonitorCog,
+    title: "Windows-installation",
+    description:
+      "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Software og licenser",
+    description:
+      "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
   },
   {
     icon: HardDriveDownload,
@@ -97,6 +125,16 @@ const repairFaqs = [
     question: "Hvilke mærker arbejder I med?",
     answer:
       "Vi arbejder med de fleste gængse mærker – bl.a. Lenovo, Dell, HP, Apple, ASUS og Acer. Er du i tvivl om din model, så spørg.",
+  },
+  {
+    question: "Kan I skifte tastaturet til dansk layout?",
+    answer:
+      "Ja. Er maskinen købt i udlandet, eller er tastaturet slidt, kan vi skifte det til dansk/nordisk layout, så æ, ø og å sidder korrekt.",
+  },
+  {
+    question: "Sørger I også for Windows og licenser?",
+    answer:
+      "Vi installerer Windows med drivere og opdateringer og hjælper med at få licenserne på plads, så maskinerne kører lovligt. Har I jeres egne licensaftaler, bruger vi selvfølgelig dem – ellers taler vi om, hvad der passer til jeres opsætning.",
   },
 ];
 
