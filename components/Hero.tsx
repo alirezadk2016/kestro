@@ -23,18 +23,18 @@ const TAGS = [
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-slate-900">
-      {/* Image sits as a top band on mobile, full-bleed right side on desktop */}
-      <div className="absolute inset-x-0 top-0 h-[38%] md:inset-0 md:h-full">
+      {/* Dark-native graphic: top band on mobile, full-bleed right on desktop */}
+      <div className="absolute inset-x-0 top-0 h-[42%] md:inset-0 md:h-full">
         <Image
-          src="/hero-devices.png"
+          src="/hero-dark.png"
           alt=""
           fill
           priority
-          className="pointer-events-none object-cover object-[75%_center] opacity-40 grayscale md:opacity-100 md:grayscale-0"
+          className="pointer-events-none object-cover object-[68%_38%] md:object-[65%_center]"
           sizes="100vw"
         />
-        {/* Mobile: fade image down into the dark panel. Desktop: fade from left. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-slate-900 md:bg-gradient-to-r md:from-slate-900 md:via-slate-900/90 md:to-slate-900/30" />
+        {/* Mobile: fade the band down into the panel. Desktop: keep the left column clean. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/10 via-slate-900/45 to-slate-900 md:bg-gradient-to-r md:from-slate-900 md:via-slate-900/70 md:to-transparent" />
       </div>
 
       <MotionConfig reducedMotion="user">
@@ -86,7 +86,7 @@ export default function Hero() {
             >
               {TAGS.map((tag) => (
                 <li key={tag.label} className="flex items-center gap-2 text-xs text-slate-300 sm:text-sm">
-                  <tag.icon className="h-4 w-4 text-emerald-400" strokeWidth={2} />
+                  <tag.icon className="h-4 w-4 text-brand-400" strokeWidth={2} />
                   {tag.label}
                 </li>
               ))}
