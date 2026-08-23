@@ -68,7 +68,7 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
             <p className="mt-3 text-base leading-7 text-ink-600">{c.noShopBody2}</p>
             <Link
               href={localePath("/kvalitet", lang)}
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
             >
               {c.qualityLink}
               <span aria-hidden="true">&rarr;</span>

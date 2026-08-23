@@ -27,7 +27,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
     <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
             {c.eyebrow}
           </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -64,7 +64,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   <a
                     href={`tel:${member.phoneHref}`}
-                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-ink-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ink-800"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
                   >
                     <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                     {member.phoneDisplay}

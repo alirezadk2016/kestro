@@ -28,9 +28,9 @@ export default function Header({ lang }: { lang: Lang }) {
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
-          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-display text-ink-950"
+          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-display text-ink-900"
         >
-          <span className="flex h-8 w-8 items-center justify-center bg-ink-950 font-display text-sm font-bold text-paper">
+          <span className="flex h-8 w-8 items-center justify-center bg-brand-600 font-display text-sm font-bold text-white">
             K
           </span>
           Kestro
@@ -44,7 +44,7 @@ export default function Header({ lang }: { lang: Lang }) {
           >
             <Link
               href={localePath(productsNav.hub.href, lang)}
-              className="flex items-center gap-1 text-sm font-medium text-ink-600 transition hover:text-ink-950"
+              className="flex items-center gap-1 text-sm font-medium text-ink-600 transition hover:text-brand-950"
               aria-expanded={productsOpen}
             >
               {productsNav.hub.label[lang]}
@@ -56,13 +56,13 @@ export default function Header({ lang }: { lang: Lang }) {
                 <div className="rounded-xl border border-paper-edge bg-white p-2 shadow-lg">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-ink-950"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
                   >
                     {productsNav.models.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.quality.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-ink-950"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
@@ -71,7 +71,7 @@ export default function Header({ lang }: { lang: Lang }) {
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
-                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-paper-dim hover:text-ink-950"
+                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-paper-dim hover:text-brand-950"
                     >
                       {category.name[lang]}
                     </Link>
@@ -85,7 +85,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               key={link.href}
               href={localePath(link.href, lang)}
-              className="text-sm font-medium text-ink-600 transition hover:text-ink-950"
+              className="text-sm font-medium text-ink-600 transition hover:text-brand-950"
             >
               {link.label[lang]}
             </Link>
@@ -96,7 +96,7 @@ export default function Header({ lang }: { lang: Lang }) {
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[44px] items-center bg-ink-950 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-ink-800"
+            className="inline-flex min-h-[44px] items-center bg-brand-950 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
           >
             {ui.bookCall[lang]}
           </Link>
@@ -200,7 +200,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               href={localePath("/kontakt", lang)}
               onClick={closeMobile}
-              className="mt-2 bg-ink-950 px-5 py-3.5 text-center text-sm font-semibold text-paper"
+              className="mt-2 bg-brand-950 px-5 py-3.5 text-center text-sm font-semibold text-paper"
             >
               {ui.bookCall[lang]}
             </Link>
@@ -234,7 +234,7 @@ function LanguageSwitcher({
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
           className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-ink-950 text-paper" : "text-ink-400 hover:text-ink-900"
+            code === lang ? "bg-brand-950 text-paper" : "text-ink-400 hover:text-ink-900"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

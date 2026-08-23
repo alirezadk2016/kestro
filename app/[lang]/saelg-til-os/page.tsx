@@ -191,7 +191,7 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             <p className="mt-2 max-w-2xl text-base leading-7 text-ink-600">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
-              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900 hover:text-accent-600"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
             >
               {c.fleetLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />

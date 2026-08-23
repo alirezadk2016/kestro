@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <section className="flex min-h-[60vh] items-center py-20">
       <Container className="text-center">
-        <p className="text-sm font-semibold text-accent-500">404</p>
+        <p className="text-sm font-semibold text-brand-600">404</p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
           Siden blev ikke fundet
         </h1>
@@ -23,7 +23,7 @@ export default function NotFound() {
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/"
-            className="bg-ink-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-ink-800"
+            className="bg-brand-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
           >
             Til forsiden / Front page
           </Link>

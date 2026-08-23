@@ -82,10 +82,10 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink-950 py-12 text-white sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-ink-950/25 blur-3xl"
+          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
         />
         <div
           aria-hidden="true"
@@ -206,9 +206,9 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               ))}
             </ul>
 
-            <div className="mt-10 border-l-2 border-accent-500 bg-accent-50 p-5 sm:p-6">
+            <div className="mt-10 border-l-2 border-ink-900 bg-paper-dim p-5 sm:p-6">
               <h2 className="flex items-center gap-2 text-base font-semibold text-ink-900">
-                <Info className="h-5 w-5 flex-shrink-0 text-amber-600" strokeWidth={2} />
+                <Info className="h-5 w-5 flex-shrink-0 text-ink-700" strokeWidth={2} />
                 {c.watchOut}
               </h2>
               <ul className="mt-3 space-y-2.5">
@@ -251,7 +251,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               <p className="mt-2 text-base leading-7 text-ink-600">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-ink-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-ink-800"
+                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-800"
               >
                 {c.ctaButton}
               </Link>
@@ -262,7 +262,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="font-semibold text-ink-900 hover:text-accent-600"
+                  className="font-semibold text-brand-700 hover:text-brand-800"
                 >
                   {category.name[lang].toLowerCase()}
                 </Link>
@@ -285,7 +285,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-ink-900 hover:text-ink-900"
+                      className="inline-flex min-h-[44px] items-center border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-brand-600 hover:text-brand-700"
                     >
                       {other.name}
                     </Link>

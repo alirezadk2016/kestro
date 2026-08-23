@@ -21,16 +21,16 @@ export default function CtaSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="relative overflow-hidden bg-ink-950 py-16 sm:py-24">
+    <section className="relative overflow-hidden bg-brand-950 py-16 sm:py-24">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-accent-600/12 blur-[130px]"
+        className="pointer-events-none absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-brand-500/20 blur-[130px]"
       />
 
       <Container className="relative">
         <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <span className="h-px w-10 bg-accent-400" />
+            <span className="h-px w-10 bg-brand-400" />
             <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold leading-[1.03] tracking-display text-paper">
               {c.title}
             </h2>
@@ -40,7 +40,7 @@ export default function CtaSection({ lang }: { lang: Lang }) {
           <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
             <Link
               href={localePath("/kontakt", lang)}
-              className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-ink-950 transition hover:bg-white"
+              className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
             >
               {ui.bookCall[lang]}
               <ArrowRight

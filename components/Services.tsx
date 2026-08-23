@@ -57,7 +57,7 @@ export default function Services({ lang }: { lang: Lang }) {
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-5 max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">

@@ -82,7 +82,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-28">
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
                 {c.eyebrow}
               </span>
               <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
@@ -98,11 +98,11 @@ export default function QualifySection({ lang }: { lang: Lang }) {
               <li key={item.href} className="border-t border-ink-900/10 last:border-b">
                 <Link href={localePath(item.href, lang)} className="group block py-6 sm:py-8">
                   <div className="flex gap-5 sm:gap-8">
-                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-accent-500">
+                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-brand-600">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-accent-600 sm:text-2xl">
+                      <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-2xl">
                         {item.question[lang]}
                       </h3>
                       <p className="mt-2.5 max-w-xl text-base leading-7 text-ink-600">
@@ -127,7 +127,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
-            className="font-semibold text-ink-900 underline decoration-accent-400 decoration-2 underline-offset-4 hover:text-accent-600"
+            className="font-semibold text-ink-900 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-accent-600"
           >
             {c.footLink}
           </Link>{" "}

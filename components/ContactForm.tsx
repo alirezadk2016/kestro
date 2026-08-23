@@ -190,7 +190,7 @@ export default function ContactForm({
       <div>
         <button
           type="submit"
-          className="bg-ink-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-ink-800"
+          className="bg-brand-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
         >
           {c.submit}
         </button>

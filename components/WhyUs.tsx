@@ -50,11 +50,11 @@ export default function WhyUs({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="bg-ink-950 py-16 text-paper sm:py-24">
+    <section className="bg-brand-950 py-16 text-paper sm:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-paper/40">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300">
               {c.eyebrow}
             </span>
             <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,3rem)] font-extrabold leading-[1.03] tracking-display text-paper">

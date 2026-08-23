@@ -1,13 +1,12 @@
 import type { Config } from "tailwindcss";
 
 /*
- * Ink, paper and one accent.
+ * Blue, ink and paper.
  *
- * The palette used to be Tailwind's indigo tints under a blue-700 — two hue
- * families pretending to be one ramp, on pure white. Everything read as a
- * default template. This is a deliberate scheme instead: near-black carries
- * the brand, a warm off-white replaces flat white, and a single rust accent
- * does the signalling. Restrained is what Danish B2B actually looks like.
+ * Blue is the brand — it always was, and it belongs to a hardware company in
+ * the Nordics. What was wrong before was not the hue but the ramp: indigo
+ * tints under a blue-700, on flat screen-white. Here it is one coherent blue,
+ * a warm off-white instead of pure white, and a near-black neutral for text.
  */
 const config: Config = {
   content: [
@@ -43,35 +42,39 @@ const config: Config = {
           edge: "#e4e1d9",
         },
 
-        /** One signal colour: workshop rust. Used sparingly, never as fill. */
-        accent: {
-          50: "#fdf5f0",
-          100: "#fae5d8",
-          200: "#f3c6ac",
-          300: "#e79f77",
-          400: "#d97742",
-          500: "#c85c26",
-          600: "#a8481c",
-          700: "#86391a",
-          800: "#6a2f1a",
-          900: "#552817",
-        },
-
         /*
-         * Kept so existing pages keep compiling; brand now points at ink so
-         * nothing renders in the old mismatched blue.
+         * One blue, one hue, all the way through. The old ramp mixed indigo
+         * tints under a blue-700 — two families pretending to be one, which is
+         * what made it look unconsidered. This is a single deep royal blue:
+         * 600 carries buttons and marks, 950 is the dark surface, and the
+         * light steps are genuinely the same colour with light added.
          */
         brand: {
-          50: "#f4f4f2",
-          100: "#e6e6e2",
-          200: "#cbcbc5",
-          300: "#a5a59c",
-          400: "#77776d",
-          500: "#3d3d36",
-          600: "#1c1c19",
-          700: "#121210",
-          800: "#0a0a09",
-          900: "#0a0a09",
+          50: "#eef2fd",
+          100: "#dce4fa",
+          200: "#bccbf6",
+          300: "#93a9ef",
+          400: "#6580e5",
+          500: "#4159d9",
+          600: "#2843c4",
+          700: "#2237a1",
+          800: "#203180",
+          900: "#1d2b62",
+          950: "#111a3c",
+        },
+
+        /* Accent points at the brand so highlights stay in the same hue. */
+        accent: {
+          50: "#eef2fd",
+          100: "#dce4fa",
+          200: "#bccbf6",
+          300: "#93a9ef",
+          400: "#6580e5",
+          500: "#4159d9",
+          600: "#2843c4",
+          700: "#2237a1",
+          800: "#203180",
+          900: "#1d2b62",
         },
       },
       fontFamily: {

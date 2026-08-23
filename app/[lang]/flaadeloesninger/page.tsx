@@ -270,7 +270,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
   const c = copy[lang];
   return (
     <>
-      <section className="bg-ink-950 py-14 text-white sm:py-20 lg:py-24">
+      <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center border border-paper/25 bg-white/5 px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
@@ -318,7 +318,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
       <section className="py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -350,7 +350,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
       <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
               {c.tradeEyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -361,7 +361,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <ol className="mt-10 space-y-6">
               {tradeInSteps.map((step, i) => (
                 <li key={step.title.da} className="flex gap-5">
-                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-ink-950 text-sm font-bold text-white">
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-950 text-sm font-bold text-white">
                     {i + 1}
                   </span>
                   <div>
@@ -374,7 +374,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
             <Link
               href={localePath("/saelg-til-os", lang)}
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900 hover:text-accent-600"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
             >
               {c.tradeLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -417,10 +417,10 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-ink-950 py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-14 sm:py-20">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ink-950/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"
         />
         <Container className="relative flex flex-col items-center gap-5 text-center">
           <Repeat className="h-8 w-8 text-brand-400" strokeWidth={1.75} />
@@ -431,7 +431,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             <a
               href={`tel:${team[0].phoneHref}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-ink-950 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-950 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
             >
               <Phone className="h-4 w-4" strokeWidth={2} />
               {team[0].phoneDisplay}

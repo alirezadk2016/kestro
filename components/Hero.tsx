@@ -44,9 +44,9 @@ export default function Hero({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="relative overflow-hidden bg-ink-950">
+    <section className="relative overflow-hidden bg-brand-950">
       {/* The graphic is texture, not subject: pushed right back so the type carries the frame. */}
-      <div className="absolute inset-0 opacity-[0.28]">
+      <div className="absolute inset-0 opacity-[0.16]">
         <Image
           src="/hero-dark.png"
           alt=""
@@ -62,15 +62,15 @@ export default function Hero({ lang }: { lang: Lang }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-1/3 h-[28rem] w-[28rem] rounded-full bg-accent-600/10 blur-[120px]"
+        className="pointer-events-none absolute -left-32 top-1/4 h-[30rem] w-[30rem] rounded-full bg-brand-500/25 blur-[130px]"
       />
 
       <MotionConfig reducedMotion="user">
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-14 pt-16 sm:px-6 sm:pt-24 md:py-28 lg:px-8">
           <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
             <div className="flex items-center gap-4">
-              <span className="h-px w-10 bg-accent-400" />
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-paper/60 sm:text-xs">
+              <span className="h-px w-10 bg-brand-400" />
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300 sm:text-xs">
                 {c.eyebrow}
               </span>
             </div>
@@ -91,7 +91,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           >
             <Link
               href={localePath("/kontakt", lang)}
-              className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-ink-950 transition hover:bg-white"
+              className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
             >
               {c.primary}
             </Link>
@@ -112,7 +112,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           >
             {FACTS.map((fact) => (
               <div key={fact.k.da} className="border-b border-paper/10 py-4 pr-6 sm:border-b-0">
-                <dt className="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-paper/40">
+                <dt className="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-300">
                   {fact.k[lang]}
                 </dt>
                 <dd className="mt-1 font-display text-lg font-semibold tracking-tight text-paper">

@@ -233,8 +233,8 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </div>
 
-            <div className="mt-6 flex gap-3 border-l-2 border-accent-500 bg-accent-50 p-5">
-              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" strokeWidth={2} />
+            <div className="mt-6 flex gap-3 border-l-2 border-ink-900 bg-paper-dim p-5">
+              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink-700" strokeWidth={2} />
               <p className="text-sm leading-6 text-ink-700">{c.warning}</p>
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               <p className="mt-2 text-base leading-7 text-ink-600">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-ink-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-ink-800"
+                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-800"
               >
                 {c.cta}
               </Link>

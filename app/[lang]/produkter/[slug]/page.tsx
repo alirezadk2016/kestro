@@ -81,11 +81,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink-950 py-12 text-white sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
         {/* Brand glow for depth — no product photography, since we source per order */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-ink-950/25 blur-3xl"
+          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
         />
         <div
           aria-hidden="true"
@@ -154,7 +154,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         <section className="py-12 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
                 {c.exampleEyebrow}
               </span>
               <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -202,7 +202,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
               <Link
                 href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
               >
                 {c.seeAllSpecsPre} {exampleModel.name}
                 <span aria-hidden="true">&rarr;</span>
@@ -244,7 +244,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
               <Link
                 href={localePath("/modeller", lang)}
-                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
+                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
               >
                 {c.allModels}
                 <span aria-hidden="true">&rarr;</span>
@@ -294,7 +294,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-ink-900 hover:text-ink-900"
+                      className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-brand-600 hover:text-brand-700"
                     >
                       <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
                       {other.name[lang]}

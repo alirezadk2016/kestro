@@ -53,7 +53,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
@@ -76,7 +76,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
 
             <Link
               href={localePath(`/modeller/${model.slug}`, lang)}
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
             >
               {c.link}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />

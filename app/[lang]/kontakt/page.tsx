@@ -83,7 +83,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
           </div>
 
           <div className="space-y-6 lg:col-span-2">
-            <div className="border border-paper-edge bg-ink-950 p-6 text-white sm:p-8">
+            <div className="border border-paper-edge bg-brand-950 p-6 text-white sm:p-8">
               <div className="flex items-center gap-4">
                 <Image
                   src={team[0].photo}

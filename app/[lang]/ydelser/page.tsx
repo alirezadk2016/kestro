@@ -203,7 +203,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
       <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -230,7 +230,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
               <p className="mt-3 text-base leading-7 text-ink-600">{c.qualityBody}</p>
               <Link
                 href={localePath("/kvalitet", lang)}
-                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
+                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
               >
                 {c.qualityLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />

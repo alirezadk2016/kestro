@@ -30,8 +30,8 @@ export default function Statement({ lang }: { lang: Lang }) {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-4">
-              <span className="h-px w-10 bg-accent-500 lg:w-full" />
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+              <span className="h-px w-10 bg-brand-600 lg:w-full" />
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
                 {c.label}
               </span>
             </div>
@@ -42,7 +42,7 @@ export default function Statement({ lang }: { lang: Lang }) {
               {c.lead}
             </p>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-ink-600">{c.body}</p>
-            <p className="mt-7 max-w-2xl border-l-2 border-accent-500 pl-5 text-base leading-8 text-ink-800 sm:text-lg">
+            <p className="mt-7 max-w-2xl border-l-2 border-brand-600 pl-5 text-base leading-8 text-ink-800 sm:text-lg">
               {c.kicker}
             </p>
           </div>

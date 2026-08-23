@@ -29,7 +29,7 @@ export default function Footer({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <footer className="bg-ink-950 text-ink-300">
+    <footer className="bg-brand-950 text-ink-300">
       <Container className="py-12 sm:py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2">
@@ -37,7 +37,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               href={localePath("/", lang)}
               className="flex min-h-[44px] items-center gap-2.5 font-display text-lg font-extrabold tracking-display text-paper"
             >
-              <span className="flex h-8 w-8 items-center justify-center bg-paper font-display text-sm font-bold text-ink-950">
+              <span className="flex h-8 w-8 items-center justify-center bg-brand-600 font-display text-sm font-bold text-white">
                 K
               </span>
               Kestro
@@ -46,7 +46,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-paper/50">{productsNav.hub.label[lang]}</h3>
+            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-brand-300">{productsNav.hub.label[lang]}</h3>
             <ul className="mt-4 space-y-0.5">
               {categories.map((category) => (
                 <li key={category.slug}>
@@ -62,7 +62,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-paper/50">{c.services}</h3>
+            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-brand-300">{c.services}</h3>
             <ul className="mt-4 space-y-0.5">
               {serviceNav.map((link) => (
                 <li key={link.href}>
@@ -78,7 +78,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-paper/50">{c.company}</h3>
+            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-brand-300">{c.company}</h3>
             <ul className="mt-4 space-y-0.5">
               {companyNav.map((link) => (
                 <li key={link.href}>
