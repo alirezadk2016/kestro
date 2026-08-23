@@ -1,20 +1,69 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import type { Lang, Localized } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "info@kestro.dk";
 
+const copy = {
+  da: {
+    name: "Navn",
+    namePlaceholder: "Dit fulde navn",
+    company: "Virksomhed",
+    companyPlaceholder: "Firmanavn",
+    optional: "(valgfrit)",
+    email: "Email",
+    emailPlaceholder: "dig@virksomhed.dk",
+    phone: "Telefon",
+    phonePlaceholder: "+45 12 34 56 78",
+    message: "Besked",
+    submit: "Send besked",
+    note: "åbnes din egen e-mailklient med beskeden udfyldt og klar til afsendelse til",
+    noteLead: "Når du klikker",
+    defaultSubject: "Henvendelse",
+    defaultPlaceholder:
+      "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
+    from: "fra",
+    via: "via kestro.dk",
+  },
+  en: {
+    name: "Name",
+    namePlaceholder: "Your full name",
+    company: "Company",
+    companyPlaceholder: "Company name",
+    optional: "(optional)",
+    email: "Email",
+    emailPlaceholder: "you@company.com",
+    phone: "Phone",
+    phonePlaceholder: "+45 12 34 56 78",
+    message: "Message",
+    submit: "Send message",
+    note: "your own email client opens with the message filled in and ready to send to",
+    noteLead: "When you click",
+    defaultSubject: "Enquiry",
+    defaultPlaceholder:
+      "Tell us what you need — number of devices, specifications, timing and anything else.",
+    from: "from",
+    via: "via kestro.dk",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
 type ContactFormProps = {
-  subjectPrefix?: string;
-  messagePlaceholder?: string;
+  lang: Lang;
+  subjectPrefix?: Localized;
+  messagePlaceholder?: Localized;
   companyRequired?: boolean;
 };
 
 export default function ContactForm({
-  subjectPrefix = "Henvendelse",
-  messagePlaceholder = "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
+  lang,
+  subjectPrefix,
+  messagePlaceholder,
   companyRequired = true,
 }: ContactFormProps) {
+  const c = copy[lang];
+  const subject_prefix = subjectPrefix?.[lang] ?? c.defaultSubject;
+  const placeholder = messagePlaceholder?.[lang] ?? c.defaultPlaceholder;
   const [values, setValues] = useState({
     navn: "",
     virksomhed: "",
@@ -31,12 +80,12 @@ export default function ContactForm({
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const subject = `${subjectPrefix} fra ${values.virksomhed || values.navn} via kestro.dk`;
+    const subject = `${subject_prefix} ${c.from} ${values.virksomhed || values.navn} ${c.via}`;
     const body = [
-      `Navn: ${values.navn}`,
-      values.virksomhed ? `Virksomhed: ${values.virksomhed}` : null,
-      `Email: ${values.email}`,
-      values.telefon ? `Telefon: ${values.telefon}` : null,
+      `${c.name}: ${values.navn}`,
+      values.virksomhed ? `${c.company}: ${values.virksomhed}` : null,
+      `${c.email}: ${values.email}`,
+      values.telefon ? `${c.phone}: ${values.telefon}` : null,
       "",
       values.besked,
     ]
@@ -55,7 +104,7 @@ export default function ContactForm({
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Navn <span className="text-brand-600">*</span>
+            {c.name} <span className="text-brand-600">*</span>
           </label>
           <input
             id="navn"
@@ -65,13 +114,18 @@ export default function ContactForm({
             value={values.navn}
             onChange={handleChange}
             className={inputClasses}
-            placeholder="Dit fulde navn"
+            placeholder={c.namePlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Virksomhed {companyRequired ? <span className="text-brand-600">*</span> : <span className="text-slate-400">(valgfrit)</span>}
+            {c.company}{" "}
+            {companyRequired ? (
+              <span className="text-brand-600">*</span>
+            ) : (
+              <span className="text-slate-400">{c.optional}</span>
+            )}
           </label>
           <input
             id="virksomhed"
@@ -81,13 +135,13 @@ export default function ContactForm({
             value={values.virksomhed}
             onChange={handleChange}
             className={inputClasses}
-            placeholder="Firmanavn"
+            placeholder={c.companyPlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Email <span className="text-brand-600">*</span>
+            {c.email} <span className="text-brand-600">*</span>
           </label>
           <input
             id="email"
@@ -97,13 +151,13 @@ export default function ContactForm({
             value={values.email}
             onChange={handleChange}
             className={inputClasses}
-            placeholder="dig@virksomhed.dk"
+            placeholder={c.emailPlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Telefon
+            {c.phone}
           </label>
           <input
             id="telefon"
@@ -112,14 +166,14 @@ export default function ContactForm({
             value={values.telefon}
             onChange={handleChange}
             className={inputClasses}
-            placeholder="+45 12 34 56 78"
+            placeholder={c.phonePlaceholder}
           />
         </div>
       </div>
 
       <div>
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-slate-700">
-          Besked <span className="text-brand-600">*</span>
+          {c.message} <span className="text-brand-600">*</span>
         </label>
         <textarea
           id="besked"
@@ -129,7 +183,7 @@ export default function ContactForm({
           value={values.besked}
           onChange={handleChange}
           className={inputClasses}
-          placeholder={messagePlaceholder}
+          placeholder={placeholder}
         />
       </div>
 
@@ -138,11 +192,10 @@ export default function ContactForm({
           type="submit"
           className="rounded-full bg-brand-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
         >
-          Send besked
+          {c.submit}
         </button>
         <p className="mt-3 text-xs leading-5 text-slate-500">
-          Når du klikker &ldquo;Send besked&rdquo;, åbnes din egen e-mailklient med beskeden udfyldt og
-          klar til afsendelse til {CONTACT_EMAIL}.
+          {c.noteLead} &ldquo;{c.submit}&rdquo;, {c.note} {CONTACT_EMAIL}.
         </p>
       </div>
     </form>

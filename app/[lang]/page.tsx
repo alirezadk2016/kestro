@@ -5,17 +5,20 @@ import Services from "@/components/Services";
 import WhyUs from "@/components/WhyUs";
 import ExampleMachine from "@/components/ExampleMachine";
 import CtaSection from "@/components/CtaSection";
+import type { Lang } from "@/lib/i18n";
 
-export default function Home() {
+export default function Home({ params }: { params: { lang: Lang } }) {
+  const { lang } = params;
+
   return (
     <>
-      <Hero />
-      <UspBar />
-      <QualifySection />
-      <Services />
-      <WhyUs />
-      <ExampleMachine />
-      <CtaSection />
+      <Hero lang={lang} />
+      <UspBar lang={lang} />
+      <QualifySection lang={lang} />
+      <Services lang={lang} />
+      <WhyUs lang={lang} />
+      <ExampleMachine lang={lang} />
+      <CtaSection lang={lang} />
     </>
   );
 }

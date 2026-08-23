@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, MotionConfig } from "framer-motion";
 import { ShieldCheck, Keyboard, Truck } from "lucide-react";
+import { localePath, type Lang } from "@/lib/i18n";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 14 },
@@ -15,12 +16,30 @@ const fadeUp = {
 };
 
 const TAGS = [
-  { icon: ShieldCheck, label: "Testet" },
-  { icon: Keyboard, label: "Nordisk tastatur" },
-  { icon: Truck, label: "Levering i DK & NO" },
+  { icon: ShieldCheck, label: { da: "Testet", en: "Tested" } },
+  { icon: Keyboard, label: { da: "Nordisk tastatur", en: "Nordic keyboard" } },
+  { icon: Truck, label: { da: "Levering i DK & NO", en: "Delivery in DK & NO" } },
 ];
 
-export default function Hero() {
+const copy = {
+  da: {
+    badge: "Renoverede erhvervscomputere til Norden",
+    headline: "Erhvervscomputere.\nKlar til Norden.",
+    sub: "Vi forbinder jer med de rigtige leverandører – så I får den rette pris og de rette garantivilkår. Fra enkelte maskiner til hele medarbejderflåden.",
+    primary: "Få et tilbud",
+    secondary: "Se hvad vi skaffer",
+  },
+  en: {
+    badge: "Refurbished business computers for the Nordics",
+    headline: "Business computers.\nReady for the Nordics.",
+    sub: "We connect you with the right suppliers — so you get the right price and the right warranty terms. From single machines to the whole staff fleet.",
+    primary: "Get a quote",
+    secondary: "See what we source",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+export default function Hero({ lang }: { lang: Lang }) {
+  const c = copy[lang];
   return (
     <section className="relative overflow-hidden bg-slate-900">
       {/* Dark-native graphic: top band on mobile, full-bleed right on desktop */}
@@ -43,16 +62,15 @@ export default function Hero() {
             <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm sm:text-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-Renoverede erhvervscomputere til Norden
+                {c.badge}
               </span>
 
               <h1 className="mt-6 whitespace-pre-line text-[clamp(1.75rem,7vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white">
-                {"Erhvervscomputere.\nKlar til Norden."}
+                {c.headline}
               </h1>
 
               <p className="mt-5 max-w-lg text-base leading-7 text-slate-300 sm:text-lg">
-                Vi forbinder jer med de rigtige leverandører – så I får den rette pris og de rette
-                garantivilkår. Fra enkelte maskiner til hele medarbejderflåden.
+                {c.sub}
               </p>
             </motion.div>
 
@@ -64,16 +82,16 @@ Renoverede erhvervscomputere til Norden
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
             >
               <Link
-                href="/kontakt"
+                href={localePath("/kontakt", lang)}
                 className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 shadow-lg shadow-black/20 transition hover:bg-slate-100"
               >
-                Få et tilbud
+                {c.primary}
               </Link>
               <Link
-                href="/produkter"
+                href={localePath("/produkter", lang)}
                 className="inline-flex items-center justify-center rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                Se hvad vi skaffer
+                {c.secondary}
               </Link>
             </motion.div>
 
@@ -85,9 +103,9 @@ Renoverede erhvervscomputere til Norden
               className="mt-8 flex flex-wrap gap-x-5 gap-y-2.5"
             >
               {TAGS.map((tag) => (
-                <li key={tag.label} className="flex items-center gap-2 text-xs text-slate-300 sm:text-sm">
+                <li key={tag.label.da} className="flex items-center gap-2 text-xs text-slate-300 sm:text-sm">
                   <tag.icon className="h-4 w-4 text-brand-400" strokeWidth={2} />
-                  {tag.label}
+                  {tag.label[lang]}
                 </li>
               ))}
             </motion.ul>

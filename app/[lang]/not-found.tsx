@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Container from "@/components/Container";
 
+/*
+ * Middleware rewrites unprefixed paths to /da, so an unknown Danish URL lands
+ * here. There is no language segment to read at this point, so the page shows
+ * both languages rather than guessing.
+ */
 export default function NotFound() {
   return (
     <section className="flex min-h-[60vh] items-center py-20">
@@ -12,18 +17,21 @@ export default function NotFound() {
         <p className="mx-auto mt-4 max-w-md text-base leading-7 text-slate-600">
           Siden findes ikke, eller er blevet flyttet. Prøv forsiden, eller kontakt os direkte.
         </p>
+        <p className="mx-auto mt-2 max-w-md text-base leading-7 text-slate-500">
+          This page does not exist or has moved. Try the front page, or contact us directly.
+        </p>
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/"
             className="rounded-full bg-brand-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
           >
-            Til forsiden
+            Til forsiden / Front page
           </Link>
           <Link
             href="/kontakt"
             className="rounded-full border border-slate-300 px-7 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
           >
-            Kontakt os
+            Kontakt os / Contact
           </Link>
         </div>
       </Container>

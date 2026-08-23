@@ -1,23 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
+import { mainNav, productsNav, ui } from "@/lib/nav";
+import { localePath, stripLocale, langs, langLabel, type Lang } from "@/lib/i18n";
 
-const navLinks = [
-  { href: "/flaadeloesninger", label: "Flådeløsninger" },
-  { href: "/saelg-til-os", label: "Sælg til os" },
-  { href: "/reparation", label: "Reparation" },
-  { href: "/om-os", label: "Om os" },
-  { href: "/kontakt", label: "Kontakt" },
-];
-
-export default function Header() {
+export default function Header({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const pathname = usePathname() ?? "/";
+
+  /** The same page in the other language. */
+  const basePath = stripLocale(pathname);
 
   function closeMobile() {
     setOpen(false);
@@ -28,7 +27,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
-          href="/"
+          href={localePath("/", lang)}
           className="flex items-center gap-2 text-xl font-bold tracking-tight text-brand-900"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-600 text-sm text-white">
@@ -44,11 +43,11 @@ export default function Header() {
             onMouseLeave={() => setProductsOpen(false)}
           >
             <Link
-              href="/produkter"
+              href={localePath(productsNav.hub.href, lang)}
               className="flex items-center gap-1 text-sm font-medium text-slate-600 transition hover:text-brand-700"
               aria-expanded={productsOpen}
             >
-              Hvad vi skaffer
+              {productsNav.hub.label[lang]}
               <ChevronDown className="h-4 w-4" strokeWidth={2} />
             </Link>
 
@@ -56,25 +55,25 @@ export default function Header() {
               <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
                 <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-lg">
                   <Link
-                    href="/modeller"
+                    href={localePath(productsNav.models.href, lang)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-brand-700"
                   >
-                    Populære modeller
+                    {productsNav.models.label[lang]}
                   </Link>
                   <Link
-                    href="/kvalitet"
+                    href={localePath(productsNav.quality.href, lang)}
                     className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-brand-700"
                   >
-                    Stand og kvalitet
+                    {productsNav.quality.label[lang]}
                   </Link>
                   <div className="mb-1 border-t border-slate-100" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
-                      href={`/produkter/${category.slug}`}
+                      href={localePath(`/produkter/${category.slug}`, lang)}
                       className="block rounded-lg px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-brand-700"
                     >
-                      {category.name}
+                      {category.name[lang]}
                     </Link>
                   ))}
                 </div>
@@ -82,23 +81,24 @@ export default function Header() {
             )}
           </div>
 
-          {navLinks.map((link) => (
+          {mainNav.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={localePath(link.href, lang)}
               className="text-sm font-medium text-slate-600 transition hover:text-brand-700"
             >
-              {link.label}
+              {link.label[lang]}
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
+          <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
-            href="/kontakt"
+            href={localePath("/kontakt", lang)}
             className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
           >
-            Book en samtale
+            {ui.bookCall[lang]}
           </Link>
         </div>
 
@@ -106,7 +106,7 @@ export default function Header() {
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          aria-label="Åbn eller luk menu"
+          aria-label={ui.openMenu[lang]}
           className="inline-flex items-center justify-center rounded-md p-2 text-slate-700 lg:hidden"
         >
           <svg
@@ -139,7 +139,7 @@ export default function Header() {
               aria-expanded={mobileProductsOpen}
               className="flex items-center justify-between rounded-md px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-50"
             >
-              Hvad vi skaffer
+              {productsNav.hub.label[lang]}
               <ChevronDown
                 className={`h-4 w-4 transition-transform ${mobileProductsOpen ? "rotate-180" : ""}`}
                 strokeWidth={2}
@@ -149,60 +149,100 @@ export default function Header() {
             {mobileProductsOpen && (
               <div className="mb-1 space-y-0.5 border-l border-slate-200 pl-3">
                 <Link
-                  href="/produkter"
+                  href={localePath(productsNav.hub.href, lang)}
                   onClick={closeMobile}
                   className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Oversigt
+                  {productsNav.overview[lang]}
                 </Link>
                 <Link
-                  href="/modeller"
+                  href={localePath(productsNav.models.href, lang)}
                   onClick={closeMobile}
                   className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Populære modeller
+                  {productsNav.models.label[lang]}
                 </Link>
                 <Link
-                  href="/kvalitet"
+                  href={localePath(productsNav.quality.href, lang)}
                   onClick={closeMobile}
                   className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Stand og kvalitet
+                  {productsNav.quality.label[lang]}
                 </Link>
                 {categories.map((category) => (
                   <Link
                     key={category.slug}
-                    href={`/produkter/${category.slug}`}
+                    href={localePath(`/produkter/${category.slug}`, lang)}
                     onClick={closeMobile}
                     className="block rounded-md px-3 py-2 text-sm text-slate-600 hover:bg-slate-50"
                   >
-                    {category.name}
+                    {category.name[lang]}
                   </Link>
                 ))}
               </div>
             )}
 
-            {navLinks.map((link) => (
+            {mainNav.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={localePath(link.href, lang)}
                 onClick={closeMobile}
                 className="rounded-md px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-50"
               >
-                {link.label}
+                {link.label[lang]}
               </Link>
             ))}
 
+            <div className="mt-3 border-t border-slate-200 pt-3">
+              <LanguageSwitcher lang={lang} basePath={basePath} onNavigate={closeMobile} />
+            </div>
+
             <Link
-              href="/kontakt"
+              href={localePath("/kontakt", lang)}
               onClick={closeMobile}
               className="mt-2 rounded-full bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white"
             >
-              Book en samtale
+              {ui.bookCall[lang]}
             </Link>
           </Container>
         </div>
       )}
     </header>
+  );
+}
+
+function LanguageSwitcher({
+  lang,
+  basePath,
+  onNavigate,
+}: {
+  lang: Lang;
+  basePath: string;
+  onNavigate?: () => void;
+}) {
+  return (
+    <div
+      className="flex w-fit items-center gap-1 rounded-full border border-slate-200 p-1"
+      role="group"
+      aria-label={ui.language[lang]}
+    >
+      {langs.map((code) => (
+        <Link
+          key={code}
+          href={localePath(basePath, code)}
+          onClick={onNavigate}
+          hrefLang={code}
+          aria-current={code === lang ? "true" : undefined}
+          className={`inline-flex min-h-[36px] items-center rounded-full px-3 text-xs font-semibold uppercase transition ${
+            code === lang
+              ? "bg-slate-900 text-white"
+              : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          }`}
+        >
+          <span className="sr-only">{langLabel[code]}</span>
+          <span aria-hidden="true">{code}</span>
+        </Link>
+      ))}
+    </div>
   );
 }

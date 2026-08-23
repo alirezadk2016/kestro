@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import type { Lang } from "@/lib/i18n";
+
+const copied_label = { da: "Kopieret!", en: "Copied" } as const;
 
 const EMAIL = "info@kestro.dk";
 
-export default function CopyEmailButton() {
+export default function CopyEmailButton({ lang }: { lang: Lang }) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -24,7 +27,7 @@ export default function CopyEmailButton() {
       className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
     >
       {copied ? (
-        "Kopieret!"
+        copied_label[lang]
       ) : (
         <>
           <span>{EMAIL}</span>

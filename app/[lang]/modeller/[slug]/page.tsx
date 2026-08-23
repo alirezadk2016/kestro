@@ -8,23 +8,71 @@ import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
 import { getCategoryIcon } from "@/lib/category-icons";
+import { localePath, alternatesFor, langs, type Lang } from "@/lib/i18n";
 
 export function generateStaticParams() {
-  return models.map((model) => ({ slug: model.slug }));
+  return langs.flatMap((lang) => models.map((model) => ({ lang, slug: model.slug })));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+const copy = {
+  da: {
+    breadcrumb: "Modeller",
+    notStock:
+      "Vi har den ikke på lager. Vi sourcer den til den enkelte ordre – fortæl os antal og hvad maskinerne skal bruges til, så vender vi tilbage med pris og leveringstid.",
+    imageNote:
+      "Billederne viser modeltypen. Stand, specifikationer og antal aftales for den enkelte ordre.",
+    configTitle: "Typisk konfiguration",
+    configBody:
+      "Brugt hardware findes i mange sammensætninger. Tallene her viser, hvad modellen som regel er bygget i – den præcise konfiguration aftaler vi for jeres ordre.",
+    goodFor: "God til",
+    watchOut: "Vær opmærksom på",
+    whyTitle: "Derfor peger vi ofte på denne model",
+    ctaTitlePre: "Skal I bruge",
+    ctaBody:
+      "Fortæl os antal, hvad maskinerne skal bruges til, og hvornår I skal bruge dem. Så finder vi dem i vores leverandørnetværk og vender tilbage med et konkret bud – også hvis en anden model passer bedre til opgaven.",
+    ctaButton: "Spørg om denne model",
+    seeAlsoPre: "Se også alt, hvad vi skaffer inden for",
+    related: "Andre modeller i samme klasse",
+  },
+  en: {
+    breadcrumb: "Models",
+    notStock:
+      "We do not hold it in stock. We source it per order — tell us the quantity and what the machines are for, and we come back with price and lead time.",
+    imageNote:
+      "The photos show the model type. Condition, specifications and quantity are agreed per order.",
+    configTitle: "Typical configuration",
+    configBody:
+      "Used hardware turns up in many configurations. The figures here show how the model is usually built — the exact configuration is agreed for your order.",
+    goodFor: "Good for",
+    watchOut: "Worth knowing",
+    whyTitle: "Why we often point at this model",
+    ctaTitlePre: "Do you need the",
+    ctaBody:
+      "Tell us the quantity, what the machines are for, and when you need them. We then find them in our supplier network and come back with a concrete proposal — including if another model suits the job better.",
+    ctaButton: "Ask about this model",
+    seeAlsoPre: "See everything else we source within",
+    related: "Other models in the same class",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+export function generateMetadata({
+  params,
+}: {
+  params: { lang: Lang; slug: string };
+}): Metadata {
   const model = getModel(params.slug);
   if (!model) return {};
 
   return {
-    title: model.metaTitle,
-    description: model.metaDescription,
-    alternates: { canonical: `/modeller/${model.slug}` },
+    title: model.metaTitle[params.lang],
+    description: model.metaDescription[params.lang],
+    alternates: alternatesFor(`/modeller/${model.slug}`, params.lang),
   };
 }
 
-export default function ModelPage({ params }: { params: { slug: string } }) {
+export default function ModelPage({ params }: { params: { lang: Lang; slug: string } }) {
+  const { lang } = params;
+  const c = copy[lang];
   const model = getModel(params.slug);
   if (!model) notFound();
 
@@ -46,9 +94,12 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
 
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
-            <nav aria-label="Brødkrumme" className="text-sm text-slate-400">
-              <Link href="/modeller" className="inline-flex min-h-[44px] items-center transition hover:text-white">
-                Modeller
+            <nav aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"} className="text-sm text-slate-400">
+              <Link
+                href={localePath("/modeller", lang)}
+                className="inline-flex min-h-[44px] items-center transition hover:text-white"
+              >
+                {c.breadcrumb}
               </Link>
               <span className="mx-2" aria-hidden="true">
                 /
@@ -62,20 +113,19 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
               </span>
               <div>
                 <span className="text-sm font-semibold uppercase tracking-wider text-brand-300">
-                  {model.brand} · {model.format}
+                  {model.brand} · {model.format[lang]}
                 </span>
                 <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {model.name}
                 </h1>
-                <p className="mt-2 text-base text-slate-300 sm:text-lg">{model.tagline}</p>
+                <p className="mt-2 text-base text-slate-300 sm:text-lg">{model.tagline[lang]}</p>
               </div>
             </div>
 
-            <p className="mt-8 text-base leading-7 text-slate-300">{model.intro}</p>
+            <p className="mt-8 text-base leading-7 text-slate-300">{model.intro[lang]}</p>
 
             <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-slate-300">
-              Vi har den ikke på lager. Vi sourcer den til den enkelte ordre – fortæl os antal og
-              hvad maskinerne skal bruges til, så vender vi tilbage med pris og leveringstid.
+              {c.notStock}
             </p>
           </div>
         </Container>
@@ -88,7 +138,7 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
               <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-white sm:aspect-[16/10]">
                 <Image
                   src={model.images[0].src}
-                  alt={model.images[0].alt}
+                  alt={model.images[0].alt[lang]}
                   width={1179}
                   height={1120}
                   className="h-full w-full object-contain p-3 sm:p-6"
@@ -104,7 +154,7 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
                   >
                     <Image
                       src={img.src}
-                      alt={img.alt}
+                      alt={img.alt[lang]}
                       width={1179}
                       height={1120}
                       className="h-full w-full object-contain p-2 sm:p-4"
@@ -114,10 +164,7 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
                 ))}
               </div>
 
-              <p className="pt-1 text-sm leading-6 text-slate-500">
-                Billederne viser modeltypen. Stand, specifikationer og antal aftales for den
-                enkelte ordre.
-              </p>
+              <p className="pt-1 text-sm leading-6 text-slate-500">{c.imageNote}</p>
             </div>
           </Container>
         </section>
@@ -128,22 +175,19 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
           <div className="mx-auto max-w-3xl">
             <div className="overflow-hidden rounded-2xl border border-slate-200">
               <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 sm:px-6">
-                <h2 className="text-base font-semibold text-slate-900">Typisk konfiguration</h2>
-                <p className="mt-1 text-sm leading-6 text-slate-600">
-                  Brugt hardware findes i mange sammensætninger. Tallene her viser, hvad modellen
-                  som regel er bygget i – den præcise konfiguration aftaler vi for jeres ordre.
-                </p>
+                <h2 className="text-base font-semibold text-slate-900">{c.configTitle}</h2>
+                <p className="mt-1 text-sm leading-6 text-slate-600">{c.configBody}</p>
               </div>
 
               <dl className="divide-y divide-slate-200">
                 {model.specs.map((spec) => (
                   <div
-                    key={spec.label}
+                    key={spec.label.da}
                     className="px-5 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4"
                   >
-                    <dt className="text-sm font-semibold text-slate-900">{spec.label}</dt>
+                    <dt className="text-sm font-semibold text-slate-900">{spec.label[lang]}</dt>
                     <dd className="mt-1 text-sm leading-6 text-slate-600 sm:col-span-2 sm:mt-0">
-                      {spec.value}
+                      {spec.value[lang]}
                     </dd>
                   </div>
                 ))}
@@ -151,13 +195,13 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
             </div>
 
             <h2 className="mt-12 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-              God til
+              {c.goodFor}
             </h2>
             <ul className="mt-5 space-y-3">
               {model.goodFor.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-7 text-slate-600">
+                <li key={item.da} className="flex gap-3 text-base leading-7 text-slate-600">
                   <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
-                  {item}
+                  {item[lang]}
                 </li>
               ))}
             </ul>
@@ -165,12 +209,12 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
             <div className="mt-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 sm:p-6">
               <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900">
                 <Info className="h-5 w-5 flex-shrink-0 text-amber-600" strokeWidth={2} />
-                Vær opmærksom på
+                {c.watchOut}
               </h2>
               <ul className="mt-3 space-y-2.5">
                 {model.notes.map((note) => (
-                  <li key={note} className="text-sm leading-6 text-slate-700">
-                    {note}
+                  <li key={note.da} className="text-sm leading-6 text-slate-700">
+                    {note[lang]}
                   </li>
                 ))}
               </ul>
@@ -179,20 +223,20 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
             {model.why && (
               <>
                 <h2 className="mt-12 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-                  Derfor peger vi ofte på denne model
+                  {c.whyTitle}
                 </h2>
                 <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                   {model.why.map((reason) => (
-                    <div key={reason.title}>
+                    <div key={reason.title.da}>
                       <dt className="flex gap-3 text-base font-semibold text-slate-900">
                         <Check
                           className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600"
                           strokeWidth={2}
                         />
-                        {reason.title}
+                        {reason.title[lang]}
                       </dt>
                       <dd className="mt-1.5 pl-8 text-sm leading-6 text-slate-600">
-                        {reason.description}
+                        {reason.description[lang]}
                       </dd>
                     </div>
                   ))}
@@ -202,29 +246,25 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
 
             <div className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
               <h2 className="text-lg font-semibold text-slate-900">
-                Skal I bruge {model.name}?
+                {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 text-base leading-7 text-slate-600">
-                Fortæl os antal, hvad maskinerne skal bruges til, og hvornår I skal bruge dem. Så
-                finder vi dem i vores leverandørnetværk og vender tilbage med et konkret bud – også
-                hvis en anden model passer bedre til opgaven.
-              </p>
+              <p className="mt-2 text-base leading-7 text-slate-600">{c.ctaBody}</p>
               <Link
-                href="/kontakt"
+                href={localePath("/kontakt", lang)}
                 className="mt-5 inline-flex min-h-[48px] items-center justify-center rounded-full bg-brand-600 px-6 text-base font-semibold text-white transition hover:bg-brand-700"
               >
-                Spørg om denne model
+                {c.ctaButton}
               </Link>
             </div>
 
             {category && (
               <p className="mt-8 text-sm leading-6 text-slate-500">
-                Se også alt, hvad vi skaffer inden for{" "}
+                {c.seeAlsoPre}{" "}
                 <Link
-                  href={`/produkter/${category.slug}`}
+                  href={localePath(`/produkter/${category.slug}`, lang)}
                   className="font-semibold text-brand-700 hover:text-brand-800"
                 >
-                  {category.name.toLowerCase()}
+                  {category.name[lang].toLowerCase()}
                 </Link>
                 .
               </p>
@@ -238,13 +278,13 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-xl font-bold tracking-tight text-slate-900">
-                Andre modeller i samme klasse
+                {c.related}
               </h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
                   <li key={other.slug}>
                     <Link
-                      href={`/modeller/${other.slug}`}
+                      href={localePath(`/modeller/${other.slug}`, lang)}
                       className="inline-flex min-h-[44px] items-center rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-brand-600 hover:text-brand-700"
                     >
                       {other.name}
@@ -257,7 +297,7 @@ export default function ModelPage({ params }: { params: { slug: string } }) {
         </section>
       )}
 
-      <CtaSection />
+      <CtaSection lang={lang} />
     </>
   );
 }
