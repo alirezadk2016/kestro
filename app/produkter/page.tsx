@@ -1,38 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Laptop,
-  Monitor,
-  HardDrive,
-  Tablet,
-  Smartphone,
-  Watch,
-  Cable,
-  Gamepad2,
-  type LucideIcon,
-} from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
+import { getCategoryIcon } from "@/lib/category-icons";
 
 export const metadata: Metadata = {
   title: "Hvad vi skaffer | Renoveret IT-udstyr til erhverv | Kestro",
   description:
     "Kestro er indkøbspartner på renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, smartwatches, docking og gaming – sourcet til jeres ordre.",
   alternates: { canonical: "/produkter" },
-};
-
-const icons: Record<string, LucideIcon> = {
-  "baerbare-computere": Laptop,
-  "stationaere-computere": Monitor,
-  "mini-pc": HardDrive,
-  tablets: Tablet,
-  smartphones: Smartphone,
-  smartwatches: Watch,
-  dockingstationer: Cable,
-  gaming: Gamepad2,
 };
 
 export default function ProdukterPage() {
@@ -68,7 +47,7 @@ export default function ProdukterPage() {
 
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => {
-              const Icon = icons[category.slug] ?? Laptop;
+              const Icon = getCategoryIcon(category.slug);
               return (
                 <Link
                   key={category.slug}

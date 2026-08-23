@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
-import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
+import { getCategoryIcon } from "@/lib/category-icons";
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }));
@@ -27,25 +27,46 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   if (!category) notFound();
 
   const others = categories.filter((c) => c.slug !== category.slug);
+  const Icon = getCategoryIcon(category.slug);
 
   return (
     <>
-      <section className="py-12 sm:py-20 lg:py-24">
-        <Container>
-          <nav aria-label="Brødkrumme" className="mb-8 text-sm text-slate-500">
-            <Link href="/produkter" className="transition hover:text-brand-700">
-              Produkter
-            </Link>
-            <span className="mx-2" aria-hidden="true">
-              /
-            </span>
-            <span className="text-slate-700">{category.name}</span>
-          </nav>
+      <section className="relative overflow-hidden bg-slate-900 py-12 text-white sm:py-16 lg:py-20">
+        {/* Brand glow for depth — no product photography, since we source per order */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-600/25 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"
+        />
 
-          <PageHeader title={category.name} description={category.tagline} />
+        <Container className="relative">
+          <div className="mx-auto max-w-3xl">
+            <nav aria-label="Brødkrumme" className="text-sm text-slate-400">
+              <Link href="/produkter" className="transition hover:text-white">
+                Hvad vi skaffer
+              </Link>
+              <span className="mx-2" aria-hidden="true">
+                /
+              </span>
+              <span className="text-slate-200">{category.name}</span>
+            </nav>
 
-          <div className="mx-auto mt-12 max-w-3xl">
-            <p className="text-base leading-7 text-slate-600">{category.intro}</p>
+            <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
+              <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
+                <Icon className="h-8 w-8 text-brand-300" strokeWidth={1.5} />
+              </span>
+              <div>
+                <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+                  {category.name}
+                </h1>
+                <p className="mt-2 text-base text-slate-300 sm:text-lg">{category.tagline}</p>
+              </div>
+            </div>
+
+            <p className="mt-8 text-base leading-7 text-slate-300">{category.intro}</p>
           </div>
         </Container>
       </section>
@@ -110,19 +131,25 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
 
       <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-20">
         <Container>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">Andre kategorier</h2>
-          <ul className="mt-6 flex flex-wrap gap-3">
-            {others.map((other) => (
-              <li key={other.slug}>
-                <Link
-                  href={`/produkter/${other.slug}`}
-                  className="inline-flex rounded-full border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-brand-600 hover:text-brand-700"
-                >
-                  {other.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">Andre kategorier</h2>
+            <ul className="mt-6 flex flex-wrap gap-3">
+              {others.map((other) => {
+                const OtherIcon = getCategoryIcon(other.slug);
+                return (
+                  <li key={other.slug}>
+                    <Link
+                      href={`/produkter/${other.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-brand-600 hover:text-brand-700"
+                    >
+                      <OtherIcon className="h-4 w-4 text-slate-400" strokeWidth={1.75} />
+                      {other.name}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </Container>
       </section>
 
