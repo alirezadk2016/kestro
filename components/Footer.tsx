@@ -17,7 +17,7 @@ const serviceLinks = [
   { href: "/kvalitet", label: "Stand og kvalitet" },
   { href: "/saelg-til-os", label: "Sælg jeres udstyr" },
   { href: "/reparation", label: "Reparation" },
-  { href: "/ydelser", label: "Sådan arbejder vi" },
+  { href: "/ydelser", label: "Alle ydelser" },
 ];
 
 export default function Footer() {

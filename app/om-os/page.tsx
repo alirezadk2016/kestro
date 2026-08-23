@@ -4,6 +4,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import TeamSection from "@/components/TeamSection";
+import { team } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Om os | Kestro",
@@ -55,6 +56,23 @@ export default function OmOsPage() {
               </div>
             ))}
           </div>
+        </Container>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50 py-14 sm:py-20">
+        <Container>
+          <figure className="mx-auto max-w-3xl">
+            <blockquote className="text-xl font-medium leading-9 text-slate-900 sm:text-2xl sm:leading-10">
+              &ldquo;De fleste ringer til os, fordi de er trætte af at lede. De ved godt, hvad de
+              skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til
+              den rigtige pris. Det er dét, vi laver.&rdquo;
+            </blockquote>
+            <figcaption className="mt-6 text-sm text-slate-600">
+              <span className="font-semibold text-slate-900">{team[0].name}</span>
+              {" – "}
+              {team[0].role}, Kestro
+            </figcaption>
+          </figure>
         </Container>
       </section>
 

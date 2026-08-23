@@ -141,6 +141,21 @@ export default function SaelgTilOsPage() {
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Også overskudslager og returvarer
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Det er ikke kun udtjente medarbejdermaskiner, vi køber. Ligger der udstyr, som aldrig
+              nåede ud til en kunde – returvarer, demoenheder, varer fra en aflyst ordre eller
+              modeller, der ikke blev solgt – så står det og taber værdi, hver måned der går.
+            </p>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Fordi vi ikke selv skal have varerne på et lager, men finder køberen først, kan vi
+              også tage partier, en almindelig opkøber ville sige nej til. Send os en liste med
+              modeller, antal og stand, så siger vi ærligt, om vi kan afsætte det – og hvad det
+              realistisk er værd.
+            </p>
+
+            <h2 className="mt-14 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
               Fortæl os, hvad I har
             </h2>
             <p className="mt-3 text-base leading-7 text-slate-600">
