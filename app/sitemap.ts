@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { models } from "@/lib/models";
+import { guides } from "@/lib/guides";
 import { localePath } from "@/lib/i18n";
 
 const BASE_URL = "https://www.kestro.dk";
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/produkter", priority: 0.9 },
     { path: "/modeller", priority: 0.9 },
     { path: "/kvalitet", priority: 0.8 },
+    { path: "/vejledninger", priority: 0.8 },
     { path: "/saelg-til-os", priority: 0.8 },
     { path: "/reparation", priority: 0.8 },
     { path: "/ydelser", priority: 0.7 },
@@ -32,7 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const routes = [...staticRoutes, ...categoryRoutes, ...modelRoutes];
+  const guideRoutes = guides.map((guide) => ({
+    path: `/vejledninger/${guide.slug}`,
+    priority: 0.7,
+  }));
+
+  const routes = [...staticRoutes, ...categoryRoutes, ...modelRoutes, ...guideRoutes];
 
   /*
    * Each page is listed once per language, and every entry carries the
