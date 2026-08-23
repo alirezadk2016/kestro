@@ -38,6 +38,7 @@ export const companyNav: NavLink[] = [
   { href: "/", label: { da: "Forside", en: "Home" } },
   { href: "/om-os", label: { da: "Om os", en: "About us" } },
   { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
+  { href: "/privatlivspolitik", label: { da: "Privatlivspolitik", en: "Privacy policy" } },
 ];
 
 /** Buttons and labels that appear in more than one place. */

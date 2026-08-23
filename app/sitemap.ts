@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/ydelser", priority: 0.7 },
     { path: "/om-os", priority: 0.7 },
     { path: "/kontakt", priority: 0.7 },
+    { path: "/privatlivspolitik", priority: 0.3 },
   ];
 
   const categoryRoutes = categories.map((category) => ({

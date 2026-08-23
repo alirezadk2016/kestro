@@ -89,7 +89,12 @@ export default function RootLayout({
       <body className={`${inter.variable} ${archivo.variable} bg-paper font-sans text-ink-900 antialiased`}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          // Escape the angle bracket so a value can never close the script
+          // tag early. Everything here is our own data today, but the escape
+          // costs nothing and stops that from becoming a rule to remember.
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         <Header lang={lang} />
         <main>{children}</main>

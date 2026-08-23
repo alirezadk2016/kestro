@@ -14,6 +14,8 @@ const copy = {
     company: "Virksomhed",
     delivers: "Leverer i",
     rights: "Alle rettigheder forbeholdes.",
+    trademarks:
+      "Produktnavne og varemærker tilhører deres respektive ejere. Kestro er ikke tilknyttet Lenovo, HP, Dell, Apple, Microsoft eller andre nævnte producenter.",
   },
   en: {
     blurb:
@@ -22,6 +24,8 @@ const copy = {
     company: "Company",
     delivers: "Delivers in",
     rights: "All rights reserved.",
+    trademarks:
+      "Product names and trademarks belong to their respective owners. Kestro is not affiliated with Lenovo, HP, Dell, Apple, Microsoft or any other manufacturer named on this site.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -116,7 +120,8 @@ export default function Footer({ lang }: { lang: Lang }) {
           </Link>
         </div>
 
-        <div className="mt-12 border-t border-ink-800 pt-6 text-sm text-ink-500">
+        <div className="mt-12 space-y-3 border-t border-ink-800 pt-6 text-sm text-ink-500">
+          <p className="max-w-3xl text-xs leading-6">{c.trademarks}</p>
           <p>
             &copy; {new Date().getFullYear()} Kestro. {c.rights}
           </p>
