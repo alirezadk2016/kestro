@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Phone } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
-import { company } from "@/lib/company";
 
 const navLinks = [
   { href: "/flaadeloesninger", label: "Flådeløsninger" },
@@ -82,18 +81,11 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          <a
-            href={`tel:${company.phoneHref}`}
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-brand-700"
-          >
-            <Phone className="h-4 w-4" strokeWidth={2} />
-            {company.phoneDisplay}
-          </a>
           <Link
             href="/kontakt"
             className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
           >
-            Få et tilbud
+            Book en samtale
           </Link>
         </div>
 
@@ -174,20 +166,12 @@ export default function Header() {
               </Link>
             ))}
 
-            <a
-              href={`tel:${company.phoneHref}`}
-              onClick={closeMobile}
-              className="mt-2 flex items-center justify-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-center text-sm font-semibold text-slate-800"
-            >
-              <Phone className="h-4 w-4" strokeWidth={2} />
-              {company.phoneDisplay}
-            </a>
             <Link
               href="/kontakt"
               onClick={closeMobile}
               className="mt-2 rounded-full bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white"
             >
-              Få et tilbud
+              Book en samtale
             </Link>
           </Container>
         </div>

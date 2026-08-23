@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
 import { company } from "@/lib/company";
@@ -84,32 +85,26 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 border-t border-slate-800 pt-8 sm:grid-cols-3">
+        <div className="mt-10 flex flex-col gap-6 border-t border-slate-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-white">Ring til os</h3>
-            <a
-              href={`tel:${company.phoneHref}`}
-              className="mt-2 inline-block text-base font-semibold text-white transition hover:text-brand-300"
-            >
-              {company.phoneDisplay}
-            </a>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-white">Skriv til os</h3>
+            <p className="text-sm text-slate-400">
+              {company.locationShort} · Leverer i {company.serves}
+            </p>
             <a
               href={`mailto:${company.email}`}
-              className="mt-2 inline-block text-sm text-slate-400 transition hover:text-white"
+              className="mt-1 inline-block text-sm text-slate-400 transition hover:text-white"
             >
               {company.email}
             </a>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-white">Find os</h3>
-            <p className="mt-2 text-sm text-slate-400">{company.locationShort}</p>
-            <p className="text-sm text-slate-400">Leverer i {company.serves}</p>
-          </div>
+          <Link
+            href="/kontakt"
+            className="inline-flex items-center gap-2 self-start rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 sm:self-auto"
+          >
+            Tal med en rådgiver
+            <ArrowRight className="h-4 w-4" strokeWidth={2} />
+          </Link>
         </div>
 
         <div className="mt-12 border-t border-slate-800 pt-6 text-sm text-slate-500">

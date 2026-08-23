@@ -14,6 +14,7 @@ import {
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
+import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
 
 export const metadata: Metadata = {
@@ -103,6 +104,10 @@ export default function ProdukterPage() {
           </div>
         </Container>
       </section>
+
+      <div className="border-t border-slate-200 bg-slate-50">
+        <QualifySection />
+      </div>
 
       <CtaSection />
     </>
