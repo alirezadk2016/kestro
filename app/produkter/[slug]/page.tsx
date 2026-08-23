@@ -30,7 +30,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <section className="py-16 sm:py-20 lg:py-24">
+      <section className="py-12 sm:py-20 lg:py-24">
         <Container>
           <nav aria-label="Brødkrumme" className="mb-8 text-sm text-slate-500">
             <Link href="/produkter" className="transition hover:text-brand-700">
@@ -50,7 +50,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-16 sm:py-20">
+      <section className="bg-slate-50 py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -79,7 +79,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -108,7 +108,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 py-16 sm:py-20">
+      <section className="border-t border-slate-200 py-12 sm:py-20">
         <Container>
           <h2 className="text-xl font-bold tracking-tight text-slate-900">Andre kategorier</h2>
           <ul className="mt-6 flex flex-wrap gap-3">

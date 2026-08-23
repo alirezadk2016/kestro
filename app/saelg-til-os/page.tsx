@@ -53,7 +53,7 @@ const accepted = [
 export default function SaelgTilOsPage() {
   return (
     <>
-      <section className="py-16 sm:py-20 lg:py-24">
+      <section className="py-12 sm:py-20 lg:py-24">
         <Container>
           <PageHeader
             title="Sælg jeres brugte IT-udstyr"
@@ -82,7 +82,7 @@ export default function SaelgTilOsPage() {
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-16 sm:py-20">
+      <section className="bg-slate-50 py-12 sm:py-20">
         <Container>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -118,7 +118,7 @@ export default function SaelgTilOsPage() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">

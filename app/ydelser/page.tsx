@@ -41,7 +41,7 @@ const steps = [
 export default function YdelserPage() {
   return (
     <>
-      <section className="py-16 sm:py-20 lg:py-24">
+      <section className="py-12 sm:py-20 lg:py-24">
         <Container>
           <PageHeader
             title="Sådan arbejder vi"

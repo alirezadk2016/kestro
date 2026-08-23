@@ -30,27 +30,33 @@ const benefits = [
 
 export default function WhyUs() {
   return (
-    <section className="bg-slate-50 py-20 sm:py-28">
+    <section className="border-y border-slate-200 bg-slate-50 py-14 sm:py-20 lg:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+              Hvorfor Kestro
+            </span>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Hvorfor virksomheder vælger Kestro
             </h2>
-            <p className="mt-4 text-lg leading-7 text-slate-600">
+            <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
               Vi bygger bro mellem overskudshardware i Sydeuropa og virksomheder i Norden, der
               ønsker pålidelig IT-hardware uden den høje pris eller miljøbelastning fra nyt udstyr.
             </p>
           </div>
 
-          <dl className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
             {benefits.map((benefit) => (
-              <div key={benefit.title} className="flex gap-3">
-                <benefit.icon className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={1.75} />
-                <div>
-                  <dt className="text-base font-semibold text-slate-900">{benefit.title}</dt>
-                  <dd className="mt-2 text-sm leading-6 text-slate-600">{benefit.description}</dd>
-                </div>
+              <div
+                key={benefit.title}
+                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                  <benefit.icon className="h-5 w-5" strokeWidth={1.75} />
+                </span>
+                <dt className="mt-4 text-base font-semibold text-slate-900">{benefit.title}</dt>
+                <dd className="mt-1.5 text-sm leading-6 text-slate-600">{benefit.description}</dd>
               </div>
             ))}
           </dl>

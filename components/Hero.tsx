@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, MotionConfig } from "framer-motion";
+import { ShieldCheck, Keyboard, Truck } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 14 },
@@ -13,70 +14,84 @@ const fadeUp = {
   }),
 };
 
-const TAGS = ["Testet", "Nordisk tastatur", "Levering i DK & NO"];
+const TAGS = [
+  { icon: ShieldCheck, label: "Testet" },
+  { icon: Keyboard, label: "Nordisk tastatur" },
+  { icon: Truck, label: "Levering i DK & NO" },
+];
 
 export default function Hero() {
   return (
-    <section className="relative flex h-[calc(100dvh-4rem)] flex-col justify-end overflow-hidden px-5 pb-12 sm:h-[calc(100dvh-5rem)] sm:px-8 md:justify-center md:px-10 md:pb-0">
-      <Image
-        src="/hero-devices.png"
-        alt=""
-        fill
-        priority
-        className="pointer-events-none -z-10 object-cover grayscale"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white via-white/85 to-white/20" />
+    <section className="relative overflow-hidden bg-slate-900">
+      {/* Image sits as a top band on mobile, full-bleed right side on desktop */}
+      <div className="absolute inset-x-0 top-0 h-[38%] md:inset-0 md:h-full">
+        <Image
+          src="/hero-devices.png"
+          alt=""
+          fill
+          priority
+          className="pointer-events-none object-cover object-[75%_center] opacity-40 grayscale md:opacity-100 md:grayscale-0"
+          sizes="100vw"
+        />
+        {/* Mobile: fade image down into the dark panel. Desktop: fade from left. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-slate-900 md:bg-gradient-to-r md:from-slate-900 md:via-slate-900/90 md:to-slate-900/30" />
+      </div>
 
       <MotionConfig reducedMotion="user">
-        <div className="relative z-10 max-w-xl">
-          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
-            <span className="inline-flex items-center rounded-full border border-black/10 px-4 py-1.5 text-sm font-medium text-black">
-              Refurbished erhvervscomputere til Norden
-            </span>
-
-            <h1 className="mt-6 whitespace-pre-line text-4xl font-extrabold tracking-tight text-black sm:text-5xl lg:text-6xl">
-              {"Erhvervscomputere.\nKlar til Norden."}
-            </h1>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={0.15}
-            variants={fadeUp}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3"
-          >
-            <Link
-              href="/kontakt"
-              className="inline-flex items-center justify-center rounded-full bg-black px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black/80"
-            >
-              Få et tilbud
-            </Link>
-            <Link
-              href="/ydelser"
-              className="text-sm font-semibold text-black underline underline-offset-2 transition-opacity hover:opacity-60"
-            >
-              Sådan arbejder vi
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={0.4}
-            variants={fadeUp}
-            className="mt-6 flex flex-wrap gap-2"
-          >
-            {TAGS.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-black/15 bg-white/70 px-3 py-1 text-xs font-medium text-black sm:text-sm"
-              >
-                {tag}
+        <div className="relative z-10 mx-auto flex min-h-[36rem] w-full max-w-7xl flex-col justify-end px-5 pb-14 pt-32 sm:px-6 md:min-h-[38rem] md:justify-center md:px-8 md:py-28 lg:px-10">
+          <div className="max-w-xl">
+            <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm sm:text-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Refurbished erhvervscomputere til Norden
               </span>
-            ))}
-          </motion.div>
+
+              <h1 className="mt-6 whitespace-pre-line text-[clamp(1.75rem,7vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white">
+                {"Erhvervscomputere.\nKlar til Norden."}
+              </h1>
+
+              <p className="mt-5 max-w-md text-base leading-7 text-slate-300 sm:text-lg">
+                Testet, opgraderet og klargjort med nordisk tastatur – til virksomheder i Danmark og
+                Norge.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              custom={0.15}
+              variants={fadeUp}
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+            >
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 shadow-lg shadow-black/20 transition hover:bg-slate-100"
+              >
+                Få et tilbud
+              </Link>
+              <Link
+                href="/produkter"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Se produkter
+              </Link>
+            </motion.div>
+
+            <motion.ul
+              initial="hidden"
+              animate="visible"
+              custom={0.4}
+              variants={fadeUp}
+              className="mt-8 flex flex-wrap gap-x-5 gap-y-2.5"
+            >
+              {TAGS.map((tag) => (
+                <li key={tag.label} className="flex items-center gap-2 text-xs text-slate-300 sm:text-sm">
+                  <tag.icon className="h-4 w-4 text-emerald-400" strokeWidth={2} />
+                  {tag.label}
+                </li>
+              ))}
+            </motion.ul>
+          </div>
         </div>
       </MotionConfig>
     </section>

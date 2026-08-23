@@ -37,13 +37,13 @@ export default function Faq({
   title?: string;
 }) {
   return (
-    <section className="py-20 sm:py-24">
+    <section className="py-14 sm:py-20 lg:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
         </div>
 
-        <dl className="mx-auto mt-12 max-w-3xl divide-y divide-slate-200 border-t border-slate-200">
+        <dl className="mx-auto mt-10 max-w-3xl divide-y divide-slate-200 border-t border-slate-200 sm:mt-12">
           {items.map((faq) => (
             <div key={faq.question} className="py-6">
               <dt className="text-base font-semibold text-slate-900">{faq.question}</dt>
