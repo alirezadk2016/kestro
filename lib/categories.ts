@@ -9,6 +9,15 @@ export type Category = {
   brands: string[];
   useCases: { title: string; description: string }[];
   specNote: string;
+  /**
+   * Optional example of a machine we often source. Not stock — we buy per
+   * order — so this is illustrative of the type of hardware, not an offer.
+   */
+  example?: {
+    model: string;
+    note: string;
+    images: { src: string; alt: string }[];
+  };
 };
 
 export const categories: Category[] = [
@@ -55,6 +64,17 @@ export const categories: Category[] = [
     ],
     specNote:
       "RAM, SSD-størrelse, skærmstørrelse og CPU-generation tilpasses den enkelte ordre – fortæl os, hvad maskinerne skal bruges til, så finder vi det rette match.",
+    example: {
+      model: "Lenovo ThinkPad T480",
+      note: "En 14\" erhvervsbærbar, der er blandt de modeller, vi oftest bliver bedt om at skaffe. Robust kabinet, godt tastatur, og RAM og SSD kan skiftes – så maskinen kan opgraderes i stedet for at blive udskiftet. Vist som eksempel på maskintypen; den konkrete konfiguration aftaler vi ud fra jeres behov.",
+      images: [
+        { src: "/thinkpad-t480-4.jpg", alt: "Lenovo ThinkPad T480 set forfra med åben skærm" },
+        { src: "/thinkpad-t480-3.jpg", alt: "ThinkPad T480 set skråt oppefra med tastatur og trackpoint" },
+        { src: "/thinkpad-t480-5.jpg", alt: "ThinkPad T480 i vinkel med skærm og tastatur synligt" },
+        { src: "/thinkpad-t480-2.jpg", alt: "Bagsiden af ThinkPad T480 med ThinkPad-logo og porte i siden" },
+        { src: "/thinkpad-t480-1.jpg", alt: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige" },
+      ],
+    },
   },
   {
     slug: "stationaere-computere",

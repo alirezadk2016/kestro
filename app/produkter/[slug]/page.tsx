@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import CtaSection from "@/components/CtaSection";
@@ -100,7 +101,48 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      <section className="py-12 sm:py-20">
+      {category.example && (
+        <section className="py-12 sm:py-20">
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+                Eksempel på en maskine
+              </span>
+              <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                {category.example.model}
+              </h2>
+              <p className="mt-3 text-base leading-7 text-slate-600">{category.example.note}</p>
+
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+                {category.example.images.map((img, i) => (
+                  <div
+                    key={img.src}
+                    className={`overflow-hidden rounded-2xl border border-slate-200 bg-white ${
+                      i === 0 ? "col-span-2 lg:col-span-2 lg:row-span-2" : ""
+                    }`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      width={800}
+                      height={800}
+                      className="h-full w-full object-cover"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 45vw, 400px"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-4 text-sm leading-6 text-slate-500">
+                Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal
+                aftales for den enkelte ordre.
+              </p>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      <section className="border-t border-slate-200 py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
