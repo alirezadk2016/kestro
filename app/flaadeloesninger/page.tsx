@@ -241,7 +241,7 @@ export default function FlaadeloesningerPage() {
 
             <Link
               href="/saelg-til-os"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
             >
               Læs mere om, hvad vi køber
               <ArrowRight className="h-4 w-4" strokeWidth={2} />

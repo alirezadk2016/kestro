@@ -42,20 +42,20 @@ export default function TeamSection() {
                 <p className="text-sm font-medium text-brand-700">{member.role}</p>
                 <p className="mt-3 text-sm leading-6 text-slate-600">{member.bio}</p>
 
-                <div className="mt-4 flex flex-col items-center gap-2 sm:items-start">
+                <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   <a
                     href={`tel:${member.phoneHref}`}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition hover:text-brand-700"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                   >
-                    <Phone className="h-4 w-4 flex-shrink-0 text-brand-600" strokeWidth={2} />
+                    <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                     {member.phoneDisplay}
                   </a>
                   <a
                     href={`mailto:${member.email ?? company.email}`}
-                    className="inline-flex items-center gap-2 text-sm text-slate-600 transition hover:text-brand-700"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-white"
                   >
                     <Mail className="h-4 w-4 flex-shrink-0 text-slate-400" strokeWidth={2} />
-                    {member.email ?? company.email}
+                    Skriv til os
                   </a>
                 </div>
               </div>

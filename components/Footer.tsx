@@ -44,7 +44,7 @@ export default function Footer() {
                 <li key={category.slug}>
                   <Link
                     href={`/produkter/${category.slug}`}
-                    className="text-sm text-slate-400 transition hover:text-white"
+                    className="-my-1 block py-2 text-sm text-slate-400 transition hover:text-white"
                   >
                     {category.shortName}
                   </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 transition hover:text-white"
+                    className="-my-1 block py-2 text-sm text-slate-400 transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -76,7 +76,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 transition hover:text-white"
+                    className="-my-1 block py-2 text-sm text-slate-400 transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -93,7 +93,7 @@ export default function Footer() {
             </p>
             <a
               href={`mailto:${company.email}`}
-              className="mt-1 inline-block text-sm text-slate-400 transition hover:text-white"
+              className="mt-1 inline-flex min-h-[44px] items-center text-sm text-slate-400 transition hover:text-white"
             >
               {company.email}
             </a>

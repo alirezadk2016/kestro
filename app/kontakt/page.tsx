@@ -51,7 +51,7 @@ export default function KontaktPage() {
 
               <a
                 href={`tel:${team[0].phoneHref}`}
-                className="mt-4 inline-flex items-center gap-2 text-lg font-bold transition hover:text-brand-300"
+                className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-slate-900 transition hover:bg-slate-100 sm:w-auto"
               >
                 <Phone className="h-5 w-5" strokeWidth={2} />
                 {team[0].phoneDisplay}

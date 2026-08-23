@@ -84,7 +84,7 @@ export default function QualifySection() {
 
         <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-6 text-slate-500">
           Passer jeres situation ikke helt ind i én af kasserne?{" "}
-          <Link href="/kontakt" className="font-semibold text-brand-700 hover:text-brand-800">
+          <Link href="/kontakt" className="inline-flex min-h-[44px] items-center font-semibold text-brand-700 hover:text-brand-800">
             Skriv til os
           </Link>{" "}
           – de fleste henvendelser starter med et spørgsmål, ikke en bestilling.

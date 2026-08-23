@@ -45,7 +45,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
             <nav aria-label="Brødkrumme" className="text-sm text-slate-400">
-              <Link href="/produkter" className="transition hover:text-white">
+              <Link href="/produkter" className="inline-flex min-h-[44px] items-center transition hover:text-white">
                 Hvad vi skaffer
               </Link>
               <span className="mx-2" aria-hidden="true">
