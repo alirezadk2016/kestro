@@ -1,22 +1,27 @@
+import { RefreshCw, BadgeCheck, PiggyBank, SlidersHorizontal } from "lucide-react";
 import Container from "./Container";
 
 const benefits = [
   {
+    icon: RefreshCw,
     title: "Længere levetid",
     description:
       "Renoveret hardware forlænger enhedernes levetid, i stedet for at de kasseres for tidligt.",
   },
   {
+    icon: BadgeCheck,
     title: "Kvalitet & tillid",
     description:
       "Alle enheder er funktionstestet og klargjort, så jeres medarbejdere får pålideligt udstyr fra dag ét.",
   },
   {
+    icon: PiggyBank,
     title: "Bedre økonomi",
     description:
       "Få samme ydeevne til en brøkdel af prisen på nyt udstyr – ideelt til større indkøb.",
   },
   {
+    icon: SlidersHorizontal,
     title: "Fleksibilitet",
     description:
       "Vi tilpasser leverancen til jeres behov i mængde og specifikationer, uden bindinger til fast lager.",
@@ -40,9 +45,12 @@ export default function WhyUs() {
 
           <dl className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             {benefits.map((benefit) => (
-              <div key={benefit.title}>
-                <dt className="text-base font-semibold text-slate-900">{benefit.title}</dt>
-                <dd className="mt-2 text-sm leading-6 text-slate-600">{benefit.description}</dd>
+              <div key={benefit.title} className="flex gap-3">
+                <benefit.icon className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={1.75} />
+                <div>
+                  <dt className="text-base font-semibold text-slate-900">{benefit.title}</dt>
+                  <dd className="mt-2 text-sm leading-6 text-slate-600">{benefit.description}</dd>
+                </div>
               </div>
             ))}
           </dl>

@@ -1,23 +1,28 @@
 import Link from "next/link";
+import { PackageSearch, ShieldCheck, Keyboard, Truck } from "lucide-react";
 import Container from "./Container";
 
 const services = [
   {
+    icon: PackageSearch,
     title: "Sourcing & indkøb",
     description:
       "Vi udvælger brugte erhvervscomputere af høj kvalitet fra pålidelige leverandører i Sydeuropa.",
   },
   {
+    icon: ShieldCheck,
     title: "Klargøring & test",
     description:
       "Hver enhed gennemgår en fuld funktionstest, opgraderes med mere RAM og nulstilles til fabriksstand.",
   },
   {
+    icon: Keyboard,
     title: "Nordisk tilpasning",
     description:
       "Dansk/nordisk tastaturlayout, sprogopsætning og mærkning – klar til brug fra dag ét.",
   },
   {
+    icon: Truck,
     title: "Levering til virksomheder",
     description:
       "Fleksible mængder og hurtig B2B-levering til virksomheder i Danmark og Norge.",
@@ -38,13 +43,13 @@ export default function Services() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => (
+          {services.map((service) => (
             <div
               key={service.title}
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-sm font-bold text-brand-700">
-                {String(i + 1).padStart(2, "0")}
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                <service.icon className="h-5 w-5" strokeWidth={1.75} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-slate-900">{service.title}</h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">{service.description}</p>
