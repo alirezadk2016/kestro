@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Users,
   Layers,
@@ -13,7 +14,7 @@ import {
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
-import { company } from "@/lib/company";
+import { team } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Flådeløsninger – udstyr hele virksomheden | Kestro",
@@ -132,12 +133,26 @@ export default function FlaadeloesningerPage() {
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </Link>
               <a
-                href={`tel:${company.phoneHref}`}
+                href={`tel:${team[0].phoneHref}`}
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 <Phone className="h-4 w-4" strokeWidth={2} />
-                {company.phoneDisplay}
+                {team[0].phoneDisplay}
               </a>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-3 text-sm text-slate-400">
+              <Image
+                src={team[0].photo}
+                alt={`${team[0].name}, ${team[0].role} hos Kestro`}
+                width={80}
+                height={80}
+                className="h-10 w-10 rounded-full object-cover object-top"
+              />
+              <span>
+                Tal med <span className="font-semibold text-white">{team[0].name}</span>,{" "}
+                {team[0].role.toLowerCase()}
+              </span>
             </div>
           </div>
         </Container>
@@ -260,11 +275,11 @@ export default function FlaadeloesningerPage() {
           </p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             <a
-              href={`tel:${company.phoneHref}`}
+              href={`tel:${team[0].phoneHref}`}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
             >
               <Phone className="h-4 w-4" strokeWidth={2} />
-              {company.phoneDisplay}
+              {team[0].phoneDisplay}
             </a>
             <Link
               href="#forespoergsel"

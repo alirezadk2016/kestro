@@ -50,9 +50,9 @@ export default function Hero() {
                 {"Erhvervscomputere.\nKlar til Norden."}
               </h1>
 
-              <p className="mt-5 max-w-md text-base leading-7 text-slate-300 sm:text-lg">
-                Fra enkelte maskiner til hele medarbejderflåden. Testet, opgraderet og klargjort med
-                nordisk tastatur – til virksomheder i Danmark og Norge.
+              <p className="mt-5 max-w-lg text-base leading-7 text-slate-300 sm:text-lg">
+                Vi forbinder jer med de rigtige leverandører – så I får den rette pris og de rette
+                garantivilkår. Fra enkelte maskiner til hele medarbejderflåden.
               </p>
             </motion.div>
 

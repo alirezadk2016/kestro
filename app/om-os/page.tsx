@@ -3,6 +3,7 @@ import { Route, Recycle, Users } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
+import TeamSection from "@/components/TeamSection";
 
 export const metadata: Metadata = {
   title: "Om os | Kestro",
@@ -56,6 +57,8 @@ export default function OmOsPage() {
           </div>
         </Container>
       </section>
+
+      <TeamSection />
 
       <CtaSection />
     </>

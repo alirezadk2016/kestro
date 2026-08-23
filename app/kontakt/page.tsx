@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Phone } from "lucide-react";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
-import { company } from "@/lib/company";
+import { company, team } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Kontakt | Kestro",
@@ -30,17 +31,35 @@ export default function KontaktPage() {
 
           <div className="space-y-6 lg:col-span-2">
             <div className="rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white sm:p-8">
-              <h2 className="text-base font-semibold">Ring direkte</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={team[0].photo}
+                  alt={`${team[0].name}, ${team[0].role} hos Kestro`}
+                  width={112}
+                  height={112}
+                  className="h-16 w-16 flex-shrink-0 rounded-full object-cover object-top"
+                />
+                <div>
+                  <h2 className="text-base font-semibold">Ring direkte til {team[0].name}</h2>
+                  <p className="text-sm text-slate-400">{team[0].role}</p>
+                </div>
+              </div>
+
+              <p className="mt-4 text-sm leading-6 text-slate-300">
                 Har I travlt, eller er det nemmere at tage det over telefonen?
               </p>
+
               <a
-                href={`tel:${company.phoneHref}`}
+                href={`tel:${team[0].phoneHref}`}
                 className="mt-4 inline-flex items-center gap-2 text-lg font-bold transition hover:text-brand-300"
               >
                 <Phone className="h-5 w-5" strokeWidth={2} />
-                {company.phoneDisplay}
+                {team[0].phoneDisplay}
               </a>
+
+              <p className="mt-4 border-t border-white/10 pt-4 text-xs text-slate-400">
+                Hovednummer: {company.phoneDisplay}
+              </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
