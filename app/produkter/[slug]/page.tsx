@@ -108,7 +108,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 py-12 sm:py-20">
+      <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-20">
         <Container>
           <h2 className="text-xl font-bold tracking-tight text-slate-900">Andre kategorier</h2>
           <ul className="mt-6 flex flex-wrap gap-3">

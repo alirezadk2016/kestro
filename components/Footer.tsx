@@ -31,8 +31,9 @@ export default function Footer() {
               Kestro
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-slate-400">
-              Kestro klargør renoveret erhvervshardware fra Sydeuropa til det nordiske marked og
-              leverer kvalitetstestede computere til danske og norske virksomheder.
+              Kestro er indkøbspartner på renoveret erhvervs-IT. Vi forbinder danske og norske
+              virksomheder med de rigtige leverandører – og klargør udstyret til det nordiske marked,
+              før det leveres.
             </p>
           </div>
 

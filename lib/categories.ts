@@ -21,7 +21,7 @@ export const categories: Category[] = [
     metaDescription:
       "Renoverede erhvervsbærbare fra ThinkPad, MacBook, Dell Latitude, HP EliteBook m.fl. – funktionstestet og klargjort med nordisk tastatur. Til virksomheder i DK og NO.",
     intro:
-      "Bærbare er kernen i vores sortiment. Vi sourcer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk/nordisk tastatur, så de er klar til udlevering til medarbejderen.",
+      "Bærbare er det, vi oftest bliver bedt om at skaffe. Vi sourcer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk/nordisk tastatur, så de er klar til udlevering til medarbejderen.",
     brands: [
       "Lenovo ThinkPad",
       "Apple MacBook Air",

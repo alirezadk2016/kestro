@@ -39,7 +39,7 @@ const situations = [
 
 export default function QualifySection() {
   return (
-    <section className="py-14 sm:py-20 lg:py-24">
+    <section className="border-y border-slate-200 bg-slate-50 py-14 sm:py-20 lg:py-24">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">

@@ -255,7 +255,7 @@ export default function FlaadeloesningerPage() {
         </Container>
       </section>
 
-      <div className="border-t border-slate-200">
+      <div className="border-t border-slate-200 bg-slate-50">
         <Faq items={enterpriseFaqs} title="Spørgsmål om større ordrer" />
       </div>
 

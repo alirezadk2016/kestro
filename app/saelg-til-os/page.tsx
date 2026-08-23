@@ -116,23 +116,19 @@ export default function SaelgTilOsPage() {
               </p>
             </div>
           </div>
-        </Container>
-      </section>
 
-      <section className="border-y border-slate-200 bg-slate-900 py-12 text-white sm:py-16">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Skal hele flåden skiftes ud?
+          <div className="mx-auto mt-12 max-w-5xl rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8">
+            <h2 className="text-lg font-semibold text-slate-900">
+              Skal hele flåden skiftes ud på én gang?
             </h2>
-            <p className="mt-4 text-base leading-7 text-slate-300">
-              Udskifter I medarbejdernes maskiner samlet, kan vi håndtere begge ender: vi køber det
-              gamle udstyr og leverer de nye enheder. Værdien af det brugte kan modregnes i det nye
-              indkøb, så I får én aftale i stedet for to forløb.
+            <p className="mt-2 max-w-2xl text-base leading-7 text-slate-600">
+              Så kan vi håndtere begge ender: vi køber det gamle udstyr og leverer de nye enheder.
+              Værdien af det brugte kan modregnes i det nye indkøb, så I får én aftale i stedet for
+              to forløb.
             </p>
             <Link
               href="/flaadeloesninger"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
             >
               Se flådeløsninger
               <ArrowRight className="h-4 w-4" strokeWidth={2} />

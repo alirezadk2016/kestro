@@ -43,7 +43,7 @@ export default function Hero() {
             <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm sm:text-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                Refurbished erhvervscomputere til Norden
+Renoverede erhvervscomputere til Norden
               </span>
 
               <h1 className="mt-6 whitespace-pre-line text-[clamp(1.75rem,7vw,3.5rem)] font-extrabold leading-[1.08] tracking-tight text-white">

@@ -13,6 +13,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
+import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
   title: "Reparation og opgradering af computere | Kestro",
@@ -205,6 +206,8 @@ export default function ReparationPage() {
       </section>
 
       <Faq items={repairFaqs} />
+
+      <CtaSection />
     </>
   );
 }

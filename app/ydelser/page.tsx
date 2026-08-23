@@ -72,10 +72,10 @@ export default function YdelserPage() {
                 Hvad vi tilbyder
               </h2>
               <p className="mt-4 text-base leading-7 text-slate-600">
-                Vi leverer renoveret bærbare og stationære computere til erhverv, udvalgt til
-                kontorbrug hos IT-indkøbere og beslutningstagere i danske og norske virksomheder.
-                Fordi vi sourcer per ordre, kan specifikationerne tilpasses den enkelte opgave –
-                fortæl os om jeres behov, så finder vi enhederne, der matcher.
+                Vi skaffer renoverede bærbare og stationære computere til erhverv – maskiner bygget
+                til daglig kontorbrug frem for forbrugerbrug. Fordi vi sourcer per ordre, kan
+                specifikationerne tilpasses den enkelte opgave: fortæl os om jeres behov, så finder
+                vi enhederne, der matcher.
               </p>
             </div>
 
