@@ -17,6 +17,10 @@ export type Category = {
     model: string;
     note: string;
     images: { src: string; alt: string }[];
+    /** A typical configuration for this model — illustrative, not an offer. */
+    specs: { label: string; value: string }[];
+    /** Why this machine family holds up in business use. */
+    why: { title: string; description: string }[];
   };
 };
 
@@ -66,7 +70,7 @@ export const categories: Category[] = [
       "RAM, SSD-størrelse, skærmstørrelse og CPU-generation tilpasses den enkelte ordre – fortæl os, hvad maskinerne skal bruges til, så finder vi det rette match.",
     example: {
       model: "Lenovo ThinkPad T480",
-      note: "En 14\" erhvervsbærbar, der er blandt de modeller, vi oftest bliver bedt om at skaffe. Robust kabinet, godt tastatur og et fuldt portudvalg – HDMI, USB-A, netværk og kortlæser – så den kan sættes direkte på en dockingstation. RAM og SSD kan skiftes, så maskinen kan opgraderes i stedet for at blive udskiftet. Vist som eksempel på maskintypen; den konkrete konfiguration, tastaturlayout og Windows-installation aftaler vi ud fra jeres behov.",
+      note: "En 14\" erhvervsbærbar fra Lenovos T-serie – en af de modeller, vi oftest bliver bedt om at skaffe. Vi har den ikke på lager. Den står her, fordi den er et godt eksempel på, hvad en velvalgt brugt erhvervsmaskine kan, og hvorfor vi peger på den slags frem for en billig forbrugerbærbar.",
       images: [
         {
           src: "/thinkpad-t480-6.jpg",
@@ -95,6 +99,67 @@ export const categories: Category[] = [
         {
           src: "/thinkpad-t480-1.jpg",
           alt: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige",
+        },
+      ],
+      specs: [
+        { label: "Model", value: "Lenovo ThinkPad T480 – 14\" erhvervsbærbar" },
+        {
+          label: "Processor",
+          value:
+            "Intel Core i5-8350U (8. generation) – 4 kerner / 8 tråde, 1,7–3,6 GHz, 6 MB cache",
+        },
+        { label: "Hukommelse", value: "8 GB DDR4 – kan udvides til 32 GB" },
+        { label: "Lagring", value: "256 GB M.2 SSD – kan udskiftes eller gøres større" },
+        { label: "Grafik", value: "Intel UHD Graphics 620 (integreret)" },
+        {
+          label: "Skærm",
+          value: "14\" LED med antirefleks – HD (1366×768) eller Full HD (1920×1080)",
+        },
+        {
+          label: "Porte",
+          value:
+            "2× USB 3.0, USB-C og Thunderbolt 3 (begge med opladning og skærmudgang), HDMI, dockstik, Gigabit-netværk, kortlæser og combo-jack",
+        },
+        { label: "Trådløst", value: "Wi-Fi og Bluetooth" },
+        { label: "Kamera og lyd", value: "Webcam, højttalere og mikrofon" },
+        {
+          label: "Tastatur",
+          value:
+            "Fuldt tastatur med trackpoint og fingeraftrykslæser – baggrundslys som tilvalg, layout kan skiftes til dansk eller norsk",
+        },
+        { label: "Optisk drev", value: "Nej" },
+        { label: "Styresystem", value: "Windows 10 eller 11 installeret med drivere" },
+      ],
+      why: [
+        {
+          title: "Bygget til at blive slæbt rundt",
+          description:
+            "Kabinet, hængsler og tastatur er lavet til daglig transport. Det er den samme maskintype, mange virksomheder og offentlige arbejdspladser selv har kørt på i årevis.",
+        },
+        {
+          title: "Reservedele er til at skaffe",
+          description:
+            "Lenovo udgiver servicemanualer til T-serien, og delene er stadig lette at få fat i. En defekt skærm, et batteri eller et tastatur bliver en reparation i stedet for en ny maskine.",
+        },
+        {
+          title: "Kan opgraderes i stedet for udskiftes",
+          description:
+            "RAM og SSD sidder i sokler og er ikke loddet fast. Skal maskinen holde et par år mere, er mere hukommelse eller en større disk en billig opgradering.",
+        },
+        {
+          title: "Tastaturet kan skiftes til nordisk layout",
+          description:
+            "Derfor kan vi levere sydeuropæiske maskiner med dansk eller norsk tastatur, uden at det ser eftermonteret ud.",
+        },
+        {
+          title: "Én type dock til hele flåden",
+          description:
+            "Med Thunderbolt 3 og ThinkPads eget dockstik kan I køre den samme dockingstation på tværs af arbejdspladserne i stedet for en løsning per maskine.",
+        },
+        {
+          title: "Batteriet kan skiftes på stedet",
+          description:
+            "T480 har både et internt og et eksternt batteri. Det eksterne kan skiftes uden værktøj, og et nyt batteri koster en brøkdel af en ny maskine.",
         },
       ],
     },

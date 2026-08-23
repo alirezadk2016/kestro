@@ -153,6 +153,48 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
                 Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal
                 aftales for den enkelte ordre.
               </p>
+
+              <div className="mt-12 overflow-hidden rounded-2xl border border-slate-200">
+                <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 sm:px-6">
+                  <h3 className="text-base font-semibold text-slate-900">Typisk konfiguration</h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    Sådan ser en {category.example.model} som regel ud. Den præcise
+                    sammensætning – hukommelse, disk, skærm og tastaturlayout – aftaler vi for den
+                    enkelte ordre.
+                  </p>
+                </div>
+
+                <dl className="divide-y divide-slate-200">
+                  {category.example.specs.map((spec) => (
+                    <div
+                      key={spec.label}
+                      className="px-5 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4"
+                    >
+                      <dt className="text-sm font-semibold text-slate-900">{spec.label}</dt>
+                      <dd className="mt-1 text-sm leading-6 text-slate-600 sm:col-span-2 sm:mt-0">
+                        {spec.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+
+              <h3 className="mt-12 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                Derfor peger vi ofte på denne type maskine
+              </h3>
+              <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                {category.example.why.map((reason) => (
+                  <div key={reason.title}>
+                    <dt className="flex gap-3 text-base font-semibold text-slate-900">
+                      <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
+                      {reason.title}
+                    </dt>
+                    <dd className="mt-1.5 pl-8 text-sm leading-6 text-slate-600">
+                      {reason.description}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </Container>
         </section>

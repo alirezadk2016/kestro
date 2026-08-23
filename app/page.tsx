@@ -3,6 +3,7 @@ import UspBar from "@/components/UspBar";
 import QualifySection from "@/components/QualifySection";
 import Services from "@/components/Services";
 import WhyUs from "@/components/WhyUs";
+import ExampleMachine from "@/components/ExampleMachine";
 import CtaSection from "@/components/CtaSection";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <QualifySection />
       <Services />
       <WhyUs />
+      <ExampleMachine />
       <CtaSection />
     </>
   );
