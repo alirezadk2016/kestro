@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://kestro.dk/sitemap.xml",
+    sitemap: "https://www.kestro.dk/sitemap.xml",
   };
 }

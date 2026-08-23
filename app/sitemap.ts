@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://kestro.dk";
+const BASE_URL = "https://www.kestro.dk";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "/ydelser", "/om-os", "/kontakt"];

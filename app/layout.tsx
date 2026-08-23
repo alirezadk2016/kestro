@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kestro.dk"),
+  metadataBase: new URL("https://www.kestro.dk"),
   title: "Kestro | Renoveret IT-hardware til virksomheder",
   description:
     "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder – klargjort til det nordiske marked med opgraderet RAM og nordisk tastatur.",
@@ -21,7 +21,7 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Kestro",
-  url: "https://kestro.dk",
+  url: "https://www.kestro.dk",
   description:
     "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder.",
   areaServed: ["DK", "NO"],
