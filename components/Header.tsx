@@ -8,7 +8,7 @@ import { categories } from "@/lib/categories";
 import { company } from "@/lib/company";
 
 const navLinks = [
-  { href: "/ydelser", label: "Ydelser" },
+  { href: "/flaadeloesninger", label: "Flådeløsninger" },
   { href: "/saelg-til-os", label: "Sælg til os" },
   { href: "/reparation", label: "Reparation" },
   { href: "/om-os", label: "Om os" },

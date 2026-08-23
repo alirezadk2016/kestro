@@ -1,8 +1,17 @@
 import Link from "next/link";
-import { ShoppingCart, Recycle, Wrench, ArrowRight } from "lucide-react";
+import { ShoppingCart, Recycle, Wrench, Building2, ArrowRight } from "lucide-react";
 import Container from "./Container";
 
 const lines = [
+  {
+    icon: Building2,
+    title: "Udstyr hele virksomheden",
+    description:
+      "Skal alle medarbejdere have en maskine, eller skal flåden skiftes ud? Ensartet opsætning, jeres specifikationer – og vi tager gerne det gamle udstyr i bytte.",
+    href: "/flaadeloesninger",
+    linkLabel: "Se flådeløsninger",
+    featured: true,
+  },
   {
     icon: ShoppingCart,
     title: "Vi skaffer jeres udstyr",
@@ -10,7 +19,7 @@ const lines = [
       "Fortæl os, hvad I mangler – bærbare, stationære, tablets, telefoner eller tilbehør. Vi finder det, tester det og leverer det klar til brug.",
     href: "/produkter",
     linkLabel: "Se hvad vi skaffer",
-    featured: true,
+    featured: false,
   },
   {
     icon: Recycle,
@@ -48,7 +57,7 @@ export default function BusinessLines() {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {lines.map((line) => (
             <Link
               key={line.href}

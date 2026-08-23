@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { ClipboardList, Handshake, ShieldCheck, Banknote } from "lucide-react";
+import Link from "next/link";
+import { ClipboardList, Handshake, ShieldCheck, Banknote, ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
@@ -114,6 +115,28 @@ export default function SaelgTilOsPage() {
                 – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.
               </p>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-900 py-12 text-white sm:py-16">
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              Skal hele flåden skiftes ud?
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-300">
+              Udskifter I medarbejdernes maskiner samlet, kan vi håndtere begge ender: vi køber det
+              gamle udstyr og leverer de nye enheder. Værdien af det brugte kan modregnes i det nye
+              indkøb, så I får én aftale i stedet for to forløb.
+            </p>
+            <Link
+              href="/flaadeloesninger"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+            >
+              Se flådeløsninger
+              <ArrowRight className="h-4 w-4" strokeWidth={2} />
+            </Link>
           </div>
         </Container>
       </section>

@@ -5,15 +5,16 @@ import { company } from "@/lib/company";
 
 const companyLinks = [
   { href: "/", label: "Forside" },
-  { href: "/ydelser", label: "Ydelser" },
   { href: "/om-os", label: "Om os" },
   { href: "/kontakt", label: "Kontakt" },
 ];
 
 const serviceLinks = [
+  { href: "/flaadeloesninger", label: "Flådeløsninger" },
   { href: "/produkter", label: "Hvad vi skaffer" },
   { href: "/saelg-til-os", label: "Sælg jeres udstyr" },
   { href: "/reparation", label: "Reparation" },
+  { href: "/ydelser", label: "Sådan arbejder vi" },
 ];
 
 export default function Footer() {
