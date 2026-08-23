@@ -70,15 +70,15 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             description={c.description}
           />
 
-          <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-slate-900">
+          <div className="mx-auto mt-10 max-w-3xl border border-paper-edge bg-paper-dim p-6 sm:p-8">
+            <h2 className="text-base font-semibold text-ink-900">
               {c.noPricesTitle}
             </h2>
-            <p className="mt-2 text-base leading-7 text-slate-600">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-7 text-slate-600">{c.noPrices2}</p>
+            <p className="mt-2 text-base leading-7 text-ink-600">{c.noPrices1}</p>
+            <p className="mt-3 text-base leading-7 text-ink-600">{c.noPrices2}</p>
           </div>
 
-          <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
             {c.categories}
           </h2>
 
@@ -89,15 +89,15 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6"
+                  className="group flex flex-col border border-paper-edge bg-white p-4 transition hover:border-ink-400 sm:p-6"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700 sm:h-10 sm:w-10">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-ink-100 text-ink-800 sm:h-10 sm:w-10">
                     <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                   </span>
-                  <h3 className="mt-3 text-sm font-semibold text-slate-900 group-hover:text-brand-700 sm:mt-4 sm:text-base">
+                  <h3 className="mt-3 text-sm font-semibold text-ink-900 group-hover:text-ink-900 sm:mt-4 sm:text-base">
                     {category.name[lang]}
                   </h3>
-                  <p className="mt-1.5 flex-1 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
+                  <p className="mt-1.5 flex-1 text-xs leading-5 text-ink-600 sm:mt-2 sm:text-sm sm:leading-6">
                     {category.tagline[lang]}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 sm:mt-4 sm:text-sm">
@@ -109,14 +109,14 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             })}
           </div>
 
-          <div className="mx-auto mt-14 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8">
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <div className="mx-auto mt-14 max-w-3xl border border-paper-edge bg-white p-6 text-center shadow-sm sm:p-8">
+            <h2 className="text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
               {c.modelsTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-slate-600">{c.modelsBody}</p>
+            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-ink-600">{c.modelsBody}</p>
             <Link
               href={localePath("/modeller", lang)}
-              className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-brand-600 px-6 text-base font-semibold text-white transition hover:bg-brand-700"
+              className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-ink-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-ink-800"
             >
               {c.modelsButton}
             </Link>

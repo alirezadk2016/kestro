@@ -258,14 +258,14 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
           />
 
           <div className="mx-auto mt-12 max-w-3xl">
-            <p className="text-base leading-7 text-slate-600">{c.intro}</p>
+            <p className="text-base leading-7 text-ink-600">{c.intro}</p>
           </div>
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-12 sm:py-20">
+      <section className="bg-paper-dim py-12 sm:py-20">
         <Container>
-          <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          <h2 className="text-center text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
             {c.whatWeDo}
           </h2>
 
@@ -273,15 +273,15 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             {services.map((service) => (
               <div
                 key={service.title.da}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6"
+                className="border border-paper-edge bg-white p-4 transition hover:border-ink-400 sm:p-6"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700 sm:h-10 sm:w-10">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-ink-100 text-ink-800 sm:h-10 sm:w-10">
                   <service.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-3 text-sm font-semibold text-slate-900 sm:mt-4 sm:text-base">
+                <h3 className="mt-3 text-sm font-semibold text-ink-900 sm:mt-4 sm:text-base">
                   {service.title[lang]}
                 </h3>
-                <p className="mt-1.5 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
+                <p className="mt-1.5 text-xs leading-5 text-ink-600 sm:mt-2 sm:text-sm sm:leading-6">
                   {service.description[lang]}
                 </p>
               </div>
@@ -294,37 +294,37 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
         <Container>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {c.howTitle}
               </h2>
-              <ol className="mt-6 space-y-4 text-base leading-7 text-slate-600">
+              <ol className="mt-6 space-y-4 text-base leading-7 text-ink-600">
                 {[c.step1, c.step2, c.step3, c.step4].map((step, i) => (
                   <li key={step}>
-                    <span className="font-semibold text-slate-900">{i + 1}.</span> {step}
+                    <span className="font-semibold text-ink-900">{i + 1}.</span> {step}
                   </li>
                 ))}
               </ol>
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {c.pricesTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">{c.pricesBody}</p>
+              <p className="mt-4 text-base leading-7 text-ink-600">{c.pricesBody}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-12 sm:py-20">
+      <section className="bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-slate-600">{c.formBody}</p>
+            <p className="mt-3 text-base leading-7 text-ink-600">{c.formBody}</p>
 
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mt-8 border border-paper-edge bg-white p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}

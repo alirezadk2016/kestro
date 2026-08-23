@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import UspBar from "@/components/UspBar";
+import Statement from "@/components/Statement";
 import QualifySection from "@/components/QualifySection";
 import Services from "@/components/Services";
 import WhyUs from "@/components/WhyUs";
@@ -13,7 +13,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <>
       <Hero lang={lang} />
-      <UspBar lang={lang} />
+      <Statement lang={lang} />
       <QualifySection lang={lang} />
       <Services lang={lang} />
       <WhyUs lang={lang} />

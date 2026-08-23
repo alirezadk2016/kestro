@@ -270,21 +270,21 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
   const c = copy[lang];
   return (
     <>
-      <section className="bg-slate-900 py-14 text-white sm:py-20 lg:py-24">
+      <section className="bg-ink-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-200 sm:text-sm">
+            <span className="inline-flex items-center border border-paper/25 bg-white/5 px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
               {c.badge}
             </span>
             <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
               {c.title}
             </h1>
-            <p className="mt-4 text-base leading-7 text-slate-300 sm:text-lg">{c.intro}</p>
+            <p className="mt-4 text-base leading-7 text-ink-300 sm:text-lg">{c.intro}</p>
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
                 href="#forespoergsel"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim"
               >
                 {c.sendEnquiry}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -298,7 +298,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               </a>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-3 text-sm text-slate-400">
+            <div className="mt-8 flex items-center justify-center gap-3 text-sm text-ink-400">
               <Image
                 src={team[0].photo}
                 alt={`${team[0].name}, ${team[0].role[lang]}`}
@@ -318,10 +318,10 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
       <section className="py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
               {c.eyebrow}
             </span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.capabilitiesTitle}
             </h2>
           </div>
@@ -330,14 +330,14 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             {capabilities.map((item) => (
               <div
                 key={item.title.da}
-                className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:block sm:p-8"
+                className="flex gap-4 border border-paper-edge bg-white p-5 sm:block sm:p-8"
               >
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 sm:h-11 sm:w-11">
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-ink-100 text-ink-800 sm:h-11 sm:w-11">
                   <item.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-slate-900 sm:mt-4">{item.title[lang]}</h3>
-                  <p className="mt-1.5 text-sm leading-6 text-slate-600 sm:mt-2">
+                  <h3 className="text-base font-semibold text-ink-900 sm:mt-4">{item.title[lang]}</h3>
+                  <p className="mt-1.5 text-sm leading-6 text-ink-600 sm:mt-2">
                     {item.description[lang]}
                   </p>
                 </div>
@@ -347,26 +347,26 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50 py-12 sm:py-20">
+      <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
               {c.tradeEyebrow}
             </span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.tradeTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">{c.tradeBody}</p>
+            <p className="mt-4 text-base leading-7 text-ink-600">{c.tradeBody}</p>
 
             <ol className="mt-10 space-y-6">
               {tradeInSteps.map((step, i) => (
                 <li key={step.title.da} className="flex gap-5">
-                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white">
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-ink-950 text-sm font-bold text-white">
                     {i + 1}
                   </span>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-900">{step.title[lang]}</h3>
-                    <p className="mt-1 text-base leading-7 text-slate-600">{step.description[lang]}</p>
+                    <h3 className="text-base font-semibold text-ink-900">{step.title[lang]}</h3>
+                    <p className="mt-1 text-base leading-7 text-ink-600">{step.description[lang]}</p>
                   </div>
                 </li>
               ))}
@@ -374,7 +374,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
             <Link
               href={localePath("/saelg-til-os", lang)}
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900 hover:text-accent-600"
             >
               {c.tradeLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -387,18 +387,18 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="flex items-start gap-4">
-              <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+              <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-ink-100 text-ink-800">
                 <FileSpreadsheet className="h-5 w-5" strokeWidth={1.75} />
               </span>
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                   {c.formTitle}
                 </h2>
-                <p className="mt-3 text-base leading-7 text-slate-600">{c.formBody}</p>
+                <p className="mt-3 text-base leading-7 text-ink-600">{c.formBody}</p>
               </div>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mt-8 border border-paper-edge bg-white p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}
@@ -409,7 +409,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <div className="border-t border-slate-200 bg-slate-50">
+      <div className="border-t border-paper-edge bg-paper-dim">
         <Faq
           lang={lang}
           items={enterpriseFaqs}
@@ -417,28 +417,28 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-slate-900 py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-ink-950 py-14 sm:py-20">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ink-950/20 blur-3xl"
         />
         <Container className="relative flex flex-col items-center gap-5 text-center">
           <Repeat className="h-8 w-8 text-brand-400" strokeWidth={1.75} />
           <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {c.ctaTitle}
           </h2>
-          <p className="max-w-xl text-base leading-7 text-slate-400">{c.ctaBody}</p>
+          <p className="max-w-xl text-base leading-7 text-ink-400">{c.ctaBody}</p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             <a
               href={`tel:${team[0].phoneHref}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-ink-950 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
             >
               <Phone className="h-4 w-4" strokeWidth={2} />
               {team[0].phoneDisplay}
             </a>
             <Link
               href="#forespoergsel"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+              className="inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               {c.ctaButton}
             </Link>

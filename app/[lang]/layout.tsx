@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
@@ -10,6 +10,15 @@ import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+/* Display face. A signage grotesque — sturdy rather than decorative, which is
+   the right register for a company that sources industrial hardware. */
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -77,7 +86,7 @@ export default function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body className={`${inter.variable} font-sans antialiased bg-white text-slate-900`}>
+      <body className={`${inter.variable} ${archivo.variable} bg-paper font-sans text-ink-900 antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

@@ -176,15 +176,15 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
               <Link
                 key={service.title.da}
                 href={localePath(service.href, lang)}
-                className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md sm:p-6"
+                className="group flex h-full flex-col border border-paper-edge bg-white p-5 transition hover:border-brand-300 hover:border-ink-400 sm:p-6"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink-100 text-ink-800">
                   <service.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
-                <h2 className="mt-4 text-base font-semibold text-slate-900 group-hover:text-brand-700 sm:text-lg">
+                <h2 className="mt-4 text-base font-semibold text-ink-900 group-hover:text-ink-900 sm:text-lg">
                   {service.title[lang]}
                 </h2>
-                <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">
+                <p className="mt-2 flex-1 text-sm leading-6 text-ink-600">
                   {service.description[lang]}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
@@ -200,16 +200,16 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50 py-12 sm:py-20">
+      <section className="border-y border-paper-edge bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
               {c.eyebrow}
             </span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.processTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-slate-600">{c.processSub}</p>
+            <p className="mt-3 text-base leading-7 text-ink-600">{c.processSub}</p>
 
             <div className="mt-10 space-y-10">
               {steps.map((step) => (
@@ -218,19 +218,19 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
                     <step.icon className="h-5 w-5" strokeWidth={1.75} />
                   </span>
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900">{step.title[lang]}</h3>
-                    <p className="mt-2 text-base leading-7 text-slate-600">{step.description[lang]}</p>
+                    <h3 className="text-lg font-semibold text-ink-900">{step.title[lang]}</h3>
+                    <p className="mt-2 text-base leading-7 text-ink-600">{step.description[lang]}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
-              <h3 className="text-lg font-semibold text-slate-900">{c.qualityTitle}</h3>
-              <p className="mt-3 text-base leading-7 text-slate-600">{c.qualityBody}</p>
+            <div className="mt-12 border border-paper-edge bg-white p-6 sm:p-8">
+              <h3 className="text-lg font-semibold text-ink-900">{c.qualityTitle}</h3>
+              <p className="mt-3 text-base leading-7 text-ink-600">{c.qualityBody}</p>
               <Link
                 href={localePath("/kvalitet", lang)}
-                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
               >
                 {c.qualityLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />

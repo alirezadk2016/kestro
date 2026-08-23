@@ -63,25 +63,25 @@ export default function Faq({
     <section className="py-14 sm:py-20 lg:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
             {title[lang]}
           </h2>
         </div>
 
         {/* Native <details> keeps this a server component: no JS, keyboard and
             screen-reader behaviour come for free. */}
-        <div className="mx-auto mt-10 max-w-3xl divide-y divide-slate-200 border-y border-slate-200 sm:mt-12">
+        <div className="mx-auto mt-10 max-w-3xl divide-y divide-paper-edge border-y border-paper-edge sm:mt-12">
           {items.map((faq) => (
             <details key={faq.question.da} className="group">
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-slate-900 transition-colors hover:text-brand-700 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-ink-900 transition-colors hover:text-ink-900 [&::-webkit-details-marker]:hidden">
                 {faq.question[lang]}
                 <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-slate-400 transition-transform duration-200 group-open:rotate-180"
+                  className="h-5 w-5 flex-shrink-0 text-ink-400 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden="true"
                 />
               </summary>
-              <p className="pb-5 pr-9 text-base leading-7 text-slate-600">{faq.answer[lang]}</p>
+              <p className="pb-5 pr-9 text-base leading-7 text-ink-600">{faq.answer[lang]}</p>
             </details>
           ))}
         </div>

@@ -77,13 +77,13 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
         <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="border border-paper-edge bg-white p-6 sm:p-8">
               <ContactForm lang={lang} />
             </div>
           </div>
 
           <div className="space-y-6 lg:col-span-2">
-            <div className="rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white sm:p-8">
+            <div className="border border-paper-edge bg-ink-950 p-6 text-white sm:p-8">
               <div className="flex items-center gap-4">
                 <Image
                   src={team[0].photo}
@@ -94,57 +94,57 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                 />
                 <div>
                   <h2 className="text-base font-semibold">{c.callDirect} {team[0].name}</h2>
-                  <p className="text-sm text-slate-400">{team[0].role[lang]}</p>
+                  <p className="text-sm text-ink-400">{team[0].role[lang]}</p>
                 </div>
               </div>
 
-              <p className="mt-4 text-sm leading-6 text-slate-300">{c.busy}</p>
+              <p className="mt-4 text-sm leading-6 text-ink-300">{c.busy}</p>
 
               <a
                 href={`tel:${team[0].phoneHref}`}
-                className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-slate-900 transition hover:bg-slate-100 sm:w-auto"
+                className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
               >
                 <Phone className="h-5 w-5" strokeWidth={2} />
                 {team[0].phoneDisplay}
               </a>
 
-              <p className="mt-4 border-t border-white/10 pt-4 text-xs text-slate-400">
+              <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
                 {c.mainNumber}: {company.phoneDisplay}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-              <h2 className="text-base font-semibold text-slate-900">{c.emailTitle}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{c.emailBody}</p>
+            <div className="border border-paper-edge bg-paper-dim p-6 sm:p-8">
+              <h2 className="text-base font-semibold text-ink-900">{c.emailTitle}</h2>
+              <p className="mt-2 text-sm leading-6 text-ink-600">{c.emailBody}</p>
               <CopyEmailButton lang={lang} />
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
-              <h2 className="text-base font-semibold text-slate-900">{c.companyTitle}</h2>
+            <div className="border border-paper-edge bg-white p-6 sm:p-8">
+              <h2 className="text-base font-semibold text-ink-900">{c.companyTitle}</h2>
               <dl className="mt-4 space-y-3 text-sm">
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldCompany}</dt>
-                  <dd className="font-medium text-slate-900">{company.name}</dd>
+                  <dt className="text-ink-500">{c.fieldCompany}</dt>
+                  <dd className="font-medium text-ink-900">{company.name}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldPhone}</dt>
-                  <dd className="font-medium text-slate-900">{company.phoneDisplay}</dd>
+                  <dt className="text-ink-500">{c.fieldPhone}</dt>
+                  <dd className="font-medium text-ink-900">{company.phoneDisplay}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldEmail}</dt>
-                  <dd className="font-medium text-slate-900">{company.email}</dd>
+                  <dt className="text-ink-500">{c.fieldEmail}</dt>
+                  <dd className="font-medium text-ink-900">{company.email}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldAddress}</dt>
-                  <dd className="font-medium text-slate-900">{company.locationShort[lang]}</dd>
+                  <dt className="text-ink-500">{c.fieldAddress}</dt>
+                  <dd className="font-medium text-ink-900">{company.locationShort[lang]}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldServes}</dt>
-                  <dd className="font-medium text-slate-900">{company.serves[lang]}</dd>
+                  <dt className="text-ink-500">{c.fieldServes}</dt>
+                  <dd className="font-medium text-ink-900">{company.serves[lang]}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">{c.fieldCvr}</dt>
-                  <dd className="font-medium italic text-slate-400">{c.cvrPending}</dd>
+                  <dt className="text-ink-500">{c.fieldCvr}</dt>
+                  <dd className="font-medium italic text-ink-400">{c.cvrPending}</dd>
                 </div>
               </dl>
             </div>

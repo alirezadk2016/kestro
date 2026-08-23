@@ -38,10 +38,10 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const image = model.images[0];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24">
+    <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+          <div className="overflow-hidden border border-paper-edge bg-white">
             <Image
               src={image.src}
               alt={image.alt[lang]}
@@ -53,13 +53,13 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
               {c.eyebrow}
             </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
               {model.name}
             </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
+            <p className="mt-4 text-base leading-7 text-ink-600 sm:text-lg">
               {c.body}
             </p>
 
@@ -67,7 +67,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               {highlights.map((highlight) => (
                 <li
                   key={highlight.da}
-                  className="rounded-full border border-slate-300 bg-white px-4 py-1.5 text-sm text-slate-700"
+                  className="border border-ink-900/15 px-3.5 py-1.5 text-sm text-ink-700"
                 >
                   {highlight[lang]}
                 </li>
@@ -76,7 +76,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
 
             <Link
               href={localePath(`/modeller/${model.slug}`, lang)}
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
             >
               {c.link}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />

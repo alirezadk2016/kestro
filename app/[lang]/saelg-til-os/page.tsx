@@ -137,19 +137,19 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
           />
 
           <div className="mx-auto mt-16 max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.howTitle}
             </h2>
 
             <div className="mt-8 space-y-8">
               {steps.map((step) => (
                 <div key={step.title.da} className="flex gap-5">
-                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-ink-100 text-ink-800">
                     <step.icon className="h-5 w-5" strokeWidth={1.75} />
                   </span>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-900">{step.title[lang]}</h3>
-                    <p className="mt-1.5 text-base leading-7 text-slate-600">{step.description[lang]}</p>
+                    <h3 className="text-base font-semibold text-ink-900">{step.title[lang]}</h3>
+                    <p className="mt-1.5 text-base leading-7 text-ink-600">{step.description[lang]}</p>
                   </div>
                 </div>
               ))}
@@ -158,40 +158,40 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-12 sm:py-20">
+      <section className="bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {c.buyTitle}
               </h2>
               <ul className="mt-6 flex flex-wrap gap-2">
                 {accepted.map((item) => (
                   <li
                     key={item.da}
-                    className="rounded-full border border-slate-300 bg-white px-4 py-1.5 text-sm text-slate-700"
+                    className="border border-ink-900/15 px-3.5 py-1.5 text-sm text-ink-700"
                   >
                     {item[lang]}
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-sm leading-6 text-slate-500">{c.buyNote}</p>
+              <p className="mt-5 text-sm leading-6 text-ink-500">{c.buyNote}</p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {c.dataTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">{c.dataBody}</p>
+              <p className="mt-4 text-base leading-7 text-ink-600">{c.dataBody}</p>
             </div>
           </div>
 
           <div className="mx-auto mt-12 max-w-5xl rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8">
-            <h2 className="text-lg font-semibold text-slate-900">{c.fleetTitle}</h2>
-            <p className="mt-2 max-w-2xl text-base leading-7 text-slate-600">{c.fleetBody}</p>
+            <h2 className="text-lg font-semibold text-ink-900">{c.fleetTitle}</h2>
+            <p className="mt-2 max-w-2xl text-base leading-7 text-ink-600">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
-              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900 hover:text-accent-600"
             >
               {c.fleetLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -203,18 +203,18 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
       <section className="py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.overstockTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">{c.overstockBody1}</p>
-            <p className="mt-4 text-base leading-7 text-slate-600">{c.overstockBody2}</p>
+            <p className="mt-4 text-base leading-7 text-ink-600">{c.overstockBody1}</p>
+            <p className="mt-4 text-base leading-7 text-ink-600">{c.overstockBody2}</p>
 
-            <h2 className="mt-14 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="mt-14 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-slate-600">{c.formBody}</p>
+            <p className="mt-3 text-base leading-7 text-ink-600">{c.formBody}</p>
 
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mt-8 border border-paper-edge bg-white p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}

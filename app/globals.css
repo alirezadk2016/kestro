@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #faf9f6;
+  --foreground: #121210;
 }
 
 body {
@@ -12,8 +12,34 @@ body {
   background: var(--background);
 }
 
+@layer base {
+  /* Headings take the display face everywhere, so a page written months from
+     now inherits the type system instead of re-stating it. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-archivo), var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+::selection {
+  background: #121210;
+  color: #faf9f6;
+}
+
+:focus-visible {
+  outline: 2px solid #c85c26;
+  outline-offset: 2px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Hairline rule that reads on both paper and ink. */
+  .rule {
+    border-color: rgba(18, 18, 16, 0.12);
   }
 }

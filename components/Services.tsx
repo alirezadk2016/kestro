@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { PackageSearch, ShieldCheck, Keyboard, Truck, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const services = [
   {
-    icon: PackageSearch,
     title: { da: "Sourcing & indkøb", en: "Sourcing and purchasing" },
     description: {
       da: "Vi udvælger brugte erhvervscomputere af høj kvalitet fra pålidelige leverandører i Sydeuropa.",
@@ -13,7 +12,6 @@ const services = [
     },
   },
   {
-    icon: ShieldCheck,
     title: { da: "Klargøring & test", en: "Preparation and testing" },
     description: {
       da: "Hver enhed gennemgår en fuld funktionstest, opgraderes med mere RAM og nulstilles til fabriksstand.",
@@ -21,7 +19,6 @@ const services = [
     },
   },
   {
-    icon: Keyboard,
     title: { da: "Nordisk tilpasning", en: "Nordic preparation" },
     description: {
       da: "Dansk/nordisk tastaturlayout, sprogopsætning og mærkning – klar til brug fra dag ét.",
@@ -29,7 +26,6 @@ const services = [
     },
   },
   {
-    icon: Truck,
     title: { da: "Levering til virksomheder", en: "Delivery to companies" },
     description: {
       da: "Fleksible mængder og hurtig B2B-levering til virksomheder i Danmark og Norge.",
@@ -55,59 +51,50 @@ const copy = {
 
 export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
+
   return (
-    <section className="py-14 sm:py-20 lg:py-24">
+    <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
-            {c.eyebrow}
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {c.title}
-          </h2>
-          <p className="mt-4 text-base text-slate-600 sm:text-lg">
-            {c.sub}
-          </p>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+              {c.eyebrow}
+            </span>
+            <h2 className="mt-5 max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
+              {c.title}
+            </h2>
+          </div>
+          <p className="max-w-sm text-base leading-7 text-ink-600">{c.sub}</p>
         </div>
 
-        <ol className="relative mt-10 grid grid-cols-1 gap-y-8 sm:mt-14 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-6">
-          {/* Connecting line across the row on large screens */}
-          <div
-            aria-hidden="true"
-            className="absolute left-0 right-0 top-6 hidden border-t border-dashed border-slate-300 lg:block"
-          />
-
+        {/* Four columns split by hairlines, numbered in display type. No icon chips. */}
+        <ol className="mt-12 grid grid-cols-1 border-t border-ink-900/12 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, i) => (
-            <li key={service.title.da} className="relative flex gap-4 sm:block">
-              <div className="relative flex-shrink-0">
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white text-brand-700 shadow-sm">
-                  <service.icon className="h-5 w-5" strokeWidth={1.75} />
-                </span>
-                <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[10px] font-bold text-white">
-                  {i + 1}
-                </span>
-              </div>
-
-              <div className="sm:mt-5">
-                <h3 className="text-base font-semibold text-slate-900">{service.title[lang]}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-slate-600">{service.description[lang]}</p>
-              </div>
+            <li
+              key={service.title.da}
+              className="border-b border-ink-900/10 py-7 pr-8 sm:border-b-0 sm:border-r sm:border-ink-900/10 sm:pl-8 sm:first:pl-0 lg:last:border-r-0"
+            >
+              <span className="font-display text-4xl font-extrabold tabular-nums tracking-display text-ink-200">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-5 font-display text-lg font-bold tracking-tight text-ink-900">
+                {service.title[lang]}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-ink-600">{service.description[lang]}</p>
             </li>
           ))}
         </ol>
 
-        <div className="mt-12 text-center">
-          <Link
-            href={localePath("/ydelser", lang)}
-            className="group inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-brand-600 hover:text-brand-700"
-          >
-            {c.link}
-            <ArrowRight
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              strokeWidth={2}
-            />
-          </Link>
-        </div>
+        <Link
+          href={localePath("/ydelser", lang)}
+          className="group mt-12 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-900"
+        >
+          {c.link}
+          <ArrowRight
+            className="h-4 w-4 transition-transform group-hover:translate-x-1"
+            strokeWidth={2}
+          />
+        </Link>
       </Container>
     </section>
   );

@@ -97,14 +97,14 @@ export default function ContactForm({
   }
 
   const inputClasses =
-    "w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100";
+    "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-accent-100";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-slate-700">
-            {c.name} <span className="text-brand-600">*</span>
+          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-ink-700">
+            {c.name} <span className="text-accent-500">*</span>
           </label>
           <input
             id="navn"
@@ -119,12 +119,12 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-slate-700">
+          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-ink-700">
             {c.company}{" "}
             {companyRequired ? (
-              <span className="text-brand-600">*</span>
+              <span className="text-accent-500">*</span>
             ) : (
-              <span className="text-slate-400">{c.optional}</span>
+              <span className="text-ink-400">{c.optional}</span>
             )}
           </label>
           <input
@@ -140,8 +140,8 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">
-            {c.email} <span className="text-brand-600">*</span>
+          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-700">
+            {c.email} <span className="text-accent-500">*</span>
           </label>
           <input
             id="email"
@@ -156,7 +156,7 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-slate-700">
+          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-ink-700">
             {c.phone}
           </label>
           <input
@@ -172,8 +172,8 @@ export default function ContactForm({
       </div>
 
       <div>
-        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-slate-700">
-          {c.message} <span className="text-brand-600">*</span>
+        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-ink-700">
+          {c.message} <span className="text-accent-500">*</span>
         </label>
         <textarea
           id="besked"
@@ -190,11 +190,11 @@ export default function ContactForm({
       <div>
         <button
           type="submit"
-          className="rounded-full bg-brand-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
+          className="bg-ink-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-ink-800"
         >
           {c.submit}
         </button>
-        <p className="mt-3 text-xs leading-5 text-slate-500">
+        <p className="mt-3 text-xs leading-5 text-ink-500">
           {c.noteLead} &ldquo;{c.submit}&rdquo;, {c.note} {CONTACT_EMAIL}.
         </p>
       </div>

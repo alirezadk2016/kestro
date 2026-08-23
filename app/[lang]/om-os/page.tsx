@@ -87,12 +87,12 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
           <div className="mx-auto mt-16 max-w-3xl space-y-10">
             {sections.map((section) => (
               <div key={section.title.da} className="flex gap-5">
-                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-ink-100 text-ink-800">
                   <section.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h2 className="text-xl font-semibold text-slate-900">{section.title[lang]}</h2>
-                  <p className="mt-3 text-base leading-7 text-slate-600">{section.description[lang]}</p>
+                  <h2 className="text-xl font-semibold text-ink-900">{section.title[lang]}</h2>
+                  <p className="mt-3 text-base leading-7 text-ink-600">{section.description[lang]}</p>
                 </div>
               </div>
             ))}
@@ -100,14 +100,14 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50 py-14 sm:py-20">
+      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-20">
         <Container>
           <figure className="mx-auto max-w-3xl">
-            <blockquote className="text-xl font-medium leading-9 text-slate-900 sm:text-2xl sm:leading-10">
+            <blockquote className="text-xl font-medium leading-9 text-ink-900 sm:text-2xl sm:leading-10">
               &ldquo;{c.quote}&rdquo;
             </blockquote>
-            <figcaption className="mt-6 text-sm text-slate-600">
-              <span className="font-semibold text-slate-900">{team[0].name}</span>
+            <figcaption className="mt-6 text-sm text-ink-600">
+              <span className="font-semibold text-ink-900">{team[0].name}</span>
               {" – "}
               {team[0].role[lang]}, Kestro
             </figcaption>

@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, Gauge, Recycle, Building2, Rocket } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const situations = [
   {
-    icon: Gauge,
     question: {
       da: "Har I computere, der er blevet for langsomme?",
       en: "Have your computers become too slow?",
@@ -18,7 +17,6 @@ const situations = [
     linkLabel: { da: "Se opgradering", en: "See upgrades" },
   },
   {
-    icon: Recycle,
     question: {
       da: "Står I med udstyr, I skal af med?",
       en: "Are you sitting on equipment you need to get rid of?",
@@ -31,7 +29,6 @@ const situations = [
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
   },
   {
-    icon: Building2,
     question: {
       da: "Skal I købe ind til flere medarbejdere?",
       en: "Do you need to buy for several employees?",
@@ -44,7 +41,6 @@ const situations = [
     linkLabel: { da: "Se flådeløsninger", en: "See fleet solutions" },
   },
   {
-    icon: Rocket,
     question: {
       da: "Skal en ny virksomhed sættes op fra bunden?",
       en: "Are you setting up a new company from scratch?",
@@ -79,57 +75,59 @@ const copy = {
 
 export default function QualifySection({ lang }: { lang: Lang }) {
   const c = copy[lang];
+
   return (
-    <section className="border-y border-slate-200 bg-slate-50 py-14 sm:py-20 lg:py-24">
+    <section className="border-b border-paper-edge bg-paper-dim py-16 sm:py-24">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
-            {c.eyebrow}
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {c.title}
-          </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
-            {c.sub}
-          </p>
-        </div>
-
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-2">
-          {situations.map((item) => (
-            <Link
-              key={item.href}
-              href={localePath(item.href, lang)}
-              className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md sm:block sm:p-8"
-            >
-              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 sm:h-11 sm:w-11">
-                <item.icon className="h-5 w-5" strokeWidth={1.75} />
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
+                {c.eyebrow}
               </span>
+              <h2 className="mt-5 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
+                {c.title}
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-7 text-ink-600">{c.sub}</p>
+            </div>
+          </div>
 
-              <div className="flex flex-1 flex-col">
-                <h3 className="text-base font-semibold text-slate-900 group-hover:text-brand-700 sm:mt-5 sm:text-lg">
-                  {item.question[lang]}
-                </h3>
-                <p className="mt-1.5 flex-1 text-sm leading-6 text-slate-600 sm:mt-2">
-                  {item.answer[lang]}
-                </p>
-
-                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 sm:mt-5">
-                  {item.linkLabel[lang]}
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
-                </span>
-              </div>
-            </Link>
-          ))}
+          {/* Rows on a hairline, not a grid of cards. The number carries the eye. */}
+          <ol className="lg:col-span-8">
+            {situations.map((item, i) => (
+              <li key={item.href} className="border-t border-ink-900/10 last:border-b">
+                <Link href={localePath(item.href, lang)} className="group block py-6 sm:py-8">
+                  <div className="flex gap-5 sm:gap-8">
+                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-accent-500">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-accent-600 sm:text-2xl">
+                        {item.question[lang]}
+                      </h3>
+                      <p className="mt-2.5 max-w-xl text-base leading-7 text-ink-600">
+                        {item.answer[lang]}
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-ink-900">
+                        {item.linkLabel[lang]}
+                        <ArrowRight
+                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                          strokeWidth={2}
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </div>
 
-        <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-6 text-slate-500">
+        <p className="mt-10 max-w-2xl text-sm leading-7 text-ink-500">
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[44px] items-center font-semibold text-brand-700 hover:text-brand-800"
+            className="font-semibold text-ink-900 underline decoration-accent-400 decoration-2 underline-offset-4 hover:text-accent-600"
           >
             {c.footLink}
           </Link>{" "}

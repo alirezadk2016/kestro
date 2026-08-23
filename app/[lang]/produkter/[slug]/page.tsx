@@ -81,11 +81,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
   return (
     <>
-      <section className="relative overflow-hidden bg-slate-900 py-12 text-white sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-ink-950 py-12 text-white sm:py-16 lg:py-20">
         {/* Brand glow for depth — no product photography, since we source per order */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-600/25 blur-3xl"
+          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-ink-950/25 blur-3xl"
         />
         <div
           aria-hidden="true"
@@ -94,7 +94,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
-            <nav aria-label={c.breadcrumbLabel} className="text-sm text-slate-400">
+            <nav aria-label={c.breadcrumbLabel} className="text-sm text-ink-400">
               <Link
                 href={localePath("/produkter", lang)}
                 className="inline-flex min-h-[44px] items-center transition hover:text-white"
@@ -104,33 +104,33 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               <span className="mx-2" aria-hidden="true">
                 /
               </span>
-              <span className="text-slate-200">{category.name[lang]}</span>
+              <span className="text-ink-200">{category.name[lang]}</span>
             </nav>
 
             <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
               <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                <Icon className="h-8 w-8 text-brand-300" strokeWidth={1.5} />
+                <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
               </span>
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {category.name[lang]}
                 </h1>
-                <p className="mt-2 text-base text-slate-300 sm:text-lg">{category.tagline[lang]}</p>
+                <p className="mt-2 text-base text-ink-300 sm:text-lg">{category.tagline[lang]}</p>
               </div>
             </div>
 
-            <p className="mt-8 text-base leading-7 text-slate-300">{category.intro[lang]}</p>
+            <p className="mt-8 text-base leading-7 text-ink-300">{category.intro[lang]}</p>
           </div>
         </Container>
       </section>
 
-      <section className="bg-slate-50 py-12 sm:py-20">
+      <section className="bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-slate-600">
+            <p className="mt-3 text-base leading-7 text-ink-600">
               {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
             </p>
 
@@ -138,14 +138,14 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="rounded-full border border-slate-300 bg-white px-4 py-1.5 text-sm text-slate-700"
+                  className="border border-ink-900/15 px-3.5 py-1.5 text-sm text-ink-700"
                 >
                   {brand}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-6 text-sm leading-6 text-slate-500">{c.brandsNote}</p>
+            <p className="mt-6 text-sm leading-6 text-ink-500">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -154,13 +154,13 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         <section className="py-12 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <span className="text-sm font-semibold uppercase tracking-wider text-brand-600">
+              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-400">
                 {c.exampleEyebrow}
               </span>
-              <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {exampleModel.name}
               </h2>
-              <p className="mt-3 text-base leading-7 text-slate-600">{exampleModel.intro[lang]}</p>
+              <p className="mt-3 text-base leading-7 text-ink-600">{exampleModel.intro[lang]}</p>
 
               {/*
                 Lead image full width, the rest in an even grid – the renders
@@ -168,7 +168,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 uncropped, which is the part a buyer actually looks at.
               */}
               <div className="mt-8 space-y-3 sm:space-y-4">
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-white sm:aspect-[16/10]">
+                <div className="aspect-[4/3] overflow-hidden border border-paper-edge bg-white sm:aspect-[16/10]">
                   <Image
                     src={exampleModel.images[0].src}
                     alt={exampleModel.images[0].alt[lang]}
@@ -183,7 +183,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
-                      className="aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white"
+                      className="aspect-square overflow-hidden border border-paper-edge bg-white"
                     >
                       <Image
                         src={img.src}
@@ -198,11 +198,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 </div>
               </div>
 
-              <p className="mt-4 text-sm leading-6 text-slate-500">{c.imageNote}</p>
+              <p className="mt-4 text-sm leading-6 text-ink-500">{c.imageNote}</p>
 
               <Link
                 href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
               >
                 {c.seeAllSpecsPre} {exampleModel.name}
                 <span aria-hidden="true">&rarr;</span>
@@ -213,28 +213,28 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-20">
+        <section className="border-t border-paper-edge bg-paper-dim py-12 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 text-slate-600">{c.modelsBody}</p>
+              <p className="mt-3 text-base leading-7 text-ink-600">{c.modelsBody}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
                   <li key={model.slug}>
                     <Link
                       href={localePath(`/modeller/${model.slug}`, lang)}
-                      className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-brand-300 hover:shadow-md"
+                      className="group flex h-full flex-col border border-paper-edge bg-white p-5 transition hover:border-brand-300 hover:border-ink-400"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-ink-500">
                         {model.format[lang]}
                       </span>
-                      <span className="mt-1.5 text-base font-semibold text-slate-900 group-hover:text-brand-700">
+                      <span className="mt-1.5 text-base font-semibold text-ink-900 group-hover:text-ink-900">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 flex-1 text-sm leading-6 text-slate-600">
+                      <span className="mt-1.5 flex-1 text-sm leading-6 text-ink-600">
                         {model.tagline[lang]}
                       </span>
                     </Link>
@@ -244,7 +244,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
               <Link
                 href={localePath("/modeller", lang)}
-                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-ink-900 transition hover:text-accent-600"
               >
                 {c.allModels}
                 <span aria-hidden="true">&rarr;</span>
@@ -254,20 +254,20 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-slate-200 py-12 sm:py-20">
+      <section className="border-t border-paper-edge py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.useCases}
             </h2>
 
             <dl className="mt-8 space-y-6">
               {category.useCases.map((useCase) => (
                 <div key={useCase.title.da} className="flex gap-4">
-                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
+                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-accent-500" strokeWidth={2} />
                   <div>
-                    <dt className="text-base font-semibold text-slate-900">{useCase.title[lang]}</dt>
-                    <dd className="mt-1 text-base leading-7 text-slate-600">
+                    <dt className="text-base font-semibold text-ink-900">{useCase.title[lang]}</dt>
+                    <dd className="mt-1 text-base leading-7 text-ink-600">
                       {useCase.description[lang]}
                     </dd>
                   </div>
@@ -275,18 +275,18 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               ))}
             </dl>
 
-            <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-              <h3 className="text-base font-semibold text-slate-900">{c.specs}</h3>
-              <p className="mt-2 text-base leading-7 text-slate-600">{category.specNote[lang]}</p>
+            <div className="mt-10 border border-paper-edge bg-paper-dim p-6">
+              <h3 className="text-base font-semibold text-ink-900">{c.specs}</h3>
+              <p className="mt-2 text-base leading-7 text-ink-600">{category.specNote[lang]}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-20">
+      <section className="border-t border-paper-edge bg-paper-dim py-12 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-xl font-bold tracking-tight text-slate-900">{c.other}</h2>
+            <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
                 const OtherIcon = getCategoryIcon(other.slug);
@@ -294,9 +294,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-brand-600 hover:text-brand-700"
+                      className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-ink-900 hover:text-ink-900"
                     >
-                      <OtherIcon className="h-4 w-4 text-slate-400" strokeWidth={1.75} />
+                      <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
                       {other.name[lang]}
                     </Link>
                   </li>
