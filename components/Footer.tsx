@@ -13,6 +13,7 @@ const companyLinks = [
 const serviceLinks = [
   { href: "/flaadeloesninger", label: "Flådeløsninger" },
   { href: "/produkter", label: "Hvad vi skaffer" },
+  { href: "/modeller", label: "Populære modeller" },
   { href: "/saelg-til-os", label: "Sælg jeres udstyr" },
   { href: "/reparation", label: "Reparation" },
   { href: "/ydelser", label: "Sådan arbejder vi" },

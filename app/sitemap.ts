@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
+import { models } from "@/lib/models";
 
 const BASE_URL = "https://www.kestro.dk";
 
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1 },
     { path: "/flaadeloesninger", priority: 0.9 },
     { path: "/produkter", priority: 0.9 },
+    { path: "/modeller", priority: 0.9 },
     { path: "/saelg-til-os", priority: 0.8 },
     { path: "/reparation", priority: 0.8 },
     { path: "/ydelser", priority: 0.7 },
@@ -22,7 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...categoryRoutes].map(({ path, priority }) => ({
+  const modelRoutes = models.map((model) => ({
+    path: `/modeller/${model.slug}`,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...categoryRoutes, ...modelRoutes].map(({ path, priority }) => ({
     url: `${BASE_URL}${path}`,
     lastModified,
     changeFrequency: "monthly" as const,

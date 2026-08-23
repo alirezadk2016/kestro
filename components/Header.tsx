@@ -55,6 +55,13 @@ export default function Header() {
             {productsOpen && (
               <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
                 <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-lg">
+                  <Link
+                    href="/modeller"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:text-brand-700"
+                  >
+                    Populære modeller
+                  </Link>
+                  <div className="mb-1 border-t border-slate-100" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
@@ -141,6 +148,13 @@ export default function Header() {
                   className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
                   Oversigt
+                </Link>
+                <Link
+                  href="/modeller"
+                  onClick={closeMobile}
+                  className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  Populære modeller
                 </Link>
                 {categories.map((category) => (
                   <Link

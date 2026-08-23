@@ -72,6 +72,22 @@ export default function ProdukterPage() {
             })}
           </div>
 
+          <div className="mx-auto mt-14 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+              Vil I se konkrete modeller?
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-slate-600">
+              Vi har samlet de maskiner, vi oftest bliver bedt om at skaffe – ThinkPad, EliteBook,
+              Latitude, EliteDesk og flere – med specifikationer og hvad de hver især egner sig til.
+              Ingen priser og ingen lagerstatus: det er en oversigt, ikke en butik.
+            </p>
+            <Link
+              href="/modeller"
+              className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-brand-600 px-6 text-base font-semibold text-white transition hover:bg-brand-700"
+            >
+              Se modeloversigten
+            </Link>
+          </div>
         </Container>
       </section>
 

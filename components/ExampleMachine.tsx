@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
-import { getCategory } from "@/lib/categories";
+import { getModel } from "@/lib/models";
 
 /*
  * A concrete machine on the front page. We do not hold stock, so this is
@@ -17,11 +17,10 @@ const highlights = [
 ];
 
 export default function ExampleMachine() {
-  const category = getCategory("baerbare-computere");
-  const example = category?.example;
-  if (!category || !example) return null;
+  const model = getModel("lenovo-thinkpad-t480");
+  if (!model?.images) return null;
 
-  const image = example.images[0];
+  const image = model.images[0];
 
   return (
     <section className="py-14 sm:py-20 lg:py-24">
@@ -43,7 +42,7 @@ export default function ExampleMachine() {
               Et konkret eksempel
             </span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              {example.model}
+              {model.name}
             </h2>
             <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
               Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en
@@ -63,7 +62,7 @@ export default function ExampleMachine() {
             </ul>
 
             <Link
-              href={`/produkter/${category.slug}`}
+              href={`/modeller/${model.slug}`}
               className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
             >
               Se specifikationer og flere billeder

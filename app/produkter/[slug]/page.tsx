@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
+import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryIcon } from "@/lib/category-icons";
 
 export function generateStaticParams() {
@@ -28,6 +29,8 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   if (!category) notFound();
 
   const others = categories.filter((c) => c.slug !== category.slug);
+  const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
+  const categoryModels = getModelsForCategory(category.slug);
   const Icon = getCategoryIcon(category.slug);
 
   return (
@@ -101,7 +104,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      {category.example && (
+      {exampleModel?.images && (
         <section className="py-12 sm:py-20">
           <Container>
             <div className="mx-auto max-w-3xl">
@@ -109,9 +112,9 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
                 Eksempel på en maskine
               </span>
               <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                {category.example.model}
+                {exampleModel.name}
               </h2>
-              <p className="mt-3 text-base leading-7 text-slate-600">{category.example.note}</p>
+              <p className="mt-3 text-base leading-7 text-slate-600">{exampleModel.intro}</p>
 
               {/*
                 Lead image full width, the rest in an even grid – the renders
@@ -121,8 +124,8 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               <div className="mt-8 space-y-3 sm:space-y-4">
                 <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-white sm:aspect-[16/10]">
                   <Image
-                    src={category.example.images[0].src}
-                    alt={category.example.images[0].alt}
+                    src={exampleModel.images[0].src}
+                    alt={exampleModel.images[0].alt}
                     width={1179}
                     height={1120}
                     className="h-full w-full object-contain p-3 sm:p-6"
@@ -131,7 +134,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-                  {category.example.images.slice(1).map((img) => (
+                  {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
                       className="aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white"
@@ -154,47 +157,58 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
                 aftales for den enkelte ordre.
               </p>
 
-              <div className="mt-12 overflow-hidden rounded-2xl border border-slate-200">
-                <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 sm:px-6">
-                  <h3 className="text-base font-semibold text-slate-900">Typisk konfiguration</h3>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    Sådan ser en {category.example.model} som regel ud. Den præcise
-                    sammensætning – hukommelse, disk, skærm og tastaturlayout – aftaler vi for den
-                    enkelte ordre.
-                  </p>
-                </div>
+              <Link
+                href={`/modeller/${exampleModel.slug}`}
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+              >
+                Se alle specifikationer på {exampleModel.name}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+          </Container>
+        </section>
+      )}
 
-                <dl className="divide-y divide-slate-200">
-                  {category.example.specs.map((spec) => (
-                    <div
-                      key={spec.label}
-                      className="px-5 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4"
+      {categoryModels.length > 0 && (
+        <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-20">
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                Modeller vi ofte skaffer
+              </h2>
+              <p className="mt-3 text-base leading-7 text-slate-600">
+                Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver
+                bedt om at finde – klik ind for specifikationer og hvad de egner sig til.
+              </p>
+
+              <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                {categoryModels.map((model) => (
+                  <li key={model.slug}>
+                    <Link
+                      href={`/modeller/${model.slug}`}
+                      className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-brand-300 hover:shadow-md"
                     >
-                      <dt className="text-sm font-semibold text-slate-900">{spec.label}</dt>
-                      <dd className="mt-1 text-sm leading-6 text-slate-600 sm:col-span-2 sm:mt-0">
-                        {spec.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-
-              <h3 className="mt-12 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-                Derfor peger vi ofte på denne type maskine
-              </h3>
-              <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                {category.example.why.map((reason) => (
-                  <div key={reason.title}>
-                    <dt className="flex gap-3 text-base font-semibold text-slate-900">
-                      <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
-                      {reason.title}
-                    </dt>
-                    <dd className="mt-1.5 pl-8 text-sm leading-6 text-slate-600">
-                      {reason.description}
-                    </dd>
-                  </div>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        {model.format}
+                      </span>
+                      <span className="mt-1.5 text-base font-semibold text-slate-900 group-hover:text-brand-700">
+                        {model.name}
+                      </span>
+                      <span className="mt-1.5 flex-1 text-sm leading-6 text-slate-600">
+                        {model.tagline}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
-              </dl>
+              </ul>
+
+              <Link
+                href="/modeller"
+                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+              >
+                Se hele modeloversigten
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
             </div>
           </Container>
         </section>
