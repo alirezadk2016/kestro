@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { company } from "@/lib/company";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,11 +21,26 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Kestro",
+  name: company.name,
   url: "https://www.kestro.dk",
   description:
     "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder.",
+  email: company.email,
+  telephone: company.phoneDisplay,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: company.city,
+    addressCountry: "DK",
+  },
   areaServed: ["DK", "NO"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: company.phoneDisplay,
+    email: company.email,
+    contactType: "sales",
+    areaServed: ["DK", "NO"],
+    availableLanguage: ["da", "en"],
+  },
 };
 
 export default function RootLayout({

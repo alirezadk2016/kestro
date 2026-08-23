@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Phone } from "lucide-react";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
+import { company } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Kontakt | Kestro",
@@ -27,6 +29,20 @@ export default function KontaktPage() {
           </div>
 
           <div className="space-y-6 lg:col-span-2">
+            <div className="rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white sm:p-8">
+              <h2 className="text-base font-semibold">Ring direkte</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Har I travlt, eller er det nemmere at tage det over telefonen?
+              </p>
+              <a
+                href={`tel:${company.phoneHref}`}
+                className="mt-4 inline-flex items-center gap-2 text-lg font-bold transition hover:text-brand-300"
+              >
+                <Phone className="h-5 w-5" strokeWidth={2} />
+                {company.phoneDisplay}
+              </a>
+            </div>
+
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
               <h2 className="text-base font-semibold text-slate-900">Foretrækker du email?</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -35,25 +51,34 @@ export default function KontaktPage() {
               <CopyEmailButton />
             </div>
 
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 sm:p-8">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
               <h2 className="text-base font-semibold text-slate-900">Virksomhedsoplysninger</h2>
               <dl className="mt-4 space-y-3 text-sm">
                 <div className="flex justify-between gap-4">
                   <dt className="text-slate-500">Virksomhed</dt>
-                  <dd className="font-medium text-slate-900">Kestro</dd>
+                  <dd className="font-medium text-slate-900">{company.name}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-slate-500">Telefon</dt>
+                  <dd className="font-medium text-slate-900">{company.phoneDisplay}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-slate-500">Email</dt>
+                  <dd className="font-medium text-slate-900">{company.email}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-slate-500">Adresse</dt>
+                  <dd className="font-medium text-slate-900">{company.locationShort}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-slate-500">Leverer i</dt>
+                  <dd className="font-medium text-slate-900">{company.serves}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-slate-500">CVR</dt>
                   <dd className="font-medium italic text-slate-400">Tilføjes snarest</dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="text-slate-500">Adresse</dt>
-                  <dd className="font-medium italic text-slate-400">Tilføjes snarest</dd>
-                </div>
               </dl>
-              <p className="mt-4 text-xs leading-5 text-slate-400">
-                Fulde virksomhedsoplysninger opdateres her, når CVR-registreringen er på plads.
-              </p>
             </div>
           </div>
         </div>

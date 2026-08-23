@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import Container from "./Container";
+import { company } from "@/lib/company";
 
 export default function CtaSection() {
   return (
@@ -36,11 +37,11 @@ export default function CtaSection() {
             />
           </Link>
           <a
-            href="mailto:info@kestro.dk"
+            href={`tel:${company.phoneHref}`}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
           >
-            <Mail className="h-4 w-4" strokeWidth={2} />
-            info@kestro.dk
+            <Phone className="h-4 w-4" strokeWidth={2} />
+            {company.phoneDisplay}
           </a>
         </div>
       </Container>

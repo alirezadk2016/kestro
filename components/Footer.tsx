@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
+import { company } from "@/lib/company";
 
 const companyLinks = [
   { href: "/", label: "Forside" },
@@ -78,16 +79,35 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <a
-                  href="mailto:info@kestro.dk"
-                  className="text-sm text-slate-400 transition hover:text-white"
-                >
-                  info@kestro.dk
-                </a>
-              </li>
-              <li className="text-sm text-slate-400">Danmark &amp; Norge</li>
             </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 border-t border-slate-800 pt-8 sm:grid-cols-3">
+          <div>
+            <h3 className="text-sm font-semibold text-white">Ring til os</h3>
+            <a
+              href={`tel:${company.phoneHref}`}
+              className="mt-2 inline-block text-base font-semibold text-white transition hover:text-brand-300"
+            >
+              {company.phoneDisplay}
+            </a>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white">Skriv til os</h3>
+            <a
+              href={`mailto:${company.email}`}
+              className="mt-2 inline-block text-sm text-slate-400 transition hover:text-white"
+            >
+              {company.email}
+            </a>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white">Find os</h3>
+            <p className="mt-2 text-sm text-slate-400">{company.locationShort}</p>
+            <p className="text-sm text-slate-400">Leverer i {company.serves}</p>
           </div>
         </div>
 
