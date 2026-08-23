@@ -193,17 +193,21 @@ export default function FlaadeloesningerPage() {
             </h2>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {capabilities.map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:block sm:p-8"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 sm:h-11 sm:w-11">
                   <item.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+                <div>
+                  <h3 className="text-base font-semibold text-slate-900 sm:mt-4">{item.title}</h3>
+                  <p className="mt-1.5 text-sm leading-6 text-slate-600 sm:mt-2">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

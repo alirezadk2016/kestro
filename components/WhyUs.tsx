@@ -46,17 +46,21 @@ export default function WhyUs() {
             </p>
           </div>
 
-          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+          <dl className="grid grid-cols-2 gap-3 sm:gap-5">
             {benefits.map((benefit) => (
               <div
                 key={benefit.title}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                  <benefit.icon className="h-5 w-5" strokeWidth={1.75} />
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700 sm:h-10 sm:w-10">
+                  <benefit.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                 </span>
-                <dt className="mt-4 text-base font-semibold text-slate-900">{benefit.title}</dt>
-                <dd className="mt-1.5 text-sm leading-6 text-slate-600">{benefit.description}</dd>
+                <dt className="mt-3 text-sm font-semibold text-slate-900 sm:mt-4 sm:text-base">
+                  {benefit.title}
+                </dt>
+                <dd className="mt-1.5 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">
+                  {benefit.description}
+                </dd>
               </div>
             ))}
           </dl>

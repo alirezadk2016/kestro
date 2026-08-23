@@ -55,29 +55,33 @@ export default function QualifySection() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-2">
           {situations.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-brand-300 hover:shadow-md sm:p-8"
+              className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md sm:block sm:p-8"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 sm:h-11 sm:w-11">
                 <item.icon className="h-5 w-5" strokeWidth={1.75} />
               </span>
 
-              <h3 className="mt-5 text-lg font-semibold text-slate-900 group-hover:text-brand-700">
-                {item.question}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{item.answer}</p>
+              <div className="flex flex-1 flex-col">
+                <h3 className="text-base font-semibold text-slate-900 group-hover:text-brand-700 sm:mt-5 sm:text-lg">
+                  {item.question}
+                </h3>
+                <p className="mt-1.5 flex-1 text-sm leading-6 text-slate-600 sm:mt-2">
+                  {item.answer}
+                </p>
 
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
-                {item.linkLabel}
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2}
-                />
-              </span>
+                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 sm:mt-5">
+                  {item.linkLabel}
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={2}
+                  />
+                </span>
+              </div>
             </Link>
           ))}
         </div>

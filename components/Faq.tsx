@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import Container from "./Container";
 
 export type FaqItem = { question: string; answer: string };
@@ -43,14 +44,23 @@ export default function Faq({
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
         </div>
 
-        <dl className="mx-auto mt-10 max-w-3xl divide-y divide-slate-200 border-t border-slate-200 sm:mt-12">
+        {/* Native <details> keeps this a server component: no JS, keyboard and
+            screen-reader behaviour come for free. */}
+        <div className="mx-auto mt-10 max-w-3xl divide-y divide-slate-200 border-y border-slate-200 sm:mt-12">
           {items.map((faq) => (
-            <div key={faq.question} className="py-6">
-              <dt className="text-base font-semibold text-slate-900">{faq.question}</dt>
-              <dd className="mt-2 text-base leading-7 text-slate-600">{faq.answer}</dd>
-            </div>
+            <details key={faq.question} className="group">
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-slate-900 transition-colors hover:text-brand-700 [&::-webkit-details-marker]:hidden">
+                {faq.question}
+                <ChevronDown
+                  className="h-5 w-5 flex-shrink-0 text-slate-400 transition-transform duration-200 group-open:rotate-180"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+              </summary>
+              <p className="pb-5 pr-9 text-base leading-7 text-slate-600">{faq.answer}</p>
+            </details>
           ))}
-        </dl>
+        </div>
       </Container>
     </section>
   );

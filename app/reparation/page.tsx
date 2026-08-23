@@ -164,17 +164,21 @@ export default function ReparationPage() {
             Hvad vi laver
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-4">
             {services.map((service) => (
               <div
                 key={service.title}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                  <service.icon className="h-5 w-5" strokeWidth={1.75} />
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700 sm:h-10 sm:w-10">
+                  <service.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-slate-900">{service.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{service.description}</p>
+                <h3 className="mt-3 text-sm font-semibold text-slate-900 sm:mt-4 sm:text-base">
+                  {service.title}
+                </h3>
+                <p className="mt-1.5 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
+                  {service.description}
+                </p>
               </div>
             ))}
           </div>
