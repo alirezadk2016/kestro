@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
+import CopyEmailButton from "@/components/CopyEmailButton";
 
 export const metadata: Metadata = {
   title: "Kontakt | Kestro",
@@ -33,13 +34,7 @@ export default function KontaktPage() {
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 Skriv direkte til os, så vender vi tilbage hurtigst muligt.
               </p>
-              <a
-                href="mailto:info@kestro.dk"
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
-              >
-                info@kestro.dk
-                <span aria-hidden="true">&rarr;</span>
-              </a>
+              <CopyEmailButton />
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 sm:p-8">

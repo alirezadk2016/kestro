@@ -27,22 +27,6 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
-      keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(14px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "glow-drift": {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: "0.6" },
-          "50%": { transform: "translate(10px, -8px) scale(1.04)", opacity: "0.8" },
-        },
-      },
-      animation: {
-        "fade-up": "fade-up 0.7s ease-out forwards",
-        "fade-up-delayed": "fade-up 0.7s ease-out 0.15s forwards",
-        "fade-up-delayed-2": "fade-up 0.7s ease-out 0.4s forwards",
-        "glow-drift": "glow-drift 12s ease-in-out infinite",
-      },
     },
   },
   plugins: [],

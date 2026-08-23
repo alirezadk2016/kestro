@@ -1,47 +1,84 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import Container from "./Container";
-import CopyEmailButton from "./CopyEmailButton";
-import HeroVisual from "./HeroVisual";
+import { motion, MotionConfig } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" as const, delay },
+  }),
+};
+
+const TAGS = ["Testet", "Nordisk tastatur", "Levering i DK & NO"];
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white">
-      <Container className="grid grid-cols-1 items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:py-28">
-        <div className="opacity-0 motion-safe:animate-fade-up motion-reduce:opacity-100">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
-            B2B IT-hardware · Klar til det nordiske marked
-          </span>
+    <section className="relative flex h-[calc(100dvh-4rem)] flex-col justify-end overflow-hidden px-5 pb-12 sm:h-[calc(100dvh-5rem)] sm:px-8 md:justify-center md:px-10 md:pb-0">
+      <Image
+        src="/hero-devices.png"
+        alt=""
+        fill
+        priority
+        className="pointer-events-none -z-10 object-cover grayscale"
+        sizes="100vw"
+      />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white via-white/85 to-white/20" />
 
-          <h1 className="mt-6 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-            Renoveret IT-hardware,
-            <span className="text-brand-600"> klargjort til jeres virksomhed</span>
-          </h1>
+      <MotionConfig reducedMotion="user">
+        <div className="relative z-10 max-w-xl">
+          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
+            <span className="inline-flex items-center rounded-full border border-black/10 px-4 py-1.5 text-sm font-medium text-black">
+              Refurbished erhvervscomputere til Norden
+            </span>
 
-          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
-            Kestro finder kvalitets bærbare og stationære computere fra Sydeuropa, opgraderer og
-            funktionstester dem, og klargør hver enhed til det nordiske marked – med dansk/nordisk
-            tastatur og opgraderet RAM. Testet og klargjort før levering, til konkurrencedygtige priser.
-          </p>
+            <h1 className="mt-6 whitespace-pre-line text-4xl font-extrabold tracking-tight text-black sm:text-5xl lg:text-6xl">
+              {"Erhvervscomputere.\nKlar til Norden."}
+            </h1>
+          </motion.div>
 
-          <div className="mt-10 flex flex-wrap gap-4 opacity-0 motion-safe:animate-fade-up-delayed-2 motion-reduce:opacity-100">
-            <Link
-              href="/ydelser"
-              className="rounded-full bg-brand-600 px-7 py-3.5 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
-            >
-              Se vores ydelser
-            </Link>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            custom={0.15}
+            variants={fadeUp}
+            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3"
+          >
             <Link
               href="/kontakt"
-              className="rounded-full border border-slate-300 px-7 py-3.5 text-center text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-full bg-black px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black/80"
             >
-              Kontakt os
+              Få et tilbud
             </Link>
-            <CopyEmailButton />
-          </div>
-        </div>
+            <Link
+              href="/ydelser"
+              className="text-sm font-semibold text-black underline underline-offset-2 transition-opacity hover:opacity-60"
+            >
+              Sådan arbejder vi
+            </Link>
+          </motion.div>
 
-        <HeroVisual />
-      </Container>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            custom={0.4}
+            variants={fadeUp}
+            className="mt-6 flex flex-wrap gap-2"
+          >
+            {TAGS.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-black/15 bg-white/70 px-3 py-1 text-xs font-medium text-black sm:text-sm"
+              >
+                {tag}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </MotionConfig>
     </section>
   );
 }

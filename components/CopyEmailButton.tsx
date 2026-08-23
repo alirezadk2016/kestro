@@ -21,13 +21,13 @@ export default function CopyEmailButton() {
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-transparent px-7 py-3.5 text-sm font-semibold text-slate-800 transition-colors duration-200 hover:bg-slate-900 hover:text-white"
+      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
     >
       {copied ? (
         "Kopieret!"
       ) : (
         <>
-          <span className="underline underline-offset-2">{EMAIL}</span>
+          <span>{EMAIL}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 12 12"
