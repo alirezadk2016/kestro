@@ -73,7 +73,7 @@ export default function Hero() {
                 href="/produkter"
                 className="inline-flex items-center justify-center rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                Se produkter
+                Se hvad vi skaffer
               </Link>
             </motion.div>
 

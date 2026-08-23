@@ -11,7 +11,7 @@ const companyLinks = [
 ];
 
 const serviceLinks = [
-  { href: "/produkter", label: "Alle produkter" },
+  { href: "/produkter", label: "Hvad vi skaffer" },
   { href: "/saelg-til-os", label: "Sælg jeres udstyr" },
   { href: "/reparation", label: "Reparation" },
 ];
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white">Produkter</h3>
+            <h3 className="text-sm font-semibold text-white">Hvad vi skaffer</h3>
             <ul className="mt-4 space-y-2.5">
               {categories.map((category) => (
                 <li key={category.slug}>

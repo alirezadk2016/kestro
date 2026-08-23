@@ -17,9 +17,9 @@ import CtaSection from "@/components/CtaSection";
 import { categories } from "@/lib/categories";
 
 export const metadata: Metadata = {
-  title: "Produkter | Renoveret IT-udstyr til erhverv | Kestro",
+  title: "Hvad vi skaffer | Renoveret IT-udstyr til erhverv | Kestro",
   description:
-    "Se vores kategorier af renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, smartwatches, dockingstationer og gaming.",
+    "Kestro er indkøbspartner på renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, smartwatches, docking og gaming – sourcet til jeres ordre.",
   alternates: { canonical: "/produkter" },
 };
 
@@ -40,11 +40,27 @@ export default function ProdukterPage() {
       <section className="py-12 sm:py-20 lg:py-24">
         <Container>
           <PageHeader
-            title="Produkter"
-            description="Vi sourcer renoveret IT-udstyr per ordre – fra enkelte enheder til hele arbejdspladser. Vælg en kategori for at se, hvad vi typisk kan skaffe."
+            title="Hvad vi skaffer"
+            description="Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug."
           />
 
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+            <h2 className="text-base font-semibold text-slate-900">
+              Derfor finder I ingen priser eller lagerstatus her
+            </h2>
+            <p className="mt-2 text-base leading-7 text-slate-600">
+              Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I
+              stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de
+              specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og
+              at I ikke betaler for et lager, andre skal have afsat.
+            </p>
+            <p className="mt-3 text-base leading-7 text-slate-600">
+              Kategorierne nedenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder
+              med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => {
               const Icon = icons[category.slug] ?? Laptop;
               return (

@@ -49,7 +49,7 @@ export default function Header() {
               className="flex items-center gap-1 text-sm font-medium text-slate-600 transition hover:text-brand-700"
               aria-expanded={productsOpen}
             >
-              Produkter
+              Hvad vi skaffer
               <ChevronDown className="h-4 w-4" strokeWidth={2} />
             </Link>
 
@@ -134,7 +134,7 @@ export default function Header() {
               aria-expanded={mobileProductsOpen}
               className="flex items-center justify-between rounded-md px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-50"
             >
-              Produkter
+              Hvad vi skaffer
               <ChevronDown
                 className={`h-4 w-4 transition-transform ${mobileProductsOpen ? "rotate-180" : ""}`}
                 strokeWidth={2}
@@ -148,7 +148,7 @@ export default function Header() {
                   onClick={closeMobile}
                   className="block rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Alle produkter
+                  Oversigt
                 </Link>
                 {categories.map((category) => (
                   <Link

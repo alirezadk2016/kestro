@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
@@ -44,20 +43,6 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           </nav>
 
           <PageHeader title={category.name} description={category.tagline} />
-
-          {category.image && (
-            <div className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <Image
-                src={category.image}
-                alt={category.imageAlt ?? ""}
-                width={1200}
-                height={675}
-                priority
-                className="h-auto w-full object-cover"
-                sizes="(max-width: 768px) 100vw, 768px"
-              />
-            </div>
-          )}
 
           <div className="mx-auto mt-12 max-w-3xl">
             <p className="text-base leading-7 text-slate-600">{category.intro}</p>

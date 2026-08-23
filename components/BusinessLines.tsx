@@ -5,11 +5,11 @@ import Container from "./Container";
 const lines = [
   {
     icon: ShoppingCart,
-    title: "Køb renoveret udstyr",
+    title: "Vi skaffer jeres udstyr",
     description:
-      "Bærbare, stationære, tablets, telefoner og tilbehør – sourcet og klargjort til jeres behov.",
+      "Fortæl os, hvad I mangler – bærbare, stationære, tablets, telefoner eller tilbehør. Vi finder det, tester det og leverer det klar til brug.",
     href: "/produkter",
-    linkLabel: "Se produkter",
+    linkLabel: "Se hvad vi skaffer",
     featured: true,
   },
   {

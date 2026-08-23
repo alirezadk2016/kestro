@@ -9,10 +9,6 @@ export type Category = {
   brands: string[];
   useCases: { title: string; description: string }[];
   specNote: string;
-  /** Optional product photo in /public. Add one per category as photos become available. */
-  image?: string;
-  /** Alt text for the photo above. Required whenever `image` is set. */
-  imageAlt?: string;
 };
 
 export const categories: Category[] = [
@@ -59,9 +55,6 @@ export const categories: Category[] = [
     ],
     specNote:
       "RAM, SSD-størrelse, skærmstørrelse og CPU-generation tilpasses den enkelte ordre – fortæl os, hvad maskinerne skal bruges til, så finder vi det rette match.",
-    image: "/thinkpad-baerbare.webp",
-    imageAlt:
-      "To Lenovo ThinkPad erhvervsbærbare – én i tent-position og én set bagfra med ThinkPad-logoet",
   },
   {
     slug: "stationaere-computere",

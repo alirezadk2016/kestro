@@ -13,15 +13,15 @@ export const metadata: Metadata = {
 const sections = [
   {
     icon: Route,
-    title: "Hvad vi gør",
+    title: "Vi er indkøbspartner – ikke webshop",
     description:
-      "Kestro finder brugte erhvervsbærbare og -stationære fra pålidelige leverandører i Sydeuropa. Vi arbejder som broker uden fast eget lager, hvilket betyder, at vi sourcer enheder til den enkelte ordre i stedet for at være bundet af, hvad der tilfældigvis er på hylden. Hver enhed bliver funktionstestet, eventuelt opgraderet med mere RAM, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer.",
+      "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Hver enhed bliver funktionstestet, eventuelt opgraderet med mere RAM, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer.",
   },
   {
     icon: Recycle,
-    title: "Hvorfor renoveret hardware",
+    title: "Fordelen ved ikke at have lager",
     description:
-      "Renoveret udstyr forlænger enhedernes levetid, i stedet for at de kasseres for tidligt – og giver jer typisk samme ydeevne til en brøkdel af prisen på nyt. For virksomheder, der skal udstyre flere medarbejdere eller opgradere en hel IT-flåde, gør det en mærkbar forskel på budgettet.",
+      "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi sourcer til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver. Samtidig forlænger renoveret udstyr enhedernes levetid og giver typisk samme ydeevne til en brøkdel af nyprisen.",
   },
   {
     icon: Users,
