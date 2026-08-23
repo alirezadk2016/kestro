@@ -103,6 +103,37 @@ export const categories: Category[] = [
       "Vi tilpasser formfaktor (tower, SFF eller mini), RAM, lagring og grafikkort efter jeres behov.",
   },
   {
+    slug: "skaerme",
+    name: "Skærme",
+    shortName: "Skærme",
+    tagline: "Renoverede erhvervsskærme til faste arbejdspladser",
+    metaTitle: "Brugte og renoverede skærme til erhverv | Kestro",
+    metaDescription:
+      "Renoverede erhvervsskærme fra Dell, HP og Lenovo – 24\" og 27\" med højdejustering og USB-hub. Sourcet til den enkelte ordre til virksomheder i Danmark og Norge.",
+    intro:
+      "En skærm holder som regel længere end den computer, der står ved siden af, og derfor er det ofte her, der er mest at hente. Vi skaffer erhvervsskærme med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har – og de bliver tjekket for døde pixels og indbrændinger, inden de sendes af sted.",
+    brands: ["Dell", "HP", "Lenovo", "Philips", "AOC", "Samsung", "EIZO"],
+    useCases: [
+      {
+        title: "To skærme per arbejdsplads",
+        description:
+          "Den billigste måde at gøre en arbejdsdag hurtigere på. To brugte 24\"-skærme koster typisk mindre end én ny.",
+      },
+      {
+        title: "Udskiftning af gamle skærme",
+        description:
+          "Står der stadig 19\"-skærme med tykke rammer rundt om i huset, kan de skiftes til moderne paneler uden at røre computerne.",
+      },
+      {
+        title: "Møde- og infoskærme",
+        description:
+          "Større paneler til mødelokaler, produktion og reception, hvor de bare skal vise noget hele dagen.",
+      },
+    ],
+    specNote:
+      "Størrelse, opløsning, tilslutninger og fod aftales for den enkelte ordre – fortæl os, hvilke maskiner skærmene skal sidde på, så matcher vi stikkene.",
+  },
+  {
     slug: "mini-pc",
     name: "Mini-pc'er",
     shortName: "Mini-pc",

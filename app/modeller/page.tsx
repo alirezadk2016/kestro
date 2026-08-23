@@ -35,6 +35,13 @@ export default function ModellerPage() {
               Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg –
               det er som regel muligt.
             </p>
+            <Link
+              href="/kvalitet"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+            >
+              Sådan vurderer vi stand og kvalitet
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
           </div>
 
           {modelGroups.map((group) => {

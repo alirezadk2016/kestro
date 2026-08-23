@@ -10,7 +10,7 @@
  * many configurations; the exact one is agreed per order.
  */
 
-export type ModelGroup = "baerbare" | "workstations" | "stationaere";
+export type ModelGroup = "baerbare" | "workstations" | "stationaere" | "skaerme" | "docking";
 
 export type Model = {
   slug: string;
@@ -49,6 +49,16 @@ export const modelGroups: { id: ModelGroup; name: string; description: string }[
     id: "stationaere",
     name: "Stationære og mini-pc'er",
     description: "Faste arbejdspladser, hvor skærm og tastatur alligevel bliver stående.",
+  },
+  {
+    id: "skaerme",
+    name: "Skærme",
+    description: "Erhvervsskærme med matte paneler, højdejustering og rigtige tilslutninger.",
+  },
+  {
+    id: "docking",
+    name: "Dockingstationer",
+    description: "Ét kabel til skærme, netværk og strøm – vælg den, der passer til jeres maskiner.",
   },
 ];
 
@@ -551,6 +561,187 @@ export const models: Model[] = [
     notes: [
       "Micro-udgaven har færre udvidelsesmuligheder end SFF. Skal der senere i grafikkort eller ekstra diske, så vælg SFF fra start.",
       "Kabinetterne ligner hinanden på papiret – sig hvilken variant I vil have, så der ikke kommer en Micro, hvor der skulle stå en SFF.",
+    ],
+  },
+  {
+    slug: "dell-ultrasharp-u2419h",
+    name: "Dell UltraSharp U2419H",
+    brand: "Dell",
+    format: '24" skærm',
+    group: "skaerme",
+    category: "skaerme",
+    tagline: "Kontorskærmen, der er nem at skaffe mange ens af.",
+    metaTitle: "Brugt Dell UltraSharp U2419H skærm til erhverv | Kestro",
+    metaDescription:
+      'Dell UltraSharp U2419H som brugt erhvervsskærm: 24" IPS, tynd ramme, højdejustering og USB-hub. Sourcet til den enkelte ordre.',
+    intro:
+      "UltraSharp er Dells erhvervsserie, og netop U2419H sad på tusindvis af arbejdspladser, før den blev udskiftet. Det betyder, at den er let at skaffe i antal – og at man kan give hele kontoret den samme skærm uden at betale nypris.",
+    goodFor: [
+      "To skærme per arbejdsplads",
+      "Kontor, administration og sagsbehandling",
+      "Udskiftning af ældre skærme uden at røre computerne",
+    ],
+    specs: [
+      { label: "Model", value: 'Dell UltraSharp U2419H – 23,8" erhvervsskærm' },
+      { label: "Panel", value: "IPS med mat overflade – brede synsvinkler" },
+      { label: "Opløsning", value: "Full HD (1920×1080)" },
+      { label: "Tilslutninger", value: "DisplayPort, HDMI og indbygget USB-hub" },
+      { label: "Fod", value: "Højdejustering, tilt, drej og pivot (kan stilles på højkant)" },
+      { label: "Ophæng", value: "VESA 100×100 – kan sidde på arm eller bag en Tiny-pc" },
+    ],
+    notes: [
+      'Full HD er standard på 24". Skal der arbejdes i store regneark eller tegninger, giver en 27" i QHD mere plads – spørg efter U2719D i stedet.',
+      "Kabler mangler ofte på brugte skærme. Aftal på forhånd, om DisplayPort- eller HDMI-kabel skal følge med.",
+    ],
+  },
+  {
+    slug: "hp-elitedisplay-e243",
+    name: "HP EliteDisplay E243",
+    brand: "HP",
+    format: '24" skærm',
+    group: "skaerme",
+    category: "skaerme",
+    tagline: "HP's kontorskærm – samme klasse, ofte lidt billigere.",
+    metaTitle: "Brugt HP EliteDisplay E243 skærm til erhverv | Kestro",
+    metaDescription:
+      'HP EliteDisplay E243 som brugt erhvervsskærm: 24" IPS med højdejustering, USB-hub og flere indgange. Sourcet til jeres ordre.',
+    intro:
+      "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundting – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
+    goodFor: [
+      "Kontorarbejdspladser i alle størrelser",
+      "Virksomheder med HP-udstyr i forvejen",
+      "Leverancer, hvor mange ens skærme skal skaffes hurtigt",
+    ],
+    specs: [
+      { label: "Model", value: 'HP EliteDisplay E243 – 23,8" erhvervsskærm' },
+      { label: "Panel", value: "IPS med mat overflade" },
+      { label: "Opløsning", value: "Full HD (1920×1080)" },
+      { label: "Tilslutninger", value: "DisplayPort, HDMI, VGA og USB-hub" },
+      { label: "Fod", value: "Højdejustering, tilt, drej og pivot" },
+      { label: "Ophæng", value: "VESA 100×100" },
+    ],
+    notes: [
+      "Enkelte varianter i serien har VGA som eneste ekstra indgang. Tjek, at jeres maskiner har DisplayPort eller HDMI, før I bestiller mange.",
+      'Serien findes også som E273 i 27". Skal skærmene bruges til to vinduer side om side, er det ofte pengene værd.',
+    ],
+  },
+  {
+    slug: "lenovo-thinkvision-t24i",
+    name: "Lenovo ThinkVision T24i",
+    brand: "Lenovo",
+    format: '24" skærm',
+    group: "skaerme",
+    category: "skaerme",
+    tagline: "Matcher ThinkPad-flåden – både i udseende og i pris.",
+    metaTitle: "Brugt Lenovo ThinkVision T24i skærm til erhverv | Kestro",
+    metaDescription:
+      'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og fuld foddjustering. Sourcet til den enkelte ordre.',
+    intro:
+      "ThinkVision T-serien er Lenovos erhvervsskærme og den naturlige makker til en ThinkPad-flåde. Tynde rammer gør, at to skærme ved siden af hinanden ikke får en tyk streg ned i midten.",
+    goodFor: [
+      "Arbejdspladser med ThinkPad-maskiner",
+      "Opstillinger med to skærme ved siden af hinanden",
+      "Kontorer, der vil holde sig til én producent",
+    ],
+    specs: [
+      { label: "Model", value: 'Lenovo ThinkVision T24i – 23,8" erhvervsskærm' },
+      { label: "Panel", value: "IPS med mat overflade" },
+      { label: "Opløsning", value: "Full HD (1920×1080)" },
+      { label: "Tilslutninger", value: "DisplayPort, HDMI, VGA og USB-hub" },
+      { label: "Fod", value: "Højdejustering, tilt, drej og pivot" },
+      { label: "Ophæng", value: "VESA 100×100" },
+    ],
+    notes: [
+      "T-serien findes i flere generationer, der ligner hinanden. Sig, om skærmene skal matche nogle, I har i forvejen, så vi finder samme generation.",
+      "USB-hubben virker kun, hvis der også er et USB-kabel mellem skærm og maskine – det mangler tit på brugte enheder.",
+    ],
+  },
+  {
+    slug: "lenovo-thinkpad-ultra-dock",
+    name: "Lenovo ThinkPad Ultra Dock",
+    brand: "Lenovo",
+    format: "Dockingstation",
+    group: "docking",
+    category: "dockingstationer",
+    tagline: "Mekanisk dock, der klikker fast under maskinen.",
+    metaTitle: "Brugt Lenovo ThinkPad Ultra Dock til erhverv | Kestro",
+    metaDescription:
+      "ThinkPad Ultra Dock som brugt dockingstation: mekanisk dockstik, flere skærme og netværk i én forbindelse. Sourcet til jeres ordre.",
+    intro:
+      "Ultra Dock klikker fast i bunden af maskinen i stedet for at sidde i et kabel. Det giver en fast forbindelse, der ikke ryger ud, når nogen flytter på maskinen, og medarbejderen skal kun gøre én ting, når hun sætter sig ved skrivebordet.",
+    goodFor: [
+      "Faste arbejdspladser til ThinkPad-flåder",
+      "Skrivebordspladser med to eller tre skærme",
+      "Kontorer med skiftende brugere ved samme plads",
+    ],
+    specs: [
+      { label: "Tilslutning", value: "ThinkPads mekaniske dockstik i bunden af maskinen" },
+      { label: "Skærme", value: "Op til tre skærme samtidig via DisplayPort, DVI og VGA" },
+      { label: "Porte", value: "Flere USB-A, Gigabit-netværk og lydudgange" },
+      { label: "Strøm", value: "Egen strømforsyning, der også oplader maskinen" },
+      { label: "Lås", value: "Nøglelås, så docken kan låses til bordet" },
+    ],
+    notes: [
+      "Ultra Dock passer kun til bestemte ThinkPad-generationer. T480 og maskiner fra samme periode bruger 40A2-typen – fortæl os, hvilke maskiner I har, så vi matcher den rigtige.",
+      "Strømforsyningen mangler ofte på brugte docks, og docken virker ikke uden. Få den skrevet ind i aftalen.",
+    ],
+  },
+  {
+    slug: "dell-wd19",
+    name: "Dell WD19",
+    brand: "Dell",
+    format: "USB-C dock",
+    group: "docking",
+    category: "dockingstationer",
+    tagline: "Ét USB-C-kabel – virker også på andre mærker.",
+    metaTitle: "Brugt Dell WD19 dockingstation til erhverv | Kestro",
+    metaDescription:
+      "Dell WD19 som brugt USB-C dockingstation: flere skærme, netværk og strøm i ét kabel. Sourcet til den enkelte ordre.",
+    intro:
+      "WD19 kobles til med ét USB-C-kabel og giver skærme, netværk, USB og strøm på én gang. Fordi den bruger almindelig USB-C frem for et mærkespecifikt stik, kan den også bruges på maskiner fra andre producenter – praktisk hvis I har en blandet flåde.",
+    goodFor: [
+      "Blandede flåder med USB-C-maskiner",
+      "Arbejdspladser med to eller tre skærme",
+      "Medarbejdere, der skifter mellem plads og møde",
+    ],
+    specs: [
+      { label: "Tilslutning", value: "USB-C – ét kabel til data, skærm og strøm" },
+      { label: "Skærme", value: "Op til tre skærme afhængigt af variant" },
+      { label: "Porte", value: "USB-A, USB-C, Gigabit-netværk og lyd" },
+      { label: "Strøm", value: "Leveres med 130 W eller 180 W strømforsyning" },
+    ],
+    notes: [
+      "WD19 findes som WD19, WD19S og WD19TB. Thunderbolt-udgaven kræver, at maskinen selv har Thunderbolt – ellers falder den ned på færre skærme.",
+      "Strømforsyningens størrelse skal passe til maskinen. En 130 W-dock oplader ikke en workstation ordentligt.",
+    ],
+  },
+  {
+    slug: "hp-usb-c-dock-g5",
+    name: "HP USB-C Dock G5",
+    brand: "HP",
+    format: "USB-C dock",
+    group: "docking",
+    category: "dockingstationer",
+    tagline: "HP's universaldock til maskiner med USB-C.",
+    metaTitle: "Brugt HP USB-C Dock G5 til erhverv | Kestro",
+    metaDescription:
+      "HP USB-C Dock G5 som brugt dockingstation: skærme, netværk og strøm gennem ét USB-C-kabel. Sourcet til jeres ordre.",
+    intro:
+      "G5-docken er HP's bud på det samme: ét USB-C-kabel til skærme, netværk og opladning. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",
+    goodFor: [
+      "Arbejdspladser med HP-maskiner",
+      "Kontorer, der vil have samme dock på alle pladser",
+      "Opsætninger med to skærme",
+    ],
+    specs: [
+      { label: "Tilslutning", value: "USB-C – ét kabel til data, skærm og strøm" },
+      { label: "Skærme", value: "To skærme via DisplayPort og HDMI" },
+      { label: "Porte", value: "USB-A, USB-C, Gigabit-netværk og lyd" },
+      { label: "Strøm", value: "Egen strømforsyning, der oplader maskinen" },
+    ],
+    notes: [
+      "Den virker på de fleste USB-C-maskiner, men HP's egne funktioner som tænd/sluk fra docken virker kun sammen med HP.",
+      "Ældre HP UltraSlim-docks bruger et fladt stik i siden af maskinen og passer ikke til nyere modeller. Sig hvilke maskiner I har.",
     ],
   },
 ];

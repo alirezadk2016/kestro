@@ -1,5 +1,6 @@
 import {
   Laptop,
+  Computer,
   Monitor,
   HardDrive,
   Tablet,
@@ -13,7 +14,8 @@ import {
 /** Icon per category slug. Keep in sync with lib/categories.ts. */
 export const categoryIcons: Record<string, LucideIcon> = {
   "baerbare-computere": Laptop,
-  "stationaere-computere": Monitor,
+  "stationaere-computere": Computer,
+  skaerme: Monitor,
   "mini-pc": HardDrive,
   tablets: Tablet,
   smartphones: Smartphone,
