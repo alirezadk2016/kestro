@@ -4,7 +4,17 @@ import { FormEvent, useState } from "react";
 
 const CONTACT_EMAIL = "info@kestro.dk";
 
-export default function ContactForm() {
+type ContactFormProps = {
+  subjectPrefix?: string;
+  messagePlaceholder?: string;
+  companyRequired?: boolean;
+};
+
+export default function ContactForm({
+  subjectPrefix = "Henvendelse",
+  messagePlaceholder = "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
+  companyRequired = true,
+}: ContactFormProps) {
   const [values, setValues] = useState({
     navn: "",
     virksomhed: "",
@@ -21,10 +31,10 @@ export default function ContactForm() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const subject = `Henvendelse fra ${values.virksomhed || values.navn} via kestro.dk`;
+    const subject = `${subjectPrefix} fra ${values.virksomhed || values.navn} via kestro.dk`;
     const body = [
       `Navn: ${values.navn}`,
-      `Virksomhed: ${values.virksomhed}`,
+      values.virksomhed ? `Virksomhed: ${values.virksomhed}` : null,
       `Email: ${values.email}`,
       values.telefon ? `Telefon: ${values.telefon}` : null,
       "",
@@ -61,13 +71,13 @@ export default function ContactForm() {
 
         <div>
           <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Virksomhed <span className="text-brand-600">*</span>
+            Virksomhed {companyRequired ? <span className="text-brand-600">*</span> : <span className="text-slate-400">(valgfrit)</span>}
           </label>
           <input
             id="virksomhed"
             name="virksomhed"
             type="text"
-            required
+            required={companyRequired}
             value={values.virksomhed}
             onChange={handleChange}
             className={inputClasses}
@@ -119,7 +129,7 @@ export default function ContactForm() {
           value={values.besked}
           onChange={handleChange}
           className={inputClasses}
-          placeholder="Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m."
+          placeholder={messagePlaceholder}
         />
       </div>
 

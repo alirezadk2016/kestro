@@ -1,6 +1,8 @@
 import Container from "./Container";
 
-const faqs = [
+export type FaqItem = { question: string; answer: string };
+
+const defaultFaqs: FaqItem[] = [
   {
     question: "Hvordan bestiller vi hos Kestro?",
     answer:
@@ -27,18 +29,22 @@ const faqs = [
   },
 ];
 
-export default function Faq() {
+export default function Faq({
+  items = defaultFaqs,
+  title = "Ofte stillede spørgsmål",
+}: {
+  items?: FaqItem[];
+  title?: string;
+}) {
   return (
     <section className="py-20 sm:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Ofte stillede spørgsmål
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
         </div>
 
         <dl className="mx-auto mt-12 max-w-3xl divide-y divide-slate-200 border-t border-slate-200">
-          {faqs.map((faq) => (
+          {items.map((faq) => (
             <div key={faq.question} className="py-6">
               <dt className="text-base font-semibold text-slate-900">{faq.question}</dt>
               <dd className="mt-2 text-base leading-7 text-slate-600">{faq.answer}</dd>
