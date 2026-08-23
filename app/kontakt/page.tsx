@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
+import PageHeader from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Kontakt | Kestro",
@@ -13,13 +14,10 @@ export default function KontaktPage() {
   return (
     <section className="py-16 sm:py-20 lg:py-28">
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Kontakt os</h1>
-          <p className="mt-4 text-lg leading-7 text-slate-600">
-            Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware
-            klargjort til det nordiske marked.
-          </p>
-        </div>
+        <PageHeader
+          title="Kontakt os"
+          description="Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware klargjort til det nordiske marked."
+        />
 
         <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
