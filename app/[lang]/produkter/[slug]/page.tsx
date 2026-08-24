@@ -153,9 +153,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         <section className="py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <span className="eyebrow text-brand-600">
-                {c.exampleEyebrow}
-              </span>
+              <span className="eyebrow text-brand-600">{c.exampleEyebrow}</span>
               <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
                 {exampleModel.name}
               </h2>

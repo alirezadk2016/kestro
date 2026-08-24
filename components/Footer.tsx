@@ -50,9 +50,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="eyebrow text-brand-300">
-              {productsNav.hub.label[lang]}
-            </h3>
+            <h3 className="eyebrow text-brand-300">{productsNav.hub.label[lang]}</h3>
             <ul className="mt-4 space-y-0.5">
               {categories.map((category) => (
                 <li key={category.slug}>
@@ -68,9 +66,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="eyebrow text-brand-300">
-              {c.services}
-            </h3>
+            <h3 className="eyebrow text-brand-300">{c.services}</h3>
             <ul className="mt-4 space-y-0.5">
               {serviceNav.map((link) => (
                 <li key={link.href}>
@@ -86,9 +82,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <h3 className="eyebrow text-brand-300">
-              {c.company}
-            </h3>
+            <h3 className="eyebrow text-brand-300">{c.company}</h3>
             <ul className="mt-4 space-y-0.5">
               {companyNav.map((link) => (
                 <li key={link.href}>

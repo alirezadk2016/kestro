@@ -52,9 +52,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
     <section className="bg-brand-950 py-16 text-paper sm:py-24">
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-300">
-            {c.eyebrow}
-          </span>
+          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
             {c.title}
           </h2>

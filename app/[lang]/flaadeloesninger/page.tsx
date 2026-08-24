@@ -318,9 +318,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
       <section className="py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="eyebrow text-brand-600">
-              {c.eyebrow}
-            </span>
+            <span className="eyebrow text-brand-600">{c.eyebrow}</span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.capabilitiesTitle}
             </h2>
@@ -352,9 +350,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
       <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="eyebrow text-brand-600">
-              {c.tradeEyebrow}
-            </span>
+            <span className="eyebrow text-brand-600">{c.tradeEyebrow}</span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.tradeTitle}
             </h2>

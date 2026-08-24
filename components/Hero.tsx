@@ -64,9 +64,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <div className="rise">
               <div className="flex items-center gap-4">
                 <span className="h-px w-10 bg-brand-400" />
-                <span className="eyebrow text-brand-300">
-                  {c.eyebrow}
-                </span>
+                <span className="eyebrow text-brand-300">{c.eyebrow}</span>
               </div>
 
               <h1 className="mt-7 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
@@ -96,9 +94,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <dl className="rise rise-3 mt-10 grid max-w-lg grid-cols-3 border-t border-paper/15 sm:mt-12">
               {FACTS.map((fact) => (
                 <div key={fact.k.da} className="py-4 pr-6">
-                  <dt className="label text-brand-300">
-                    {fact.k[lang]}
-                  </dt>
+                  <dt className="label text-brand-300">{fact.k[lang]}</dt>
                   <dd className="mt-1 font-display text-base font-semibold tracking-tight text-paper sm:text-lg">
                     {fact.v[lang]}
                   </dd>

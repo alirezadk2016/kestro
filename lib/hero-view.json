@@ -1,26 +1,59 @@
 {
   "fov": 30,
   "distanceFactor": 2.35,
-  "yaw": 0.62,
-  "yawAmplitude": 0.17,
-  "yawPeriodSeconds": 22,
+  "startYaw": 0.62,
   "pitch": 0.36,
-  "exposure": 1.08,
+  "spinSeconds": 26,
+  "exposure": 0.82,
+  "hinge": [0.06, 0.36],
+  "lidClosedRadians": -1.75,
+  "lidTimings": {
+    "closeStart": 0.26,
+    "closeEnd": 0.38,
+    "openStart": 0.6,
+    "openEnd": 0.72
+  },
   "lights": {
-    "hemisphere": {
-      "sky": "#bfd0ff",
-      "ground": "#0b1330",
-      "intensity": 1.6
-    },
     "key": {
       "color": "#ffffff",
-      "intensity": 3.2,
+      "intensity": 1.0,
       "position": [4, 6, 5]
     },
     "rim": {
-      "color": "#6f8cff",
-      "intensity": 2.2,
+      "color": "#8fa8ff",
+      "intensity": 1.25,
       "position": [-5, 2, -4]
+    },
+    "fill": {
+      "color": "#4a63c8",
+      "intensity": 0.18,
+      "position": [-2, -3, 4]
     }
-  }
+  },
+  "studio": [
+    {
+      "position": [2.5, 7, 6],
+      "size": [14, 9],
+      "color": "#ffffff",
+      "intensity": 0.85
+    },
+    {
+      "position": [-8, 2.5, 2],
+      "size": [1.2, 16],
+      "color": "#dbe6ff",
+      "intensity": 5.0
+    },
+    {
+      "position": [6, 3, -8],
+      "size": [10, 7],
+      "color": "#5f7cf0",
+      "intensity": 1.9
+    },
+    {
+      "position": [0, -7, 1],
+      "size": [16, 16],
+      "color": "#141c38",
+      "intensity": 0.35
+    }
+  ]
 }

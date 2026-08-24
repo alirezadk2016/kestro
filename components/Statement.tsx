@@ -30,9 +30,7 @@ export default function Statement({ lang }: { lang: Lang }) {
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
             <span className="h-px w-8 bg-brand-600" />
-            <span className="eyebrow text-brand-600">
-              {c.label}
-            </span>
+            <span className="eyebrow text-brand-600">{c.label}</span>
           </div>
 
           <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">

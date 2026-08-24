@@ -86,9 +86,7 @@ export default function HeroSpec({ lang, className }: { lang: Lang; className?: 
       >
         {l.rows.map((row, i) => (
           <div key={row} className="min-w-0">
-            <dt className="label text-paper/40">
-              {row}
-            </dt>
+            <dt className="label text-paper/40">{row}</dt>
             <dd className="mt-1.5">
               {/* Keyed on the enquiry, so React swaps the element and the CSS
                   animation runs again. The fields are staggered by hand rather

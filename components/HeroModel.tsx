@@ -9,10 +9,14 @@ import type { Lang } from "@/lib/i18n";
 /*
  * The laptop in the hero.
  *
- * Every visitor gets the poster frame first: a 36 kB WebP rendered from this
- * very model, by scripts/render-hero-still.mjs, using the camera in
- * hero-view.json. Nothing here blocks it. The WebGL canvas is an upgrade that
- * loads afterwards and fades in on the same view, so the swap is invisible.
+ * Every visitor gets the poster frame first: a WebP that
+ * scripts/render-hero-still.mjs renders from lib/laptop-scene.mjs — the same
+ * module this file draws live — at frame zero of the same cycle. Nothing here
+ * blocks it. The WebGL canvas is an upgrade that loads afterwards and fades in
+ * on the identical view, so the swap is invisible.
+ *
+ * This file owns when and whether to render. What gets rendered lives in
+ * lib/laptop-scene.mjs, so the poster and the canvas cannot drift apart.
  *
  * The upgrade is skipped — poster frame only, forever — when the visitor asked
  * for less motion, turned on data saver, or is on a low-memory device. A
@@ -75,9 +79,9 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
     let cleanup: (() => void) | undefined;
 
     async function start() {
-      const [THREE, { GLTFLoader }] = await Promise.all([
+      const [THREE, { createLaptopScene }] = await Promise.all([
         import("three"),
-        import("three/examples/jsm/loaders/GLTFLoader.js"),
+        import("@/lib/laptop-scene.mjs"),
       ]);
       const element = canvas.current;
       if (disposed || !element) return;
@@ -89,30 +93,13 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
         powerPreference: "low-power",
       });
       renderer.setClearAlpha(0);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = view.exposure;
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(view.fov, 1, 0.01, 100);
-
-      const { hemisphere, key, rim } = view.lights;
-      scene.add(new THREE.HemisphereLight(hemisphere.sky, hemisphere.ground, hemisphere.intensity));
-      for (const light of [key, rim]) {
-        const directional = new THREE.DirectionalLight(light.color, light.intensity);
-        directional.position.set(light.position[0], light.position[1], light.position[2]);
-        scene.add(directional);
+      const laptop = await createLaptopScene(renderer, view);
+      if (disposed) {
+        laptop.dispose();
+        renderer.dispose();
+        return;
       }
-
-      const gltf = await new GLTFLoader().loadAsync("/models/laptop.glb");
-      if (disposed) return;
-
-      const model = gltf.scene;
-      const box = new THREE.Box3().setFromObject(model);
-      const size = box.getSize(new THREE.Vector3());
-      model.position.sub(box.getCenter(new THREE.Vector3()));
-      scene.add(model);
-
-      const radius = Math.max(size.x, size.y, size.z) * view.distanceFactor;
 
       function resize() {
         const box = element!.getBoundingClientRect();
@@ -120,8 +107,8 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
         // Capped at 2 so a 3× phone screen does not render nine times the pixels.
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(box.width, box.height, false);
-        camera.aspect = box.width / box.height;
-        camera.updateProjectionMatrix();
+        laptop.camera.aspect = box.width / box.height;
+        laptop.camera.updateProjectionMatrix();
       }
 
       resize();
@@ -134,14 +121,7 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
       function draw(now: number) {
         frame = requestAnimationFrame(draw);
         if (!drawing.current || document.hidden) return;
-
-        const seconds = (now - started) / 1000;
-        const sweep = Math.sin((seconds / view.yawPeriodSeconds) * Math.PI * 2) * view.yawAmplitude;
-        const yaw = view.yaw + sweep;
-
-        camera.position.set(Math.sin(yaw) * radius, view.pitch * radius, Math.cos(yaw) * radius);
-        camera.lookAt(0, 0, 0);
-        renderer.render(scene, camera);
+        laptop.draw((now - started) / 1000);
       }
 
       frame = requestAnimationFrame(draw);
@@ -150,13 +130,7 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
       cleanup = () => {
         cancelAnimationFrame(frame);
         observer.disconnect();
-        scene.traverse((node) => {
-          if (!(node instanceof THREE.Mesh)) return;
-          node.geometry.dispose();
-          for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
-            material.dispose();
-          }
-        });
+        laptop.dispose();
         renderer.dispose();
       };
     }
@@ -177,6 +151,19 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
 
   return (
     <div ref={holder} className={`relative aspect-[4/3] ${className ?? ""}`}>
+      {/* Backlight. The chassis is nearly as dark as the hero behind it — the
+          machine is meant to be dark — so it needs something behind it to have
+          a silhouette at all. This is the glow every product shot of a black
+          laptop is lit with, and it costs one gradient. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(55% 45% at 52% 44%, rgba(84,116,236,0.30) 0%, rgba(66,92,200,0.11) 45%, transparent 72%)",
+        }}
+      />
+
       {/* Contact shadow. Without something under it the laptop reads as a
           cut-out pasted onto the navy rather than an object standing on a
           surface, and a real shadow pass would cost frames for the same. */}

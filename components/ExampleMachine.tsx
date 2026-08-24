@@ -53,9 +53,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <span className="eyebrow text-brand-600">
-              {c.eyebrow}
-            </span>
+            <span className="eyebrow text-brand-600">{c.eyebrow}</span>
             <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
               {model.name}
             </h2>

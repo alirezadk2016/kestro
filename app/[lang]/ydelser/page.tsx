@@ -200,9 +200,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
       <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="eyebrow text-brand-600">
-              {c.eyebrow}
-            </span>
+            <span className="eyebrow text-brand-600">{c.eyebrow}</span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
               {c.processTitle}
             </h2>

@@ -37,11 +37,23 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## The hero laptop
 
-`public/models/laptop.glb` is built from `assets/laptop/scene.gltf` by
-`npm run build:model`, which also re-renders the poster frame
-`public/models/laptop-still.webp`. Both read their camera and lighting from
-`lib/hero-view.json`, so the still and the live canvas always show the same
-view — change the view in one place and re-run the script.
+`npm run build:model` turns `assets/laptop/scene.gltf` into the two files the
+site ships, then re-renders the poster frame:
+
+- `public/models/laptop-base.glb` — chassis, keyboard, ports
+- `public/models/laptop-lid.glb` — screen and lid shell
+- `public/models/laptop-still.webp` — the poster frame
+
+It is two files because the lid moves. The source is one rigid scene, so the
+build splits it by height — everything above the chassis is lid — and the site
+hangs the lid off a pivot at the hinge so it can open and close. The hinge, the
+closed angle, the camera, the lighting and the timing all live in
+`lib/hero-view.json`.
+
+`lib/laptop-scene.mjs` builds the scene, and both the live canvas
+(`components/HeroModel.tsx`) and the poster renderer
+(`scripts/render-hero-still.mjs`) use it, so the two cannot drift apart. Re-run
+`npm run build:model` after changing either the view file or the scene module.
 
 Every visitor sees the poster frame. The WebGL canvas is loaded afterwards,
 during an idle moment, and only when the visitor has not asked for reduced
