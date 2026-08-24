@@ -60,6 +60,13 @@ during an idle moment, and only when the visitor has not asked for reduced
 motion, has not turned on data saver, and is not on a low-memory device.
 three.js is a dynamic import, so it never reaches the initial bundle.
 
+`/maskinen` uses the same scene twice over: `components/MachineViewer.tsx`
+turns off the spin and steers it by pose instead, one pose per part, from
+`lib/machine-parts.ts`. The inside of that page is a drawing, not the model —
+the model is an outer shell with no components in it — so the board, the RAM
+slots and the rest are inline SVG in `components/MachineInside.tsx`, laid out
+from the same data file.
+
 **Licence:** the source model is a Sketchfab/Fab export. Confirm its licence
 terms before the site goes live — most Sketchfab models are CC-BY and require
 the author to be credited. If attribution is required, the credit belongs in

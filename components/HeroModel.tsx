@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import view from "@/lib/hero-view.json";
-import type { Lang } from "@/lib/i18n";
+import { localePath, type Lang } from "@/lib/i18n";
 
 /*
  * The laptop in the hero.
@@ -27,6 +28,14 @@ import type { Lang } from "@/lib/i18n";
 const alt = {
   da: "Bærbar erhvervscomputer, sat op til nordisk brug",
   en: "Business laptop, set up for Nordic use",
+} satisfies Record<Lang, string>;
+
+/* The hero's laptop is ambient — it turns on its own and takes no input. The
+   one that can be turned by hand lives on its own page, and this is the way
+   in: the whole thing is a link, with a label that appears on hover. */
+const explore = {
+  da: "Se maskinen del for del",
+  en: "See the machine part by part",
 } satisfies Record<Lang, string>;
 
 /** A tab in the background should not be spending the visitor's battery. */
@@ -58,7 +67,7 @@ function wantsTheUpgrade(reduced: boolean) {
 }
 
 export default function HeroModel({ lang, className }: { lang: Lang; className?: string }) {
-  const holder = useRef<HTMLDivElement>(null);
+  const holder = useRef<HTMLAnchorElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const [live, setLive] = useState(false);
   const reduced = useReducedMotion();
@@ -150,7 +159,12 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
   }, [reduced]);
 
   return (
-    <div ref={holder} className={`relative aspect-[4/3] ${className ?? ""}`}>
+    <Link
+      href={localePath("/maskinen", lang)}
+      ref={holder}
+      aria-label={explore[lang]}
+      className={`group relative block aspect-[4/3] ${className ?? ""}`}
+    >
       {/* Backlight. The chassis is nearly as dark as the hero behind it — the
           machine is meant to be dark — so it needs something behind it to have
           a silhouette at all. This is the glow every product shot of a black
@@ -190,6 +204,15 @@ export default function HeroModel({ lang, className }: { lang: Lang; className?:
           live ? "opacity-100" : "opacity-0"
         }`}
       />
-    </div>
+
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-[6%] flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        <span className="inline-flex min-h-[40px] items-center border border-paper/25 bg-brand-950/70 px-5 text-xs font-semibold tracking-tight text-paper backdrop-blur-sm">
+          {explore[lang]}
+        </span>
+      </span>
+    </Link>
   );
 }

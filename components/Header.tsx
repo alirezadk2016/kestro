@@ -62,6 +62,12 @@ export default function Header({ lang }: { lang: Lang }) {
                     {productsNav.models.label[lang]}
                   </Link>
                   <Link
+                    href={localePath(productsNav.machine.href, lang)}
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
+                  >
+                    {productsNav.machine.label[lang]}
+                  </Link>
+                  <Link
                     href={localePath(productsNav.quality.href, lang)}
                     className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
                   >
@@ -177,6 +183,13 @@ export default function Header({ lang }: { lang: Lang }) {
                   className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
                 >
                   {productsNav.models.label[lang]}
+                </Link>
+                <Link
+                  href={localePath(productsNav.machine.href, lang)}
+                  onClick={closeMobile}
+                  className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
+                >
+                  {productsNav.machine.label[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.quality.href, lang)}

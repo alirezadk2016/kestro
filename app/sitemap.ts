@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/flaadeloesninger", priority: 0.9 },
     { path: "/produkter", priority: 0.9 },
     { path: "/modeller", priority: 0.9 },
+    { path: "/maskinen", priority: 0.8 },
     { path: "/kvalitet", priority: 0.8 },
     { path: "/vejledninger", priority: 0.8 },
     { path: "/saelg-til-os", priority: 0.8 },

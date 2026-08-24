@@ -1,8 +1,8 @@
 {
   "fov": 30,
-  "distanceFactor": 2.35,
+  "distanceFactor": 2.4976,
   "startYaw": 0.62,
-  "pitch": 0.36,
+  "pitch": 0.3456,
   "spinSeconds": 26,
   "exposure": 0.82,
   "hinge": [0.06, 0.36],

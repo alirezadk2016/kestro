@@ -22,6 +22,7 @@ export const productsNav = {
   hub: { href: "/produkter", label: { da: "Hvad vi skaffer", en: "What we source" } },
   overview: { da: "Oversigt", en: "Overview" } as Localized,
   models: { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+  machine: { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   quality: { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
 };
 
@@ -29,6 +30,7 @@ export const serviceNav: NavLink[] = [
   { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
   { href: "/produkter", label: { da: "Hvad vi skaffer", en: "What we source" } },
   { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+  { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
   { href: "/saelg-til-os", label: { da: "Sælg jeres udstyr", en: "Sell your equipment" } },
   { href: "/reparation", label: { da: "Reparation", en: "Repairs" } },
