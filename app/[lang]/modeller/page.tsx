@@ -53,17 +53,12 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
-          <PageHeader
-            title={c.title}
-            description={c.description}
-          />
+          <PageHeader title={c.title} description={c.description} />
 
           <div className="mx-auto mt-10 max-w-3xl border border-paper-edge bg-paper-dim p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-ink-900">
-              {c.noShopTitle}
-            </h2>
+            <h2 className="text-base font-semibold text-ink-900">{c.noShopTitle}</h2>
             <p className="mt-2 text-base leading-7 text-ink-600">{c.noShopBody1}</p>
             <p className="mt-3 text-base leading-7 text-ink-600">{c.noShopBody2}</p>
             <Link

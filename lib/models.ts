@@ -218,7 +218,10 @@ export const models: Model[] = [
         },
       },
       {
-        title: { da: "Kan opgraderes i stedet for udskiftes", en: "Upgradable instead of replaceable" },
+        title: {
+          da: "Kan opgraderes i stedet for udskiftes",
+          en: "Upgradable instead of replaceable",
+        },
         description: {
           da: "Maskinen kan udvides med mere hukommelse, og SSD'en kan skiftes eller gøres større. Skal den holde et par år mere, er det en billig opgradering frem for et nyt indkøb.",
           en: "The machine takes more memory, and the SSD can be swapped or made larger. If it has to last another couple of years, that is a cheap upgrade rather than a new purchase.",
@@ -242,7 +245,10 @@ export const models: Model[] = [
         },
       },
       {
-        title: { da: "Batteriet kan skiftes på stedet", en: "The battery can be swapped on the spot" },
+        title: {
+          da: "Batteriet kan skiftes på stedet",
+          en: "The battery can be swapped on the spot",
+        },
         description: {
           da: "T480 har både et internt og et eksternt batteri. Det eksterne kan skiftes uden værktøj, og et nyt batteri koster en brøkdel af en ny maskine.",
           en: "The T480 has both an internal and an external battery. The external one can be changed without tools, and a new battery costs a fraction of a new machine.",
@@ -333,7 +339,10 @@ export const models: Model[] = [
         da: "Blandet brug: kontor, møder og lettere billedarbejde",
         en: "Mixed use: office, meetings and lighter image work",
       },
-      { da: "Arbejdspladser med Windows 11 som krav", en: "Workplaces where Windows 11 is a requirement" },
+      {
+        da: "Arbejdspladser med Windows 11 som krav",
+        en: "Workplaces where Windows 11 is a requirement",
+      },
     ],
     specs: [
       {
@@ -359,7 +368,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Grafik", en: "Graphics" },
@@ -567,7 +579,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Skærm", en: "Display" },
@@ -664,7 +679,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Skærm", en: "Display" },
@@ -758,7 +776,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Skærm", en: "Display" },
@@ -818,7 +839,7 @@ export const models: Model[] = [
     },
     intro: {
       da: 'Latitude 5000-serien er Dells svar på T-serien og EliteBook: en 14" erhvervsmaskine, der er lavet til at blive serviceret. To hukommelsessokler, netværksstik, HDMI og USB-C – den kan sættes ind i næsten enhver opsætning uden adaptere.',
-      en: 'The Latitude 5000 series is Dell\'s answer to the T series and the EliteBook: a 14" business machine made to be serviced. Two memory slots, Ethernet, HDMI and USB-C — it drops into almost any setup without adapters.',
+      en: "The Latitude 5000 series is Dell's answer to the T series and the EliteBook: a 14\" business machine made to be serviced. Two memory slots, Ethernet, HDMI and USB-C — it drops into almost any setup without adapters.",
     },
     goodFor: [
       { da: "Kontor og administration", en: "Office and administration" },
@@ -852,7 +873,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Skærm", en: "Display" },
@@ -943,7 +967,10 @@ export const models: Model[] = [
       },
       {
         label: { da: "Lagring", en: "Storage" },
-        value: { da: "256–512 GB NVMe SSD – kan udskiftes", en: "256–512 GB NVMe SSD — replaceable" },
+        value: {
+          da: "256–512 GB NVMe SSD – kan udskiftes",
+          en: "256–512 GB NVMe SSD — replaceable",
+        },
       },
       {
         label: { da: "Skærm", en: "Display" },

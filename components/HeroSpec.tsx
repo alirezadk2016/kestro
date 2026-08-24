@@ -1,17 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import type { Lang } from "@/lib/i18n";
 
 /*
- * The right half of the hero. Not decoration: it shows the thing we actually
+ * The band that closes the hero. Not decoration: it shows the thing we actually
  * do — a customer states a configuration, we go and find it. The values cycle
- * through three realistic enquiries so the panel is alive without resorting to
+ * through three realistic enquiries so the band is alive without resorting to
  * an abstract animation that means nothing.
  *
- * Models are ones that exist in the catalogue, so the panel never shows a
- * machine we have not written a page about.
+ * Laid out across the page rather than as a tall panel in the corner, which is
+ * what it used to be. A row of six short fields fits a phone in two columns,
+ * so the content is on the small screen instead of hidden from it.
+ *
+ * Models are ones that exist in the catalogue, so it never shows a machine we
+ * have not written a page about.
  */
 const labels = {
   da: {
@@ -30,44 +34,40 @@ const labels = {
 
 const enquiries = [
   {
-    values: {
-      da: ["120 stk.", "ThinkPad T14", "16 GB", "512 GB SSD", "Dansk", "Windows 11"],
-      en: ["120 units", "ThinkPad T14", "16 GB", "512 GB SSD", "Danish", "Windows 11"],
-    },
+    da: ["120 stk.", "ThinkPad T14", "16 GB", "512 GB SSD", "Dansk", "Windows 11"],
+    en: ["120 units", "ThinkPad T14", "16 GB", "512 GB SSD", "Danish", "Windows 11"],
   },
   {
-    values: {
-      da: ["40 stk.", "HP EliteBook 840", "32 GB", "1 TB SSD", "Norsk", "Windows 11"],
-      en: ["40 units", "HP EliteBook 840", "32 GB", "1 TB SSD", "Norwegian", "Windows 11"],
-    },
+    da: ["40 stk.", "HP EliteBook 840", "32 GB", "1 TB SSD", "Norsk", "Windows 11"],
+    en: ["40 units", "HP EliteBook 840", "32 GB", "1 TB SSD", "Norwegian", "Windows 11"],
   },
   {
-    values: {
-      da: ["8 stk.", "HP ZBook 15", "64 GB", "1 TB SSD", "Dansk", "Windows 11 Pro"],
-      en: ["8 units", "HP ZBook 15", "64 GB", "1 TB SSD", "Danish", "Windows 11 Pro"],
-    },
+    da: ["8 stk.", "HP ZBook 15", "64 GB", "1 TB SSD", "Dansk", "Windows 11 Pro"],
+    en: ["8 units", "HP ZBook 15", "64 GB", "1 TB SSD", "Danish", "Windows 11 Pro"],
   },
-];
+] satisfies Record<Lang, string[]>[];
 
-export default function HeroSpec({ lang }: { lang: Lang }) {
+const CYCLE_MS = 5000;
+
+export default function HeroSpec({ lang, className }: { lang: Lang; className?: string }) {
   const l = labels[lang];
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    // Someone who asked for less motion gets a static panel, not a slower one.
+    // Someone who asked for less motion gets a static band, not a slower one.
     if (reduced) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % enquiries.length), 4000);
+    const id = setInterval(() => setIndex((i) => (i + 1) % enquiries.length), CYCLE_MS);
     return () => clearInterval(id);
   }, [reduced]);
 
-  const values = enquiries[index].values[lang];
+  const values = enquiries[index][lang];
 
   return (
-    <div className="border border-paper/15 bg-paper/[0.04] backdrop-blur-sm">
-      <div className="flex items-center justify-between border-b border-paper/15 px-6 py-4">
+    <div className={`border-t border-paper/15 pt-8 ${className ?? ""}`}>
+      <div className="flex items-center justify-between gap-6">
         <span className="font-display text-sm font-bold tracking-tight text-paper">{l.title}</span>
-        <span className="flex items-center gap-2 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-300">
+        <span className="flex items-center gap-2 label text-brand-300">
           <span className="relative flex h-1.5 w-1.5">
             {!reduced && (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
@@ -78,34 +78,34 @@ export default function HeroSpec({ lang }: { lang: Lang }) {
         </span>
       </div>
 
-      <dl className="px-6 py-2">
+      {/* aria-live so a screen reader is told the values changed, rather than
+          silently reading whichever enquiry happened to be showing. */}
+      <dl
+        aria-live="polite"
+        className="mt-7 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-6"
+      >
         {l.rows.map((row, i) => (
-          <div
-            key={row}
-            className="flex items-baseline justify-between gap-6 border-b border-paper/10 py-3.5 last:border-b-0"
-          >
-            <dt className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-paper/40">
+          <div key={row} className="min-w-0">
+            <dt className="label text-paper/40">
               {row}
             </dt>
-            <dd className="min-w-0 text-right">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={`${index}-${i}`}
-                  initial={reduced ? false : { opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduced ? undefined : { opacity: 0, y: -6 }}
-                  transition={{ duration: 0.35, delay: reduced ? 0 : i * 0.04 }}
-                  className="block font-display text-base font-semibold tracking-tight text-paper"
-                >
-                  {values[i]}
-                </motion.span>
-              </AnimatePresence>
+            <dd className="mt-1.5">
+              {/* Keyed on the enquiry, so React swaps the element and the CSS
+                  animation runs again. The fields are staggered by hand rather
+                  than by an animation library. */}
+              <span
+                key={index}
+                style={{ animationDelay: `${i * 0.04}s` }}
+                className="swap-in block truncate font-display text-base font-semibold tracking-tight text-paper"
+              >
+                {values[i]}
+              </span>
             </dd>
           </div>
         ))}
       </dl>
 
-      <p className="border-t border-paper/15 px-6 py-4 text-xs leading-6 text-paper/50">{l.foot}</p>
+      <p className="mt-8 max-w-2xl text-xs leading-6 text-paper/50">{l.foot}</p>
     </div>
   );
 }

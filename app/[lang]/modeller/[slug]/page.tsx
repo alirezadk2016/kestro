@@ -55,11 +55,7 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({
-  params,
-}: {
-  params: { lang: Lang; slug: string };
-}): Metadata {
+export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
   const model = getModel(params.slug);
   if (!model) return {};
 
@@ -94,7 +90,10 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
-            <nav aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"} className="text-sm text-ink-400">
+            <nav
+              aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
+              className="text-sm text-ink-400"
+            >
               <Link
                 href={localePath("/modeller", lang)}
                 className="inline-flex min-h-[44px] items-center transition hover:text-white"
@@ -132,7 +131,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {model.images && (
-        <section className="py-16 sm:py-24">
+        <section className="py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
               <div className="aspect-[4/3] overflow-hidden border border-paper-edge bg-white sm:aspect-[16/10]">
@@ -170,7 +169,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         </section>
       )}
 
-      <section className={`py-16 sm:py-24 ${model.images ? "border-t border-paper-edge" : ""}`}>
+      <section className={`py-14 sm:py-24 ${model.images ? "border-t border-paper-edge" : ""}`}>
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="overflow-hidden border border-paper-edge">
@@ -200,7 +199,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             <ul className="mt-5 space-y-3">
               {model.goodFor.map((item) => (
                 <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-600">
-                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-accent-500" strokeWidth={2} />
+                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
                   {item[lang]}
                 </li>
               ))}
@@ -230,7 +229,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     <div key={reason.title.da}>
                       <dt className="flex gap-3 text-base font-semibold text-ink-900">
                         <Check
-                          className="mt-1 h-5 w-5 flex-shrink-0 text-accent-500"
+                          className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600"
                           strokeWidth={2}
                         />
                         {reason.title[lang]}
@@ -274,12 +273,10 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
+        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <h2 className="text-xl font-bold tracking-tight text-ink-900">
-                {c.related}
-              </h2>
+              <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.related}</h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
                   <li key={other.slug}>

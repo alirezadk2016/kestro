@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## The hero laptop
+
+`public/models/laptop.glb` is built from `assets/laptop/scene.gltf` by
+`npm run build:model`, which also re-renders the poster frame
+`public/models/laptop-still.webp`. Both read their camera and lighting from
+`lib/hero-view.json`, so the still and the live canvas always show the same
+view — change the view in one place and re-run the script.
+
+Every visitor sees the poster frame. The WebGL canvas is loaded afterwards,
+during an idle moment, and only when the visitor has not asked for reduced
+motion, has not turned on data saver, and is not on a low-memory device.
+three.js is a dynamic import, so it never reaches the initial bundle.
+
+**Licence:** the source model is a Sketchfab/Fab export. Confirm its licence
+terms before the site goes live — most Sketchfab models are CC-BY and require
+the author to be credited. If attribution is required, the credit belongs in
+the footer or on the privacy/legal page.

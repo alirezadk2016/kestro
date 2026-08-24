@@ -1,18 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { motion, MotionConfig } from "framer-motion";
+import HeroModel from "./HeroModel";
 import HeroSpec from "./HeroSpec";
 import { localePath, type Lang } from "@/lib/i18n";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: "easeOut" as const, delay },
-  }),
-};
+/*
+ * No "use client" here on purpose. The hero is text, two links and a table of
+ * facts — it renders on the server and ships no JavaScript of its own. The
+ * entrance is the .rise utility in globals.css, and only the two pieces that
+ * genuinely need the browser (the cycling enquiry panel, the WebGL laptop) are
+ * client components.
+ */
 
 /* Facts, not feature bullets. Set as a rule-separated row rather than pills —
    the pill-with-tiny-icon is the single most template-looking element there is. */
@@ -61,80 +58,72 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      <MotionConfig reducedMotion="user">
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-20 sm:px-6 sm:py-24 md:py-28 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-7">
-              <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
-                <div className="flex items-center gap-4">
-                  <span className="h-px w-10 bg-brand-400" />
-                  <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300 sm:text-xs">
-                    {c.eyebrow}
-                  </span>
-                </div>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-16 sm:px-6 sm:py-24 md:py-28 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <div className="rise">
+              <div className="flex items-center gap-4">
+                <span className="h-px w-10 bg-brand-400" />
+                <span className="eyebrow text-brand-300">
+                  {c.eyebrow}
+                </span>
+              </div>
 
-                <h1 className="mt-7 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
-                  {c.headline}
-                </h1>
+              <h1 className="mt-7 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
+                {c.headline}
+              </h1>
 
-                <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
-                  {c.sub}
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                custom={0.15}
-                variants={fadeUp}
-                className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
-              >
-                <Link
-                  href={localePath("/kontakt", lang)}
-                  className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
-                >
-                  {c.primary}
-                </Link>
-                <Link
-                  href={localePath("/produkter", lang)}
-                  className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
-                >
-                  {c.secondary}
-                </Link>
-              </motion.div>
-
-              <motion.dl
-                initial="hidden"
-                animate="visible"
-                custom={0.4}
-                variants={fadeUp}
-                className="mt-12 grid max-w-lg grid-cols-3 border-t border-paper/15"
-              >
-                {FACTS.map((fact) => (
-                  <div key={fact.k.da} className="py-4 pr-6">
-                    <dt className="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-300">
-                      {fact.k[lang]}
-                    </dt>
-                    <dd className="mt-1 font-display text-base font-semibold tracking-tight text-paper sm:text-lg">
-                      {fact.v[lang]}
-                    </dd>
-                  </div>
-                ))}
-              </motion.dl>
+              <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
+                {c.sub}
+              </p>
             </div>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.3}
-              variants={fadeUp}
-              className="hidden md:block lg:col-span-5"
-            >
-              <HeroSpec lang={lang} />
-            </motion.div>
+            <div className="rise rise-1 mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <Link
+                href={localePath("/kontakt", lang)}
+                className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
+              >
+                {c.primary}
+              </Link>
+              <Link
+                href={localePath("/produkter", lang)}
+                className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
+              >
+                {c.secondary}
+              </Link>
+            </div>
+
+            <dl className="rise rise-3 mt-10 grid max-w-lg grid-cols-3 border-t border-paper/15 sm:mt-12">
+              {FACTS.map((fact) => (
+                <div key={fact.k.da} className="py-4 pr-6">
+                  <dt className="label text-brand-300">
+                    {fact.k[lang]}
+                  </dt>
+                  <dd className="mt-1 font-display text-base font-semibold tracking-tight text-paper sm:text-lg">
+                    {fact.v[lang]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* On a wide screen the laptop is deliberately larger than its
+              column and leans into the page gutter, which the section clips.
+              Sized to the column it read as a thumbnail floating in a void. */}
+          <div className="rise rise-2 lg:col-span-5">
+            <HeroModel
+              lang={lang}
+              className="mx-auto w-full max-w-xs sm:max-w-sm lg:-ml-[14%] lg:w-[128%] lg:max-w-none"
+            />
           </div>
         </div>
-      </MotionConfig>
+
+        {/* The enquiry runs the full width under both columns. As a tall panel
+            beside the headline it made the hero half a screen too long and was
+            hidden on phones entirely; across the page it costs a fraction of
+            the height and fits a phone in two columns. */}
+        <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
+      </div>
     </section>
   );
 }

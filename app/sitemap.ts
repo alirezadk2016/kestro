@@ -52,7 +52,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const languages = { "da-DK": da, en, "x-default": da };
 
     return [
-      { url: da, lastModified, changeFrequency: "monthly" as const, priority, alternates: { languages } },
+      {
+        url: da,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority,
+        alternates: { languages },
+      },
       {
         url: en,
         lastModified,

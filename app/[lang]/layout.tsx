@@ -86,7 +86,9 @@ export default function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body className={`${inter.variable} ${archivo.variable} bg-paper font-sans text-ink-900 antialiased`}>
+      <body
+        className={`${inter.variable} ${archivo.variable} bg-paper font-sans text-ink-900 antialiased`}
+      >
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script

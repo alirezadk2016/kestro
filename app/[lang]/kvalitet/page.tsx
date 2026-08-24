@@ -200,12 +200,9 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
-          <PageHeader
-            title={c.title}
-            description={c.description}
-          />
+          <PageHeader title={c.title} description={c.description} />
 
           <div className="mx-auto mt-12 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -215,10 +212,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-8 space-y-4">
               {grades.map((grade) => (
-                <div
-                  key={grade.grade.da}
-                  className="border border-paper-edge bg-white p-5 sm:p-6"
-                >
+                <div key={grade.grade.da} className="border border-paper-edge bg-white p-5 sm:p-6">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <h3 className="text-lg font-bold text-ink-900">{grade.grade[lang]}</h3>
                     <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-700">
@@ -227,7 +221,8 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
                   </div>
                   <p className="mt-3 text-base leading-7 text-ink-600">{grade.description[lang]}</p>
                   <p className="mt-3 text-sm leading-6 text-ink-500">
-                    <span className="font-semibold text-ink-700">{c.suits}</span> {grade.suits[lang]}
+                    <span className="font-semibold text-ink-700">{c.suits}</span>{" "}
+                    {grade.suits[lang]}
                   </p>
                 </div>
               ))}
@@ -241,7 +236,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
+      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -252,7 +247,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {testPoints.map((point) => (
                 <li key={point.da} className="flex gap-3 text-sm leading-6 text-ink-600">
-                  <Check className="mt-1 h-4 w-4 flex-shrink-0 text-accent-500" strokeWidth={2.5} />
+                  <Check className="mt-1 h-4 w-4 flex-shrink-0 text-brand-600" strokeWidth={2.5} />
                   {point[lang]}
                 </li>
               ))}
@@ -263,7 +258,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -281,7 +276,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
+      <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -292,16 +287,14 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <ul className="mt-8 space-y-3">
               {disclosure.map((item) => (
                 <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-600">
-                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-accent-500" strokeWidth={2} />
+                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
                   {item[lang]}
                 </li>
               ))}
             </ul>
 
             <div className="mt-10 border border-paper-edge bg-white p-6 sm:p-8">
-              <h3 className="text-base font-semibold text-ink-900">
-                {c.notIncludedTitle}
-              </h3>
+              <h3 className="text-base font-semibold text-ink-900">{c.notIncludedTitle}</h3>
               <p className="mt-2 text-base leading-7 text-ink-600">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}

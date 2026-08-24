@@ -68,12 +68,9 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-14 sm:py-24">
       <Container>
-        <PageHeader
-          title={c.title}
-          description={c.description}
-        />
+        <PageHeader title={c.title} description={c.description} />
 
         <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
@@ -93,7 +90,9 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                   className="h-16 w-16 flex-shrink-0 rounded-full object-cover object-top"
                 />
                 <div>
-                  <h2 className="text-base font-semibold">{c.callDirect} {team[0].name}</h2>
+                  <h2 className="text-base font-semibold">
+                    {c.callDirect} {team[0].name}
+                  </h2>
                   <p className="text-sm text-ink-400">{team[0].role[lang]}</p>
                 </div>
               </div>

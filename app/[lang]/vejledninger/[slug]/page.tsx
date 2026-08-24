@@ -33,11 +33,7 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({
-  params,
-}: {
-  params: { lang: Lang; slug: string };
-}): Metadata {
+export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
   const guide = getGuide(params.slug);
   if (!guide) return {};
 
@@ -98,7 +94,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               {guide.title[lang]}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-brand-300">
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 label text-brand-300">
               <span>
                 {c.forWhom} {guide.audience[lang].toLowerCase()}
               </span>
@@ -117,7 +113,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         </Container>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
           <div className="max-w-3xl">
             {guide.sections.map((section) => (
@@ -165,7 +161,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
+        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
           <Container>
             <div className="max-w-3xl">
               <h2 className="font-display text-xl font-bold tracking-tight text-ink-900">

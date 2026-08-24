@@ -1,4 +1,3 @@
-
 import Container from "./Container";
 import type { Lang } from "@/lib/i18n";
 
@@ -53,7 +52,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
     <section className="bg-brand-950 py-16 text-paper sm:py-24">
       <Container>
         <div className="max-w-3xl">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-300">
+          <span className="eyebrow text-brand-300">
             {c.eyebrow}
           </span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">

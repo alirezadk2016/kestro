@@ -62,20 +62,6 @@ const config: Config = {
           900: "#1d2b62",
           950: "#111a3c",
         },
-
-        /* Accent points at the brand so highlights stay in the same hue. */
-        accent: {
-          50: "#eef2fd",
-          100: "#dce4fa",
-          200: "#bccbf6",
-          300: "#93a9ef",
-          400: "#6580e5",
-          500: "#4159d9",
-          600: "#2843c4",
-          700: "#2237a1",
-          800: "#203180",
-          900: "#1d2b62",
-        },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

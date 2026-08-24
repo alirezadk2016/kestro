@@ -77,10 +77,10 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-paper-edge bg-paper-dim py-16 sm:py-24">
+    <section className="border-b border-paper-edge bg-paper-dim py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+          <span className="eyebrow text-brand-600">
             {c.eyebrow}
           </span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">

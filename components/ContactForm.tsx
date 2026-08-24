@@ -21,8 +21,7 @@ const copy = {
     note: "åbnes din egen e-mailklient med beskeden udfyldt og klar til afsendelse til",
     noteLead: "Når du klikker",
     defaultSubject: "Henvendelse",
-    defaultPlaceholder:
-      "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
+    defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
     from: "fra",
     via: "via kestro.dk",
   },
@@ -97,14 +96,14 @@ export default function ContactForm({
   }
 
   const inputClasses =
-    "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-accent-100";
+    "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-100";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-ink-700">
-            {c.name} <span className="text-accent-500">*</span>
+            {c.name} <span className="text-brand-600">*</span>
           </label>
           <input
             id="navn"
@@ -122,7 +121,7 @@ export default function ContactForm({
           <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-ink-700">
             {c.company}{" "}
             {companyRequired ? (
-              <span className="text-accent-500">*</span>
+              <span className="text-brand-600">*</span>
             ) : (
               <span className="text-ink-400">{c.optional}</span>
             )}
@@ -141,7 +140,7 @@ export default function ContactForm({
 
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-700">
-            {c.email} <span className="text-accent-500">*</span>
+            {c.email} <span className="text-brand-600">*</span>
           </label>
           <input
             id="email"
@@ -173,7 +172,7 @@ export default function ContactForm({
 
       <div>
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-ink-700">
-          {c.message} <span className="text-accent-500">*</span>
+          {c.message} <span className="text-brand-600">*</span>
         </label>
         <textarea
           id="besked"

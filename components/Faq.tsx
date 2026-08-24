@@ -60,17 +60,19 @@ export default function Faq({
   title?: Localized;
 }) {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-14 sm:py-24">
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+        {/* Left-aligned like every other section heading on the site. It was
+            the one centred block, which is what made it read as bolted on. */}
+        <div className="max-w-2xl">
+          <h2 className="text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
             {title[lang]}
           </h2>
         </div>
 
         {/* Native <details> keeps this a server component: no JS, keyboard and
             screen-reader behaviour come for free. */}
-        <div className="mx-auto mt-10 max-w-3xl divide-y divide-paper-edge border-y border-paper-edge sm:mt-12">
+        <div className="mt-10 max-w-3xl divide-y divide-paper-edge border-y border-paper-edge sm:mt-12">
           {items.map((faq) => (
             <details key={faq.question.da} className="group">
               <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-ink-900 transition-colors hover:text-ink-900 [&::-webkit-details-marker]:hidden">

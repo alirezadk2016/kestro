@@ -142,7 +142,7 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
   const c = copy[lang];
 
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-14 sm:py-24">
       <Container>
         <PageHeader title={c.title} description={c.description} />
 

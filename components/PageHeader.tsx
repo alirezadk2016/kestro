@@ -1,6 +1,12 @@
 import { ReactNode } from "react";
 
-export default function PageHeader({ title, description }: { title: string; description: ReactNode }) {
+export default function PageHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: ReactNode;
+}) {
   return (
     <div className="mx-auto max-w-3xl">
       <h1 className="text-balance font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.03] tracking-display text-ink-900">

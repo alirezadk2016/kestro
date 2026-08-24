@@ -24,18 +24,14 @@ const copy = {
 export default function TeamSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
   return (
-    <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
+    <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
-            {c.eyebrow}
-          </span>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+          <span className="eyebrow text-brand-600">{c.eyebrow}</span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-4 text-base leading-7 text-ink-600">
-            {c.sub}
-          </p>
+          <p className="mt-4 text-base leading-7 text-ink-600">{c.sub}</p>
         </div>
 
         <div

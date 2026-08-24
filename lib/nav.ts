@@ -50,4 +50,5 @@ export const ui = {
   openMenu: { da: "Åbn eller luk menu", en: "Open or close menu" },
   breadcrumb: { da: "Brødkrumme", en: "Breadcrumb" },
   language: { da: "Sprog", en: "Language" },
+  callUs: { da: "Ring til os", en: "Call us" },
 } satisfies Record<string, Localized>;

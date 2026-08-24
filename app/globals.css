@@ -33,7 +33,58 @@ body {
   outline-offset: 2px;
 }
 
+@layer components {
+  /*
+   * Two small-caps labels, not the five near-identical ones that had grown
+   * across the pages. An eyebrow sits above a heading; a label names a value
+   * in a data row. Both were 10–11 px, which is under-sized on a phone, so
+   * they are set once here at a size that survives a small screen.
+   *
+   * Colour stays at the call site — these are the same label on paper and on
+   * navy.
+   */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.16em];
+  }
+
+  .label {
+    @apply font-medium uppercase tracking-[0.12em];
+    font-size: 0.7rem;
+  }
+}
+
 @layer utilities {
+  /*
+   * The hero's entrance. This used to be framer-motion, which cost 42 kB
+   * gzipped on the one page that used it and forced the whole hero to be a
+   * client component. Four elements fading up on load do not need a
+   * JavaScript animation library.
+   *
+   * Elements start at the finished state and the animation runs backwards
+   * from it, so if the stylesheet somehow never applies, the hero is visible
+   * rather than blank.
+   */
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .rise-1 {
+    animation-delay: 0.15s;
+  }
+
+  .rise-2 {
+    animation-delay: 0.3s;
+  }
+
+  .rise-3 {
+    animation-delay: 0.4s;
+  }
+
+  /* A value that has just changed in the enquiry panel. */
+  .swap-in {
+    animation: swap-in 0.35s ease-out backwards;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -41,5 +92,27 @@ body {
   /* Hairline rule that reads on both paper and ink. */
   .rule {
     border-color: rgba(18, 18, 16, 0.12);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Asked for less motion: everything arrives, nothing travels. */
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .swap-in {
+    animation: none;
   }
 }

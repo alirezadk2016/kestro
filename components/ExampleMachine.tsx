@@ -38,7 +38,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const image = model.images[0];
 
   return (
-    <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
+    <section className="border-b border-paper-edge bg-paper py-14 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="overflow-hidden border border-paper-edge bg-white">
@@ -53,15 +53,13 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            <span className="eyebrow text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
               {model.name}
             </h2>
-            <p className="mt-4 text-base leading-7 text-ink-600 sm:text-lg">
-              {c.body}
-            </p>
+            <p className="mt-4 text-base leading-7 text-ink-600 sm:text-lg">{c.body}</p>
 
             <ul className="mt-6 flex flex-wrap gap-2">
               {highlights.map((highlight) => (

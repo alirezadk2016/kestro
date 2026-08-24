@@ -19,8 +19,10 @@ const copy = {
     breadcrumbLabel: "Brødkrumme",
     breadcrumbHub: "Hvad vi skaffer",
     brandsTitle: "Mærker vi typisk arbejder med",
-    brandsBodyPre: "Vi sourcer per ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
-    brandsNote: "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
+    brandsBodyPre:
+      "Vi sourcer per ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
+    brandsNote:
+      "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     exampleEyebrow: "Eksempel på en maskine",
     imageNote:
       "Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal aftales for den enkelte ordre.",
@@ -37,7 +39,8 @@ const copy = {
     breadcrumbLabel: "Breadcrumb",
     breadcrumbHub: "What we source",
     brandsTitle: "Brands we usually work with",
-    brandsBodyPre: "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
+    brandsBodyPre:
+      "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     exampleEyebrow: "An example machine",
     imageNote:
@@ -53,11 +56,7 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({
-  params,
-}: {
-  params: { lang: Lang; slug: string };
-}): Metadata {
+export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
   const category = getCategory(params.slug);
   if (!category) return {};
 
@@ -124,7 +123,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-16 sm:py-24">
+      <section className="bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -151,10 +150,10 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       </section>
 
       {exampleModel?.images && (
-        <section className="py-16 sm:py-24">
+        <section className="py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+              <span className="eyebrow text-brand-600">
                 {c.exampleEyebrow}
               </span>
               <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -213,7 +212,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
+        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -254,7 +253,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-paper-edge py-16 sm:py-24">
+      <section className="border-t border-paper-edge py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -264,7 +263,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
             <dl className="mt-8 space-y-6">
               {category.useCases.map((useCase) => (
                 <div key={useCase.title.da} className="flex gap-4">
-                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-accent-500" strokeWidth={2} />
+                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
                   <div>
                     <dt className="text-base font-semibold text-ink-900">{useCase.title[lang]}</dt>
                     <dd className="mt-1 text-base leading-7 text-ink-600">
@@ -283,7 +282,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="border-t border-paper-edge bg-paper-dim py-16 sm:py-24">
+      <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.other}</h2>

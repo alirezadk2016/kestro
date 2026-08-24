@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
+import { company } from "@/lib/company";
 import { mainNav, productsNav, ui } from "@/lib/nav";
 import { localePath, stripLocale, langs, langLabel, type Lang } from "@/lib/i18n";
 
@@ -102,32 +103,47 @@ export default function Header({ lang }: { lang: Lang }) {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label={ui.openMenu[lang]}
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900 lg:hidden"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.8}
+        {/*
+          On a phone every way to reach us used to be behind the burger. For a
+          company whose enquiries start with a call, one tap to dial belongs in
+          the bar itself.
+        */}
+        <div className="flex items-center gap-1 lg:hidden">
+          <a
+            href={`tel:${company.phoneHref}`}
+            aria-label={ui.callUs[lang]}
+            className="inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-brand-700"
           >
-            {open ? (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
-              />
-            )}
-          </svg>
-        </button>
+            <Phone className="h-5 w-5" strokeWidth={1.9} />
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={ui.openMenu[lang]}
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.8}
+            >
+              {open ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </Container>
 
       {open && (

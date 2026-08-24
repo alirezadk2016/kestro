@@ -164,12 +164,9 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
-          <PageHeader
-            title={c.title}
-            description={c.description}
-          />
+          <PageHeader title={c.title} description={c.description} />
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {services.map((service) => (
@@ -200,10 +197,10 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
+      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            <span className="eyebrow text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -219,7 +216,9 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
                   </span>
                   <div>
                     <h3 className="text-lg font-semibold text-ink-900">{step.title[lang]}</h3>
-                    <p className="mt-2 text-base leading-7 text-ink-600">{step.description[lang]}</p>
+                    <p className="mt-2 text-base leading-7 text-ink-600">
+                      {step.description[lang]}
+                    </p>
                   </div>
                 </div>
               ))}

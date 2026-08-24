@@ -55,7 +55,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
 
   return (
     <>
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
@@ -72,7 +72,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
                     </span>
 
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-ink-400">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 label text-ink-400">
                         <span>
                           {c.forWhom} {guide.audience[lang].toLowerCase()}
                         </span>

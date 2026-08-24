@@ -1,0 +1,26 @@
+{
+  "fov": 30,
+  "distanceFactor": 2.35,
+  "yaw": 0.62,
+  "yawAmplitude": 0.17,
+  "yawPeriodSeconds": 22,
+  "pitch": 0.36,
+  "exposure": 1.08,
+  "lights": {
+    "hemisphere": {
+      "sky": "#bfd0ff",
+      "ground": "#0b1330",
+      "intensity": 1.6
+    },
+    "key": {
+      "color": "#ffffff",
+      "intensity": 3.2,
+      "position": [4, 6, 5]
+    },
+    "rim": {
+      "color": "#6f8cff",
+      "intensity": 2.2,
+      "position": [-5, 2, -4]
+    }
+  }
+}

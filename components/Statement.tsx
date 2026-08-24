@@ -25,12 +25,12 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-paper-edge bg-paper py-16 sm:py-24">
+    <section className="border-b border-paper-edge bg-paper py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
             <span className="h-px w-8 bg-brand-600" />
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            <span className="eyebrow text-brand-600">
               {c.label}
             </span>
           </div>

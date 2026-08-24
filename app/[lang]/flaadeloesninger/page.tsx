@@ -315,10 +315,10 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            <span className="eyebrow text-brand-600">
               {c.eyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -336,7 +336,9 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                   <item.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink-900 sm:mt-4">{item.title[lang]}</h3>
+                  <h3 className="text-base font-semibold text-ink-900 sm:mt-4">
+                    {item.title[lang]}
+                  </h3>
                   <p className="mt-1.5 text-sm leading-6 text-ink-600 sm:mt-2">
                     {item.description[lang]}
                   </p>
@@ -347,10 +349,10 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-16 sm:py-24">
+      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-600">
+            <span className="eyebrow text-brand-600">
               {c.tradeEyebrow}
             </span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
@@ -366,7 +368,9 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-ink-900">{step.title[lang]}</h3>
-                    <p className="mt-1 text-base leading-7 text-ink-600">{step.description[lang]}</p>
+                    <p className="mt-1 text-base leading-7 text-ink-600">
+                      {step.description[lang]}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -383,7 +387,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section id="forespoergsel" className="scroll-mt-24 py-16 sm:py-24">
+      <section id="forespoergsel" className="scroll-mt-24 py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="flex items-start gap-4">
@@ -417,7 +421,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-brand-950 py-16 sm:py-24">
+      <section className="relative overflow-hidden bg-brand-950 py-14 sm:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"

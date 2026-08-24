@@ -151,7 +151,10 @@ export const guides: Guide[] = [
     },
     sections: [
       {
-        heading: { da: "Tjek først, om det kan lade sig gøre", en: "First check whether it is possible" },
+        heading: {
+          da: "Tjek først, om det kan lade sig gøre",
+          en: "First check whether it is possible",
+        },
         body: [
           {
             da: "Mange tynde maskiner har hukommelsen loddet fast på bundkortet. Så kan den ikke skiftes – uanset hvad. ThinkPad X1 Carbon er et typisk eksempel. Slå din præcise model op hos producenten, eller kig i servicemanualen, som Lenovo, HP og Dell udgiver frit.",
@@ -551,7 +554,10 @@ export const guides: Guide[] = [
         ],
       },
       {
-        heading: { da: "For en virksomhed er det ikke nok", en: "For a company that is not enough" },
+        heading: {
+          da: "For en virksomhed er det ikke nok",
+          en: "For a company that is not enough",
+        },
         body: [
           {
             da: "Har maskinen indeholdt personoplysninger, skal I kunne dokumentere, at de er væk – ikke bare vide det. Forlang en sletterapport med serienummer for hver enkelt enhed fra den, der håndterer udstyret. Det er det dokument, I skal kunne lægge frem, hvis nogen spørger.",
