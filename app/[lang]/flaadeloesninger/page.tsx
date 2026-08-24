@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Users,
   Layers,
@@ -14,6 +13,7 @@ import {
   Keyboard,
 } from "lucide-react";
 import Container from "@/components/Container";
+import TeamAvatar from "@/components/TeamAvatar";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import { team } from "@/lib/company";
@@ -289,23 +289,19 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                 {c.sendEnquiry}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </Link>
-              <a
-                href={`tel:${team[0].phoneHref}`}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-              >
-                <Phone className="h-4 w-4" strokeWidth={2} />
-                {team[0].phoneDisplay}
-              </a>
+              {team[0].phoneHref && (
+                <a
+                  href={`tel:${team[0].phoneHref}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  <Phone className="h-4 w-4" strokeWidth={2} />
+                  {team[0].phoneDisplay}
+                </a>
+              )}
             </div>
 
             <div className="mt-8 flex items-center justify-center gap-3 text-sm text-ink-400">
-              <Image
-                src={team[0].photo}
-                alt={`${team[0].name}, ${team[0].role[lang]}`}
-                width={80}
-                height={80}
-                className="h-10 w-10 rounded-full object-cover object-top"
-              />
+              <TeamAvatar member={team[0]} lang={lang} size={40} className="h-10 w-10" />
               <span>
                 {c.talkTo} <span className="font-semibold text-white">{team[0].name}</span>,{" "}
                 {team[0].role[lang].toLowerCase()}

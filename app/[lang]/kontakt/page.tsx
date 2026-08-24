@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Phone } from "lucide-react";
 import Container from "@/components/Container";
+import TeamAvatar from "@/components/TeamAvatar";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
@@ -17,6 +17,7 @@ const copy = {
     description:
       "Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware klargjort til det nordiske marked.",
     callDirect: "Ring direkte til",
+    callUs: "Ring til os",
     busy: "Har I travlt, eller er det nemmere at tage det over telefonen?",
     mainNumber: "Hovednummer",
     emailTitle: "Foretrækker du email?",
@@ -39,6 +40,7 @@ const copy = {
     description:
       "Tell us what you need and get a no-obligation quote on refurbished business hardware prepared for the Nordic market.",
     callDirect: "Call",
+    callUs: "Call us",
     busy: "In a hurry, or easier to sort it out over the phone?",
     mainNumber: "Main number",
     emailTitle: "Prefer email?",
@@ -82,16 +84,13 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
           <div className="space-y-6 lg:col-span-2">
             <div className="border border-paper-edge bg-brand-950 p-6 text-white sm:p-8">
               <div className="flex items-center gap-4">
-                <Image
-                  src={team[0].photo}
-                  alt={`${team[0].name}, ${team[0].role[lang]} ${c.at} Kestro`}
-                  width={112}
-                  height={112}
-                  className="h-16 w-16 flex-shrink-0 rounded-full object-cover object-top"
-                />
+                <TeamAvatar member={team[0]} lang={lang} size={64} className="h-16 w-16" />
                 <div>
+                  {/* Named only when there is a direct line to name. On the
+                      main number, "call Mak directly" would be a promise the
+                      button does not keep. */}
                   <h2 className="text-base font-semibold">
-                    {c.callDirect} {team[0].name}
+                    {team[0].phoneHref ? `${c.callDirect} ${team[0].name}` : c.callUs}
                   </h2>
                   <p className="text-sm text-ink-400">{team[0].role[lang]}</p>
                 </div>
@@ -99,17 +98,21 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
               <p className="mt-4 text-sm leading-6 text-ink-300">{c.busy}</p>
 
+              {/* A direct line when there is one; otherwise the main number
+                  does the job rather than a placeholder standing in for it. */}
               <a
-                href={`tel:${team[0].phoneHref}`}
+                href={`tel:${team[0].phoneHref ?? company.phoneHref}`}
                 className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
               >
                 <Phone className="h-5 w-5" strokeWidth={2} />
-                {team[0].phoneDisplay}
+                {team[0].phoneDisplay ?? company.phoneDisplay}
               </a>
 
-              <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
-                {c.mainNumber}: {company.phoneDisplay}
-              </p>
+              {team[0].phoneHref && (
+                <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
+                  {c.mainNumber}: {company.phoneDisplay}
+                </p>
+              )}
             </div>
 
             <div className="border border-paper-edge bg-paper-dim p-6 sm:p-8">

@@ -24,25 +24,27 @@ export const company = {
 export type TeamMember = {
   name: string;
   role: Localized;
-  phoneDisplay: string;
-  phoneHref: string;
-  photo: string;
   /** Short intro shown on the team card. */
   bio: Localized;
-  /** Optional direct email — omit until the address actually exists. */
+  /**
+   * Everything below is optional on purpose. A card renders with a name, a
+   * role and the company address alone — a direct line, a personal address or
+   * a photo is added when there is a real one to add, not filled in with a
+   * placeholder.
+   */
+  phoneDisplay?: string;
+  phoneHref?: string;
+  photo?: string;
   email?: string;
 };
 
 export const team: TeamMember[] = [
   {
-    name: "Mehdi",
+    name: "Mak",
     role: { da: "Salgs- og marketingchef", en: "Head of Sales and Marketing" },
-    phoneDisplay: "+45 91 19 91 15",
-    phoneHref: "+4591199115",
-    photo: "/mehdi.jpg",
     bio: {
-      da: "Står for salg og kunderelationer hos Kestro. Ring, hvis I vil have et bud på en leverance, en flådeløsning eller en vurdering af jeres brugte udstyr.",
-      en: "Handles sales and customer relationships at Kestro. Call if you want a quote on a delivery, a fleet solution, or a valuation of your used equipment.",
+      da: "Står for salg og kunderelationer hos Kestro. Skriv, hvis I vil have et bud på en leverance, en flådeløsning eller en vurdering af jeres brugte udstyr.",
+      en: "Handles sales and customer relationships at Kestro. Write if you want a quote on a delivery, a fleet solution, or a valuation of your used equipment.",
     },
   },
 ];
