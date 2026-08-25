@@ -219,16 +219,18 @@ export default function ContactForm({
           </a>
         </div>
 
-        <p className="mt-5 text-sm leading-6 text-ink-500">
-          {c.orCall}{" "}
-          <a
-            href={`tel:${company.phoneHref}`}
-            className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
-          >
-            {company.phoneDisplay}
-          </a>
-          .
-        </p>
+        {company.phoneHref && (
+          <p className="mt-5 text-sm leading-6 text-ink-500">
+            {c.orCall}{" "}
+            <a
+              href={`tel:${company.phoneHref}`}
+              className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
+            >
+              {company.phoneDisplay}
+            </a>
+            .
+          </p>
+        )}
 
         <button
           type="button"

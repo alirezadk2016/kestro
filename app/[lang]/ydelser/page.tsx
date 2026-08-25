@@ -23,6 +23,7 @@ const copy = {
     metaTitle: "Ydelser | Indkøb, flåder, opgradering og opkøb af brugt IT | Kestro",
     metaDescription:
       "Alt vi hjælper virksomheder med: indkøb af renoveret IT-udstyr, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr, afsætning af overskudslager og opstart af nye arbejdspladser.",
+    stepLink: "Læs mere",
     title: "Det hjælper vi med",
     description:
       "Kestro er indkøbspartner på brugt erhvervs-IT. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.",
@@ -38,6 +39,7 @@ const copy = {
     metaTitle: "Services | Sourcing, fleets, upgrades and buy-back of used IT | Kestro",
     metaDescription:
       "Everything we help companies with: sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment, placing overstock, and setting up new workstations.",
+    stepLink: "Read more",
     title: "What we help with",
     description:
       "Kestro is a sourcing partner for used business IT. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.",
@@ -109,8 +111,8 @@ const services = [
       da: "Ligger der udstyr, der aldrig kom ud til kunderne – returvarer, demoenheder eller varer fra en aflyst ordre? Vi finder køberne i stedet for, at det står og taber værdi.",
       en: "Sitting on equipment that never reached a customer — returns, demo units or goods from a cancelled order? We find the buyers instead of letting it lose value on a shelf.",
     },
-    href: "/saelg-til-os",
-    linkLabel: { da: "Tal med os om afsætning", en: "Talk to us about placing it" },
+    href: "/ydelser/overskudslager-og-returvarer",
+    linkLabel: { da: "Læs mere", en: "Read more" },
   },
   {
     icon: Rocket,
@@ -119,14 +121,15 @@ const services = [
       da: "Skal alt stå klar til første arbejdsdag, hjælper vi med at vælge udstyret, klargøre det og få det leveret samlet – skærme, docks og kabler indregnet.",
       en: "If everything has to be ready for the first day of work, we help choose the equipment, prepare it and deliver it in one go — monitors, docks and cables included.",
     },
-    href: "/kontakt",
-    linkLabel: { da: "Tal med os om opstart", en: "Talk to us about setup" },
+    href: "/ydelser/opstart-af-arbejdspladser",
+    linkLabel: { da: "Læs mere", en: "Read more" },
   },
 ];
 
 const steps = [
   {
     icon: PackageSearch,
+    slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
       da: "Vi arbejder som indkøbspartner og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
@@ -135,6 +138,7 @@ const steps = [
   },
   {
     icon: ShieldCheck,
+    slug: "klargoering-og-test",
     title: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     description: {
       da: "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes sikkert, før enheden nulstilles.",
@@ -143,6 +147,7 @@ const steps = [
   },
   {
     icon: Keyboard,
+    slug: "nordisk-tilpasning",
     title: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     description: {
       da: "Tastaturet skiftes til dansk eller norsk layout, så æ, ø og å sidder korrekt. Windows installeres med drivere og sprogopsætning, og vi hjælper med at få licenserne på plads, så maskinerne kører lovligt fra dag ét.",
@@ -151,6 +156,7 @@ const steps = [
   },
   {
     icon: Truck,
+    slug: "levering",
     title: { da: "Levering til virksomheden", en: "Delivery to the company" },
     description: {
       da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Fordi vi sourcer per ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
@@ -208,17 +214,30 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-10 space-y-10">
               {steps.map((step) => (
-                <div key={step.title.da} className="flex gap-5 sm:gap-6">
+                <Link
+                  key={step.title.da}
+                  href={localePath(`/ydelser/${step.slug}`, lang)}
+                  className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/70 sm:gap-6"
+                >
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white text-brand-700 shadow-sm">
                     <step.icon className="h-5 w-5" strokeWidth={1.75} />
                   </span>
                   <div>
-                    <h3 className="text-lg font-semibold text-ink-900">{step.title[lang]}</h3>
+                    <h3 className="text-lg font-semibold text-ink-900 transition-colors group-hover:text-brand-700">
+                      {step.title[lang]}
+                    </h3>
                     <p className="mt-2 text-base leading-7 text-ink-600">
                       {step.description[lang]}
                     </p>
+                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
+                      {c.stepLink}
+                      <ArrowRight
+                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                        strokeWidth={2}
+                      />
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

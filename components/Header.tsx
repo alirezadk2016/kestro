@@ -114,13 +114,15 @@ export default function Header({ lang }: { lang: Lang }) {
           the bar itself.
         */}
         <div className="flex items-center gap-1 lg:hidden">
-          <a
-            href={`tel:${company.phoneHref}`}
-            aria-label={ui.callUs[lang]}
-            className="inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-brand-700"
-          >
-            <Phone className="h-5 w-5" strokeWidth={1.9} />
-          </a>
+          {company.phoneHref && (
+            <a
+              href={`tel:${company.phoneHref}`}
+              aria-label={ui.callUs[lang]}
+              className="inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-brand-700"
+            >
+              <Phone className="h-5 w-5" strokeWidth={1.9} />
+            </a>
+          )}
 
           <button
             type="button"

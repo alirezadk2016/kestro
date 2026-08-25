@@ -42,8 +42,8 @@ const sections: Section[] = [
     heading: { da: "Dataansvarlig", en: "Data controller" },
     body: [
       {
-        da: `${company.name}, ${company.locationShort.da}. E-mail: ${company.email}. Telefon: ${company.phoneDisplay}.`,
-        en: `${company.name}, ${company.locationShort.en}. Email: ${company.email}. Phone: ${company.phoneDisplay}.`,
+        da: `${company.name}, ${company.locationShort.da}. E-mail: ${company.email}.`,
+        en: `${company.name}, ${company.locationShort.en}. Email: ${company.email}.`,
       },
     ],
   },

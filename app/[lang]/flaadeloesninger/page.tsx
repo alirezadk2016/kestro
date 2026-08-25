@@ -6,7 +6,6 @@ import {
   Cpu,
   Repeat,
   CalendarClock,
-  FileSpreadsheet,
   ArrowRight,
   Phone,
   MonitorCog,
@@ -14,7 +13,6 @@ import {
 } from "lucide-react";
 import Container from "@/components/Container";
 import TeamAvatar from "@/components/TeamAvatar";
-import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import { team } from "@/lib/company";
 import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
@@ -73,14 +71,6 @@ const copy = {
     ctaButton: "Send enquiry",
   },
 } satisfies Record<Lang, Record<string, string>>;
-
-const formCopy = {
-  subjectPrefix: { da: "Flådeforespørgsel", en: "Fleet enquiry" },
-  messagePlaceholder: {
-    da: "Fx: 120 bærbare til kontorbrug, min. 16 GB RAM og 512 GB SSD, gerne opgraderbare. Vi skal samtidig af med ca. 100 ældre maskiner. Ønsket levering: inden udgangen af næste kvartal.",
-    en: "For example: 120 laptops for office use, at least 16 GB memory and a 512 GB SSD, ideally upgradable. We also need to get rid of about 100 older machines. Wanted delivery: before the end of next quarter.",
-  },
-};
 
 export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
   const c = copy[params.lang];
@@ -283,7 +273,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
-                href="#forespoergsel"
+                href={localePath("/flaadeloesninger/forespoergsel", lang)}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim"
               >
                 {c.sendEnquiry}
@@ -379,32 +369,6 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section id="forespoergsel" className="scroll-mt-24 py-14 sm:py-24">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <div className="flex items-start gap-4">
-              <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-ink-100 text-ink-800">
-                <FileSpreadsheet className="h-5 w-5" strokeWidth={1.75} />
-              </span>
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
-                  {c.formTitle}
-                </h2>
-                <p className="mt-3 text-base leading-7 text-ink-600">{c.formBody}</p>
-              </div>
-            </div>
-
-            <div className="mt-8 border border-paper-edge bg-white p-6 sm:p-8">
-              <ContactForm
-                lang={lang}
-                subjectPrefix={formCopy.subjectPrefix}
-                messagePlaceholder={formCopy.messagePlaceholder}
-              />
-            </div>
-          </div>
-        </Container>
-      </section>
-
       <div className="border-t border-paper-edge bg-paper-dim">
         <Faq
           lang={lang}
@@ -433,7 +397,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               {team[0].phoneDisplay}
             </a>
             <Link
-              href="#forespoergsel"
+              href={localePath("/flaadeloesninger/forespoergsel", lang)}
               className="inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               {c.ctaButton}

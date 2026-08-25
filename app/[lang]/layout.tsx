@@ -60,7 +60,7 @@ export default function RootLayout({
     url: "https://www.kestro.dk",
     description: meta[lang].description,
     email: company.email,
-    telephone: company.phoneDisplay,
+    ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
     /* Street and CVR are added to the schema the moment they exist in
        lib/company.ts, so the structured data never claims an address the site
        does not show. */
@@ -75,7 +75,7 @@ export default function RootLayout({
     areaServed: ["DK", "NO"],
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: company.phoneDisplay,
+      ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
       email: company.email,
       contactType: "sales",
       areaServed: ["DK", "NO"],

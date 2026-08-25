@@ -98,17 +98,19 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
               <p className="mt-4 text-sm leading-6 text-ink-300">{c.busy}</p>
 
-              {/* A direct line when there is one; otherwise the main number
-                  does the job rather than a placeholder standing in for it. */}
-              <a
-                href={`tel:${team[0].phoneHref ?? company.phoneHref}`}
-                className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
-              >
-                <Phone className="h-5 w-5" strokeWidth={2} />
-                {team[0].phoneDisplay ?? company.phoneDisplay}
-              </a>
+              {/* A direct line when there is one; otherwise the card sends
+                  people to the form and the address, which do work. */}
+              {(team[0].phoneHref || company.phoneHref) && (
+                <a
+                  href={`tel:${team[0].phoneHref || company.phoneHref}`}
+                  className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
+                >
+                  <Phone className="h-5 w-5" strokeWidth={2} />
+                  {team[0].phoneDisplay || company.phoneDisplay}
+                </a>
+              )}
 
-              {team[0].phoneHref && (
+              {team[0].phoneHref && company.phoneDisplay && (
                 <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
                   {c.mainNumber}: {company.phoneDisplay}
                 </p>
@@ -128,10 +130,12 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                   <dt className="text-ink-500">{c.fieldCompany}</dt>
                   <dd className="font-medium text-ink-900">{company.name}</dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldPhone}</dt>
-                  <dd className="font-medium text-ink-900">{company.phoneDisplay}</dd>
-                </div>
+                {company.phoneDisplay && (
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink-500">{c.fieldPhone}</dt>
+                    <dd className="font-medium text-ink-900">{company.phoneDisplay}</dd>
+                  </div>
+                )}
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink-500">{c.fieldEmail}</dt>
                   <dd className="font-medium text-ink-900">{company.email}</dd>

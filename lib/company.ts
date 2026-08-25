@@ -7,10 +7,20 @@ import type { Lang, Localized } from "./i18n";
 export const company = {
   name: "Kestro",
   email: "info@kestro.dk",
-  /** Display format (Danish convention: 8 digits, grouped in pairs) */
-  phoneDisplay: "+45 91 48 88 43",
-  /** tel: href format */
-  phoneHref: "+4591488843",
+  /*
+   * Empty until there is a number to publish. Nothing renders a phone that is
+   * not here — the header's call button, the contact card, the footer's legal
+   * line and the Organization schema all check first — so the site simply
+   * routes people to email and the form instead.
+   *
+   * Left blank rather than printed as "+45 XX XX XX XX" for the same reason
+   * "CVR: Tilføjes snarest" came out: a visible placeholder tells a buyer the
+   * company is not ready. Filling these two fields in turns the phone back on
+   * everywhere at once.
+   */
+  phoneDisplay: "" as string,
+  /** tel: href format, digits and a leading +. */
+  phoneHref: "" as string,
   city: "Aarhus",
   country: { da: "Danmark", en: "Denmark" } as Localized,
   /** Shown wherever a short location line is needed */
