@@ -3,24 +3,24 @@ import type { Lang } from "@/lib/i18n";
 
 const benefits = [
   {
-    title: { da: "Længere levetid", en: "A longer life" },
+    title: { da: "Maskiner der bliver i brug", en: "Machines that stay in use" },
     description: {
-      da: "Renoveret hardware forlænger enhedernes levetid, i stedet for at de kasseres for tidligt.",
-      en: "Refurbishing keeps machines in use instead of scrapping them before their time.",
+      da: "Vi køber maskiner, der stadig kan arbejde, og sætter dem i drift igen i stedet for at de bliver skiftet ud efter tre år.",
+      en: "We buy machines that can still do the work and put them back into service, rather than seeing them replaced after three years.",
     },
   },
   {
     title: { da: "Kvalitet & tillid", en: "Quality and trust" },
     description: {
-      da: "Alle enheder er funktionstestet og klargjort, så jeres medarbejdere får pålideligt udstyr fra dag ét.",
-      en: "Every machine is function-tested and prepared, so your staff get equipment they can rely on from day one.",
+      da: "Vi funktionstester og klargør hver maskine, før den sendes videre, og oplyser stand og batteritilstand skriftligt.",
+      en: "We function-test and prepare each machine before it goes on, and report its condition and battery state in writing.",
     },
   },
   {
-    title: { da: "Bedre økonomi", en: "Better economics" },
+    title: { da: "Prisen ligger fast, før I bestiller", en: "The price is fixed before you order" },
     description: {
-      da: "Få samme ydeevne til en brøkdel af prisen på nyt udstyr – ideelt til større indkøb.",
-      en: "The same performance for a fraction of the new price — which matters most on larger purchases.",
+      da: "I får en pris per maskine i tilbuddet og kan holde den op mod et tilsvarende nyt indkøb. Vi regner ikke med besparelser, I ikke kan efterprøve.",
+      en: "You get a price per machine in the quote and can hold it against a comparable new purchase. We do not quote savings you cannot check.",
     },
   },
   {
@@ -36,12 +36,12 @@ const copy = {
   da: {
     eyebrow: "Hvorfor Kestro",
     title: "Hvorfor virksomheder vælger Kestro",
-    sub: "Vi bygger bro mellem overskudshardware i Sydeuropa og virksomheder i Norden, der ønsker pålidelig IT-hardware uden den høje pris eller miljøbelastning fra nyt udstyr.",
+    sub: "Vi køber brugt erhvervshardware i Sydeuropa, klargør det til nordisk brug og leverer det til virksomheder i Danmark og Norge.",
   },
   en: {
     eyebrow: "Why Kestro",
     title: "Why companies choose Kestro",
-    sub: "We bridge surplus hardware in southern Europe and companies in the Nordics that want dependable IT without the price or the environmental cost of buying new.",
+    sub: "We buy used business hardware in southern Europe, prepare it for Nordic use and deliver it to companies in Denmark and Norway.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

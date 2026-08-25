@@ -95,8 +95,8 @@ const services = [
     icon: BatteryCharging,
     title: { da: "Batteriskift", en: "Battery replacement" },
     description: {
-      da: "Holder den bærbare ikke længere en arbejdsdag? Et nyt batteri koster en brøkdel af en ny maskine.",
-      en: "Laptop no longer lasting a working day? A new battery costs a fraction of a new machine.",
+      da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
+      en: "Laptop no longer lasting a working day? The battery is one of the cheapest parts to change — we quote the price before we start.",
     },
   },
   {

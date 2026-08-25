@@ -11,20 +11,20 @@ const copy = {
   da: {
     metaTitle: "Om os | Kestro",
     metaDescription:
-      "Kestro forbinder overskudshardware i Sydeuropa med virksomheder i Norden, der har brug for pålidelig IT uden nyprisen.",
+      "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Norden, der skal bruge testet IT-udstyr uden at købe nyt.",
     title: "Om Kestro",
     description:
-      "Vi bygger bro mellem overskudshardware i Sydeuropa og virksomheder i Danmark og Norge, der ønsker pålidelig IT-hardware uden den høje pris på nyt udstyr.",
+      "Vi bygger bro mellem brugt erhvervshardware i Sydeuropa og virksomheder i Danmark og Norge, der hellere vil have en testet maskine til opgaven end en ny til listepris.",
     quote:
       "De fleste ringer til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
   en: {
     metaTitle: "About us | Kestro",
     metaDescription:
-      "Kestro connects surplus hardware in southern Europe with companies in the Nordics that need dependable IT without paying new prices.",
+      "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
     title: "About Kestro",
     description:
-      "We bridge surplus hardware in southern Europe and companies in Denmark and Norway that want dependable IT hardware without the high price of buying new.",
+      "We bridge used business hardware in southern Europe and companies in Denmark and Norway that would rather have a tested machine for the job than a new one at list price.",
     quote:
       "Most people call us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
   },
@@ -58,8 +58,8 @@ const sections = [
       en: "The advantage of holding no stock",
     },
     description: {
-      da: "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi sourcer til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver. Samtidig forlænger renoveret udstyr enhedernes levetid og giver typisk samme ydeevne til en brøkdel af nyprisen.",
-      en: "When a supplier has bought big in advance, that stock has to move — and what you get offered is what is on the shelf. Because we source for the individual order, we can go after the specifications the job actually needs instead. Refurbishing also keeps machines in use longer, and usually gives the same performance for a fraction of the new price.",
+      da: "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi sourcer til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver, og sætte en maskine i drift igen frem for at den skiftes ud.",
+      en: "When a supplier has bought big in advance, that stock has to move — and what you get offered is what is on the shelf. Because we source for the individual order, we can go after the specifications the job actually needs instead, and put a machine back into service rather than see it replaced.",
     },
   },
   {

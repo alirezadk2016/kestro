@@ -23,14 +23,14 @@ const copy = {
   da: {
     eyebrow: "Indkøbspartner på renoveret erhvervs-IT",
     headline: "Erhvervscomputere.\nKlar til Norden.",
-    sub: "Vi forbinder jer med de rigtige leverandører – så I får den rette pris og de rette garantivilkår. Fra enkelte maskiner til hele medarbejderflåden.",
+    sub: "Vi finder maskinerne hos de rigtige leverandører og oplyser pris, stand og garantivilkår skriftligt, før I bestiller. Fra enkelte maskiner til hele medarbejderflåden.",
     primary: "Få tilbud på jeres IT-behov",
     secondary: "Se hvad vi skaffer",
   },
   en: {
     eyebrow: "Sourcing partner for refurbished business IT",
     headline: "Business computers.\nReady for the Nordics.",
-    sub: "We connect you with the right suppliers — so you get the right price and the right warranty terms. From single machines to the whole staff fleet.",
+    sub: "We find the machines with the right suppliers and put the price, the condition and the warranty terms in writing before you order. From single machines to the whole staff fleet.",
     primary: "Get a quote for your IT needs",
     secondary: "See what we source",
   },

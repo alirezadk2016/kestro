@@ -175,8 +175,8 @@ const tradeInSteps = [
   {
     title: { da: "Afhentning og datasletning", en: "Collection and data erasure" },
     description: {
-      da: "Vi henter det gamle udstyr og sletter alle data, før enhederne klargøres til videresalg.",
-      en: "We collect the old equipment and erase all data before the machines are prepared for resale.",
+      da: "Vi henter det gamle udstyr og sletter data på lagermedierne, før enhederne klargøres til videresalg. Skal I bruge dokumentation for sletningen, aftaler vi det på forhånd.",
+      en: "We collect the old equipment and erase the storage media before the machines are prepared for resale. If you need documentation of the erasure, we agree that up front.",
     },
   },
   {

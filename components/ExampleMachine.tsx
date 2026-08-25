@@ -14,18 +14,18 @@ const highlights = [
   { da: "Erhvervsserie – ikke en forbrugermodel", en: "Business range — not a consumer model" },
   { da: "RAM og SSD kan skiftes", en: "Memory and SSD can be changed" },
   { da: "Dansk eller norsk tastatur", en: "Danish or Norwegian keyboard" },
-  { da: "Windows installeret og klar", en: "Windows installed and ready" },
+  { da: "Windows sat op – licens aftales", en: "Windows set up — licence agreed with you" },
 ];
 
 const copy = {
   da: {
     eyebrow: "Et konkret eksempel",
-    body: "Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en erhvervsmodel, der kan repareres og opgraderes, med nordisk tastatur og Windows installeret. Vi har den ikke på lager – vi finder den, når I har brug for den.",
+    body: "Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en erhvervsmodel, der kan repareres og opgraderes, med nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
     link: "Se specifikationer og flere billeder",
   },
   en: {
     eyebrow: "One concrete example",
-    body: "This is what a typical machine looks like when we source laptops for a company: a business model that can be repaired and upgraded, with a Nordic keyboard and Windows installed. We do not hold it in stock — we find it when you need it.",
+    body: "This is what a typical machine looks like when we source laptops for a company: a business model that can be repaired and upgraded, with a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
     link: "See specifications and more photos",
   },
 } satisfies Record<Lang, Record<string, string>>;

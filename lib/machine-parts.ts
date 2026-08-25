@@ -220,8 +220,8 @@ export const interiorParts: InteriorPart[] = [
       en: "The space the machine works in right now. Too little of it and Windows writes to the disk instead, and everything slows down — even with a perfectly good processor.",
     },
     upgrade: {
-      da: "Det billigste, der virkelig kan mærkes. En maskine med 8 GB til 16 GB koster en brøkdel af en ny maskine. Vi opgraderer som standard, før vi leverer.",
-      en: "The cheapest change you actually notice. Taking a machine from 8 GB to 16 GB costs a fraction of a new one. We upgrade as standard before delivery.",
+      da: "Den opgradering, der oftest kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
+      en: "The upgrade that most often makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
     },
     swappable: "yes",
     region: { x: 372, y: 168, width: 236, height: 96 },
@@ -240,8 +240,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Where Windows, the programs and the files live. An old spinning hard disk is the single part that makes an otherwise decent machine unusable.",
     },
     upgrade: {
-      da: "Skiftes på få minutter. Alt udstyr, vi sender videre, har SSD – og disken fra den gamle maskine slettes efter anerkendt standard, før den forlader os.",
-      en: "Changed in minutes. Everything we pass on has an SSD — and the disk from the old machine is erased to a recognised standard before it leaves us.",
+      da: "Skiftes på få minutter. Alt udstyr, vi sender videre, har SSD – og disken fra den gamle maskine slettes, før den forlader os. Vi oplyser, hvilken metode der er brugt.",
+      en: "Changed in minutes. Everything we pass on has an SSD — and the disk from the old machine is erased before it leaves us. We tell you which method was used.",
     },
     swappable: "yes",
     region: { x: 660, y: 150, width: 268, height: 78 },

@@ -20,7 +20,7 @@ const copy = {
     buyNote: "Er I i tvivl, om jeres udstyr er relevant? Spørg os – vi kigger gerne på det.",
     dataTitle: "Datasikkerhed",
     dataBody:
-      "Alle enheder får slettet data, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – f.eks. i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
+      "Enhederne får slettet lagermedierne, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – f.eks. i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
     fleetTitle: "Skal hele flåden skiftes ud på én gang?",
     fleetBody:
       "Så kan vi håndtere begge ender: vi køber det gamle udstyr og leverer de nye enheder. Værdien af det brugte kan modregnes i det nye indkøb, så I får én aftale i stedet for to forløb.",
@@ -45,7 +45,7 @@ const copy = {
     buyNote: "Not sure whether your equipment is relevant? Ask us — we are happy to look at it.",
     dataTitle: "Data security",
     dataBody:
-      "Every device has its data erased before it is prepared for resale. If you have specific requirements for erasure documentation — for your GDPR procedures, for instance — say so when you contact us and we agree how it is handled.",
+      "Machines have their storage media erased before they are prepared for resale. If you have specific requirements for erasure documentation — for your GDPR procedures, for instance — say so when you contact us and we agree how it is handled.",
     fleetTitle: "Replacing the whole fleet at once?",
     fleetBody:
       "Then we can handle both ends: we buy the old equipment and deliver the new machines. The value of the used kit can be offset against the new purchase, so you get one agreement instead of two processes.",

@@ -357,8 +357,8 @@ export const categories: Category[] = [
       },
     ],
     specNote: {
-      da: "Alle enheder leveres nulstillet og afmeldt tidligere konti, klar til jeres opsætning.",
-      en: "Every device arrives reset and released from previous accounts, ready for your setup.",
+      da: "Enhederne leveres nulstillet og afmeldt tidligere konti, klar til jeres opsætning.",
+      en: "Machines arrive reset and released from previous accounts, ready for your setup.",
     },
   },
   {
@@ -484,8 +484,8 @@ export const categories: Category[] = [
       en: "Refurbished gaming PCs, gaming laptops and hardware — ROG, Legion, Alienware, Predator. For individuals, esports and companies in Denmark and Norway.",
     },
     intro: {
-      da: "Gaming-maskiner har typisk kraftig hardware, der holder i mange år. Renoverede enheder giver adgang til høj ydelse til en brøkdel af nyprisen – både til private, e-sportsmiljøer og virksomheder med tunge grafikopgaver.",
-      en: "Gaming machines are built with strong hardware that stays useful for years. Buying them refurbished gets you that performance for a fraction of the new price — for individuals, for esports setups and for companies with heavy graphics work.",
+      da: "Gaming-maskiner er bygget med kraftig hardware. Brugte enheder er en vej til den slags ydelse uden at købe nyt – både til private, e-sportsmiljøer og virksomheder med tunge grafikopgaver.",
+      en: "Gaming machines are built with powerful hardware. Buying used is a route to that kind of performance without buying new — for individuals, for esports setups and for companies with heavy graphics work.",
     },
     brands: [
       "ASUS ROG",

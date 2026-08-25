@@ -250,8 +250,8 @@ export const models: Model[] = [
           en: "The battery can be swapped on the spot",
         },
         description: {
-          da: "T480 har både et internt og et eksternt batteri. Det eksterne kan skiftes uden værktøj, og et nyt batteri koster en brøkdel af en ny maskine.",
-          en: "The T480 has both an internal and an external battery. The external one can be changed without tools, and a new battery costs a fraction of a new machine.",
+          da: "T480 har både et internt og et eksternt batteri. Det eksterne kan skiftes uden værktøj, og batteriet er en billig del at skifte.",
+          en: "The T480 has both an internal and an external battery. The external one can be changed without tools, and the battery is a cheap part to replace.",
         },
       },
     ],

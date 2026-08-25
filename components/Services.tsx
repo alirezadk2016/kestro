@@ -14,7 +14,7 @@ const services = [
   {
     title: { da: "Klargøring & test", en: "Preparation and testing" },
     description: {
-      da: "Hver enhed gennemgår en fuld funktionstest, opgraderes med mere RAM og nulstilles til fabriksstand.",
+      da: "Hver enhed funktionstestes, opgraderes med mere RAM og får styresystemet sat op fra bunden.",
       en: "Every machine goes through a full function test, gets more memory where needed and is reset to factory state.",
     },
   },
@@ -38,13 +38,13 @@ const copy = {
   da: {
     eyebrow: "Processen",
     title: "Fra brugt til klar til brug",
-    sub: "Sådan bliver renoveret hardware til en pålidelig del af jeres IT-flåde.",
+    sub: "Fra maskinen står i Sydeuropa, til den er sat op på et skrivebord i Danmark eller Norge.",
     link: "Se hele processen",
   },
   en: {
     eyebrow: "The process",
     title: "From used to ready to use",
-    sub: "How refurbished hardware becomes a dependable part of your IT fleet.",
+    sub: "From the machine sitting in southern Europe to it being set up on a desk in Denmark or Norway.",
     link: "See the whole process",
   },
 } satisfies Record<Lang, Record<string, string>>;
