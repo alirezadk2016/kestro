@@ -53,29 +53,29 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-paper-edge bg-paper py-14 sm:py-24">
+    <section className="lit lit-paper border-b border-paper-edge bg-paper py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-600">{c.eyebrow}</span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-8 text-ink-600">{c.sub}</p>
+          <p className="mt-5 text-base leading-7 text-ink-600">{c.sub}</p>
         </div>
 
-        <ol className="mt-12 grid grid-cols-1 border-t border-ink-900/12 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-10 grid grid-cols-2 gap-x-6 border-t border-ink-900/12 lg:grid-cols-4 lg:gap-x-0">
           {services.map((service, i) => (
             <li
               key={service.title.da}
-              className="border-b border-ink-900/10 py-7 pr-8 sm:border-b-0 sm:border-r sm:border-ink-900/10 sm:pl-8 sm:first:pl-0 lg:last:border-r-0"
+              className="border-b border-ink-900/10 py-6 lg:border-b-0 lg:border-r lg:border-ink-900/10 lg:py-7 lg:pl-8 lg:pr-8 lg:first:pl-0 lg:last:border-r-0"
             >
-              <span className="font-display text-3xl font-extrabold tabular-nums tracking-display text-ink-500">
+              <span className="font-display text-2xl font-extrabold tabular-nums tracking-display text-ink-500 lg:text-3xl">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-ink-900">
+              <h3 className="mt-3 font-display text-base font-bold tracking-tight text-ink-900 lg:mt-4 lg:text-lg">
                 {service.title[lang]}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-ink-600">{service.description[lang]}</p>
+              <p className="mt-2 text-sm leading-6 text-ink-600">{service.description[lang]}</p>
             </li>
           ))}
         </ol>

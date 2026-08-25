@@ -49,23 +49,23 @@ export default function WhyUs({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="bg-brand-950 py-16 text-paper sm:py-24">
+    <section className="lit bg-brand-950 py-14 text-paper sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-8 text-paper/60">{c.sub}</p>
+          <p className="mt-5 text-base leading-7 text-paper/65">{c.sub}</p>
         </div>
 
-        <dl className="mt-12 grid grid-cols-1 gap-x-12 border-t border-paper/15 md:grid-cols-2">
+        <dl className="mt-10 grid grid-cols-1 gap-x-12 border-t border-paper/15 sm:grid-cols-2">
           {benefits.map((benefit) => (
-            <div key={benefit.title.da} className="border-b border-paper/10 py-7">
-              <dt className="font-display text-lg font-bold tracking-tight text-paper">
+            <div key={benefit.title.da} className="border-b border-paper/10 py-6">
+              <dt className="font-display text-base font-bold tracking-tight text-paper sm:text-lg">
                 {benefit.title[lang]}
               </dt>
-              <dd className="mt-3 text-base leading-7 text-paper/60">
+              <dd className="mt-2 text-sm leading-6 text-paper/65 sm:text-base sm:leading-7">
                 {benefit.description[lang]}
               </dd>
             </div>

@@ -3,6 +3,7 @@ import { Route, Recycle, Users } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
+import WhyUs from "@/components/WhyUs";
 import TeamSection from "@/components/TeamSection";
 import { team } from "@/lib/company";
 import { alternatesFor, type Lang } from "@/lib/i18n";
@@ -113,6 +114,8 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
           </figure>
         </Container>
       </section>
+
+      <WhyUs lang={lang} />
 
       <TeamSection lang={lang} />
 

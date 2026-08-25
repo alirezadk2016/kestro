@@ -2,9 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
-import { categories } from "@/lib/categories";
 import { company, postalAddress } from "@/lib/company";
-import { companyNav, serviceNav, productsNav, ui } from "@/lib/nav";
+import { companyNav, serviceNav, ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -36,9 +35,9 @@ export default function Footer({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <footer className="bg-brand-950 text-ink-300">
-      <Container className="py-16 sm:py-20">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-5">
+    <footer className="lit bg-brand-950 text-ink-300">
+      <Container className="py-12 sm:py-20">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
           <div className="col-span-2">
             <Link
               href={localePath("/", lang)}
@@ -48,22 +47,6 @@ export default function Footer({ lang }: { lang: Lang }) {
               Kestro
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-ink-400">{c.blurb}</p>
-          </div>
-
-          <div>
-            <h3 className="eyebrow text-brand-300">{productsNav.hub.label[lang]}</h3>
-            <ul className="mt-4 space-y-0.5">
-              {categories.map((category) => (
-                <li key={category.slug}>
-                  <Link
-                    href={localePath(`/produkter/${category.slug}`, lang)}
-                    className="-my-1 block py-3 text-sm text-ink-400 transition hover:text-paper"
-                  >
-                    {category.shortName[lang]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div>

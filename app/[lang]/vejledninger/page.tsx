@@ -64,7 +64,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
               <li key={guide.slug} className="border-b border-ink-900/10">
                 <Link
                   href={localePath(`/vejledninger/${guide.slug}`, lang)}
-                  className="group block py-7"
+                  className="group -mx-4 block rounded-xl px-4 py-7 transition-colors hover:bg-paper-dim"
                 >
                   <div className="flex gap-5 sm:gap-8">
                     <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-500 transition-colors group-hover:text-brand-600">

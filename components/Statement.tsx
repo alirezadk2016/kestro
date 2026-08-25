@@ -25,7 +25,7 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-paper-edge bg-paper py-14 sm:py-24">
+    <section className="lit lit-paper border-b border-paper-edge bg-paper py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">

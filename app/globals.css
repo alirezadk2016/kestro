@@ -35,6 +35,60 @@ body {
 
 @layer components {
   /*
+   * Glass.
+   *
+   * The header and the mobile menu sit over the page rather than beside it, so
+   * they are a translucent, blurred, slightly saturated pane — content passing
+   * underneath tints them. The old values were 85% over a warm off-white,
+   * which was nearly opaque; against pure white they were flat.
+   */
+  .glass {
+    /* 0.75, not lower: the pane sits over the dark hero, and at 0.62 the menu
+       labels measured 4.3:1 against what showed through. Glass that cannot be
+       read is not a style choice. */
+    background-color: rgb(255 255 255 / 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Safari on iOS drops backdrop-filter behind an opaque ancestor; without a
+     fallback the pane would read as clear glass with no substance. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      background-color: rgb(255 255 255 / 0.94);
+    }
+  }
+
+  /*
+   * A soft brand wash, so a dark band is lit from somewhere rather than being
+   * a flat rectangle of navy. Children are lifted above it rather than the
+   * wash being pushed behind the section's own background.
+   */
+  .lit {
+    position: relative;
+  }
+
+  .lit > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lit::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(75% 65% at 80% -10%, rgba(46, 121, 255, 0.22), transparent 68%);
+  }
+
+  /* The same idea on paper: a hint of blue at the top edge so a light section
+     is not a plain white box butted against the one above it. */
+  .lit-paper::after {
+    background: radial-gradient(65% 55% at 50% -20%, rgba(30, 64, 255, 0.055), transparent 70%);
+  }
+
+  /*
    * Two small-caps labels, not the five near-identical ones that had grown
    * across the pages. An eyebrow sits above a heading; a label names a value
    * in a data row. Both were 10–11 px, which is under-sized on a phone, so

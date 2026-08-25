@@ -77,30 +77,35 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-paper-edge bg-paper-dim py-14 sm:py-24">
+    <section className="lit lit-paper border-b border-paper-edge bg-paper-dim py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-600">{c.eyebrow}</span>
           <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-8 text-ink-600">{c.sub}</p>
+          <p className="mt-5 text-base leading-7 text-ink-600">{c.sub}</p>
         </div>
 
-        <ol className="mt-12 grid grid-cols-1 gap-x-12 border-t border-ink-900/12 md:grid-cols-2">
+        <ol className="mt-10 grid grid-cols-1 gap-x-12 border-t border-ink-900/12 md:grid-cols-2">
           {situations.map((item, i) => (
             <li key={item.href} className="border-b border-ink-900/10">
-              <Link href={localePath(item.href, lang)} className="group block py-7">
+              <Link
+                href={localePath(item.href, lang)}
+                className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/70 sm:py-7"
+              >
                 <div className="flex gap-5">
                   <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-600 transition-colors group-hover:text-brand-600">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
+                    <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-xl">
                       {item.question[lang]}
                     </h3>
-                    <p className="mt-3 text-base leading-7 text-ink-600">{item.answer[lang]}</p>
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
+                    <p className="mt-2 text-sm leading-6 text-ink-600 sm:mt-3 sm:text-base sm:leading-7">
+                      {item.answer[lang]}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
                       {item.linkLabel[lang]}
                       <ArrowRight
                         className="h-4 w-4 transition-transform group-hover:translate-x-1"

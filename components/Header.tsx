@@ -26,7 +26,7 @@ export default function Header({ lang }: { lang: Lang }) {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-paper-edge bg-paper/85 backdrop-blur-md">
+    <header className="glass sticky top-0 z-50 border-b border-ink-900/8">
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
@@ -44,7 +44,7 @@ export default function Header({ lang }: { lang: Lang }) {
           >
             <Link
               href={localePath(productsNav.hub.href, lang)}
-              className="flex items-center gap-1 text-sm font-medium text-ink-600 transition hover:text-brand-950"
+              className="flex items-center gap-1 text-sm font-medium text-ink-700 transition hover:text-brand-700"
               aria-expanded={productsOpen}
             >
               {productsNav.hub.label[lang]}
@@ -53,22 +53,22 @@ export default function Header({ lang }: { lang: Lang }) {
 
             {productsOpen && (
               <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
-                <div className="rounded-xl border border-paper-edge bg-white p-2 shadow-lg">
+                <div className="glass rounded-xl border border-ink-900/8 p-2 shadow-xl shadow-ink-900/10">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
                   >
                     {productsNav.models.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.machine.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
                   >
                     {productsNav.machine.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.quality.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-paper-dim hover:text-brand-950"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
@@ -77,7 +77,7 @@ export default function Header({ lang }: { lang: Lang }) {
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
-                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-paper-dim hover:text-brand-950"
+                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
                     >
                       {category.name[lang]}
                     </Link>
@@ -91,7 +91,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               key={link.href}
               href={localePath(link.href, lang)}
-              className="text-sm font-medium text-ink-600 transition hover:text-brand-950"
+              className="text-sm font-medium text-ink-700 transition hover:text-brand-700"
             >
               {link.label[lang]}
             </Link>
@@ -152,13 +152,13 @@ export default function Header({ lang }: { lang: Lang }) {
       </Container>
 
       {open && (
-        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-paper-edge bg-white lg:hidden">
+        <div className="glass max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink-900/8 lg:hidden">
           <Container className="flex flex-col gap-1 py-4">
             <button
               type="button"
               onClick={() => setMobileProductsOpen((v) => !v)}
               aria-expanded={mobileProductsOpen}
-              className="flex items-center justify-between rounded-md px-3 py-2.5 text-base font-medium text-ink-700 hover:bg-paper-dim"
+              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
             >
               {productsNav.hub.label[lang]}
               <ChevronDown
@@ -172,28 +172,28 @@ export default function Header({ lang }: { lang: Lang }) {
                 <Link
                   href={localePath(productsNav.hub.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.overview[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.models.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.models.label[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.machine.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.machine.label[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.quality.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-md px-3 py-2 text-sm font-medium text-ink-700 hover:bg-paper-dim"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.quality.label[lang]}
                 </Link>
@@ -202,7 +202,7 @@ export default function Header({ lang }: { lang: Lang }) {
                     key={category.slug}
                     href={localePath(`/produkter/${category.slug}`, lang)}
                     onClick={closeMobile}
-                    className="block rounded-md px-3 py-2 text-sm text-ink-600 hover:bg-paper-dim"
+                    className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
                   >
                     {category.name[lang]}
                   </Link>
@@ -215,7 +215,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 key={link.href}
                 href={localePath(link.href, lang)}
                 onClick={closeMobile}
-                className="rounded-md px-3 py-2.5 text-base font-medium text-ink-700 hover:bg-paper-dim"
+                className="rounded-lg px-3 py-2.5 text-base font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
               >
                 {link.label[lang]}
               </Link>
@@ -262,7 +262,7 @@ function LanguageSwitcher({
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
           className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-brand-950 text-paper" : "text-ink-500 hover:text-ink-900"
+            code === lang ? "bg-brand-950 text-paper" : "text-ink-700 hover:text-ink-900"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>
