@@ -111,7 +111,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-ink-600">{c.modelsBody}</p>
             <Link
               href={localePath("/modeller", lang)}
-              className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-brand-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+              className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
             >
               {c.modelsButton}
             </Link>

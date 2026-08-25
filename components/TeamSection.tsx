@@ -63,7 +63,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                   {member.phoneHref && (
                     <a
                       href={`tel:${member.phoneHref}`}
-                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
                     >
                       <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                       {member.phoneDisplay}
@@ -74,7 +74,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     className={
                       member.phoneHref
                         ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-ink-200 px-5 py-3 text-sm font-semibold text-ink-700 transition hover:border-ink-400 hover:bg-white"
-                        : "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800"
+                        : "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
                     }
                   >
                     <Mail

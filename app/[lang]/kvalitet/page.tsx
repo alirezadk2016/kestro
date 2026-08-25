@@ -253,7 +253,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </ul>
 
-            <p className="mt-8 text-sm leading-6 text-ink-500">{c.testNote}</p>
+            <p className="mt-8 text-sm leading-6 text-ink-600">{c.testNote}</p>
           </div>
         </Container>
       </section>
@@ -298,7 +298,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               <p className="mt-2 text-base leading-7 text-ink-600">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-950 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
               >
                 {c.cta}
               </Link>

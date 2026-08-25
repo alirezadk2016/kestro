@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
+import Logo from "./Logo";
 import { categories } from "@/lib/categories";
 import { company } from "@/lib/company";
 import { mainNav, productsNav, ui } from "@/lib/nav";
@@ -29,11 +30,9 @@ export default function Header({ lang }: { lang: Lang }) {
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
-          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-display text-ink-900"
+          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-ink-900"
         >
-          <span className="flex h-8 w-8 items-center justify-center bg-brand-600 font-display text-sm font-bold text-white">
-            K
-          </span>
+          <Logo className="h-7 w-auto" />
           Kestro
         </Link>
 
@@ -103,7 +102,7 @@ export default function Header({ lang }: { lang: Lang }) {
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[44px] items-center bg-brand-950 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+            className="inline-flex min-h-[44px] items-center bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
           >
             {ui.bookCall[lang]}
           </Link>
@@ -229,7 +228,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               href={localePath("/kontakt", lang)}
               onClick={closeMobile}
-              className="mt-2 bg-brand-950 px-5 py-3.5 text-center text-sm font-semibold text-paper"
+              className="mt-2 bg-brand-600 px-5 py-3.5 text-center text-sm font-semibold text-paper"
             >
               {ui.bookCall[lang]}
             </Link>
@@ -263,7 +262,7 @@ function LanguageSwitcher({
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
           className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-brand-950 text-paper" : "text-ink-400 hover:text-ink-900"
+            code === lang ? "bg-brand-950 text-paper" : "text-ink-500 hover:text-ink-900"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

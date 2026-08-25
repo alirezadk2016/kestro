@@ -92,7 +92,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
             <li key={item.href} className="border-b border-ink-900/10">
               <Link href={localePath(item.href, lang)} className="group block py-7">
                 <div className="flex gap-5">
-                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-brand-600">
+                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-600 transition-colors group-hover:text-brand-600">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0 flex-1">

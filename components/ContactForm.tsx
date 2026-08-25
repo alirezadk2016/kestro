@@ -207,7 +207,7 @@ export default function ContactForm({
           <button
             type="button"
             onClick={copyMessage}
-            className="inline-flex min-h-[44px] items-center bg-brand-950 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+            className="inline-flex min-h-[44px] items-center bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
           >
             {copied ? c.copied : c.copyMessage}
           </button>
@@ -294,7 +294,7 @@ export default function ContactForm({
             {companyRequired ? (
               <span className="text-brand-600">*</span>
             ) : (
-              <span className="text-ink-400">{c.optional}</span>
+              <span className="text-ink-500">{c.optional}</span>
             )}
           </label>
           <input
@@ -376,7 +376,7 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex min-h-[48px] items-center bg-brand-950 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800 disabled:opacity-60"
+          className="inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 disabled:opacity-60"
         >
           {status === "sending" ? c.sending : c.submit}
         </button>

@@ -1,12 +1,12 @@
 import type { Config } from "tailwindcss";
 
 /*
- * Blue, ink and paper.
+ * The palette from the brand board.
  *
- * Blue is the brand — it always was, and it belongs to a hardware company in
- * the Nordics. What was wrong before was not the hue but the ramp: indigo
- * tints under a blue-700, on flat screen-white. Here it is one coherent blue,
- * a warm off-white instead of pure white, and a near-black neutral for text.
+ * #1E40FF and #3B82F6 are the blues, #0B1426 the dark surface and the text,
+ * #6B7280 the secondary text, #F3F4F6 the light neutral. Everything else here
+ * is a step between those, so a tint always comes from the identity rather
+ * than from a second hue.
  */
 const config: Config = {
   content: [
@@ -20,52 +20,61 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
 
-        /** Near-black with a warm cast — the primary brand colour. */
+        /*
+         * Cool neutrals, anchored on the two the brand board names: #0B1426
+         * for text and dark surfaces, #6B7280 for secondary text. The warm
+         * near-black that was here belonged to the older paper-and-ink
+         * direction and reads yellow next to the blue.
+         */
         ink: {
-          50: "#f4f4f2",
-          100: "#e6e6e2",
-          200: "#cbcbc5",
-          300: "#a5a59c",
-          400: "#77776d",
-          500: "#55554c",
-          600: "#3d3d36",
-          700: "#2b2b26",
-          800: "#1c1c19",
-          900: "#121210",
-          950: "#0a0a09",
+          50: "#F7F8FA",
+          100: "#EFF1F4",
+          200: "#E3E6EC",
+          300: "#C6CBD4",
+          400: "#9CA3AF",
+          500: "#6B7280",
+          600: "#4B5563",
+          700: "#374151",
+          800: "#1E293B",
+          900: "#0B1426",
+          950: "#060B16",
         },
 
-        /** Warm off-white. Paper, not screen-white. */
+        /** The board's light neutral, plus a step either side of it. */
         paper: {
-          DEFAULT: "#faf9f6",
-          dim: "#f2f0eb",
-          edge: "#e4e1d9",
+          DEFAULT: "#FFFFFF",
+          dim: "#F3F4F6",
+          edge: "#E3E6EC",
         },
 
         /*
-         * One blue, one hue, all the way through. The old ramp mixed indigo
-         * tints under a blue-700 — two families pretending to be one, which is
-         * what made it look unconsidered. This is a single deep royal blue:
-         * 600 carries buttons and marks, 950 is the dark surface, and the
-         * light steps are genuinely the same colour with light added.
+         * The brand board's two blues, as a ramp.
+         *
+         * 600 is #1E40FF, the primary — buttons, the mark, anything that has
+         * to be unmistakably Kestro. 500 is #3B82F6, the lighter blue the logo
+         * gradient runs to. 950 is #0B1426, the dark surface the whole site
+         * sits on. The rest are steps between, so a tint has somewhere to come
+         * from without inventing a second hue.
          */
         brand: {
-          50: "#eef2fd",
-          100: "#dce4fa",
-          200: "#bccbf6",
-          300: "#93a9ef",
-          400: "#6580e5",
-          500: "#4159d9",
-          600: "#2843c4",
-          700: "#2237a1",
-          800: "#203180",
-          900: "#1d2b62",
-          950: "#111a3c",
+          50: "#EEF2FF",
+          100: "#DCE4FE",
+          200: "#BECFFD",
+          300: "#93AEFB",
+          400: "#6690F9",
+          500: "#3B82F6",
+          600: "#1E40FF",
+          700: "#1A36D6",
+          800: "#182FA8",
+          900: "#16296F",
+          950: "#0B1426",
         },
       },
+      /* One family, as the brand board specifies. Manrope carries the
+         wordmark, so headings set in it match the logo beside them. */
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-archivo)", "var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        display: ["var(--font-manrope)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         display: "-0.035em",

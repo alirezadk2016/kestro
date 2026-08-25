@@ -222,7 +222,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
 
           {live && (
             <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-4">
-              <span className="label text-paper/45">{c.hint}</span>
+              <span className="label text-paper/60">{c.hint}</span>
               <button
                 type="button"
                 onClick={() => select(exteriorViews[0].id)}

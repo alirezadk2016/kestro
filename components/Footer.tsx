@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
+import Logo from "./Logo";
 import { categories } from "@/lib/categories";
 import { company, postalAddress } from "@/lib/company";
 import { companyNav, serviceNav, productsNav, ui } from "@/lib/nav";
@@ -41,11 +42,9 @@ export default function Footer({ lang }: { lang: Lang }) {
           <div className="col-span-2">
             <Link
               href={localePath("/", lang)}
-              className="flex min-h-[44px] items-center gap-2.5 font-display text-lg font-extrabold tracking-display text-paper"
+              className="flex min-h-[44px] items-center gap-2.5 font-display text-lg font-extrabold tracking-tight text-paper"
             >
-              <span className="flex h-8 w-8 items-center justify-center bg-brand-600 font-display text-sm font-bold text-white">
-                K
-              </span>
+              <Logo className="h-7 w-auto" />
               Kestro
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-ink-400">{c.blurb}</p>
@@ -125,7 +124,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         {/* The legal line. A B2B buyer looks for the entity, the address and
             the CVR before ordering, and e-handelsloven §7 requires them; each
             part appears when there is a real value for it. */}
-        <div className="mt-12 space-y-3 border-t border-ink-800 pt-6 text-sm text-ink-500">
+        <div className="mt-12 space-y-3 border-t border-white/10 pt-6 text-sm text-ink-400">
           <p className="text-xs leading-6">
             {[
               company.legalForm ? `${company.name} ${company.legalForm}` : company.name,

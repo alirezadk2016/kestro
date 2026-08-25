@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Archivo } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
@@ -7,19 +7,12 @@ import Footer from "@/components/Footer";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
 
-const inter = Inter({
+/* One family for the whole site. The wordmark is set in Manrope, so a heading
+   next to the logo is the same letterforms rather than a near-miss. */
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
   display: "swap",
-});
-
-/* Display face. A signage grotesque — sturdy rather than decorative, which is
-   the right register for a company that sources industrial hardware. */
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-archivo",
-  display: "swap",
+  variable: "--font-manrope",
 });
 
 export function generateStaticParams() {
@@ -92,9 +85,7 @@ export default function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body
-        className={`${inter.variable} ${archivo.variable} bg-paper font-sans text-ink-900 antialiased`}
-      >
+      <body className={`${manrope.variable} bg-paper font-sans text-ink-900 antialiased`}>
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script

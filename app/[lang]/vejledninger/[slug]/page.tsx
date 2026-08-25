@@ -151,7 +151,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               <p className="mt-3 text-base leading-8 text-ink-600">{guide.closing[lang]}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-6 inline-flex min-h-[48px] items-center bg-brand-950 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+                className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
               >
                 {c.contact}
               </Link>

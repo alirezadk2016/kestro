@@ -13,27 +13,16 @@ export default function OpengraphImage() {
         flexDirection: "column",
         justifyContent: "center",
         padding: "80px",
-        background: "#0f172a",
+        background: "#0B1426",
         fontFamily: "system-ui, sans-serif",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 56,
-            height: 56,
-            borderRadius: 12,
-            background: "#1d4ed8",
-            color: "white",
-            fontSize: 30,
-            fontWeight: 700,
-          }}
-        >
-          K
-        </div>
+        <svg width="62" height="55" viewBox="0 0 114 100">
+          <path d="M0 0 H30 V74 L16 100 H0 Z" fill="#2563F5" />
+          <path d="M34 50 L76 0 H114 L62 50 Z" fill="#3B82F6" />
+          <path d="M62 50 L114 100 H76 L34 50 Z" fill="#1E40FF" />
+        </svg>
         <div style={{ display: "flex", fontSize: 34, fontWeight: 700, color: "white" }}>Kestro</div>
       </div>
 

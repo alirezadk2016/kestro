@@ -67,12 +67,12 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
                   className="group block py-7"
                 >
                   <div className="flex gap-5 sm:gap-8">
-                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-300 transition-colors group-hover:text-brand-600">
+                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-500 transition-colors group-hover:text-brand-600">
                       {String(i + 1).padStart(2, "0")}
                     </span>
 
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 label text-ink-400">
+                      <div className="label flex flex-wrap items-center gap-x-3 gap-y-1 text-ink-500">
                         <span>
                           {c.forWhom} {guide.audience[lang].toLowerCase()}
                         </span>
@@ -109,7 +109,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
             <p className="mt-3 text-base leading-8 text-ink-600">{c.adviceBody}</p>
             <Link
               href={localePath("/kontakt", lang)}
-              className="mt-6 inline-flex min-h-[48px] items-center bg-brand-950 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+              className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
             >
               {c.adviceCta}
             </Link>

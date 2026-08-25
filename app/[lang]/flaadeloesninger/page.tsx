@@ -427,7 +427,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             <a
               href={`tel:${team[0].phoneHref}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-950 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
             >
               <Phone className="h-4 w-4" strokeWidth={2} />
               {team[0].phoneDisplay}

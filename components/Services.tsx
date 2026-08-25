@@ -69,7 +69,7 @@ export default function Services({ lang }: { lang: Lang }) {
               key={service.title.da}
               className="border-b border-ink-900/10 py-7 pr-8 sm:border-b-0 sm:border-r sm:border-ink-900/10 sm:pl-8 sm:first:pl-0 lg:last:border-r-0"
             >
-              <span className="font-display text-3xl font-extrabold tabular-nums tracking-display text-ink-200">
+              <span className="font-display text-3xl font-extrabold tabular-nums tracking-display text-ink-500">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-ink-900">

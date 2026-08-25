@@ -23,7 +23,7 @@ export default function NotFound() {
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/"
-            className="bg-brand-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+            className="bg-brand-600 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
           >
             Til forsiden / Front page
           </Link>
