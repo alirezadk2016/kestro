@@ -19,9 +19,9 @@ export default function OpengraphImage() {
     >
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <svg width="62" height="55" viewBox="0 0 114 100">
-          <path d="M0 0 H30 V74 L16 100 H0 Z" fill="#2563F5" />
-          <path d="M34 50 L76 0 H114 L62 50 Z" fill="#3B82F6" />
-          <path d="M62 50 L114 100 H76 L34 50 Z" fill="#1E40FF" />
+          <path d="M0 0 H34 V44 L22 100 H0 Z" fill="#1E5BFF" />
+          <path d="M36 52 L60 0 H114 L67 52 Z" fill="#2E79FF" />
+          <path d="M67 52 L114 100 H56 L36 52 Z" fill="#1E45D8" />
         </svg>
         <div style={{ display: "flex", fontSize: 34, fontWeight: 700, color: "white" }}>Kestro</div>
       </div>

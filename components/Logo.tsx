@@ -17,13 +17,17 @@ export type LogoTone = "brand" | "light" | "dark";
 const VIEW_BOX = "0 0 114 100";
 
 /*
- * Two path shapes and a stem. Kept as constants so the tones below cannot
- * drift apart — a mono variant that traced slightly different geometry would
- * be a second logo.
+ * The three pieces, as constants so the tones below cannot drift apart — a
+ * mono variant tracing slightly different geometry would be a second logo.
+ *
+ * The stem tapers rather than running straight down, and the gap between it
+ * and the arm follows the arm's own angle instead of the stem's edge. Both are
+ * what give the mark its fold; a rectangular stem with a vertical gap reads as
+ * a plain letter with a chevron parked next to it.
  */
-const STEM = "M0 0 H30 V74 L16 100 H0 Z";
-const ARM_UP = "M34 50 L76 0 H114 L62 50 Z";
-const ARM_DOWN = "M62 50 L114 100 H76 L34 50 Z";
+const STEM = "M0 0 H34 V44 L22 100 H0 Z";
+const ARM_UP = "M36 52 L60 0 H114 L67 52 Z";
+const ARM_DOWN = "M67 52 L114 100 H56 L36 52 Z";
 
 export default function Logo({
   tone = "brand",
@@ -51,20 +55,25 @@ export default function Logo({
       {tone === "brand" ? (
         <>
           <defs>
-            <linearGradient id={`${id}-stem`} x1="0.1" y1="0" x2="0.9" y2="1">
-              <stop offset="0" stopColor="#2563F5" />
-              <stop offset="0.48" stopColor="#2563F5" />
-              <stop offset="0.48" stopColor="#1B44C9" />
-              <stop offset="1" stopColor="#1B44C9" />
+            {/* The stem carries a fold of its own: brighter above the crease,
+                deeper below it, lifting again at the foot. */}
+            <linearGradient id={`${id}-stem`} x1="1" y1="0" x2="0.15" y2="1">
+              <stop offset="0" stopColor="#1E5BFF" />
+              <stop offset="0.5" stopColor="#1E5BFF" />
+              <stop offset="0.5" stopColor="#1C4CE6" />
+              <stop offset="1" stopColor="#2359F7" />
             </linearGradient>
             <linearGradient id={`${id}-up`} x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0" stopColor="#1E40FF" />
-              <stop offset="1" stopColor="#3B82F6" />
+              <stop offset="0" stopColor="#1F4EF5" />
+              <stop offset="1" stopColor="#2E79FF" />
             </linearGradient>
+            {/* The lower arm runs from deep navy where it tucks under the
+                upper one out to full blue at the foot — that shading is the
+                fold, and it is what stops the mark reading as a flat letter. */}
             <linearGradient id={`${id}-down`} x1="0.15" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#16307E" />
-              <stop offset="0.55" stopColor="#1E40FF" />
-              <stop offset="1" stopColor="#2E6BFF" />
+              <stop offset="0" stopColor="#152C74" />
+              <stop offset="0.45" stopColor="#1E45D8" />
+              <stop offset="1" stopColor="#2764FF" />
             </linearGradient>
           </defs>
           <path d={STEM} fill={`url(#${id}-stem)`} />

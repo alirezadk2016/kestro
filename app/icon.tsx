@@ -25,9 +25,9 @@ export default function Icon() {
       }}
     >
       <svg width="20" height="18" viewBox="0 0 114 100" fill="#FFFFFF">
-        <path d="M0 0 H30 V74 L16 100 H0 Z" />
-        <path d="M34 50 L76 0 H114 L62 50 Z" />
-        <path d="M62 50 L114 100 H76 L34 50 Z" opacity="0.72" />
+        <path d="M0 0 H34 V44 L22 100 H0 Z" />
+        <path d="M36 52 L60 0 H114 L67 52 Z" />
+        <path d="M67 52 L114 100 H56 L36 52 Z" opacity="0.72" />
       </svg>
     </div>,
     { ...size },
