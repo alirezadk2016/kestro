@@ -5,7 +5,7 @@ import TeamAvatar from "@/components/TeamAvatar";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
-import { company, team } from "@/lib/company";
+import { company, postalAddress, team } from "@/lib/company";
 import { alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -29,7 +29,7 @@ const copy = {
     fieldAddress: "Adresse",
     fieldServes: "Leverer i",
     fieldCvr: "CVR",
-    cvrPending: "Tilføjes snarest",
+    fieldHours: "Åbningstider",
     at: "hos",
   },
   en: {
@@ -52,7 +52,7 @@ const copy = {
     fieldAddress: "Address",
     fieldServes: "Delivers in",
     fieldCvr: "VAT no. (CVR)",
-    cvrPending: "Added shortly",
+    fieldHours: "Opening hours",
     at: "at",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -138,16 +138,32 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink-500">{c.fieldAddress}</dt>
-                  <dd className="font-medium text-ink-900">{company.locationShort[lang]}</dd>
+                  <dd className="text-right font-medium text-ink-900">{postalAddress(lang)}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink-500">{c.fieldServes}</dt>
                   <dd className="font-medium text-ink-900">{company.serves[lang]}</dd>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldCvr}</dt>
-                  <dd className="font-medium italic text-ink-400">{c.cvrPending}</dd>
-                </div>
+                {/* Shown when there is one. "Tilføjes snarest" against a CVR
+                    number reads, to somebody about to order 120 machines, as a
+                    company that does not exist yet. */}
+                {company.cvr && (
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink-500">{c.fieldCvr}</dt>
+                    <dd className="font-medium text-ink-900">
+                      {company.cvr}
+                      {company.legalForm ? ` · ${company.legalForm}` : ""}
+                    </dd>
+                  </div>
+                )}
+                {company.openingHours[lang] && (
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink-500">{c.fieldHours}</dt>
+                    <dd className="text-right font-medium text-ink-900">
+                      {company.openingHours[lang]}
+                    </dd>
+                  </div>
+                )}
               </dl>
             </div>
           </div>

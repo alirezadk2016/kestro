@@ -21,10 +21,11 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Everything except Next internals, the metadata routes that live outside
-     * app/[lang] (icon, opengraph-image, sitemap, robots) and any path that
-     * looks like a file.
+     * Everything except Next internals, the API routes (which have no language
+     * and would be rewritten to /da/api/..., where nothing lives), the metadata
+     * routes outside app/[lang] (icon, opengraph-image, sitemap, robots) and
+     * any path that looks like a file.
      */
-    "/((?!_next/|icon|opengraph-image|sitemap\\.xml|robots\\.txt|.*\\.).*)",
+    "/((?!_next/|api/|icon|opengraph-image|sitemap\\.xml|robots\\.txt|.*\\.).*)",
   ],
 };

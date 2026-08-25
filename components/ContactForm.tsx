@@ -1,9 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useState } from "react";
-import type { Lang, Localized } from "@/lib/i18n";
+import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "info@kestro.dk";
+
+/*
+ * The form posts to /api/kontakt, which sends the message and answers. If that
+ * route reports it has no mail credentials yet, the submit falls back to the
+ * mailto: link the form used to use, so an enquiry is never simply lost.
+ */
+type Status = "idle" | "sending" | "sent" | "error";
 
 const copy = {
   da: {
@@ -20,6 +28,13 @@ const copy = {
     submit: "Send besked",
     note: "åbnes din egen e-mailklient med beskeden udfyldt og klar til afsendelse til",
     noteLead: "Når du klikker",
+    sending: "Sender …",
+    thanksTitle: "Tak for jeres henvendelse.",
+    thanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    thanksAgain: "Send en besked mere",
+    failed: "Beskeden kunne ikke sendes lige nu. Prøv igen, eller skriv direkte til os på",
+    privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
+    privacyLink: "privatlivspolitikken",
     defaultSubject: "Henvendelse",
     defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
     from: "fra",
@@ -39,6 +54,13 @@ const copy = {
     submit: "Send message",
     note: "your own email client opens with the message filled in and ready to send to",
     noteLead: "When you click",
+    sending: "Sending …",
+    thanksTitle: "Thank you for getting in touch.",
+    thanksBody: "We will come back to you within one working day.",
+    thanksAgain: "Send another message",
+    failed: "The message could not be sent just now. Try again, or write to us directly at",
+    privacy: "We use the details only to answer the enquiry. See the",
+    privacyLink: "privacy policy",
     defaultSubject: "Enquiry",
     defaultPlaceholder:
       "Tell us what you need — number of devices, specifications, timing and anything else.",
@@ -63,12 +85,15 @@ export default function ContactForm({
   const c = copy[lang];
   const subject_prefix = subjectPrefix?.[lang] ?? c.defaultSubject;
   const placeholder = messagePlaceholder?.[lang] ?? c.defaultPlaceholder;
+  const [status, setStatus] = useState<Status>("idle");
   const [values, setValues] = useState({
     navn: "",
     virksomhed: "",
     email: "",
     telefon: "",
     besked: "",
+    /* Honeypot. Hidden from people, filled in by bots. */
+    website: "",
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -76,9 +101,7 @@ export default function ContactForm({
     setValues((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  function sendByMail() {
     const subject = `${subject_prefix} ${c.from} ${values.virksomhed || values.navn} ${c.via}`;
     const body = [
       `${c.name}: ${values.navn}`,
@@ -91,15 +114,86 @@ export default function ContactForm({
       .filter((line) => line !== null)
       .join("\n");
 
-    const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoUrl;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/kontakt", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: values.navn,
+          company: values.virksomhed,
+          email: values.email,
+          phone: values.telefon,
+          message: values.besked,
+          subject: subject_prefix,
+          page: window.location.pathname,
+          website: values.website,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("sent");
+        return;
+      }
+
+      /* 503 means the server has no mail credentials yet — not the visitor's
+         problem, so hand them the client-side route rather than an error. */
+      if (response.status === 503) {
+        setStatus("idle");
+        sendByMail();
+        return;
+      }
+
+      setStatus("error");
+    } catch {
+      /* Offline, or the request was blocked. The mailto still works. */
+      setStatus("idle");
+      sendByMail();
+    }
   }
 
   const inputClasses =
     "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-100";
 
+  if (status === "sent") {
+    return (
+      <div className="border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
+        <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+          {c.thanksTitle}
+        </h3>
+        <p className="mt-3 text-base leading-7 text-ink-600">{c.thanksBody}</p>
+        <button
+          type="button"
+          onClick={() => {
+            setValues({
+              navn: "",
+              virksomhed: "",
+              email: "",
+              telefon: "",
+              besked: "",
+              website: "",
+            });
+            setStatus("idle");
+          }}
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-brand-800"
+        >
+          {c.thanksAgain}
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="relative space-y-5">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-ink-700">
@@ -186,15 +280,52 @@ export default function ContactForm({
         />
       </div>
 
+      {/* Hidden from people by position rather than display:none, which some
+          bots check for. Never focusable, never announced. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.website}
+          onChange={handleChange}
+        />
+      </div>
+
       <div>
         <button
           type="submit"
-          className="bg-brand-950 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+          disabled={status === "sending"}
+          className="inline-flex min-h-[48px] items-center bg-brand-950 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800 disabled:opacity-60"
         >
-          {c.submit}
+          {status === "sending" ? c.sending : c.submit}
         </button>
+
+        {status === "error" && (
+          <p role="alert" className="mt-3 text-sm leading-6 text-ink-700">
+            {c.failed}{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            .
+          </p>
+        )}
+
         <p className="mt-3 text-xs leading-5 text-ink-500">
-          {c.noteLead} &ldquo;{c.submit}&rdquo;, {c.note} {CONTACT_EMAIL}.
+          {c.privacy}{" "}
+          <Link
+            href={localePath("/privatlivspolitik", lang)}
+            className="underline decoration-ink-300 underline-offset-2 hover:text-ink-700"
+          >
+            {c.privacyLink}
+          </Link>
+          .
         </p>
       </div>
     </form>

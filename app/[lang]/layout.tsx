@@ -68,11 +68,17 @@ export default function RootLayout({
     description: meta[lang].description,
     email: company.email,
     telephone: company.phoneDisplay,
+    /* Street and CVR are added to the schema the moment they exist in
+       lib/company.ts, so the structured data never claims an address the site
+       does not show. */
     address: {
       "@type": "PostalAddress",
+      ...(company.street ? { streetAddress: company.street } : {}),
+      ...(company.postcode ? { postalCode: company.postcode } : {}),
       addressLocality: company.city,
       addressCountry: "DK",
     },
+    ...(company.cvr ? { vatID: `DK${company.cvr.replace(/\D/g, "")}`, taxID: company.cvr } : {}),
     areaServed: ["DK", "NO"],
     contactPoint: {
       "@type": "ContactPoint",

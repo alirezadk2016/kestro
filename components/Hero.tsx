@@ -24,14 +24,14 @@ const copy = {
     eyebrow: "Indkøbspartner på renoveret erhvervs-IT",
     headline: "Erhvervscomputere.\nKlar til Norden.",
     sub: "Vi forbinder jer med de rigtige leverandører – så I får den rette pris og de rette garantivilkår. Fra enkelte maskiner til hele medarbejderflåden.",
-    primary: "Få et tilbud",
+    primary: "Få tilbud på jeres IT-behov",
     secondary: "Se hvad vi skaffer",
   },
   en: {
     eyebrow: "Sourcing partner for refurbished business IT",
     headline: "Business computers.\nReady for the Nordics.",
     sub: "We connect you with the right suppliers — so you get the right price and the right warranty terms. From single machines to the whole staff fleet.",
-    primary: "Get a quote",
+    primary: "Get a quote for your IT needs",
     secondary: "See what we source",
   },
 } satisfies Record<Lang, Record<string, string>>;

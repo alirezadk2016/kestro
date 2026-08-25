@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import { categories } from "@/lib/categories";
-import { company } from "@/lib/company";
+import { company, postalAddress } from "@/lib/company";
 import { companyNav, serviceNav, productsNav, ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -14,6 +14,7 @@ const copy = {
     company: "Virksomhed",
     delivers: "Leverer i",
     rights: "Alle rettigheder forbeholdes.",
+    cvrLabel: "CVR",
     trademarks:
       "Produktnavne og varemærker tilhører deres respektive ejere. Kestro er ikke tilknyttet Lenovo, HP, Dell, Apple, Microsoft eller andre nævnte producenter.",
   },
@@ -24,6 +25,7 @@ const copy = {
     company: "Company",
     delivers: "Delivers in",
     rights: "All rights reserved.",
+    cvrLabel: "CVR",
     trademarks:
       "Product names and trademarks belong to their respective owners. Kestro is not affiliated with Lenovo, HP, Dell, Apple, Microsoft or any other manufacturer named on this site.",
   },
@@ -120,7 +122,21 @@ export default function Footer({ lang }: { lang: Lang }) {
           </Link>
         </div>
 
+        {/* The legal line. A B2B buyer looks for the entity, the address and
+            the CVR before ordering, and e-handelsloven §7 requires them; each
+            part appears when there is a real value for it. */}
         <div className="mt-12 space-y-3 border-t border-ink-800 pt-6 text-sm text-ink-500">
+          <p className="text-xs leading-6">
+            {[
+              company.legalForm ? `${company.name} ${company.legalForm}` : company.name,
+              postalAddress(lang),
+              company.cvr ? `${c.cvrLabel} ${company.cvr}` : null,
+              company.phoneDisplay,
+              company.email,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+          </p>
           <p className="max-w-3xl text-xs leading-6">{c.trademarks}</p>
           <p>
             &copy; {new Date().getFullYear()} Kestro. {c.rights}

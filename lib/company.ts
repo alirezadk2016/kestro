@@ -1,4 +1,4 @@
-import type { Localized } from "./i18n";
+import type { Lang, Localized } from "./i18n";
 
 /**
  * Single source of truth for company contact details.
@@ -17,9 +17,42 @@ export const company = {
   locationShort: { da: "Aarhus, Danmark", en: "Aarhus, Denmark" } as Localized,
   /** Markets served */
   serves: { da: "Danmark & Norge", en: "Denmark & Norway" } as Localized,
-  /** Not registered yet — leave empty until a real CVR exists. */
-  cvr: "",
+  /*
+   * The legal identity, as e-handelsloven §7 requires it and as a procurement
+   * manager will look for it before placing an order.
+   *
+   * Empty until the real values exist. Nothing renders a field that is empty:
+   * a blank row is better than "to be added shortly", which tells a buyer the
+   * company is not registered yet. Filling these in is the only step needed —
+   * the contact page, the footer and the Organization schema all read from
+   * here.
+   */
+  /* Annotated as string rather than left to `as const`, which would type an
+     empty field as the literal "" and make every `company.cvr ? …` branch
+     unreachable to the compiler. */
+  cvr: "" as string,
+  /** e.g. "ApS", "A/S", "Enkeltmandsvirksomhed". */
+  legalForm: "" as string,
+  /** Street and number. */
+  street: "" as string,
+  /** Four digits in Denmark. */
+  postcode: "" as string,
+  /** When there is a place to meet. Empty means "by appointment" only. */
+  openingHours: { da: "", en: "" } as Localized,
 } as const;
+
+/** Whether there is enough to publish a legal-details block at all. */
+export const hasLegalDetails = Boolean(company.cvr);
+
+/** The postal address on one line, as much of it as exists. */
+export function postalAddress(lang: Lang): string {
+  return (
+    [company.street, [company.postcode, company.city].filter(Boolean).join(" ")]
+      .filter(Boolean)
+      .join(", ")
+      .trim() || company.locationShort[lang]
+  );
+}
 
 export type TeamMember = {
   name: string;

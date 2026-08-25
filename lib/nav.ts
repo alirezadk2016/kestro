@@ -45,9 +45,16 @@ export const companyNav: NavLink[] = [
   { href: "/privatlivspolitik", label: { da: "Privatlivspolitik", en: "Privacy policy" } },
 ];
 
-/** Buttons and labels that appear in more than one place. */
+/**
+ * Buttons and labels that appear in more than one place.
+ *
+ * The primary actions name what they are for. "Få et tilbud" and "Book en
+ * samtale" are the two buttons every competitor also has, and a procurement
+ * manager reads them as the same generic form; a button that says what will be
+ * quoted is the one that gets pressed.
+ */
 export const ui = {
-  bookCall: { da: "Book en samtale", en: "Book a call" },
+  bookCall: { da: "Få en pris på jeres løsning", en: "Get a price for your setup" },
   talkToAdviser: { da: "Tal med en rådgiver", en: "Talk to an adviser" },
   openMenu: { da: "Åbn eller luk menu", en: "Open or close menu" },
   breadcrumb: { da: "Brødkrumme", en: "Breadcrumb" },
