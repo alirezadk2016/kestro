@@ -2,16 +2,24 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { company } from "@/lib/company";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "info@kestro.dk";
 
 /*
- * The form posts to /api/kontakt, which sends the message and answers. If that
- * route reports it has no mail credentials yet, the submit falls back to the
- * mailto: link the form used to use, so an enquiry is never simply lost.
+ * The form posts to /api/kontakt, which sends the message and answers.
+ *
+ * There is no mailto: path any more. Handing a visitor a mailto asks their
+ * machine to have a mail client configured and asks them to press send a
+ * second time inside it; on a work laptop with webmail, the enquiry is simply
+ * lost, and the site cannot even tell that it happened.
+ *
+ * If the route has no mail credentials yet, or the send fails, the form says
+ * so and puts the finished message in front of the visitor to copy or open —
+ * it does not redirect the browser and it does not claim we received anything.
  */
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sending" | "sent" | "error" | "unavailable";
 
 const copy = {
   da: {
@@ -26,13 +34,18 @@ const copy = {
     phonePlaceholder: "+45 12 34 56 78",
     message: "Besked",
     submit: "Send besked",
-    note: "åbnes din egen e-mailklient med beskeden udfyldt og klar til afsendelse til",
-    noteLead: "Når du klikker",
+    unavailableTitle: "Formularen kan ikke sende lige nu",
+    unavailableBody:
+      "Send beskeden direkte til os i stedet – den står klar herunder. Vi svarer inden for én arbejdsdag.",
+    openMail: "Åbn i mailprogram",
+    copyMessage: "Kopiér beskeden",
+    copied: "Kopieret",
+    orCall: "Eller ring på",
+    back: "Tilbage til formularen",
     sending: "Sender …",
     thanksTitle: "Tak for jeres henvendelse.",
     thanksBody: "Vi vender tilbage inden for én arbejdsdag.",
     thanksAgain: "Send en besked mere",
-    failed: "Beskeden kunne ikke sendes lige nu. Prøv igen, eller skriv direkte til os på",
     privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
     privacyLink: "privatlivspolitikken",
     defaultSubject: "Henvendelse",
@@ -52,13 +65,18 @@ const copy = {
     phonePlaceholder: "+45 12 34 56 78",
     message: "Message",
     submit: "Send message",
-    note: "your own email client opens with the message filled in and ready to send to",
-    noteLead: "When you click",
+    unavailableTitle: "The form cannot send right now",
+    unavailableBody:
+      "Send the message to us directly instead — it is ready below. We answer within one working day.",
+    openMail: "Open in mail app",
+    copyMessage: "Copy the message",
+    copied: "Copied",
+    orCall: "Or call",
+    back: "Back to the form",
     sending: "Sending …",
     thanksTitle: "Thank you for getting in touch.",
     thanksBody: "We will come back to you within one working day.",
     thanksAgain: "Send another message",
-    failed: "The message could not be sent just now. Try again, or write to us directly at",
     privacy: "We use the details only to answer the enquiry. See the",
     privacyLink: "privacy policy",
     defaultSubject: "Enquiry",
@@ -86,6 +104,7 @@ export default function ContactForm({
   const subject_prefix = subjectPrefix?.[lang] ?? c.defaultSubject;
   const placeholder = messagePlaceholder?.[lang] ?? c.defaultPlaceholder;
   const [status, setStatus] = useState<Status>("idle");
+  const [copied, setCopied] = useState(false);
   const [values, setValues] = useState({
     navn: "",
     virksomhed: "",
@@ -101,7 +120,8 @@ export default function ContactForm({
     setValues((prev) => ({ ...prev, [name]: value }));
   }
 
-  function sendByMail() {
+  /** The finished message, for the visitor to copy or hand to their mail app. */
+  function composed() {
     const subject = `${subject_prefix} ${c.from} ${values.virksomhed || values.navn} ${c.via}`;
     const body = [
       `${c.name}: ${values.navn}`,
@@ -114,9 +134,7 @@ export default function ContactForm({
       .filter((line) => line !== null)
       .join("\n");
 
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+    return { subject, body };
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -145,24 +163,83 @@ export default function ContactForm({
         return;
       }
 
-      /* 503 means the server has no mail credentials yet — not the visitor's
-         problem, so hand them the client-side route rather than an error. */
-      if (response.status === 503) {
-        setStatus("idle");
-        sendByMail();
-        return;
-      }
-
-      setStatus("error");
+      /* 503 means the server has no mail credentials yet. That is ours to fix,
+         not the visitor's, so it gets the same honest panel as a failure. */
+      setStatus(response.status === 503 ? "unavailable" : "error");
     } catch {
-      /* Offline, or the request was blocked. The mailto still works. */
-      setStatus("idle");
-      sendByMail();
+      /* Offline, or the request was blocked. */
+      setStatus("unavailable");
+    }
+  }
+
+  async function copyMessage() {
+    const { subject, body } = composed();
+    try {
+      await navigator.clipboard.writeText(`${subject}\n\n${body}`);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* Clipboard refused. The mail link beside it still works. */
     }
   }
 
   const inputClasses =
     "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-100";
+
+  if (status === "unavailable" || status === "error") {
+    const { subject, body } = composed();
+    const mailHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+
+    return (
+      <div className="border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
+        <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+          {c.unavailableTitle}
+        </h3>
+        <p className="mt-3 text-base leading-7 text-ink-600">{c.unavailableBody}</p>
+
+        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-paper-edge bg-white p-4 font-mono text-xs leading-6 text-ink-700">
+          {body}
+        </pre>
+
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={copyMessage}
+            className="inline-flex min-h-[44px] items-center bg-brand-950 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-800"
+          >
+            {copied ? c.copied : c.copyMessage}
+          </button>
+          <a
+            href={mailHref}
+            className="inline-flex min-h-[44px] items-center border border-ink-200 px-6 text-sm font-semibold text-ink-700 transition hover:border-ink-400"
+          >
+            {c.openMail}
+          </a>
+        </div>
+
+        <p className="mt-5 text-sm leading-6 text-ink-500">
+          {c.orCall}{" "}
+          <a
+            href={`tel:${company.phoneHref}`}
+            className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
+          >
+            {company.phoneDisplay}
+          </a>
+          .
+        </p>
+
+        <button
+          type="button"
+          onClick={() => setStatus("idle")}
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-ink-500 underline decoration-ink-300 underline-offset-4 hover:text-ink-900"
+        >
+          {c.back}
+        </button>
+      </div>
+    );
+  }
 
   if (status === "sent") {
     return (
@@ -303,19 +380,6 @@ export default function ContactForm({
         >
           {status === "sending" ? c.sending : c.submit}
         </button>
-
-        {status === "error" && (
-          <p role="alert" className="mt-3 text-sm leading-6 text-ink-700">
-            {c.failed}{" "}
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
-            >
-              {CONTACT_EMAIL}
-            </a>
-            .
-          </p>
-        )}
 
         <p className="mt-3 text-xs leading-5 text-ink-500">
           {c.privacy}{" "}

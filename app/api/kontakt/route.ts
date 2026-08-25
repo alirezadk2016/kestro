@@ -12,12 +12,19 @@ import { company } from "@/lib/company";
  * This posts the message to Resend over their REST API. No SDK: it is one
  * fetch, and a dependency that sends mail is a dependency worth not having.
  *
- * Until RESEND_API_KEY is set the route answers 503 with configured:false, and
- * the form falls back to the mailto it used before. So the site works today
- * and upgrades the moment the key exists, with nothing to change in the code.
+ * Set CONTACT_WEBHOOK_URL and every enquiry is also posted as JSON to whatever
+ * is on the other end — HubSpot, Pipedrive, Make, Zapier, a Google Sheet. That
+ * is the CRM step, and it needs no code here because every one of those
+ * accepts an inbound JSON hook. It runs alongside the mail and is never
+ * allowed to fail the visitor's request: the inbox is the source of truth.
+ *
+ * Until RESEND_API_KEY and CONTACT_FROM are set the route answers 503, and the
+ * form tells the visitor plainly and hands them the finished message to copy
+ * or mail. It does not redirect the browser and it does not pretend the
+ * message arrived.
  */
 
-const RESEND_ENDPOINT = "https://api.resend.com/emails";
+const RESEND_ENDPOINT = process.env.RESEND_ENDPOINT ?? "https://api.resend.com/emails";
 
 /** Long enough for anything real, short enough to bound what we forward. */
 const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 };
@@ -138,5 +145,42 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
   }
 
+  await forwardToCrm({ name, organisation, email, phone, message, subject, page });
+
   return NextResponse.json({ ok: true, configured: true });
+}
+
+/**
+ * The enquiry, also as JSON, for whatever holds the pipeline.
+ *
+ * Awaited rather than left dangling: a serverless function can be frozen the
+ * moment it responds, and a fetch still in flight then never completes. A
+ * failure here is logged and swallowed — the mail has already gone, and a CRM
+ * being down is not a reason to tell a customer their message did not send.
+ */
+async function forwardToCrm(enquiry: Record<string, string>) {
+  const url = process.env.CONTACT_WEBHOOK_URL;
+  if (!url) return;
+
+  try {
+    const hook = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        ...(process.env.CONTACT_WEBHOOK_TOKEN
+          ? { authorization: `Bearer ${process.env.CONTACT_WEBHOOK_TOKEN}` }
+          : {}),
+      },
+      body: JSON.stringify({
+        ...enquiry,
+        source: "kestro.dk",
+        receivedAt: new Date().toISOString(),
+      }),
+      signal: AbortSignal.timeout(5000),
+    });
+
+    if (!hook.ok) console.error(`Contact form: webhook returned ${hook.status}`);
+  } catch (error) {
+    console.error("Contact form: webhook failed", error instanceof Error ? error.message : error);
+  }
 }
