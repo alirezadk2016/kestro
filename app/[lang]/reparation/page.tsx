@@ -24,10 +24,10 @@ const copy = {
   da: {
     metaTitle: "Reparation og opgradering af computere | Kestro",
     metaDescription:
-      "Reparation, opgradering og klargøring af computere – RAM og SSD, batteri, skærm, nordisk tastatur, reservedele, Windows-installation og licenser. For private og virksomheder.",
+      "Reparation, opgradering og klargøring af computere – RAM og SSD, batteri, skærm, nordisk tastatur, reservedele, Windows-installation og licenser. Værkstedet er den del af Kestro, der også tager imod private.",
     title: "Reparation og opgradering",
     description:
-      "Et lille værksted til computere, der ikke skal skiftes ud endnu. For private og mindre virksomheder – ikke kun store ordrer.",
+      "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
       "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det ét enkelt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
     whatWeDo: "Hvad vi laver",
@@ -45,10 +45,10 @@ const copy = {
   en: {
     metaTitle: "Computer repairs and upgrades | Kestro",
     metaDescription:
-      "Repairs, upgrades and setup for computers — memory and SSD, battery, screen, Nordic keyboard, spare parts, Windows installation and licences. For individuals and companies.",
+      "Repairs, upgrades and setup for computers — memory and SSD, battery, screen, Nordic keyboard, spare parts, Windows installation and licences. The workshop is the part of Kestro that also takes individuals.",
     title: "Repairs and upgrades",
     description:
-      "A small workshop for computers that do not need replacing yet. For individuals and smaller companies — not only large orders.",
+      "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:
       "Most machines get replaced long before they are worn out. Often it is a single battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
     whatWeDo: "What we do",
@@ -212,8 +212,8 @@ const repairFaqs = [
   {
     question: { da: "Tager I imod private kunder?", en: "Do you take private customers?" },
     answer: {
-      da: "Ja. Værkstedet er både for private og mindre virksomheder – der er ingen minimumsordre.",
-      en: "Yes. The workshop is for both individuals and smaller companies — there is no minimum order.",
+      da: "Ja – men kun i værkstedet. Resten af Kestro er indkøb og levering til virksomheder. Reparation og opgradering tager vi imod fra både private og mindre virksomheder, og der er ingen minimumsordre.",
+      en: "Yes — but only in the workshop. The rest of Kestro is purchasing and delivery for companies. Repairs and upgrades we take from both individuals and smaller companies, and there is no minimum order.",
     },
   },
   {

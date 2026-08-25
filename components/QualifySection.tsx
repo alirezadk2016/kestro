@@ -119,7 +119,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           ))}
         </ol>
 
-        <p className="mt-10 max-w-2xl text-sm leading-7 text-ink-500">
+        <p className="mt-10 max-w-2xl text-sm leading-7 text-ink-600">
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
