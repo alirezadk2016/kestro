@@ -87,6 +87,38 @@ async function findBorder(file) {
   return 0;
 }
 
+/*
+ * The grade.
+ *
+ * The sources are bright, cool, evenly lit stock photographs and the page they
+ * hang in is deep navy with the light coming from one side. Dropped in
+ * untouched they read as six pictures pinned to the page rather than as
+ * anything standing in it — the problem is not the geometry or the lighting in
+ * the scene, it is that the pictures were shot in a different world.
+ *
+ * So they get treated the way a colourist treats footage before it is cut
+ * together: pull the saturation back a little so the blues in the frame belong
+ * to the brand rather than competing with it, add contrast, and lift the
+ * blacks towards the page's navy instead of letting them sit at zero. The last
+ * one is what actually does the work — a photograph whose shadows are pure
+ * black on a navy page always looks like a hole cut in the page.
+ */
+function grade(image) {
+  return (
+    image
+      .modulate({ saturation: 0.84, brightness: 0.97 })
+      /*
+       * Per channel, not one number for all three. sharp's tint() is a duotone
+       * — it greyscales first, which throws the photograph away. This is the
+       * actual move: the same contrast on every channel, but the blacks pulled
+       * down in red and green and lifted in blue, so the shadows land on navy
+       * instead of on zero and the picture sits in the page rather than being
+       * a hole cut through it.
+       */
+      .linear([1.09, 1.09, 1.11], [-9, -6, 5])
+  );
+}
+
 await mkdir(OUT_DIR, { recursive: true });
 
 /* Frames from a previous set would still be served and still be fetched by a
@@ -109,9 +141,9 @@ for (const frame of FRAMES) {
   const box = { left: border, top: border, width: width - border * 2, height: tall };
 
   const out = join(OUT_DIR, `${frame.id}.webp`);
-  const info = await sharp(file)
-    .extract(box)
-    .resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" })
+  const info = await grade(
+    sharp(file).extract(box).resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" }),
+  )
     .webp({ quality: 82 })
     .toFile(out);
 

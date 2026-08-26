@@ -32,5 +32,20 @@
     "colour": "#0B1426",
     "near": 10.5,
     "far": 18.5
+  },
+  "post": true,
+  "bloom": {
+    "strength": 0.14,
+    "radius": 0.5,
+    "threshold": 0.95
+  },
+  "grade": {
+    "aberration": 0.0012,
+    "vignette": 0.28,
+    "grain": 0.0
+  },
+  "camera": {
+    "drift": 0.42,
+    "parallax": 0.55
   }
 }

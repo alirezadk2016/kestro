@@ -121,16 +121,8 @@ export default function Hero({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            {/* On a wide screen the carousel is deliberately wider than its
-                column and leans into the page gutter, which the section clips.
-                Sized to the column, the panes turning away at the sides get
-                cut off by their own container and the ring stops reading as a
-                ring. */}
             <div className="rise rise-2 lg:col-span-5">
-              <HeroReel
-                lang={lang}
-                className="mx-auto w-full max-w-lg lg:-mr-[12%] lg:w-[114%] lg:max-w-none"
-              />
+              <HeroReel lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
             </div>
           </div>
 

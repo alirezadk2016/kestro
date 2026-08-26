@@ -43,8 +43,7 @@ document.body.appendChild(renderer.domElement);
 
 try {
   const reel = await createReelScene(renderer, ${JSON.stringify(view)}, { drifting: false });
-  reel.camera.aspect = ${WIDTH} / ${HEIGHT};
-  reel.camera.updateProjectionMatrix();
+  reel.setSize(${WIDTH}, ${HEIGHT});
   reel.draw(0);
   window.__png = renderer.domElement.toDataURL("image/webp", 0.88);
 } catch (error) {

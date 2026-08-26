@@ -14,6 +14,27 @@ const BASE = `http://127.0.0.1:${PORT}`;
 const run = (command, args, options = {}) =>
   spawn(command, args, { stdio: "inherit", shell: false, ...options });
 
+/*
+ * Refuse to run against somebody else's server.
+ *
+ * Without this the runner starts, finds the port already answering, and checks
+ * whatever is on it — a dev server, or a previous build left behind. That is
+ * worse than not running at all: it reports on a build nobody asked about, and
+ * the failures make no sense against the code in front of you. Found the hard
+ * way, checking a stale server whose chunk hashes no longer existed.
+ */
+try {
+  const response = await fetch(BASE + "/", { signal: AbortSignal.timeout(1500) });
+  if (response) {
+    console.error(
+      `verify: something is already serving ${BASE}. Stop it first, or set VERIFY_PORT.`,
+    );
+    process.exit(1);
+  }
+} catch {
+  /* Nothing there, which is what we want. */
+}
+
 console.log("verify: building");
 const build = run("npx", ["next", "build"]);
 const [code] = await once(build, "exit");

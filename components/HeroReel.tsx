@@ -129,8 +129,9 @@ export default function HeroReel({ lang, className }: { lang: Lang; className?: 
         // Capped at 2 so a 3× phone screen does not render nine times the pixels.
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(box.width, box.height, false);
-        scene.camera.aspect = box.width / box.height;
-        scene.camera.updateProjectionMatrix();
+        /* The scene resizes itself: with a post-processing chain there are
+           render targets behind the canvas that have to follow it too. */
+        scene.setSize(box.width, box.height);
       }
 
       resize();
@@ -141,9 +142,37 @@ export default function HeroReel({ lang, className }: { lang: Lang; className?: 
       const started = performance.now();
       let announced = -1;
 
+      /*
+       * Whether this device can afford the bloom and grade passes.
+       *
+       * There is no way to ask. Reading the GPU string is unreliable and
+       * banned in some browsers, and the same model of phone performs
+       * differently on a cold morning and a warm afternoon. So it is measured:
+       * the first ninety drawn frames are timed, and if the median frame took
+       * longer than a 36 fps budget the whole chain is dropped for the rest of
+       * the session. A slightly plainer picture at full speed beats a filmic
+       * one that stutters — the stutter is the thing people notice.
+       */
+      const samples: number[] = [];
+      let previous = started;
+      let judged = false;
+
       function draw(now: number) {
         frame = requestAnimationFrame(draw);
         if (!drawing.current || document.hidden) return;
+
+        if (!judged) {
+          /* Ignore the first few: shader compilation lands in them. */
+          if (samples.length > 0 || now - started > 400) samples.push(now - previous);
+          if (samples.length >= 90) {
+            const sorted = [...samples].sort((a, b) => a - b);
+            const median = sorted[Math.floor(sorted.length / 2)];
+            if (median > 1000 / 36) scene.setPost(false);
+            judged = true;
+          }
+        }
+        previous = now;
+
         scene.draw((now - started) / 1000);
 
         /* React only hears about the frame in front when it changes. Setting
@@ -235,13 +264,18 @@ export default function HeroReel({ lang, className }: { lang: Lang; className?: 
   return (
     <div ref={holder} className={className}>
       {/*
-        The ring. Deliberately wider than the picture box it sits in and
-        clipped by the hero: the panes coming round the sides run past the
-        edge, which is what says there are more of them than the three you can
-        see. Contained neatly it reads as three pictures, not as a carousel.
+        The ring runs wider than the column and out into the page gutter, which
+        the hero clips. Contained neatly inside the column it reads as three
+        pictures side by side; running off the edge it reads as a carousel with
+        more of it out of shot.
+
+        The bleed is on the canvas alone, not on the whole component. Putting
+        it on the wrapper took the caption plate out over the edge with it and
+        cut the counter off — the picture may leave the frame, the words may
+        not.
       */}
       <div
-        className="relative aspect-square w-full sm:aspect-[5/4] lg:aspect-[4/3]"
+        className="relative aspect-square w-full sm:aspect-[5/4] lg:-mr-[22%] lg:aspect-[16/10] lg:w-[122%]"
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
       >
