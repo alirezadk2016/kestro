@@ -97,7 +97,9 @@ export default function RootLayout({
           }}
         />
         <Header lang={lang} />
-        <main>{children}</main>
+        <main id="indhold" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
         <Footer lang={lang} />
         <Reveal />
       </body>

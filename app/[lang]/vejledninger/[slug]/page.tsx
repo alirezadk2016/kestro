@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { guides, getGuide } from "@/lib/guides";
 import { company } from "@/lib/company";
@@ -81,6 +82,13 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       <section className="bg-brand-950 py-16 text-paper sm:py-24">
         <Container>
           <div className="max-w-3xl">
+            <BreadcrumbSchema
+              lang={lang}
+              trail={[
+                { name: c.breadcrumb, href: "/vejledninger" },
+                { name: guide.title[lang], href: `/vejledninger/${guide.slug}` },
+              ]}
+            />
             <nav aria-label={c.breadcrumb} className="text-sm text-paper/50">
               <Link
                 href={localePath("/vejledninger", lang)}

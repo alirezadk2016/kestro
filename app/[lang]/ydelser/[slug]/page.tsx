@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
+import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
 import { company } from "@/lib/company";
@@ -59,8 +60,14 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
     url: `https://www.kestro.dk${localePath(`/ydelser/${service.slug}`, lang)}`,
   };
 
+  const trail: Crumb[] = [
+    { name: c.breadcrumb, href: "/ydelser" },
+    { name: service.name[lang], href: `/ydelser/${service.slug}` },
+  ];
+
   return (
     <>
+      <BreadcrumbSchema lang={lang} trail={trail} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

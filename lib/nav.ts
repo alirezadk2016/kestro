@@ -60,4 +60,5 @@ export const ui = {
   breadcrumb: { da: "Brødkrumme", en: "Breadcrumb" },
   language: { da: "Sprog", en: "Language" },
   callUs: { da: "Ring til os", en: "Call us" },
+  skipToContent: { da: "Gå til indhold", en: "Skip to content" },
 } satisfies Record<string, Localized>;

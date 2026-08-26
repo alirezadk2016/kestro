@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
@@ -90,6 +91,13 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
+            <BreadcrumbSchema
+              lang={lang}
+              trail={[
+                { name: c.breadcrumb, href: "/modeller" },
+                { name: model.name, href: `/modeller/${model.slug}` },
+              ]}
+            />
             <nav
               aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
               className="text-sm text-ink-400"

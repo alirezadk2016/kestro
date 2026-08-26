@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
@@ -93,6 +94,13 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
         <Container className="relative">
           <div className="mx-auto max-w-3xl">
+            <BreadcrumbSchema
+              lang={lang}
+              trail={[
+                { name: c.breadcrumbHub, href: "/produkter" },
+                { name: category.name[lang], href: `/produkter/${category.slug}` },
+              ]}
+            />
             <nav aria-label={c.breadcrumbLabel} className="text-sm text-ink-400">
               <Link
                 href={localePath("/produkter", lang)}

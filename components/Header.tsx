@@ -27,6 +27,26 @@ export default function Header({ lang }: { lang: Lang }) {
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-ink-900/8">
+      {/*
+        The first thing a keyboard reaches on every page.
+       
+        Without it, tabbing to the content means going through the logo, eight
+        navigation items, the products menu, two language buttons and the call
+        to action — on every page, every time. WCAG calls this Bypass Blocks
+        and it is a Level A requirement; it is also just the difference between
+        a site that can be used from a keyboard and one that can technically be
+        operated from one.
+
+        Off-screen until focused rather than hidden, because a hidden element
+        cannot be focused and would never appear.
+      */}
+      <a
+        href="#indhold"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-none focus:bg-brand-700 focus:px-5 focus:text-sm focus:font-semibold focus:text-paper focus:outline-none focus:ring-2 focus:ring-paper focus:ring-offset-2"
+      >
+        {ui.skipToContent[lang]}
+      </a>
+
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
@@ -129,7 +149,7 @@ export default function Header({ lang }: { lang: Lang }) {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={ui.openMenu[lang]}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
