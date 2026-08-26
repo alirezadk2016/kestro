@@ -1,5 +1,6 @@
 import Link from "next/link";
-import HeroModel from "./HeroModel";
+import Container from "./Container";
+import HeroReel from "./HeroReel";
 import HeroSpec from "./HeroSpec";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -10,14 +11,6 @@ import { localePath, type Lang } from "@/lib/i18n";
  * genuinely need the browser (the cycling enquiry panel, the WebGL laptop) are
  * client components.
  */
-
-/* Facts, not feature bullets. Set as a rule-separated row rather than pills —
-   the pill-with-tiny-icon is the single most template-looking element there is. */
-const FACTS = [
-  { k: { da: "Base", en: "Based in" }, v: { da: "Aarhus", en: "Aarhus" } },
-  { k: { da: "Leverer i", en: "Delivers in" }, v: { da: "DK & NO", en: "DK & NO" } },
-  { k: { da: "Tastatur", en: "Keyboard" }, v: { da: "Nordisk", en: "Nordic" } },
-];
 
 const copy = {
   da: {
@@ -58,16 +51,19 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-16 sm:px-6 sm:py-24 md:py-28 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
+      {/* The padding lives on this wrapper rather than on the section, because
+          the reel below has to reach both edges of the screen and a padded
+          ancestor would box it in. */}
+      <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
+        <Container>
+          <div className="max-w-3xl">
             <div className="rise">
               <div className="flex items-center gap-4">
                 <span className="h-px w-10 bg-brand-400" />
                 <span className="eyebrow text-brand-300">{c.eyebrow}</span>
               </div>
 
-              <h1 className="mt-7 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
+              <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
                 {c.headline}
               </h1>
 
@@ -76,7 +72,7 @@ export default function Hero({ lang }: { lang: Lang }) {
               </p>
             </div>
 
-            <div className="rise rise-1 mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <Link
                 href={localePath("/kontakt", lang)}
                 className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
@@ -90,35 +86,21 @@ export default function Hero({ lang }: { lang: Lang }) {
                 {c.secondary}
               </Link>
             </div>
-
-            <dl className="rise rise-3 mt-10 grid max-w-lg grid-cols-3 border-t border-paper/15 sm:mt-12">
-              {FACTS.map((fact) => (
-                <div key={fact.k.da} className="py-4 pr-6">
-                  <dt className="label text-brand-300">{fact.k[lang]}</dt>
-                  <dd className="mt-1 font-display text-base font-semibold tracking-tight text-paper sm:text-lg">
-                    {fact.v[lang]}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
+        </Container>
 
-          {/* On a wide screen the laptop is deliberately larger than its
-              column and leans into the page gutter, which the section clips.
-              Sized to the column it read as a thumbnail floating in a void. */}
-          <div className="rise rise-2 lg:col-span-5">
-            <HeroModel
-              lang={lang}
-              className="mx-auto w-full max-w-xs sm:max-w-sm lg:-ml-[14%] lg:w-[128%] lg:max-w-none"
-            />
-          </div>
-        </div>
+        {/* The reel sits outside the container on purpose: the rail of panels
+            runs off both edges of the screen the way a banner does, and boxed
+            into the text column it would read as a widget. */}
+        <HeroReel lang={lang} />
 
-        {/* The enquiry runs the full width under both columns. As a tall panel
-            beside the headline it made the hero half a screen too long and was
-            hidden on phones entirely; across the page it costs a fraction of
-            the height and fits a phone in two columns. */}
-        <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
+        <Container>
+          {/* The enquiry runs the full width. As a tall panel beside the
+              headline it made the hero half a screen too long and was hidden
+              on phones entirely; across the page it costs a fraction of the
+              height and fits a phone in two columns. */}
+          <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
+        </Container>
       </div>
     </section>
   );
