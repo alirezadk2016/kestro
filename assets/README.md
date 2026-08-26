@@ -53,32 +53,52 @@ Three of these are not on the site, and two of them should stay off it:
 If any of these is ever wanted on the site, the fix is a new render, not a
 smaller crop.
 
-## The customer-journey set
+## renders/journey/
 
-Six frames uploaded as a replacement for the reel — a buyer wondering where to
-shop, an adviser, a technician, packing, delivery, a happy team. They are not
-on the site, and none of them can go on it as they stand.
+The six frames the hero carousel runs on: the question a buyer starts with,
+the conversation, the workshop, packing, delivery, the desks in use.
 
-  - **The logo is not ours.** Every frame carries a wheat-or-leaf mark and a
-    lowercase "kestro" — on the polo shirts, the backdrop, the mug, the boxes,
-    the van. The site's header shows the K. One page cannot show a company two
-    marks and be believed about anything else.
-  - **They show a company that does not exist.** A staffed advice desk, a
-    workshop with racking, a branded delivery van, a boardroom of colleagues.
+scripts/build-reel-frames.mjs cuts them into public/reel/. Re-run it after
+replacing any of them.
+
+### What the script removes, and why
+
+Each source frame has a numbered badge and a caption bar burnt into the bottom
+of the picture. The script measures where they start — the bar is not at the
+same height in every frame, because a two-line caption starts higher than a
+one-line one — and crops above them.
+
+That is not tidying. Text inside an image cannot be translated, selected, read
+aloud, or indexed, and this site is Danish and English from one source. The
+captions the carousel shows live in lib/reel-frames.ts, in both languages, each
+linked to the page that documents it. Two of the burnt-in ones were also claims
+the copy does not make: "Great price", and "Fast and secure delivery" — the
+delivery caption now says the timeframe is given before you order, which is
+what /ydelser/levering actually says.
+
+### What is still wrong with them
+
+Cropping cannot reach these. They are in the pictures themselves, and the fix
+is a new render, not a smaller crop.
+
+  - **The logo is not ours.** Five of the six carry a wheat-or-leaf mark with a
+    lowercase "kestro" — on the backdrop, the polo shirts, the boxes, the van,
+    the meeting-room screen. The site's header shows the K. Both appear on
+    screen at once on the front page. A visitor who notices is being told the
+    site does not know its own name, and that is a bad thing to be wondering
+    while reading a page whose argument is that we write everything down
+    accurately.
+  - **Two frames still carry English text in the picture.** Frame 1's speech
+    bubble and frame 2's "Great quality / Great price / Reliable support" card
+    sit in the middle of the composition, so a Danish visitor reads English
+    inside the image and a Danish caption beside it.
+  - **They show a company that does not exist yet.** A staffed advice desk, a
+    warehouse with racking, a branded delivery van, a boardroom of colleagues.
     Kestro is two people who source per order. Depicting a workforce and a
     fleet is not decoration, it is a claim about the business, and under
     markedsføringsloven §5 it is the kind of claim that has to be true.
-  - **The captions are burnt into the pixels, in English only.** The site is
-    Danish and English from one source. Text inside an image cannot be
-    translated, cannot be selected, cannot be read aloud, and cannot be
-    indexed. Two of them ("Great price", "Fast and secure delivery") are also
-    claims we removed from the copy on purpose.
 
-What would make a set like this usable, in order of how much it matters: the
-correct mark; no staff, premises or vehicles we do not have; and no text inside
-the frame — captions belong in lib/reel-frames.ts, where they exist in both
-languages and link to the page that documents them.
-
-Once a corrected set exists, dropping it in is one run of
-scripts/build-reel-frames.mjs and one edit to the id list in lib/reel-view.json
-and lib/reel-frames.ts.
+A corrected set needs, in order of how much it matters: the K mark; no text
+inside the frame; and no staff, premises or vehicles the company does not have.
+Dropping one in is a run of scripts/build-reel-frames.mjs and an edit to the id
+lists in lib/reel-view.json and lib/reel-frames.ts.

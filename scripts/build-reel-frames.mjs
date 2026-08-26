@@ -1,117 +1,122 @@
 /*
- * Cuts the hero reel's frames out of the contact sheet in assets/.
+ * Cuts the hero carousel's frames out of the source images in assets/.
  *
  *   node scripts/build-reel-frames.mjs
  *
- * The source is one 1536×1024 sheet holding thirteen numbered tiles: eight
- * components across two rows, then five views of the assembled machine along
- * the bottom. Cutting them here rather than by hand means the crop is a
- * reviewable diff — a rectangle in this file, not a decision someone made in
- * an image editor and cannot explain a year later.
+ * The sources are square frames from a customer-journey set, each with a
+ * numbered badge and a caption bar burnt into the bottom of the picture. This
+ * script's whole job is to remove them.
  *
- * Two things the geometry has to get right:
+ * That is not tidying. Text inside an image cannot be translated, selected,
+ * read aloud by a screen reader, or indexed — and this site is Danish and
+ * English from one source. The captions the carousel shows live in
+ * lib/reel-frames.ts, in both languages, each linking to the page that
+ * documents what it claims. A caption baked into the pixels can do none of
+ * that, and would sit in the picture contradicting the real one beside it.
  *
- *   - The component tiles carry their caption inside the frame ("5  Memory
- *     (RAM)"). The reel writes its own captions in two languages, so the crop
- *     starts below the baked-in one. LABEL_BAND is that offset.
- *   - The two bands have different proportions. Everything is normalised to
- *     3:2 with a centre crop, because a wall of panels that are almost but not
- *     quite the same shape reads as a mistake rather than as a composition.
+ * The bar is not at the same height in every frame — a two-line caption starts
+ * higher than a one-line one, and the badge sits on top of the bar rather than
+ * beside it. So the cut is measured rather than assumed: find the first row
+ * that is almost entirely brand blue, then step back above the badge.
  */
 import sharp from "sharp";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readdir, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const SOURCE = join(root, "assets/renders/exploded-frames.png");
+const SOURCE_DIR = join(root, "assets/renders/journey");
 const OUT_DIR = join(root, "public/reel");
 
-/* Panel geometry, measured off the sheet by scanning for the border strokes
-   rather than eyeballed: the columns and rows below are where the mean
-   brightness of a line of pixels spikes against its neighbours. */
-const GRID_COLS = [20, 388, 767, 1142, 1514];
-const GRID_ROWS = [101, 373, 649];
-const STRIP_COLS = [20, 306, 591, 890, 1183, 1514];
-const STRIP_TOP = 690;
-const STRIP_BOTTOM = 925;
-const LABEL_BAND = 48;
-const INSET = 3; // clear of the border stroke itself
-
-/* 960×640 — roughly twice the widest a panel is drawn at, so it stays sharp
-   on a retina screen without paying for pixels nobody sees. Nine of these load
-   as textures, so the total matters more than any single one. */
+/** 960×720 — about twice the widest a pane is drawn at, so it stays sharp on a
+    retina screen without paying for pixels nobody sees. */
 const WIDTH = 960;
-const HEIGHT = 640;
+const HEIGHT = 720;
 
-function componentTile(row, col) {
-  return {
-    left: GRID_COLS[col] + INSET,
-    top: GRID_ROWS[row] + LABEL_BAND,
-    width: GRID_COLS[col + 1] - GRID_COLS[col] - INSET * 2,
-    height: GRID_ROWS[row + 1] - GRID_ROWS[row] - LABEL_BAND - INSET,
-  };
-}
+/** How tall the numbered badge is, above the bar it sits on. */
+const BADGE = 52;
 
-/*
- * Narrows a tile to part of itself, in fractions of its own box.
- *
- * Two of the renders carry invented product markings — a battery labelled
- * "Li-ion 00", an SSD reading "hiVMe SSD" — the kind of almost-text an image
- * model produces. Nobody reads it at panel size, but this is a company whose
- * argument is that it writes things down accurately, and a visitor who leans
- * in and finds a made-up part number has been given a reason to doubt the rest
- * of the page. So the crop simply excludes it: both parts are photographed
- * lengthways, and the half without the lettering is the better composition
- * anyway.
- */
-function zoom(box, x, w) {
-  return {
-    left: Math.round(box.left + box.width * x),
-    top: box.top,
-    width: Math.round(box.width * w),
-    height: box.height,
-  };
-}
-
-function stripTile(col) {
-  return {
-    left: STRIP_COLS[col] + INSET,
-    top: STRIP_TOP + INSET,
-    width: STRIP_COLS[col + 1] - STRIP_COLS[col] - INSET * 2,
-    height: STRIP_BOTTOM - STRIP_TOP - INSET * 2,
-  };
-}
-
-/*
- * The reel in order. This is a sequence, not a gallery: the machine arrives
- * closed, gets opened, the parts we actually touch come out, and it goes back
- * together set up for a Danish desk. Every frame maps to something the site
- * already says happens, which is the only reason for a picture of it to be on
- * the front page.
- */
+/** The frames, in the order the journey runs. */
 const FRAMES = [
-  { id: "01-arrival", box: stripTile(4) },
-  { id: "02-chassis", box: componentTile(1, 3) },
-  { id: "03-cooling", box: componentTile(0, 2) },
-  { id: "04-board", box: componentTile(0, 3) },
-  { id: "05-memory", box: componentTile(1, 0) },
-  { id: "06-storage", box: zoom(componentTile(1, 1), 0.4, 0.6) },
-  { id: "07-battery", box: zoom(componentTile(1, 2), 0.0, 0.6) },
-  { id: "08-open", box: stripTile(1) },
-  { id: "09-ready", box: stripTile(0) },
+  { source: "1.png", id: "1-spoergsmaal" },
+  { source: "2.png", id: "2-raadgivning" },
+  { source: "3.png", id: "3-klargoering" },
+  { source: "4.png", id: "4-pakning" },
+  { source: "5.png", id: "5-levering" },
+  { source: "6.png", id: "6-paa-plads" },
 ];
+
+/**
+ * Where the burnt-in furniture starts, in pixels from the top.
+ *
+ * A row counts as part of the caption bar when nearly all of it is the brand
+ * blue. Looking only below 60% of the height keeps a blue shirt or a blue
+ * backdrop in the upper part of the picture from being mistaken for it.
+ */
+async function findCaptionTop(file) {
+  const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+
+  for (let y = Math.floor(height * 0.6); y < height; y++) {
+    let blue = 0;
+    for (let x = 0; x < width; x++) {
+      const p = (y * width + x) * channels;
+      const [r, g, b] = [data[p], data[p + 1], data[p + 2]];
+      if (b > 90 && b - r > 55 && g < b) blue++;
+    }
+    if (blue / width > 0.9) return { top: y, width, height };
+  }
+
+  return { top: height, width, height };
+}
+
+/** The white border some of the frames are matted onto. */
+async function findBorder(file) {
+  const { data, info } = await sharp(file).raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+
+  for (let y = 0; y < Math.floor(height * 0.1); y++) {
+    let white = 0;
+    for (let x = 0; x < width; x++) {
+      const p = (y * width + x) * channels;
+      if (data[p] > 240 && data[p + 1] > 240 && data[p + 2] > 240) white++;
+    }
+    if (white / width < 0.9) return y;
+  }
+
+  return 0;
+}
 
 await mkdir(OUT_DIR, { recursive: true });
 
+/* Frames from a previous set would still be served and still be fetched by a
+   stale lib/reel-view.json, so anything not in FRAMES goes — except the poster,
+   which scripts/render-reel-still.mjs writes here afterwards. */
+const keep = new Set([...FRAMES.map((frame) => `${frame.id}.webp`), "reel-still.webp"]);
+for (const file of await readdir(OUT_DIR)) {
+  if (file.endsWith(".webp") && !keep.has(file)) {
+    await rm(join(OUT_DIR, file));
+    console.log(`removed ${file}`);
+  }
+}
+
 for (const frame of FRAMES) {
-  const file = join(OUT_DIR, `${frame.id}.webp`);
-  const info = await sharp(SOURCE)
-    .extract(frame.box)
+  const file = join(SOURCE_DIR, frame.source);
+  const { top, width, height } = await findCaptionTop(file);
+  const border = await findBorder(file);
+
+  const tall = Math.max(1, Math.min(top - BADGE, height) - border);
+  const box = { left: border, top: border, width: width - border * 2, height: tall };
+
+  const out = join(OUT_DIR, `${frame.id}.webp`);
+  const info = await sharp(file)
+    .extract(box)
     .resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" })
     .webp({ quality: 82 })
-    .toFile(file);
+    .toFile(out);
+
   console.log(
-    `${frame.id}  ${frame.box.width}×${frame.box.height} → ${WIDTH}×${HEIGHT}  ${(info.size / 1024).toFixed(1)} kB`,
+    `${frame.id}  caption at y=${top}, keeping ${box.width}×${box.height}` +
+      `  →  ${WIDTH}×${HEIGHT}  ${(info.size / 1024).toFixed(1)} kB`,
   );
 }

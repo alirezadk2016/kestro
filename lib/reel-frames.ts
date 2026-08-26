@@ -3,16 +3,16 @@ import type { Lang } from "@/lib/i18n";
 type Localized = Record<Lang, string>;
 
 /*
- * The nine steps the hero reel shows, in order.
+ * The six steps the hero carousel shows, in order — the way an order actually
+ * runs, from the question a buyer starts with to the desks being ready.
  *
- * This is a sequence, not a gallery: a machine arrives, gets opened, the parts
- * we actually touch come out, and it goes back together set up for a Danish
- * desk. Every line here is something the site already states on a service page
- * — /ydelser/klargoering-og-test says the battery's capacity is measured in
- * percent, /ydelser/nordisk-tilpasning says the keyboard is physically
- * swapped. Nothing new is claimed in a caption. A picture on the front page is
- * worth having only where the work behind it is written down somewhere a
- * visitor can go and read, which is what `href` is for.
+ * The captions live here rather than in the pictures for three reasons: they
+ * exist in both languages, a screen reader can read them, and every one of
+ * them links to the page that documents what it says. That last one is the
+ * point. A line here is only allowed to claim what /ydelser already sets out —
+ * so the delivery step says the timeframe is given before you order, which is
+ * what /ydelser/levering says, and not that delivery is fast, which is a claim
+ * nothing on the site can document.
  */
 export type ReelFrame = {
   /** Matches the file in public/reel and the entry in lib/reel-view.json. */
@@ -27,114 +27,81 @@ export type ReelFrame = {
 
 export const reelFrames: ReelFrame[] = [
   {
-    id: "01-arrival",
-    name: { da: "Ankomst", en: "Arrival" },
+    id: "1-spoergsmaal",
+    name: { da: "Spørgsmålet", en: "The question" },
     line: {
-      da: "Maskinen kommer fra en leverandør i Sydeuropa. Første gennemgang er udvendig: kabinet, hængsler og skærmramme.",
-      en: "The machine comes from a supplier in Southern Europe. The first pass is on the outside: chassis, hinges and screen bezel.",
+      da: "Hvor køber man brugt erhvervs-IT uden at gætte på stand, pris og garanti?",
+      en: "Where do you buy used business IT without guessing at condition, price and warranty?",
     },
     href: "/ydelser/sourcing-og-indkoeb",
     alt: {
-      da: "Lukket bærbar computer set fra oven i studielys",
-      en: "A closed laptop seen from above under studio light",
+      da: "En mand ved et skrivebord med en bærbar computer, i tvivl om hvor han skal købe",
+      en: "A man at a desk with a laptop, unsure where to buy",
     },
   },
   {
-    id: "02-chassis",
-    name: { da: "Åbnet", en: "Opened" },
+    id: "2-raadgivning",
+    name: { da: "Rådgivning", en: "Advice" },
     line: {
-      da: "Bundpladen af. Alt bliver set efter indeni – ikke kun det, der kan aflæses udefra.",
-      en: "Base plate off. Everything inside gets looked at — not only what can be read off from the outside.",
+      da: "I fortæller, hvad opgaven kræver. Vi foreslår en konfiguration – og siger det, hvis en opgradering er nok.",
+      en: "You tell us what the job needs. We propose a configuration — and say so if an upgrade is enough.",
+    },
+    href: "/ydelser/sourcing-og-indkoeb",
+    alt: {
+      da: "En medarbejder taler med en kunde over et skrivebord",
+      en: "A member of staff talking with a customer across a desk",
+    },
+  },
+  {
+    id: "3-klargoering",
+    name: { da: "Klargøring", en: "Preparation" },
+    line: {
+      da: "Hver enhed testes: skærm, tastatur, batteri og porte. Slidte dele skiftes, og lagermediet slettes.",
+      en: "Every unit is tested: screen, keyboard, battery and ports. Worn parts are replaced and the storage medium erased.",
     },
     href: "/ydelser/klargoering-og-test",
     alt: {
-      da: "Bundkabinettet af en bærbar computer, afmonteret",
-      en: "The bottom chassis of a laptop, removed",
+      da: "En tekniker arbejder på en åbnet bærbar computer med skruetrækker",
+      en: "A technician working on an opened laptop with a screwdriver",
     },
   },
   {
-    id: "03-cooling",
-    name: { da: "Køling", en: "Cooling" },
+    id: "4-pakning",
+    name: { da: "Pakning", en: "Packing" },
     line: {
-      da: "Blæser og ribber renses, og kølepastaen skiftes. Det er ofte det, der får en ellers god maskine til at føles træg.",
-      en: "Fan and fins are cleaned and the thermal paste replaced. That is often what makes an otherwise good machine feel sluggish.",
+      da: "Maskinerne pakkes enkeltvis og sendes samlet, så I kun har én modtagelse at holde styr på.",
+      en: "The machines are packed individually and sent together, so you have one delivery to keep track of.",
     },
-    href: "/ydelser/klargoering-og-test",
+    href: "/ydelser/levering",
     alt: {
-      da: "Køleenhed med to blæsere og kobberrør",
-      en: "A cooling assembly with two fans and copper heat pipes",
+      da: "En kasse bliver pakket og tapet til forsendelse",
+      en: "A box being packed and taped for shipping",
     },
   },
   {
-    id: "04-board",
-    name: { da: "Bundkort", en: "Mainboard" },
+    id: "5-levering",
+    name: { da: "Levering", en: "Delivery" },
     line: {
-      da: "Ydeevnen måles, mens maskinen arbejder – ikke kun når den tændes.",
-      en: "Performance is measured while the machine is working — not only when it boots.",
+      da: "Leveret til virksomheden i Danmark og Norge. Tidsrammen oplyser vi, før I bestiller.",
+      en: "Delivered to the company in Denmark and Norway. We give you the timeframe before you order.",
     },
-    href: "/ydelser/klargoering-og-test",
+    href: "/ydelser/levering",
     alt: {
-      da: "Bundkortet fra en bærbar computer med processoren i midten",
-      en: "A laptop mainboard with the processor at its centre",
+      da: "En pakke bliver afleveret til en kunde ved en varebil",
+      en: "A parcel being handed to a customer at a van",
     },
   },
   {
-    id: "05-memory",
-    name: { da: "Hukommelse", en: "Memory" },
+    id: "6-paa-plads",
+    name: { da: "På plads", en: "In place" },
     line: {
-      da: "RAM opgraderes efter, hvad opgaven kræver – ikke efter hvad der tilfældigvis sad i maskinen.",
-      en: "Memory is upgraded to what the job needs — not to whatever happened to be in the machine.",
-    },
-    href: "/ydelser/klargoering-og-test",
-    alt: { da: "To SODIMM-hukommelsesmoduler", en: "Two SODIMM memory modules" },
-  },
-  {
-    id: "06-storage",
-    name: { da: "Lagring", en: "Storage" },
-    line: {
-      da: "Alt udstyr, vi sender videre, har SSD. Det gamle lagermedie slettes først.",
-      en: "Everything we pass on has an SSD. The old storage medium is erased first.",
-    },
-    href: "/ydelser/klargoering-og-test",
-    alt: { da: "En M.2 SSD tæt på", en: "An M.2 SSD close up" },
-  },
-  {
-    id: "07-battery",
-    name: { da: "Batteri", en: "Battery" },
-    line: {
-      da: "Den faktiske kapacitet måles og oplyses i procent af ny – ikke som “OK”.",
-      en: "The actual capacity is measured and stated as a percentage of new — not as “OK”.",
-    },
-    href: "/ydelser/klargoering-og-test",
-    alt: {
-      da: "Et lithium-ion-batteri til en bærbar computer",
-      en: "A lithium-ion laptop battery",
-    },
-  },
-  {
-    id: "08-open",
-    name: { da: "Test", en: "Testing" },
-    line: {
-      da: "Hver tast trykkes igennem, og portene testes med udstyr i. En slidt USB-port ses ikke udefra.",
-      en: "Every key gets pressed through and the ports are tested with something plugged in. A worn USB port does not show from the outside.",
-    },
-    href: "/ydelser/klargoering-og-test",
-    alt: {
-      da: "En bærbar computer halvt åben, set fra siden",
-      en: "A laptop half open, seen from the side",
-    },
-  },
-  {
-    id: "09-ready",
-    name: { da: "Klar", en: "Ready" },
-    line: {
-      da: "Nordisk tastatur monteret og Windows sat op. Klar til et dansk skrivebord.",
-      en: "Nordic keyboard fitted and Windows set up. Ready for a Danish desk.",
+      da: "Arbejdspladserne står klar. Nordisk tastatur monteret og Windows sat op.",
+      en: "The desks are ready. Nordic keyboard fitted and Windows set up.",
     },
     href: "/ydelser/nordisk-tilpasning",
     alt: {
-      da: "En bærbar computer åben med Kestros logo på skærmen",
-      en: "A laptop open with the Kestro logo on screen",
+      da: "Et team omkring et mødebord med bærbare computere",
+      en: "A team around a meeting table with laptops",
     },
   },
 ];
