@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import Container from "./Container";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { reelFrames } from "@/lib/reel-frames";
 import view from "@/lib/reel-view.json";
@@ -36,19 +35,17 @@ const copy = {
     heading: "Fra leverandør til skrivebord",
     stepsLabel: "Trin i klargøringen",
     more: "Læs hvordan",
-    of: "af",
   },
   en: {
     heading: "From supplier to desk",
     stepsLabel: "Steps in the preparation",
     more: "Read how",
-    of: "of",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
 const posterAlt = {
-  da: "Tre trin i klargøringen af en brugt erhvervscomputer, vist side om side",
-  en: "Three steps in preparing a used business computer, shown side by side",
+  da: "Trin i klargøringen af en brugt erhvervscomputer, vist på en roterende karrusel",
+  en: "Steps in preparing a used business computer, shown on a turning carousel",
 } satisfies Record<Lang, string>;
 
 /** A tab in the background should not be spending the visitor's battery. */
@@ -81,7 +78,7 @@ function wantsTheUpgrade(reduced: boolean) {
 
 type Handle = Awaited<ReturnType<typeof import("@/lib/reel-scene.mjs").createReelScene>>;
 
-export default function HeroReel({ lang }: { lang: Lang }) {
+export default function HeroReel({ lang, className }: { lang: Lang; className?: string }) {
   const c = copy[lang];
   const holder = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -205,21 +202,15 @@ export default function HeroReel({ lang }: { lang: Lang }) {
   const frame = reelFrames[current];
 
   return (
-    <div ref={holder} className="mt-11 sm:mt-14">
-      {/* No eyebrow above this one. The hero's own eyebrow sits a few hundred
-          pixels higher, and two rule-and-label rows that close together read
-          as a template rather than as a page. */}
-      <Container>
-        <h2 className="font-display text-[clamp(1.25rem,2.2vw,1.625rem)] font-bold leading-tight tracking-display text-paper">
-          {c.heading}
-        </h2>
-      </Container>
-
-      {/* Full-bleed on purpose: a rail of panels boxed inside the text column
-          reads as a widget, and the whole point is that it runs off both
-          edges of the screen the way a banner does. */}
+    <div ref={holder} className={className}>
+      {/*
+        The ring. Deliberately wider than the picture box it sits in and
+        clipped by the hero: the panes coming round the sides run past the
+        edge, which is what says there are more of them than the three you can
+        see. Contained neatly it reads as three pictures, not as a carousel.
+      */}
       <div
-        className="relative mt-6 h-[46vw] max-h-[430px] min-h-[320px] w-full sm:mt-8"
+        className="relative aspect-square w-full sm:aspect-[5/4] lg:aspect-[4/3]"
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
       >
@@ -228,7 +219,7 @@ export default function HeroReel({ lang }: { lang: Lang }) {
           alt={posterAlt[lang]}
           fill
           priority
-          sizes="100vw"
+          sizes="(min-width: 1024px) 46vw, 92vw"
           className={`object-cover transition-opacity duration-700 ${live ? "opacity-0" : "opacity-100"}`}
         />
         <canvas
@@ -240,67 +231,72 @@ export default function HeroReel({ lang }: { lang: Lang }) {
         />
       </div>
 
-      <Container>
-        {/*
-          The caption. A fixed minimum height so the line under the reel does
-          not jump the page around every few seconds as the frames change, and
-          aria-live so the change is announced rather than silently swapped.
-        */}
-        <div className="mt-6 grid gap-x-10 gap-y-6 sm:mt-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
-          <div aria-live="polite" className="min-h-[7rem] max-w-xl sm:min-h-[6rem]">
-            <p className="label text-brand-300">
-              {String(current + 1).padStart(2, "0")} {c.of}{" "}
-              {String(reelFrames.length).padStart(2, "0")}
-              {/* A rule rather than a slash: at the weight this divider wants
-                  to be, punctuation is text and has to clear 4.5:1, while a
-                  decorative rule does not have to be legible at all. */}
-              <span
-                aria-hidden="true"
-                className="mx-3 inline-block h-3 w-px translate-y-px bg-paper/30"
-              />
-              <span className="text-paper">{frame.name[lang]}</span>
-            </p>
-            <p className="mt-3 text-base leading-7 text-paper/70">{frame.line[lang]}</p>
-            <Link
-              href={localePath(frame.href, lang)}
-              className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
-            >
-              {c.more}
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </Link>
-          </div>
+      {/*
+        The caption, on a pane of glass of its own — the same material the
+        header uses, tuned for a dark surface. It overlaps the picture box so
+        it reads as sitting at the foot of the ring rather than as a paragraph
+        that happens to follow it.
 
-          {/*
-            Nine real buttons, not dots drawn on the canvas. This is how the
-            reel is stepped through with a keyboard, and how it is read at all
-            when the canvas never loads.
-          */}
-          <ol aria-label={c.stepsLabel} className="flex flex-wrap gap-1.5 md:justify-end">
-            {reelFrames.map((step, index) => (
-              <li key={step.id}>
-                <button
-                  type="button"
-                  onClick={() => goTo(index)}
-                  aria-current={index === current ? "true" : undefined}
-                  className="group flex h-11 w-8 items-center justify-center"
-                >
-                  <span className="sr-only">
-                    {step.name[lang]} — {step.alt[lang]}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className={`w-0.5 transition-all duration-300 ${
-                      index === current
-                        ? "h-7 bg-brand-300 shadow-[0_0_12px_rgba(147,169,239,0.85)]"
-                        : "h-3.5 bg-paper/30 group-hover:h-5 group-hover:bg-paper/70"
-                    }`}
-                  />
-                </button>
-              </li>
-            ))}
-          </ol>
+        A fixed minimum height, so the line does not jump the page about every
+        few seconds as the ring turns, and aria-live so the change is announced
+        rather than silently swapped.
+      */}
+      <div className="glass-dark relative z-10 -mt-6 p-5 sm:-mt-8 sm:p-6">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="eyebrow text-brand-300">{c.heading}</h2>
+          <p className="label tabular-nums text-paper/60">
+            {String(current + 1).padStart(2, "0")}&nbsp;&mdash;&nbsp;
+            {String(reelFrames.length).padStart(2, "0")}
+          </p>
         </div>
-      </Container>
+
+        <div aria-live="polite" className="mt-4 min-h-[8.5rem] sm:min-h-[7.5rem]">
+          <p className="font-display text-lg font-bold tracking-tight text-paper">
+            {frame.name[lang]}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-paper/70">{frame.line[lang]}</p>
+          <Link
+            href={localePath(frame.href, lang)}
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+          >
+            {c.more}
+            <ArrowRight className="h-4 w-4" strokeWidth={2} />
+          </Link>
+        </div>
+
+        {/*
+          Nine real buttons, not markers drawn on the canvas. This is how the
+          carousel is stepped through with a keyboard, and how it is read at
+          all when the canvas never loads.
+        */}
+        <ol
+          aria-label={c.stepsLabel}
+          className="mt-1 flex flex-wrap gap-1 border-t border-paper/10 pt-1"
+        >
+          {reelFrames.map((step, index) => (
+            <li key={step.id}>
+              <button
+                type="button"
+                onClick={() => goTo(index)}
+                aria-current={index === current ? "true" : undefined}
+                className="group flex h-11 w-7 items-center justify-center"
+              >
+                <span className="sr-only">
+                  {step.name[lang]} &mdash; {step.alt[lang]}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={`w-0.5 transition-all duration-300 ${
+                    index === current
+                      ? "h-6 bg-brand-300 shadow-[0_0_12px_rgba(147,169,239,0.85)]"
+                      : "h-3 bg-paper/30 group-hover:h-4.5 group-hover:bg-paper/70"
+                  }`}
+                />
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   );
 }

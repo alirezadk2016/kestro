@@ -52,3 +52,33 @@ Three of these are not on the site, and two of them should stay off it:
 
 If any of these is ever wanted on the site, the fix is a new render, not a
 smaller crop.
+
+## The customer-journey set
+
+Six frames uploaded as a replacement for the reel — a buyer wondering where to
+shop, an adviser, a technician, packing, delivery, a happy team. They are not
+on the site, and none of them can go on it as they stand.
+
+  - **The logo is not ours.** Every frame carries a wheat-or-leaf mark and a
+    lowercase "kestro" — on the polo shirts, the backdrop, the mug, the boxes,
+    the van. The site's header shows the K. One page cannot show a company two
+    marks and be believed about anything else.
+  - **They show a company that does not exist.** A staffed advice desk, a
+    workshop with racking, a branded delivery van, a boardroom of colleagues.
+    Kestro is two people who source per order. Depicting a workforce and a
+    fleet is not decoration, it is a claim about the business, and under
+    markedsføringsloven §5 it is the kind of claim that has to be true.
+  - **The captions are burnt into the pixels, in English only.** The site is
+    Danish and English from one source. Text inside an image cannot be
+    translated, cannot be selected, cannot be read aloud, and cannot be
+    indexed. Two of them ("Great price", "Fast and secure delivery") are also
+    claims we removed from the copy on purpose.
+
+What would make a set like this usable, in order of how much it matters: the
+correct mark; no staff, premises or vehicles we do not have; and no text inside
+the frame — captions belong in lib/reel-frames.ts, where they exist in both
+languages and link to the page that documents them.
+
+Once a corrected set exists, dropping it in is one run of
+scripts/build-reel-frames.mjs and one edit to the id list in lib/reel-view.json
+and lib/reel-frames.ts.

@@ -60,6 +60,33 @@ body {
   }
 
   /*
+   * The same material on a dark surface.
+   *
+   * .glass is white at 75% because it sits over the paper page. Over the navy
+   * hero that would be a white card. This is the inverse: a thin white film
+   * the background shows straight through, held together by an edge rather
+   * than by opacity, with a highlight along the top the way a real pane
+   * catches the light at its lip.
+   *
+   * The film has to stay this thin. Every step of opacity added here lightens
+   * the ground under the caption and pushes its contrast down, and the text on
+   * it is already the smallest on the page.
+   */
+  .glass-dark {
+    background-color: rgb(255 255 255 / 0.055);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.11);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-dark {
+      background-color: rgb(9 16 32 / 0.92);
+    }
+  }
+
+  /*
    * A soft brand wash, so a dark band is lit from somewhere rather than being
    * a flat rectangle of navy. Children are lifted above it rather than the
    * wash being pushed behind the section's own background.

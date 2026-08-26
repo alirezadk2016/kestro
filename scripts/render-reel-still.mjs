@@ -22,8 +22,8 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const OUT = join(root, "public/reel/reel-still.webp");
-const WIDTH = 1600;
-const HEIGHT = 520;
+const WIDTH = 1200;
+const HEIGHT = 900;
 
 const view = JSON.parse(await readFile(join(root, "lib/reel-view.json"), "utf8"));
 

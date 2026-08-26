@@ -51,54 +51,58 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      {/* The padding lives on this wrapper rather than on the section, because
-          the reel below has to reach both edges of the screen and a padded
-          ancestor would box it in. */}
       <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
         <Container>
-          <div className="max-w-3xl">
-            <div className="rise">
-              <div className="flex items-center gap-4">
-                <span className="h-px w-10 bg-brand-400" />
-                <span className="eyebrow text-brand-300">{c.eyebrow}</span>
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-7">
+              <div className="rise">
+                <div className="flex items-center gap-4">
+                  <span className="h-px w-10 bg-brand-400" />
+                  <span className="eyebrow text-brand-300">{c.eyebrow}</span>
+                </div>
+
+                <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,5.4vw,4rem)] font-extrabold leading-[0.98] tracking-display text-paper">
+                  {c.headline}
+                </h1>
+
+                <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
+                  {c.sub}
+                </p>
               </div>
 
-              <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,6.5vw,4.5rem)] font-extrabold leading-[0.98] tracking-display text-paper">
-                {c.headline}
-              </h1>
-
-              <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
-                {c.sub}
-              </p>
+              <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <Link
+                  href={localePath("/kontakt", lang)}
+                  className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
+                >
+                  {c.primary}
+                </Link>
+                <Link
+                  href={localePath("/produkter", lang)}
+                  className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
+                >
+                  {c.secondary}
+                </Link>
+              </div>
             </div>
 
-            <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <Link
-                href={localePath("/kontakt", lang)}
-                className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
-              >
-                {c.primary}
-              </Link>
-              <Link
-                href={localePath("/produkter", lang)}
-                className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
-              >
-                {c.secondary}
-              </Link>
+            {/* On a wide screen the carousel is deliberately wider than its
+                column and leans into the page gutter, which the section clips.
+                Sized to the column, the panes turning away at the sides get
+                cut off by their own container and the ring stops reading as a
+                ring. */}
+            <div className="rise rise-2 lg:col-span-5">
+              <HeroReel
+                lang={lang}
+                className="mx-auto w-full max-w-lg lg:-mr-[12%] lg:w-[114%] lg:max-w-none"
+              />
             </div>
           </div>
-        </Container>
 
-        {/* The reel sits outside the container on purpose: the rail of panels
-            runs off both edges of the screen the way a banner does, and boxed
-            into the text column it would read as a widget. */}
-        <HeroReel lang={lang} />
-
-        <Container>
-          {/* The enquiry runs the full width. As a tall panel beside the
-              headline it made the hero half a screen too long and was hidden
-              on phones entirely; across the page it costs a fraction of the
-              height and fits a phone in two columns. */}
+          {/* The enquiry runs the full width under both columns. As a tall
+              panel beside the headline it made the hero half a screen too long
+              and was hidden on phones entirely; across the page it costs a
+              fraction of the height and fits a phone in two columns. */}
           <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
         </Container>
       </div>
