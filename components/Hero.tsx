@@ -35,19 +35,54 @@ export default function Hero({ lang }: { lang: Lang }) {
   return (
     <section className="relative overflow-hidden bg-brand-950">
       {/*
-        A drafting grid in CSS rather than an image: it costs no request, suits
-        a company that sells to a specification, and gives the dark field
-        something to hold without the blur-blob decoration.
+        The room the carousel stands in, in three layers.
+
+        The carousel brings its own lit backdrop and floor, but they stop at
+        the edge of its canvas — and a lit object on a flat rectangle of navy
+        reads as a picture pasted onto a wall rather than as something standing
+        in the page. These continue that light outwards, so the glow behind the
+        panes carries on into the hero and the field has a near side and a far
+        side instead of being one even colour.
+
+        All three are CSS, so they cost no request and nothing to draw.
+      */}
+
+      {/* The key light, sitting behind the carousel and spilling left. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(115% 95% at 76% 20%, rgba(46,121,255,0.20) 0%, rgba(24,50,124,0.10) 36%, transparent 70%)",
+        }}
+      />
+
+      {/*
+        A drafting grid: it suits a company that sells to a specification and
+        gives the dark field something to hold without the blur-blob
+        decoration. Aimed at the middle rather than at the carousel — behind
+        photographs it was competing with them, and the empty half of the hero
+        was the part that needed something in it.
       */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0 opacity-[0.3]"
         style={{
           backgroundImage:
             "linear-gradient(to right, rgba(147,169,239,0.09) 1px, transparent 1px), linear-gradient(to bottom, rgba(147,169,239,0.09) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
-          maskImage: "radial-gradient(120% 90% at 70% 30%, #000 30%, transparent 78%)",
-          WebkitMaskImage: "radial-gradient(120% 90% at 70% 30%, #000 30%, transparent 78%)",
+          maskImage: "radial-gradient(105% 95% at 42% 42%, #000 18%, transparent 74%)",
+          WebkitMaskImage: "radial-gradient(105% 95% at 42% 42%, #000 18%, transparent 74%)",
+        }}
+      />
+
+      {/* The floor falling away, so the band ends in shadow rather than at a
+          line. It also gives the section below something to arrive on. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5"
+        style={{
+          background: "linear-gradient(180deg, rgba(4,8,18,0) 0%, rgba(4,8,18,0.5) 100%)",
         }}
       />
 

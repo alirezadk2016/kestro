@@ -27,5 +27,10 @@
     "4-pakning",
     "5-levering",
     "6-paa-plads"
-  ]
+  ],
+  "fog": {
+    "colour": "#0B1426",
+    "near": 10.5,
+    "far": 18.5
+  }
 }
