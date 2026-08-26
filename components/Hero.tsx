@@ -33,7 +33,7 @@ export default function Hero({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="relative overflow-hidden bg-brand-950">
+    <section className="grain relative overflow-hidden bg-brand-950">
       {/*
         The room the carousel stands in, in three layers.
 

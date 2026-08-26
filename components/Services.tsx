@@ -28,8 +28,8 @@ const services = [
   {
     title: { da: "Levering til virksomheder", en: "Delivery to companies" },
     description: {
-      da: "Fleksible mængder og hurtig B2B-levering til virksomheder i Danmark og Norge.",
-      en: "Flexible quantities and quick B2B delivery to companies in Denmark and Norway.",
+      da: "Fleksible mængder til virksomheder i Danmark og Norge. Tidsrammen oplyser vi, før I bestiller.",
+      en: "Flexible quantities for companies in Denmark and Norway. We give you the timeframe before you order.",
     },
   },
 ];
@@ -53,36 +53,36 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="lit lit-paper border-b border-paper-edge bg-paper py-14 sm:py-24">
+    <section className="stage py-16 sm:py-28" data-reveal>
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-600">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-7 text-ink-600">{c.sub}</p>
+          <p className="mt-5 text-base leading-7 text-paper/70">{c.sub}</p>
         </div>
 
-        <ol className="mt-10 grid grid-cols-2 gap-x-6 border-t border-ink-900/12 lg:grid-cols-4 lg:gap-x-0">
+        <ol className="mt-12 grid grid-cols-2 gap-x-6 border-t border-paper/15 lg:grid-cols-4 lg:gap-x-0">
           {services.map((service, i) => (
             <li
               key={service.title.da}
-              className="border-b border-ink-900/10 py-6 lg:border-b-0 lg:border-r lg:border-ink-900/10 lg:py-7 lg:pl-8 lg:pr-8 lg:first:pl-0 lg:last:border-r-0"
+              className="border-b border-paper/12 py-6 lg:border-b-0 lg:border-r lg:border-paper/12 lg:py-8 lg:pl-8 lg:pr-8 lg:first:pl-0 lg:last:border-r-0"
             >
-              <span className="font-display text-2xl font-extrabold tabular-nums tracking-display text-ink-500 lg:text-3xl">
+              <span className="font-display text-2xl font-extrabold tabular-nums tracking-display text-brand-300 lg:text-3xl">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-3 font-display text-base font-bold tracking-tight text-ink-900 lg:mt-4 lg:text-lg">
+              <h3 className="mt-3 font-display text-base font-bold tracking-tight text-paper lg:mt-4 lg:text-lg">
                 {service.title[lang]}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-ink-600">{service.description[lang]}</p>
+              <p className="mt-2 text-sm leading-6 text-paper/65">{service.description[lang]}</p>
             </li>
           ))}
         </ol>
 
         <Link
           href={localePath("/ydelser", lang)}
-          className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+          className="group mt-12 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
         >
           {c.link}
           <ArrowRight

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
 
@@ -98,6 +99,7 @@ export default function RootLayout({
         <Header lang={lang} />
         <main>{children}</main>
         <Footer lang={lang} />
+        <Reveal />
       </body>
     </html>
   );

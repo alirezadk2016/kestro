@@ -40,14 +40,42 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-paper-edge bg-paper py-14 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="overflow-hidden border border-paper-edge bg-white">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16" data-reveal>
+          {/*
+            The machine on a dark ground with a light behind it, rather than
+            centred on a white card.
+
+            The source photograph is a black laptop shot on white. On a white
+            card it is a catalogue thumbnail — the one image on the page with
+            no depth at all, on a page whose whole visual argument is lit
+            hardware against dark. scripts/build-cutout.mjs removes the white
+            so the machine can stand in the same light as the hero, which costs
+            one gradient and a shadow and makes it the same object as the ones
+            turning at the top of the page.
+          */}
+          <div className="stage relative aspect-[4/3] overflow-hidden">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(52% 46% at 50% 42%, rgba(84,116,236,0.32) 0%, rgba(66,92,200,0.12) 46%, transparent 74%)",
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-[14%] bottom-[10%] h-[12%]"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(2,5,14,0.6) 0%, rgba(2,5,14,0) 70%)",
+              }}
+            />
             <Image
-              src={image.src}
+              src="/thinkpad-t480-6-cutout.webp"
               alt={image.alt[lang]}
               width={1179}
               height={1115}
-              className="h-full w-full object-contain p-4 sm:p-8"
+              className="absolute inset-0 h-full w-full object-contain p-6 sm:p-10"
               sizes="(max-width: 1024px) 92vw, 560px"
             />
           </div>

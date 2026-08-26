@@ -194,6 +194,37 @@ export default function HeroReel({ lang, className }: { lang: Lang; className?: 
 
   const onPointerLeave = useCallback(() => reel.current?.setPointer(null, 0), []);
 
+  /*
+   * The ring answers the scroll.
+   *
+   * A carousel that turns at its own pace regardless of what the reader does
+   * is a screensaver. Tying it to the scroll is what makes the hero feel like
+   * a camera move rather than a loop playing in the corner: the ring is
+   * already turning slowly, and scrolling past pushes it along.
+   *
+   * The listener is passive and does no work of its own — it hands the delta
+   * to the scene, which applies it inside the frame it was already drawing.
+   * Skipped entirely when the canvas is not live, which includes everyone who
+   * asked for less motion.
+   */
+  useEffect(() => {
+    if (!wantsTheUpgrade(reduced)) return;
+
+    let last = window.scrollY;
+
+    function onScroll() {
+      const now = window.scrollY;
+      const delta = now - last;
+      last = now;
+      /* Roughly a sixth of a turn per screen scrolled: enough to feel
+         connected, not so much that the reader outruns the captions. */
+      reel.current?.nudge(delta * 0.0011);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [reduced]);
+
   const goTo = useCallback((index: number) => {
     setCurrent(index);
     reel.current?.goTo(index);

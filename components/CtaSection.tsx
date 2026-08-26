@@ -21,7 +21,7 @@ export default function CtaSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="lit bg-brand-950 py-14 sm:py-24">
+    <section className="stage py-16 sm:py-28" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="h-px w-8 bg-brand-400" />

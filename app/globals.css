@@ -35,6 +35,34 @@ body {
 
 @layer components {
   /*
+   * A section arriving.
+   *
+   * Only hidden once components/Reveal.tsx has stamped the root — otherwise a
+   * failed script would leave the page blank, and content that needs
+   * JavaScript to become visible is content that can vanish.
+   *
+   * The easing is a long tail rather than a symmetrical ease: it covers most
+   * of the distance early and settles slowly, which is what a camera move
+   * does and what a linear or ease-in-out transition never does.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-reveal-ready] [data-reveal] {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+      transition:
+        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    html[data-reveal-ready] [data-reveal].is-revealed {
+      opacity: 1;
+      transform: none;
+      will-change: auto;
+    }
+  }
+
+  /*
    * Glass.
    *
    * The header and the mobile menu sit over the page rather than beside it, so
@@ -84,6 +112,93 @@ body {
     .glass-dark {
       background-color: rgb(9 16 32 / 0.92);
     }
+  }
+
+  /*
+   * A stage: a dark band that is lit rather than merely dark.
+   *
+   * The page used to be one lit frame at the top and a long light document
+   * under it, which is why it read as a brochure with a nice cover. A dark
+   * band on its own does not fix that — a flat rectangle of navy is just a
+   * different flat rectangle. What makes it read as a photographed space is
+   * the same three things a set has: a key light coming from somewhere
+   * specific, corners that fall away, and grain.
+   *
+   * Children need `position: relative` or a z-index, since both washes are
+   * ::before/::after inside the section.
+   */
+  .stage {
+    position: relative;
+    isolation: isolate;
+    background-color: theme("colors.brand.950");
+  }
+
+  .stage > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* The key, up and to one side. Not centred: a light source dead in the
+     middle of a band is the one arrangement that never happens on a set. */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(75% 85% at 78% 8%, rgba(46, 121, 255, 0.18), transparent 62%),
+      radial-gradient(60% 70% at 12% 100%, rgba(20, 44, 110, 0.32), transparent 68%);
+  }
+
+  /* Corners falling away, and the grain.
+   *
+   * The grain is an inline SVG turbulence rather than an image: it costs no
+   * request, tiles at any size, and stays the same weight on a phone as on a
+   * 5K display. It is the difference between a flat digital gradient and
+   * something that looks photographed — at 4% nobody sees it directly, they
+   * only notice its absence.
+   */
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(2, 5, 12, 0.55) 100%),
+      url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+    background-size:
+      100% 100%,
+      140px 140px;
+  }
+
+  /* The same grain and vignette on a band that carries its own background —
+     the hero, whose light is built in three layers, and the closing call to
+     action. */
+  .grain {
+    position: relative;
+  }
+
+  .grain > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(120% 120% at 50% 45%, transparent 58%, rgba(2, 5, 12, 0.5) 100%),
+      url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+    background-size:
+      100% 100%,
+      140px 140px;
   }
 
   /*
