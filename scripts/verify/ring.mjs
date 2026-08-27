@@ -103,6 +103,51 @@ if (worst > 0) {
   process.exit(1);
 }
 
+/*
+ * The poster has to be at least as wide, in proportion, as the widest shape
+ * the canvas box takes.
+ *
+ * The canvas holds a fixed vertical field of view, so it shows the same height
+ * at any width. object-cover on a poster wider than its box crops the sides
+ * and leaves that height alone, which is what makes the swap from poster to
+ * canvas invisible. A poster narrower than the box gets cropped top and bottom
+ * and scaled up instead, and the picture jumps the moment WebGL takes over.
+ *
+ * The shapes are read out of the component's own classes rather than repeated
+ * here, so changing one of them is caught instead of quietly breaking this.
+ */
+const component = await readFile(join(root, "components/HeroReel.tsx"), "utf8");
+const boxLine = component.match(/className="relative aspect-[^"]*"/);
+
+if (!boxLine) {
+  console.error("ring: could not find the canvas box's classes in components/HeroReel.tsx");
+  process.exit(1);
+}
+
+const shapes = [...boxLine[0].matchAll(/aspect-(?:\[(\d+)\/(\d+)\]|(square))/g)].map((m) =>
+  m[3] ? 1 : Number(m[1]) / Number(m[2]),
+);
+
+if (shapes.length === 0) {
+  console.error("ring: found no aspect classes on the canvas box");
+  process.exit(1);
+}
+
+const widestBox = Math.max(...shapes);
+const posterAspect = view.poster.width / view.poster.height;
+
+if (posterAspect < widestBox - 0.001) {
+  console.error(
+    `ring: the poster is ${posterAspect.toFixed(3)}:1 but the box gets as wide as ` +
+      `${widestBox.toFixed(3)}:1, so object-cover will crop its height and the swap ` +
+      `to the canvas will jump.\n      Widen poster in lib/reel-view.json.`,
+  );
+  process.exit(1);
+}
+
 console.log(
   `ring: ${count} panes, no overlap over a full turn across ±${travel.toFixed(2)} of camera travel`,
+);
+console.log(
+  `      poster ${posterAspect.toFixed(3)}:1 covers the widest box shape ${widestBox.toFixed(3)}:1`,
 );

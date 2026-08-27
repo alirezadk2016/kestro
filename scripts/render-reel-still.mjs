@@ -22,10 +22,23 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const OUT = join(root, "public/reel/reel-still.webp");
-const WIDTH = 1200;
-const HEIGHT = 900;
 
 const view = JSON.parse(await readFile(join(root, "lib/reel-view.json"), "utf8"));
+
+/*
+ * The poster's proportions come from the view, not from a number typed here.
+ *
+ * They have to be at least as wide as the widest shape the box ever takes.
+ * The canvas keeps a fixed vertical field of view, so it shows the same height
+ * whatever its width — and object-cover on a poster that is wider than its box
+ * crops the sides only, leaving that same height. Render it narrower than the
+ * box and object-cover crops the top and bottom instead and scales up, so the
+ * poster shows a tighter framing than the canvas that replaces it and the
+ * swap jumps. It did: the poster filled 91% of the box height against the
+ * canvas's 85%.
+ */
+const WIDTH = view.poster.width;
+const HEIGHT = view.poster.height;
 
 const page = `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#0a1020}</style>
 <script type="importmap">{"imports":{

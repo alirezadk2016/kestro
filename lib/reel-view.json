@@ -47,5 +47,9 @@
   "camera": {
     "drift": 0.42,
     "parallax": 0.55
+  },
+  "poster": {
+    "width": 1440,
+    "height": 900
   }
 }

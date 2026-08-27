@@ -56,7 +56,22 @@ export default function Header({ lang }: { lang: Lang }) {
           Kestro
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        {/*
+          The navigation and the button beside it have to fit on one line, and
+          between 1024 and 1168 px they did not: "Hvad vi skaffer", "Sælg til
+          os" and "Om os" each broke onto a second line and the header grew a
+          row taller. That is the whole of tablet landscape and every small
+          laptop.
+
+          Fixed by giving the row less to carry rather than by pushing the
+          breakpoint up and sending laptops back to the burger menu. The items
+          are told not to wrap, the gap tightens below xl, and the call to
+          action steps aside until there is room for it — it is the widest
+          thing in the header and, at the top of the page, it repeats the
+          button in the hero directly underneath. It comes back at xl, and in
+          between the nav's own Kontakt link still reaches the same page.
+        */}
+        <nav className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7">
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}
@@ -122,7 +137,7 @@ export default function Header({ lang }: { lang: Lang }) {
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[44px] items-center bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+            className="hidden min-h-[44px] items-center whitespace-nowrap bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 xl:inline-flex"
           >
             {ui.bookCall[lang]}
           </Link>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "./Container";
 import HeroReel from "./HeroReel";
 import HeroSpec from "./HeroSpec";
+import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -17,14 +18,12 @@ const copy = {
     eyebrow: "Indkøbspartner på renoveret erhvervs-IT",
     headline: "Erhvervscomputere.\nKlar til Norden.",
     sub: "Vi finder maskinerne hos de rigtige leverandører og oplyser pris, stand og garantivilkår skriftligt, før I bestiller. Fra enkelte maskiner til hele medarbejderflåden.",
-    primary: "Få tilbud på jeres IT-behov",
     secondary: "Se hvad vi skaffer",
   },
   en: {
     eyebrow: "Sourcing partner for refurbished business IT",
     headline: "Business computers.\nReady for the Nordics.",
     sub: "We find the machines with the right suppliers and put the price, the condition and the warranty terms in writing before you order. From single machines to the whole staff fleet.",
-    primary: "Get a quote for your IT needs",
     secondary: "See what we source",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -106,11 +105,22 @@ export default function Hero({ lang }: { lang: Lang }) {
               </div>
 
               <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                {/*
+                  The same words as the header's button and the closing one,
+                  from lib/nav.ts.
+
+                  This said "Få tilbud på jeres IT-behov" while the button
+                  fixed to the top of the same screen said "Få en pris på jeres
+                  løsning" — one destination, one form, two promises, both in
+                  view at once. A buyer reading them has to work out whether
+                  they are the same thing. There is one primary action on this
+                  site and it is worded in one place.
+                */}
                 <Link
                   href={localePath("/kontakt", lang)}
                   className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
                 >
-                  {c.primary}
+                  {ui.bookCall[lang]}
                 </Link>
                 <Link
                   href={localePath("/produkter", lang)}
