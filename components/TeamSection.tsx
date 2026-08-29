@@ -42,21 +42,28 @@ export default function TeamSection({ lang }: { lang: Lang }) {
           {team.map((member) => (
             <div
               key={member.name}
-              className="flex flex-col gap-6 border border-paper-edge bg-white p-6 text-center shadow-sm sm:flex-row sm:items-start sm:p-8 sm:text-left"
+              className="group relative flex flex-col gap-6 overflow-hidden border border-paper-edge bg-white p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:items-start sm:p-8 sm:text-left"
             >
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-1 bg-brand-600 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+              />
+
               <TeamAvatar
                 member={member}
                 lang={lang}
-                size={112}
+                size={128}
                 tone="quiet"
                 rounded="rounded-2xl"
-                className="mx-auto h-24 w-24 sm:mx-0 sm:h-28 sm:w-28"
+                className="mx-auto h-28 w-28 shadow-sm ring-1 ring-black/5 sm:mx-0 sm:h-32 sm:w-32"
               />
 
               <div className="min-w-0">
-                <h3 className="text-lg font-semibold text-ink-900">{member.name}</h3>
-                <p className="text-sm font-medium text-brand-700">{member.role[lang]}</p>
-                <p className="mt-3 text-sm leading-6 text-ink-600">{member.bio[lang]}</p>
+                <h3 className="text-xl font-bold text-ink-900">{member.name}</h3>
+                <p className="mt-1.5 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 ring-1 ring-inset ring-brand-200">
+                  {member.role[lang]}
+                </p>
+                <p className="mt-4 text-sm leading-6 text-ink-600">{member.bio[lang]}</p>
 
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   {/* A direct line only when there is one. Without it, writing

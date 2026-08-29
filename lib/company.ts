@@ -98,18 +98,21 @@ const people: TeamMember[] = [
     id: "ismail-masoumabadi",
     name: "Ismail Masoumabadi",
     role: {
-      da: "Internationalt salg og it-sikkerhed",
-      en: "International sales and IT security",
+      da: "Netværkssikkerhed & international salgsledelse",
+      en: "Network Security & International Sales Management",
     },
     bio: {
-      da: "Står for indkøbene i udlandet og for sikkerheden på kestro.dk. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer hvad der reelt er i dem, og sørger for, at det I sender os gennem siden, bliver håndteret forsvarligt.",
-      en: "Runs the sourcing abroad and the security of kestro.dk. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
+      da: "Står for indkøbene i udlandet og for netværkssikkerheden i virksomheden. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer hvad der reelt er i dem, og sørger for, at det I sender os gennem siden, bliver håndteret forsvarligt.",
+      en: "Runs the sourcing abroad and the company's network security. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
     },
   },
   {
     id: "mehdi",
     name: "Mehdi",
-    role: { da: "Salgs- og marketingchef", en: "Head of sales and marketing" },
+    role: {
+      da: "Salgsrådgivning & chef for marketing og salg",
+      en: "Sales Advisory & Head of Marketing and Sales",
+    },
     bio: {
       da: "Er den, I taler med om en leverance. Han tager imod jeres behov, henter priserne hjem og sender et skriftligt tilbud, I kan regne på – uden at I binder jer til noget.",
       en: "The one you talk to about a delivery. He takes your requirements, gets the prices in and sends a written quote you can work with — with nothing committed.",
