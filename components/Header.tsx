@@ -26,7 +26,7 @@ export default function Header({ lang }: { lang: Lang }) {
   }
 
   return (
-    <header className="glass-dark sticky top-0 z-50">
+    <header className="glass-nav sticky top-0 z-50">
       {/*
         The first thing a keyboard reaches on every page.
 
@@ -88,7 +88,7 @@ export default function Header({ lang }: { lang: Lang }) {
 
             {productsOpen && (
               <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
-                <div className="glass-dark rounded-xl p-2 shadow-xl shadow-black/30">
+                <div className="glass-nav rounded-xl p-2 shadow-xl shadow-black/40">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
@@ -201,7 +201,7 @@ export default function Header({ lang }: { lang: Lang }) {
       </Container>
 
       {open && (
-        <div className="glass-dark max-h-[calc(100dvh-4rem)] overflow-y-auto border-t-0 lg:hidden">
+        <div className="glass-nav max-h-[calc(100dvh-4rem)] overflow-y-auto lg:hidden">
           <Container className="flex flex-col gap-1 py-4">
             <button
               type="button"

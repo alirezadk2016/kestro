@@ -115,6 +115,35 @@ body {
   }
 
   /*
+   * The header's material.
+   *
+   * .glass-dark is a thin white film with the page showing straight through,
+   * which is right for a plate sitting on a background we control. The header
+   * is not that: it is fixed over whatever happens to scroll under it, and on
+   * this site that includes product photographs on white and a laptop showing
+   * a bright blue desktop. At 5.5% the nav labels measured 2.8:1 against one
+   * of them.
+   *
+   * So this keeps the blur — content moving underneath still tints and
+   * shifts it, which is the whole point of the material — but over a navy
+   * base solid enough that nothing passing under can take the labels below
+   * AA. The base is the page's own background colour, so at the top of a page
+   * the header reads as part of the field rather than as a bar laid on it.
+   */
+  .glass-nav {
+    background-color: rgb(11 20 38 / 0.82);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-nav {
+      background-color: rgb(11 20 38 / 0.97);
+    }
+  }
+
+  /*
    * A stage: a dark band that is lit rather than merely dark.
    *
    * The page used to be one lit frame at the top and a long light document
