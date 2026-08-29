@@ -16,6 +16,7 @@ export default function TeamAvatar({
   size,
   className = "",
   rounded = "rounded-full",
+  tone = "solid",
 }: {
   member: TeamMember;
   lang: Lang;
@@ -23,6 +24,14 @@ export default function TeamAvatar({
   size: number;
   className?: string;
   rounded?: string;
+  /**
+   * How loud the monogram is when there is no photograph yet. "solid" is a
+   * filled brand tile, which is what a dark band needs to show anything at
+   * all; "quiet" is a tint with the letters in brand, for light cards where
+   * two filled squares would read as two colour swatches rather than two
+   * people.
+   */
+  tone?: "solid" | "quiet";
 }) {
   if (member.photo) {
     return (
@@ -36,13 +45,24 @@ export default function TeamAvatar({
     );
   }
 
+  /* Initials of the name as it is written: two words give one letter each,
+     one word gives its first two. "Ismail Masoumabadi" reads IM, not IS. */
+  const parts = member.name.split(/\s+/).filter(Boolean);
+  const monogram = (
+    parts.length > 1 ? parts[0][0] + parts[parts.length - 1][0] : member.name.slice(0, 2)
+  ).toUpperCase();
+
   return (
     <span
       aria-hidden="true"
       style={{ fontSize: Math.round(size * 0.36) }}
-      className={`flex flex-shrink-0 items-center justify-center bg-brand-600 font-display font-extrabold tracking-display text-white ${rounded} ${className}`}
+      className={`flex flex-shrink-0 items-center justify-center font-display font-extrabold tracking-display ${
+        tone === "quiet"
+          ? "bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-200"
+          : "bg-brand-600 text-white"
+      } ${rounded} ${className}`}
     >
-      {member.name.slice(0, 2).toUpperCase()}
+      {monogram}
     </span>
   );
 }

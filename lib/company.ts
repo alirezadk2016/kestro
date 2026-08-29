@@ -1,4 +1,5 @@
 import type { Lang, Localized } from "./i18n";
+import teamPhotos from "./team-photos.json";
 
 /**
  * Single source of truth for company contact details.
@@ -65,6 +66,12 @@ export function postalAddress(lang: Lang): string {
 }
 
 export type TeamMember = {
+  /**
+   * Stable key. It is what the photo on disk is named after
+   * (public/team/<id>.webp) and what the pages that need one specific person
+   * look up, so reordering the list below never moves a face or a name.
+   */
+  id: string;
   name: string;
   role: Localized;
   /** Short intro shown on the team card. */
@@ -81,13 +88,50 @@ export type TeamMember = {
   email?: string;
 };
 
-export const team: TeamMember[] = [
+/*
+ * No phone numbers here, deliberately: the two fields exist because the
+ * layouts read them, not because a number is coming. See the note on
+ * company.phoneDisplay above — the same reasoning applies per person.
+ */
+const people: TeamMember[] = [
   {
-    name: "Mak",
-    role: { da: "Salgs- og marketingchef", en: "Head of Sales and Marketing" },
+    id: "ismail-masoumabadi",
+    name: "Ismail Masoumabadi",
+    role: {
+      da: "Internationalt salg og it-sikkerhed",
+      en: "International sales and IT security",
+    },
     bio: {
-      da: "Står for salg og kunderelationer hos Kestro. Skriv, hvis I vil have et bud på en leverance, en flådeløsning eller en vurdering af jeres brugte udstyr.",
-      en: "Handles sales and customer relationships at Kestro. Write if you want a quote on a delivery, a fleet solution, or a valuation of your used equipment.",
+      da: "Står for indkøbene i udlandet og for sikkerheden på kestro.dk. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer hvad der reelt er i dem, og sørger for, at det I sender os gennem siden, bliver håndteret forsvarligt.",
+      en: "Runs the sourcing abroad and the security of kestro.dk. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
+    },
+  },
+  {
+    id: "mehdi",
+    name: "Mehdi",
+    role: { da: "Salgs- og marketingchef", en: "Head of sales and marketing" },
+    bio: {
+      da: "Er den, I taler med om en leverance. Han tager imod jeres behov, henter priserne hjem og sender et skriftligt tilbud, I kan regne på – uden at I binder jer til noget.",
+      en: "The one you talk to about a delivery. He takes your requirements, gets the prices in and sends a written quote you can work with — with nothing committed.",
     },
   },
 ];
+
+/*
+ * A face is shown when a face exists on disk. scripts/build-team-photos.mjs
+ * writes team-photos.json from whatever is in assets/team/, so dropping a
+ * photograph in and running the script is the whole job: no edit here, and no
+ * page left pointing at a file that 404s because it was named in advance.
+ */
+export const team: TeamMember[] = people.map((person) => {
+  const photo = (teamPhotos as Record<string, string>)[person.id];
+  return photo ? { ...person, photo } : person;
+});
+
+/**
+ * The person a buyer should end up with when a page needs exactly one name:
+ * the quote on the about page, the contact card, the fleet CTA. Looked up by
+ * id rather than taken as team[0], so the order of the list stays a
+ * presentation decision.
+ */
+export const salesContact: TeamMember = team.find((member) => member.id === "mehdi") ?? team[0];

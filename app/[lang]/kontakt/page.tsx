@@ -5,7 +5,7 @@ import TeamAvatar from "@/components/TeamAvatar";
 import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
-import { company, postalAddress, team } from "@/lib/company";
+import { company, postalAddress, salesContact } from "@/lib/company";
 import { alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -17,8 +17,10 @@ const copy = {
     description:
       "Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware klargjort til det nordiske marked.",
     callDirect: "Ring direkte til",
-    callUs: "Ring til os",
+    writeDirect: "Skriv direkte til",
     busy: "Har I travlt, eller er det nemmere at tage det over telefonen?",
+    lands:
+      "Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø. I får svar inden for én arbejdsdag.",
     mainNumber: "Hovednummer",
     emailTitle: "Foretrækker du email?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
@@ -40,8 +42,10 @@ const copy = {
     description:
       "Tell us what you need and get a no-obligation quote on refurbished business hardware prepared for the Nordic market.",
     callDirect: "Call",
-    callUs: "Call us",
+    writeDirect: "Write directly to",
     busy: "In a hurry, or easier to sort it out over the phone?",
+    lands:
+      "Your message lands with the person who writes the quote, not in a support queue. You get an answer within one working day.",
     mainNumber: "Main number",
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
@@ -84,33 +88,36 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
           <div className="space-y-6 lg:col-span-2">
             <div className="border border-paper-edge bg-brand-950 p-6 text-white sm:p-8">
               <div className="flex items-center gap-4">
-                <TeamAvatar member={team[0]} lang={lang} size={64} className="h-16 w-16" />
+                <TeamAvatar member={salesContact} lang={lang} size={64} className="h-16 w-16" />
                 <div>
-                  {/* Named only when there is a direct line to name. On the
-                      main number, "call Mak directly" would be a promise the
-                      button does not keep. */}
+                  {/* Without a number the card used to read "Call us" over a
+                      question about phoning, and then render no button at all.
+                      Same person, same card — it just says what actually
+                      happens when you use the form beside it. */}
                   <h2 className="text-base font-semibold">
-                    {team[0].phoneHref ? `${c.callDirect} ${team[0].name}` : c.callUs}
+                    {salesContact.phoneHref ? c.callDirect : c.writeDirect} {salesContact.name}
                   </h2>
-                  <p className="text-sm text-ink-400">{team[0].role[lang]}</p>
+                  <p className="text-sm text-ink-400">{salesContact.role[lang]}</p>
                 </div>
               </div>
 
-              <p className="mt-4 text-sm leading-6 text-ink-300">{c.busy}</p>
+              <p className="mt-4 text-sm leading-6 text-ink-300">
+                {salesContact.phoneHref ? c.busy : c.lands}
+              </p>
 
               {/* A direct line when there is one; otherwise the card sends
                   people to the form and the address, which do work. */}
-              {(team[0].phoneHref || company.phoneHref) && (
+              {(salesContact.phoneHref || company.phoneHref) && (
                 <a
-                  href={`tel:${team[0].phoneHref || company.phoneHref}`}
+                  href={`tel:${salesContact.phoneHref || company.phoneHref}`}
                   className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
                 >
                   <Phone className="h-5 w-5" strokeWidth={2} />
-                  {team[0].phoneDisplay || company.phoneDisplay}
+                  {salesContact.phoneDisplay || company.phoneDisplay}
                 </a>
               )}
 
-              {team[0].phoneHref && company.phoneDisplay && (
+              {salesContact.phoneHref && company.phoneDisplay && (
                 <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
                   {c.mainNumber}: {company.phoneDisplay}
                 </p>

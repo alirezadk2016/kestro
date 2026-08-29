@@ -5,7 +5,7 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import WhyUs from "@/components/WhyUs";
 import TeamSection from "@/components/TeamSection";
-import { team } from "@/lib/company";
+import { salesContact } from "@/lib/company";
 import { alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -17,7 +17,7 @@ const copy = {
     description:
       "Vi bygger bro mellem brugt erhvervshardware i Sydeuropa og virksomheder i Danmark og Norge, der hellere vil have en testet maskine til opgaven end en ny til listepris.",
     quote:
-      "De fleste ringer til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
+      "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
   en: {
     metaTitle: "About us | Kestro",
@@ -27,7 +27,7 @@ const copy = {
     description:
       "We bridge used business hardware in southern Europe and companies in Denmark and Norway that would rather have a tested machine for the job than a new one at list price.",
     quote:
-      "Most people call us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
+      "Most people write to us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -107,9 +107,9 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
               &ldquo;{c.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-6 text-sm text-ink-600">
-              <span className="font-semibold text-ink-900">{team[0].name}</span>
+              <span className="font-semibold text-ink-900">{salesContact.name}</span>
               {" – "}
-              {team[0].role[lang]}, Kestro
+              {salesContact.role[lang]}, Kestro
             </figcaption>
           </figure>
         </Container>
@@ -119,7 +119,8 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
 
       <TeamSection lang={lang} />
 
-      <CtaSection lang={lang} />
+      {/* TeamSection introduces them a screen above; twice is noise. */}
+      <CtaSection lang={lang} people={false} />
     </>
   );
 }

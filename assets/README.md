@@ -15,8 +15,29 @@ was compressed out of a phone-messenger copy is gone for good.
 ## What goes where
 
     assets/logo/       vector originals — .svg, .ai, .pdf, .eps
-    assets/photos/     photographs — workshop, machines, packing, team
+    assets/photos/     photographs — workshop, machines, packing
+    assets/team/       one portrait per person, named after their id
     assets/brand/      brand board, colour references, type specimens
+
+## assets/team/
+
+One file per person, named after the `id` in `lib/company.ts`:
+
+    assets/team/ismail-masoumabadi.jpg
+    assets/team/mehdi.jpg
+
+Then run:
+
+    node scripts/build-team-photos.mjs
+
+That writes `public/team/<id>.webp` at 320×320 and rewrites
+`lib/team-photos.json`. The site reads that file, so a person with no
+photograph on disk renders as a monogram instead of a broken image, and gets a
+face the moment the file lands — there is nothing to edit in the code.
+
+The crop is square and anchored at the top, which is the crop a portrait
+survives; a centred square crop takes the forehead off. Send the original off
+the phone, not a screenshot of it.
 
 ## Photographs
 

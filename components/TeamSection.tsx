@@ -47,9 +47,10 @@ export default function TeamSection({ lang }: { lang: Lang }) {
               <TeamAvatar
                 member={member}
                 lang={lang}
-                size={160}
+                size={112}
+                tone="quiet"
                 rounded="rounded-2xl"
-                className="mx-auto h-36 w-36 sm:mx-0 sm:h-40 sm:w-40"
+                className="mx-auto h-24 w-24 sm:mx-0 sm:h-28 sm:w-28"
               />
 
               <div className="min-w-0">

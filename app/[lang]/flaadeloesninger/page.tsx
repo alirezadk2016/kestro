@@ -14,7 +14,7 @@ import {
 import Container from "@/components/Container";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
-import { team } from "@/lib/company";
+import { salesContact } from "@/lib/company";
 import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -279,22 +279,22 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                 {c.sendEnquiry}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </Link>
-              {team[0].phoneHref && (
+              {salesContact.phoneHref && (
                 <a
-                  href={`tel:${team[0].phoneHref}`}
+                  href={`tel:${salesContact.phoneHref}`}
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   <Phone className="h-4 w-4" strokeWidth={2} />
-                  {team[0].phoneDisplay}
+                  {salesContact.phoneDisplay}
                 </a>
               )}
             </div>
 
             <div className="mt-8 flex items-center justify-center gap-3 text-sm text-ink-400">
-              <TeamAvatar member={team[0]} lang={lang} size={40} className="h-10 w-10" />
+              <TeamAvatar member={salesContact} lang={lang} size={40} className="h-10 w-10" />
               <span>
-                {c.talkTo} <span className="font-semibold text-white">{team[0].name}</span>,{" "}
-                {team[0].role[lang].toLowerCase()}
+                {c.talkTo} <span className="font-semibold text-white">{salesContact.name}</span>,{" "}
+                {salesContact.role[lang].toLowerCase()}
               </span>
             </div>
           </div>
@@ -389,16 +389,25 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           </h2>
           <p className="max-w-xl text-base leading-7 text-ink-400">{c.ctaBody}</p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-            <a
-              href={`tel:${team[0].phoneHref}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
-            >
-              <Phone className="h-4 w-4" strokeWidth={2} />
-              {team[0].phoneDisplay}
-            </a>
+            {/* Only when there is a number. Without the guard this rendered a
+                filled blue pill with a phone icon, no label and href="tel:" —
+                the loudest button on the page, doing nothing. */}
+            {salesContact.phoneHref && (
+              <a
+                href={`tel:${salesContact.phoneHref}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+              >
+                <Phone className="h-4 w-4" strokeWidth={2} />
+                {salesContact.phoneDisplay}
+              </a>
+            )}
             <Link
               href={localePath("/flaadeloesninger/forespoergsel", lang)}
-              className="inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+              className={
+                salesContact.phoneHref
+                  ? "inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  : "inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+              }
             >
               {c.ctaButton}
             </Link>
