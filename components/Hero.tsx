@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
+import HeroMark from "./HeroMark";
 import HeroModel from "./HeroModel";
 import HeroSpec from "./HeroSpec";
 import { ui } from "@/lib/nav";
@@ -47,7 +48,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         All three are CSS, so they cost no request and nothing to draw.
       */}
 
-      {/* The key light, sitting behind the carousel and spilling left. */}
+      {/* The key light, sitting behind the model and spilling left. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -57,24 +58,30 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      {/*
-        A drafting grid: it suits a company that sells to a specification and
-        gives the dark field something to hold without the blur-blob
-        decoration. Aimed at the middle rather than at the carousel — behind
-        photographs it was competing with them, and the empty half of the hero
-        was the part that needed something in it.
-      */}
-      <div
+      {/* The K mark, oversized and cropped by the left edge — a watermark
+          behind the headline rather than decoration competing with it. */}
+      <HeroMark className="pointer-events-none absolute -left-[14%] top-1/2 h-[52%] w-auto -translate-y-1/2 opacity-90 sm:-left-[8%] sm:h-[62%] lg:-left-[5%] lg:h-[72%]" />
+
+      {/* Flat decorative SVGs with nothing for next/image to optimise —
+          no format conversion, no responsive sizing a vector needs. */}
+      {/* eslint-disable @next/next/no-img-element */}
+      {/* A dotted world map, faint, in the field the model turns in. */}
+      <img
+        src="/world-dots.svg"
+        alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.3]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(147,169,239,0.09) 1px, transparent 1px), linear-gradient(to bottom, rgba(147,169,239,0.09) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage: "radial-gradient(105% 95% at 42% 42%, #000 18%, transparent 74%)",
-          WebkitMaskImage: "radial-gradient(105% 95% at 42% 42%, #000 18%, transparent 74%)",
-        }}
+        className="pointer-events-none absolute right-[2%] top-[6%] hidden w-[46%] max-w-2xl opacity-[0.55] md:block"
       />
+
+      {/* A network of connected points, denser toward the corner — the same
+          idea as the world map, that Kestro's work spans more than one desk. */}
+      <img
+        src="/network-mesh.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 right-0 hidden w-[52%] max-w-3xl opacity-70 lg:block"
+      />
+      {/* eslint-enable @next/next/no-img-element */}
 
       {/* The floor falling away, so the band ends in shadow rather than at a
           line. It also gives the section below something to arrive on. */}

@@ -70,11 +70,11 @@ const config: Config = {
           950: "#0B1426",
         },
       },
-      /* One family, as the brand board specifies. Manrope carries the
-         wordmark, so headings set in it match the logo beside them. */
+      /* One family, as the brand board specifies. It carries the wordmark
+         too, so headings set in it match the logo beside them. */
       fontFamily: {
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        display: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         display: "-0.035em",

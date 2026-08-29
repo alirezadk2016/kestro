@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
@@ -8,12 +8,12 @@ import Reveal from "@/components/Reveal";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
 
-/* One family for the whole site. The wordmark is set in Manrope, so a heading
+/* One family for the whole site. The wordmark is set in it too, so a heading
    next to the logo is the same letterforms rather than a near-miss. */
-const manrope = Manrope({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-manrope",
+  variable: "--font-sans",
 });
 
 export function generateStaticParams() {
@@ -86,7 +86,7 @@ export default function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body className={`${manrope.variable} bg-brand-950 font-sans text-paper antialiased`}>
+      <body className={`${jakarta.variable} bg-brand-950 font-sans text-paper antialiased`}>
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script
