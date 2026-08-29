@@ -342,6 +342,67 @@ for (const [name, viewport] of [
   await context.close();
 }
 
+/* ---------------------------------------------------------------- navigation */
+
+/*
+ * The site has to survive being used, not only being loaded.
+ *
+ * Every check above calls page.goto, which is a fresh document every time. A
+ * visitor does not do that — they click, and a click in this app is a
+ * client-side navigation where the layout never remounts. That difference hid
+ * a bug that reached production: the reveal effect ran once on mount, so every
+ * page arrived at by clicking kept its sections at opacity 0 for good, and the
+ * site showed blank below the header. Eight sections across four pages, and
+ * the entire front page on the way back to it.
+ *
+ * So this one clicks, and reads each page the way a person would — scrolling
+ * the whole way down — then insists nothing is left invisible.
+ */
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  page.on("pageerror", (error) => fail("navigation", error.message));
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  await page.waitForTimeout(1200);
+
+  async function readThrough(where) {
+    const height = await page.evaluate(() => document.documentElement.scrollHeight);
+    for (let y = 0; y < height; y += 700) {
+      await page.evaluate((v) => scrollTo(0, v), y);
+      await page.waitForTimeout(200);
+    }
+    await page.waitForTimeout(1400);
+
+    const stuck = await page.evaluate(() =>
+      [...document.querySelectorAll("[data-reveal]")]
+        .filter((el) => getComputedStyle(el).opacity !== "1")
+        .map((el) => el.className.slice(0, 40)),
+    );
+    if (stuck.length) {
+      fail(
+        `navigation (${where})`,
+        `${stuck.length} section(s) never became visible: ${stuck.join(", ")}`,
+      );
+    }
+
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.waitForTimeout(300);
+  }
+
+  await readThrough("direct load of /");
+
+  for (const label of ["Reparation", "Om os", "Vejledninger"]) {
+    await page.click(`header nav a:has-text("${label}")`);
+    await page.waitForTimeout(1100);
+    await readThrough(`after clicking ${label}`);
+  }
+
+  await page.click("header a[href='/']");
+  await page.waitForTimeout(1100);
+  await readThrough("back on / after clicking the logo");
+
+  await page.close();
+}
+
 /* ------------------------------------------------------------------ console */
 
 {
