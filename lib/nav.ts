@@ -25,6 +25,10 @@ export const productsNav = {
   machine: { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   quality: { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
   pricing: { href: "/priser", label: { da: "Priser", en: "Pricing" } },
+  sampleQuote: {
+    href: "/tilbud-eksempel",
+    label: { da: "Sådan ser et tilbud ud", en: "What a quote looks like" },
+  },
 };
 
 export const serviceNav: NavLink[] = [
@@ -34,6 +38,10 @@ export const serviceNav: NavLink[] = [
   { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
   { href: "/priser", label: { da: "Priser", en: "Pricing" } },
+  {
+    href: "/tilbud-eksempel",
+    label: { da: "Sådan ser et tilbud ud", en: "What a quote looks like" },
+  },
   { href: "/saelg-til-os", label: { da: "Sælg jeres udstyr", en: "Sell your equipment" } },
   { href: "/reparation", label: { da: "Reparation", en: "Repairs" } },
   { href: "/ydelser", label: { da: "Alle ydelser", en: "All services" } },

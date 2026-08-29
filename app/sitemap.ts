@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/maskinen", priority: 0.8 },
     { path: "/kvalitet", priority: 0.8 },
     { path: "/priser", priority: 0.8 },
+    { path: "/tilbud-eksempel", priority: 0.8 },
     { path: "/vejledninger", priority: 0.8 },
     { path: "/saelg-til-os", priority: 0.8 },
     { path: "/reparation", priority: 0.8 },

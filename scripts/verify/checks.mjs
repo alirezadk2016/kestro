@@ -41,6 +41,7 @@ const PAGES = [
   "/kontakt",
   "/vejledninger",
   "/priser",
+  "/tilbud-eksempel",
   "/om-os",
   "/privatlivspolitik",
 ];

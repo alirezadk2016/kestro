@@ -112,6 +112,12 @@ export default function Header({ lang }: { lang: Lang }) {
                     className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
                   >
                     {productsNav.pricing.label[lang]}
+                  </Link>{" "}
+                  <Link
+                    href={localePath(productsNav.sampleQuote.href, lang)}
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                  >
+                    {productsNav.sampleQuote.label[lang]}
                   </Link>
                   <div className="mb-1 border-t border-paper-edge" />
                   {categories.map((category) => (
@@ -246,6 +252,13 @@ export default function Header({ lang }: { lang: Lang }) {
                   className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.pricing.label[lang]}
+                </Link>{" "}
+                <Link
+                  href={localePath(productsNav.sampleQuote.href, lang)}
+                  onClick={closeMobile}
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                >
+                  {productsNav.sampleQuote.label[lang]}
                 </Link>
                 {categories.map((category) => (
                   <Link
