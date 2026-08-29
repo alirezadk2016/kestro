@@ -53,13 +53,16 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
   const c = copy[lang];
 
   return (
-    <div className={`glass-dark p-5 sm:p-6 ${className ?? ""}`}>
+    <div className={className}>
       <p className="label text-brand-300">{c.label}</p>
 
-      <dl className="mt-4 divide-y divide-white/10">
+      {/* Rows on hairlines rather than in a boxed panel: a card here reads as
+          a second surface floating over the hero, and the list is stronger
+          when the machine's own light is what it sits in. */}
+      <dl className="mt-4 divide-y divide-white/10 border-y border-white/10">
         {c.rows.map((row) => (
-          <div key={row.value} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-            <span className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-brand-500/15 text-brand-300">
+          <div key={row.value} className="flex items-center gap-3 py-3">
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-brand-400/25 bg-brand-500/10 text-brand-300">
               <row.icon className="h-4 w-4" strokeWidth={1.75} />
             </span>
             <div className="min-w-0">

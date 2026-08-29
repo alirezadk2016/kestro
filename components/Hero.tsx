@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
 import HeroMark from "./HeroMark";
@@ -17,15 +18,20 @@ import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    eyebrow: "Indkøbspartner på renoveret erhvervs-IT",
-    headline: "Erhvervscomputere.\nKlar til Norden.",
+    eyebrow: "Renoveret erhvervs-IT",
+    /* Two lines, two weights of attention: what it is, then who it is for.
+       The second line carries the brand colour, so the headline has a
+       hierarchy inside itself rather than being one even block. */
+    headlineTop: "Erhvervscomputere.",
+    headlineAccent: "Klar til Norden.",
     sub: "Vi finder maskinerne hos de rigtige leverandører og oplyser pris, stand og garantivilkår skriftligt, før I bestiller. Fra enkelte maskiner til hele medarbejderflåden.",
     secondary: "Se hvad vi skaffer",
     machineAlt: "Lenovo ThinkPad T480, åbnet og set forfra",
   },
   en: {
-    eyebrow: "Sourcing partner for refurbished business IT",
-    headline: "Business computers.\nReady for the Nordics.",
+    eyebrow: "Refurbished business IT",
+    headlineTop: "Business computers.",
+    headlineAccent: "Ready for the Nordics.",
     sub: "We find the machines with the right suppliers and put the price, the condition and the warranty terms in writing before you order. From single machines to the whole staff fleet.",
     secondary: "See what we source",
     machineAlt: "Lenovo ThinkPad T480, open and seen from the front",
@@ -100,17 +106,17 @@ export default function Hero({ lang }: { lang: Lang }) {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <div className="rise">
-                <div className="flex items-center gap-4">
-                  <span className="h-px w-10 bg-brand-400" />
-                  <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-                </div>
+                <span className="inline-flex items-center rounded-full border border-brand-400/35 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
+                  {c.eyebrow}
+                </span>
 
                 {/* Sized for the longest word it has to hold rather than for
                     the English: "Erhvervscomputere." is one 18-character word
-                    that cannot break, and at the old 4rem cap it ran straight
-                    out of this column and into the machine beside it. */}
-                <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2rem,3.8vw,3.25rem)] font-extrabold leading-[1.02] tracking-display text-paper">
-                  {c.headline}
+                    that cannot break, and at a 4rem cap it ran straight out of
+                    this column and into the machine beside it. */}
+                <h1 className="mt-6 font-display text-[clamp(2rem,3.8vw,3.4rem)] font-extrabold leading-[1.04] tracking-display">
+                  <span className="block text-paper">{c.headlineTop}</span>
+                  <span className="block text-brand-500">{c.headlineAccent}</span>
                 </h1>
 
                 <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
@@ -132,15 +138,20 @@ export default function Hero({ lang }: { lang: Lang }) {
                 */}
                 <Link
                   href={localePath("/kontakt", lang)}
-                  className="inline-flex min-h-[52px] items-center justify-center bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
+                  className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 text-sm font-semibold tracking-tight text-white transition hover:bg-brand-500"
                 >
                   {ui.bookCall[lang]}
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={2}
+                  />
                 </Link>
                 <Link
                   href={localePath("/produkter", lang)}
-                  className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-7 text-sm font-semibold tracking-tight text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
                 >
                   {c.secondary}
+                  <LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />
                 </Link>
               </div>
             </div>
@@ -149,27 +160,28 @@ export default function Hero({ lang }: { lang: Lang }) {
                 of the same claim: this is the kind of hardware we source, and
                 this is what you get told about it before you order.
 
-                A photograph of a real T480 rather than the 3D model turning on
-                a loop. The model was a loop nobody asked to watch, and it cost
-                the front page a deferred three.js chunk to draw a machine we
-                already have a proper photograph of. */}
+                The machine is lit rather than cut out on white: it arrives
+                with its own key light, rim and floor, and the glow underneath
+                carries that light out into the page so it stands in the hero
+                rather than sitting on top of it. Its edges are feathered in
+                the asset itself, so there is no rectangle to hide. */}
             <div className="settle relative lg:col-span-4">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
+                className="pointer-events-none absolute -inset-x-[18%] -inset-y-[12%]"
                 style={{
                   background:
-                    "radial-gradient(58% 52% at 50% 46%, rgba(84,116,236,0.30) 0%, rgba(66,92,200,0.10) 46%, transparent 74%)",
+                    "radial-gradient(52% 48% at 52% 46%, rgba(60,110,255,0.34) 0%, rgba(40,74,190,0.14) 44%, transparent 72%)",
                 }}
               />
               <Image
-                src="/thinkpad-t480-6-cutout.webp"
+                src="/hero/hero-laptop.webp"
                 alt={c.machineAlt}
-                width={1179}
-                height={1115}
+                width={542}
+                height={445}
                 priority
-                sizes="(min-width: 1024px) 34vw, 92vw"
-                className="relative mx-auto w-full max-w-md lg:max-w-none"
+                sizes="(min-width: 1024px) 38vw, 96vw"
+                className="relative mx-auto w-full max-w-xl lg:max-w-none"
               />
             </div>
 
