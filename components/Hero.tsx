@@ -168,10 +168,13 @@ export default function Hero({ lang }: { lang: Lang }) {
             <div className="settle relative lg:col-span-4">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -inset-x-[18%] -inset-y-[12%]"
+                /* Kept close to the machine. At 18% it spilled under the spec
+                   column and lifted the ground there to rgb(57,77,123), which
+                   took the list's label under AA. */
+                className="pointer-events-none absolute -inset-x-[6%] -inset-y-[10%]"
                 style={{
                   background:
-                    "radial-gradient(52% 48% at 52% 46%, rgba(60,110,255,0.34) 0%, rgba(40,74,190,0.14) 44%, transparent 72%)",
+                    "radial-gradient(50% 46% at 50% 46%, rgba(60,110,255,0.32) 0%, rgba(40,74,190,0.12) 42%, transparent 68%)",
                 }}
               />
               <Image

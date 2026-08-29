@@ -54,7 +54,9 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
 
   return (
     <div className={className}>
-      <p className="label text-brand-300">{c.label}</p>
+      {/* brand-200 rather than 300: this label sits over the machine's glow
+          rather than on the flat page, and 300 measured 3.84:1 against it. */}
+      <p className="label text-brand-200">{c.label}</p>
 
       {/* Rows on hairlines rather than in a boxed panel: a card here reads as
           a second surface floating over the hero, and the list is stronger
