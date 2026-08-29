@@ -1,4 +1,6 @@
 import Hero from "@/components/Hero";
+import CategoryCards from "@/components/CategoryCards";
+import HighlightRow from "@/components/HighlightRow";
 import Statement from "@/components/Statement";
 import QualifySection from "@/components/QualifySection";
 import Services from "@/components/Services";
@@ -13,6 +15,8 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <>
       <Hero lang={lang} />
+      <CategoryCards lang={lang} />
+      <HighlightRow lang={lang} />
       <Statement lang={lang} />
       <QualifySection lang={lang} />
       <Services lang={lang} />
