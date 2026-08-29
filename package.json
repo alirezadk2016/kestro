@@ -11,6 +11,7 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "build:model": "node scripts/build-model.mjs && node scripts/render-hero-still.mjs",
+    "build:team-photos": "node scripts/build-team-photos.mjs",
     "verify": "node scripts/verify/run.mjs"
   },
   "dependencies": {
