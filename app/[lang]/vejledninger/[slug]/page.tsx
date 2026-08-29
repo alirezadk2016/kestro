@@ -125,13 +125,13 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         <Container>
           <div className="max-w-3xl">
             {guide.sections.map((section) => (
-              <div key={section.heading.da} className="border-t border-paper-edge py-8">
-                <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+              <div key={section.heading.da} className="border-t border-white/10 py-8">
+                <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                   {section.heading[lang]}
                 </h2>
 
                 {section.body.map((paragraph) => (
-                  <p key={paragraph.da} className="mt-4 text-base leading-8 text-ink-600">
+                  <p key={paragraph.da} className="mt-4 text-base leading-8 text-paper/65">
                     {paragraph[lang]}
                   </p>
                 ))}
@@ -139,9 +139,9 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                 {section.list && (
                   <ul className="mt-6 space-y-3.5">
                     {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-600">
+                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
                         <Check
-                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-600"
+                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                           strokeWidth={2.5}
                         />
                         {item[lang]}
@@ -152,11 +152,11 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               </div>
             ))}
 
-            <div className="mt-6 border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
-              <h2 className="font-display text-lg font-bold tracking-tight text-ink-900">
+            <div className="mt-6 border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+              <h2 className="font-display text-lg font-bold tracking-tight text-paper">
                 {c.closingTitle}
               </h2>
-              <p className="mt-3 text-base leading-8 text-ink-600">{guide.closing[lang]}</p>
+              <p className="mt-3 text-base leading-8 text-paper/65">{guide.closing[lang]}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
@@ -169,23 +169,23 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-ink-900">
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.more}
               </h2>
-              <ul className="mt-8 border-t border-ink-900/12">
+              <ul className="mt-8 border-t border-white/15">
                 {others.map((other) => (
-                  <li key={other.slug} className="border-b border-ink-900/10">
+                  <li key={other.slug} className="border-b border-white/10">
                     <Link
                       href={localePath(`/vejledninger/${other.slug}`, lang)}
                       className="group block py-5"
                     >
-                      <span className="font-display text-base font-bold tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
+                      <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {other.title[lang]}
                       </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-ink-600">
+                      <span className="mt-1.5 block text-sm leading-6 text-paper/65">
                         {other.summary[lang]}
                       </span>
                     </Link>

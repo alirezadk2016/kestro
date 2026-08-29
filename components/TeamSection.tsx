@@ -24,14 +24,14 @@ const copy = {
 export default function TeamSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
   return (
-    <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
+    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow text-brand-600">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-4 text-base leading-7 text-ink-600">{c.sub}</p>
+          <p className="mt-4 text-base leading-7 text-paper/65">{c.sub}</p>
         </div>
 
         <div
@@ -42,11 +42,11 @@ export default function TeamSection({ lang }: { lang: Lang }) {
           {team.map((member) => (
             <div
               key={member.name}
-              className="group relative flex flex-col gap-6 overflow-hidden border border-paper-edge bg-white p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:items-start sm:p-8 sm:text-left"
+              className="group relative flex flex-col gap-6 overflow-hidden border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06] sm:flex-row sm:items-start sm:p-8 sm:text-left"
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-1 bg-brand-600 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                className="absolute inset-x-0 top-0 h-1 bg-brand-400 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
               />
 
               <TeamAvatar
@@ -55,15 +55,15 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                 size={128}
                 tone="quiet"
                 rounded="rounded-2xl"
-                className="mx-auto h-28 w-28 shadow-sm ring-1 ring-black/5 sm:mx-0 sm:h-32 sm:w-32"
+                className="mx-auto h-28 w-28 shadow-sm ring-1 ring-white/10 sm:mx-0 sm:h-32 sm:w-32"
               />
 
               <div className="min-w-0">
-                <h3 className="text-xl font-bold text-ink-900">{member.name}</h3>
-                <p className="mt-1.5 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 ring-1 ring-inset ring-brand-200">
+                <h3 className="text-xl font-bold text-paper">{member.name}</h3>
+                <p className="mt-1.5 inline-flex items-center rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-300 ring-1 ring-inset ring-brand-400/30">
                   {member.role[lang]}
                 </p>
-                <p className="mt-4 text-sm leading-6 text-ink-600">{member.bio[lang]}</p>
+                <p className="mt-4 text-sm leading-6 text-paper/65">{member.bio[lang]}</p>
 
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   {/* A direct line only when there is one. Without it, writing
@@ -81,12 +81,12 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     href={`mailto:${member.email ?? company.email}`}
                     className={
                       member.phoneHref
-                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-ink-200 px-5 py-3 text-sm font-semibold text-ink-700 transition hover:border-ink-400 hover:bg-white"
+                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 transition hover:border-white/35 hover:bg-white/5"
                         : "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
                     }
                   >
                     <Mail
-                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-ink-400" : ""}`}
+                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-paper/50" : ""}`}
                       strokeWidth={2}
                     />
                     {c.write}

@@ -60,30 +60,30 @@ export default function Faq({
   title?: Localized;
 }) {
   return (
-    <section className="py-14 sm:py-24">
+    <section className="bg-brand-950 py-14 sm:py-24">
       <Container>
         {/* Left-aligned like every other section heading on the site. It was
             the one centred block, which is what made it read as bolted on. */}
         <div className="max-w-2xl">
-          <h2 className="text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+          <h2 className="text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
             {title[lang]}
           </h2>
         </div>
 
         {/* Native <details> keeps this a server component: no JS, keyboard and
             screen-reader behaviour come for free. */}
-        <div className="mt-10 max-w-3xl divide-y divide-paper-edge border-y border-paper-edge sm:mt-12">
+        <div className="mt-10 max-w-3xl divide-y divide-white/10 border-y border-white/10 sm:mt-12">
           {items.map((faq) => (
             <details key={faq.question.da} className="group">
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-ink-900 transition-colors hover:text-ink-900 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors hover:text-paper [&::-webkit-details-marker]:hidden">
                 {faq.question[lang]}
                 <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-ink-400 transition-transform duration-200 group-open:rotate-180"
+                  className="h-5 w-5 flex-shrink-0 text-paper/45 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden="true"
                 />
               </summary>
-              <p className="pb-5 pr-9 text-base leading-7 text-ink-600">{faq.answer[lang]}</p>
+              <p className="pb-5 pr-9 text-base leading-7 text-paper/65">{faq.answer[lang]}</p>
             </details>
           ))}
         </div>

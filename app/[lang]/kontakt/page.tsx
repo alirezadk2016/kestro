@@ -67,7 +67,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
         <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
-            <div className="border border-paper-edge bg-white p-6 sm:p-8">
+            <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8">
               <ContactForm lang={lang} />
             </div>
           </div>
@@ -75,44 +75,44 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
           <div className="space-y-6 lg:col-span-2">
             <ContactFlipCard lang={lang} />
 
-            <div className="border border-paper-edge bg-paper-dim p-6 sm:p-8">
-              <h2 className="text-base font-semibold text-ink-900">{c.emailTitle}</h2>
-              <p className="mt-2 text-sm leading-6 text-ink-600">{c.emailBody}</p>
+            <div className="border border-white/10 bg-white/5 p-6 sm:p-8">
+              <h2 className="text-base font-semibold text-paper">{c.emailTitle}</h2>
+              <p className="mt-2 text-sm leading-6 text-paper/65">{c.emailBody}</p>
               <CopyEmailButton lang={lang} />
             </div>
 
-            <div className="border border-paper-edge bg-white p-6 sm:p-8">
-              <h2 className="text-base font-semibold text-ink-900">{c.companyTitle}</h2>
+            <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+              <h2 className="text-base font-semibold text-paper">{c.companyTitle}</h2>
               <dl className="mt-4 space-y-3 text-sm">
                 <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldCompany}</dt>
-                  <dd className="font-medium text-ink-900">{company.name}</dd>
+                  <dt className="text-paper/55">{c.fieldCompany}</dt>
+                  <dd className="font-medium text-paper">{company.name}</dd>
                 </div>
                 {company.phoneDisplay && (
                   <div className="flex justify-between gap-4">
-                    <dt className="text-ink-500">{c.fieldPhone}</dt>
-                    <dd className="font-medium text-ink-900">{company.phoneDisplay}</dd>
+                    <dt className="text-paper/55">{c.fieldPhone}</dt>
+                    <dd className="font-medium text-paper">{company.phoneDisplay}</dd>
                   </div>
                 )}
                 <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldEmail}</dt>
-                  <dd className="font-medium text-ink-900">{company.email}</dd>
+                  <dt className="text-paper/55">{c.fieldEmail}</dt>
+                  <dd className="font-medium text-paper">{company.email}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldAddress}</dt>
-                  <dd className="text-right font-medium text-ink-900">{postalAddress(lang)}</dd>
+                  <dt className="text-paper/55">{c.fieldAddress}</dt>
+                  <dd className="text-right font-medium text-paper">{postalAddress(lang)}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt className="text-ink-500">{c.fieldServes}</dt>
-                  <dd className="font-medium text-ink-900">{company.serves[lang]}</dd>
+                  <dt className="text-paper/55">{c.fieldServes}</dt>
+                  <dd className="font-medium text-paper">{company.serves[lang]}</dd>
                 </div>
                 {/* Shown when there is one. "Tilføjes snarest" against a CVR
                     number reads, to somebody about to order 120 machines, as a
                     company that does not exist yet. */}
                 {company.cvr && (
                   <div className="flex justify-between gap-4">
-                    <dt className="text-ink-500">{c.fieldCvr}</dt>
-                    <dd className="font-medium text-ink-900">
+                    <dt className="text-paper/55">{c.fieldCvr}</dt>
+                    <dd className="font-medium text-paper">
                       {company.cvr}
                       {company.legalForm ? ` · ${company.legalForm}` : ""}
                     </dd>
@@ -120,8 +120,8 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                 )}
                 {company.openingHours[lang] && (
                   <div className="flex justify-between gap-4">
-                    <dt className="text-ink-500">{c.fieldHours}</dt>
-                    <dd className="text-right font-medium text-ink-900">
+                    <dt className="text-paper/55">{c.fieldHours}</dt>
+                    <dd className="text-right font-medium text-paper">
                       {company.openingHours[lang]}
                     </dd>
                   </div>

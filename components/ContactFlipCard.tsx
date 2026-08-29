@@ -50,7 +50,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
       <div
         role="tablist"
         aria-label={c.choose}
-        className="mb-4 inline-flex w-full rounded-full border border-ink-200 bg-white p-1 text-sm font-semibold text-ink-600 sm:w-auto"
+        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/65 sm:w-auto"
       >
         <button
           type="button"
@@ -58,7 +58,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           aria-selected={!showIntl}
           onClick={() => setShowIntl(false)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
-            !showIntl ? "bg-brand-600 text-white" : "hover:text-ink-900"
+            !showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
           <MapPin className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
@@ -70,7 +70,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           aria-selected={showIntl}
           onClick={() => setShowIntl(true)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
-            showIntl ? "bg-brand-600 text-white" : "hover:text-ink-900"
+            showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
           <Globe2 className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
@@ -108,7 +108,7 @@ function Face({
   return (
     <div
       aria-hidden={hidden}
-      className={`absolute inset-0 flex flex-col border border-paper-edge bg-brand-950 p-6 text-white [backface-visibility:hidden] sm:p-8 ${
+      className={`absolute inset-0 flex flex-col border border-white/10 bg-brand-950 p-6 text-white [backface-visibility:hidden] sm:p-8 ${
         hidden ? "pointer-events-none" : ""
       } ${flipped ? "[transform:rotateY(180deg)]" : ""}`}
     >

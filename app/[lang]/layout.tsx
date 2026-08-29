@@ -86,7 +86,7 @@ export default function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body className={`${manrope.variable} bg-paper font-sans text-ink-900 antialiased`}>
+      <body className={`${manrope.variable} bg-brand-950 font-sans text-paper antialiased`}>
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script

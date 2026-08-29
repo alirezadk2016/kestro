@@ -235,7 +235,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           )}
         </div>
 
-        {failed && <p className="mt-4 text-sm leading-7 text-ink-500">{c.fallback}</p>}
+        {failed && <p className="mt-4 text-sm leading-7 text-paper/50">{c.fallback}</p>}
       </div>
 
       <div className="lg:col-span-5">
@@ -251,7 +251,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
               className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
                 item.id === active.id
                   ? "border-brand-600 bg-brand-600 text-white"
-                  : "border-paper-edge text-ink-600 hover:border-ink-300 hover:text-ink-900"
+                  : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
               }`}
             >
               {item.name[lang]}
@@ -259,16 +259,16 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mt-8 border-t border-ink-900/12 pt-8">
-          <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+        <div className="mt-8 border-t border-white/10 pt-8">
+          <h3 className="font-display text-xl font-bold tracking-tight text-paper">
             {active.name[lang]}
           </h3>
-          <p className="mt-3 text-base leading-7 text-ink-600">{active.summary[lang]}</p>
+          <p className="mt-3 text-base leading-7 text-paper/65">{active.summary[lang]}</p>
 
-          <p className="label mt-8 text-brand-700">{c.checks}</p>
+          <p className="label mt-8 text-brand-300">{c.checks}</p>
           <ul className="mt-4 space-y-3">
             {active.checks.map((check) => (
-              <li key={check.da} className="flex gap-3 text-sm leading-7 text-ink-600">
+              <li key={check.da} className="flex gap-3 text-sm leading-7 text-paper/65">
                 <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
                 {check[lang]}
               </li>

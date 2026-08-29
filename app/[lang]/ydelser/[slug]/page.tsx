@@ -98,16 +98,16 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       <section className="lit lit-paper py-14 sm:py-24">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-lg leading-8 text-ink-700">{service.intro[lang]}</p>
+            <p className="text-lg leading-8 text-paper/80">{service.intro[lang]}</p>
 
             {service.sections.map((section) => (
-              <div key={section.heading.da} className="mt-12 border-t border-ink-900/12 pt-8">
-                <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+              <div key={section.heading.da} className="mt-12 border-t border-white/15 pt-8">
+                <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                   {section.heading[lang]}
                 </h2>
 
                 {section.body.map((paragraph) => (
-                  <p key={paragraph.da} className="mt-4 text-base leading-8 text-ink-600">
+                  <p key={paragraph.da} className="mt-4 text-base leading-8 text-paper/65">
                     {paragraph[lang]}
                   </p>
                 ))}
@@ -115,9 +115,9 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                 {section.list && (
                   <ul className="mt-6 space-y-3.5">
                     {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-600">
+                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
                         <Check
-                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-600"
+                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                           strokeWidth={2.5}
                         />
                         {item[lang]}
@@ -128,14 +128,14 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
               </div>
             ))}
 
-            <div className="mt-12 border-t border-ink-900/12 pt-8">
-              <p className="eyebrow text-brand-700">{c.next}</p>
+            <div className="mt-12 border-t border-white/15 pt-8">
+              <p className="eyebrow text-brand-300">{c.next}</p>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {service.related.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={localePath(link.href, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge px-5 text-sm font-semibold text-ink-700 transition hover:border-ink-300 hover:text-ink-900"
+                      className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
                     >
                       {link.label[lang]}
                       <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -149,23 +149,23 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-ink-900">
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.more}
               </h2>
-              <ul className="mt-8 border-t border-ink-900/12">
+              <ul className="mt-8 border-t border-white/15">
                 {others.map((other) => (
-                  <li key={other.slug} className="border-b border-ink-900/10">
+                  <li key={other.slug} className="border-b border-white/10">
                     <Link
                       href={localePath(`/ydelser/${other.slug}`, lang)}
-                      className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/70"
+                      className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/5"
                     >
-                      <span className="font-display text-base font-bold tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
+                      <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {other.name[lang]}
                       </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-ink-600">
+                      <span className="mt-1.5 block text-sm leading-6 text-paper/65">
                         {other.summary[lang]}
                       </span>
                     </Link>

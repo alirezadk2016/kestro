@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import FeatureStrip from "./FeatureStrip";
 import HeroReel from "./HeroReel";
 import HeroSpec from "./HeroSpec";
 import { ui } from "@/lib/nav";
@@ -143,6 +144,8 @@ export default function Hero({ lang }: { lang: Lang }) {
           <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
         </Container>
       </div>
+
+      <FeatureStrip lang={lang} />
     </section>
   );
 }

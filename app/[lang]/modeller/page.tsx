@@ -57,13 +57,13 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-10 max-w-3xl border border-paper-edge bg-paper-dim p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-ink-900">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-ink-600">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-7 text-ink-600">{c.noShopBody2}</p>
+          <div className="mx-auto mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+            <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
+            <p className="mt-2 text-base leading-7 text-paper/65">{c.noShopBody1}</p>
+            <p className="mt-3 text-base leading-7 text-paper/65">{c.noShopBody2}</p>
             <Link
               href={localePath("/kvalitet", lang)}
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.qualityLink}
               <span aria-hidden="true">&rarr;</span>
@@ -76,28 +76,28 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
 
             return (
               <div key={group.id} className="mt-14">
-                <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 text-base leading-7 text-ink-600">{group.description[lang]}</p>
+                <p className="mt-2 text-base leading-7 text-paper/65">{group.description[lang]}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
                     <li key={model.slug}>
                       <Link
                         href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="group flex h-full flex-col border border-paper-edge bg-white p-5 transition hover:border-brand-300 hover:border-ink-400 sm:p-6"
+                        className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
                       >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
                           {model.brand} · {model.format[lang]}
                         </span>
-                        <h3 className="mt-2 text-base font-semibold text-ink-900 group-hover:text-ink-900 sm:text-lg">
+                        <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-6 text-ink-600">
+                        <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
                           {model.tagline[lang]}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
                           {c.seeSpecs}
                           <span aria-hidden="true">&rarr;</span>
                         </span>

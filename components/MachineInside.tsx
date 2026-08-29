@@ -197,7 +197,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
   return (
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-7">
-        <div className="overflow-hidden border border-paper-edge bg-brand-950">
+        <div className="overflow-hidden border border-white/10 bg-brand-950">
           <svg
             viewBox={box.join(" ")}
             role="img"
@@ -277,7 +277,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
           </svg>
         </div>
 
-        <p className="mt-4 text-xs leading-6 text-ink-500">{c.note}</p>
+        <p className="mt-4 text-xs leading-6 text-paper/50">{c.note}</p>
       </div>
 
       <div className="lg:col-span-5">
@@ -291,7 +291,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
             className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
               selected === null
                 ? "border-brand-600 bg-brand-600 text-white"
-                : "border-paper-edge text-ink-600 hover:border-ink-300 hover:text-ink-900"
+                : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
             }`}
           >
             {c.all}
@@ -305,7 +305,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
               className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
                 selected?.id === part.id
                   ? "border-brand-600 bg-brand-600 text-white"
-                  : "border-paper-edge text-ink-600 hover:border-ink-300 hover:text-ink-900"
+                  : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
               }`}
             >
               {part.name[lang]}
@@ -313,38 +313,40 @@ export default function MachineInside({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mt-8 border-t border-ink-900/12 pt-8">
+        <div className="mt-8 border-t border-white/10 pt-8">
           {selected ? (
             <>
               <div className="flex flex-wrap items-center gap-3">
-                <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+                <h3 className="font-display text-xl font-bold tracking-tight text-paper">
                   {selected.name[lang]}
                 </h3>
                 <span
                   className={`label px-2 py-1 ${
                     selected.swappable === "no"
-                      ? "bg-paper-dim text-ink-500"
-                      : "bg-brand-50 text-brand-700"
+                      ? "bg-white/10 text-paper/55"
+                      : "bg-brand-500/15 text-brand-300"
                   }`}
                 >
                   {swappableLabel[selected.swappable][lang]}
                 </span>
               </div>
 
-              <p className="mt-2 font-mono text-xs leading-6 text-ink-500">{selected.spec[lang]}</p>
+              <p className="mt-2 font-mono text-xs leading-6 text-paper/50">
+                {selected.spec[lang]}
+              </p>
 
-              <p className="label mt-8 text-brand-700">{c.what}</p>
-              <p className="mt-3 text-base leading-7 text-ink-600">{selected.what[lang]}</p>
+              <p className="label mt-8 text-brand-300">{c.what}</p>
+              <p className="mt-3 text-base leading-7 text-paper/65">{selected.what[lang]}</p>
 
-              <p className="label mt-8 text-brand-700">{c.upgrade}</p>
-              <p className="mt-3 text-base leading-7 text-ink-600">{selected.upgrade[lang]}</p>
+              <p className="label mt-8 text-brand-300">{c.upgrade}</p>
+              <p className="mt-3 text-base leading-7 text-paper/65">{selected.upgrade[lang]}</p>
             </>
           ) : (
             <>
-              <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+              <h3 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.pick}
               </h3>
-              <p className="mt-3 text-base leading-7 text-ink-600">{c.pickBody}</p>
+              <p className="mt-3 text-base leading-7 text-paper/65">{c.pickBody}</p>
             </>
           )}
         </div>

@@ -59,20 +59,20 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <ol className="mt-14 border-t border-ink-900/12">
+          <ol className="mt-14 border-t border-white/15">
             {guides.map((guide, i) => (
-              <li key={guide.slug} className="border-b border-ink-900/10">
+              <li key={guide.slug} className="border-b border-white/10">
                 <Link
                   href={localePath(`/vejledninger/${guide.slug}`, lang)}
-                  className="group -mx-4 block rounded-xl px-4 py-7 transition-colors hover:bg-paper-dim"
+                  className="group -mx-4 block rounded-xl px-4 py-7 transition-colors hover:bg-white/5"
                 >
                   <div className="flex gap-5 sm:gap-8">
-                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-500 transition-colors group-hover:text-brand-600">
+                    <span className="pt-1 font-display text-sm font-semibold tabular-nums text-paper/55 transition-colors group-hover:text-brand-300">
                       {String(i + 1).padStart(2, "0")}
                     </span>
 
                     <div className="min-w-0 flex-1">
-                      <div className="label flex flex-wrap items-center gap-x-3 gap-y-1 text-ink-500">
+                      <div className="label flex flex-wrap items-center gap-x-3 gap-y-1 text-paper/55">
                         <span>
                           {c.forWhom} {guide.audience[lang].toLowerCase()}
                         </span>
@@ -82,13 +82,13 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
                         </span>
                       </div>
 
-                      <h2 className="mt-2.5 font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-2xl">
+                      <h2 className="mt-2.5 font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-2xl">
                         {guide.title[lang]}
                       </h2>
-                      <p className="mt-3 max-w-2xl text-base leading-7 text-ink-600">
+                      <p className="mt-3 max-w-2xl text-base leading-7 text-paper/65">
                         {guide.summary[lang]}
                       </p>
-                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
+                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                         {c.read}
                         <ArrowRight
                           className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -102,11 +102,11 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
             ))}
           </ol>
 
-          <div className="mt-12 max-w-3xl border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-ink-900">
+          <div className="mt-12 max-w-3xl border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+            <h2 className="font-display text-xl font-bold tracking-tight text-paper">
               {c.adviceTitle}
             </h2>
-            <p className="mt-3 text-base leading-8 text-ink-600">{c.adviceBody}</p>
+            <p className="mt-3 text-base leading-8 text-paper/65">{c.adviceBody}</p>
             <Link
               href={localePath("/kontakt", lang)}
               className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"

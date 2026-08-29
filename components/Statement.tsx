@@ -69,41 +69,38 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section
-      className="lit lit-paper border-b border-paper-edge bg-paper py-14 sm:py-24"
-      data-reveal
-    >
+    <section className="stage py-14 sm:py-24" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-brand-600" />
-            <span className="eyebrow text-brand-600">{c.label}</span>
+            <span className="h-px w-8 bg-brand-400" />
+            <span className="eyebrow text-brand-300">{c.label}</span>
           </div>
 
-          <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-ink-900">
+          <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.lead}
           </p>
-          <p className="mt-6 text-lg leading-8 text-ink-600">{c.body}</p>
-          <p className="mt-6 border-l-2 border-brand-600 pl-5 text-base leading-8 text-ink-800">
+          <p className="mt-6 text-lg leading-8 text-paper/70">{c.body}</p>
+          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-8 text-paper/90">
             {c.kicker}
           </p>
         </div>
 
-        <p className="label mt-12 text-ink-500 sm:mt-16">{c.promisesLabel}</p>
-        <dl className="mt-5 grid grid-cols-1 gap-x-12 border-t border-ink-900/12 sm:grid-cols-3">
+        <p className="label mt-12 text-paper/55 sm:mt-16">{c.promisesLabel}</p>
+        <dl className="mt-5 grid grid-cols-1 gap-x-12 border-t border-paper/15 sm:grid-cols-3">
           {promises.map((promise) => (
             <div
               key={promise.href}
-              className="flex flex-col border-b border-ink-900/10 py-5 sm:h-full sm:border-b-0 sm:py-7"
+              className="flex flex-col border-b border-paper/10 py-5 sm:h-full sm:border-b-0 sm:py-7"
             >
-              <dt className="font-display text-base font-bold leading-snug tracking-tight text-ink-900">
+              <dt className="font-display text-base font-bold leading-snug tracking-tight text-paper">
                 {promise.term[lang]}
               </dt>
-              <dd className="mt-2 flex flex-1 flex-col text-sm leading-6 text-ink-600">
+              <dd className="mt-2 flex flex-1 flex-col text-sm leading-6 text-paper/65">
                 {promise.body[lang]}
                 <Link
                   href={localePath(promise.href, lang)}
-                  className="mt-2.5 block self-start text-sm font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-brand-800 sm:mt-auto sm:pt-2.5"
+                  className="mt-2.5 block self-start text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-2.5"
                 >
                   {promise.link[lang]}
                 </Link>

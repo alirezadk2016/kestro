@@ -142,7 +142,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         <section className="py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
-              <div className="aspect-[4/3] overflow-hidden border border-paper-edge bg-white sm:aspect-[16/10]">
+              <div className="aspect-[4/3] overflow-hidden bg-white shadow-lg shadow-black/20 sm:aspect-[16/10]">
                 <Image
                   src={model.images[0].src}
                   alt={model.images[0].alt[lang]}
@@ -157,7 +157,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 {model.images.slice(1).map((img) => (
                   <div
                     key={img.src}
-                    className="aspect-square overflow-hidden border border-paper-edge bg-white"
+                    className="aspect-square overflow-hidden bg-white shadow-md shadow-black/20"
                   >
                     <Image
                       src={img.src}
@@ -171,29 +171,29 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 ))}
               </div>
 
-              <p className="pt-1 text-sm leading-6 text-ink-500">{c.imageNote}</p>
+              <p className="pt-1 text-sm leading-6 text-paper/55">{c.imageNote}</p>
             </div>
           </Container>
         </section>
       )}
 
-      <section className={`py-14 sm:py-24 ${model.images ? "border-t border-paper-edge" : ""}`}>
+      <section className={`py-14 sm:py-24 ${model.images ? "border-t border-white/10" : ""}`}>
         <Container>
           <div className="mx-auto max-w-3xl">
-            <div className="overflow-hidden border border-paper-edge">
-              <div className="border-b border-paper-edge bg-paper-dim px-5 py-4 sm:px-6">
-                <h2 className="text-base font-semibold text-ink-900">{c.configTitle}</h2>
-                <p className="mt-1 text-sm leading-6 text-ink-600">{c.configBody}</p>
+            <div className="overflow-hidden border border-white/10">
+              <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
+                <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
+                <p className="mt-1 text-sm leading-6 text-paper/65">{c.configBody}</p>
               </div>
 
-              <dl className="divide-y divide-paper-edge">
+              <dl className="divide-y divide-white/10">
                 {model.specs.map((spec) => (
                   <div
                     key={spec.label.da}
                     className="px-5 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4"
                   >
-                    <dt className="text-sm font-semibold text-ink-900">{spec.label[lang]}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-ink-600 sm:col-span-2 sm:mt-0">
+                    <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
+                    <dd className="mt-1 text-sm leading-6 text-paper/65 sm:col-span-2 sm:mt-0">
                       {spec.value[lang]}
                     </dd>
                   </div>
@@ -201,26 +201,26 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               </dl>
             </div>
 
-            <h2 className="mt-12 text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+            <h2 className="mt-12 text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.goodFor}
             </h2>
             <ul className="mt-5 space-y-3">
               {model.goodFor.map((item) => (
-                <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-600">
-                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
+                <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
                   {item[lang]}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-10 border-l-2 border-ink-900 bg-paper-dim p-5 sm:p-6">
-              <h2 className="flex items-center gap-2 text-base font-semibold text-ink-900">
-                <Info className="h-5 w-5 flex-shrink-0 text-ink-700" strokeWidth={2} />
+            <div className="mt-10 border-l-2 border-white/30 bg-white/5 p-5 sm:p-6">
+              <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
+                <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
                 {c.watchOut}
               </h2>
               <ul className="mt-3 space-y-2.5">
                 {model.notes.map((note) => (
-                  <li key={note.da} className="text-sm leading-6 text-ink-700">
+                  <li key={note.da} className="text-sm leading-6 text-paper/80">
                     {note[lang]}
                   </li>
                 ))}
@@ -229,20 +229,20 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
             {model.why && (
               <>
-                <h2 className="mt-12 text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+                <h2 className="mt-12 text-xl font-bold tracking-tight text-paper sm:text-2xl">
                   {c.whyTitle}
                 </h2>
                 <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                   {model.why.map((reason) => (
                     <div key={reason.title.da}>
-                      <dt className="flex gap-3 text-base font-semibold text-ink-900">
+                      <dt className="flex gap-3 text-base font-semibold text-paper">
                         <Check
-                          className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600"
+                          className="mt-1 h-5 w-5 flex-shrink-0 text-brand-300"
                           strokeWidth={2}
                         />
                         {reason.title[lang]}
                       </dt>
-                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-ink-600">
+                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/65">
                         {reason.description[lang]}
                       </dd>
                     </div>
@@ -251,11 +251,11 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               </>
             )}
 
-            <div className="mt-12 border border-paper-edge bg-paper-dim p-6 sm:p-8">
-              <h2 className="text-lg font-semibold text-ink-900">
+            <div className="mt-12 border border-white/10 bg-white/5 p-6 sm:p-8">
+              <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 text-base leading-7 text-ink-600">{c.ctaBody}</p>
+              <p className="mt-2 text-base leading-7 text-paper/65">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
@@ -265,11 +265,11 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             </div>
 
             {category && (
-              <p className="mt-8 text-sm leading-6 text-ink-500">
+              <p className="mt-8 text-sm leading-6 text-paper/55">
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="font-semibold text-brand-700 hover:text-brand-800"
+                  className="font-semibold text-brand-300 hover:text-paper"
                 >
                   {category.name[lang].toLowerCase()}
                 </Link>
@@ -281,16 +281,16 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.related}</h2>
+              <h2 className="text-xl font-bold tracking-tight text-paper">{c.related}</h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-brand-600 hover:text-brand-700"
+                      className="inline-flex min-h-[44px] items-center border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
                     >
                       {other.name}
                     </Link>

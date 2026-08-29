@@ -24,7 +24,7 @@ export default function CopyEmailButton({ lang }: { lang: Lang }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
+      className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
     >
       {copied ? (
         copied_label[lang]

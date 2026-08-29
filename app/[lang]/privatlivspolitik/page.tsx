@@ -148,19 +148,19 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
 
         <div className="mt-14 max-w-3xl">
           {sections.map((section) => (
-            <div key={section.heading.da} className="border-t border-paper-edge py-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-ink-900">
+            <div key={section.heading.da} className="border-t border-white/10 py-8">
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {section.heading[lang]}
               </h2>
               {section.body.map((paragraph) => (
-                <p key={paragraph.da} className="mt-4 text-base leading-8 text-ink-600">
+                <p key={paragraph.da} className="mt-4 text-base leading-8 text-paper/65">
                   {paragraph[lang]}
                 </p>
               ))}
             </div>
           ))}
 
-          <p className="border-t border-paper-edge pt-8 text-sm text-ink-500">
+          <p className="border-t border-white/10 pt-8 text-sm text-paper/55">
             {c.updated}: {UPDATED}
           </p>
         </div>

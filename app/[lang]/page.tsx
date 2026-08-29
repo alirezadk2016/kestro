@@ -3,6 +3,7 @@ import Statement from "@/components/Statement";
 import QualifySection from "@/components/QualifySection";
 import Services from "@/components/Services";
 import ExampleMachine from "@/components/ExampleMachine";
+import TrustStrip from "@/components/TrustStrip";
 import CtaSection from "@/components/CtaSection";
 import type { Lang } from "@/lib/i18n";
 
@@ -16,6 +17,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
       <QualifySection lang={lang} />
       <Services lang={lang} />
       <ExampleMachine lang={lang} />
+      <TrustStrip lang={lang} />
       <CtaSection lang={lang} />
     </>
   );

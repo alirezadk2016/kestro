@@ -131,13 +131,13 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-14 sm:py-24">
+      <section className="bg-ink-900 py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-ink-600">
+            <p className="mt-3 text-base leading-7 text-paper/65">
               {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
             </p>
 
@@ -145,14 +145,14 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="border border-ink-900/15 px-3.5 py-1.5 text-sm text-ink-700"
+                  className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/80"
                 >
                   {brand}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-6 text-sm leading-6 text-ink-500">{c.brandsNote}</p>
+            <p className="mt-6 text-sm leading-6 text-paper/55">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -161,11 +161,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         <section className="py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <span className="eyebrow text-brand-600">{c.exampleEyebrow}</span>
-              <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+              <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
+              <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {exampleModel.name}
               </h2>
-              <p className="mt-3 text-base leading-7 text-ink-600">{exampleModel.intro[lang]}</p>
+              <p className="mt-3 text-base leading-7 text-paper/65">{exampleModel.intro[lang]}</p>
 
               {/*
                 Lead image full width, the rest in an even grid – the renders
@@ -173,7 +173,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 uncropped, which is the part a buyer actually looks at.
               */}
               <div className="mt-8 space-y-3 sm:space-y-4">
-                <div className="aspect-[4/3] overflow-hidden border border-paper-edge bg-white sm:aspect-[16/10]">
+                <div className="aspect-[4/3] overflow-hidden bg-white shadow-lg shadow-black/20 sm:aspect-[16/10]">
                   <Image
                     src={exampleModel.images[0].src}
                     alt={exampleModel.images[0].alt[lang]}
@@ -188,7 +188,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
-                      className="aspect-square overflow-hidden border border-paper-edge bg-white"
+                      className="aspect-square overflow-hidden bg-white shadow-md shadow-black/20"
                     >
                       <Image
                         src={img.src}
@@ -203,11 +203,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 </div>
               </div>
 
-              <p className="mt-4 text-sm leading-6 text-ink-500">{c.imageNote}</p>
+              <p className="mt-4 text-sm leading-6 text-paper/55">{c.imageNote}</p>
 
               <Link
                 href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
               >
                 {c.seeAllSpecsPre} {exampleModel.name}
                 <span aria-hidden="true">&rarr;</span>
@@ -218,28 +218,28 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
-              <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 text-ink-600">{c.modelsBody}</p>
+              <p className="mt-3 text-base leading-7 text-paper/65">{c.modelsBody}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
                   <li key={model.slug}>
                     <Link
                       href={localePath(`/modeller/${model.slug}`, lang)}
-                      className="group flex h-full flex-col border border-paper-edge bg-white p-5 transition hover:border-brand-300 hover:border-ink-400"
+                      className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
                         {model.format[lang]}
                       </span>
-                      <span className="mt-1.5 text-base font-semibold text-ink-900 group-hover:text-ink-900">
+                      <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 flex-1 text-sm leading-6 text-ink-600">
+                      <span className="mt-1.5 flex-1 text-sm leading-6 text-paper/65">
                         {model.tagline[lang]}
                       </span>
                     </Link>
@@ -249,7 +249,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
               <Link
                 href={localePath("/modeller", lang)}
-                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
               >
                 {c.allModels}
                 <span aria-hidden="true">&rarr;</span>
@@ -259,20 +259,20 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-paper-edge py-14 sm:py-24">
+      <section className="border-t border-white/10 py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.useCases}
             </h2>
 
             <dl className="mt-8 space-y-6">
               {category.useCases.map((useCase) => (
                 <div key={useCase.title.da} className="flex gap-4">
-                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-600" strokeWidth={2} />
+                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
                   <div>
-                    <dt className="text-base font-semibold text-ink-900">{useCase.title[lang]}</dt>
-                    <dd className="mt-1 text-base leading-7 text-ink-600">
+                    <dt className="text-base font-semibold text-paper">{useCase.title[lang]}</dt>
+                    <dd className="mt-1 text-base leading-7 text-paper/65">
                       {useCase.description[lang]}
                     </dd>
                   </div>
@@ -280,18 +280,18 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               ))}
             </dl>
 
-            <div className="mt-10 border border-paper-edge bg-paper-dim p-6">
-              <h3 className="text-base font-semibold text-ink-900">{c.specs}</h3>
-              <p className="mt-2 text-base leading-7 text-ink-600">{category.specNote[lang]}</p>
+            <div className="mt-10 border border-white/10 bg-white/5 p-6">
+              <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
+              <p className="mt-2 text-base leading-7 text-paper/65">{category.specNote[lang]}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-paper-edge bg-paper-dim py-14 sm:py-24">
+      <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-xl font-bold tracking-tight text-ink-900">{c.other}</h2>
+            <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
                 const OtherIcon = getCategoryIcon(other.slug);
@@ -299,7 +299,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge bg-white px-4 text-sm font-medium text-ink-700 transition hover:border-brand-600 hover:text-brand-700"
+                      className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
                     >
                       <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
                       {other.name[lang]}

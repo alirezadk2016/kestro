@@ -26,10 +26,10 @@ export default function Header({ lang }: { lang: Lang }) {
   }
 
   return (
-    <header className="glass sticky top-0 z-50 border-b border-ink-900/8">
+    <header className="glass-dark sticky top-0 z-50">
       {/*
         The first thing a keyboard reaches on every page.
-       
+
         Without it, tabbing to the content means going through the logo, eight
         navigation items, the products menu, two language buttons and the call
         to action — on every page, every time. WCAG calls this Bypass Blocks
@@ -50,7 +50,7 @@ export default function Header({ lang }: { lang: Lang }) {
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
-          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-ink-900"
+          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
         >
           <Logo className="h-7 w-auto" />
           Kestro
@@ -79,7 +79,7 @@ export default function Header({ lang }: { lang: Lang }) {
           >
             <Link
               href={localePath(productsNav.hub.href, lang)}
-              className="flex items-center gap-1 text-sm font-medium text-ink-700 transition hover:text-brand-700"
+              className="flex items-center gap-1 text-sm font-medium text-paper/75 transition hover:text-paper"
               aria-expanded={productsOpen}
             >
               {productsNav.hub.label[lang]}
@@ -88,43 +88,43 @@ export default function Header({ lang }: { lang: Lang }) {
 
             {productsOpen && (
               <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
-                <div className="glass rounded-xl border border-ink-900/8 p-2 shadow-xl shadow-ink-900/10">
+                <div className="glass-dark rounded-xl p-2 shadow-xl shadow-black/30">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.models.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.machine.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.machine.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.quality.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.pricing.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.pricing.label[lang]}
                   </Link>{" "}
                   <Link
                     href={localePath(productsNav.sampleQuote.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.sampleQuote.label[lang]}
                   </Link>
-                  <div className="mb-1 border-t border-paper-edge" />
+                  <div className="mb-1 border-t border-white/10" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
-                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
+                      className="block rounded-lg px-3 py-2 text-sm text-paper/75 transition hover:bg-white/10 hover:text-paper"
                     >
                       {category.name[lang]}
                     </Link>
@@ -138,7 +138,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               key={link.href}
               href={localePath(link.href, lang)}
-              className="text-sm font-medium text-ink-700 transition hover:text-brand-700"
+              className="text-sm font-medium text-paper/75 transition hover:text-paper"
             >
               {link.label[lang]}
             </Link>
@@ -165,7 +165,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <a
               href={`tel:${company.phoneHref}`}
               aria-label={ui.callUs[lang]}
-              className="inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-brand-700"
+              className="inline-flex h-11 w-11 items-center justify-center text-paper/75 transition hover:text-paper"
             >
               <Phone className="h-5 w-5" strokeWidth={1.9} />
             </a>
@@ -176,7 +176,7 @@ export default function Header({ lang }: { lang: Lang }) {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={ui.openMenu[lang]}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -201,13 +201,13 @@ export default function Header({ lang }: { lang: Lang }) {
       </Container>
 
       {open && (
-        <div className="glass max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink-900/8 lg:hidden">
+        <div className="glass-dark max-h-[calc(100dvh-4rem)] overflow-y-auto border-t-0 lg:hidden">
           <Container className="flex flex-col gap-1 py-4">
             <button
               type="button"
               onClick={() => setMobileProductsOpen((v) => !v)}
               aria-expanded={mobileProductsOpen}
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
             >
               {productsNav.hub.label[lang]}
               <ChevronDown
@@ -217,46 +217,46 @@ export default function Header({ lang }: { lang: Lang }) {
             </button>
 
             {mobileProductsOpen && (
-              <div className="mb-1 space-y-0.5 border-l border-paper-edge pl-3">
+              <div className="mb-1 space-y-0.5 border-l border-white/10 pl-3">
                 <Link
                   href={localePath(productsNav.hub.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.overview[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.models.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.models.label[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.machine.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.machine.label[lang]}
                 </Link>
                 <Link
                   href={localePath(productsNav.quality.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.quality.label[lang]}
                 </Link>{" "}
                 <Link
                   href={localePath(productsNav.pricing.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.pricing.label[lang]}
                 </Link>{" "}
                 <Link
                   href={localePath(productsNav.sampleQuote.href, lang)}
                   onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
                 >
                   {productsNav.sampleQuote.label[lang]}
                 </Link>
@@ -265,7 +265,7 @@ export default function Header({ lang }: { lang: Lang }) {
                     key={category.slug}
                     href={localePath(`/produkter/${category.slug}`, lang)}
                     onClick={closeMobile}
-                    className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
+                    className="block rounded-lg px-3 py-2 text-sm text-paper/75 transition hover:bg-white/10 hover:text-paper"
                   >
                     {category.name[lang]}
                   </Link>
@@ -278,13 +278,13 @@ export default function Header({ lang }: { lang: Lang }) {
                 key={link.href}
                 href={localePath(link.href, lang)}
                 onClick={closeMobile}
-                className="rounded-lg px-3 py-2.5 text-base font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                className="rounded-lg px-3 py-2.5 text-base font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
               >
                 {link.label[lang]}
               </Link>
             ))}
 
-            <div className="mt-3 border-t border-paper-edge pt-3">
+            <div className="mt-3 border-t border-white/10 pt-3">
               <LanguageSwitcher lang={lang} basePath={basePath} onNavigate={closeMobile} />
             </div>
 
@@ -313,7 +313,7 @@ function LanguageSwitcher({
 }) {
   return (
     <div
-      className="flex w-fit items-center border border-paper-edge"
+      className="flex w-fit items-center border border-white/15"
       role="group"
       aria-label={ui.language[lang]}
     >
@@ -325,7 +325,7 @@ function LanguageSwitcher({
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
           className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-brand-950 text-paper" : "text-ink-700 hover:text-ink-900"
+            code === lang ? "bg-brand-600 text-paper" : "text-paper/70 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

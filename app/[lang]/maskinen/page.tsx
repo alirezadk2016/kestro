@@ -96,14 +96,14 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-paper-edge bg-paper-dim py-14 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-600">{c.outsideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+            <span className="eyebrow text-brand-300">{c.outsideEyebrow}</span>
+            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
               {c.outsideTitle}
             </h2>
-            <p className="mt-5 text-base leading-7 text-ink-600">{c.outsideBody}</p>
+            <p className="mt-5 text-base leading-7 text-paper/65">{c.outsideBody}</p>
           </div>
 
           <div className="mt-12">
@@ -115,22 +115,22 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
       <section className="py-14 sm:py-24">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-600">{c.insideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-ink-900">
+            <span className="eyebrow text-brand-300">{c.insideEyebrow}</span>
+            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
               {c.insideTitle}
             </h2>
-            <p className="mt-5 text-base leading-7 text-ink-600">{c.insideBody}</p>
+            <p className="mt-5 text-base leading-7 text-paper/65">{c.insideBody}</p>
           </div>
 
           <div className="mt-12">
             <MachineInside lang={lang} />
           </div>
 
-          <p className="mt-12 max-w-2xl text-sm leading-7 text-ink-500">
+          <p className="mt-12 max-w-2xl text-sm leading-7 text-paper/55">
             {c.guidesPre}{" "}
             <Link
               href={localePath("/vejledninger", lang)}
-              className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-brand-800"
+              className="font-semibold text-brand-300 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-paper"
             >
               {c.guidesLink}
             </Link>{" "}

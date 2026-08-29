@@ -201,48 +201,48 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
       <section className="lit lit-paper py-14 sm:py-24">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-8 text-ink-600">{c.whyBody1}</p>
-            <p className="mt-4 text-base leading-8 text-ink-600">{c.whyBody2}</p>
+            <p className="mt-4 text-base leading-8 text-paper/65">{c.whyBody1}</p>
+            <p className="mt-4 text-base leading-8 text-paper/65">{c.whyBody2}</p>
 
-            <div className="mt-12 border-t border-ink-900/12 pt-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+            <div className="mt-12 border-t border-white/15 pt-8">
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                 {c.driversTitle}
               </h2>
-              <p className="mt-4 text-base leading-8 text-ink-600">{c.driversLead}</p>
+              <p className="mt-4 text-base leading-8 text-paper/65">{c.driversLead}</p>
             </div>
           </div>
 
-          <ol className="mt-8 grid grid-cols-1 gap-x-12 border-t border-ink-900/12 md:grid-cols-2">
+          <ol className="mt-8 grid grid-cols-1 gap-x-12 border-t border-white/15 md:grid-cols-2">
             {drivers.map((driver, i) => (
-              <li key={driver.heading.da} className="border-b border-ink-900/10 py-6">
+              <li key={driver.heading.da} className="border-b border-white/10 py-6">
                 <div className="flex gap-5">
-                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-ink-500">
+                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-paper/55">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base font-bold tracking-tight text-ink-900">
+                    <h3 className="font-display text-base font-bold tracking-tight text-paper">
                       {driver.heading[lang]}
                     </h3>
-                    <p className="mt-2 text-sm leading-7 text-ink-600">{driver.body[lang]}</p>
+                    <p className="mt-2 text-sm leading-7 text-paper/65">{driver.body[lang]}</p>
                   </div>
                 </div>
               </li>
             ))}
           </ol>
 
-          <div className="mt-12 max-w-3xl border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
-            <h2 className="font-display text-lg font-bold tracking-tight text-ink-900">
+          <div className="mt-12 max-w-3xl border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+            <h2 className="font-display text-lg font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-ink-600">{c.quoteLead}</p>
+            <p className="mt-3 text-base leading-7 text-paper/65">{c.quoteLead}</p>
             <ul className="mt-5 space-y-3">
               {c.quotePoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-ink-700">
+                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/80">
                   <Check
-                    className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-600"
+                    className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                     strokeWidth={2.5}
                   />
                   {point}
@@ -251,21 +251,21 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             </ul>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-ink-900/12 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.freeTitle}
             </h2>
-            <p className="mt-4 text-base leading-8 text-ink-600">{c.freeBody}</p>
+            <p className="mt-4 text-base leading-8 text-paper/65">{c.freeBody}</p>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-ink-900/12 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.fastTitle}
             </h2>
-            <p className="mt-4 text-base leading-8 text-ink-600">{c.fastLead}</p>
+            <p className="mt-4 text-base leading-8 text-paper/65">{c.fastLead}</p>
             <ul className="mt-5 space-y-2.5">
               {c.fastPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-ink-600">
+                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/65">
                   <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
                   {point}
                 </li>
@@ -273,14 +273,14 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             </ul>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-ink-900/12 pt-8">
-            <p className="eyebrow text-brand-700">{c.relatedTitle}</p>
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <p className="eyebrow text-brand-300">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {c.related.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge px-5 text-sm font-semibold text-ink-700 transition hover:border-ink-300 hover:text-ink-900"
+                    className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />

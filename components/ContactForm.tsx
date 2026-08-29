@@ -184,7 +184,7 @@ export default function ContactForm({
   }
 
   const inputClasses =
-    "w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-100";
+    "w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -193,13 +193,13 @@ export default function ContactForm({
     )}&body=${encodeURIComponent(body)}`;
 
     return (
-      <div className="border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-ink-600">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-7 text-paper/65">{c.unavailableBody}</p>
 
-        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-paper-edge bg-white p-4 font-mono text-xs leading-6 text-ink-700">
+        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
           {body}
         </pre>
 
@@ -213,18 +213,18 @@ export default function ContactForm({
           </button>
           <a
             href={mailHref}
-            className="inline-flex min-h-[44px] items-center border border-ink-200 px-6 text-sm font-semibold text-ink-700 transition hover:border-ink-400"
+            className="inline-flex min-h-[44px] items-center border border-white/15 px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
           >
             {c.openMail}
           </a>
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-6 text-ink-500">
+          <p className="mt-5 text-sm leading-6 text-paper/55">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
-              className="font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4"
+              className="font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
             >
               {company.phoneDisplay}
             </a>
@@ -235,7 +235,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-ink-500 underline decoration-ink-300 underline-offset-4 hover:text-ink-900"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/55 underline decoration-paper/30 underline-offset-4 hover:text-paper"
         >
           {c.back}
         </button>
@@ -245,11 +245,11 @@ export default function ContactForm({
 
   if (status === "sent") {
     return (
-      <div className="border-l-2 border-brand-600 bg-paper-dim p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
           {c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-ink-600">{c.thanksBody}</p>
+        <p className="mt-3 text-base leading-7 text-paper/65">{c.thanksBody}</p>
         <button
           type="button"
           onClick={() => {
@@ -263,7 +263,7 @@ export default function ContactForm({
             });
             setStatus("idle");
           }}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-brand-800"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
         >
           {c.thanksAgain}
         </button>
@@ -275,8 +275,8 @@ export default function ContactForm({
     <form onSubmit={handleSubmit} className="relative space-y-5">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-ink-700">
-            {c.name} <span className="text-brand-600">*</span>
+          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/80">
+            {c.name} <span className="text-brand-400">*</span>
           </label>
           <input
             id="navn"
@@ -291,12 +291,12 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-ink-700">
+          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/80">
             {c.company}{" "}
             {companyRequired ? (
-              <span className="text-brand-600">*</span>
+              <span className="text-brand-400">*</span>
             ) : (
-              <span className="text-ink-500">{c.optional}</span>
+              <span className="text-paper/45">{c.optional}</span>
             )}
           </label>
           <input
@@ -312,8 +312,8 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-700">
-            {c.email} <span className="text-brand-600">*</span>
+          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/80">
+            {c.email} <span className="text-brand-400">*</span>
           </label>
           <input
             id="email"
@@ -328,7 +328,7 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-ink-700">
+          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/80">
             {c.phone}
           </label>
           <input
@@ -344,8 +344,8 @@ export default function ContactForm({
       </div>
 
       <div>
-        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-ink-700">
-          {c.message} <span className="text-brand-600">*</span>
+        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
+          {c.message} <span className="text-brand-400">*</span>
         </label>
         <textarea
           id="besked"
@@ -383,11 +383,11 @@ export default function ContactForm({
           {status === "sending" ? c.sending : c.submit}
         </button>
 
-        <p className="mt-3 text-xs leading-5 text-ink-500">
+        <p className="mt-3 text-xs leading-5 text-paper/50">
           {c.privacy}{" "}
           <Link
             href={localePath("/privatlivspolitik", lang)}
-            className="underline decoration-ink-300 underline-offset-2 hover:text-ink-700"
+            className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
           >
             {c.privacyLink}
           </Link>

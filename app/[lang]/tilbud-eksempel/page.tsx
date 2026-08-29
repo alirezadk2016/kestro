@@ -223,16 +223,17 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
       <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
       <PageHeader title={c.title} description={c.description} />
 
-      <section className="lit lit-paper py-14 sm:py-24">
+      <section className="lit bg-brand-950 py-14 sm:py-24">
         <Container>
           {/*
             Styled as a document rather than as a web section: a buyer is being
             shown a piece of paper they will receive, and it should look like
-            one. The label in the corner is not decoration — nothing on this
-            page may be mistaken for a live offer.
+            one — white, regardless of the dark page around it. The label in
+            the corner is not decoration — nothing on this page may be
+            mistaken for a live offer.
           */}
-          <article className="mx-auto max-w-3xl border border-ink-900/15 bg-white shadow-sm">
-            <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/12 p-6 sm:p-8">
+          <article className="mx-auto max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20">
+            <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/10 p-6 sm:p-8">
               <div>
                 <p className="label text-brand-700">{company.name}</p>
                 <h2 className="mt-1 font-display text-2xl font-extrabold tracking-display text-ink-900">
@@ -244,7 +245,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
               </span>
             </header>
 
-            <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/12 p-6 sm:grid-cols-2 sm:p-8">
+            <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               {c.metaRows.map((row) => (
                 <div key={row.k} className="flex justify-between gap-4 py-1.5 text-sm">
                   <dt className="text-ink-500">{row.k}</dt>
@@ -253,7 +254,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
               ))}
             </dl>
 
-            <div className="border-b border-ink-900/12 p-6 sm:p-8">
+            <div className="border-b border-ink-900/10 p-6 sm:p-8">
               <h3 className="label text-ink-500">{c.specTitle}</h3>
               <dl className="mt-4">
                 {lines.map((line) => (
@@ -268,7 +269,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
               </dl>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 border-b border-ink-900/12 p-6 sm:grid-cols-2 sm:p-8">
+            <div className="grid grid-cols-1 gap-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               <div>
                 <h3 className="label text-ink-500">{c.includedTitle}</h3>
                 <ul className="mt-4 space-y-2">
@@ -299,7 +300,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
               </div>
             </div>
 
-            <div className="border-b border-ink-900/12 p-6 sm:p-8">
+            <div className="border-b border-ink-900/10 p-6 sm:p-8">
               <h3 className="label text-ink-500">{c.termsTitle}</h3>
               <dl className="mt-4 space-y-4">
                 {c.terms.map((term) => (
@@ -321,7 +322,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                     key={row.k}
                     className={`flex justify-between gap-6 py-2 ${
                       i === c.priceRows.length - 1
-                        ? "border-t border-ink-900/15 pt-3 font-display text-base font-bold text-ink-900"
+                        ? "border-t border-ink-900/10 pt-3 font-display text-base font-bold text-ink-900"
                         : "text-sm text-ink-700"
                     }`}
                   >
@@ -343,11 +344,11 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             </div>
           </article>
 
-          <div className="mx-auto mt-12 max-w-3xl border-t border-ink-900/12 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">
+          <div className="mx-auto mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-8 text-ink-600">{c.whyBody}</p>
+            <p className="mt-4 text-base leading-8 text-paper/65">{c.whyBody}</p>
 
             <p className="eyebrow mt-10 text-brand-700">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
@@ -355,7 +356,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="inline-flex min-h-[44px] items-center gap-2 border border-paper-edge px-5 text-sm font-semibold text-ink-700 transition hover:border-ink-300 hover:text-ink-900"
+                    className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />
