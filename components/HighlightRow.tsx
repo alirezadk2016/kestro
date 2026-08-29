@@ -88,9 +88,9 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
           <div className="flex flex-col justify-between border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:col-span-4">
             <div>
               <span className="eyebrow text-brand-300">{c.askEyebrow}</span>
-              <h3 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+              <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
                 {c.askTitle}
-              </h3>
+              </h2>
               <p className="mt-4 text-sm leading-6 text-paper/65">{c.askBody}</p>
             </div>
             <Link
@@ -108,9 +108,9 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
           {/* How a machine is prepared */}
           <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:col-span-5">
             <span className="eyebrow text-brand-300">{c.refurbEyebrow}</span>
-            <h3 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+            <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.refurbTitle}
-            </h3>
+            </h2>
 
             <div className="mt-6 flex gap-5">
               <Image
@@ -174,9 +174,9 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
             />
             <div className="relative">
               <span className="eyebrow text-brand-300">{c.fleetEyebrow}</span>
-              <h3 className="mt-3 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper">
+              <h2 className="mt-3 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper">
                 {c.fleetTitle}
-              </h3>
+              </h2>
               <p className="mt-3 text-sm leading-6 text-paper/75">{c.fleetBody}</p>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                 {c.fleetLink}

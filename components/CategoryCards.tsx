@@ -77,8 +77,11 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-white/10 bg-brand-950 py-12 sm:py-16" data-reveal>
       <Container>
+        {/* The row's heading, set as the eyebrow it looks like. It has to be a
+            real h2: the cards below are h3s, and without it the page steps
+            from the hero's h1 straight to level 3. */}
         <div className="flex items-baseline gap-4">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
+          <h2 className="eyebrow text-brand-300">{c.eyebrow}</h2>
           <span aria-hidden="true" className="h-px flex-1 bg-white/10" />
         </div>
 
