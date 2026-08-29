@@ -1,8 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
 import HeroMark from "./HeroMark";
-import HeroModel from "./HeroModel";
 import HeroSpecs from "./HeroSpecs";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -21,12 +21,14 @@ const copy = {
     headline: "Erhvervscomputere.\nKlar til Norden.",
     sub: "Vi finder maskinerne hos de rigtige leverandører og oplyser pris, stand og garantivilkår skriftligt, før I bestiller. Fra enkelte maskiner til hele medarbejderflåden.",
     secondary: "Se hvad vi skaffer",
+    machineAlt: "Lenovo ThinkPad T480, åbnet og set forfra",
   },
   en: {
     eyebrow: "Sourcing partner for refurbished business IT",
     headline: "Business computers.\nReady for the Nordics.",
     sub: "We find the machines with the right suppliers and put the price, the condition and the warranty terms in writing before you order. From single machines to the whole staff fleet.",
     secondary: "See what we source",
+    machineAlt: "Lenovo ThinkPad T480, open and seen from the front",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -103,7 +105,11 @@ export default function Hero({ lang }: { lang: Lang }) {
                   <span className="eyebrow text-brand-300">{c.eyebrow}</span>
                 </div>
 
-                <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2.25rem,5.4vw,4rem)] font-extrabold leading-[0.98] tracking-display text-paper">
+                {/* Sized for the longest word it has to hold rather than for
+                    the English: "Erhvervscomputere." is one 18-character word
+                    that cannot break, and at the old 4rem cap it ran straight
+                    out of this column and into the machine beside it. */}
+                <h1 className="mt-6 whitespace-pre-line text-balance font-display text-[clamp(2rem,3.8vw,3.25rem)] font-extrabold leading-[1.02] tracking-display text-paper">
                   {c.headline}
                 </h1>
 
@@ -141,11 +147,29 @@ export default function Hero({ lang }: { lang: Lang }) {
 
             {/* The machine, and the configuration beside it — the two halves
                 of the same claim: this is the kind of hardware we source, and
-                this is what you get told about it before you order. */}
-            <div className="settle lg:col-span-4">
-              <HeroModel
-                lang={lang}
-                className="mx-auto aspect-square w-full max-w-lg lg:max-w-none"
+                this is what you get told about it before you order.
+
+                A photograph of a real T480 rather than the 3D model turning on
+                a loop. The model was a loop nobody asked to watch, and it cost
+                the front page a deferred three.js chunk to draw a machine we
+                already have a proper photograph of. */}
+            <div className="settle relative lg:col-span-4">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(58% 52% at 50% 46%, rgba(84,116,236,0.30) 0%, rgba(66,92,200,0.10) 46%, transparent 74%)",
+                }}
+              />
+              <Image
+                src="/thinkpad-t480-6-cutout.webp"
+                alt={c.machineAlt}
+                width={1179}
+                height={1115}
+                priority
+                sizes="(min-width: 1024px) 34vw, 92vw"
+                className="relative mx-auto w-full max-w-md lg:max-w-none"
               />
             </div>
 
