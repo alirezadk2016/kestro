@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# team photos (originals; generated webps in public/team/ are committed)
+/assets/team/
