@@ -276,6 +276,25 @@ body {
     animation-delay: 0.4s;
   }
 
+  /*
+   * The same entrance, for the one element that must not fade in.
+   *
+   * The largest thing on the front page is the carousel's poster, which makes
+   * it the Largest Contentful Paint — the number Google grades the page on.
+   * .rise holds an element at opacity 0 for its delay and then fades it, and a
+   * browser does not record a paint for something that is not visible: the
+   * image had finished downloading at 1080 ms and LCP was still reported at
+   * 2008 ms. Nearly a second of that metric was this animation.
+   *
+   * So this moves and does not fade. The element is on screen at full opacity
+   * from the first frame and simply settles into place, which is what the
+   * entrance was for anyway.
+   */
+  .settle {
+    animation: settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: 0.3s;
+  }
+
   /* A value that has just changed in the enquiry panel. */
   .swap-in {
     animation: swap-in 0.35s ease-out backwards;
@@ -298,6 +317,12 @@ body {
   }
 }
 
+@keyframes settle {
+  from {
+    transform: translateY(14px);
+  }
+}
+
 @keyframes swap-in {
   from {
     opacity: 0;
@@ -308,6 +333,7 @@ body {
 /* Asked for less motion: everything arrives, nothing travels. */
 @media (prefers-reduced-motion: reduce) {
   .rise,
+  .settle,
   .swap-in {
     animation: none;
   }

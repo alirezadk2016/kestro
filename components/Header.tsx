@@ -107,6 +107,12 @@ export default function Header({ lang }: { lang: Lang }) {
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
+                  <Link
+                    href={localePath(productsNav.pricing.href, lang)}
+                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-brand-50 hover:text-brand-700"
+                  >
+                    {productsNav.pricing.label[lang]}
+                  </Link>
                   <div className="mb-1 border-t border-paper-edge" />
                   {categories.map((category) => (
                     <Link
@@ -233,6 +239,13 @@ export default function Header({ lang }: { lang: Lang }) {
                   className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
                 >
                   {productsNav.quality.label[lang]}
+                </Link>{" "}
+                <Link
+                  href={localePath(productsNav.pricing.href, lang)}
+                  onClick={closeMobile}
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+                >
+                  {productsNav.pricing.label[lang]}
                 </Link>
                 {categories.map((category) => (
                   <Link

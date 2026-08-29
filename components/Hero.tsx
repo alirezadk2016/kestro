@@ -131,7 +131,7 @@ export default function Hero({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            <div className="rise rise-2 lg:col-span-5">
+            <div className="settle lg:col-span-5">
               <HeroReel lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
             </div>
           </div>

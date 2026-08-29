@@ -40,6 +40,7 @@ const PAGES = [
   "/reparation",
   "/kontakt",
   "/vejledninger",
+  "/priser",
   "/om-os",
   "/privatlivspolitik",
 ];
