@@ -35,12 +35,6 @@ try {
   /* Nothing there, which is what we want. */
 }
 
-/* Geometry first: it needs no browser and no build, so a broken ring is
-   reported in milliseconds rather than after a full build and a page load. */
-const ring = run("node", ["scripts/verify/ring.mjs"]);
-const [ringCode] = await once(ring, "exit");
-if (ringCode !== 0) process.exit(ringCode);
-
 console.log("verify: building");
 const build = run("npx", ["next", "build"]);
 const [code] = await once(build, "exit");

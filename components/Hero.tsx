@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
-import HeroReel from "./HeroReel";
+import HeroModel from "./HeroModel";
 import HeroSpec from "./HeroSpec";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -133,7 +133,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             </div>
 
             <div className="settle lg:col-span-5">
-              <HeroReel lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
+              <HeroModel lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
             </div>
           </div>
 
