@@ -3,7 +3,7 @@ import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
 import HeroMark from "./HeroMark";
 import HeroModel from "./HeroModel";
-import HeroSpec from "./HeroSpec";
+import HeroSpecs from "./HeroSpecs";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -95,8 +95,8 @@ export default function Hero({ lang }: { lang: Lang }) {
 
       <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
         <Container>
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-7">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
               <div className="rise">
                 <div className="flex items-center gap-4">
                   <span className="h-px w-10 bg-brand-400" />
@@ -139,16 +139,20 @@ export default function Hero({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            <div className="settle lg:col-span-5">
-              <HeroModel lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
+            {/* The machine, and the configuration beside it — the two halves
+                of the same claim: this is the kind of hardware we source, and
+                this is what you get told about it before you order. */}
+            <div className="settle lg:col-span-4">
+              <HeroModel
+                lang={lang}
+                className="mx-auto aspect-square w-full max-w-lg lg:max-w-none"
+              />
+            </div>
+
+            <div className="rise rise-3 lg:col-span-3">
+              <HeroSpecs lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
             </div>
           </div>
-
-          {/* The enquiry runs the full width under both columns. As a tall
-              panel beside the headline it made the hero half a screen too long
-              and was hidden on phones entirely; across the page it costs a
-              fraction of the height and fits a phone in two columns. */}
-          <HeroSpec lang={lang} className="rise rise-3 mt-14 sm:mt-16" />
         </Container>
       </div>
 
