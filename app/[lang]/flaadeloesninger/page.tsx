@@ -21,7 +21,7 @@ const copy = {
   da: {
     metaTitle: "Flådeløsninger – udstyr hele virksomheden | Kestro",
     metaDescription:
-      "Skal I udstyre et helt team eller hele virksomheden? Kestro leverer renoverede erhvervscomputere i større antal, med ensartet opsætning, opgraderet RAM og mulighed for at bytte jeres gamle udstyr ind.",
+      "Renoverede erhvervscomputere i større antal: ensartet opsætning, opgraderet RAM og mulighed for at bytte jeres gamle udstyr ind.",
     badge: "Til større virksomheder",
     title: "Udstyr hele virksomheden",
     intro:
@@ -47,7 +47,7 @@ const copy = {
   en: {
     metaTitle: "Fleet solutions — equip the whole company | Kestro",
     metaDescription:
-      "Need to equip a whole team or the entire company? Kestro delivers refurbished business computers in volume, with a uniform configuration, upgraded memory and the option to trade your old equipment in.",
+      "Refurbished business computers in volume: one configuration across the fleet, upgraded memory and the option to trade your old equipment in.",
     badge: "For larger companies",
     title: "Equip the whole company",
     intro:

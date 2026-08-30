@@ -71,7 +71,7 @@ const copy = {
   da: {
     metaTitle: "Sådan ser et tilbud fra Kestro ud – eksempel | Kestro",
     metaDescription:
-      "Et eksempel på et tilbud på brugt erhvervs-IT: model, specifikation, stand, målt batterikapacitet, tastatur, garanti og tidsramme – felt for felt, som I får det skriftligt.",
+      "Et eksempel på et tilbud på brugt erhvervs-IT: model, stand, målt batterikapacitet, tastatur, garanti og tidsramme – felt for felt.",
     title: "Sådan ser et tilbud ud",
     description:
       "Vi skriver mange steder, at pris, stand, batteritilstand og garantivilkår står skriftligt, før I bestiller. Her er dokumentet, det står i. Det er et eksempel – ikke et tilbud – men felterne er de samme, og de bliver alle sammen udfyldt.",
@@ -137,7 +137,7 @@ const copy = {
   en: {
     metaTitle: "What a quote from Kestro looks like — an example | Kestro",
     metaDescription:
-      "An example quote for used business IT: model, specification, condition, measured battery capacity, keyboard, warranty and timeframe — field by field, as you get it in writing.",
+      "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",
     description:
       "We say in a lot of places that price, condition, battery health and warranty terms are in writing before you order. This is the document they are written in. It is an example, not an offer — but the fields are the same, and every one of them gets filled in.",

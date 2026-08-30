@@ -16,7 +16,7 @@ import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Send en flådeforespørgsel – tilbud på større IT-indkøb | Kestro",
+    metaTitle: "Flådeforespørgsel – tilbud på større IT-indkøb | Kestro",
     metaDescription:
       "Skriv antal, ønsket specifikation og tidsramme, så vender vi tilbage med, hvad vi kan skaffe, til hvilken pris og hvornår.",
     title: "Send jeres forespørgsel",
@@ -34,7 +34,7 @@ const copy = {
     ],
   },
   en: {
-    metaTitle: "Send a fleet enquiry — a quote on a larger IT purchase | Kestro",
+    metaTitle: "Fleet enquiry — a quote on a larger IT purchase | Kestro",
     metaDescription:
       "Tell us the quantity, the specification you want and the timing, and we come back with what we can source, at what price and when.",
     title: "Send us your enquiry",

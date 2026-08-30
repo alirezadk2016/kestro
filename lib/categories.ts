@@ -33,8 +33,8 @@ export const categories: Category[] = [
       en: "Refurbished business laptops for companies | Kestro",
     },
     metaDescription: {
-      da: "Renoverede erhvervsbærbare fra ThinkPad, MacBook, Dell Latitude, HP EliteBook m.fl. – funktionstestet og klargjort med nordisk tastatur. Til virksomheder i DK og NO.",
-      en: "Refurbished business laptops — ThinkPad, MacBook, Dell Latitude, HP EliteBook and more. Function-tested and prepared with a Nordic keyboard, for companies in Denmark and Norway.",
+      da: "Renoverede erhvervsbærbare – ThinkPad, MacBook, Latitude, EliteBook m.fl. Funktionstestet og klargjort med nordisk tastatur.",
+      en: "Refurbished business laptops — ThinkPad, MacBook, Latitude, EliteBook and more. Function-tested, with a Nordic keyboard.",
     },
     intro: {
       da: "Bærbare er det, vi oftest bliver bedt om at skaffe. Vi sourcer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk/nordisk tastatur, så de er klar til udlevering til medarbejderen.",
@@ -96,8 +96,8 @@ export const categories: Category[] = [
       en: "Refurbished business desktop computers | Kestro",
     },
     metaDescription: {
-      da: "Renoverede stationære erhvervscomputere og workstations – Dell OptiPlex, HP EliteDesk, Lenovo ThinkCentre m.fl. Funktionstestet og klargjort til virksomheder i DK og NO.",
-      en: "Refurbished business desktops and workstations — Dell OptiPlex, HP EliteDesk, Lenovo ThinkCentre and more. Function-tested and prepared for companies in Denmark and Norway.",
+      da: "Renoverede stationære erhvervscomputere og workstations – OptiPlex, EliteDesk, ThinkCentre m.fl. Funktionstestet og klargjort.",
+      en: "Refurbished business desktops and workstations — OptiPlex, EliteDesk, ThinkCentre and more. Function-tested and prepared.",
     },
     intro: {
       da: "Til faste arbejdspladser er en renoveret desktop ofte den mest økonomiske løsning. Erhvervsdesktops er bygget til lang levetid og er nemme at opgradere, hvilket gør dem velegnede til genbrug.",
@@ -156,7 +156,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: 'Renoverede erhvervsskærme fra Dell, HP og Lenovo – 24" og 27" med højdejustering og USB-hub. Sourcet til den enkelte ordre til virksomheder i Danmark og Norge.',
-      en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27" with height adjustment and a USB hub. Sourced per order for companies in Denmark and Norway.',
+      en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27" with height adjustment and a USB hub. Sourced per order.',
     },
     intro: {
       da: "En skærm holder som regel længere end den computer, der står ved siden af, og derfor er det ofte her, der er mest at hente. Vi skaffer erhvervsskærme med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har – og de bliver tjekket for døde pixels og indbrændinger, inden de sendes af sted.",
@@ -204,7 +204,7 @@ export const categories: Category[] = [
       en: "Refurbished mini PCs for business | Kestro",
     },
     metaDescription: {
-      da: "Renoverede mini-pc'er og tiny-desktops – Lenovo ThinkCentre Tiny, Dell OptiPlex Micro, HP Mini, Intel NUC. Til kontor, digital skiltning og trange arbejdspladser.",
+      da: "Renoverede mini-pc'er og tiny-desktops – ThinkCentre Tiny, OptiPlex Micro, HP Mini, Intel NUC. Til kontor og trange pladser.",
       en: "Refurbished mini PCs and tiny desktops — Lenovo ThinkCentre Tiny, Dell OptiPlex Micro, HP Mini, Intel NUC. For offices, digital signage and tight workspaces.",
     },
     intro: {

@@ -38,8 +38,8 @@ export const services: Service[] = [
     slug: "sourcing-og-indkoeb",
     name: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     metaTitle: {
-      da: "Sourcing af brugt erhvervs-IT – indkøbspartner uden lager | Kestro",
-      en: "Sourcing used business IT — a buying partner with no stock | Kestro",
+      da: "Sourcing af brugt erhvervs-IT uden lager | Kestro",
+      en: "Sourcing used business IT, with no stock | Kestro",
     },
     metaDescription: {
       da: "Vi finder brugte erhvervscomputere hos leverandører i Sydeuropa mod jeres konkrete behov, i stedet for at sælge jer det, der står på et lager.",
@@ -169,7 +169,7 @@ export const services: Service[] = [
     },
     metaDescription: {
       da: "Maskiner fra Sydeuropa har spansk eller italiensk layout. Vi skifter til dansk eller norsk tastatur og sætter Windows op med sprog og drivere.",
-      en: "Machines from southern Europe come with Spanish or Italian layouts. We change them to Danish or Norwegian keyboards and set Windows up with the language and drivers.",
+      en: "Machines from southern Europe arrive with Spanish or Italian layouts. We fit Danish or Norwegian keyboards and set Windows up to match.",
     },
     summary: {
       da: "Æ, ø og å, hvor de skal være – og et styresystem, der taler dansk.",
@@ -306,12 +306,12 @@ export const services: Service[] = [
     slug: "opstart-af-arbejdspladser",
     name: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
     metaTitle: {
-      da: "IT til en ny virksomhed eller afdeling – klar til dag ét | Kestro",
-      en: "IT for a new company or department — ready on day one | Kestro",
+      da: "IT til en ny virksomhed eller afdeling | Kestro",
+      en: "IT for a new company or department | Kestro",
     },
     metaDescription: {
       da: "Skal arbejdspladserne stå klar til første arbejdsdag? Vi hjælper med at vælge udstyret, klargøre det og få det leveret samlet – skærme, docks og kabler med.",
-      en: "Do the desks have to be ready for the first day of work? We help choose the equipment, prepare it and deliver it in one go — monitors, docks and cables included.",
+      en: "Desks ready for the first day of work: we help choose the equipment, prepare it and deliver it in one go — monitors and docks included.",
     },
     summary: {
       da: "Alt skal virke den første morgen. Det er en anden opgave end at købe maskiner.",

@@ -24,12 +24,12 @@ const meta = {
   da: {
     title: "Kestro | Renoveret IT-hardware til virksomheder",
     description:
-      "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder – klargjort til det nordiske marked med opgraderet RAM og nordisk tastatur.",
+      "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder, klargjort med opgraderet RAM og nordisk tastatur.",
   },
   en: {
     title: "Kestro | Refurbished IT hardware for businesses",
     description:
-      "Kestro supplies tested, refurbished computers to companies in Denmark and Norway — prepared for the Nordic market with upgraded memory and a Nordic keyboard.",
+      "Kestro supplies tested, refurbished computers to companies in Denmark and Norway, prepared with upgraded memory and a Nordic keyboard.",
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 
@@ -57,6 +57,7 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://www.kestro.dk/#organization",
     name: company.name,
     url: "https://www.kestro.dk",
     description: meta[lang].description,
@@ -84,6 +85,26 @@ export default function RootLayout({
     },
   };
 
+  /*
+   * The site as an entity, alongside the company that runs it.
+   *
+   * Organization says who Kestro is; this says what kestro.dk is and which
+   * language you are looking at, which is what lets Google tie the Danish and
+   * English trees together as one site rather than two. No SearchAction: the
+   * site has no search page, and declaring one that does not exist is the kind
+   * of structured data that earns a manual action rather than a sitelink.
+   */
+  const webSiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.kestro.dk/#website",
+    name: company.name,
+    url: lang === "da" ? "https://www.kestro.dk" : "https://www.kestro.dk/en",
+    description: meta[lang].description,
+    inLanguage: lang === "da" ? "da-DK" : "en",
+    publisher: { "@id": "https://www.kestro.dk/#organization" },
+  };
+
   return (
     <html lang={htmlLang[lang]}>
       <body className={`${jakarta.variable} bg-brand-950 font-sans text-paper antialiased`}>
@@ -94,6 +115,12 @@ export default function RootLayout({
           // costs nothing and stops that from becoming a rule to remember.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
         <Header lang={lang} />

@@ -8,9 +8,9 @@ import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Grad A, B og C på brugt IT-udstyr – hvad betyder det? | Kestro",
+    metaTitle: "Grad A, B og C på brugt IT-udstyr – hvad betyder det?",
     metaDescription:
-      "Sådan graderes brugt erhvervsudstyr, hvad en funktionstest dækker, hvordan data slettes, og hvad I altid bør få oplyst, før I bestiller brugt IT til virksomheden.",
+      "Sådan graderes brugt erhvervsudstyr, hvad en funktionstest dækker, og hvad I altid bør få oplyst, før I bestiller brugt IT.",
     title: "Stand, test og hvad I bør spørge om",
     description:
       "“Brugt” siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
@@ -44,9 +44,9 @@ const copy = {
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
-    metaTitle: "Grade A, B and C on used IT equipment — what do they mean? | Kestro",
+    metaTitle: "Grade A, B and C on used IT equipment — what they mean",
     metaDescription:
-      "How used business equipment is graded, what a function test covers, how data is erased, and what you should always be told before ordering used IT for your company.",
+      "How used business equipment is graded, what a function test covers, and what you should always be told before you order.",
     title: "Condition, testing and what to ask about",
     description:
       "“Used” says nothing about quality on its own. Here is the grading the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",

@@ -10,7 +10,7 @@ const copy = {
   da: {
     metaTitle: "Modeller vi ofte skaffer | Brugte erhvervscomputere | Kestro",
     metaDescription:
-      "Oversigt over de modeller, vi oftest bliver bedt om at skaffe – ThinkPad, EliteBook, Latitude, EliteDesk og flere. Specifikationer og hvad de egner sig til. Ikke lagervarer.",
+      "De modeller vi oftest skaffer – ThinkPad, EliteBook, Latitude, EliteDesk og flere. Specifikationer og hvad de egner sig til. Ikke lagervarer.",
     title: "Modeller vi ofte skaffer",
     description:
       "En oversigt over de maskiner, vi kender godt og oftest bliver bedt om at finde. Brug den til at blive klogere på, hvad der findes – og til at pege på noget konkret, når I skriver til os.",
@@ -25,7 +25,7 @@ const copy = {
   en: {
     metaTitle: "Models we often source | Used business computers | Kestro",
     metaDescription:
-      "An overview of the models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
+      "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
     title: "Models we often source",
     description:
       "An overview of the machines we know well and are most often asked to find. Use it to get a feel for what exists — and to point at something concrete when you write to us.",

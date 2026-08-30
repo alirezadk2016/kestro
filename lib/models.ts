@@ -1209,8 +1209,8 @@ export const models: Model[] = [
       en: "The size of a book — it can sit behind the monitor.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkCentre M720q Tiny mini-pc til erhverv | Kestro",
-      en: "Used Lenovo ThinkCentre M720q Tiny mini PC for business | Kestro",
+      da: "Brugt Lenovo ThinkCentre M720q Tiny mini-pc | Kestro",
+      en: "Used Lenovo ThinkCentre M720q Tiny mini PC | Kestro",
     },
     metaDescription: {
       da: "ThinkCentre M720q Tiny som brugt mini-pc til erhverv: 1 liters kabinet, VESA-beslag og lavt strømforbrug. Sourcet til den enkelte ordre.",

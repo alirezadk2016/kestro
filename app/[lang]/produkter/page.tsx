@@ -12,7 +12,7 @@ const copy = {
   da: {
     metaTitle: "Hvad vi skaffer | Renoveret IT-udstyr til erhverv | Kestro",
     metaDescription:
-      "Kestro er indkøbspartner på renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, smartwatches, docking og gaming – sourcet til jeres ordre.",
+      "Indkøbspartner på renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, docking og gaming – sourcet til jeres ordre.",
     title: "Hvad vi skaffer",
     description:
       "Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.",
@@ -31,7 +31,7 @@ const copy = {
   en: {
     metaTitle: "What we source | Refurbished business IT | Kestro",
     metaDescription:
-      "Kestro is a sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, smartwatches, docking and gaming — sourced for your order.",
+      "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
     title: "What we source",
     description:
       "Kestro is a sourcing partner, not a web shop. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.",

@@ -24,7 +24,7 @@ const copy = {
   da: {
     metaTitle: "Reparation og opgradering af computere | Kestro",
     metaDescription:
-      "Reparation, opgradering og klargøring af computere – RAM og SSD, batteri, skærm, nordisk tastatur, reservedele, Windows-installation og licenser. Værkstedet er den del af Kestro, der også tager imod private.",
+      "Reparation og opgradering af computere – RAM og SSD, batteri, skærm, nordisk tastatur og Windows. Værkstedet tager også imod private.",
     title: "Reparation og opgradering",
     description:
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
@@ -45,7 +45,7 @@ const copy = {
   en: {
     metaTitle: "Computer repairs and upgrades | Kestro",
     metaDescription:
-      "Repairs, upgrades and setup for computers — memory and SSD, battery, screen, Nordic keyboard, spare parts, Windows installation and licences. The workshop is the part of Kestro that also takes individuals.",
+      "Repairs and upgrades — memory and SSD, battery, screen, Nordic keyboard and Windows. The workshop also takes individuals.",
     title: "Repairs and upgrades",
     description:
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",

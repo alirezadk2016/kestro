@@ -77,8 +77,44 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
   const Icon = getCategoryIcon(model.category);
   const related = models.filter((m) => m.group === model.group && m.slug !== model.slug);
 
+  /*
+   * The model as a product Google can recognise.
+   *
+   * Deliberately carries no `offers`. Google wants a price there and will log
+   * the omission as a warning, but we hold no stock and price per order — the
+   * whole /priser page exists to say so. A made-up price would buy a rich
+   * result with a number the buyer cannot hold us to, which is the one thing
+   * this site has consistently refused to do. Everything here is a fact from
+   * lib/models.ts; add offers the day there is a real price to publish.
+   */
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: model.name,
+    brand: { "@type": "Brand", name: model.brand },
+    category: category?.name[lang],
+    description: model.intro[lang],
+    ...(model.images?.length
+      ? { image: model.images.map((img) => `https://www.kestro.dk${img.src}`) }
+      : {}),
+    additionalProperty: model.specs.map((spec) => ({
+      "@type": "PropertyValue",
+      name: spec.label[lang],
+      value: spec.value[lang],
+    })),
+    itemCondition: "https://schema.org/RefurbishedCondition",
+    manufacturer: { "@type": "Organization", name: model.brand },
+    seller: { "@id": "https://www.kestro.dk/#organization" },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
         <div
           aria-hidden="true"

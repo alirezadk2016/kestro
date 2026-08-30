@@ -20,9 +20,9 @@ import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Ydelser | Indkøb, flåder, opgradering og opkøb af brugt IT | Kestro",
+    metaTitle: "Ydelser: indkøb, flåder, opgradering og opkøb | Kestro",
     metaDescription:
-      "Alt vi hjælper virksomheder med: indkøb af renoveret IT-udstyr, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr, afsætning af overskudslager og opstart af nye arbejdspladser.",
+      "Indkøb af renoveret IT, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
     description:
@@ -36,9 +36,9 @@ const copy = {
     qualityLink: "Se hvordan vi vurderer stand og kvalitet",
   },
   en: {
-    metaTitle: "Services | Sourcing, fleets, upgrades and buy-back of used IT | Kestro",
+    metaTitle: "Services: sourcing, fleets, upgrades and buy-back | Kestro",
     metaDescription:
-      "Everything we help companies with: sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment, placing overstock, and setting up new workstations.",
+      "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
     stepLink: "Read more",
     title: "What we help with",
     description:

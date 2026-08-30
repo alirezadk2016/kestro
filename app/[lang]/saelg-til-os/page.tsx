@@ -11,7 +11,7 @@ const copy = {
   da: {
     metaTitle: "Sælg jeres brugte IT-udstyr | Kestro",
     metaDescription:
-      "Skal jeres virksomhed udskifte IT-udstyr? Kestro køber brugte erhvervscomputere, telefoner og tablets – med sikker datasletning og afhentning i Danmark og Norge.",
+      "Vi køber brugte erhvervscomputere, telefoner og tablets – med sikker datasletning og afhentning i Danmark og Norge.",
     title: "Sælg jeres brugte IT-udstyr",
     description:
       "Skal I udskifte medarbejdernes computere eller rydde op efter en flytning? Vi køber brugt erhvervsudstyr og giver det et nyt liv.",

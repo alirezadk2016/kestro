@@ -9,7 +9,7 @@ import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Vejledninger: reparation, opgradering og køb af brugt IT | Kestro",
+    metaTitle: "Vejledninger til reparation, opgradering og køb | Kestro",
     metaDescription:
       "Gratis vejledninger om at reparere, opgradere og købe brugt computerudstyr. Skrevet så du kan klare det selv – og med et ærligt svar på, hvornår du ikke bør.",
     title: "Vejledninger",

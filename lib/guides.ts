@@ -45,7 +45,7 @@ export const guides: Guide[] = [
       en: "Repair or replace? How to work it out",
     },
     metaTitle: {
-      da: "Reparere eller købe ny computer? Sådan regner du på det | Kestro",
+      da: "Reparere eller købe ny computer? Sådan regner du | Kestro",
       en: "Repair or replace your computer? How to work it out | Kestro",
     },
     metaDescription: {
@@ -131,7 +131,7 @@ export const guides: Guide[] = [
       en: "How to upgrade the memory in a laptop",
     },
     metaTitle: {
-      da: "Sådan opgraderer du RAM i en bærbar computer – trin for trin | Kestro",
+      da: "Sådan opgraderer du RAM i en bærbar computer | Kestro",
       en: "How to upgrade RAM in a laptop — step by step | Kestro",
     },
     metaDescription: {
@@ -326,8 +326,8 @@ export const guides: Guide[] = [
     slug: "samle-din-egen-pc",
     title: { da: "Sådan samler du din egen pc", en: "How to build your own PC" },
     metaTitle: {
-      da: "Samle sin egen pc: rækkefølge, dele og de klassiske fejl | Kestro",
-      en: "Building your own PC: order, parts and the classic mistakes | Kestro",
+      da: "Samle sin egen pc: rækkefølge, dele og fejl | Kestro",
+      en: "Building your own PC: order, parts and mistakes | Kestro",
     },
     metaDescription: {
       da: "Hvilke dele skal passe sammen, i hvilken rækkefølge samler du, og hvad går galt første gang. En gennemgang uden mystik.",
@@ -438,8 +438,8 @@ export const guides: Guide[] = [
       en: "Windows 11 on an older machine: what does it take?",
     },
     metaTitle: {
-      da: "Windows 11 på en ældre computer – krav og muligheder | Kestro",
-      en: "Windows 11 on an older computer — requirements and options | Kestro",
+      da: "Windows 11 på en ældre computer – krav | Kestro",
+      en: "Windows 11 on an older computer — requirements | Kestro",
     },
     metaDescription: {
       da: "TPM, Secure Boot og processorkrav forklaret, og hvad du gør, hvis maskinen ikke er på listen.",
@@ -512,8 +512,8 @@ export const guides: Guide[] = [
       en: "How to erase data before selling or scrapping a computer",
     },
     metaTitle: {
-      da: "Slet data før salg af computer – sådan gør du det rigtigt | Kestro",
-      en: "Erase data before selling a computer — how to do it properly | Kestro",
+      da: "Slet data før salg af computer – sådan gør du | Kestro",
+      en: "Erase data before selling a computer — how to | Kestro",
     },
     metaDescription: {
       da: "Formatering er ikke sletning. Sådan fjerner du data rigtigt fra SSD og harddisk, og hvad en virksomhed skal kunne dokumentere.",
