@@ -90,13 +90,13 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
         }}
       />
 
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <PageHeader title={c.title} description={c.description} />
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.outsideEyebrow}</span>
@@ -112,7 +112,7 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.insideEyebrow}</span>

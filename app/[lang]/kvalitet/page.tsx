@@ -200,7 +200,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
@@ -236,7 +236,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -258,7 +258,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -276,7 +276,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">

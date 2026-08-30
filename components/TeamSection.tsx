@@ -25,7 +25,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
   const team = teamFor(lang);
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
+    <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>

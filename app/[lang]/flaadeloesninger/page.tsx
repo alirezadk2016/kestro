@@ -302,7 +302,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <span className="eyebrow text-brand-300">{c.eyebrow}</span>
@@ -334,7 +334,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <span className="eyebrow text-brand-300">{c.tradeEyebrow}</span>
@@ -378,7 +378,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-brand-950 py-14 sm:py-24">
+      <section className="relative overflow-hidden bg-brand-950 py-10 sm:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"

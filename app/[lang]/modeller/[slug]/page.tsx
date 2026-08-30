@@ -183,10 +183,10 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {model.images && (
-        <section className="py-14 sm:py-24">
+        <section className="py-10 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
-              <div className="aspect-[4/3] overflow-hidden bg-white shadow-lg shadow-black/20 sm:aspect-[16/10]">
+              <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25 sm:aspect-[16/10]">
                 <Image
                   src={model.images[0].src}
                   alt={model.images[0].alt[lang]}
@@ -201,7 +201,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 {model.images.slice(1).map((img) => (
                   <div
                     key={img.src}
-                    className="aspect-square overflow-hidden bg-white shadow-md shadow-black/20"
+                    className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
                   >
                     <Image
                       src={img.src}
@@ -221,7 +221,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         </section>
       )}
 
-      <section className={`py-14 sm:py-24 ${model.images ? "border-t border-white/10" : ""}`}>
+      <section className={`py-10 sm:py-24 ${model.images ? "border-t border-white/10" : ""}`}>
         <Container>
           <div className="mx-auto max-w-3xl">
             <div className="overflow-hidden border border-white/10">
@@ -327,7 +327,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-xl font-bold tracking-tight text-paper">{c.related}</h2>

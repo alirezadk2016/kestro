@@ -91,15 +91,15 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
             <h1 className="mt-4 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
               {service.name[lang]}
             </h1>
-            <p className="mt-5 text-lg leading-8 text-paper/70">{service.summary[lang]}</p>
+            <p className="mt-5 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">{service.summary[lang]}</p>
           </div>
         </Container>
       </section>
 
-      <section className="lit lit-paper py-14 sm:py-24">
+      <section className="lit lit-paper py-10 sm:py-24">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-lg leading-8 text-paper/80">{service.intro[lang]}</p>
+            <p className="text-base leading-7 sm:text-lg sm:leading-8 text-paper/80">{service.intro[lang]}</p>
 
             {service.sections.map((section) => (
               <div key={section.heading.da} className="mt-12 border-t border-white/15 pt-8">
@@ -108,7 +108,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                 </h2>
 
                 {section.body.map((paragraph) => (
-                  <p key={paragraph.da} className="mt-4 text-base leading-8 text-paper/65">
+                  <p key={paragraph.da} className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">
                     {paragraph[lang]}
                   </p>
                 ))}
@@ -150,7 +150,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
           <Container>
             <div className="max-w-3xl">
               <h2 className="font-display text-xl font-bold tracking-tight text-paper">

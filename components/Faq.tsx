@@ -60,7 +60,7 @@ export default function Faq({
   title?: Localized;
 }) {
   return (
-    <section className="bg-brand-950 py-14 sm:py-24">
+    <section className="bg-brand-950 py-10 sm:py-24">
       <Container>
         {/* Left-aligned like every other section heading on the site. It was
             the one centred block, which is what made it read as bolted on. */}

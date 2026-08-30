@@ -223,7 +223,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
       <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
       <PageHeader title={c.title} description={c.description} />
 
-      <section className="lit bg-brand-950 py-14 sm:py-24">
+      <section className="lit bg-brand-950 py-10 sm:py-24">
         <Container>
           {/*
             Styled as a document rather than as a web section: a buyer is being
@@ -348,7 +348,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-8 text-paper/65">{c.whyBody}</p>
+            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody}</p>
 
             <p className="eyebrow mt-10 text-brand-700">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">

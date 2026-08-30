@@ -69,7 +69,7 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-14 sm:py-24" data-reveal>
+    <section className="stage py-10 sm:py-24" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
@@ -80,8 +80,8 @@ export default function Statement({ lang }: { lang: Lang }) {
           <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.lead}
           </p>
-          <p className="mt-6 text-lg leading-8 text-paper/70">{c.body}</p>
-          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-8 text-paper/90">
+          <p className="mt-6 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">{c.body}</p>
+          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-7 sm:leading-8 text-paper/90">
             {c.kicker}
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function Statement({ lang }: { lang: Lang }) {
                 {promise.body[lang]}
                 <Link
                   href={localePath(promise.href, lang)}
-                  className="mt-2.5 block self-start text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-2.5"
+                  className="mt-2.5 block self-start text-sm font-semibold leading-6 text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-2.5"
                 >
                   {promise.link[lang]}
                 </Link>

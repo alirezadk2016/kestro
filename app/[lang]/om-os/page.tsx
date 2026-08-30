@@ -79,7 +79,7 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
   const salesContact = primaryContact(lang);
   return (
     <>
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
@@ -101,7 +101,7 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <figure className="mx-auto max-w-3xl">
             <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">

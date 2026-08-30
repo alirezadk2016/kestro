@@ -77,7 +77,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24" data-reveal>
+    <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>

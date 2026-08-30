@@ -40,14 +40,14 @@ export default function CtaSection({
   const team = teamFor(lang);
 
   return (
-    <section className="stage py-16 sm:py-28" data-reveal>
+    <section className="stage py-12 sm:py-28" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="h-px w-8 bg-brand-400" />
           <h2 className="mt-6 text-balance font-display text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-8 text-paper/60">{c.body}</p>
+          <p className="mt-5 text-base leading-7 sm:leading-8 text-paper/60">{c.body}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -86,7 +86,7 @@ export default function CtaSection({
               ))}
               <Link
                 href={localePath("/om-os", lang)}
-                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-paper/75 underline decoration-paper/30 underline-offset-4 transition hover:text-paper hover:decoration-paper sm:ml-auto"
+                className="group inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-paper/75 underline decoration-paper/30 underline-offset-4 transition hover:text-paper hover:decoration-paper sm:ml-auto"
               >
                 {c.meet}
                 <ArrowRight

@@ -45,7 +45,7 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
   return (
     <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
       <Container>
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-7 py-8 sm:grid-cols-3 sm:py-9 lg:grid-cols-5 lg:gap-x-8">
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-8 sm:grid-cols-3 sm:gap-y-7 sm:py-9 lg:grid-cols-5 lg:gap-x-8">
           {features.map((feature) => (
             <li key={feature.title.da} className="flex items-start gap-3">
               <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-brand-500/15 text-brand-300">

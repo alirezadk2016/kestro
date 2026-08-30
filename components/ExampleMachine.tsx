@@ -38,7 +38,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const image = model.images[0];
 
   return (
-    <section className="stage py-14 sm:py-24">
+    <section className="stage py-10 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16" data-reveal>
           {/*

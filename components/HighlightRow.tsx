@@ -112,14 +112,18 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               {c.refurbTitle}
             </h2>
 
-            <div className="mt-6 flex gap-5">
+            {/* Side by side only once there is room for it. On a phone the
+                render collapsed to a stamp with the steps wrapping every three
+                words beside it — stacked, the image is worth looking at and
+                the list reads as a list. */}
+            <div className="mt-6 flex flex-col gap-5 sm:flex-row">
               <Image
                 src="/cards/exploded.webp"
                 alt={c.refurbAlt}
                 width={200}
                 height={250}
                 sizes="(min-width: 1024px) 16vw, 40vw"
-                className="h-auto w-[38%] max-w-[200px] flex-shrink-0 self-center"
+                className="h-auto w-3/4 max-w-[240px] flex-shrink-0 self-center sm:w-[38%] sm:max-w-[200px]"
               />
               <ol className="min-w-0 flex-1 space-y-3">
                 {steps.map((step) => (

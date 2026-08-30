@@ -67,8 +67,11 @@ export default function Hero({ lang }: { lang: Lang }) {
       />
 
       {/* The K mark, oversized and cropped by the left edge — a watermark
-          behind the headline rather than decoration competing with it. */}
-      <HeroMark className="pointer-events-none absolute -left-[14%] top-1/2 h-[52%] w-auto -translate-y-1/2 opacity-90 sm:-left-[8%] sm:h-[62%] lg:-left-[5%] lg:h-[72%]" />
+          behind the headline rather than decoration competing with it.
+          Only from lg: below that the hero stacks, the section grows to twice
+          the height, and a mark sized against it runs straight through the
+          headline and the spec list as a pair of stray diagonals. */}
+      <HeroMark className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[72%] w-auto -translate-y-1/2 opacity-90 lg:block" />
 
       {/* Flat decorative SVGs with nothing for next/image to optimise —
           no format conversion, no responsive sizing a vector needs. */}
@@ -103,7 +106,7 @@ export default function Hero({ lang }: { lang: Lang }) {
 
       <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
         <Container>
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <div className="rise">
                 <span className="inline-flex items-center rounded-full border border-brand-400/35 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">

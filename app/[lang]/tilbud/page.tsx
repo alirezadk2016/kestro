@@ -98,13 +98,13 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
 
   return (
-    <section className="lit lit-paper py-14 sm:py-24">
+    <section className="lit lit-paper py-10 sm:py-24">
       <Container>
         <div className="mx-auto max-w-5xl">
           <h1 className="max-w-3xl text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.title}
           </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-paper/70">{c.lead}</p>
+          <p className="mt-5 max-w-3xl text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">{c.lead}</p>
 
           <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
             <div className="border border-white/10 bg-white/[0.04] p-6 shadow-sm sm:p-8">

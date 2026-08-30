@@ -55,7 +55,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
 
   return (
     <>
-      <section className="py-14 sm:py-24">
+      <section className="py-10 sm:py-24">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
@@ -106,7 +106,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
             <h2 className="font-display text-xl font-bold tracking-tight text-paper">
               {c.adviceTitle}
             </h2>
-            <p className="mt-3 text-base leading-8 text-paper/65">{c.adviceBody}</p>
+            <p className="mt-3 text-base leading-7 sm:leading-8 text-paper/65">{c.adviceBody}</p>
             <Link
               href={localePath("/kontakt", lang)}
               className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"

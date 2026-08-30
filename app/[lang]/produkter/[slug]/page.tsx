@@ -135,7 +135,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-14 sm:py-24">
+      <section className="bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -162,7 +162,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       </section>
 
       {exampleModel?.images && (
-        <section className="py-14 sm:py-24">
+        <section className="py-10 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
@@ -177,7 +177,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 uncropped, which is the part a buyer actually looks at.
               */}
               <div className="mt-8 space-y-3 sm:space-y-4">
-                <div className="aspect-[4/3] overflow-hidden bg-white shadow-lg shadow-black/20 sm:aspect-[16/10]">
+                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25 sm:aspect-[16/10]">
                   <Image
                     src={exampleModel.images[0].src}
                     alt={exampleModel.images[0].alt[lang]}
@@ -192,7 +192,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
-                      className="aspect-square overflow-hidden bg-white shadow-md shadow-black/20"
+                      className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
                     >
                       <Image
                         src={img.src}
@@ -211,9 +211,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
               <Link
                 href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+                className="mt-6 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
               >
-                {c.seeAllSpecsPre} {exampleModel.name}
+                {c.seeAllSpecsPre} {exampleModel.name}{" "}
                 <span aria-hidden="true">&rarr;</span>
               </Link>
             </div>
@@ -222,7 +222,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
           <Container>
             <div className="mx-auto max-w-3xl">
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -267,7 +267,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-white/10 py-14 sm:py-24">
+      <section className="border-t border-white/10 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -296,7 +296,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="border-t border-white/10 bg-ink-900 py-14 sm:py-24">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
         <Container>
           <div className="mx-auto max-w-3xl">
             <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>

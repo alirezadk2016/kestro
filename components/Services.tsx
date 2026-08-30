@@ -53,7 +53,7 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-16 sm:py-28" data-reveal>
+    <section className="stage py-12 sm:py-28" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>
@@ -63,7 +63,7 @@ export default function Services({ lang }: { lang: Lang }) {
           <p className="mt-5 text-base leading-7 text-paper/70">{c.sub}</p>
         </div>
 
-        <ol className="mt-12 grid grid-cols-2 gap-x-6 border-t border-paper/15 lg:grid-cols-4 lg:gap-x-0">
+        <ol className="mt-12 grid grid-cols-1 gap-x-6 border-t border-paper/15 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0">
           {services.map((service, i) => (
             <li
               key={service.title.da}

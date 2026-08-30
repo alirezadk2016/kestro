@@ -61,7 +61,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
   return (
-    <section className="py-14 sm:py-24">
+    <section className="py-10 sm:py-24">
       <Container>
         <PageHeader title={c.title} description={c.description} />
 

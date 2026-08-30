@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
@@ -15,6 +15,23 @@ export default function Header({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+
+  /*
+   * Hold the page still while the drawer is open.
+   *
+   * Without this the page keeps scrolling behind a panel that is pinned to the
+   * top: a thumb aiming for "Kontakt" moves the article underneath instead,
+   * and the content slides past under a translucent menu, which reads as the
+   * page glitching rather than as a menu.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
   const pathname = usePathname() ?? "/";
 
   /** The same page in the other language. */
@@ -200,8 +217,10 @@ export default function Header({ lang }: { lang: Lang }) {
         </div>
       </Container>
 
+      {/* Opaque, not glass: the drawer covers the page rather than floating over
+          a strip of it, and at 82% the article read straight through the links. */}
       {open && (
-        <div className="glass-nav max-h-[calc(100dvh-4rem)] overflow-y-auto lg:hidden">
+        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-white/10 bg-brand-950 lg:hidden">
           <Container className="flex flex-col gap-1 py-4">
             <button
               type="button"
