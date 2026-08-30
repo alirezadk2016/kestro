@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import PriceOnRequest from "@/components/PriceOnRequest";
 import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
@@ -171,6 +172,11 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-ink-300">
               {c.notStock}
             </p>
+
+            {/* The page describes the machine in detail and then used to say
+                nothing about price, which leaves a buyer guessing whether this
+                is a shop that forgot its prices. */}
+            <PriceOnRequest lang={lang} className="mt-6" />
           </div>
         </Container>
       </section>

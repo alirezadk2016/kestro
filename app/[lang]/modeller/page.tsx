@@ -21,6 +21,8 @@ const copy = {
       "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
     qualityLink: "Sådan vurderer vi stand og kvalitet",
     seeSpecs: "Se specifikationer",
+    priceLabel: "Få et tilbud",
+    priceNote: "Prisen afhænger af konfiguration, stand og antal.",
   },
   en: {
     metaTitle: "Models we often source | Used business computers | Kestro",
@@ -36,6 +38,8 @@ const copy = {
       "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
     qualityLink: "How we assess condition and quality",
     seeSpecs: "See specifications",
+    priceLabel: "Get a quote",
+    priceNote: "The price depends on configuration, condition and quantity.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -80,6 +84,7 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                   {group.name[lang]}
                 </h2>
                 <p className="mt-2 text-base leading-7 text-paper/65">{group.description[lang]}</p>
+                <p className="mt-1 text-sm leading-6 text-paper/55">{c.priceNote}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
@@ -97,9 +102,12 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                         <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
                           {model.tagline[lang]}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
-                          {c.seeSpecs}
-                          <span aria-hidden="true">&rarr;</span>
+                        <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">
+                          <span className="text-sm font-semibold text-paper">{c.priceLabel}</span>
+                          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
+                            {c.seeSpecs}
+                            <span aria-hidden="true">&rarr;</span>
+                          </span>
                         </span>
                       </Link>
                     </li>

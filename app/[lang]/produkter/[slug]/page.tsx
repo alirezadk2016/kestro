@@ -32,6 +32,8 @@ const copy = {
     modelsBody:
       "Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver bedt om at finde – klik ind for specifikationer og hvad de egner sig til.",
     allModels: "Se hele modeloversigten",
+    priceLabel: "Få et tilbud",
+    priceNote: "Prisen afhænger af konfiguration, stand og antal.",
     useCases: "Typiske anvendelser",
     specs: "Specifikationer",
     other: "Andre kategorier",
@@ -51,6 +53,8 @@ const copy = {
     modelsBody:
       "We do not hold them in stock. The list shows the models we know well and are most often asked to find — click through for specifications and what they suit.",
     allModels: "See the full model overview",
+    priceLabel: "Get a quote",
+    priceNote: "The price depends on configuration, condition and quantity.",
     useCases: "Typical uses",
     specs: "Specifications",
     other: "Other categories",
@@ -225,6 +229,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 {c.modelsTitle}
               </h2>
               <p className="mt-3 text-base leading-7 text-paper/65">{c.modelsBody}</p>
+              <p className="mt-1.5 text-sm leading-6 text-paper/55">{c.priceNote}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
@@ -241,6 +246,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                       </span>
                       <span className="mt-1.5 flex-1 text-sm leading-6 text-paper/65">
                         {model.tagline[lang]}
+                      </span>
+                      <span className="mt-3 border-t border-white/10 pt-3 text-sm font-semibold text-paper">
+                        {c.priceLabel}
                       </span>
                     </Link>
                   </li>

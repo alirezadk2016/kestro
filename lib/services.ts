@@ -46,8 +46,8 @@ export const services: Service[] = [
       en: "We find used business computers through suppliers in southern Europe against what you actually need, instead of selling you what happens to be in a warehouse.",
     },
     summary: {
-      da: "Vi køber ind, når I ved, hvad I skal bruge – ikke før.",
-      en: "We buy when you know what you need — not before.",
+      da: "Vi finder det rigtige IT-udstyr til jer – og køber først ind, når I ved, hvad I skal bruge.",
+      en: "We find the right IT equipment for you — and buy only once you know what you need.",
     },
     intro: {
       da: "Kestro holder ikke lager. Vi arbejder som indkøbspartner og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en konkret ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
@@ -87,6 +87,86 @@ export const services: Service[] = [
           {
             da: "Ingen pres for at tage en model, der er tæt på, men ikke rigtig.",
             en: "No pressure to take a model that is close but not right.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Hvad vi kan skaffe", en: "What we can source" },
+        body: [
+          {
+            da: "Vi arbejder med erhvervsserier frem for forbrugermodeller – maskiner, der er bygget til at blive serviceret, og som der findes reservedele til flere år frem. Det er dem, der kan holde til en runde mere.",
+            en: "We work with business ranges rather than consumer models — machines built to be serviced, with spare parts available for years to come. Those are the ones that hold up for another round.",
+          },
+        ],
+        list: [
+          {
+            da: "Bærbare: ThinkPad, EliteBook, Latitude og tilsvarende erhvervsserier.",
+            en: "Laptops: ThinkPad, EliteBook, Latitude and equivalent business ranges.",
+          },
+          {
+            da: "Stationære og små formfaktorer til kontorpladser og receptioner.",
+            en: "Desktops and small form factors for desks and reception areas.",
+          },
+          {
+            da: "Skærme, dockingstationer, tastaturer og mus, så en plads er komplet.",
+            en: "Monitors, docking stations, keyboards and mice, so a desk arrives complete.",
+          },
+          {
+            da: "Nordisk tastatur og dansk opsætning, hvis maskinerne skal bruges her.",
+            en: "Nordic keyboards and Danish setup when the machines are to be used here.",
+          },
+        ],
+      },
+      {
+        heading: { da: "5, 20 eller 100 maskiner", en: "5, 20 or 100 machines" },
+        body: [
+          {
+            da: "Antallet ændrer opgaven. Fem maskiner er et indkøb; halvtreds er et rul, hvor det betyder noget, at alle maskiner er ens, at de kommer samlet, og at de gamle bliver hentet med retur.",
+            en: "Quantity changes the job. Five machines is a purchase; fifty is a rollout, where it matters that every machine is identical, that they arrive together, and that the old ones go back with us.",
+          },
+          {
+            da: "Ved større antal sourcer vi på samme konfiguration hele vejen rundt, klargør dem ens og aftaler leveringen, så I ikke skal koordinere den maskine for maskine.",
+            en: "At larger quantities we source a single configuration throughout, prepare them the same way and agree the delivery, so you are not coordinating it machine by machine.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Hvad prisen afhænger af", en: "What the price depends on" },
+        body: [
+          {
+            da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den den konkrete leverance i stedet for at være et tal, der alligevel skal laves om.",
+            en: "We do not put list prices on machines we have not bought yet. The price comes once we know what the job needs — and then it holds for that actual delivery rather than being a figure that has to be revised anyway.",
+          },
+        ],
+        list: [
+          {
+            da: "Specifikationerne: processor, hukommelse, disk og skærmstørrelse.",
+            en: "The specification: processor, memory, disk and screen size.",
+          },
+          {
+            da: "Standen: kosmetisk stand og batteriets tilstand flytter prisen mærkbart.",
+            en: "The condition: cosmetic grade and battery health move the price noticeably.",
+          },
+          {
+            da: "Antallet: en samlet ordre købes anderledes ind end en enkelt maskine.",
+            en: "The quantity: a single combined order is bought differently than one machine.",
+          },
+          {
+            da: "Tilbehør og klargøring: dock, skærm, nordisk tastatur, opsætning og levering.",
+            en: "Accessories and preparation: dock, monitor, Nordic keyboard, setup and delivery.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Fortæl os hvad I søger", en: "Tell us what you are looking for" },
+        body: [
+          {
+            da: "I behøver ikke have en modelliste klar. Skriv hvor mange maskiner det drejer sig om, hvad de skal bruges til, og hvornår I skal have dem – så foreslår vi noget konkret.",
+            en: "You do not need a list of models ready. Tell us how many machines it is about, what they will be used for, and when you need them — and we will come back with something concrete.",
+          },
+          {
+            da: "Ved I mere end det, går det hurtigere: skærmstørrelse, hukommelse, om der skal dockingstationer og skærme med, og om tastaturerne skal være nordiske.",
+            en: "If you know more than that, it goes faster: screen size, memory, whether docks and monitors are included, and whether the keyboards need to be Nordic.",
           },
         ],
       },
