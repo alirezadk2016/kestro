@@ -88,7 +88,7 @@ Problemet er ikke overlap, det er synlighed: opstartssiden har **ét** indgåend
 
 Gaming trækker hobbyister ind på et domæne, hvis hele indhold taler til indkøbere; det er ikke bare irrelevant trafik, det er et forkert signal om, hvad sitet handler om. Smartwatches er tættere på forretningen — en virksomhed, der køber firmatelefoner, kan spørge til ure — men den fortjener et afsnit, ikke en side.
 
-**Konsekvens:** sitemap går fra 112 til 108 URL'er (to sider × to sprog). Menuen mister to punkter.
+**Konsekvens:** sitemap går fra 112 til 108 URL'er for disse to (to sider × to sprog); med flådeforespørgslen i trin 1 lander det samlede tal på 106. Menuen mister to punkter.
 
 **Alternativ, hvis I hellere vil beholde dem:** `noindex, follow` og ude af sitemap og menu. Så findes de stadig for en kunde, der spørger, uden at fortynde domænet. Vælg én af de to — at lade dem ligge som de er, er den eneste mulighed uden fordele.
 
@@ -262,7 +262,7 @@ Alle ni er vejledninger. Det er ikke en tilfældighed: kategorierne og ydelserne
 
 | | Før | Efter |
 | --- | --- | --- |
-| Sider i sitemap | 112 | 108 |
+| Sider i sitemap | 112 | 106 |
 | Kategorier | 9 | 7 |
 | Konverteringsformularer | 2 | 1 |
 | Kannibaliseringskonflikter | 6 | 0 |

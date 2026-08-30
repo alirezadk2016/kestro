@@ -71,7 +71,7 @@ const copy = {
   da: {
     metaTitle: "Hvad koster brugte erhvervscomputere? | Kestro",
     metaDescription:
-      "Ingen prisliste, fordi vi ikke har lager. Hvad der afgør prisen på brugt erhvervs-IT, og hvad I skal skrive for at få et realistisk tal.",
+      "Hvorfor der ikke står en pris på siden, hvad der afgør jeres pris, og hvad der står i tilbuddet, før I bestiller noget som helst.",
     title: "Hvad koster det?",
     description:
       "Det ærlige svar er, at det afhænger – og her står præcis hvad det afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
@@ -109,7 +109,7 @@ const copy = {
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
       { href: "/ydelser/levering", label: "Levering og tidsrammer" },
-      { href: "/flaadeloesninger/forespoergsel", label: "Send en flådeforespørgsel" },
+      { href: "/tilbud", label: "Få et tilbud på jeres flåde" },
     ],
   },
   en: {
@@ -153,7 +153,7 @@ const copy = {
     related: [
       { href: "/kvalitet", label: "Condition, testing and what to ask about" },
       { href: "/ydelser/levering", label: "Delivery and timeframes" },
-      { href: "/flaadeloesninger/forespoergsel", label: "Send a fleet enquiry" },
+      { href: "/tilbud", label: "Get a quote for your fleet" },
     ],
   },
 };
@@ -196,7 +196,13 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <PageHeader title={c.title} description={c.description} />
+      <PageHeader
+        title={c.title}
+        description={c.description}
+        lang={lang}
+        href="/priser"
+        crumb={lang === "da" ? "Priser" : "Pricing"}
+      />
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>

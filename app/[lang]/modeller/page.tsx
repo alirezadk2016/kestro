@@ -8,9 +8,9 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Modeller vi ofte skaffer | Brugte erhvervscomputere | Kestro",
+    metaTitle: "Modeller vi ofte skaffer til erhverv | Kestro",
     metaDescription:
-      "De modeller vi oftest skaffer – ThinkPad, EliteBook, Latitude, EliteDesk og flere. Specifikationer og hvad de egner sig til. Ikke lagervarer.",
+      "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Ingen lager, ingen listepriser – vi sourcer per ordre.",
     title: "Modeller vi ofte skaffer",
     description:
       "En oversigt over de maskiner, vi kender godt og oftest bliver bedt om at finde. Brug den til at blive klogere på, hvad der findes – og til at pege på noget konkret, når I skriver til os.",
@@ -25,7 +25,7 @@ const copy = {
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
   },
   en: {
-    metaTitle: "Models we often source | Used business computers | Kestro",
+    metaTitle: "Models we often source for business | Kestro",
     metaDescription:
       "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
     title: "Models we often source",
@@ -59,7 +59,13 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/modeller"
+            crumb={lang === "da" ? "Modeller" : "Models"}
+          />
 
           <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>

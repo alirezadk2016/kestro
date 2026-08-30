@@ -10,7 +10,7 @@ import { metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Om os | Kestro",
+    metaTitle: "Om os – hvem I handler med | Kestro",
     metaDescription:
       "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Norden, der skal bruge testet IT-udstyr uden at købe nyt.",
     title: "Om Kestro",
@@ -20,7 +20,7 @@ const copy = {
       "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
   en: {
-    metaTitle: "About us | Kestro",
+    metaTitle: "About us – who you are dealing with | Kestro",
     metaDescription:
       "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
     title: "About Kestro",
@@ -81,7 +81,13 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/om-os"
+            crumb={lang === "da" ? "Om os" : "About us"}
+          />
 
           <div className="mt-16 max-w-3xl space-y-10">
             {sections.map((section) => (

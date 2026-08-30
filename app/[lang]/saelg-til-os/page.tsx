@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ClipboardList, Handshake, ShieldCheck, Banknote, ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
+import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
@@ -11,7 +12,7 @@ const copy = {
   da: {
     metaTitle: "Sælg jeres brugte IT-udstyr | Kestro",
     metaDescription:
-      "Vi køber brugte erhvervscomputere, telefoner og tablets – med sikker datasletning og afhentning i Danmark og Norge.",
+      "Vi køber brugte erhvervsmaskiner, henter dem og sletter lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
     title: "Sælg jeres brugte IT-udstyr",
     description:
       "Skal I udskifte medarbejdernes computere eller rydde op efter en flytning? Vi køber brugt erhvervsudstyr og giver det et nyt liv.",
@@ -131,7 +132,13 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/saelg-til-os"
+            crumb={lang === "da" ? "Sælg til os" : "Sell to us"}
+          />
 
           <div className="mt-16 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -223,6 +230,20 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
           </div>
         </Container>
       </section>
+
+      <RelatedLinks
+        lang={lang}
+        links={[
+          {
+            href: "/vejledninger/slet-data-foer-du-saelger",
+            label: { da: "Sådan sletter I data først", en: "How to erase the data first" },
+          },
+          {
+            href: "/ydelser/overskudslager-og-returvarer",
+            label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
+          },
+        ]}
+      />
 
       <CtaSection lang={lang} />
     </>

@@ -94,7 +94,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <p className="mt-4 text-sm leading-6 text-paper/65">{c.askBody}</p>
             </div>
             <Link
-              href={localePath("/flaadeloesninger/forespoergsel", lang)}
+              href={localePath("/tilbud", lang)}
               className="group mt-8 inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-700 sm:w-auto"
             >
               {c.askLink}

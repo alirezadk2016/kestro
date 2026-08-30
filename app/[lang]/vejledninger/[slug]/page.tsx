@@ -21,6 +21,7 @@ const copy = {
     updated: "Opdateret",
     forWhom: "Til",
     closingTitle: "Hvis du hellere vil have det gjort",
+    next: "Videre herfra",
     more: "Flere vejledninger",
     contact: "Skriv til os",
   },
@@ -30,6 +31,7 @@ const copy = {
     updated: "Updated",
     forWhom: "For",
     closingTitle: "If you would rather have it done",
+    next: "Where to go next",
     more: "More guides",
     contact: "Write to us",
   },
@@ -172,6 +174,28 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                 {c.contact}
               </Link>
             </div>
+
+            {/* The page that resolves what the guide raised. A guide that
+                answers a question and then stops leaves the reader to find the
+                commercial page on their own. */}
+            {guide.related.length > 0 && (
+              <div className="mt-10 border-t border-white/15 pt-8">
+                <p className="eyebrow text-brand-300">{c.next}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {guide.related.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={localePath(link.href, lang)}
+                        className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
+                      >
+                        {link.label[lang]}
+                        <span aria-hidden="true">&rarr;</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </Container>
       </section>

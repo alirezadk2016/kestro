@@ -38,11 +38,11 @@ export const services: Service[] = [
     slug: "sourcing-og-indkoeb",
     name: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     metaTitle: {
-      da: "Sourcing af brugt erhvervs-IT uden lager | Kestro",
+      da: "IT-indkøb til erhverv – sourcing uden lager | Kestro",
       en: "Sourcing used business IT, with no stock | Kestro",
     },
     metaDescription: {
-      da: "Vi finder brugte erhvervscomputere hos leverandører i Sydeuropa mod jeres konkrete behov, i stedet for at sælge jer det, der står på et lager.",
+      da: "Vi finder det rigtige IT-udstyr til jer hos leverandører i Sydeuropa og køber først ind, når I ved, hvad I skal bruge – ikke før.",
       en: "We find used business computers through suppliers in southern Europe against what you actually need, instead of selling you what happens to be in a warehouse.",
     },
     summary: {
@@ -181,11 +181,11 @@ export const services: Service[] = [
     slug: "klargoering-og-test",
     name: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     metaTitle: {
-      da: "Klargøring og test af brugte computere til erhverv | Kestro",
+      da: "Klargøring og test af brugte erhvervsmaskiner | Kestro",
       en: "Preparing and testing used computers for business | Kestro",
     },
     metaDescription: {
-      da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering af RAM og SSD efter behov, og sletning af lagermediet, før maskinen sættes op igen.",
+      da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering efter behov og sletning af lagermediet, før maskinen sættes op igen.",
       en: "Function testing of screen, keyboard, battery and performance, memory and disk upgrades where needed, and erasure of the storage media before setup.",
     },
     summary: {
@@ -244,11 +244,11 @@ export const services: Service[] = [
     slug: "nordisk-tilpasning",
     name: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     metaTitle: {
-      da: "Dansk og norsk tastatur på brugte computere | Kestro",
+      da: "Nordisk tastatur og dansk opsætning | Kestro",
       en: "Danish and Norwegian keyboards on used computers | Kestro",
     },
     metaDescription: {
-      da: "Maskiner fra Sydeuropa har spansk eller italiensk layout. Vi skifter til dansk eller norsk tastatur og sætter Windows op med sprog og drivere.",
+      da: "Tastaturet skiftes fysisk til dansk eller norsk layout, og Windows sættes op med drivere og sprog, så maskinen er klar fra dag ét.",
       en: "Machines from southern Europe arrive with Spanish or Italian layouts. We fit Danish or Norwegian keyboards and set Windows up to match.",
     },
     summary: {
@@ -293,11 +293,11 @@ export const services: Service[] = [
     slug: "levering",
     name: { da: "Levering til virksomheden", en: "Delivery to the company" },
     metaTitle: {
-      da: "Levering af brugt erhvervs-IT i Danmark og Norge | Kestro",
+      da: "Levering af IT-udstyr til virksomheder | Kestro",
       en: "Delivering used business IT in Denmark and Norway | Kestro",
     },
     metaDescription: {
-      da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Leveringstiden afhænger af ordren, og vi oplyser den, før I bestiller.",
+      da: "Samlet levering til én eller flere adresser i Danmark og Norge, med en tidsramme, I får oplyst skriftligt, før I bestiller noget.",
       en: "We deliver to companies in Denmark and Norway in whatever quantity you need. Lead time depends on the order, and we tell you before you commit.",
     },
     summary: {
@@ -347,11 +347,11 @@ export const services: Service[] = [
     slug: "overskudslager-og-returvarer",
     name: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
     metaTitle: {
-      da: "Afsætning af overskudslager og returvarer i IT | Kestro",
+      da: "Overskudslager og returvarer i IT | Kestro",
       en: "Placing overstock and returned IT equipment | Kestro",
     },
     metaDescription: {
-      da: "Returvarer, demoenheder eller udstyr fra en aflyst ordre, der aldrig kom ud til kunderne. Vi finder køberne, i stedet for at det står og taber værdi.",
+      da: "Returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned det står stille. Vi finder køberne i stedet for jer.",
       en: "Returns, demo units or equipment from a cancelled order that never reached a customer. We find the buyers instead of letting it lose value on a shelf.",
     },
     summary: {
@@ -386,11 +386,11 @@ export const services: Service[] = [
     slug: "opstart-af-arbejdspladser",
     name: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
     metaTitle: {
-      da: "IT til en ny virksomhed eller afdeling | Kestro",
+      da: "IT-udstyr til nye medarbejdere | Kestro",
       en: "IT for a new company or department | Kestro",
     },
     metaDescription: {
-      da: "Skal arbejdspladserne stå klar til første arbejdsdag? Vi hjælper med at vælge udstyret, klargøre det og få det leveret samlet – skærme, docks og kabler med.",
+      da: "En komplet arbejdsplads til den nye medarbejder: maskine, skærm, dock og tastatur, sat op ens hver gang og leveret til datoen.",
       en: "Desks ready for the first day of work: we help choose the equipment, prepare it and deliver it in one go — monitors and docks included.",
     },
     summary: {

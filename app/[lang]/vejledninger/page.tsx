@@ -57,7 +57,13 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/vejledninger"
+            crumb={lang === "da" ? "Vejledninger" : "Guides"}
+          />
 
           <ol className="mt-14 border-t border-white/15">
             {guides.map((guide, i) => (

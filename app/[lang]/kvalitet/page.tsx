@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
+import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Grad A, B og C på brugt IT-udstyr – hvad betyder det?",
+    metaTitle: "Garanti og stand på refurbished erhvervs-IT | Kestro",
     metaDescription:
-      "Sådan graderes brugt erhvervsudstyr, hvad en funktionstest dækker, og hvad I altid bør få oplyst, før I bestiller brugt IT.",
+      "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvad I bør have skriftligt om garanti, før I køber brugt IT-udstyr.",
     title: "Stand, test og hvad I bør spørge om",
     description:
       "“Brugt” siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
@@ -44,7 +45,7 @@ const copy = {
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
-    metaTitle: "Grade A, B and C on used IT equipment — what they mean",
+    metaTitle: "Grade A, B and C on refurbished IT | Kestro",
     metaDescription:
       "How used business equipment is graded, what a function test covers, and what you should always be told before you order.",
     title: "Condition, testing and what to ask about",
@@ -202,7 +203,13 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/kvalitet"
+            crumb={lang === "da" ? "Stand og kvalitet" : "Condition and quality"}
+          />
 
           <div className="mt-12 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -311,6 +318,31 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
           </div>
         </Container>
       </section>
+
+      <RelatedLinks
+        lang={lang}
+        links={[
+          {
+            href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+            label: { da: "Tjeklisten, I selv kan bruge", en: "The checklist you can use yourself" },
+          },
+          {
+            href: "/ydelser/klargoering-og-test",
+            label: { da: "Sådan klargør og tester vi", en: "How we prepare and test" },
+          },
+          {
+            href: "/vejledninger/slet-data-foer-du-saelger",
+            label: { da: "Sikker datasletning", en: "Secure data erasure" },
+          },
+          {
+            href: "/vejledninger/windows-11-paa-aeldre-maskine",
+            label: {
+              da: "Kommer maskinen med over til Windows 11?",
+              en: "Will the machine make the jump to Windows 11?",
+            },
+          },
+        ]}
+      />
 
       <CtaSection lang={lang} />
     </>

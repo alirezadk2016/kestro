@@ -17,6 +17,12 @@ export type Category = {
    * source in this category. Not stock — we buy per order.
    */
   exampleModel?: string;
+  /**
+   * Guides that answer a question this category's buyer actually asks.
+   * Step 3's rule: the commercial page links to the guide that removes the
+   * objection, and the guide links back.
+   */
+  guides?: { href: string; label: Localized }[];
 };
 
 export const categories: Category[] = [
@@ -29,11 +35,11 @@ export const categories: Category[] = [
       en: "Refurbished business laptops for office and hybrid work",
     },
     metaTitle: {
-      da: "Renoverede bærbare computere til erhverv | Kestro",
+      da: "Brugte bærbare computere til erhverv | Kestro",
       en: "Refurbished business laptops for companies | Kestro",
     },
     metaDescription: {
-      da: "Renoverede erhvervsbærbare – ThinkPad, MacBook, Latitude, EliteBook m.fl. Funktionstestet og klargjort med nordisk tastatur.",
+      da: "Refurbished erhvervsbærbare fra ThinkPad-, EliteBook- og Latitude-serierne. Funktionstestet, nordisk tastatur og skriftlige vilkår før bestilling.",
       en: "Refurbished business laptops — ThinkPad, MacBook, Latitude, EliteBook and more. Function-tested, with a Nordic keyboard.",
     },
     intro: {
@@ -82,6 +88,22 @@ export const categories: Category[] = [
       en: "Memory, disk size, screen size and processor generation are matched to the individual order — tell us what the machines are for, and we will find the right fit.",
     },
     exampleModel: "lenovo-thinkpad-t480",
+    guides: [
+      {
+        href: "/vejledninger/windows-11-paa-aeldre-maskine",
+        label: {
+          da: "Kommer maskinen med over til Windows 11?",
+          en: "Will the machine make the jump to Windows 11?",
+        },
+      },
+      {
+        href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        label: {
+          da: "Ti ting du skal tjekke på en brugt bærbar",
+          en: "Ten things to check on a used laptop",
+        },
+      },
+    ],
   },
   {
     slug: "stationaere-computere",
@@ -92,11 +114,11 @@ export const categories: Category[] = [
       en: "Refurbished desktops and workstations for fixed desks",
     },
     metaTitle: {
-      da: "Renoverede stationære computere til erhverv | Kestro",
+      da: "Brugte stationære computere til erhverv | Kestro",
       en: "Refurbished business desktop computers | Kestro",
     },
     metaDescription: {
-      da: "Renoverede stationære erhvervscomputere og workstations – OptiPlex, EliteDesk, ThinkCentre m.fl. Funktionstestet og klargjort.",
+      da: "Refurbished stationære erhvervsmaskiner og små formfaktorer til kontoret. Vi sourcer til den enkelte ordre og oplyser stand skriftligt.",
       en: "Refurbished business desktops and workstations — OptiPlex, EliteDesk, ThinkCentre and more. Function-tested and prepared.",
     },
     intro: {
@@ -141,6 +163,12 @@ export const categories: Category[] = [
       da: "Vi tilpasser formfaktor (tower, SFF eller mini), RAM, lagring og grafikkort efter jeres behov.",
       en: "We match the form factor (tower, SFF or mini), memory, storage and graphics card to what you need.",
     },
+    guides: [
+      {
+        href: "/vejledninger/reparere-eller-koebe-ny",
+        label: { da: "Reparere eller købe ny?", en: "Repair or replace?" },
+      },
+    ],
   },
   {
     slug: "skaerme",
@@ -151,11 +179,11 @@ export const categories: Category[] = [
       en: "Refurbished business monitors for fixed desks",
     },
     metaTitle: {
-      da: "Brugte og renoverede skærme til erhverv | Kestro",
+      da: "Brugte skærme til kontor og erhverv | Kestro",
       en: "Used and refurbished business monitors | Kestro",
     },
     metaDescription: {
-      da: 'Renoverede erhvervsskærme fra Dell, HP og Lenovo – 24" og 27" med højdejustering og USB-hub. Sourcet til den enkelte ordre til virksomheder i Danmark og Norge.',
+      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docking, så en arbejdsplads står komplet.",
       en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27" with height adjustment and a USB hub. Sourced per order.',
     },
     intro: {
@@ -190,6 +218,12 @@ export const categories: Category[] = [
       da: "Størrelse, opløsning, tilslutninger og fod aftales for den enkelte ordre – fortæl os, hvilke maskiner skærmene skal sidde på, så matcher vi stikkene.",
       en: "Size, resolution, connectors and stand are agreed per order — tell us which machines the monitors will sit on, and we will match the ports.",
     },
+    guides: [
+      {
+        href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        label: { da: "Sådan tjekker I brugt udstyr", en: "How to check used equipment" },
+      },
+    ],
   },
   {
     slug: "mini-pc",
@@ -200,11 +234,11 @@ export const categories: Category[] = [
       en: "Compact machines for desks with no room to spare",
     },
     metaTitle: {
-      da: "Renoverede mini-pc'er til erhverv | Kestro",
+      da: "Brugte mini-pc'er til erhverv | Kestro",
       en: "Refurbished mini PCs for business | Kestro",
     },
     metaDescription: {
-      da: "Renoverede mini-pc'er og tiny-desktops – ThinkCentre Tiny, OptiPlex Micro, HP Mini, Intel NUC. Til kontor og trange pladser.",
+      da: "Refurbished mini-pc'er og små formfaktorer til receptioner, kasseborde og kontorpladser med lidt plads. Sourcet per ordre, testet før levering.",
       en: "Refurbished mini PCs and tiny desktops — Lenovo ThinkCentre Tiny, Dell OptiPlex Micro, HP Mini, Intel NUC. For offices, digital signage and tight workspaces.",
     },
     intro: {
@@ -257,11 +291,11 @@ export const categories: Category[] = [
       en: "Refurbished tablets for field work, shops and presentations",
     },
     metaTitle: {
-      da: "Renoverede tablets til erhverv | Kestro",
+      da: "Brugte tablets til erhverv | Kestro",
       en: "Refurbished business tablets | Kestro",
     },
     metaDescription: {
-      da: "Renoverede tablets til virksomheder – iPad, Samsung Galaxy Tab, Microsoft Surface og Lenovo Tab. Testet og klargjort, leveret i Danmark og Norge.",
+      da: "Refurbished tablets til lager, service og mødelokaler. Vi skaffer dem per ordre og oplyser stand og batteritilstand, før I bestiller.",
       en: "Refurbished tablets for companies — iPad, Samsung Galaxy Tab, Microsoft Surface and Lenovo Tab. Tested and prepared, delivered in Denmark and Norway.",
     },
     intro: {
@@ -310,16 +344,16 @@ export const categories: Category[] = [
     name: { da: "Smartphones", en: "Smartphones" },
     shortName: { da: "Smartphones", en: "Smartphones" },
     tagline: {
-      da: "Renoverede erhvervstelefoner til medarbejdere",
-      en: "Refurbished company phones for employees",
+      da: "Renoverede telefoner og smartwatches til medarbejdere",
+      en: "Refurbished phones and smartwatches for employees",
     },
     metaTitle: {
-      da: "Renoverede smartphones til erhverv | Kestro",
+      da: "Refurbished mobiltelefoner til virksomheder | Kestro",
       en: "Refurbished business smartphones | Kestro",
     },
     metaDescription: {
-      da: "Renoverede erhvervstelefoner – iPhone, Samsung Galaxy, Google Pixel. Testet, nulstillet og klar til udlevering. Til virksomheder i Danmark og Norge.",
-      en: "Refurbished company phones — iPhone, Samsung Galaxy, Google Pixel. Tested, reset and ready to hand out. For companies in Denmark and Norway.",
+      da: "Brugte firmatelefoner sourcet per ordre. Stand og batteritilstand oplyses per enhed, og gamle telefoner kan hentes retur med datasletning.",
+      en: "Refurbished company phones and smartwatches — iPhone, Samsung Galaxy, Pixel, Apple Watch. Tested, reset and ready to hand out.",
     },
     intro: {
       da: "Firmatelefoner udskiftes ofte hyppigere end nødvendigt. Renoverede enheder giver samme funktionalitet til en markant lavere pris – særligt når der skal udstyres flere medarbejdere på én gang.",
@@ -332,6 +366,8 @@ export const categories: Category[] = [
       "Google Pixel",
       "Sony Xperia",
       "Nokia",
+      "Apple Watch",
+      "Samsung Galaxy Watch",
     ],
     useCases: [
       {
@@ -355,59 +391,17 @@ export const categories: Category[] = [
           en: "Spare devices to lend out while someone's phone is being repaired.",
         },
       },
-    ],
-    specNote: {
-      da: "Enhederne leveres nulstillet og afmeldt tidligere konti, klar til jeres opsætning.",
-      en: "Machines arrive reset and released from previous accounts, ready for your setup.",
-    },
-  },
-  {
-    slug: "smartwatches",
-    name: { da: "Smartwatches", en: "Smartwatches" },
-    shortName: { da: "Smartwatches", en: "Smartwatches" },
-    tagline: {
-      da: "Renoverede smartwatches til medarbejdere og teams",
-      en: "Refurbished smartwatches for staff and teams",
-    },
-    metaTitle: {
-      da: "Renoverede smartwatches til erhverv | Kestro",
-      en: "Refurbished business smartwatches | Kestro",
-    },
-    metaDescription: {
-      da: "Renoverede smartwatches – Apple Watch, Samsung Galaxy Watch, Garmin. Testet og klargjort til virksomheder i Danmark og Norge.",
-      en: "Refurbished smartwatches — Apple Watch, Samsung Galaxy Watch, Garmin. Tested and prepared for companies in Denmark and Norway.",
-    },
-    intro: {
-      da: "Smartwatches bruges i stigende grad som arbejdsredskab – til notifikationer, opkald og sundhedsdata. Renoverede enheder gør det økonomisk overkommeligt at udstyre et helt team.",
-      en: "Smartwatches are increasingly a work tool — for notifications, calls and health data. Buying them refurbished makes it affordable to equip a whole team.",
-    },
-    brands: ["Apple Watch", "Samsung Galaxy Watch", "Garmin", "Fitbit", "Huawei Watch"],
-    useCases: [
       {
-        title: { da: "Notifikationer på farten", en: "Notifications on the move" },
+        title: { da: "Smartwatches til teams", en: "Smartwatches for teams" },
         description: {
-          da: "Medarbejdere, der ikke altid kan have telefonen fremme.",
-          en: "Staff who cannot always have a phone in their hand.",
-        },
-      },
-      {
-        title: { da: "Sundhed og trivsel", en: "Health and wellbeing" },
-        description: {
-          da: "Firmaordninger med fokus på bevægelse og medarbejdertrivsel.",
-          en: "Company schemes built around movement and staff wellbeing.",
-        },
-      },
-      {
-        title: { da: "Personalegoder", en: "Staff benefits" },
-        description: {
-          da: "En overkommelig måde at give medarbejdere et gode uden nypris.",
-          en: "An affordable way to give staff a benefit without paying new prices.",
+          da: "Til medarbejdere, der ikke altid kan have telefonen fremme. Vi kan skaffe Apple Watch og Galaxy Watch sammen med telefonerne.",
+          en: "For staff who cannot always have a phone in their hand. We can source Apple Watch and Galaxy Watch alongside the phones.",
         },
       },
     ],
     specNote: {
-      da: "Fås i forskellige størrelser og med eller uden mobilforbindelse (LTE). Remme kan leveres nye.",
-      en: "Available in different sizes, with or without mobile connectivity (LTE). Straps can be supplied new.",
+      da: "Enhederne leveres nulstillet og afmeldt tidligere konti, klar til jeres opsætning. Smartwatches fås med eller uden mobilforbindelse, og remme kan leveres nye.",
+      en: "Devices arrive reset and released from previous accounts, ready for your setup. Smartwatches come with or without mobile connectivity, and straps can be supplied new.",
     },
   },
   {
@@ -419,11 +413,11 @@ export const categories: Category[] = [
       en: "Docks, monitors and accessories for the desk",
     },
     metaTitle: {
-      da: "Dockingstationer og tilbehør til erhverv | Kestro",
+      da: "Dockingstationer til erhvervsbærbare | Kestro",
       en: "Business docking stations and accessories | Kestro",
     },
     metaDescription: {
-      da: "Renoverede dockingstationer, skærme, tastaturer og mus til erhverv – ThinkPad Dock, Dell WD-serien, HP Thunderbolt Dock m.fl.",
+      da: "Brugte dockingstationer, kabler og tilbehør, der passer til de maskiner vi leverer – så skærme og netværk virker uden at nogen skal fejlfinde.",
       en: "Refurbished docking stations, monitors, keyboards and mice for business — ThinkPad Dock, Dell WD series, HP Thunderbolt Dock and more.",
     },
     intro: {
@@ -465,63 +459,6 @@ export const categories: Category[] = [
     specNote: {
       da: "Docking skal matche maskinens porte (USB-C, Thunderbolt eller ældre proprietære stik) – vi sikrer, at det passer til jeres enheder.",
       en: "A dock has to match the machine's ports (USB-C, Thunderbolt or an older proprietary connector) — we make sure it fits the machines you have.",
-    },
-  },
-  {
-    slug: "gaming",
-    name: { da: "Gaming-udstyr", en: "Gaming hardware" },
-    shortName: { da: "Gaming", en: "Gaming" },
-    tagline: {
-      da: "Gaming-pc'er og udstyr til private og virksomheder",
-      en: "Gaming PCs and hardware for individuals and companies",
-    },
-    metaTitle: {
-      da: "Renoveret gaming-udstyr og gaming-pc'er | Kestro",
-      en: "Refurbished gaming hardware and gaming PCs | Kestro",
-    },
-    metaDescription: {
-      da: "Renoverede gaming-pc'er, gaming-bærbare og udstyr – ROG, Legion, Alienware, Predator. Til private, e-sport og virksomheder i Danmark og Norge.",
-      en: "Refurbished gaming PCs, gaming laptops and hardware — ROG, Legion, Alienware, Predator. For individuals, esports and companies in Denmark and Norway.",
-    },
-    intro: {
-      da: "Gaming-maskiner er bygget med kraftig hardware. Brugte enheder er en vej til den slags ydelse uden at købe nyt – både til private, e-sportsmiljøer og virksomheder med tunge grafikopgaver.",
-      en: "Gaming machines are built with powerful hardware. Buying used is a route to that kind of performance without buying new — for individuals, for esports setups and for companies with heavy graphics work.",
-    },
-    brands: [
-      "ASUS ROG",
-      "Lenovo Legion",
-      "Alienware",
-      "Acer Predator",
-      "MSI Gaming",
-      "HP Omen",
-      "Razer",
-    ],
-    useCases: [
-      {
-        title: { da: "Gaming derhjemme", en: "Gaming at home" },
-        description: {
-          da: "Komplette maskiner til private, der vil have ydelse uden nyprisen.",
-          en: "Complete machines for people who want the performance without the new price.",
-        },
-      },
-      {
-        title: { da: "E-sport og gaming-lokaler", en: "Esports and gaming rooms" },
-        description: {
-          da: "Flere identiske maskiner til klubber, skoler og gaming-cafeer.",
-          en: "Several identical machines for clubs, schools and gaming cafés.",
-        },
-      },
-      {
-        title: { da: "Grafik og 3D-arbejde", en: "Graphics and 3D work" },
-        description: {
-          da: "Kraftige grafikkort er også relevante til rendering, video og designarbejde i virksomheder.",
-          en: "Strong graphics cards matter just as much for rendering, video and design work in a company.",
-        },
-      },
-    ],
-    specNote: {
-      da: "Grafikkort, CPU, RAM og køling varierer meget på gaming-maskiner – fortæl os, hvilke spil eller programmer maskinen skal klare.",
-      en: "Graphics card, processor, memory and cooling vary a lot on gaming machines — tell us which games or programs it has to handle.",
     },
   },
 ];

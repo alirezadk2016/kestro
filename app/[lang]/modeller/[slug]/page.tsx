@@ -78,7 +78,14 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
   const category = getCategory(model.category);
   const Icon = getCategoryIcon(model.category);
-  const related = models.filter((m) => m.group === model.group && m.slug !== model.slug);
+  /* Peers are the models in the same category, not the same group: the ZBook
+     is the only "workstations" model, so relating by group left it with no
+     siblings pointing at it — two incoming links on the whole site. */
+  const sameCategory = models.filter((m) => m.category === model.category && m.slug !== model.slug);
+  const sameGroup = models.filter(
+    (m) => m.group === model.group && m.slug !== model.slug && !sameCategory.includes(m),
+  );
+  const related = [...sameCategory, ...sameGroup];
 
   /*
    * The model as a product Google can recognise.

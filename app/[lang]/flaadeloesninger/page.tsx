@@ -12,6 +12,8 @@ import {
   Keyboard,
 } from "lucide-react";
 import Container from "@/components/Container";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
@@ -19,9 +21,9 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Flådeløsninger – udstyr hele virksomheden | Kestro",
+    metaTitle: "Computere til flere medarbejdere – flådeløsninger | Kestro",
     metaDescription:
-      "Renoverede erhvervscomputere i større antal: ensartet opsætning, opgraderet RAM og mulighed for at bytte jeres gamle udstyr ind.",
+      "Fra ti maskiner til en hel medarbejderflåde: samme konfiguration hele vejen rundt, samlet levering og gamle maskiner hentet retur.",
     badge: "Til større virksomheder",
     title: "Udstyr hele virksomheden",
     intro:
@@ -263,6 +265,16 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
     <>
       <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
+          <Breadcrumbs
+            lang={lang}
+            trail={[
+              {
+                name: lang === "da" ? "Flådeløsninger" : "Fleet solutions",
+                href: "/flaadeloesninger",
+              },
+            ]}
+            className="mb-8"
+          />
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center border border-paper/25 bg-white/5 px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
               {c.badge}
@@ -274,7 +286,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
-                href={localePath("/flaadeloesninger/forespoergsel", lang)}
+                href={localePath("/tilbud", lang)}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-950 transition hover:bg-paper-dim"
               >
                 {c.sendEnquiry}
@@ -401,7 +413,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               </a>
             )}
             <Link
-              href={localePath("/flaadeloesninger/forespoergsel", lang)}
+              href={localePath("/tilbud", lang)}
               className={
                 salesContact.phoneHref
                   ? "inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
@@ -413,6 +425,24 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           </div>
         </Container>
       </section>
+
+      <RelatedLinks
+        lang={lang}
+        links={[
+          {
+            href: "/ydelser/opstart-af-arbejdspladser",
+            label: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
+          },
+          {
+            href: "/ydelser/levering",
+            label: { da: "Levering til virksomheden", en: "Delivery to the company" },
+          },
+          {
+            href: "/kvalitet",
+            label: { da: "Stand, test og garanti", en: "Condition, testing and warranty" },
+          },
+        ]}
+      />
     </>
   );
 }

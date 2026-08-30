@@ -172,7 +172,13 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/ydelser"
+            crumb={lang === "da" ? "Ydelser" : "Services"}
+          />
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {services.map((service) => (

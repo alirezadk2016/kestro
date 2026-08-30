@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
@@ -24,7 +25,7 @@ const copy = {
   da: {
     metaTitle: "Få et tilbud på brugt erhvervs-IT | Kestro",
     metaDescription:
-      "Fortæl os antal, specifikation og hvornår det skal stå klar, så vender vi tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
+      "Fortæl os antal, specifikation og hvornår det skal stå klar. Vi vender tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
     title: "Få et tilbud",
     lead: "Prisen afhænger af konfiguration, stand og antal, så den bliver regnet på jeres konkrete behov frem for på en liste. Udfyld det, I ved – resten kan stå som “ved ikke endnu”.",
     formTitle: "Jeres forespørgsel",
@@ -46,6 +47,7 @@ const copy = {
       { href: "/tilbud-eksempel", label: "Se et eksempel på et tilbud" },
       { href: "/priser", label: "Hvad afgør prisen" },
       { href: "/kvalitet", label: "Sådan vurderer vi stand og kvalitet" },
+      { href: "/ydelser/opstart-af-arbejdspladser", label: "Opstart af nye arbejdspladser" },
     ],
     otherTitle: "Noget helt andet?",
     otherBody: "Skal I ikke bruge et tilbud, men have fat i et menneske, er kontaktsiden vejen.",
@@ -76,6 +78,7 @@ const copy = {
       { href: "/tilbud-eksempel", label: "See an example quote" },
       { href: "/priser", label: "What decides the price" },
       { href: "/kvalitet", label: "How we assess condition and quality" },
+      { href: "/ydelser/opstart-af-arbejdspladser", label: "Setting up new workstations" },
     ],
     otherTitle: "Something else entirely?",
     otherBody:
@@ -101,6 +104,11 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
     <section className="lit lit-paper py-10 sm:py-20">
       <Container>
         <div className="max-w-5xl">
+          <Breadcrumbs
+            lang={lang}
+            trail={[{ name: lang === "da" ? "Få et tilbud" : "Get a quote", href: "/tilbud" }]}
+            className="mb-5"
+          />
           <h1 className="max-w-3xl text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.title}
           </h1>

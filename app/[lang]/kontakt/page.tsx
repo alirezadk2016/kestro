@@ -9,9 +9,9 @@ import { metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Kontakt | Kestro",
+    metaTitle: "Kontakt os i Aarhus | Kestro",
     metaDescription:
-      "Kontakt Kestro for et uforpligtende tilbud på renoveret IT-hardware klargjort til det nordiske marked.",
+      "Skriv til os om et indkøb, en flåde eller udstyr, I skal af med. Vi svarer inden for én arbejdsdag – og vi sælger ikke til jer i mellemtiden.",
     title: "Kontakt os",
     description:
       "Fortæl os om jeres behov, og få et uforpligtende tilbud på renoveret erhvervshardware klargjort til det nordiske marked.",
@@ -28,9 +28,9 @@ const copy = {
     at: "hos",
   },
   en: {
-    metaTitle: "Contact | Kestro",
+    metaTitle: "Contact us in Aarhus | Kestro",
     metaDescription:
-      "Contact Kestro for a no-obligation quote on refurbished IT hardware prepared for the Nordic market.",
+      "Write to us about a purchase, a fleet, or equipment you need to move on. We reply within one working day, and we do not chase you in between.",
     title: "Contact us",
     description:
       "Tell us what you need and get a no-obligation quote on refurbished business hardware prepared for the Nordic market.",
@@ -63,7 +63,13 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
   return (
     <section className="py-10 sm:py-20">
       <Container>
-        <PageHeader title={c.title} description={c.description} />
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/kontakt"
+          crumb={lang === "da" ? "Kontakt" : "Contact"}
+        />
 
         <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">

@@ -386,6 +386,7 @@ De 26 vigtigste sider. Modelsiderne følger én regel og er ikke listet enkeltvi
 Kortlægningen respekterer den opsætning, der allerede kører, og foreslår ingen ændring af den:
 
 - Hver dansk URL har præcis én engelsk modpart på `/en` + samme sti, og omvendt. Alle 112 sider bærer `da`, `en` og `x-default`, symmetrisk begge veje.
+  <br>_Note tilføjet efter trin 4 (30-08-2026): tallet var 112, da kortlægningen blev skrevet. Trin 4 fjernede tre URL'er med 301, så det er 106 nu. Symmetrien er uændret._
 - **Ingen engelsk søgeord er tildelt en dansk URL og omvendt.** De 17 engelske ord peger alle på `/en/...`-modparten af den side, det danske ord peger på.
 - De ni foreslåede nye sider skal oprettes i **begge** sprog samtidig, ellers brydes symmetrien. Hvis en side kun giver mening på dansk, skal den engelske modpart ikke laves halvt — så skal siden holdes ude af hreflang-klyngen helt.
 - `x-default` peger på dansk. Det er korrekt for et dansk primærmarked.

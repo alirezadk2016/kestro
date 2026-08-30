@@ -35,6 +35,14 @@ export type Guide = {
   sections: GuideSection[];
   /** What to do if you would rather not do it yourself. */
   closing: Localized;
+  /**
+   * The page that resolves what the guide raised.
+   *
+   * A guide that answers a question and then stops leaves the reader to find
+   * the commercial page on their own — and leaves the commercial page without
+   * the link. One or two, always to somewhere that already exists.
+   */
+  related: { href: string; label: Localized }[];
 };
 
 export const guides: Guide[] = [
@@ -123,6 +131,13 @@ export const guides: Guide[] = [
       da: "Er du i tvivl, så skriv til os med model og hvad der sker. Vi siger ærligt, hvis det ikke kan betale sig – det er billigere for os at sige nej end at lave en reparation, du fortryder.",
       en: "If you are unsure, write to us with the model and what happens. We will say honestly if it is not worth it — it is cheaper for us to say no than to do a repair you regret.",
     },
+    related: [
+      {
+        href: "/reparation",
+        label: { da: "Reparation og opgradering", en: "Repairs and upgrades" },
+      },
+      { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
+    ],
   },
   {
     slug: "opgrader-ram-i-baerbar",
@@ -220,6 +235,16 @@ export const guides: Guide[] = [
       da: "Vil du hellere have det gjort, klarer vi det – og vi tjekker samtidig, om der er andet, der trækker maskinen ned. Skriv til os med modellen.",
       en: "If you would rather have it done, we can do it — and we will check at the same time whether anything else is holding the machine back. Write to us with the model.",
     },
+    related: [
+      {
+        href: "/reparation",
+        label: { da: "Få os til at opgradere den", en: "Have us do the upgrade" },
+      },
+      {
+        href: "/modeller",
+        label: { da: "Modeller, der er nemme at opgradere", en: "Models that are easy to upgrade" },
+      },
+    ],
   },
   {
     slug: "tjek-brugt-baerbar-foer-koeb",
@@ -228,11 +253,11 @@ export const guides: Guide[] = [
       en: "Ten things to check on a used laptop before you buy",
     },
     metaTitle: {
-      da: "Købe brugt bærbar? Ti ting du skal tjekke først | Kestro",
+      da: "Ti ting du skal tjekke på en brugt bærbar | Kestro",
       en: "Buying a used laptop? Ten things to check first | Kestro",
     },
     metaDescription: {
-      da: "Batteri, skærm, tastatur, porte og disk – en gennemgang du kan lave på ti minutter, før du betaler for en brugt computer.",
+      da: "Batteri, hængsler, porte, skærm og tastatur: tjeklisten, der afslører, om en brugt bærbar holder til et par år mere hos jer.",
       en: "Battery, screen, keyboard, ports and disk — a check you can do in ten minutes before paying for a used computer.",
     },
     summary: {
@@ -321,6 +346,19 @@ export const guides: Guide[] = [
       da: "Skal maskinen bruges i en virksomhed, laver vi den gennemgang for jer og skriver resultatet ned, før I betaler. Det er hele forskellen på at købe brugt og at gætte.",
       en: "If the machine is for a company, we do that check for you and write down the result before you pay. That is the whole difference between buying used and guessing.",
     },
+    related: [
+      {
+        href: "/kvalitet",
+        label: {
+          da: "Sådan vurderer vi stand og kvalitet",
+          en: "How we assess condition and quality",
+        },
+      },
+      {
+        href: "/produkter/baerbare-computere",
+        label: { da: "Brugte bærbare computere", en: "Used business laptops" },
+      },
+    ],
   },
   {
     slug: "samle-din-egen-pc",
@@ -430,6 +468,12 @@ export const guides: Guide[] = [
       da: "Vil du hellere have den samlet, gør vi det – enten helt fra bunden eller ved at opgradere den maskine, du allerede har. Skriv til os med, hvad den skal bruges til.",
       en: "If you would rather have it built, we can do that — either from scratch or by upgrading the machine you already have. Write to us with what it is for.",
     },
+    related: [
+      {
+        href: "/produkter/stationaere-computere",
+        label: { da: "Brugte stationære computere", en: "Used desktop computers" },
+      },
+    ],
   },
   {
     slug: "windows-11-paa-aeldre-maskine",
@@ -438,11 +482,11 @@ export const guides: Guide[] = [
       en: "Windows 11 on an older machine: what does it take?",
     },
     metaTitle: {
-      da: "Windows 11 på en ældre computer – krav | Kestro",
+      da: "Windows 11 på en ældre maskine: hvad kræver det? | Kestro",
       en: "Windows 11 on an older computer — requirements | Kestro",
     },
     metaDescription: {
-      da: "TPM, Secure Boot og processorkrav forklaret, og hvad du gør, hvis maskinen ikke er på listen.",
+      da: "TPM 2.0, Secure Boot og processorkrav forklaret – og hvad I stiller op med de maskiner i flåden, der ikke kommer med over.",
       en: "TPM, Secure Boot and processor requirements explained, and what to do if your machine is not on the list.",
     },
     summary: {
@@ -504,6 +548,16 @@ export const guides: Guide[] = [
       da: "Skal en hel flåde vurderes, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan følge med, og hvilke der bedre kan betale sig at skifte.",
       en: "If a whole fleet needs assessing, we can go through the list with you and say which machines can come along and which are better replaced.",
     },
+    related: [
+      {
+        href: "/produkter/baerbare-computere",
+        label: { da: "Maskiner, der kommer med over", en: "Machines that make the jump" },
+      },
+      {
+        href: "/tilbud",
+        label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
+      },
+    ],
   },
   {
     slug: "slet-data-foer-du-saelger",
@@ -512,11 +566,11 @@ export const guides: Guide[] = [
       en: "How to erase data before selling or scrapping a computer",
     },
     metaTitle: {
-      da: "Slet data før salg af computer – sådan gør du | Kestro",
+      da: "Sikker datasletning før salg eller kassering | Kestro",
       en: "Erase data before selling a computer — how to | Kestro",
     },
     metaDescription: {
-      da: "Formatering er ikke sletning. Sådan fjerner du data rigtigt fra SSD og harddisk, og hvad en virksomhed skal kunne dokumentere.",
+      da: "En formateret disk er ikke en slettet disk. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",
       en: "Formatting is not erasing. How to properly remove data from an SSD or hard disk, and what a company must be able to document.",
     },
     summary: {
@@ -574,6 +628,16 @@ export const guides: Guide[] = [
       da: "Køber vi jeres udstyr, sletter vi data som en del af aftalen og leverer dokumentationen med. I kan også bare bede om rådgivningen – den koster ingenting.",
       en: "If we buy your equipment, erasing the data is part of the deal and the documentation comes with it. You are also welcome to just ask for the advice — that costs nothing.",
     },
+    related: [
+      {
+        href: "/saelg-til-os",
+        label: { da: "Sælg jeres brugte udstyr til os", en: "Sell your used equipment to us" },
+      },
+      {
+        href: "/ydelser/overskudslager-og-returvarer",
+        label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
+      },
+    ],
   },
 ];
 

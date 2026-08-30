@@ -178,7 +178,13 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
   return (
     <section className="py-10 sm:py-20">
       <Container>
-        <PageHeader title={c.title} description={c.description} />
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/privatlivspolitik"
+          crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
+        />
 
         <div className="mt-14 max-w-3xl">
           {sections.map((section) => (

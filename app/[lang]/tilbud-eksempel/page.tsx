@@ -131,7 +131,7 @@ const copy = {
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
       { href: "/priser", label: "Hvad koster det?" },
-      { href: "/flaadeloesninger/forespoergsel", label: "Send jeres krav – få et rigtigt tilbud" },
+      { href: "/tilbud", label: "Send jeres krav – få et rigtigt tilbud" },
     ],
   },
   en: {
@@ -198,7 +198,7 @@ const copy = {
       { href: "/kvalitet", label: "Condition, testing and what to ask about" },
       { href: "/priser", label: "What does it cost?" },
       {
-        href: "/flaadeloesninger/forespoergsel",
+        href: "/tilbud",
         label: "Send your requirements — get a real quote",
       },
     ],
@@ -221,7 +221,13 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
   return (
     <>
       <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
-      <PageHeader title={c.title} description={c.description} />
+      <PageHeader
+        title={c.title}
+        description={c.description}
+        lang={lang}
+        href="/tilbud-eksempel"
+        crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
+      />
 
       <section className="lit bg-brand-950 py-10 sm:py-20">
         <Container>

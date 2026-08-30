@@ -10,9 +10,9 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Hvad vi skaffer | Renoveret IT-udstyr til erhverv | Kestro",
+    metaTitle: "Brugt IT-udstyr til virksomheder – hvad vi skaffer | Kestro",
     metaDescription:
-      "Indkøbspartner på renoveret IT-udstyr: bærbare, stationære, mini-pc'er, tablets, smartphones, docking og gaming – sourcet til jeres ordre.",
+      "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
     title: "Hvad vi skaffer",
     description:
       "Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.",
@@ -65,7 +65,13 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/produkter"
+            crumb={lang === "da" ? "Hvad vi skaffer" : "What we source"}
+          />
 
           <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>

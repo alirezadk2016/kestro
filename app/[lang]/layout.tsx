@@ -41,14 +41,14 @@ export const dynamicParams = false;
 
 const meta = {
   da: {
-    title: "Kestro | Renoveret IT-hardware til virksomheder",
+    title: "Refurbished erhvervscomputere til virksomheder | Kestro",
     description:
-      "Kestro leverer kvalitetstestede, renoverede computere til danske og norske virksomheder, klargjort med opgraderet RAM og nordisk tastatur.",
+      "Kestro skaffer refurbished erhvervscomputere til danske og norske virksomheder. Pris, stand og garantivilkår står skriftligt, før I bestiller.",
   },
   en: {
-    title: "Kestro | Refurbished IT hardware for businesses",
+    title: "Refurbished business computers for companies | Kestro",
     description:
-      "Kestro supplies tested, refurbished computers to companies in Denmark and Norway, prepared with upgraded memory and a Nordic keyboard.",
+      "Kestro sources refurbished business computers for companies in Denmark and Norway. Price, condition and warranty terms in writing before you order.",
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 

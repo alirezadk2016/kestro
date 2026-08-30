@@ -92,7 +92,13 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
 
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/maskinen"
+            crumb={lang === "da" ? "Maskinen indeni" : "Inside the machine"}
+          />
         </Container>
       </section>
 

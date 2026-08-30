@@ -22,9 +22,9 @@ import { metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    metaTitle: "Reparation og opgradering af computere | Kestro",
+    metaTitle: "Reparation og opgradering af firmacomputere | Kestro",
     metaDescription:
-      "Reparation og opgradering af computere – RAM og SSD, batteri, skærm, nordisk tastatur og Windows. Værkstedet tager også imod private.",
+      "Batteri, disk, hukommelse og skærm på erhvervsmaskiner. I får en pris, før vi går i gang – og et ærligt svar, hvis det ikke kan betale sig.",
     title: "Reparation og opgradering",
     description:
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
@@ -252,7 +252,13 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
     <>
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader title={c.title} description={c.description} />
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/reparation"
+            crumb={lang === "da" ? "Reparation" : "Repairs"}
+          />
 
           <div className="mt-12 max-w-3xl">
             <p className="text-base leading-7 text-paper/65">{c.intro}</p>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
+import RelatedLinks from "@/components/RelatedLinks";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
@@ -323,6 +324,10 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
           </div>
         </Container>
       </section>
+
+      {category.guides && category.guides.length > 0 && (
+        <RelatedLinks lang={lang} links={category.guides} />
+      )}
 
       <CtaSection lang={lang} />
     </>

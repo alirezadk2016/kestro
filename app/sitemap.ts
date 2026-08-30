@@ -33,7 +33,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/reparation" },
     { path: "/ydelser" },
     { path: "/tilbud" },
-    { path: "/flaadeloesninger/forespoergsel" },
     { path: "/om-os" },
     { path: "/kontakt" },
     { path: "/privatlivspolitik" },
