@@ -12,11 +12,16 @@
  *     the whole site at a host that redirects.
  *   - robots.txt advertises the sitemap at this origin.
  *
- * If www.kestro.dk is the address that answers and kestro.dk redirects to it,
- * put the www back — and change nothing else, because everything reads from
- * here.
+ * www is the canonical host: kestro.dk 301s to www.kestro.dk, and Search
+ * Console has processed https://www.kestro.dk/sitemap.xml and discovered all
+ * 110 URLs from it. Dropping the www would point every canonical, every <loc>
+ * and every schema @id at a host that redirects, and would put the sitemap on
+ * a different host than the property it is submitted under.
+ *
+ * Change this only if the host the site answers on actually changes — and then
+ * change nothing else, because everything reads from here.
  */
-export const SITE_ORIGIN = "https://kestro.dk";
+export const SITE_ORIGIN = "https://www.kestro.dk";
 
 /** Absolute URL for a site-internal path. Root comes back without a trailing slash. */
 export function absoluteUrl(path: string): string {
