@@ -131,14 +131,14 @@ const people: TeamMember[] = [
   },
   {
     id: "alireza",
-    name: "Alireza",
+    name: "Alireza Makvandi",
     role: {
       da: "Medstifter & teknisk ansvarlig",
       en: "Co-founder & Technical Director",
     },
     bio: {
-      da: "Står bag den tekniske side af Kestro: sitet, produktdata og den tekniske kontrol, før en maskine bliver præsenteret. Han sikrer, at specifikationerne er korrekte, at komponenterne er kompatible, og at det, der står på siden, stemmer overens med det, der indgår i tilbuddet.",
-      en: "Behind the technical side of Kestro: the site, the product data and the technical checks before a machine is presented. He makes sure the specifications are correct, that the components are compatible, and that what the site says matches what goes into the quote.",
+      da: "Har ansvar for den tekniske side af Kestro: sitet, produktdata og den tekniske kontrol, før en maskine bliver præsenteret. Han sikrer, at specifikationerne er korrekte, at komponenterne er kompatible, og at det, der står på siden, stemmer overens med det, der indgår i tilbuddet.",
+      en: "Responsible for the technical side of Kestro: the site, the product data and the technical checks before a machine is presented. He makes sure the specifications are correct, that the components are compatible, and that what the site says matches what goes into the quote.",
     },
   },
 ];
