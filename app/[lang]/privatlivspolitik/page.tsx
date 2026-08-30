@@ -18,7 +18,7 @@ const copy = {
   da: {
     metaTitle: "Privatlivspolitik | Kestro",
     metaDescription:
-      "Sådan behandler Kestro personoplysninger. Hjemmesiden sætter ingen cookies og bruger ingen analyseværktøjer.",
+      "Sådan behandler Kestro personoplysninger: kontaktformularerne, sprogcookien og den statistik, der kun kører, hvis I siger ja.",
     title: "Privatlivspolitik",
     description:
       "Hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: hjemmesiden i sig selv indsamler ingenting.",
@@ -27,7 +27,7 @@ const copy = {
   en: {
     metaTitle: "Privacy policy | Kestro",
     metaDescription:
-      "How Kestro handles personal data. The website sets no cookies and uses no analytics.",
+      "How Kestro handles personal data: the contact forms, the language cookie, and the statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
       "What data we process, why, and what you can require. Short version: the website itself collects nothing.",
@@ -51,8 +51,8 @@ const sections: Section[] = [
     heading: { da: "Kort fortalt", en: "In short" },
     body: [
       {
-        da: "Denne hjemmeside bruger ingen analyse- eller sporingsværktøjer, viser ingen reklamer og henter intet fra tredjeparter. Skrifttyper og billeder ligger på vores eget domæne. Der sættes én cookie, og den husker kun, hvilket sprog I læser siden på – se afsnittet om cookies nedenfor.",
-        en: "This website uses no analytics or tracking tools, shows no advertising, and loads nothing from third parties. Fonts and images are served from our own domain. One cookie is set, and it only remembers which language you are reading the site in — see the cookie section below.",
+        da: "Denne hjemmeside viser ingen reklamer og deler ikke oplysninger til markedsføring. Skrifttyper og billeder ligger på vores eget domæne. Vi bruger Google Analytics til at se, hvilke sider der bliver læst – men kun hvis I aktivt siger ja. Siger I nej, bliver der ikke hentet noget fra Google overhovedet.",
+        en: "This website shows no advertising and shares nothing for marketing. Fonts and images are served from our own domain. We use Google Analytics to see which pages get read — but only if you actively say yes. If you say no, nothing is loaded from Google at all.",
       },
     ],
   },
@@ -64,8 +64,8 @@ const sections: Section[] = [
         en: "We set one cookie: kestro-lang. It remembers whether you are reading the site in Danish or English, so your choice holds on your next visit. It contains only the language code, it expires after a year, and it is not used for statistics, profiling or marketing.",
       },
       {
-        da: "Fordi den er nødvendig for at levere siden på det sprog, I har valgt, kræver den ikke samtykke, og der er derfor ingen cookiebanner. Kommer der på et tidspunkt statistik eller sporing på siden, kommer der også en samtykkeløsning – og denne tekst bliver rettet, før det sker.",
-        en: "Because it is necessary to deliver the site in the language you chose, it requires no consent, and there is therefore no cookie banner. If statistics or tracking are ever added, a consent mechanism comes with them — and this text is corrected before that happens.",
+        da: "Sprogcookien er nødvendig for at levere siden på det sprog, I har valgt, og kræver derfor ikke samtykke. Statistik gør: siger I ja i banneret, sætter Google Analytics sine egne cookies (_ga og _ga_*) for at kunne skelne besøg fra hinanden. De udløber efter to år og indeholder et tilfældigt id, ikke et navn. Siger I nej – eller svarer I ikke – bliver der hverken sat cookies eller sendt data.",
+        en: "The language cookie is necessary to deliver the site in the language you chose, so it needs no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random id, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
       },
     ],
   },
@@ -100,6 +100,23 @@ const sections: Section[] = [
     ],
   },
   {
+    heading: { da: "Statistik (Google Analytics)", en: "Statistics (Google Analytics)" },
+    body: [
+      {
+        da: "Hvis I accepterer statistik i banneret, indlæser vi Google Analytics 4 og måler, hvilke sider der bliver læst, hvordan man er kommet ind på siden, og om en formular blev sendt. Vi sender aldrig navn, e-mail, telefonnummer eller indholdet af en besked til Google.",
+        en: "If you accept statistics in the banner, we load Google Analytics 4 and measure which pages get read, how you arrived, and whether a form was sent. We never send your name, email, phone number or the content of a message to Google.",
+      },
+      {
+        da: 'Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket "Cookies og statistik" nederst på siden; derefter indlæses Google ikke igen.',
+        en: 'The legal basis is your consent — GDPR article 6(1)(a) and the Danish cookie order § 3. You can withdraw it at any time through the "Cookies and statistics" link at the bottom of the page; after that, Google is not loaded again.',
+      },
+      {
+        da: "Google LLC behandler oplysningerne som databehandler og er amerikansk. Overførslen sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og EU-US Data Privacy Framework. Vi har slået deling til Googles annonceprodukter fra.",
+        en: "Google LLC processes the data as our processor and is a US company. The transfer rests on the European Commission's standard contractual clauses and the EU-US Data Privacy Framework. Sharing with Google's advertising products is switched off.",
+      },
+    ],
+  },
+  {
     heading: { da: "Serverlogs", en: "Server logs" },
     body: [
       {
@@ -112,12 +129,12 @@ const sections: Section[] = [
     heading: { da: "Leverandører og overførsel", en: "Providers and transfers" },
     body: [
       {
-        da: "Hjemmesiden hostes hos Vercel Inc. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Begge behandler personoplysninger på vores vegne som databehandlere.",
-        en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. Both process personal data on our behalf as processors.",
+        da: "Hjemmesiden hostes hos Vercel Inc. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle tre er databehandlere på vores vegne.",
+        en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. If you accept statistics, Google LLC also processes visit data for us. All three are processors acting on our behalf.",
       },
       {
-        da: "Vercel og Resend er amerikanske leverandører. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
-        en: "Vercel and Resend are US providers. Transfers of personal data to the US take place under the European Commission's standard contractual clauses and/or the EU-US Data Privacy Framework.",
+        da: "Vercel, Resend og Google er amerikanske leverandører. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
+        en: "Vercel, Resend and Google are US providers. Transfers of personal data to the US take place under the European Commission's standard contractual clauses and/or the EU-US Data Privacy Framework.",
       },
     ],
   },

@@ -72,6 +72,7 @@ export const ui = {
   bookCall: { da: "Få et tilbud", en: "Get a quote" },
   talkToAdviser: { da: "Tal med en rådgiver", en: "Talk to an adviser" },
   openMenu: { da: "Åbn eller luk menu", en: "Open or close menu" },
+  mainNav: { da: "Hovedmenu", en: "Main navigation" },
   breadcrumb: { da: "Brødkrumme", en: "Breadcrumb" },
   language: { da: "Sprog", en: "Language" },
   callUs: { da: "Ring til os", en: "Call us" },

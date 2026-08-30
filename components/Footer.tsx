@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
+import ConsentReset from "./ConsentReset";
 import { company, postalAddress } from "@/lib/company";
 import { companyNav, serviceNav, ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -123,6 +124,7 @@ export default function Footer({ lang }: { lang: Lang }) {
           <p>
             &copy; {new Date().getFullYear()} Kestro. {c.rights}
           </p>
+          <ConsentReset lang={lang} />
         </div>
       </Container>
     </footer>

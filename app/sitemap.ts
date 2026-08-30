@@ -16,37 +16,35 @@ function absolute(path: string, lang: "da" | "en"): string {
   return p === "/" ? BASE_URL : `${BASE_URL}${p}`;
 }
 
-type Route = { path: string; priority: number; lastModified?: string };
+type Route = { path: string; lastModified?: string };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: Route[] = [
-    { path: "/", priority: 1 },
-    { path: "/flaadeloesninger", priority: 0.9 },
-    { path: "/produkter", priority: 0.9 },
-    { path: "/modeller", priority: 0.9 },
-    { path: "/maskinen", priority: 0.8 },
-    { path: "/kvalitet", priority: 0.8 },
-    { path: "/priser", priority: 0.8 },
-    { path: "/tilbud-eksempel", priority: 0.8 },
-    { path: "/vejledninger", priority: 0.8 },
-    { path: "/saelg-til-os", priority: 0.8 },
-    { path: "/reparation", priority: 0.8 },
-    { path: "/ydelser", priority: 0.8 },
-    { path: "/tilbud", priority: 0.9 },
-    { path: "/flaadeloesninger/forespoergsel", priority: 0.7 },
-    { path: "/om-os", priority: 0.7 },
-    { path: "/kontakt", priority: 0.7 },
-    { path: "/privatlivspolitik", priority: 0.3 },
+    { path: "/" },
+    { path: "/flaadeloesninger" },
+    { path: "/produkter" },
+    { path: "/modeller" },
+    { path: "/maskinen" },
+    { path: "/kvalitet" },
+    { path: "/priser" },
+    { path: "/tilbud-eksempel" },
+    { path: "/vejledninger" },
+    { path: "/saelg-til-os" },
+    { path: "/reparation" },
+    { path: "/ydelser" },
+    { path: "/tilbud" },
+    { path: "/flaadeloesninger/forespoergsel" },
+    { path: "/om-os" },
+    { path: "/kontakt" },
+    { path: "/privatlivspolitik" },
   ];
 
   const categoryRoutes: Route[] = categories.map((category) => ({
     path: `/produkter/${category.slug}`,
-    priority: 0.8,
   }));
 
   const modelRoutes: Route[] = models.map((model) => ({
     path: `/modeller/${model.slug}`,
-    priority: 0.7,
   }));
 
   /*
@@ -62,13 +60,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
    */
   const guideRoutes: Route[] = guides.map((guide) => ({
     path: `/vejledninger/${guide.slug}`,
-    priority: 0.7,
     lastModified: guide.updated,
   }));
 
   const serviceRoutes: Route[] = services.map((service) => ({
     path: `/ydelser/${service.slug}`,
-    priority: 0.8,
   }));
 
   const routes: Route[] = [
@@ -84,10 +80,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * alternates for both, so Google pairs the Danish and English versions
    * instead of treating them as duplicates.
    *
+   * No <priority> and no <changefreq>: Google has stated it ignores both, and
+   * a field that is read by nothing is a field that can only be wrong. The one
+   * hint it does use is <lastmod>, which is why only the pages with a real
+   * edit date carry one.
+   *
    * hreflang is "da", not "da-DK": the region subtag would target Danish
    * speakers in Denmark only, and the same pages serve Norway.
    */
-  return routes.flatMap(({ path, priority, lastModified }) => {
+  return routes.flatMap(({ path, lastModified }) => {
     const da = absolute(path, "da");
     const en = absolute(path, "en");
     const languages = { da, en, "x-default": da };
@@ -96,15 +97,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       {
         url: da,
         ...(lastModified ? { lastModified } : {}),
-        changeFrequency: "monthly" as const,
-        priority,
         alternates: { languages },
       },
       {
         url: en,
         ...(lastModified ? { lastModified } : {}),
-        changeFrequency: "monthly" as const,
-        priority: Math.round(priority * 0.9 * 100) / 100,
         alternates: { languages },
       },
     ];

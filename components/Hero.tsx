@@ -90,6 +90,8 @@ export default function Hero({ lang }: { lang: Lang }) {
         src="/network-mesh.svg"
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         className="pointer-events-none absolute bottom-0 right-0 hidden w-[52%] max-w-3xl opacity-70 lg:block"
       />
       {/* eslint-enable @next/next/no-img-element */}

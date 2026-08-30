@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { company } from "@/lib/company";
+import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
 const CONTACT_EMAIL = "info@kestro.dk";
@@ -290,6 +291,13 @@ export default function ContactForm({
 
       if (response.ok) {
         setStatus("sent");
+        /* The conversion. Nothing the visitor typed is sent — only which form
+           it was and, on the quote form, the quantity band, because that is
+           the one dimension that says whether the traffic is the right kind. */
+        track(events.generateLead, {
+          form: quote ? "quote" : "contact",
+          ...(quote ? { quantity_band: values.antal } : {}),
+        });
         return;
       }
 

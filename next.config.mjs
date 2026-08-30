@@ -3,9 +3,11 @@
 /*
  * Security headers.
  *
- * The site is static, sets no cookies, and loads nothing from a third party —
- * fonts are self-hosted by next/font and every image is local. That makes a
- * tight policy cheap to run: nothing legitimate needs an external origin.
+ * The site is static, fonts are self-hosted by next/font and every image is
+ * local, so the policy stays tight: the only external origin allowed is
+ * Google's tag, and it is only ever requested after a visitor has accepted
+ * statistics. Listing it here does not load it — components/Analytics.tsx
+ * decides that — it only means the browser will not block it when it does.
  *
  * script-src keeps 'unsafe-inline' because Next inlines its hydration script
  * into statically generated HTML, and a per-request nonce cannot match a
@@ -15,11 +17,11 @@
  */
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self'",
-  "connect-src 'self'",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
   "form-action 'self'",
   "base-uri 'self'",
   "frame-ancestors 'none'",

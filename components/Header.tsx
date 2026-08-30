@@ -88,7 +88,10 @@ export default function Header({ lang }: { lang: Lang }) {
           button in the hero directly underneath. It comes back at xl, and in
           between the nav's own Kontakt link still reaches the same page.
         */}
-        <nav className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7">
+        <nav
+          aria-label={ui.mainNav[lang]}
+          className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7"
+        >
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}

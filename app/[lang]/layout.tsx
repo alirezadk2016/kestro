@@ -5,6 +5,8 @@ import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import Analytics from "@/components/Analytics";
+import ConsentBanner from "@/components/ConsentBanner";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -20,6 +22,21 @@ const jakarta = Plus_Jakarta_Sans({
 export function generateStaticParams() {
   return langs.map((lang) => ({ lang }));
 }
+
+/*
+ * Only "da" and "en" are languages.
+ *
+ * Without this, anything with a dot in it that middleware leaves alone —
+ * /index.html, /wp-login.php, /style.css, and every path a scanner tries all
+ * night — matched this segment with lang="index.html". The layout calls
+ * notFound() for that, but the page beside it renders in parallel and reaches
+ * copy[lang] first, throws, and the request comes back 500 instead of 404.
+ *
+ * Google treats a 5xx as "the host is unwell" and slows the crawl of the whole
+ * site; a 404 costs nothing. Rejecting the param at the routing layer fixes it
+ * for every page at once rather than one guard per file.
+ */
+export const dynamicParams = false;
 
 const meta = {
   da: {
@@ -130,6 +147,8 @@ export default function RootLayout({
         </main>
         <Footer lang={lang} />
         <Reveal />
+        <ConsentBanner lang={lang} />
+        <Analytics />
       </body>
     </html>
   );
