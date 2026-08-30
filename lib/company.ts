@@ -137,8 +137,8 @@ const people: TeamMember[] = [
       en: "Co-founder & Technical Director",
     },
     bio: {
-      da: "Står bag den tekniske side af Kestro: sitet, produktdata og kontrollen, før en maskine bliver beskrevet her. Han holder øje med, at specifikationerne passer, at komponenterne spiller sammen, og at det, siden siger om en model, er det samme, som står i tilbuddet.",
-      en: "Behind the technical side of Kestro: the site, the product data and the checking that happens before a machine is described here. He watches that the specifications hold, that the components work together, and that what the site says about a model is what turns up in the quote.",
+      da: "Står bag den tekniske side af Kestro: sitet, produktdata og den tekniske kontrol, før en maskine bliver præsenteret. Han sikrer, at specifikationerne er korrekte, at komponenterne er kompatible, og at det, der står på siden, stemmer overens med det, der indgår i tilbuddet.",
+      en: "Behind the technical side of Kestro: the site, the product data and the technical checks before a machine is presented. He makes sure the specifications are correct, that the components are compatible, and that what the site says matches what goes into the quote.",
     },
   },
 ];
