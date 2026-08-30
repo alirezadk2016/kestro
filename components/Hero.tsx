@@ -137,7 +137,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                   site and it is worded in one place.
                 */}
                 <Link
-                  href={localePath("/kontakt", lang)}
+                  href={localePath("/tilbud", lang)}
                   className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 text-sm font-semibold tracking-tight text-white transition hover:bg-brand-500"
                 >
                   {ui.bookCall[lang]}

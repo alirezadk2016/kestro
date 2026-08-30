@@ -51,6 +51,7 @@ export const serviceNav: NavLink[] = [
 export const companyNav: NavLink[] = [
   { href: "/", label: { da: "Forside", en: "Home" } },
   { href: "/om-os", label: { da: "Om os", en: "About us" } },
+  { href: "/tilbud", label: { da: "Få et tilbud", en: "Get a quote" } },
   { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
   { href: "/privatlivspolitik", label: { da: "Privatlivspolitik", en: "Privacy policy" } },
 ];
@@ -64,7 +65,11 @@ export const companyNav: NavLink[] = [
  * quoted is the one that gets pressed.
  */
 export const ui = {
-  bookCall: { da: "Få en pris på jeres løsning", en: "Get a price for your setup" },
+  /* The one primary action on the site. Worded here so the header, the hero
+     and the closing band cannot end up promising three different things —
+     and matching the "Få et tilbud" on the model pages it now shares a
+     destination with. */
+  bookCall: { da: "Få et tilbud", en: "Get a quote" },
   talkToAdviser: { da: "Tal med en rådgiver", en: "Talk to an adviser" },
   openMenu: { da: "Åbn eller luk menu", en: "Open or close menu" },
   breadcrumb: { da: "Brødkrumme", en: "Breadcrumb" },

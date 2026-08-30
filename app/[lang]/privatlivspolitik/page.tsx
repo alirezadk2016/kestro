@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
-import { alternatesFor, type Lang, type Localized } from "@/lib/i18n";
+import { metaFor, type Lang, type Localized } from "@/lib/i18n";
 
 /*
  * Required under GDPR art. 13 the moment a visitor can send us their name and
@@ -133,7 +133,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/privatlivspolitik", params.lang),
+    ...metaFor("/privatlivspolitik", params.lang),
   };
 }
 

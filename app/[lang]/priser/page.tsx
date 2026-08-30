@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
-import { localePath, alternatesFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
 
 /*
  * What it costs, without a price list.
@@ -163,7 +163,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/priser", params.lang),
+    ...metaFor("/priser", params.lang),
   };
 }
 

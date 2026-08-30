@@ -47,7 +47,7 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
 
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           <div className="flex h-20 items-center justify-center border border-white/15 bg-white/[0.04]">
-            <Logo className="h-6 w-auto opacity-90" />
+            <Logo className="h-6 w-auto opacity-90" idPrefix="trust" />
           </div>
           {Array.from({ length: 5 }).map((_, i) => (
             <Link

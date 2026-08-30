@@ -40,15 +40,16 @@ const copy = {
 
 export default function PriceOnRequest({
   lang,
-  /** Where the enquiry goes. Fleet quantities have their own form. */
-  href = "/kontakt",
+  /** Named on the quote form when the buyer arrives from a model page. */
+  equipment,
   className = "",
 }: {
   lang: Lang;
-  href?: string;
+  equipment?: string;
   className?: string;
 }) {
   const c = copy[lang];
+  const href = equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud";
 
   return (
     <div className={`border border-white/10 bg-white/[0.04] p-6 sm:p-7 ${className}`}>

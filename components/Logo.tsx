@@ -33,15 +33,22 @@ export default function Logo({
   tone = "brand",
   className,
   title,
+  idPrefix,
 }: {
   tone?: LogoTone;
   className?: string;
   /** Give the mark an accessible name when it stands alone. */
   title?: string;
+  /**
+   * Distinguishes this instance's gradient ids from every other mark on the
+   * page. The header, the footer and the trust strip all render the brand
+   * tone, and `kestro-brand-stem` three times over is invalid HTML: the second
+   * and third marks resolve url(#…) to the first one's gradient. This is a
+   * prop rather than useId() because the mark renders on the server.
+   */
+  idPrefix?: string;
 }) {
-  /* A unique suffix per instance: two gradients with the same id on one page
-     make the second mark render with the first one's colours. */
-  const id = `kestro-${tone}`;
+  const id = `kestro-${idPrefix ?? tone}`;
 
   return (
     <svg

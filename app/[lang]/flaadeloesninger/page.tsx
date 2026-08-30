@@ -15,7 +15,7 @@ import Container from "@/components/Container";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
-import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -77,7 +77,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/flaadeloesninger", params.lang),
+    ...metaFor("/flaadeloesninger", params.lang),
   };
 }
 

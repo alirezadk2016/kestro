@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
-import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -73,7 +73,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/saelg-til-os", params.lang),
+    ...metaFor("/saelg-til-os", params.lang),
   };
 }
 

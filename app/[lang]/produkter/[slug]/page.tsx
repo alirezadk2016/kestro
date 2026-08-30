@@ -9,7 +9,7 @@ import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryIcon } from "@/lib/category-icons";
-import { localePath, alternatesFor, langs, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => categories.map((category) => ({ lang, slug: category.slug })));
@@ -68,7 +68,7 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   return {
     title: category.metaTitle[params.lang],
     description: category.metaDescription[params.lang],
-    alternates: alternatesFor(`/produkter/${category.slug}`, params.lang),
+    ...metaFor(`/produkter/${category.slug}`, params.lang),
   };
 }
 

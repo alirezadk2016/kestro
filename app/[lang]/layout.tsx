@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { company } from "@/lib/company";
-import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
+import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
 /* One family for the whole site. The wordmark is set in it too, so a heading
@@ -41,7 +41,7 @@ export function generateMetadata({ params }: { params: { lang: string } }): Meta
     metadataBase: new URL(SITE_ORIGIN),
     title: meta[lang].title,
     description: meta[lang].description,
-    alternates: alternatesFor("/", lang),
+    ...metaFor("/", lang),
   };
 }
 

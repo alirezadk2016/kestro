@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
-import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 /*
  * The fleet enquiry, as a page.
@@ -66,7 +66,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle as string,
     description: c.metaDescription as string,
-    alternates: alternatesFor("/flaadeloesninger/forespoergsel", params.lang),
+    ...metaFor("/flaadeloesninger/forespoergsel", params.lang),
   };
 }
 
@@ -95,6 +95,8 @@ export default function FleetEnquiryPage({ params }: { params: { lang: Lang } })
           <div className="mt-10 border border-white/10 bg-white/[0.04] p-6 shadow-sm sm:p-8">
             <ContactForm
               lang={lang}
+              quote
+              defaultQuantity="50+"
               subjectPrefix={formCopy.subjectPrefix}
               messagePlaceholder={formCopy.messagePlaceholder}
             />

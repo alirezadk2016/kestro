@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { company } from "@/lib/company";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
@@ -48,6 +48,24 @@ const copy = {
     thanksAgain: "Send en besked mere",
     privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
     privacyLink: "privatlivspolitikken",
+    quoteSubject: "Tilbudsforespørgsel",
+    quantityLegend: "Hvor mange maskiner?",
+    quantityHelp: "Vælg det nærmeste – tallet må gerne ændre sig undervejs.",
+    equipment: "Udstyr eller model",
+    equipmentPlaceholder: "Fx bærbare til kontorbrug, eller ThinkPad T14",
+    ram: "Hukommelse",
+    storage: "Lagerplads",
+    keyboard: "Tastatur",
+    deadline: "Hvornår skal det stå klar?",
+    deadlinePlaceholder: "Fx inden udgangen af oktober",
+    dontKnow: "Ved ikke endnu",
+    quoteMessage: "Andet, vi skal vide",
+    quoteMessagePlaceholder:
+      "Fx: dockingstationer til alle pladser, vi skal samtidig af med 30 ældre maskiner, levering til to adresser.",
+    quoteSubmit: "Få et tilbud",
+    quoteThanksTitle: "Tak – forespørgslen er sendt.",
+    quoteThanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    nextTitle: "Hvad sker der nu?",
     defaultSubject: "Henvendelse",
     defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
     from: "fra",
@@ -79,6 +97,24 @@ const copy = {
     thanksAgain: "Send another message",
     privacy: "We use the details only to answer the enquiry. See the",
     privacyLink: "privacy policy",
+    quoteSubject: "Quote request",
+    quantityLegend: "How many machines?",
+    quantityHelp: "Pick the nearest — the number can still change.",
+    equipment: "Equipment or model",
+    equipmentPlaceholder: "E.g. laptops for office use, or ThinkPad T14",
+    ram: "Memory",
+    storage: "Storage",
+    keyboard: "Keyboard",
+    deadline: "When does it need to be ready?",
+    deadlinePlaceholder: "E.g. before the end of October",
+    dontKnow: "Not sure yet",
+    quoteMessage: "Anything else we should know",
+    quoteMessagePlaceholder:
+      "E.g. docking stations for every desk, we also need to get rid of 30 older machines, delivery to two addresses.",
+    quoteSubmit: "Get a quote",
+    quoteThanksTitle: "Thank you — your request is on its way.",
+    quoteThanksBody: "We will come back to you within one working day.",
+    nextTitle: "What happens now?",
     defaultSubject: "Enquiry",
     defaultPlaceholder:
       "Tell us what you need — number of devices, specifications, timing and anything else.",
@@ -87,37 +123,131 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
+/* Kept out of `copy` so that stays a flat string map: what happens after the
+   form is sent, in the order it happens. Nothing here is a promise the site
+   does not already make elsewhere. */
+const nextSteps: Record<Lang, string[]> = {
+  da: [
+    "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
+    "Vi finder maskinerne i leverandørnetværket og sender et tilbud med pris per enhed, stand, antal og leveringstid.",
+    "I godkender – eller siger nej. Der er ingen binding i at spørge.",
+  ],
+  en: [
+    "We read the request and ask if anything is missing.",
+    "We find the machines in our supplier network and send a quote with price per unit, condition, quantity and lead time.",
+    "You approve — or you say no. Asking commits you to nothing.",
+  ],
+};
+
 type ContactFormProps = {
   lang: Lang;
   subjectPrefix?: Localized;
   messagePlaceholder?: Localized;
   companyRequired?: boolean;
+  /**
+   * Quote mode: the same form, plus the handful of fields that decide a price.
+   *
+   * A blank message box asks a buyer to compose a specification from memory,
+   * and what comes back is usually "hvad koster en brugt bærbar?" — a question
+   * nobody can answer, so the first reply has to ask for quantity, memory,
+   * disk and keyboard anyway. Asking here saves that round trip. Everything
+   * except quantity may be left at "ved ikke endnu": a buyer who does not know
+   * the specification yet is exactly who we want to hear from.
+   */
+  quote?: boolean;
+  /** Prefills the equipment field, e.g. from a model page. */
+  defaultEquipment?: string;
+  /** Preselects a quantity band, e.g. from a fleet page. */
+  defaultQuantity?: string;
 };
+
+/* The quantity bands. Ranges rather than exact numbers: a buyer rarely knows
+   whether it is 18 or 22 machines, and the band is what changes how we source. */
+const quantities = ["1", "2–9", "10–49", "50+"] as const;
 
 export default function ContactForm({
   lang,
   subjectPrefix,
   messagePlaceholder,
   companyRequired = true,
+  quote = false,
+  defaultEquipment = "",
+  defaultQuantity = "",
 }: ContactFormProps) {
   const c = copy[lang];
-  const subject_prefix = subjectPrefix?.[lang] ?? c.defaultSubject;
-  const placeholder = messagePlaceholder?.[lang] ?? c.defaultPlaceholder;
+  const subject_prefix = subjectPrefix?.[lang] ?? (quote ? c.quoteSubject : c.defaultSubject);
+  const placeholder =
+    messagePlaceholder?.[lang] ?? (quote ? c.quoteMessagePlaceholder : c.defaultPlaceholder);
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
-  const [values, setValues] = useState({
+  const emptyValues = {
     navn: "",
     virksomhed: "",
     email: "",
     telefon: "",
     besked: "",
+    /* Quote fields. Unused and never rendered when `quote` is false. */
+    antal: defaultQuantity || quantities[0],
+    udstyr: defaultEquipment,
+    ram: "",
+    disk: "",
+    tastatur: "",
+    hvornaar: "",
     /* Honeypot. Hidden from people, filled in by bots. */
     website: "",
-  });
+  };
+  const [values, setValues] = useState(emptyValues);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  /*
+   * Prefill from the link the buyer arrived on: /tilbud?model=…&antal=….
+   *
+   * Read here rather than from the page's searchParams because the quote page
+   * is prerendered — a server component that reads a query string would have
+   * to opt the whole page out of static rendering to fill in one field. This
+   * runs after hydration, so the markup the server sent and the markup React
+   * expects still match.
+   */
+  useEffect(() => {
+    if (!quote) return;
+    const params = new URLSearchParams(window.location.search);
+    const model = params.get("model")?.slice(0, 120) ?? "";
+    const band = params.get("antal") ?? "";
+    if (!model && !band) return;
+    setValues((prev) => ({
+      ...prev,
+      udstyr: prev.udstyr || model,
+      antal: quantities.includes(band as (typeof quantities)[number]) ? band : prev.antal,
+    }));
+  }, [quote]);
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  /**
+   * What the enquiry actually says.
+   *
+   * In quote mode the specification is a set of fields rather than prose, so
+   * it is written out here as labelled lines — the same text goes to the API
+   * and into the mail fallback, so the two can never describe different
+   * requests.
+   */
+  function messageBody() {
+    if (!quote) return values.besked;
+
+    const spec = [
+      `${c.quantityLegend} ${values.antal}`,
+      values.udstyr ? `${c.equipment}: ${values.udstyr}` : null,
+      values.ram ? `${c.ram}: ${values.ram}` : null,
+      values.disk ? `${c.storage}: ${values.disk}` : null,
+      values.tastatur ? `${c.keyboard}: ${values.tastatur}` : null,
+      values.hvornaar ? `${c.deadline} ${values.hvornaar}` : null,
+    ].filter((line): line is string => line !== null);
+
+    return values.besked ? `${spec.join("\n")}\n\n${values.besked}` : spec.join("\n");
   }
 
   /** The finished message, for the visitor to copy or hand to their mail app. */
@@ -129,7 +259,7 @@ export default function ContactForm({
       `${c.email}: ${values.email}`,
       values.telefon ? `${c.phone}: ${values.telefon}` : null,
       "",
-      values.besked,
+      messageBody(),
     ]
       .filter((line) => line !== null)
       .join("\n");
@@ -151,7 +281,7 @@ export default function ContactForm({
           company: values.virksomhed,
           email: values.email,
           phone: values.telefon,
-          message: values.besked,
+          message: messageBody(),
           subject: subject_prefix,
           page: window.location.pathname,
           website: values.website,
@@ -247,20 +377,31 @@ export default function ContactForm({
     return (
       <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
         <h3 className="font-display text-xl font-bold tracking-tight text-paper">
-          {c.thanksTitle}
+          {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">{c.thanksBody}</p>
+        <p className="mt-3 text-base leading-7 text-paper/65">
+          {quote ? c.quoteThanksBody : c.thanksBody}
+        </p>
+
+        {quote && (
+          <ol className="mt-6 space-y-3 border-t border-white/10 pt-5">
+            {nextSteps[lang].map((step, i) => (
+              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/70">
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
+                >
+                  {i + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+        )}
         <button
           type="button"
           onClick={() => {
-            setValues({
-              navn: "",
-              virksomhed: "",
-              email: "",
-              telefon: "",
-              besked: "",
-              website: "",
-            });
+            setValues(emptyValues);
             setStatus("idle");
           }}
           className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
@@ -273,6 +414,37 @@ export default function ContactForm({
 
   return (
     <form onSubmit={handleSubmit} className="relative space-y-5">
+      {quote && (
+        <fieldset>
+          <legend className="mb-2 text-sm font-medium text-paper/80">
+            {c.quantityLegend} <span className="text-brand-400">*</span>
+          </legend>
+          <div className="flex flex-wrap gap-2">
+            {quantities.map((band) => (
+              <label
+                key={band}
+                className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition ${
+                  values.antal === band
+                    ? "border-brand-400 bg-brand-600/20 text-paper"
+                    : "border-white/15 bg-white/5 text-paper/70 hover:border-white/35 hover:text-paper"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="antal"
+                  value={band}
+                  checked={values.antal === band}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                {band}
+              </label>
+            ))}
+          </div>
+          <p className="mt-2 text-xs leading-5 text-paper/50">{c.quantityHelp}</p>
+        </fieldset>
+      )}
+
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/80">
@@ -343,15 +515,108 @@ export default function ContactForm({
         </div>
       </div>
 
+      {quote && (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/80">
+              {c.equipment}
+            </label>
+            <input
+              id="udstyr"
+              name="udstyr"
+              type="text"
+              value={values.udstyr}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.equipmentPlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/80">
+              {c.ram}
+            </label>
+            <select
+              id="ram"
+              name="ram"
+              value={values.ram}
+              onChange={handleChange}
+              className={inputClasses}
+            >
+              <option value="">{c.dontKnow}</option>
+              <option value="8 GB">8 GB</option>
+              <option value="16 GB">16 GB</option>
+              <option value="32 GB+">32 GB+</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/80">
+              {c.storage}
+            </label>
+            <select
+              id="disk"
+              name="disk"
+              value={values.disk}
+              onChange={handleChange}
+              className={inputClasses}
+            >
+              <option value="">{c.dontKnow}</option>
+              <option value="256 GB SSD">256 GB SSD</option>
+              <option value="512 GB SSD">512 GB SSD</option>
+              <option value="1 TB SSD+">1 TB SSD+</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/80">
+              {c.keyboard}
+            </label>
+            <select
+              id="tastatur"
+              name="tastatur"
+              value={values.tastatur}
+              onChange={handleChange}
+              className={inputClasses}
+            >
+              <option value="">{c.dontKnow}</option>
+              <option value="Dansk">Dansk</option>
+              <option value="Norsk">Norsk</option>
+              <option value="Engelsk (UK/US)">Engelsk (UK/US)</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/80">
+              {c.deadline}
+            </label>
+            <input
+              id="hvornaar"
+              name="hvornaar"
+              type="text"
+              value={values.hvornaar}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.deadlinePlaceholder}
+            />
+          </div>
+        </div>
+      )}
+
       <div>
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
-          {c.message} <span className="text-brand-400">*</span>
+          {quote ? c.quoteMessage : c.message}{" "}
+          {quote ? (
+            <span className="text-paper/45">{c.optional}</span>
+          ) : (
+            <span className="text-brand-400">*</span>
+          )}
         </label>
         <textarea
           id="besked"
           name="besked"
-          required
-          rows={5}
+          required={!quote}
+          rows={quote ? 4 : 5}
           value={values.besked}
           onChange={handleChange}
           className={inputClasses}
@@ -380,7 +645,7 @@ export default function ContactForm({
           disabled={status === "sending"}
           className="inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 disabled:opacity-60"
         >
-          {status === "sending" ? c.sending : c.submit}
+          {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>
 
         <p className="mt-3 text-xs leading-5 text-paper/50">

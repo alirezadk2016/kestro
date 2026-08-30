@@ -7,7 +7,7 @@ import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
 import { company } from "@/lib/company";
-import { localePath, alternatesFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -36,7 +36,7 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   return {
     title: service.metaTitle[params.lang],
     description: service.metaDescription[params.lang],
-    alternates: alternatesFor(`/ydelser/${service.slug}`, params.lang),
+    ...metaFor(`/ydelser/${service.slug}`, params.lang),
   };
 }
 

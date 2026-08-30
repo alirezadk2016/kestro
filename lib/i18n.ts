@@ -66,3 +66,63 @@ export function alternatesFor(path: string, lang: Lang) {
     languages: { da, en, "x-default": da },
   };
 }
+
+/**
+ * The Open Graph block for one page.
+ *
+ * og:url was missing everywhere. A share that carries no URL leaves the
+ * scraper to guess which address the card belongs to — and where a page can be
+ * reached at more than one address, the guess is what gets attributed. It is
+ * built from the same localePath() as the canonical, so the two cannot drift.
+ *
+ * No title, description or image here: Next fills og:title and og:description
+ * from the page's own title and description, and the image comes from the
+ * opengraph-image file convention. Repeating them would be two places to
+ * change every time one of them is edited.
+ */
+/**
+ * The Open Graph block for one page.
+ *
+ * og:url was missing everywhere. A share that carries no URL leaves the
+ * scraper to guess which address the card belongs to — and where a page can be
+ * reached at more than one address, the guess is what gets attributed. It is
+ * built from the same localePath() as the canonical, so the two cannot drift.
+ *
+ * The image has to be named here even though app/opengraph-image.tsx already
+ * generates it: a page that declares `openGraph` replaces the one Next
+ * assembled from the file convention, so leaving it out silently drops
+ * og:image and downgrades the Twitter card to the small one. Resolved against
+ * metadataBase in the layout, so it comes out absolute on the canonical host.
+ *
+ * No title or description: Next fills those from the page's own metadata, and
+ * repeating them would be two places to edit for one change.
+ */
+const OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  type: "image/png",
+};
+
+export function openGraphFor(path: string, lang: Lang) {
+  return {
+    type: "website" as const,
+    siteName: "Kestro",
+    url: localePath(path, lang),
+    locale: lang === "da" ? "da_DK" : "en_GB",
+    alternateLocale: lang === "da" ? "en_GB" : "da_DK",
+    images: [OG_IMAGE],
+  };
+}
+
+/** Canonical, hreflang, Open Graph and the Twitter card for a page. */
+export function metaFor(path: string, lang: Lang) {
+  return {
+    alternates: alternatesFor(path, lang),
+    openGraph: openGraphFor(path, lang),
+    twitter: {
+      card: "summary_large_image" as const,
+      images: [OG_IMAGE],
+    },
+  };
+}

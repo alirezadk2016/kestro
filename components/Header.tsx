@@ -52,7 +52,7 @@ export default function Header({ lang }: { lang: Lang }) {
           href={localePath("/", lang)}
           className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
         >
-          <Logo className="h-7 w-auto" />
+          <Logo className="h-7 w-auto" idPrefix="header" />
           Kestro
         </Link>
 
@@ -148,7 +148,7 @@ export default function Header({ lang }: { lang: Lang }) {
         <div className="hidden items-center gap-4 lg:flex">
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
-            href={localePath("/kontakt", lang)}
+            href={localePath("/tilbud", lang)}
             className="hidden min-h-[44px] items-center whitespace-nowrap bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 xl:inline-flex"
           >
             {ui.bookCall[lang]}
@@ -289,7 +289,7 @@ export default function Header({ lang }: { lang: Lang }) {
             </div>
 
             <Link
-              href={localePath("/kontakt", lang)}
+              href={localePath("/tilbud", lang)}
               onClick={closeMobile}
               className="mt-2 bg-brand-600 px-5 py-3.5 text-center text-sm font-semibold text-paper"
             >

@@ -10,7 +10,7 @@ import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
 import { getCategoryIcon } from "@/lib/category-icons";
-import { localePath, alternatesFor, langs, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -65,7 +65,7 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   return {
     title: model.metaTitle[params.lang],
     description: model.metaDescription[params.lang],
-    alternates: alternatesFor(`/modeller/${model.slug}`, params.lang),
+    ...metaFor(`/modeller/${model.slug}`, params.lang),
   };
 }
 
@@ -176,7 +176,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             {/* The page describes the machine in detail and then used to say
                 nothing about price, which leaves a buyer guessing whether this
                 is a shop that forgot its prices. */}
-            <PriceOnRequest lang={lang} className="mt-6" />
+            <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
           </div>
         </Container>
       </section>

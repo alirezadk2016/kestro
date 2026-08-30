@@ -6,7 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { company } from "@/lib/company";
-import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 /*
  * What a quote from us actually looks like.
@@ -210,7 +210,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/tilbud-eksempel", params.lang),
+    ...metaFor("/tilbud-eksempel", params.lang),
   };
 }
 

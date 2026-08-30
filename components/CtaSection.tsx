@@ -51,7 +51,7 @@ export default function CtaSection({
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              href={localePath("/kontakt", lang)}
+              href={localePath("/tilbud", lang)}
               className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
             >
               {ui.bookCall[lang]}

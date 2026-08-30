@@ -6,7 +6,7 @@ import CtaSection from "@/components/CtaSection";
 import WhyUs from "@/components/WhyUs";
 import TeamSection from "@/components/TeamSection";
 import { primaryContact } from "@/lib/company";
-import { alternatesFor, type Lang } from "@/lib/i18n";
+import { metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -36,7 +36,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/om-os", params.lang),
+    ...metaFor("/om-os", params.lang),
   };
 }
 

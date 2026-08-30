@@ -7,7 +7,7 @@ import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { guides, getGuide } from "@/lib/guides";
 import { company } from "@/lib/company";
-import { localePath, alternatesFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -42,7 +42,7 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   return {
     title: guide.metaTitle[params.lang],
     description: guide.metaDescription[params.lang],
-    alternates: alternatesFor(`/vejledninger/${guide.slug}`, params.lang),
+    ...metaFor(`/vejledninger/${guide.slug}`, params.lang),
   };
 }
 

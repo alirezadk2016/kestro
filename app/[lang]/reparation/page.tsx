@@ -18,7 +18,7 @@ import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
-import { alternatesFor, type Lang } from "@/lib/i18n";
+import { metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -78,7 +78,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/reparation", params.lang),
+    ...metaFor("/reparation", params.lang),
   };
 }
 

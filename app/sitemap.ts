@@ -32,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/saelg-til-os", priority: 0.8 },
     { path: "/reparation", priority: 0.8 },
     { path: "/ydelser", priority: 0.8 },
+    { path: "/tilbud", priority: 0.9 },
     { path: "/flaadeloesninger/forespoergsel", priority: 0.7 },
     { path: "/om-os", priority: 0.7 },
     { path: "/kontakt", priority: 0.7 },

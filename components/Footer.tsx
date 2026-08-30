@@ -43,7 +43,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               href={localePath("/", lang)}
               className="flex min-h-[44px] items-center gap-2.5 font-display text-lg font-extrabold tracking-tight text-paper"
             >
-              <Logo className="h-7 w-auto" />
+              <Logo className="h-7 w-auto" idPrefix="footer" />
               Kestro
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-ink-400">{c.blurb}</p>

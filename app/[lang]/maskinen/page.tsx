@@ -6,7 +6,7 @@ import CtaSection from "@/components/CtaSection";
 import MachineViewer from "@/components/MachineViewer";
 import MachineInside from "@/components/MachineInside";
 import { interiorParts } from "@/lib/machine-parts";
-import { localePath, alternatesFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -54,7 +54,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: alternatesFor("/maskinen", params.lang),
+    ...metaFor("/maskinen", params.lang),
   };
 }
 
