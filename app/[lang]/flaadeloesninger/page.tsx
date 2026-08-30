@@ -17,7 +17,7 @@ import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
-import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -32,6 +32,17 @@ const copy = {
     talkTo: "Tal med",
     eyebrow: "Til flådeindkøb",
     capabilitiesTitle: "Det, større indkøb kræver",
+    scaleEyebrow: "Omfang",
+    scaleTitle: "Ti, halvtreds og to hundrede maskiner er tre forskellige opgaver",
+    scaleLead:
+      "Antallet ændrer ikke bare prisen – det ændrer, hvordan indkøbet skal gribes an. Vi holder ikke lager, men skaffer maskinerne per ordre i vores leverandørnetværk, og det er dér, forskellen mellem ti og to hundrede enheder viser sig først.",
+    scaleClose:
+      "Prisen per enhed følger ikke antallet alene. Den afhænger af model, stand, specifikation og hvad der er tilgængeligt, når I spørger.",
+    scaleCloseLink: "Hvad der afgør prisen",
+    rolloutEyebrow: "Forløbet",
+    rolloutTitle: "Sådan forløber en flådeleverance, uge for uge",
+    rolloutLead:
+      "Rækkefølgen herunder er den samme hver gang. Hvor lang tid hvert trin tager, er den ikke: det afhænger af antal, specifikation og hvad leverandørnetværket har, når I spørger. Ugerne er derfor vejledende og ikke et tilsagn – men de siger, hvad der skal ske hvornår, og hvornår vi har brug for noget fra jer.",
     tradeEyebrow: "Bytteordning",
     tradeTitle: "Ud med det gamle, ind med det nye – i én aftale",
     tradeBody:
@@ -58,6 +69,17 @@ const copy = {
     talkTo: "Talk to",
     eyebrow: "For fleet purchases",
     capabilitiesTitle: "What a larger purchase actually needs",
+    scaleEyebrow: "Scale",
+    scaleTitle: "Ten, fifty and two hundred machines are three different jobs",
+    scaleLead:
+      "Quantity does not just change the price — it changes how the purchase has to be run. We hold no stock; we source per order through our supplier network, and that is where the difference between ten and two hundred units shows up first.",
+    scaleClose:
+      "Price per unit does not follow quantity alone. It depends on model, condition, specification and what is available when you ask.",
+    scaleCloseLink: "What decides the price",
+    rolloutEyebrow: "The process",
+    rolloutTitle: "How a fleet delivery runs, week by week",
+    rolloutLead:
+      "The order below is the same every time. How long each step takes is not: it depends on quantity, specification and what the supplier network has when you ask. The weeks are indicative rather than a commitment — but they say what happens when, and when we need something from you.",
     tradeEyebrow: "Trade-in",
     tradeTitle: "Old out, new in — in one agreement",
     tradeBody:
@@ -145,6 +167,115 @@ const capabilities = [
     description: {
       da: "Vokser I, kan vi holde en aftalt konfiguration ved lige, så nye medarbejdere får samme opsætning som resten – uden at I skal starte forfra med et indkøb hver gang.",
       en: "As you grow, we can keep an agreed configuration on file, so new employees get the same setup as everyone else — without you starting a purchase from scratch each time.",
+    },
+  },
+];
+
+/*
+ * What actually changes with quantity.
+ *
+ * The page promised "from a single team to the whole company" in two
+ * sentences. For a buyer who has to defend the purchase internally, the
+ * useful answer is not that we scale — it is what gets harder, and where the
+ * decision moves. Sourcing per order rather than from stock is exactly where
+ * ten units and two hundred stop being the same job.
+ */
+/*
+ * The one conversion target, with the volume band preselected.
+ *
+ * Step 3, rule 5: every CTA goes to /tilbud, and this page's goes there with
+ * ?antal=50%2B. ContactForm already reads the parameter and prefills the
+ * select — the link was simply never pointed at it. The buyer can still
+ * change the band; this only saves the click for the reader this page is
+ * written for.
+ */
+const QUOTE_HREF = "/tilbud?antal=50%2B";
+
+const scaleTiers = [
+  {
+    range: { da: "Op til omkring 10 enheder", en: "Up to around 10 units" },
+    body: {
+      da: "Én model i ét parti er som regel til at finde, og hele leverancen kan komme på én gang. Her handler det mest om at ramme den rigtige specifikation: hvad skal maskinen bruges til, og hvor længe skal den holde. En udskiftning af firmacomputere i den størrelse kan klares uden en egentlig projektplan.",
+      en: "One model in a single batch is usually findable, and the whole delivery can arrive at once. At this size it is mostly about getting the specification right: what the machine is for, and how long it has to last. Replacing company computers at that scale does not need a project plan.",
+    },
+  },
+  {
+    range: { da: "Omkring 20-50 enheder", en: "Around 20-50 units" },
+    body: {
+      da: "Her begynder ensartetheden at koste noget. Et parti på halvtreds ens maskiner med samme byggeår findes ikke altid, og så står valget mellem at vente, at betale mere, eller at acceptere to nært beslægtede modeller. Vi siger, hvad der reelt kan skaffes, før I binder jer. Samtidig bliver listen over serienumre og den gamle flåde en opgave i sig selv.",
+      en: "This is where uniformity starts to cost something. A batch of fifty identical machines from the same build year is not always out there, and the choice becomes: wait, pay more, or accept two closely related models. We tell you what can actually be sourced before you commit. At the same time, the serial-number list and the old fleet turn into a job of their own.",
+    },
+  },
+  {
+    range: { da: "50-200+ enheder", en: "50-200+ units" },
+    body: {
+      da: "Et indkøb i den størrelse løber typisk over flere leverandører og over tid, og leverancen deles næsten altid op i hold. Konfigurationen skal låses tidligt – ændrer den sig undervejs, begynder sourcingen forfra på resten. Til gengæld er det her, en fast aftalt opsætning tjener sig hjem: support på to hundrede ens maskiner er en anden opgave end support på to hundrede forskellige.",
+      en: "A purchase that size usually runs across several suppliers and over time, and the delivery is nearly always split into batches. The configuration has to be locked early — change it midway and sourcing starts again on whatever is left. In return, this is where an agreed setup pays for itself: supporting two hundred identical machines is a different job from supporting two hundred different ones.",
+    },
+  },
+];
+
+/*
+ * The order of a fleet delivery.
+ *
+ * The weeks are labels for sequence, not a delivery promise — sourcing per
+ * order means the duration genuinely depends on what the network has that
+ * week. Saying so on the page is better than a number we would have to walk
+ * back on the first order that took longer.
+ */
+const rolloutPhases = [
+  {
+    when: { da: "Uge 1 · Afklaring", en: "Week 1 · Scoping" },
+    body: {
+      da: "Vi taler antal, brugstyper og deadline igennem: hvor mange maskiner, til hvilket arbejde, og hvornår de skal stå på bordene. Har I udstyr, der skal væk samtidig, hører vi om det nu frem for til sidst. Ud af det kommer én specifikation, vi begge kan læse.",
+      en: "We go through quantity, user types and deadline: how many machines, for what work, and when they have to be on the desks. If you have equipment that needs to go at the same time, we hear about it now rather than at the end. What comes out is one specification we can both read.",
+    },
+  },
+  {
+    when: { da: "Uge 1-2 · Sourcing og tilbud", en: "Week 1-2 · Sourcing and quote" },
+    body: {
+      da: "Vi søger i leverandørnetværket og vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris per enhed og leveringstid. Kan specifikationen ikke fyldes i det antal, siger vi det og foreslår det nærmeste alternativ i stedet for at love noget, der ikke findes.",
+      en: "We search the supplier network and come back with what can actually be sourced: model, condition, quantity, price per unit and delivery time. If the specification cannot be filled at that quantity, we say so and propose the closest alternative rather than promising something that is not there.",
+    },
+    link: {
+      href: "/ydelser/sourcing-og-indkoeb",
+      label: { da: "Sådan arbejder vi med sourcing", en: "How we work with sourcing" },
+    },
+  },
+  {
+    when: { da: "Efter accept · Klargøring", en: "After acceptance · Preparation" },
+    body: {
+      da: "Vi tester og klargør maskinerne: RAM og lagring bringes op på det aftalte, Windows, drivere og sprogopsætning kommer på plads, og tastaturerne skiftes til nordisk layout. Skal I bruge en liste over serienumre til jeres aktivregister, aftaler vi det her – ikke efter levering.",
+      en: "We test and prepare the machines: memory and storage are brought up to what was agreed, Windows, drivers and language settings are put in place, and the keyboards are changed to a Nordic layout. If you need a serial-number list for your asset register, we agree that here — not after delivery.",
+    },
+    link: {
+      href: "/ydelser/klargoering-og-test",
+      label: { da: "Hvad klargøringen omfatter", en: "What preparation covers" },
+    },
+  },
+  {
+    when: { da: "Levering", en: "Delivery" },
+    body: {
+      da: "Leverancen kommer enten samlet eller i hold. Ved større ordrer er hold som regel det rigtige: I kan begynde at rulle ud på den første portion, mens resten er på vej, i stedet for at vente på, at alt er klar på én gang.",
+      en: "The delivery arrives either in one go or in batches. On larger orders batches are usually right: you can start rolling out the first portion while the rest is on its way, instead of waiting for everything to be ready at once.",
+    },
+    link: {
+      href: "/ydelser/levering",
+      label: { da: "Levering til virksomheden", en: "Delivery to the company" },
+    },
+  },
+  {
+    when: {
+      da: "Efter levering · Det gamle og det næste",
+      en: "After delivery · The old and the next",
+    },
+    body: {
+      da: "Vi kan hente det gamle udstyr og slette lagermedierne, og værdien kan modregnes i indkøbet. Vokser I videre, kan den aftalte konfiguration holdes ved lige, så den næste medarbejder får samme maskine som resten.",
+      en: "We can collect the old equipment and erase the storage media, and the value can be offset against the purchase. If you keep growing, the agreed configuration can be kept on file, so the next employee gets the same machine as everyone else.",
+    },
+    link: {
+      href: "/ydelser/opstart-af-arbejdspladser",
+      label: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
     },
   },
 ];
@@ -249,6 +380,26 @@ const enterpriseFaqs = [
     },
   },
   {
+    question: {
+      da: "Hvad sker der, hvis behovet ændrer sig undervejs?",
+      en: "What happens if the requirement changes along the way?",
+    },
+    answer: {
+      da: "Sig til så tidligt som muligt. Er sourcingen ikke afsluttet, kan vi som regel justere antal eller specifikation undervejs. Er en del af leverancen allerede skaffet, gælder ændringen den resterende del – og vi siger klart, hvad der kan nås, og hvad der ikke kan.",
+      en: "Tell us as early as you can. If the sourcing is not finished, we can usually adjust quantity or specification along the way. If part of the delivery has already been sourced, the change applies to what is left — and we say clearly what can still be done and what cannot.",
+    },
+  },
+  {
+    question: {
+      da: "Kan leverancen deles op i flere hold?",
+      en: "Can the delivery be split into batches?",
+    },
+    answer: {
+      da: "Ja, og ved større ordrer er det ofte det bedste. I kan rulle ud på den første portion, mens resten skaffes, i stedet for at vente på, at hele flåden er samlet.",
+      en: "Yes, and on larger orders it is often the better way. You can roll out the first portion while the rest is sourced, rather than waiting for the whole fleet to be assembled.",
+    },
+  },
+  {
     question: { da: "Hvad med garanti og fakturering?", en: "What about warranty and invoicing?" },
     answer: {
       da: "Garantivilkår og betalingsbetingelser aftaler vi ud fra ordrens omfang. Vi gennemgår det med jer, før I binder jer til noget.",
@@ -261,8 +412,27 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
   const { lang } = params;
   const c = copy[lang];
   const salesContact = primaryContact(lang);
+
+  /* Marked up from the same array <Faq> renders, so the answers Google reads
+     and the answers on the page are the same text by construction. Same
+     inline approach as /priser and /maskinen. */
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: htmlLang[lang],
+    mainEntity: enterpriseFaqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question[lang],
+      acceptedAnswer: { "@type": "Answer", text: faq.answer[lang] },
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      />
       <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
           <Breadcrumbs
@@ -286,7 +456,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
-                href={localePath("/tilbud", lang)}
+                href={localePath(QUOTE_HREF, lang)}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-950 transition hover:bg-paper-dim"
               >
                 {c.sendEnquiry}
@@ -340,6 +510,76 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                 </div>
               </div>
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
+        <Container>
+          <div className="max-w-2xl">
+            <span className="eyebrow text-brand-300">{c.scaleEyebrow}</span>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              {c.scaleTitle}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-paper/65">{c.scaleLead}</p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
+            {scaleTiers.map((tier) => (
+              <div
+                key={tier.range.da}
+                className="border border-white/10 bg-white/[0.04] p-5 sm:p-8"
+              >
+                <h3 className="text-base font-semibold text-paper">{tier.range[lang]}</h3>
+                <p className="mt-2 text-sm leading-6 text-paper/65">{tier.body[lang]}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 max-w-2xl">
+            <p className="text-base leading-7 text-paper/65">{c.scaleClose}</p>
+            <Link
+              href={localePath("/priser", lang)}
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
+            >
+              {c.scaleCloseLink}
+              <ArrowRight className="h-4 w-4" strokeWidth={2} />
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-10 sm:py-20">
+        <Container>
+          <div className="max-w-3xl">
+            <span className="eyebrow text-brand-300">{c.rolloutEyebrow}</span>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              {c.rolloutTitle}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-paper/65">{c.rolloutLead}</p>
+
+            <ol className="mt-10 space-y-6">
+              {rolloutPhases.map((phase, i) => (
+                <li key={phase.when.da} className="flex gap-5">
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-950 text-sm font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="text-base font-semibold text-paper">{phase.when[lang]}</h3>
+                    <p className="mt-1 text-base leading-7 text-paper/65">{phase.body[lang]}</p>
+                    {phase.link && (
+                      <Link
+                        href={localePath(phase.link.href, lang)}
+                        className="mt-2 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
+                      >
+                        {phase.link.label[lang]}
+                        <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                      </Link>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </Container>
       </section>
@@ -413,7 +653,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               </a>
             )}
             <Link
-              href={localePath("/tilbud", lang)}
+              href={localePath(QUOTE_HREF, lang)}
               className={
                 salesContact.phoneHref
                   ? "inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
