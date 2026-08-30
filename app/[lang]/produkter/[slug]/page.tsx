@@ -97,7 +97,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         />
 
         <Container className="relative">
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <BreadcrumbSchema
               lang={lang}
               trail={[
@@ -135,9 +135,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-10 sm:py-24">
+      <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.brandsTitle}
             </h2>
@@ -156,39 +156,53 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               ))}
             </ul>
 
-            <p className="mt-6 text-sm leading-6 text-paper/55">{c.brandsNote}</p>
+            <p className="mt-6 max-w-2xl text-sm leading-6 text-paper/55">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
 
       {exampleModel?.images && (
-        <section className="py-10 sm:py-24">
+        <section className="py-10 sm:py-20">
           <Container>
-            <div className="mx-auto max-w-3xl">
-              <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
-              <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-                {exampleModel.name}
-              </h2>
-              <p className="mt-3 text-base leading-7 text-paper/65">{exampleModel.intro[lang]}</p>
+            {/* Machine on one side, what it is on the other. Stacked, the
+                gallery alone was a screen and a half with the right half of
+                the window empty. */}
+            <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
+              <div className="lg:col-span-6">
+                <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
+                <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                  {exampleModel.name}
+                </h2>
+                <p className="mt-3 text-base leading-7 text-paper/65">{exampleModel.intro[lang]}</p>
+
+                <p className="mt-5 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+
+                <Link
+                  href={localePath(`/modeller/${exampleModel.slug}`, lang)}
+                  className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
+                >
+                  {c.seeAllSpecsPre} {exampleModel.name} <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
 
               {/*
-                Lead image full width, the rest in an even grid – the renders
-                sit on white, so object-contain keeps ports and keyboard
-                uncropped, which is the part a buyer actually looks at.
+                Lead image, then the rest in an even grid – the renders sit on
+                white, so object-contain keeps ports and keyboard uncropped,
+                which is the part a buyer actually looks at.
               */}
-              <div className="mt-8 space-y-3 sm:space-y-4">
-                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25 sm:aspect-[16/10]">
+              <div className="space-y-3 sm:space-y-4 lg:col-span-6">
+                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25">
                   <Image
                     src={exampleModel.images[0].src}
                     alt={exampleModel.images[0].alt[lang]}
                     width={1179}
                     height={1120}
                     className="h-full w-full object-contain p-3 sm:p-6"
-                    sizes="(max-width: 768px) 92vw, 768px"
+                    sizes="(max-width: 1024px) 92vw, 550px"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
@@ -199,32 +213,22 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                         alt={img.alt[lang]}
                         width={1179}
                         height={1120}
-                        className="h-full w-full object-contain p-2 sm:p-4"
-                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 45vw, 250px"
+                        className="h-full w-full object-contain p-2 sm:p-3"
+                        sizes="(max-width: 640px) 30vw, 175px"
                       />
                     </div>
                   ))}
                 </div>
               </div>
-
-              <p className="mt-4 text-sm leading-6 text-paper/55">{c.imageNote}</p>
-
-              <Link
-                href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                className="mt-6 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
-              >
-                {c.seeAllSpecsPre} {exampleModel.name}{" "}
-                <span aria-hidden="true">&rarr;</span>
-              </Link>
             </div>
           </Container>
         </section>
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="mx-auto max-w-3xl">
+            <div className="max-w-3xl">
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.modelsTitle}
               </h2>
@@ -267,9 +271,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </section>
       )}
 
-      <section className="border-t border-white/10 py-10 sm:py-24">
+      <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.useCases}
             </h2>
@@ -296,9 +300,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         </Container>
       </section>
 
-      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {

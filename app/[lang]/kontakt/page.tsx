@@ -61,11 +61,11 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
   return (
-    <section className="py-10 sm:py-24">
+    <section className="py-10 sm:py-20">
       <Container>
         <PageHeader title={c.title} description={c.description} />
 
-        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
+        <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
             <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8">
               <ContactForm lang={lang} />

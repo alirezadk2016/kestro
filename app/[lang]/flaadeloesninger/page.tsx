@@ -302,7 +302,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <span className="eyebrow text-brand-300">{c.eyebrow}</span>
@@ -321,9 +321,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                   <item.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-paper sm:mt-4">
-                    {item.title[lang]}
-                  </h3>
+                  <h3 className="text-base font-semibold text-paper sm:mt-4">{item.title[lang]}</h3>
                   <p className="mt-1.5 text-sm leading-6 text-paper/65 sm:mt-2">
                     {item.description[lang]}
                   </p>
@@ -334,9 +332,9 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.tradeEyebrow}</span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.tradeTitle}
@@ -378,7 +376,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
         />
       </div>
 
-      <section className="relative overflow-hidden bg-brand-950 py-10 sm:py-24">
+      <section className="relative overflow-hidden bg-brand-950 py-10 sm:py-20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"

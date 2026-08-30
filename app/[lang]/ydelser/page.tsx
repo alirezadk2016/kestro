@@ -170,7 +170,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
@@ -203,9 +203,9 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.eyebrow}</span>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.processTitle}

@@ -80,7 +80,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         }}
       />
 
-      <section className="bg-brand-950 py-16 text-paper sm:py-24">
+      <section className="bg-brand-950 py-16 text-paper sm:py-20">
         <Container>
           <div className="max-w-3xl">
             <BreadcrumbSchema
@@ -117,12 +117,14 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               </span>
             </div>
 
-            <p className="mt-8 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">{guide.intro[lang]}</p>
+            <p className="mt-8 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
+              {guide.intro[lang]}
+            </p>
           </div>
         </Container>
       </section>
 
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
             {guide.sections.map((section) => (
@@ -132,7 +134,10 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                 </h2>
 
                 {section.body.map((paragraph) => (
-                  <p key={paragraph.da} className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">
+                  <p
+                    key={paragraph.da}
+                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                  >
                     {paragraph[lang]}
                   </p>
                 ))}
@@ -157,7 +162,9 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               <h2 className="font-display text-lg font-bold tracking-tight text-paper">
                 {c.closingTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 sm:leading-8 text-paper/65">{guide.closing[lang]}</p>
+              <p className="mt-3 text-base leading-7 sm:leading-8 text-paper/65">
+                {guide.closing[lang]}
+              </p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="mt-6 inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
@@ -170,12 +177,10 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
-                {c.more}
-              </h2>
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">{c.more}</h2>
               <ul className="mt-8 border-t border-white/15">
                 {others.map((other) => (
                   <li key={other.slug} className="border-b border-white/10">

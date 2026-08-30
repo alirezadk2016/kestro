@@ -129,11 +129,11 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-16 max-w-3xl">
+          <div className="mt-16 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.howTitle}
             </h2>
@@ -157,9 +157,9 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-10 sm:py-24">
+      <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.buyTitle}
@@ -185,7 +185,7 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             </div>
           </div>
 
-          <div className="mx-auto mt-12 max-w-5xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
+          <div className="mt-12 max-w-5xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
             <h2 className="text-lg font-semibold text-paper">{c.fleetTitle}</h2>
             <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.fleetBody}</p>
             <Link
@@ -199,9 +199,9 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.overstockTitle}
             </h2>

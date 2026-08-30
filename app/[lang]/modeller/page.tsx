@@ -57,11 +57,11 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
             <p className="mt-2 text-base leading-7 text-paper/65">{c.noShopBody1}</p>
             <p className="mt-3 text-base leading-7 text-paper/65">{c.noShopBody2}</p>
@@ -83,8 +83,10 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                 <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 text-base leading-7 text-paper/65">{group.description[lang]}</p>
-                <p className="mt-1 text-sm leading-6 text-paper/55">{c.priceNote}</p>
+                <p className="mt-2 max-w-3xl text-base leading-7 text-paper/65">
+                  {group.description[lang]}
+                </p>
+                <p className="mt-1 max-w-3xl text-sm leading-6 text-paper/55">{c.priceNote}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (

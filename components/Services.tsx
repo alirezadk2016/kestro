@@ -53,7 +53,7 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-12 sm:py-28" data-reveal>
+    <section className="stage py-12 sm:py-24" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>

@@ -200,11 +200,11 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-12 max-w-3xl">
+          <div className="mt-12 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.gradingTitle}
             </h2>
@@ -212,14 +212,19 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-8 space-y-4">
               {grades.map((grade) => (
-                <div key={grade.grade.da} className="border border-white/10 bg-white/[0.04] p-5 sm:p-6">
+                <div
+                  key={grade.grade.da}
+                  className="border border-white/10 bg-white/[0.04] p-5 sm:p-6"
+                >
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <h3 className="text-lg font-bold text-paper">{grade.grade[lang]}</h3>
                     <span className="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-300">
                       {grade.label[lang]}
                     </span>
                   </div>
-                  <p className="mt-3 text-base leading-7 text-paper/65">{grade.description[lang]}</p>
+                  <p className="mt-3 text-base leading-7 text-paper/65">
+                    {grade.description[lang]}
+                  </p>
                   <p className="mt-3 text-sm leading-6 text-paper/55">
                     <span className="font-semibold text-paper/80">{c.suits}</span>{" "}
                     {grade.suits[lang]}
@@ -236,9 +241,9 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.testTitle}
             </h2>
@@ -253,14 +258,14 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </ul>
 
-            <p className="mt-8 text-sm leading-6 text-paper/65">{c.testNote}</p>
+            <p className="mt-8 max-w-2xl text-sm leading-6 text-paper/65">{c.testNote}</p>
           </div>
         </Container>
       </section>
 
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.dataTitle}
             </h2>
@@ -276,9 +281,9 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.disclosureTitle}
             </h2>

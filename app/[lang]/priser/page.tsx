@@ -198,7 +198,7 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
 
       <PageHeader title={c.title} description={c.description} />
 
-      <section className="lit lit-paper py-10 sm:py-24">
+      <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">

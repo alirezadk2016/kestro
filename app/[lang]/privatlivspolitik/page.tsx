@@ -159,7 +159,7 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
   const c = copy[lang];
 
   return (
-    <section className="py-10 sm:py-24">
+    <section className="py-10 sm:py-20">
       <Container>
         <PageHeader title={c.title} description={c.description} />
 
@@ -170,7 +170,10 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
                 {section.heading[lang]}
               </h2>
               {section.body.map((paragraph) => (
-                <p key={paragraph.da} className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">
+                <p
+                  key={paragraph.da}
+                  className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                >
                   {paragraph[lang]}
                 </p>
               ))}

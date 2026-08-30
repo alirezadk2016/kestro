@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { MemoryStick, HardDrive, Keyboard, BatteryCharging, ShieldCheck, FileText } from "lucide-react";
+import {
+  MemoryStick,
+  HardDrive,
+  Keyboard,
+  BatteryCharging,
+  ShieldCheck,
+  FileText,
+} from "lucide-react";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*

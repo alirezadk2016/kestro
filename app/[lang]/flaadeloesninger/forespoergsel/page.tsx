@@ -75,9 +75,9 @@ export default function FleetEnquiryPage({ params }: { params: { lang: Lang } })
   const c = copy[lang];
 
   return (
-    <section className="lit lit-paper py-10 sm:py-24">
+    <section className="lit lit-paper py-10 sm:py-20">
       <Container>
-        <div className="mx-auto max-w-3xl">
+        <div className="max-w-3xl">
           <nav aria-label={c.backLabel as string} className="text-sm text-paper/55">
             <Link
               href={localePath("/flaadeloesninger", lang)}
@@ -90,7 +90,9 @@ export default function FleetEnquiryPage({ params }: { params: { lang: Lang } })
           <h1 className="mt-4 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
             {c.title as string}
           </h1>
-          <p className="mt-5 text-base leading-7 sm:text-lg sm:leading-8 text-paper/65">{c.intro as string}</p>
+          <p className="mt-5 text-base leading-7 sm:text-lg sm:leading-8 text-paper/65">
+            {c.intro as string}
+          </p>
 
           <div className="mt-10 border border-white/10 bg-white/[0.04] p-6 shadow-sm sm:p-8">
             <ContactForm

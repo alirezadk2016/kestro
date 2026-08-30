@@ -55,7 +55,7 @@ export default function VejledningerPage({ params }: { params: { lang: Lang } })
 
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 

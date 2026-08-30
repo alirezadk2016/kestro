@@ -63,11 +63,11 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
             <p className="mt-2 text-base leading-7 text-paper/65">{c.noPrices1}</p>
             <p className="mt-3 text-base leading-7 text-paper/65">{c.noPrices2}</p>
@@ -108,7 +108,9 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.modelsTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-paper/65">{c.modelsBody}</p>
+            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-paper/65">
+              {c.modelsBody}
+            </p>
             <Link
               href={localePath("/modeller", lang)}
               className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"

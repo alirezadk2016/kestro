@@ -223,7 +223,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
       <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
       <PageHeader title={c.title} description={c.description} />
 
-      <section className="lit bg-brand-950 py-10 sm:py-24">
+      <section className="lit bg-brand-950 py-10 sm:py-20">
         <Container>
           {/*
             Styled as a document rather than as a web section: a buyer is being
@@ -232,7 +232,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             the corner is not decoration — nothing on this page may be
             mistaken for a live offer.
           */}
-          <article className="mx-auto max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20">
+          <article className="max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20">
             <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/10 p-6 sm:p-8">
               <div>
                 <p className="label text-brand-700">{company.name}</p>
@@ -344,7 +344,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             </div>
           </article>
 
-          <div className="mx-auto mt-12 max-w-3xl border-t border-white/15 pt-8">
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>

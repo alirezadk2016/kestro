@@ -69,7 +69,7 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-10 sm:py-24" data-reveal>
+    <section className="stage py-10 sm:py-20" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">

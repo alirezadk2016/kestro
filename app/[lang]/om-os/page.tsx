@@ -79,11 +79,11 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
   const salesContact = primaryContact(lang);
   return (
     <>
-      <section className="py-10 sm:py-24">
+      <section className="py-10 sm:py-20">
         <Container>
           <PageHeader title={c.title} description={c.description} />
 
-          <div className="mx-auto mt-16 max-w-3xl space-y-10">
+          <div className="mt-16 max-w-3xl space-y-10">
             {sections.map((section) => (
               <div key={section.title.da} className="flex gap-5">
                 <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300">
@@ -101,9 +101,9 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-24">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <figure className="mx-auto max-w-3xl">
+          <figure className="max-w-3xl">
             <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
               &ldquo;{c.quote}&rdquo;
             </blockquote>

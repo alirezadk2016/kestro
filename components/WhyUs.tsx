@@ -49,7 +49,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="lit bg-brand-950 py-14 text-paper sm:py-24">
+    <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>

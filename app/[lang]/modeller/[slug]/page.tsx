@@ -129,7 +129,11 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         />
 
         <Container className="relative">
-          <div className="mx-auto max-w-3xl">
+          {/* One shell width for the whole page, so every section starts at the
+              same left edge. Inside it the machine and what we say about it sit
+              side by side on a desktop: as stacked full-width blocks the photos
+              alone were two screens of scrolling with half the window empty. */}
+          <div className="max-w-6xl">
             <BreadcrumbSchema
               lang={lang}
               trail={[
@@ -153,88 +157,89 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               <span className="text-ink-200">{model.name}</span>
             </nav>
 
-            <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-              <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
-              </span>
-              <div>
-                <span className="text-sm font-semibold uppercase tracking-wider text-paper/70">
-                  {model.brand} · {model.format[lang]}
-                </span>
-                <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-                  {model.name}
-                </h1>
-                <p className="mt-2 text-base text-ink-300 sm:text-lg">{model.tagline[lang]}</p>
-              </div>
-            </div>
+            <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+              <div className="lg:col-span-7">
+                <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
+                  <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
+                    <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
+                  </span>
+                  <div>
+                    <span className="text-sm font-semibold uppercase tracking-wider text-paper/70">
+                      {model.brand} · {model.format[lang]}
+                    </span>
+                    <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+                      {model.name}
+                    </h1>
+                    <p className="mt-2 text-base text-ink-300 sm:text-lg">{model.tagline[lang]}</p>
+                  </div>
+                </div>
 
-            <p className="mt-8 text-base leading-7 text-ink-300">{model.intro[lang]}</p>
+                <p className="mt-8 text-base leading-7 text-ink-300">{model.intro[lang]}</p>
 
-            <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-ink-300">
-              {c.notStock}
-            </p>
+                <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-ink-300">
+                  {c.notStock}
+                </p>
 
-            {/* The page describes the machine in detail and then used to say
+                {/* The page describes the machine in detail and then used to say
                 nothing about price, which leaves a buyer guessing whether this
                 is a shop that forgot its prices. */}
-            <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
+                <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
+              </div>
+
+              {model.images && (
+                <div className="space-y-3 sm:space-y-4 lg:col-span-5">
+                  <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25">
+                    <Image
+                      src={model.images[0].src}
+                      alt={model.images[0].alt[lang]}
+                      width={1179}
+                      height={1120}
+                      className="h-full w-full object-contain p-3 sm:p-6"
+                      sizes="(max-width: 1024px) 92vw, 460px"
+                      priority
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                    {model.images.slice(1).map((img) => (
+                      <div
+                        key={img.src}
+                        className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
+                      >
+                        <Image
+                          src={img.src}
+                          alt={img.alt[lang]}
+                          width={1179}
+                          height={1120}
+                          className="h-full w-full object-contain p-2 sm:p-3"
+                          sizes="(max-width: 640px) 30vw, 150px"
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="pt-1 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+                </div>
+              )}
+            </div>
           </div>
         </Container>
       </section>
 
-      {model.images && (
-        <section className="py-10 sm:py-24">
-          <Container>
-            <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
-              <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25 sm:aspect-[16/10]">
-                <Image
-                  src={model.images[0].src}
-                  alt={model.images[0].alt[lang]}
-                  width={1179}
-                  height={1120}
-                  className="h-full w-full object-contain p-3 sm:p-6"
-                  sizes="(max-width: 768px) 92vw, 768px"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-                {model.images.slice(1).map((img) => (
-                  <div
-                    key={img.src}
-                    className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt[lang]}
-                      width={1179}
-                      height={1120}
-                      className="h-full w-full object-contain p-2 sm:p-4"
-                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 45vw, 250px"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              <p className="pt-1 text-sm leading-6 text-paper/55">{c.imageNote}</p>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      <section className={`py-10 sm:py-24 ${model.images ? "border-t border-white/10" : ""}`}>
+      <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-6xl">
             <div className="overflow-hidden border border-white/10">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
                 <p className="mt-1 text-sm leading-6 text-paper/65">{c.configBody}</p>
               </div>
 
-              <dl className="divide-y divide-white/10">
+              <dl className="lg:grid lg:grid-cols-2">
                 {model.specs.map((spec) => (
                   <div
                     key={spec.label.da}
-                    className="px-5 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4"
+                    className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
                   >
                     <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
                     <dd className="mt-1 text-sm leading-6 text-paper/65 sm:col-span-2 sm:mt-0">
@@ -247,30 +252,37 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
             <WhatIsFixed lang={lang} className="mt-12" />
 
-            <h2 className="mt-12 text-xl font-bold tracking-tight text-paper sm:text-2xl">
-              {c.goodFor}
-            </h2>
-            <ul className="mt-5 space-y-3">
-              {model.goodFor.map((item) => (
-                <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
-                  <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
-                  {item[lang]}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
+              <div>
+                <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
+                  {c.goodFor}
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {model.goodFor.map((item) => (
+                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                      <Check
+                        className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300"
+                        strokeWidth={2}
+                      />
+                      {item[lang]}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            <div className="mt-10 border-l-2 border-white/30 bg-white/5 p-5 sm:p-6">
-              <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
-                <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
-                {c.watchOut}
-              </h2>
-              <ul className="mt-3 space-y-2.5">
-                {model.notes.map((note) => (
-                  <li key={note.da} className="text-sm leading-6 text-paper/80">
-                    {note[lang]}
-                  </li>
-                ))}
-              </ul>
+              <div className="border-l-2 border-white/30 bg-white/5 p-5 sm:p-6">
+                <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
+                  <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
+                  {c.watchOut}
+                </h2>
+                <ul className="mt-3 space-y-2.5">
+                  {model.notes.map((note) => (
+                    <li key={note.da} className="text-sm leading-6 text-paper/80">
+                      {note[lang]}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             {model.why && (
@@ -301,7 +313,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 text-base leading-7 text-paper/65">{c.ctaBody}</p>
+              <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
@@ -327,9 +339,9 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-24">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="mx-auto max-w-3xl">
+            <div className="max-w-6xl">
               <h2 className="text-xl font-bold tracking-tight text-paper">{c.related}</h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
