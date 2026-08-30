@@ -1,4 +1,5 @@
 import { localePath, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /*
  * The breadcrumb trail, marked up.
@@ -19,7 +20,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 export type Crumb = { name: string; href: string };
 
 export default function BreadcrumbSchema({ lang, trail }: { lang: Lang; trail: Crumb[] }) {
-  const site = "https://www.kestro.dk";
+  const site = SITE_ORIGIN;
 
   const json = {
     "@context": "https://schema.org",

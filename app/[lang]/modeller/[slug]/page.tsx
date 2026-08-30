@@ -10,6 +10,7 @@ import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
 import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, alternatesFor, langs, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => models.map((model) => ({ lang, slug: model.slug })));
@@ -95,7 +96,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
     category: category?.name[lang],
     description: model.intro[lang],
     ...(model.images?.length
-      ? { image: model.images.map((img) => `https://www.kestro.dk${img.src}`) }
+      ? { image: model.images.map((img) => `${SITE_ORIGIN}${img.src}`) }
       : {}),
     additionalProperty: model.specs.map((spec) => ({
       "@type": "PropertyValue",
@@ -104,7 +105,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
     })),
     itemCondition: "https://schema.org/RefurbishedCondition",
     manufacturer: { "@type": "Organization", name: model.brand },
-    seller: { "@id": "https://www.kestro.dk/#organization" },
+    seller: { "@id": `${SITE_ORIGIN}/#organization` },
   };
 
   return (

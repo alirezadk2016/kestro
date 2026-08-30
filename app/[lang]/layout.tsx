@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, alternatesFor, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /* One family for the whole site. The wordmark is set in it too, so a heading
    next to the logo is the same letterforms rather than a near-miss. */
@@ -37,7 +38,7 @@ export function generateMetadata({ params }: { params: { lang: string } }): Meta
   const lang: Lang = isLang(params.lang) ? params.lang : "da";
 
   return {
-    metadataBase: new URL("https://www.kestro.dk"),
+    metadataBase: new URL(SITE_ORIGIN),
     title: meta[lang].title,
     description: meta[lang].description,
     alternates: alternatesFor("/", lang),
@@ -57,9 +58,9 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://www.kestro.dk/#organization",
+    "@id": `${SITE_ORIGIN}/#organization`,
     name: company.name,
-    url: "https://www.kestro.dk",
+    url: SITE_ORIGIN,
     description: meta[lang].description,
     email: company.email,
     ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
@@ -97,12 +98,12 @@ export default function RootLayout({
   const webSiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://www.kestro.dk/#website",
+    "@id": `${SITE_ORIGIN}/#website`,
     name: company.name,
-    url: lang === "da" ? "https://www.kestro.dk" : "https://www.kestro.dk/en",
+    url: lang === "da" ? SITE_ORIGIN : `${SITE_ORIGIN}/en`,
     description: meta[lang].description,
     inLanguage: lang === "da" ? "da-DK" : "en",
-    publisher: { "@id": "https://www.kestro.dk/#organization" },
+    publisher: { "@id": `${SITE_ORIGIN}/#organization` },
   };
 
   return (

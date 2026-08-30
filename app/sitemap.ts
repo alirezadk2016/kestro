@@ -4,14 +4,11 @@ import { models } from "@/lib/models";
 import { guides } from "@/lib/guides";
 import { services } from "@/lib/services";
 import { localePath } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
-/*
- * Must match the canonical host exactly. A sitemap whose <loc> values sit on a
- * different host than the property it is submitted under is rejected outright:
- * if the site answers on kestro.dk rather than www.kestro.dk, this constant and
- * the one in app/robots.ts both have to change with it.
- */
-const BASE_URL = "https://www.kestro.dk";
+/* The host every <loc> sits on. Defined once in lib/site.ts — a sitemap on a
+   different host than the Search Console property is rejected outright. */
+const BASE_URL = SITE_ORIGIN;
 
 /** Absolute URL for a site path, matching the canonical's no-trailing-slash form. */
 function absolute(path: string, lang: "da" | "en"): string {

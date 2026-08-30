@@ -8,6 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import { guides, getGuide } from "@/lib/guides";
 import { company } from "@/lib/company";
 import { localePath, alternatesFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => guides.map((guide) => ({ lang, slug: guide.slug })));
@@ -66,7 +67,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     publisher: { "@type": "Organization", name: company.name },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://www.kestro.dk${localePath(`/vejledninger/${guide.slug}`, lang)}`,
+      "@id": `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`,
     },
   };
 

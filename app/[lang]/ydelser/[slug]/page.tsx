@@ -8,6 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
 import { company } from "@/lib/company";
 import { localePath, alternatesFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => services.map((service) => ({ lang, slug: service.slug })));
@@ -55,9 +56,9 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
     name: service.name[lang],
     description: service.metaDescription[lang],
     inLanguage: htmlLang[lang],
-    provider: { "@type": "Organization", name: company.name, url: "https://www.kestro.dk" },
+    provider: { "@type": "Organization", name: company.name, url: SITE_ORIGIN },
     areaServed: ["DK", "NO"],
-    url: `https://www.kestro.dk${localePath(`/ydelser/${service.slug}`, lang)}`,
+    url: `${SITE_ORIGIN}${localePath(`/ydelser/${service.slug}`, lang)}`,
   };
 
   const trail: Crumb[] = [
