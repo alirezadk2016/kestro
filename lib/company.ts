@@ -86,6 +86,15 @@ export type TeamMember = {
   phoneHref?: string;
   photo?: string;
   email?: string;
+  /**
+   * Whether this person is one of the people an enquiry actually reaches.
+   *
+   * The closing band on every page says "dem I kommer til at tale med", and
+   * that has to stay literally true: the whole team belongs on /om-os, but a
+   * buyer writing about a delivery is answered by the two who handle
+   * deliveries.
+   */
+  handlesEnquiries?: boolean;
 };
 
 /*
@@ -105,6 +114,7 @@ const people: TeamMember[] = [
       da: "Står for indkøbene i udlandet og for netværkssikkerheden i virksomheden. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer hvad der reelt er i dem, og sørger for, at det I sender os gennem siden, bliver håndteret forsvarligt.",
       en: "Runs the sourcing abroad and the company's network security. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
     },
+    handlesEnquiries: true,
   },
   {
     id: "mehdi",
@@ -116,6 +126,19 @@ const people: TeamMember[] = [
     bio: {
       da: "Er den, I taler med om en leverance. Han tager imod jeres behov, henter priserne hjem og sender et skriftligt tilbud, I kan regne på – uden at I binder jer til noget.",
       en: "The one you talk to about a delivery. He takes your requirements, gets the prices in and sends a written quote you can work with — with nothing committed.",
+    },
+    handlesEnquiries: true,
+  },
+  {
+    id: "alireza",
+    name: "Alireza",
+    role: {
+      da: "Medstifter & teknisk ansvarlig",
+      en: "Co-founder & Technical Director",
+    },
+    bio: {
+      da: "Står bag den tekniske side af Kestro: sitet, produktdata og kontrollen, før en maskine bliver beskrevet her. Han holder øje med, at specifikationerne passer, at komponenterne spiller sammen, og at det, siden siger om en model, er det samme, som står i tilbuddet.",
+      en: "Behind the technical side of Kestro: the site, the product data and the checking that happens before a machine is described here. He watches that the specifications hold, that the components work together, and that what the site says about a model is what turns up in the quote.",
     },
   },
 ];
@@ -154,4 +177,9 @@ export function primaryContact(lang: Lang): TeamMember {
 export function teamFor(lang: Lang): TeamMember[] {
   const first = primaryContact(lang);
   return [first, ...team.filter((member) => member.id !== first.id)];
+}
+
+/** Only the people an enquiry reaches, the market's own contact first. */
+export function enquiryContacts(lang: Lang): TeamMember[] {
+  return teamFor(lang).filter((member) => member.handlesEnquiries);
 }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import TeamAvatar from "./TeamAvatar";
-import { teamFor } from "@/lib/company";
+import { enquiryContacts } from "@/lib/company";
 import { localePath, type Lang } from "@/lib/i18n";
 import { ui } from "@/lib/nav";
 
@@ -37,7 +37,7 @@ export default function CtaSection({
   people?: boolean;
 }) {
   const c = copy[lang];
-  const team = teamFor(lang);
+  const team = enquiryContacts(lang);
 
   return (
     <section className="stage py-12 sm:py-28" data-reveal>

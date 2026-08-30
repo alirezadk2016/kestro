@@ -36,8 +36,12 @@ export default function TeamSection({ lang }: { lang: Lang }) {
         </div>
 
         <div
+          /* Two up, and an odd one out spans the row rather than sitting in
+             half of it with a hole beside it. */
           className={`mx-auto mt-10 grid grid-cols-1 gap-6 sm:mt-12 ${
-            team.length === 1 ? "max-w-2xl" : "max-w-4xl md:grid-cols-2"
+            team.length === 1
+              ? "max-w-2xl"
+              : "max-w-4xl md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2"
           }`}
         >
           {team.map((member) => (
