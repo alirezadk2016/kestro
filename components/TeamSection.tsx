@@ -1,7 +1,7 @@
 import { Phone, Mail } from "lucide-react";
 import Container from "./Container";
 import TeamAvatar from "./TeamAvatar";
-import { team, company } from "@/lib/company";
+import { teamFor, company } from "@/lib/company";
 import type { Lang } from "@/lib/i18n";
 
 const copy = {
@@ -23,6 +23,7 @@ const copy = {
 
 export default function TeamSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
+  const team = teamFor(lang);
   return (
     <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
       <Container>

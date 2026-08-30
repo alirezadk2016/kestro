@@ -5,7 +5,7 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import WhyUs from "@/components/WhyUs";
 import TeamSection from "@/components/TeamSection";
-import { salesContact } from "@/lib/company";
+import { primaryContact } from "@/lib/company";
 import { alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -76,6 +76,7 @@ const sections = [
 export default function OmOsPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
+  const salesContact = primaryContact(lang);
   return (
     <>
       <section className="py-14 sm:py-24">

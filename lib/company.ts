@@ -131,10 +131,27 @@ export const team: TeamMember[] = people.map((person) => {
   return photo ? { ...person, photo } : person;
 });
 
+const byId = (id: string): TeamMember => team.find((member) => member.id === id) ?? team[0];
+
 /**
- * The person a buyer should end up with when a page needs exactly one name:
- * the quote on the about page, the contact card, the fleet CTA. Looked up by
- * id rather than taken as team[0], so the order of the list stays a
- * presentation decision.
+ * Who a buyer is put in front of, by market.
+ *
+ * A visitor reading the Danish site is in Scandinavia and should land on
+ * Mehdi, who handles the Nordic sales; a visitor reading the English site is
+ * writing in from outside it and should land on Ismail, whose job is the
+ * international side. Both are real people with real roles — this only decides
+ * which of them is named first.
+ *
+ * Keyed off the language rather than off the request's country, because the
+ * language is what the reader actually sees, and it is settled once by the
+ * middleware rather than re-derived on every page.
  */
-export const salesContact: TeamMember = team.find((member) => member.id === "mehdi") ?? team[0];
+export function primaryContact(lang: Lang): TeamMember {
+  return lang === "da" ? byId("mehdi") : byId("ismail-masoumabadi");
+}
+
+/** The team with the market's own contact first. */
+export function teamFor(lang: Lang): TeamMember[] {
+  const first = primaryContact(lang);
+  return [first, ...team.filter((member) => member.id !== first.id)];
+}

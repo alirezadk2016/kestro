@@ -39,7 +39,11 @@ const copy = {
  * or the other rather than merely relabelling itself.
  */
 export default function ContactFlipCard({ lang }: { lang: Lang }) {
-  const [showIntl, setShowIntl] = useState(false);
+  /* Opens on the side the reader's own market belongs to: the Danish site is
+     read from Scandinavia, so it starts on Mehdi; the English site is read
+     from outside it, so it starts on Ismail. Either side is still one tap
+     away — this only decides which is face up. */
+  const [showIntl, setShowIntl] = useState(lang !== "da");
   const c = copy[lang];
 
   const nordicContact = team.find((member) => member.id === "mehdi") ?? team[0];

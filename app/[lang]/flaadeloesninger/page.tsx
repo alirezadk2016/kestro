@@ -14,7 +14,7 @@ import {
 import Container from "@/components/Container";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
-import { salesContact } from "@/lib/company";
+import { primaryContact } from "@/lib/company";
 import { localePath, alternatesFor, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -258,6 +258,7 @@ const enterpriseFaqs = [
 export default function FlaadeloesningerPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
+  const salesContact = primaryContact(lang);
   return (
     <>
       <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
