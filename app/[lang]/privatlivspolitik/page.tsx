@@ -51,8 +51,21 @@ const sections: Section[] = [
     heading: { da: "Kort fortalt", en: "In short" },
     body: [
       {
-        da: "Denne hjemmeside sætter ingen cookies, bruger ingen analyse- eller sporingsværktøjer og henter intet fra tredjeparter. Skrifttyper og billeder ligger på vores eget domæne. Derfor er der heller ingen cookiebanner – der er ikke noget at give samtykke til.",
-        en: "This website sets no cookies, uses no analytics or tracking tools, and loads nothing from third parties. Fonts and images are served from our own domain. That is also why there is no cookie banner — there is nothing to consent to.",
+        da: "Denne hjemmeside bruger ingen analyse- eller sporingsværktøjer, viser ingen reklamer og henter intet fra tredjeparter. Skrifttyper og billeder ligger på vores eget domæne. Der sættes én cookie, og den husker kun, hvilket sprog I læser siden på – se afsnittet om cookies nedenfor.",
+        en: "This website uses no analytics or tracking tools, shows no advertising, and loads nothing from third parties. Fonts and images are served from our own domain. One cookie is set, and it only remembers which language you are reading the site in — see the cookie section below.",
+      },
+    ],
+  },
+  {
+    heading: { da: "Cookies", en: "Cookies" },
+    body: [
+      {
+        da: "Vi sætter én cookie: kestro-lang. Den husker, om I læser siden på dansk eller engelsk, så jeres valg holder ved næste besøg. Den indeholder kun sprogkoden, den udløber efter et år, og den bruges hverken til statistik, profilering eller markedsføring.",
+        en: "We set one cookie: kestro-lang. It remembers whether you are reading the site in Danish or English, so your choice holds on your next visit. It contains only the language code, it expires after a year, and it is not used for statistics, profiling or marketing.",
+      },
+      {
+        da: "Fordi den er nødvendig for at levere siden på det sprog, I har valgt, kræver den ikke samtykke, og der er derfor ingen cookiebanner. Kommer der på et tidspunkt statistik eller sporing på siden, kommer der også en samtykkeløsning – og denne tekst bliver rettet, før det sker.",
+        en: "Because it is necessary to deliver the site in the language you chose, it requires no consent, and there is therefore no cookie banner. If statistics or tracking are ever added, a consent mechanism comes with them — and this text is corrected before that happens.",
       },
     ],
   },
@@ -60,12 +73,16 @@ const sections: Section[] = [
     heading: { da: "Kontaktformularerne", en: "The contact forms" },
     body: [
       {
-        da: "Formularerne sender ikke data til os. Når I trykker send, åbner jeres eget mailprogram med teksten udfyldt, og I sender selv mailen. Vi modtager først oplysninger, når I aktivt sender dem.",
-        en: "The forms do not send data to us. When you press send, your own mail client opens with the text filled in, and you send the message yourself. We receive information only once you actively send it.",
+        da: "Når I sender en formular, går indholdet til vores egen server på kestro.dk, som sender det videre til os som en e-mail. Vi modtager altså først oplysninger, når I trykker send – men det er siden, der sender dem, ikke jeres eget mailprogram.",
+        en: "When you submit a form, the content goes to our own server on kestro.dk, which passes it on to us as an email. So we receive information only once you press send — but it is the site that sends it, not your own mail client.",
       },
       {
-        da: "Når I skriver til os, behandler vi: navn, virksomhed, e-mailadresse, telefonnummer hvis oplyst, og indholdet af beskeden.",
-        en: "When you write to us we process: name, company, email address, phone number if given, and the content of the message.",
+        da: "Vi behandler: navn, virksomhed, e-mailadresse, telefonnummer hvis oplyst, indholdet af beskeden, og hvilken side på kestro.dk den blev sendt fra. På tilbudsformularen desuden det, I selv udfylder om antal, model, hukommelse, lagerplads, tastatur og ønsket leveringstidspunkt.",
+        en: "We process: name, company, email address, phone number if given, the content of the message, and which page on kestro.dk it was sent from. On the quote form, also what you fill in about quantity, model, memory, storage, keyboard and preferred delivery date.",
+      },
+      {
+        da: "Kan formularen ikke sende, viser den beskeden, så I kan kopiere den eller åbne den i jeres eget mailprogram. I det tilfælde forlader oplysningerne ikke jeres browser, før I selv sender dem.",
+        en: "If the form cannot send, it shows you the message so you can copy it or open it in your own mail client. In that case the details do not leave your browser until you send them yourself.",
       },
     ],
   },
@@ -95,12 +112,12 @@ const sections: Section[] = [
     heading: { da: "Leverandører og overførsel", en: "Providers and transfers" },
     body: [
       {
-        da: "Hjemmesiden hostes hos Vercel Inc., og e-mail behandles hos vores mailudbyder. Begge kan behandle personoplysninger på vores vegne som databehandlere.",
-        en: "The website is hosted with Vercel Inc., and email is handled by our mail provider. Both may process personal data on our behalf as processors.",
+        da: "Hjemmesiden hostes hos Vercel Inc. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Begge behandler personoplysninger på vores vegne som databehandlere.",
+        en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. Both process personal data on our behalf as processors.",
       },
       {
-        da: "Vercel er en amerikansk leverandør. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
-        en: "Vercel is a US provider. Transfers of personal data to the US take place under the European Commission's standard contractual clauses and/or the EU-US Data Privacy Framework.",
+        da: "Vercel og Resend er amerikanske leverandører. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
+        en: "Vercel and Resend are US providers. Transfers of personal data to the US take place under the European Commission's standard contractual clauses and/or the EU-US Data Privacy Framework.",
       },
     ],
   },

@@ -6,6 +6,7 @@ import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import PriceOnRequest from "@/components/PriceOnRequest";
+import WhatIsFixed from "@/components/WhatIsFixed";
 import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
@@ -243,6 +244,8 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 ))}
               </dl>
             </div>
+
+            <WhatIsFixed lang={lang} className="mt-12" />
 
             <h2 className="mt-12 text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.goodFor}
