@@ -5,12 +5,24 @@ import { guides } from "@/lib/guides";
 import { services } from "@/lib/services";
 import { localePath } from "@/lib/i18n";
 
+/*
+ * Must match the canonical host exactly. A sitemap whose <loc> values sit on a
+ * different host than the property it is submitted under is rejected outright:
+ * if the site answers on kestro.dk rather than www.kestro.dk, this constant and
+ * the one in app/robots.ts both have to change with it.
+ */
 const BASE_URL = "https://www.kestro.dk";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+/** Absolute URL for a site path, matching the canonical's no-trailing-slash form. */
+function absolute(path: string, lang: "da" | "en"): string {
+  const p = localePath(path, lang);
+  return p === "/" ? BASE_URL : `${BASE_URL}${p}`;
+}
 
-  const staticRoutes: { path: string; priority: number }[] = [
+type Route = { path: string; priority: number; lastModified?: string };
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes: Route[] = [
     { path: "/", priority: 1 },
     { path: "/flaadeloesninger", priority: 0.9 },
     { path: "/produkter", priority: 0.9 },
@@ -29,27 +41,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/privatlivspolitik", priority: 0.3 },
   ];
 
-  const categoryRoutes = categories.map((category) => ({
+  const categoryRoutes: Route[] = categories.map((category) => ({
     path: `/produkter/${category.slug}`,
     priority: 0.8,
   }));
 
-  const modelRoutes = models.map((model) => ({
+  const modelRoutes: Route[] = models.map((model) => ({
     path: `/modeller/${model.slug}`,
     priority: 0.7,
   }));
 
-  const guideRoutes = guides.map((guide) => ({
+  /*
+   * Guides are the only content carrying a real edit date, so they are the only
+   * pages that get a <lastmod>.
+   *
+   * Everything else deliberately has none. It used to be `new Date()`, which
+   * stamped all 110 URLs with the moment of the last build — so a deploy that
+   * changed one component told Google that every page on the site had just been
+   * rewritten. Google only uses lastmod when it is consistently accurate and
+   * ignores it otherwise, and an omitted date is treated better than a wrong
+   * one. Give a page a real date here when there is one to give.
+   */
+  const guideRoutes: Route[] = guides.map((guide) => ({
     path: `/vejledninger/${guide.slug}`,
     priority: 0.7,
+    lastModified: guide.updated,
   }));
 
-  const serviceRoutes = services.map((service) => ({
+  const serviceRoutes: Route[] = services.map((service) => ({
     path: `/ydelser/${service.slug}`,
     priority: 0.8,
   }));
 
-  const routes = [
+  const routes: Route[] = [
     ...staticRoutes,
     ...categoryRoutes,
     ...modelRoutes,
@@ -61,25 +85,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * Each page is listed once per language, and every entry carries the
    * alternates for both, so Google pairs the Danish and English versions
    * instead of treating them as duplicates.
+   *
+   * hreflang is "da", not "da-DK": the region subtag would target Danish
+   * speakers in Denmark only, and the same pages serve Norway.
    */
-  return routes.flatMap(({ path, priority }) => {
-    const da = `${BASE_URL}${localePath(path, "da")}`;
-    const en = `${BASE_URL}${localePath(path, "en")}`;
-    const languages = { "da-DK": da, en, "x-default": da };
+  return routes.flatMap(({ path, priority, lastModified }) => {
+    const da = absolute(path, "da");
+    const en = absolute(path, "en");
+    const languages = { da, en, "x-default": da };
 
     return [
       {
         url: da,
-        lastModified,
+        ...(lastModified ? { lastModified } : {}),
         changeFrequency: "monthly" as const,
         priority,
         alternates: { languages },
       },
       {
         url: en,
-        lastModified,
+        ...(lastModified ? { lastModified } : {}),
         changeFrequency: "monthly" as const,
-        priority: priority * 0.9,
+        priority: Math.round(priority * 0.9 * 100) / 100,
         alternates: { languages },
       },
     ];

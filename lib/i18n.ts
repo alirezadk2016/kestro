@@ -58,8 +58,11 @@ export function alternatesFor(path: string, lang: Lang) {
   const da = localePath(path, "da");
   const en = localePath(path, "en");
 
+  /* "da", not "da-DK": the region subtag would target Danish speakers in
+     Denmark only, and the same pages serve Norway. Has to stay in step with
+     the hreflang written into app/sitemap.ts — Google cross-checks the two. */
   return {
     canonical: localePath(path, lang),
-    languages: { "da-DK": da, en, "x-default": da },
+    languages: { da, en, "x-default": da },
   };
 }
