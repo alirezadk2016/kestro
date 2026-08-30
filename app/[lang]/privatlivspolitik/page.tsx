@@ -60,12 +60,12 @@ const sections: Section[] = [
     heading: { da: "Cookies", en: "Cookies" },
     body: [
       {
-        da: "Vi sætter én cookie: kestro-lang. Den husker, om I læser siden på dansk eller engelsk, så jeres valg holder ved næste besøg. Den indeholder kun sprogkoden, den udløber efter et år, og den bruges hverken til statistik, profilering eller markedsføring.",
-        en: "We set one cookie: kestro-lang. It remembers whether you are reading the site in Danish or English, so your choice holds on your next visit. It contains only the language code, it expires after a year, and it is not used for statistics, profiling or marketing.",
+        da: "Vi sætter ingen cookies af os selv. To små værdier gemmes lokalt i jeres browser: jeres svar på spørgsmålet om statistik, og om I har lukket beskeden om den engelske udgave. De sendes aldrig til os, og de bruges ikke til andet end at huske de to valg.",
+        en: "We set no cookies of our own. Two small values are stored locally in your browser: your answer to the statistics question, and whether you have dismissed the note about the English version. They are never sent to us, and they are used for nothing but remembering those two choices.",
       },
       {
-        da: "Sprogcookien er nødvendig for at levere siden på det sprog, I har valgt, og kræver derfor ikke samtykke. Statistik gør: siger I ja i banneret, sætter Google Analytics sine egne cookies (_ga og _ga_*) for at kunne skelne besøg fra hinanden. De udløber efter to år og indeholder et tilfældigt id, ikke et navn. Siger I nej – eller svarer I ikke – bliver der hverken sat cookies eller sendt data.",
-        en: "The language cookie is necessary to deliver the site in the language you chose, so it needs no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random id, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
+        da: "De to værdier er nødvendige for at kunne huske, hvad I har svaret, og kræver derfor ikke samtykke. Statistik gør: siger I ja i banneret, sætter Google Analytics sine egne cookies (_ga og _ga_*) for at kunne skelne besøg fra hinanden. De udløber efter to år og indeholder et tilfældigt id, ikke et navn. Siger I nej – eller svarer I ikke – bliver der hverken sat cookies eller sendt data.",
+        en: "Those two values are necessary to remember what you answered, so they need no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random id, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
       },
     ],
   },

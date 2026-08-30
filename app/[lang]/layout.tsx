@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Analytics from "@/components/Analytics";
 import ConsentBanner from "@/components/ConsentBanner";
+import LanguageHint from "@/components/LanguageHint";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -141,6 +142,7 @@ export default function RootLayout({
             __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
+        {lang === "da" && <LanguageHint />}
         <Header lang={lang} />
         <main id="indhold" tabIndex={-1} className="focus:outline-none">
           {children}
