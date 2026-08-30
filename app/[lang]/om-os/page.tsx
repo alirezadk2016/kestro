@@ -48,8 +48,8 @@ const sections = [
       en: "We are a sourcing partner, not a web shop",
     },
     description: {
-      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Hver enhed bliver funktionstestet, eventuelt opgraderet med mere RAM, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer.",
-      en: "Kestro does not sit on a warehouse for you to pick from. We work as a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe. Every machine is function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you.",
+      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer.",
+      en: "Kestro does not sit on a warehouse for you to pick from. We work as a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you.",
     },
   },
   {

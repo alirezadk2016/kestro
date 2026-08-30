@@ -88,7 +88,7 @@ const copy = {
     quotePoints: [
       "Pris per enhed og samlet – ikke kun en totalsum.",
       "Præcis hvilken model og specifikation, I får.",
-      "Stand og batteriets faktiske kapacitet i procent, per enhed.",
+      "Stand per enhed – og batteriets faktiske kapacitet i procent på de bærbare.",
       "Garantivilkårene, og hvem I kontakter, hvis noget går i stykker.",
       "Hvad der følger med, og hvad der ikke gør.",
       "En tidsramme – ikke et løfte om en fast leveringstid, vi ikke kan holde.",
@@ -132,7 +132,7 @@ const copy = {
     quotePoints: [
       "Price per unit and in total — not just a lump sum.",
       "Exactly which model and specification you are getting.",
-      "Condition and the battery's actual capacity as a percentage, per unit.",
+      "Condition per unit — and the battery's actual capacity as a percentage on the laptops.",
       "The warranty terms, and who you contact if something breaks.",
       "What comes with them, and what does not.",
       "A timeframe — not a promise of a fixed delivery date we cannot keep.",

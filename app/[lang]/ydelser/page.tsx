@@ -32,7 +32,7 @@ const copy = {
     processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
-      "Ingen enhed sendes videre, før den er funktionstestet og nulstillet. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
+      "Enhederne funktionstestes og nulstilles, før de sendes videre. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
     qualityLink: "Se hvordan vi vurderer stand og kvalitet",
   },
   en: {
@@ -49,7 +49,7 @@ const copy = {
       "From used equipment in southern Europe to tested, Nordic-ready machines at your desks.",
     qualityTitle: "Quality assurance",
     qualityBody:
-      "No machine is passed on before it has been function-tested and reset. We state condition, battery health, configuration and warranty terms in writing before you order — and we do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier behind the individual delivery.",
+      "The machines are function-tested and reset before they are passed on. We state condition, battery health, configuration and warranty terms in writing before you order — and we do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier behind the individual delivery.",
     qualityLink: "See how we assess condition and quality",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -98,8 +98,8 @@ const services = [
     icon: Recycle,
     title: { da: "Opkøb af brugt udstyr", en: "Buying used equipment" },
     description: {
-      da: "Skal I af med gamle maskiner, køber vi dem, henter dem og sletter data med dokumentation per enhed. I får en vurdering, før I beslutter jer.",
-      en: "If you need to get rid of old machines, we buy them, collect them and erase the data with documentation per device. You get a valuation before you decide.",
+      da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi dem og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
+      en: "If you need to get rid of old machines, we buy them and collect them. If there is data on the units, we erase it and can provide documentation per device. You get a valuation before you decide.",
     },
     href: "/saelg-til-os",
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
@@ -141,8 +141,8 @@ const steps = [
     slug: "klargoering-og-test",
     title: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     description: {
-      da: "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes sikkert, før enheden nulstilles.",
-      en: "Every machine goes through a function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk are upgraded where needed, and previous data is securely erased before the machine is reset.",
+      da: "Enhederne gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes, før enheden nulstilles.",
+      en: "The machines go through a function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk are upgraded where needed, and previous data is erased before the machine is reset.",
     },
   },
   {

@@ -13,7 +13,7 @@ const features = [
   {
     icon: ShieldCheck,
     title: { da: "Funktionstestet", en: "Function-tested" },
-    sub: { da: "Hver enhed, før den sendes", en: "Every unit, before it ships" },
+    sub: { da: "Før maskinen sendes videre", en: "Before the machine ships" },
   },
   {
     icon: Keyboard,

@@ -185,8 +185,8 @@ export const services: Service[] = [
       en: "Preparing and testing used computers for business | Kestro",
     },
     metaDescription: {
-      da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering af RAM og SSD, og sletning af lagermediet, før maskinen sættes op igen.",
-      en: "Function testing of screen, keyboard, battery and performance, memory and disk upgrades, and erasing the storage media before the machine is set up again.",
+      da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering af RAM og SSD efter behov, og sletning af lagermediet, før maskinen sættes op igen.",
+      en: "Function testing of screen, keyboard, battery and performance, memory and disk upgrades where needed, and erasure of the storage media before setup.",
     },
     summary: {
       da: "Det, der sker mellem at maskinen er købt, og at den står på et skrivebord.",
@@ -201,8 +201,8 @@ export const services: Service[] = [
         heading: { da: "Det bliver testet", en: "What gets tested" },
         body: [
           {
-            da: "Hver enhed gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Vi tester porte med udstyr i – en USB-port, der er slidt løs, ses ikke udefra – og åbner og lukker skærmen helt, fordi hængsler er den mest oversete slitagedel på en brugt bærbar.",
-            en: "Every machine goes through a function test of screen, keyboard, battery and performance. Ports are tested with something plugged in — a USB port worn loose does not show from the outside — and the screen is opened and closed fully, because hinges are the most overlooked wear part on a used laptop.",
+            da: "Enhederne gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Vi tester porte med udstyr i – en USB-port, der er slidt løs, ses ikke udefra – og åbner og lukker skærmen helt, fordi hængsler er den mest oversete slitagedel på en brugt bærbar.",
+            en: "The machines go through a function test of screen, keyboard, battery and performance. Ports are tested with something plugged in — a USB port worn loose does not show from the outside — and the screen is opened and closed fully, because hinges are the most overlooked wear part on a used laptop.",
           },
         ],
         list: [
@@ -228,8 +228,8 @@ export const services: Service[] = [
         heading: { da: "Det bliver opgraderet", en: "What gets upgraded" },
         body: [
           {
-            da: "Hukommelse og disk er de to dele, der oftest afgør, om en ellers god maskine føles træg. Vi opgraderer RAM efter behov, og alt udstyr, vi sender videre, har SSD. Slidte dele skiftes, og lagermediet slettes, før maskinen sættes op igen – vi oplyser, hvilken metode der er brugt.",
-            en: "Memory and disk are the two parts that most often decide whether an otherwise good machine feels sluggish. We upgrade memory where it is needed, and everything we pass on has an SSD. Worn parts are replaced, and the storage media are erased before the machine is set up again — we tell you which method was used.",
+            da: "Hukommelse og disk er de to dele, der oftest afgør, om en ellers god maskine føles træg. Vi opgraderer RAM efter behov, og maskinerne sendes som udgangspunkt videre med SSD. Slidte dele skiftes, og lagermediet slettes, før maskinen sættes op igen – vi oplyser, hvilken metode der er brugt.",
+            en: "Memory and disk are the two parts that most often decide whether an otherwise good machine feels sluggish. We upgrade memory where it is needed, and the machines we pass on come with an SSD as standard. Worn parts are replaced, and the storage media are erased before the machine is set up again — we tell you which method was used.",
           },
         ],
       },

@@ -240,8 +240,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Where Windows, the programs and the files live. An old spinning hard disk is the single part that makes an otherwise decent machine unusable.",
     },
     upgrade: {
-      da: "Skiftes på få minutter. Alt udstyr, vi sender videre, har SSD – og disken fra den gamle maskine slettes, før den forlader os. Vi oplyser, hvilken metode der er brugt.",
-      en: "Changed in minutes. Everything we pass on has an SSD — and the disk from the old machine is erased before it leaves us. We tell you which method was used.",
+      da: "Skiftes på få minutter. Maskinerne sendes som udgangspunkt videre med SSD – og er der data på den gamle disk, slettes den, før den forlader os. Vi oplyser, hvilken metode der er brugt.",
+      en: "Changed in minutes. The machines we pass on come with an SSD as standard — and if there is data on the old disk, it is erased before it leaves us. We tell you which method was used.",
     },
     swappable: "yes",
     region: { x: 660, y: 150, width: 268, height: 78 },

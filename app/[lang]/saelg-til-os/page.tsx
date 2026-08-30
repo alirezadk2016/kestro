@@ -98,8 +98,8 @@ const steps = [
     icon: ShieldCheck,
     title: { da: "3. Afhentning og datasletning", en: "3. Collection and data erasure" },
     description: {
-      da: "Vi aftaler afhentning, og alle data slettes sikkert, før enhederne klargøres til videresalg.",
-      en: "We arrange collection, and all data is securely erased before the machines are prepared for resale.",
+      da: "Vi aftaler afhentning, og er der data på enhederne, slettes lagermedierne, før de klargøres til videresalg.",
+      en: "We arrange collection, and if there is data on the units, the storage media are erased before the machines are prepared for resale.",
     },
   },
   {

@@ -7,15 +7,15 @@ const services = [
   {
     title: { da: "Sourcing & indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi udvælger brugte erhvervscomputere af høj kvalitet fra pålidelige leverandører i Sydeuropa.",
-      en: "We pick good used business computers from reliable suppliers in southern Europe.",
+      da: "Vi finder brugte erhvervscomputere i vores leverandørnetværk i Sydeuropa – valgt efter opgaven, ikke efter hvad der står på et lager.",
+      en: "We find used business computers through our supplier network in southern Europe — chosen for the job, not for what is in a warehouse.",
     },
   },
   {
     title: { da: "Klargøring & test", en: "Preparation and testing" },
     description: {
-      da: "Hver enhed funktionstestes, opgraderes med mere RAM og får styresystemet sat op fra bunden.",
-      en: "Every machine goes through a full function test, gets more memory where needed and is reset to factory state.",
+      da: "Enhederne funktionstestes og får styresystemet sat op fra bunden. Skal der mere RAM eller en større disk i, opgraderer vi maskinen.",
+      en: "The machines are function-tested and have the operating system set up from scratch. If more memory or a larger disk is needed, we upgrade it.",
     },
   },
   {

@@ -22,8 +22,8 @@ const situations = [
       en: "Are you sitting on equipment you need to get rid of?",
     },
     answer: {
-      da: "Vi køber brugte erhvervsmaskiner, henter dem og sletter lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
-      en: "We buy used business machines, collect them and erase the storage media before they get a second life. You get a valuation before you decide.",
+      da: "Vi køber brugte erhvervsmaskiner og henter dem. Er der data på enhederne, sletter vi lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
+      en: "We buy used business machines and collect them. If there is data on the units, we erase the storage media before they get a second life. You get a valuation before you decide.",
     },
     href: "/saelg-til-os",
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },

@@ -58,8 +58,8 @@ const promises = [
     href: "/ydelser/klargoering-og-test",
     term: { da: "Testet enhed for enhed", en: "Tested unit by unit" },
     body: {
-      da: "Hver tast trykkes igennem, og batteriets faktiske kapacitet oplyses i procent – ikke som “OK”.",
-      en: "Every key gets pressed through, and the battery’s actual capacity is given as a percentage — not as “OK”.",
+      da: "Hver tast trykkes igennem, og vi kan oplyse batteriets faktiske kapacitet i procent – ikke bare som “OK”.",
+      en: "Every key gets pressed through, and we can give the battery’s actual capacity as a percentage — not just as “OK”.",
     },
     link: { da: "Klargøring og test", en: "Preparation and testing" },
   },

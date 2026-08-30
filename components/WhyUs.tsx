@@ -12,8 +12,8 @@ const benefits = [
   {
     title: { da: "Kvalitet & tillid", en: "Quality and trust" },
     description: {
-      da: "Vi funktionstester og klargør hver maskine, før den sendes videre, og oplyser stand og batteritilstand skriftligt.",
-      en: "We function-test and prepare each machine before it goes on, and report its condition and battery state in writing.",
+      da: "Vi funktionstester og klargør maskinerne, før de sendes videre, og oplyser stand og batteritilstand skriftligt, før I bestiller.",
+      en: "We function-test and prepare the machines before they go on, and put condition and battery state in writing before you order.",
     },
   },
   {
