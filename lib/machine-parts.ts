@@ -51,8 +51,8 @@ export const exteriorViews: ExteriorView[] = [
     },
     checks: [
       {
-        da: "Vi vurderer altid stand udvendigt først: ridser, buler og om skallen er skæv.",
-        en: "Condition outside is always judged first: scratches, dents, and whether the shell sits square.",
+        da: "Stand udvendigt vurderes først: ridser, buler og om skallen er skæv.",
+        en: "Condition outside is judged first: scratches, dents, and whether the shell sits square.",
       },
       {
         da: "En maskine med skader på kabinettet har som regel også fået et slag indvendigt.",
@@ -280,8 +280,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Moves heat away from the processor. Choked with dust, the machine throttles itself down rather than cook.",
     },
     upgrade: {
-      da: "Blæser og ribber renses, og kølepastaen skiftes på hver maskine, vi klargør. Det er den mest oversete årsag til, at en brugt maskine føles træg.",
-      en: "Fan and fins are cleaned and the thermal paste replaced on every machine we prepare. It is the most overlooked reason a used machine feels sluggish.",
+      da: "Blæser og ribber renses, og kølepastaen skiftes, når maskinen har brug for det. Det er den mest oversete årsag til, at en brugt maskine føles træg.",
+      en: "Fan and fins are cleaned and the thermal paste replaced when the machine needs it. It is the most overlooked reason a used machine feels sluggish.",
     },
     swappable: "yes",
     region: { x: 60, y: 60, width: 250, height: 210 },

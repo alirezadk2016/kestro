@@ -38,7 +38,7 @@ const copy = {
     step4: "Du får besked, når den er klar.",
     pricesTitle: "Priser",
     pricesBody:
-      "Prisen afhænger af, hvad der skal laves, og hvilke dele der skal bruges. Vi giver altid en pris, før vi går i gang – du bliver ikke overrasket bagefter. Skriv til os med, hvad der er galt, så vender vi tilbage med et estimat.",
+      "Prisen afhænger af, hvad der skal laves, og hvilke dele der skal bruges. Vi giver en pris, før vi går i gang – du bliver ikke overrasket bagefter. Skriv til os med, hvad der er galt, så vender vi tilbage med et estimat.",
     formTitle: "Beskriv problemet",
     formBody: "Skriv hvad der er galt, så vender vi tilbage med et estimat.",
   },
@@ -59,7 +59,7 @@ const copy = {
     step4: "We let you know when it is ready.",
     pricesTitle: "Prices",
     pricesBody:
-      "The price depends on what needs doing and which parts are needed. We always give a price before we start — no surprises afterwards. Write to us with what is wrong and we come back with an estimate.",
+      "The price depends on what needs doing and which parts are needed. We give you a price before we start — no surprises afterwards. Write to us with what is wrong and we come back with an estimate.",
     formTitle: "Describe the problem",
     formBody: "Tell us what is wrong and we come back with an estimate.",
   },

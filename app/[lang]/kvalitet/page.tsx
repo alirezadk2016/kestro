@@ -34,7 +34,7 @@ const copy = {
     warrantyBody1:
       "Garantien på brugt erhvervsudstyr afhænger af, hvem der står bag den enkelte leverance, og hvor gammelt udstyret er. Nogle maskiner har stadig producentens egen garanti; andre dækkes af leverandøren. Derfor lover vi ikke et fast antal måneder på forhånd.",
     warrantyBody2:
-      "Til gengæld står garantiperioden altid skriftligt i tilbuddet, sammen med hvem I skal kontakte, hvis noget går i stykker. Får I et tilbud – fra os eller fra andre – hvor det ikke fremgår, så spørg, inden I skriver under.",
+      "Til gengæld står garantiperioden skriftligt i tilbuddet, sammen med hvem I skal kontakte, hvis noget går i stykker. Får I et tilbud – fra os eller fra andre – hvor det ikke fremgår, så spørg, inden I skriver under.",
     disclosureTitle: "Det får I oplyst, før I bestiller",
     disclosureBody:
       "Vi sourcer per ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
