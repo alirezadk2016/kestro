@@ -43,9 +43,280 @@ export type Guide = {
    * the link. One or two, always to somewhere that already exists.
    */
   related: { href: string; label: Localized }[];
+  /**
+   * Questions the guide raises but does not answer in the body.
+   *
+   * Optional, and only where a reader genuinely has a question left — a guide
+   * that ends with four invented questions is padding. Same shape as <Faq>
+   * takes, and the page marks it up from this array, so what a reader sees and
+   * what Google reads cannot drift apart.
+   */
+  faqs?: { question: Localized; answer: Localized }[];
 };
 
 export const guides: Guide[] = [
+  /*
+   * First in the array on purpose.
+   *
+   * The hub lists guides in this order, and every other guide's "flere
+   * vejledninger" block takes the first three that are not itself — so
+   * position one is the only position that earns this page inbound links from
+   * across the section. Step 3, rule 1: no page under three inbound links.
+   *
+   * Every date and requirement below comes from Microsoft and can be changed
+   * by Microsoft. That is why the page carries its edit date and says out loud
+   * that the terms should be checked rather than trusted from a web page.
+   */
+  {
+    slug: "windows-10-support-slutter",
+    title: {
+      da: "Windows 10: supporten er slut – hvad gør I nu?",
+      en: "Windows 10 support has ended — what now?",
+    },
+    metaTitle: {
+      da: "Windows 10 support slut: hvad nu for virksomheden? | Kestro",
+      en: "Windows 10 end of support: what it means | Kestro",
+    },
+    metaDescription: {
+      da: "Supporten sluttede 14. oktober 2025. Hvad det betyder for jeres maskiner, hvordan I finder ud af, hvilke der kan opgraderes, og hvad I gør med resten.",
+      en: "Support ended on 14 October 2025. What that means for your machines, how to work out which ones can be upgraded, and what to do with the rest.",
+    },
+    summary: {
+      da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan gør I op, hvad der skal ske med hvilke.",
+      en: "The machines do not stop working — but the security updates have stopped. How to work out what happens to which.",
+    },
+    audience: {
+      da: "Virksomheder med maskiner på Windows 10",
+      en: "Companies with machines still on Windows 10",
+    },
+    readingMinutes: 7,
+    updated: "2026-08-31",
+    intro: {
+      da: "Den 14. oktober 2025 stoppede Microsoft med at udsende sikkerhedsopdateringer til Windows 10. Der skete ikke noget synligt den dag, og det er præcis derfor, opgaven er let at udskyde. Denne vejledning handler ikke om, hvorvidt I skal gøre noget, men om hvordan I finder ud af hvad – uden at skifte maskiner, der ikke behøver at blive skiftet.",
+      en: "On 14 October 2025 Microsoft stopped issuing security updates for Windows 10. Nothing visible happened that day, which is exactly why the job is easy to put off. This guide is not about whether you need to do something, but about working out what — without replacing machines that do not need replacing.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Hvad der faktisk skete den 14. oktober 2025",
+          en: "What actually happened on 14 October 2025",
+        },
+        body: [
+          {
+            da: "Microsoft holdt op med at udsende sikkerhedsopdateringer, kvalitetsopdateringer og teknisk support til Windows 10. Ingen maskine blev slukket, ingen licens holdt op med at virke, og ingen fil forsvandt. En Windows 10-maskine starter i dag præcis som den gjorde i oktober 2025.",
+            en: "Microsoft stopped issuing security updates, quality updates and technical support for Windows 10. No machine was switched off, no licence stopped working, and no file disappeared. A Windows 10 machine boots today exactly as it did in October 2025.",
+          },
+          {
+            da: "Det, der stoppede, er strømmen af rettelser til sårbarheder, der bliver fundet efter den dato. Forskellen viser sig ikke med det samme. Den viser sig, når der bliver fundet noget nyt, og rettelsen kommer til Windows 11 og ikke til jer.",
+            en: "What stopped is the flow of fixes for vulnerabilities found after that date. The difference does not show up immediately. It shows up when something new is found, and the fix ships for Windows 11 and not for you.",
+          },
+          {
+            da: "Datoer og vilkår herunder kommer fra Microsoft, og det er Microsoft, der kan ændre dem. Siden her bærer sin redigeringsdato øverst – brug den til at vurdere, hvor gammel informationen er, og slå det aktuelle op hos Microsoft, før I træffer en beslutning, der koster penge.",
+            en: "The dates and terms below come from Microsoft, and Microsoft is who can change them. This page carries its edit date at the top — use it to judge how old the information is, and check Microsoft's current position before making a decision that costs money.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Support og hardwarekrav er to forskellige spørgsmål",
+          en: "Support status and hardware eligibility are two different questions",
+        },
+        body: [
+          {
+            da: "De to bliver blandet sammen i næsten enhver samtale om det her, og det fører til forkerte beslutninger begge veje. Spørgsmålene er uafhængige.",
+            en: "The two get mixed together in almost every conversation about this, and that leads to wrong decisions in both directions. The questions are independent.",
+          },
+          {
+            da: "Det første handler om styresystemet: får Windows 10 stadig sikkerhedsopdateringer? Svaret er det samme for hver eneste maskine i verden, uanset hvor ny eller dyr den er. En maskine købt i går, der kører Windows 10, er lige så uden opdateringer som en fra 2017.",
+            en: "The first is about the operating system: is Windows 10 still receiving security updates? The answer is the same for every machine in the world, however new or expensive. A machine bought yesterday running Windows 10 is exactly as unpatched as one from 2017.",
+          },
+          {
+            da: "Det andet handler om den enkelte maskine: må den installere Windows 11? Her er svaret forskelligt fra maskine til maskine, og det afgøres af TPM 2.0, Secure Boot i UEFI-tilstand og om processoren står på Microsofts liste. Kravene og hvordan I tjekker dem står i vejledningen om Windows 11 på en ældre maskine.",
+            en: "The second is about the individual machine: is it allowed to install Windows 11? Here the answer differs from machine to machine, decided by TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The requirements and how to check them are in our guide on Windows 11 on an older machine.",
+          },
+          {
+            da: "Konsekvensen er værd at holde fast i: “vores maskiner er kun tre år gamle” svarer ikke på det første spørgsmål, og “Windows 10 er udløbet” svarer ikke på det andet. I skal have begge svar, før I ved, hvad opgaven koster.",
+            en: "The consequence is worth holding on to: “our machines are only three years old” does not answer the first question, and “Windows 10 has expired” does not answer the second. You need both answers before you know what the job costs.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "ESU: den betalte forlængelse",
+          en: "ESU: the paid extension",
+        },
+        body: [
+          {
+            da: "Microsoft tilbyder Extended Security Updates til organisationer: sikkerhedsrettelser til Windows 10 mod betaling, købt et år ad gangen i et begrænset antal år efter slutdatoen. Det er rettelser og ikke andet – ingen nye funktioner og ingen almindelig teknisk support.",
+            en: "Microsoft offers Extended Security Updates to organisations: paid security fixes for Windows 10, bought a year at a time for a limited number of years past the end date. It is fixes and nothing else — no new features and no general technical support.",
+          },
+          {
+            da: "ESU er en bro, ikke en destination. Prisen stiger for hvert år, man forlænger, og slutdatoen rykker sig kun – den forsvinder ikke. Programmet er værd at bruge til at få en udskiftning til at ske i den rigtige rækkefølge frem for på én weekend; det er ikke værd at bruge som en måde at lade være med at beslutte sig.",
+            en: "ESU is a bridge, not a destination. The price rises with each year you extend, and the end date only moves — it does not disappear. The programme is worth using to make a replacement happen in the right order rather than over one weekend; it is not worth using as a way of not deciding.",
+          },
+          {
+            da: "Vi oplyser ikke priser eller nøjagtige vilkår her, fordi de ændrer sig, og fordi de afhænger af, hvilke aftaler I har i forvejen. Spørg jeres Microsoft-partner eller slå programmet op hos Microsoft.",
+            en: "We do not quote prices or exact terms here, because they change and because they depend on the agreements you already have. Ask your Microsoft partner or look the programme up with Microsoft.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvad I bør tjekke på de maskiner, I har",
+          en: "What to check on the machines you already have",
+        },
+        body: [
+          {
+            da: "Opgørelsen er det eneste, der gør resten af beslutningen billig. Uden den bliver svaret enten “vi skifter det hele”, som koster for meget, eller “vi venter”, som ikke er en beslutning. Gå listen igennem én maskine ad gangen.",
+            en: "The inventory is the one thing that makes the rest of the decision cheap. Without it the answer is either “we replace everything”, which costs too much, or “we wait”, which is not a decision. Go through the list one machine at a time.",
+          },
+        ],
+        list: [
+          {
+            da: "Hvor mange maskiner kører reelt stadig Windows 10? Tallet er tit et andet end det, man husker.",
+            en: "How many machines are actually still on Windows 10? The number is often not the one people remember.",
+          },
+          {
+            da: "Opfylder maskinen Windows 11-kravene – TPM 2.0, Secure Boot i UEFI, processor på listen?",
+            en: "Does the machine meet the Windows 11 requirements — TPM 2.0, Secure Boot in UEFI, processor on the list?",
+          },
+          {
+            da: "Hvordan står maskinen fysisk? Batteri, lagerplads og hukommelse afgør, om den er værd at tage med videre, også når den godt må.",
+            en: "What condition is the machine in? Battery, storage and memory decide whether it is worth taking forward, even when it is allowed to come.",
+          },
+          {
+            da: "Hvad bruges den til? En maskine i receptionen og en maskine til konstruktion har ikke det samme svar.",
+            en: "What is it used for? A reception machine and an engineering workstation do not have the same answer.",
+          },
+          {
+            da: "Er den dækket af ESU i dag, og hvor længe? Det afgør, hvor meget tid I reelt har.",
+            en: "Is it covered by ESU today, and for how long? That decides how much time you actually have.",
+          },
+          {
+            da: "Behandler den personoplysninger? GDPR kræver passende tekniske foranstaltninger, og en maskine, der ikke længere modtager sikkerhedsopdateringer, er svær at argumentere for som passende. Tag den del med den, der har ansvaret for databeskyttelse hos jer – det er en vurdering, ikke en formalitet.",
+            en: "Does it handle personal data? The GDPR requires appropriate technical measures, and a machine that no longer receives security updates is hard to argue is appropriate. Take that part to whoever is responsible for data protection with you — it is a judgement, not a formality.",
+          },
+          {
+            da: "Er den på leasing eller stadig i garanti? Det ændrer, hvornår det giver mening at skifte den.",
+            en: "Is it leased or still under warranty? That changes when replacing it makes sense.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Tre veje – og de fleste flåder skal bruge alle tre",
+          en: "Three routes — and most fleets need all three",
+        },
+        body: [
+          {
+            da: "Opgrader. Opfylder maskinen kravene, og er den i øvrigt god nok til opgaven, er opgraderingen til Windows 11 den billigste vej. Microsoft har hidtil stillet opgraderingen til rådighed uden beregning for maskiner med en gyldig Windows 10-licens, der opfylder kravene – bekræft det aktuelle vilkår, før I planlægger ud fra det. For mange flåder er det her, størstedelen af maskinerne ender.",
+            en: "Upgrade. If the machine meets the requirements and is otherwise good enough for the job, upgrading to Windows 11 is the cheapest route. Microsoft has so far made the upgrade available at no charge for machines with a valid Windows 10 licence that meet the requirements — confirm the current terms before planning around it. For many fleets this is where most machines end up.",
+          },
+          {
+            da: "Udskift. Maskiner, der ikke opfylder kravene, og maskiner, der godt må, men er slidte, skal skiftes. Det betyder ikke nødvendigvis nyt: en brugt erhvervsmaskine, der opfylder kravene, gør det samme arbejde. Der er usædvanligt mange af dem på markedet netop nu, fordi andre virksomheder skiftede flåde af nøjagtig samme grund.",
+            en: "Replace. Machines that do not meet the requirements, and machines that do but are worn out, need replacing. That does not have to mean new: a used business machine that meets the requirements does the same work. There are unusually many of them about right now, precisely because other companies changed fleets for exactly the same reason.",
+          },
+          {
+            da: "Planlæg. Nogle maskiner kan vente: dem uden netværk, dem uden personoplysninger, dem der er bundet til software, som ikke kan flytte endnu. At vente er et fint valg, når det er truffet med en dato og en begrundelse. Det er et dårligt valg, når det bare er det, der sker.",
+            en: "Plan. Some machines can wait: the ones off the network, the ones with no personal data, the ones tied to software that cannot move yet. Waiting is a fine choice when it is made with a date and a reason. It is a poor choice when it is simply what happens.",
+          },
+          {
+            da: "Det er sjældent, at en hel flåde falder i én af de tre kasser. Blandingen er det normale – og det er også derfor, opgørelsen er pengene værd, før nogen beslutter noget.",
+            en: "It is rare for a whole fleet to fall into one of the three boxes. A mixture is the normal outcome — and that is also why the inventory is worth the effort before anyone decides anything.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Rækkefølgen, der gør det til et projekt frem for en brand",
+          en: "The order that makes this a project rather than a fire",
+        },
+        body: [
+          {
+            da: "Lav opgørelsen først, og sortér derefter maskinerne i de tre veje. Beslut så, hvad der skal ske med dem, der går ud – de har en værdi, og den værdi kan modregnes i det, der kommer ind. Læg til sidst en rækkefølge, så udskiftningen sker i hold og ikke på én gang: en flåde, der skiftes samlet, skal også skiftes samlet næste gang.",
+            en: "Do the inventory first, then sort the machines into the three routes. Then decide what happens to the ones going out — they have a value, and that value can be offset against what comes in. Finally set an order so the replacement happens in batches rather than all at once: a fleet replaced in one go has to be replaced in one go next time as well.",
+          },
+          {
+            da: "Hvis I standardiserer på én konfiguration, mens I alligevel er i gang, bliver den næste runde nemmere. Det er sjældent muligt for hele flåden, men det er næsten altid muligt for den største gruppe af medarbejdere.",
+            en: "If you standardise on one configuration while you are at it, the next round gets easier. That is rarely possible for the whole fleet, but it is almost always possible for the largest group of employees.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Skal en hel flåde gøres op, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan opgraderes, og hvilke der bedre kan betale sig at skifte. Skal der skiftes noget, skaffer vi brugte erhvervsmaskiner, der opfylder Windows 11-kravene, og vi kan give et bud på de gamle samtidig. Der er ingen binding i at spørge.",
+      en: "If a whole fleet needs assessing, we can go through the list with you and say which machines can be upgraded and which are better replaced. If something does need replacing, we source used business machines that meet the Windows 11 requirements, and we can price the old ones at the same time. Asking commits you to nothing.",
+    },
+    related: [
+      {
+        href: "/vejledninger/windows-11-paa-aeldre-maskine",
+        label: {
+          da: "Kravene til Windows 11, og hvordan I tjekker dem",
+          en: "The Windows 11 requirements, and how to check them",
+        },
+      },
+      {
+        href: "/produkter",
+        label: { da: "Udstyr vi kan skaffe", en: "Equipment we can source" },
+      },
+      {
+        href: "/tilbud",
+        label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Holder vores Windows 10-maskiner op med at virke?",
+          en: "Will our Windows 10 machines stop working?",
+        },
+        answer: {
+          da: "Nej. De starter, kører og logger på som før. Det, der er stoppet, er sikkerhedsopdateringerne – og den forskel mærkes ikke på en bestemt dag, men når der bliver fundet en ny sårbarhed, og rettelsen ikke længere kommer til jer.",
+          en: "No. They boot, run and log in as before. What has stopped is the security updates — and that difference is not felt on a particular day, but when a new vulnerability is found and the fix no longer reaches you.",
+        },
+      },
+      {
+        question: {
+          da: "Er opgraderingen til Windows 11 gratis?",
+          en: "Is the upgrade to Windows 11 free?",
+        },
+        answer: {
+          da: "Microsoft har hidtil stillet opgraderingen til rådighed uden beregning for maskiner med en gyldig Windows 10-licens, der opfylder hardwarekravene. Vilkårene kan ændres, og de er Microsofts – bekræft det aktuelle, før I lægger et budget på det.",
+          en: "Microsoft has so far made the upgrade available at no charge for machines with a valid Windows 10 licence that meet the hardware requirements. The terms can change and they are Microsoft's — confirm the current position before building a budget on it.",
+        },
+      },
+      {
+        question: {
+          da: "Kan vi bare blive på Windows 10?",
+          en: "Can we simply stay on Windows 10?",
+        },
+        answer: {
+          da: "Teknisk set ja. Om det er forsvarligt afhænger af, hvad maskinerne bruges til, om de er på netværket, og hvilke forpligtelser I har omkring de data, de behandler. ESU er den understøttede måde at købe sig tid på; at blive uden ESU er en risiko, nogen hos jer bør have taget stilling til frem for at arve.",
+          en: "Technically yes. Whether it is defensible depends on what the machines are used for, whether they are on the network, and what obligations you have around the data they handle. ESU is the supported way to buy time; staying on without it is a risk somebody with you should have decided to accept rather than inherited.",
+        },
+      },
+      {
+        question: {
+          da: "Hvor mange af vores maskiner skal skiftes?",
+          en: "How many of our machines need replacing?",
+        },
+        answer: {
+          da: "Det kan ikke besvares uden opgørelsen, og enhver, der svarer på det uden at have set listen, gætter. Det almindelige billede er en blanding: nogle kan opgraderes, nogle skal skiftes, og nogle kan vente.",
+          en: "That cannot be answered without the inventory, and anyone who answers it without seeing the list is guessing. The usual picture is a mixture: some can be upgraded, some need replacing, and some can wait.",
+        },
+      },
+      {
+        question: {
+          da: "Kan I hjælpe med at vurdere flåden?",
+          en: "Can you help assess the fleet?",
+        },
+        answer: {
+          da: "Ja. Send en liste over maskinerne – model og cirka alder er nok til at komme i gang – så gennemgår vi den med jer. Skal der skaffes noget, kan vi regne på det, og skal noget ud, kan vi byde på det samtidig.",
+          en: "Yes. Send a list of the machines — model and rough age is enough to start — and we will go through it with you. If something needs sourcing we can price it, and if something is going out we can bid on it at the same time.",
+        },
+      },
+    ],
+  },
   {
     slug: "reparere-eller-koebe-ny",
     title: {

@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
+import Faq from "@/components/Faq";
 import { guides, getGuide } from "@/lib/guides";
 import { company } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -23,6 +24,7 @@ const copy = {
     closingTitle: "Hvis du hellere vil have det gjort",
     next: "Videre herfra",
     more: "Flere vejledninger",
+    faq: "Spørgsmål, vi får om det her",
     contact: "Skriv til os",
   },
   en: {
@@ -33,6 +35,7 @@ const copy = {
     closingTitle: "If you would rather have it done",
     next: "Where to go next",
     more: "More guides",
+    faq: "Questions we get about this",
     contact: "Write to us",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -54,7 +57,21 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
   const guide = getGuide(params.slug);
   if (!guide) notFound();
 
-  const others = guides.filter((g) => g.slug !== guide.slug).slice(0, 3);
+  /*
+   * The next three guides, wrapping around the list.
+   *
+   * This used to be the first three that were not this one, which quietly
+   * meant only the first four guides in the array were ever linked: adding a
+   * seventh guide dropped samle-din-egen-pc from every "more guides" block and
+   * took it under three inbound links, breaking step 3's rule 1. Rotating
+   * gives every guide exactly three inbound links from this block however many
+   * guides there are, and it stays deterministic, which a prerendered page
+   * needs.
+   */
+  const index = guides.findIndex((g) => g.slug === guide.slug);
+  const others = [1, 2, 3]
+    .map((offset) => guides[(index + offset) % guides.length])
+    .filter((g) => g.slug !== guide.slug);
 
   /* Article schema so the guide can win a rich result rather than a bare link. */
   const articleJsonLd = {
@@ -73,6 +90,19 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     },
   };
 
+  const faqJsonLd = guide.faqs?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        inLanguage: htmlLang[lang],
+        mainEntity: guide.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question[lang],
+          acceptedAnswer: { "@type": "Answer", text: faq.answer[lang] },
+        })),
+      }
+    : null;
+
   return (
     <>
       <script
@@ -81,6 +111,14 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
 
       <section className="bg-brand-950 py-16 text-paper sm:py-20">
         <Container>
@@ -199,6 +237,12 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
           </div>
         </Container>
       </section>
+
+      {guide.faqs && guide.faqs.length > 0 && (
+        <div className="border-t border-white/10">
+          <Faq lang={lang} items={guide.faqs} title={{ da: copy.da.faq, en: copy.en.faq }} />
+        </div>
+      )}
 
       {others.length > 0 && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
