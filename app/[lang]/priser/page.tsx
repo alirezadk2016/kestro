@@ -4,7 +4,6 @@ import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
 
 /*
@@ -190,7 +189,6 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
-      <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/priser" }]} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}

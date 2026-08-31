@@ -52,6 +52,16 @@ export type Guide = {
    * what Google reads cannot drift apart.
    */
   faqs?: { question: Localized; answer: Localized }[];
+  /**
+   * Where a claim on the page can be checked.
+   *
+   * A guide that states dates and requirements and cites nobody asks to be
+   * taken on trust. The href is localised because the authoritative page often
+   * exists in Danish too, and a Danish reader should land on the Danish one.
+   * Only real, reachable pages belong here — a dead citation is worse than
+   * none.
+   */
+  sources?: { href: Localized; label: Localized }[];
 };
 
 export const guides: Guide[] = [
@@ -262,6 +272,18 @@ export const guides: Guide[] = [
       {
         href: "/tilbud",
         label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
+      },
+    ],
+    sources: [
+      {
+        href: {
+          da: "https://www.microsoft.com/da-dk/windows/end-of-support",
+          en: "https://www.microsoft.com/en-us/windows/end-of-support",
+        },
+        label: {
+          da: "Microsoft: Windows 10 og ophør af support",
+          en: "Microsoft: Windows 10 end of support",
+        },
       },
     ],
     faqs: [

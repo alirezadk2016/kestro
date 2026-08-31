@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
@@ -23,6 +23,7 @@ const copy = {
     forWhom: "Til",
     closingTitle: "Hvis du hellere vil have det gjort",
     next: "Videre herfra",
+    sources: "Kilder",
     more: "Flere vejledninger",
     faq: "Spørgsmål, vi får om det her",
     contact: "Skriv til os",
@@ -34,6 +35,7 @@ const copy = {
     forWhom: "For",
     closingTitle: "If you would rather have it done",
     next: "Where to go next",
+    sources: "Sources",
     more: "More guides",
     faq: "Questions we get about this",
     contact: "Write to us",
@@ -212,6 +214,30 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                 {c.contact}
               </Link>
             </div>
+
+            {/* Where the claims can be checked. An outbound link to the body
+                that actually decides a date is not leaked authority; it is the
+                difference between a page that asserts and a page that cites. */}
+            {guide.sources && guide.sources.length > 0 && (
+              <div className="mt-10 border-t border-white/15 pt-8">
+                <p className="eyebrow text-brand-300">{c.sources}</p>
+                <ul className="mt-4 space-y-2">
+                  {guide.sources.map((source) => (
+                    <li key={source.href.da}>
+                      <a
+                        href={source.href[lang]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+                      >
+                        {source.label[lang]}
+                        <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* The page that resolves what the guide raised. A guide that
                 answers a question and then stops leaves the reader to find the

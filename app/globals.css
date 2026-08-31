@@ -367,3 +367,18 @@ body {
     animation: none;
   }
 }
+
+/*
+ * The English-language offer, hidden until the pre-paint script says otherwise.
+ *
+ * Default hidden rather than default shown: if scripting is off the bar simply
+ * never appears, which is the same outcome as before and better than showing
+ * every Danish reader an English offer they did not need.
+ */
+.lang-hint {
+  display: none;
+}
+
+html[data-lang-hint="on"] .lang-hint {
+  display: block;
+}

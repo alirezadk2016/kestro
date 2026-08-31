@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { company } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
@@ -220,7 +219,6 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
 
   return (
     <>
-      <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
       <PageHeader
         title={c.title}
         description={c.description}
