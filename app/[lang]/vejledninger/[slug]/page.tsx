@@ -3,11 +3,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
 import Container from "@/components/Container";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
-import { guides, getGuide } from "@/lib/guides";
-import { company } from "@/lib/company";
+import ArticleToc from "@/components/ArticleToc";
+import AuthorByline from "@/components/AuthorByline";
+import ClusterMark from "@/components/ClusterMark";
+import { guides, getGuide, getCluster } from "@/lib/guides";
+import { company, teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -17,26 +20,28 @@ export function generateStaticParams() {
 
 const copy = {
   da: {
-    breadcrumb: "Vejledninger",
+    breadcrumb: "Viden",
+    inCluster: "Mere om",
     readingSuffix: "min. læsning",
     updated: "Opdateret",
     forWhom: "Til",
     closingTitle: "Hvis du hellere vil have det gjort",
     next: "Videre herfra",
     sources: "Kilder",
-    more: "Flere vejledninger",
+    more: "Flere fra Viden",
     faq: "Spørgsmål, vi får om det her",
     contact: "Skriv til os",
   },
   en: {
-    breadcrumb: "Guides",
+    breadcrumb: "Knowledge",
+    inCluster: "More on",
     readingSuffix: "min read",
     updated: "Updated",
     forWhom: "For",
     closingTitle: "If you would rather have it done",
     next: "Where to go next",
     sources: "Sources",
-    more: "More guides",
+    more: "More from Knowledge",
     faq: "Questions we get about this",
     contact: "Write to us",
   },
@@ -75,6 +80,36 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     .map((offset) => guides[(index + offset) % guides.length])
     .filter((g) => g.slug !== guide.slug);
 
+  const cluster = getCluster(guide.cluster);
+  /* Same-cluster neighbours, shown separately from the rotation above. The
+     rotation is what guarantees every article three inbound links whatever the
+     cluster sizes are; this block is the topical signal on top of it. Anything
+     already in the rotation is dropped so the two lists never repeat. */
+  const inCluster = guides.filter(
+    (g) =>
+      g.cluster === guide.cluster &&
+      g.slug !== guide.slug &&
+      !others.some((other) => other.slug === g.slug),
+  );
+
+  /* One id per section, from the Danish heading so the two languages share an
+     anchor and a link into the article survives a language switch. */
+  const sectionId = (headingDa: string) =>
+    headingDa
+      .toLowerCase()
+      .replace(/[æå]/g, "a")
+      .replace(/ø/g, "o")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 48);
+
+  const toc = guide.sections.map((section) => ({
+    id: sectionId(section.heading.da),
+    label: section.heading,
+  }));
+
+  const author = teamMember(guide.author);
+
   /* Article schema so the guide can win a rich result rather than a bare link. */
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -84,7 +119,16 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     inLanguage: htmlLang[lang],
     dateModified: guide.updated,
     datePublished: guide.updated,
-    author: { "@type": "Organization", name: company.name },
+    /* A named person with a real role, from lib/company.ts. Organization said
+       nothing a reader or a search engine could weigh. */
+    author: {
+      "@type": "Person",
+      name: author.name,
+      jobTitle: author.role[lang],
+      url: `${SITE_ORIGIN}${localePath("/om-os", lang)}#${author.id}`,
+      worksFor: { "@type": "Organization", name: company.name },
+    },
+    articleSection: cluster.name[lang],
     publisher: { "@type": "Organization", name: company.name },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -122,46 +166,54 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         />
       )}
 
-      <section className="bg-brand-950 py-16 text-paper sm:py-20">
-        <Container>
+      {/* The header carries depth by layering rather than by ornament: the mark
+          sits behind the type on a wide screen and steps out of the way on a
+          narrow one, where the words are the only thing worth the space. */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-16 lg:py-20">
+        <ClusterMark
+          cluster={guide.cluster}
+          className="pointer-events-none absolute -right-8 top-1/2 hidden h-[26rem] w-[26rem] -translate-y-1/2 text-brand-300/10 lg:block"
+        />
+        <Container className="relative">
           <div className="max-w-3xl">
-            <BreadcrumbSchema
+            <Breadcrumbs
               lang={lang}
               trail={[
                 { name: c.breadcrumb, href: "/vejledninger" },
                 { name: guide.title[lang], href: `/vejledninger/${guide.slug}` },
               ]}
             />
-            <nav aria-label={c.breadcrumb} className="text-sm text-paper/50">
-              <Link
-                href={localePath("/vejledninger", lang)}
-                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
-              >
-                {c.breadcrumb}
-              </Link>
-            </nav>
 
-            <h1 className="mt-4 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <p className="mt-6">
+              <Link
+                href={`${localePath("/vejledninger", lang)}#${cluster.anchor}`}
+                /* No mark at this size: the drawing is a technical diagram and
+                   it turns to mud below about 40px. The large one behind the
+                   heading already says which cluster this is. */
+                className="inline-flex min-h-[36px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
+              >
+                {cluster.name[lang]}
+              </Link>
+            </p>
+
+            <h1 className="mt-3 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
               {guide.title[lang]}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 label text-brand-300">
-              <span>
-                {c.forWhom} {guide.audience[lang].toLowerCase()}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>
-                {guide.readingMinutes} {c.readingSuffix}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>
-                {c.updated} {guide.updated}
-              </span>
-            </div>
-
-            <p className="mt-8 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
-              {guide.intro[lang]}
+            {/* The answer, before the scroll. Someone who reads only this
+                should still have got what they came for. */}
+            <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-7 text-paper/85 sm:text-lg sm:leading-8">
+              {guide.tldr[lang]}
             </p>
+
+            <AuthorByline
+              authorId={guide.author}
+              updated={guide.updated}
+              readingMinutes={guide.readingMinutes}
+              lang={lang}
+            />
+
+            <ArticleToc items={toc} lang={lang} />
           </div>
         </Container>
       </section>
@@ -169,8 +221,16 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
+            <p className="text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
+              {guide.intro[lang]}
+            </p>
+
             {guide.sections.map((section) => (
-              <div key={section.heading.da} className="border-t border-white/10 py-8">
+              <div
+                key={section.heading.da}
+                id={sectionId(section.heading.da)}
+                className="scroll-mt-24 border-t border-white/10 py-8 first:mt-10"
+              >
                 <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                   {section.heading[lang]}
                 </h2>
@@ -264,6 +324,33 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         </Container>
       </section>
 
+      {inCluster.length > 0 && (
+        <section className="border-t border-white/10 py-10 sm:py-16">
+          <Container>
+            <div className="max-w-3xl">
+              <p className="eyebrow text-brand-300">
+                {c.inCluster} {cluster.name[lang].toLowerCase()}
+              </p>
+              <ul className="mt-5 space-y-3">
+                {inCluster.map((sibling) => (
+                  <li key={sibling.slug}>
+                    <Link
+                      href={localePath(`/vejledninger/${sibling.slug}`, lang)}
+                      className="group flex items-baseline gap-3 text-base font-semibold leading-7 text-paper transition-colors hover:text-brand-300"
+                    >
+                      <span aria-hidden="true" className="text-brand-300">
+                        &rarr;
+                      </span>
+                      {sibling.title[lang]}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Container>
+        </section>
+      )}
+
       {guide.faqs && guide.faqs.length > 0 && (
         <div className="border-t border-white/10">
           <Faq lang={lang} items={guide.faqs} title={{ da: copy.da.faq, en: copy.en.faq }} />
@@ -297,7 +384,11 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
         </section>
       )}
 
-      <CtaSection lang={lang} />
+      {/* CTA weight follows the article's declared intent, not a layout choice.
+          A guide to wiping a disk before selling it has no business carrying
+          the same three-link sales block as one about replacing a fleet; the
+          closing note above already offers the help, quietly. */}
+      {guide.intent !== "informational" && <CtaSection lang={lang} />}
     </>
   );
 }

@@ -391,7 +391,10 @@ for (const [name, viewport] of [
 
   await readThrough("direct load of /");
 
-  for (const label of ["Reparation", "Om os", "Vejledninger"]) {
+  /* Labels, not hrefs, because what is being checked is that a visitor can
+     click the thing they can see. "Viden" was "Vejledninger" until the section
+     was renamed — the URL did not move, only the word on the link. */
+  for (const label of ["Reparation", "Om os", "Viden"]) {
     await page.click(`header nav a:has-text("${label}")`);
     await page.waitForTimeout(1100);
     await readThrough(`after clicking ${label}`);

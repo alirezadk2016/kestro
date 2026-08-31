@@ -35,6 +35,13 @@ try {
   /* Nothing there, which is what we want. */
 }
 
+/* Content gates first: they are static, take a second, and there is no point
+   building 108 pages to find out an article claims another article's keyword. */
+console.log("verify: content");
+const content = run("node", ["scripts/verify/content.mjs"]);
+const [contentCode] = await once(content, "exit");
+if (contentCode !== 0) process.exit(contentCode);
+
 console.log("verify: building");
 const build = run("npx", ["next", "build"]);
 const [code] = await once(build, "exit");

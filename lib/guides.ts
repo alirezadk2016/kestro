@@ -13,6 +13,94 @@ import type { Localized } from "./i18n";
  * teaser for a paid course; if courses arrive later, they get their own type.
  */
 
+/*
+ * The taxonomy Viden is organised by.
+ *
+ * Held in data rather than in the URL. Step 3 made the same call for model
+ * pages: a hierarchy expressed in a path costs a redirect the day an article
+ * changes cluster, and buys nothing Google cannot already read from
+ * breadcrumbs and internal links. It also means the section can one day move
+ * to /viden by renaming one path segment, with the structure already built.
+ *
+ * Four working clusters, each with a commercial page waiting at the bottom,
+ * plus an honest bucket for the one guide that belongs to none. Step 3 decided
+ * samle-din-egen-pc was the wrong audience and should be kept but not built
+ * on; filing it under a cluster it does not belong to would quietly reverse
+ * that decision.
+ */
+export type Cluster =
+  "memory-storage" | "lifecycle" | "workplace-hardware" | "buying-condition" | "uden-klynge";
+
+/** What kind of question the article answers. Drives nothing but the label. */
+export type ArticleType = "grundviden" | "beslutning" | "erhvervs-it" | "praktisk";
+
+/**
+ * How close the reader is to buying — and therefore how loud the page is
+ * allowed to be about it. The template reads this; a designer never decides
+ * CTA weight per article.
+ */
+export type Intent =
+  "informational" | "informational-commercial" | "commercial-education" | "high-commercial";
+
+export type ClusterMeta = {
+  id: Cluster;
+  /** Anchor on the hub. Part of a URL the moment anyone links to it. */
+  anchor: string;
+  name: Localized;
+  description: Localized;
+};
+
+export const clusters: ClusterMeta[] = [
+  {
+    id: "lifecycle",
+    anchor: "levetid-og-udskiftning",
+    name: { da: "Levetid og udskiftning", en: "Lifecycle and replacement" },
+    description: {
+      da: "Hvornår en maskine har gjort sit, hvad supportdatoer betyder for en flåde, og hvordan man skifter uden at skifte alt.",
+      en: "When a machine has done its job, what support dates mean for a fleet, and how to replace without replacing everything.",
+    },
+  },
+  {
+    id: "buying-condition",
+    anchor: "koeb-stand-og-afhaendelse",
+    name: { da: "Køb, stand og afhændelse", en: "Buying, condition and disposal" },
+    description: {
+      da: "Hvad man skal se efter, før man køber brugt — og hvad der skal ske med udstyret, når det skal videre.",
+      en: "What to look for before buying used — and what has to happen to the equipment when it moves on.",
+    },
+  },
+  {
+    id: "memory-storage",
+    anchor: "hukommelse-og-lagring",
+    name: { da: "Hukommelse og lagring", en: "Memory and storage" },
+    description: {
+      da: "RAM og lagerplads: hvor meget der skal til, hvad der kan opgraderes, og hvornår det kan betale sig.",
+      en: "Memory and storage: how much is needed, what can be upgraded, and when it is worth doing.",
+    },
+  },
+  {
+    id: "workplace-hardware",
+    anchor: "arbejdspladsen",
+    name: { da: "Arbejdspladsen", en: "The workplace" },
+    description: {
+      da: "Skærme, dockingstationer og alt det, der gør en maskine til en arbejdsplads.",
+      en: "Monitors, docking stations and everything that turns a machine into a workplace.",
+    },
+  },
+  {
+    id: "uden-klynge",
+    anchor: "oevrige",
+    name: { da: "Øvrige vejledninger", en: "Other guides" },
+    description: {
+      da: "Står uden for klyngerne. De bliver stående, men der bygges ikke videre på dem.",
+      en: "Outside the clusters. They stay, but nothing is built on top of them.",
+    },
+  },
+];
+
+export const getCluster = (id: Cluster): ClusterMeta =>
+  clusters.find((cluster) => cluster.id === id) ?? clusters[clusters.length - 1];
+
 export type GuideSection = {
   heading: Localized;
   body: Localized[];
@@ -22,6 +110,19 @@ export type GuideSection = {
 
 export type Guide = {
   slug: string;
+  /** Which cluster the article belongs to. Exactly one. */
+  cluster: Cluster;
+  type: ArticleType;
+  intent: Intent;
+  /**
+   * The one search this article is written to own. Checked against every other
+   * article and against docs/seo-keyword-map.csv — two pages may never claim
+   * the same primary. Empty string means deliberately none, which is a
+   * decision, not an omission.
+   */
+  primaryKeyword: string;
+  /** Team member id from lib/company.ts. Never a name typed in here. */
+  author: string;
   title: Localized;
   metaTitle: Localized;
   metaDescription: Localized;
@@ -31,6 +132,14 @@ export type Guide = {
   readingMinutes: number;
   /** ISO date. Shown, and used for the article schema. */
   updated: string;
+  /**
+   * The answer, before the reader scrolls. 40-60 words.
+   *
+   * Separate from `summary`, which is a teaser written for the hub. This one
+   * has to be usable on its own: someone who reads this and leaves should have
+   * got what they came for.
+   */
+  tldr: Localized;
   intro: Localized;
   sections: GuideSection[];
   /** What to do if you would rather not do it yourself. */
@@ -79,6 +188,11 @@ export const guides: Guide[] = [
    */
   {
     slug: "windows-10-support-slutter",
+    cluster: "lifecycle",
+    type: "erhvervs-it",
+    intent: "informational-commercial",
+    primaryKeyword: "windows 10 support slut virksomhed",
+    author: "alireza",
     title: {
       da: "Windows 10: supporten er slut – hvad gør I nu?",
       en: "Windows 10 support has ended — what now?",
@@ -101,6 +215,10 @@ export const guides: Guide[] = [
     },
     readingMinutes: 7,
     updated: "2026-08-31",
+    tldr: {
+      da: "Supporten sluttede 14. oktober 2025. Maskinerne virker stadig, men de får ikke længere sikkerhedsopdateringer. Opgørelsen afgør resten: en del af flåden kan opgraderes til Windows 11, en del skal skiftes, og en del kan vente. Det er sjældent, at alle tre ikke er i spil på én gang.",
+      en: "Support ended on 14 October 2025. The machines still run, but they no longer receive security updates. The inventory decides the rest: part of the fleet can be upgraded to Windows 11, part needs replacing, and part can wait. It is rare that all three are not in play at once.",
+    },
     intro: {
       da: "Den 14. oktober 2025 stoppede Microsoft med at udsende sikkerhedsopdateringer til Windows 10. Der skete ikke noget synligt den dag, og det er præcis derfor, opgaven er let at udskyde. Denne vejledning handler ikke om, hvorvidt I skal gøre noget, men om hvordan I finder ud af hvad – uden at skifte maskiner, der ikke behøver at blive skiftet.",
       en: "On 14 October 2025 Microsoft stopped issuing security updates for Windows 10. Nothing visible happened that day, which is exactly why the job is easy to put off. This guide is not about whether you need to do something, but about working out what — without replacing machines that do not need replacing.",
@@ -341,6 +459,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "reparere-eller-koebe-ny",
+    cluster: "lifecycle",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "reparere eller købe ny computer",
+    author: "alireza",
     title: {
       da: "Reparere eller købe ny? Sådan regner du på det",
       en: "Repair or replace? How to work it out",
@@ -360,6 +483,10 @@ export const guides: Guide[] = [
     audience: { da: "Private og mindre virksomheder", en: "Individuals and small businesses" },
     readingMinutes: 4,
     updated: "2026-08-23",
+    tldr: {
+      da: "Regn på det i stedet for at gætte. Er reparationen under en tredjedel af, hvad en tilsvarende brugt maskine koster, og har maskinen mere end et par år tilbage i sig, er reparation som regel det billigste. Er den det ikke, køber man tid, ikke en løsning.",
+      en: "Do the arithmetic instead of guessing. If the repair costs less than a third of an equivalent used machine and the machine has more than a couple of years left in it, repairing is usually cheapest. If it does not, you are buying time rather than a solution.",
+    },
     intro: {
       da: "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Spørgsmålet er ikke, om en computer kan repareres – det kan næsten alle – men om det kan betale sig. Her er den måde, vi selv regner på, når nogen spørger.",
       en: "Most machines get replaced long before they are worn out. The question is not whether a computer can be repaired — almost all of them can — but whether it is worth it. Here is how we work it out when someone asks.",
@@ -434,6 +561,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "opgrader-ram-i-baerbar",
+    cluster: "memory-storage",
+    type: "praktisk",
+    intent: "informational",
+    primaryKeyword: "opgradere ram i bærbar",
+    author: "alireza",
     title: {
       da: "Sådan opgraderer du hukommelsen i en bærbar",
       en: "How to upgrade the memory in a laptop",
@@ -453,6 +585,10 @@ export const guides: Guide[] = [
     audience: { da: "Private der selv vil prøve", en: "People who want to do it themselves" },
     readingMinutes: 5,
     updated: "2026-08-23",
+    tldr: {
+      da: "De fleste erhvervsbærbare kan skiftes RAM på med en skruetrækker og ti minutter. Det, der afgør det, er ikke evnen, men typen: SO-DIMM eller loddet fast, DDR3, DDR4 eller DDR5, og hvor meget kortet overhovedet understøtter. Tjek de tre først.",
+      en: "Most business laptops take a memory change with a screwdriver and ten minutes. What decides it is not skill but type: SO-DIMM or soldered down, DDR3, DDR4 or DDR5, and how much the board supports at all. Check those three first.",
+    },
     intro: {
       da: "Mere hukommelse er som regel den billigste vej til en mærkbart hurtigere maskine. Men det virker kun, hvis maskinen kan udvides, og hvis du køber den rigtige type. Her er rækkefølgen.",
       en: "More memory is usually the cheapest route to a noticeably faster machine. But it only works if the machine can be expanded, and if you buy the right type. Here is the order to do it in.",
@@ -541,6 +677,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "tjek-brugt-baerbar-foer-koeb",
+    cluster: "buying-condition",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "hvad skal man tjekke på en brugt bærbar",
+    author: "alireza",
     title: {
       da: "Ti ting du skal tjekke på en brugt bærbar, før du køber",
       en: "Ten things to check on a used laptop before you buy",
@@ -560,6 +701,10 @@ export const guides: Guide[] = [
     audience: { da: "Alle der køber brugt", en: "Anyone buying second-hand" },
     readingMinutes: 5,
     updated: "2026-08-23",
+    tldr: {
+      da: "Kosmetisk stand er det, man ser først, og det, der betyder mindst. Det, der afgør købet, er batteriets faktiske tilstand, om lagermediet har været brugt hårdt, om alle porte virker, og om maskinen kan komme med over på et understøttet styresystem.",
+      en: "Cosmetic condition is what you see first and what matters least. What decides the purchase is the real state of the battery, whether the drive has had a hard life, whether every port works, and whether the machine can come along to a supported operating system.",
+    },
     intro: {
       da: "Brugt udstyr er en god handel, når du ved, hvad du får. Listen her er den samme, vi selv går igennem, før noget bliver sendt videre – og du kan lave det meste af den, mens sælgeren står ved siden af.",
       en: "Used equipment is a good deal when you know what you are getting. This list is the same one we go through before anything is passed on — and you can do most of it while the seller is standing next to you.",
@@ -655,6 +800,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "samle-din-egen-pc",
+    cluster: "uden-klynge",
+    type: "praktisk",
+    intent: "informational",
+    primaryKeyword: "",
+    author: "alireza",
     title: { da: "Sådan samler du din egen pc", en: "How to build your own PC" },
     metaTitle: {
       da: "Samle sin egen pc: rækkefølge, dele og fejl | Kestro",
@@ -671,6 +821,10 @@ export const guides: Guide[] = [
     audience: { da: "Private og gaming", en: "Individuals and gaming" },
     readingMinutes: 6,
     updated: "2026-08-23",
+    tldr: {
+      da: "Rækkefølgen gør arbejdet nemt: bundkort, CPU, køler og RAM samles uden for kabinettet, og først derefter skrues det hele i. De fejl, der koster tid, er næsten altid strøm, der ikke er sat i, eller RAM, der ikke sidder helt fast.",
+      en: "The order makes the work easy: motherboard, CPU, cooler and memory go together outside the case, and only then does the whole thing get screwed in. The mistakes that cost time are almost always power that is not plugged in, or memory that is not fully seated.",
+    },
     intro: {
       da: "At samle en pc er lettere, end det ser ud. Delene kan kun sidde ét sted, og de kan stort set ikke sættes forkert i. Det svære er at vælge dele, der passer sammen – resten er skruearbejde.",
       en: "Building a PC is easier than it looks. Parts only fit in one place, and they can barely be inserted the wrong way. The hard part is choosing components that fit together — the rest is screwing things in.",
@@ -770,6 +924,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "windows-11-paa-aeldre-maskine",
+    cluster: "lifecycle",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "windows 11 krav gammel computer",
+    author: "alireza",
     title: {
       da: "Windows 11 på en ældre maskine: hvad kræver det?",
       en: "Windows 11 on an older machine: what does it take?",
@@ -789,6 +948,10 @@ export const guides: Guide[] = [
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
     readingMinutes: 4,
     updated: "2026-08-23",
+    tldr: {
+      da: "Tre ting afgør det: TPM 2.0, Secure Boot i UEFI-tilstand, og om processoren står på Microsofts liste. De to første er ofte kun en indstilling i BIOS. Den tredje kan ikke omgås — og det er dér, en maskine, der kører helt fint, alligevel må skiftes.",
+      en: "Three things decide it: TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The first two are often just a BIOS setting. The third cannot be worked around — and that is where a machine running perfectly well still has to be replaced.",
+    },
     intro: {
       da: "Mange maskiner, der kører helt fint, får at vide, at de ikke kan opdatere til Windows 11. Det handler sjældent om ydelse og næsten altid om tre krav, der kan tjekkes på et par minutter.",
       en: "Plenty of machines that run perfectly well are told they cannot update to Windows 11. That is rarely about performance and almost always about three requirements you can check in a couple of minutes.",
@@ -854,6 +1017,11 @@ export const guides: Guide[] = [
   },
   {
     slug: "slet-data-foer-du-saelger",
+    cluster: "buying-condition",
+    type: "praktisk",
+    intent: "informational",
+    primaryKeyword: "sikker datasletning",
+    author: "alireza",
     title: {
       da: "Sådan sletter du data, før du sælger eller kasserer en computer",
       en: "How to erase data before selling or scrapping a computer",
@@ -873,6 +1041,10 @@ export const guides: Guide[] = [
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
     readingMinutes: 4,
     updated: "2026-08-23",
+    tldr: {
+      da: "At slette filer og tømme papirkurven fjerner ikke data. På en SSD er den rigtige fremgangsmåde en indbygget secure erase eller kryptering efterfulgt af sletning af nøglen. Skal udstyret ud af en virksomhed, er dokumentationen for sletningen lige så vigtig som sletningen selv.",
+      en: "Deleting files and emptying the recycle bin does not remove data. On an SSD the right approach is a built-in secure erase, or encryption followed by destroying the key. If the equipment is leaving a company, the documentation of the erasure matters as much as the erasure itself.",
+    },
     intro: {
       da: "Når en maskine skifter hænder, følger data med, hvis man ikke gør noget aktivt. En hurtig formatering fjerner kun indholdsfortegnelsen – filerne ligger der stadig og kan hentes frem med gratis værktøjer.",
       en: "When a machine changes hands, the data goes with it unless you actively do something. A quick format only removes the index — the files are still there and can be recovered with free tools.",

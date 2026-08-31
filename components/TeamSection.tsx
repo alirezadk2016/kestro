@@ -45,8 +45,10 @@ export default function TeamSection({ lang }: { lang: Lang }) {
           }`}
         >
           {team.map((member) => (
+            /* id is the anchor target: an article byline links to the real bio. */
             <div
               key={member.name}
+              id={member.id}
               className="group relative flex flex-col gap-6 overflow-hidden border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06] sm:flex-row sm:items-start sm:p-8 sm:text-left"
             >
               <span

@@ -157,6 +157,15 @@ export const team: TeamMember[] = people.map((person) => {
 const byId = (id: string): TeamMember => team.find((member) => member.id === id) ?? team[0];
 
 /**
+ * A named person, by id.
+ *
+ * Exported so an article can carry an author id instead of a name typed into
+ * content: the byline, the photograph and the Person schema then all come from
+ * the one place the role is actually maintained.
+ */
+export const teamMember = byId;
+
+/**
  * Who a buyer is put in front of, by market.
  *
  * A visitor reading the Danish site is in Scandinavia and should land on
