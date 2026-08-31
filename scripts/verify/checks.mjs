@@ -137,7 +137,10 @@ for (const [name, viewport] of [
   ["desktop", { width: 1440, height: 900 }],
   ["phone", { width: 390, height: 844 }],
 ]) {
-  for (const path of ["/", "/en", "/ydelser/levering", "/kontakt"]) {
+  /* /vejledninger joins the list because the Viden hub now sets type over a
+     drawing, and a drawing behind text is exactly what a computed style cannot
+     see and this check can. */
+  for (const path of ["/", "/en", "/ydelser/levering", "/kontakt", "/vejledninger"]) {
     const page = await browser.newPage({ viewport });
     await page.goto(BASE + path, { waitUntil: "networkidle" });
 
