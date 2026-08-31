@@ -106,6 +106,15 @@ export type GuideSection = {
   body: Localized[];
   /** Optional list — used where steps or checks read better than prose. */
   list?: Localized[];
+  /**
+   * Optional comparison, rendered as a real <table>.
+   *
+   * Where two things differ along several axes, a table says it in a glance
+   * and prose does not. It is semantic HTML rather than a styled grid on
+   * purpose: a crawler, a screen reader and a language model all read a table
+   * as a table, and the comparison is usually the part worth quoting.
+   */
+  table?: { caption: Localized; head: Localized[]; rows: Localized[][] };
 };
 
 export type Guide = {
@@ -453,6 +462,320 @@ export const guides: Guide[] = [
         answer: {
           da: "Ja. Send en liste over maskinerne – model og cirka alder er nok til at komme i gang – så gennemgår vi den med jer. Skal der skaffes noget, kan vi regne på det, og skal noget ud, kan vi byde på det samtidig.",
           en: "Yes. Send a list of the machines — model and rough age is enough to start — and we will go through it with you. If something needs sourcing we can price it, and if something is going out we can bid on it at the same time.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "refurbished-eller-brugt",
+    cluster: "buying-condition",
+    type: "grundviden",
+    intent: "informational-commercial",
+    primaryKeyword: "refurbished vs brugt",
+    author: "alireza",
+    title: {
+      da: "Refurbished eller brugt: hvad er forskellen?",
+      en: "Refurbished or used: what is the difference?",
+    },
+    metaTitle: {
+      da: "Refurbished vs brugt: hvad er forskellen? | Kestro",
+      en: "Refurbished vs used: what is the difference? | Kestro",
+    },
+    metaDescription: {
+      da: "Brugt beskriver maskinens historie. Refurbished beskriver et arbejde, nogen har udført på den. Hvorfor de ikke er ens – og hvad en virksomhed bør spørge om.",
+      en: "Used describes the machine's history. Refurbished describes work somebody did to it. Why the two words are not the same — and what a company should ask about.",
+    },
+    summary: {
+      da: "To ord, der bruges i flæng, og en forskel, der afgør hvad I får. Sådan finder I ud af, hvad der faktisk er lavet ved maskinen.",
+      en: "Two words used interchangeably, and a difference that decides what you get. How to find out what was actually done to the machine.",
+    },
+    audience: {
+      da: "Indkøbere og IT-ansvarlige",
+      en: "Buyers and IT managers",
+    },
+    readingMinutes: 8,
+    updated: "2026-08-31",
+    tldr: {
+      da: "Brugt beskriver maskinens historie: den har haft en ejer før. Refurbished beskriver et arbejde, nogen har udført på den bagefter – kontrol, rengøring, udskiftning af slidte dele, sletning af data. Forskellen er reel, men ordet er ikke en standard, nogen håndhæver. To sælgere kan bruge det om vidt forskellige processer, og derfor er spørgsmålet ikke om en maskine er refurbished, men hvad der konkret blev gjort ved den.",
+      en: "Used describes the machine's history: it had an owner before. Refurbished describes work somebody did to it afterwards — checking, cleaning, replacing worn parts, erasing data. The difference is real, but the word is not a standard anyone enforces. Two sellers can use it for completely different processes, which is why the question is not whether a machine is refurbished, but what was actually done to it.",
+    },
+    intro: {
+      da: "De to ord står side om side i næsten enhver annonce for brugt IT-udstyr, og de bliver brugt, som om de betyder det samme. Det gør de ikke – men forskellen ligger ikke i ordene. Den ligger i det arbejde, ordene påstår er udført, og det er dét, en indkøber skal have svar på.",
+      en: "The two words sit side by side in almost every advert for used IT equipment, and they get used as though they mean the same thing. They do not — but the difference is not in the words. It is in the work the words claim was done, and that is what a buyer needs an answer to.",
+    },
+    sections: [
+      {
+        heading: { da: "Hvad de to ord dækker", en: "What the two words cover" },
+        body: [
+          {
+            da: "Brugt er en oplysning om historie. Maskinen har haft en ejer, den har været tændt, og den er solgt videre. Ordet siger ingenting om, hvilken stand den er i, om nogen har set på den, eller om der stadig ligger data på disken. En brugt maskine kan være upåklagelig, og den kan være defekt – begge dele er dækket af det samme ord.",
+            en: "Used is a statement about history. The machine has had an owner, it has been switched on, and it has been sold on. The word says nothing about what condition it is in, whether anyone has looked at it, or whether there is still data on the drive. A used machine can be immaculate or it can be broken — the same word covers both.",
+          },
+          {
+            da: "Refurbished er en oplysning om arbejde. Nogen har haft maskinen igennem en proces, før den blev sat til salg. Hvad den proces indeholder, varierer: den kan være en visuel gennemgang og en formatering, og den kan være funktionstest, udskiftning af batteri og disk, dokumenteret datasletning og ny opsætning. Begge dele bliver solgt under samme ord.",
+            en: "Refurbished is a statement about work. Somebody has taken the machine through a process before putting it up for sale. What that process contains varies: it can be a visual check and a format, and it can be functional testing, a new battery and drive, documented data erasure and a fresh setup. Both are sold under the same word.",
+          },
+          {
+            da: "Det er derfor, de to ord ikke er hinandens modsætninger. Alt refurbished udstyr er brugt. Ikke alt brugt udstyr er refurbished. Og to maskiner, der begge kaldes refurbished, kan have været gennem vidt forskellige processer.",
+            en: "That is why the two words are not opposites. All refurbished equipment is used. Not all used equipment is refurbished. And two machines both called refurbished can have been through completely different processes.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "Hvad ordene brugt og refurbished siger om en maskine",
+            en: "What the words used and refurbished say about a machine",
+          },
+          head: [
+            { da: "", en: "" },
+            { da: "Brugt", en: "Used" },
+            { da: "Refurbished", en: "Refurbished" },
+          ],
+          rows: [
+            [
+              { da: "Hvad ordet beskriver", en: "What the word describes" },
+              { da: "Maskinens historie", en: "The machine's history" },
+              { da: "Et arbejde udført på maskinen", en: "Work performed on the machine" },
+            ],
+            [
+              { da: "Siger noget om stand", en: "Says something about condition" },
+              { da: "Nej", en: "No" },
+              {
+                da: "Kun hvis sælgeren beskriver processen",
+                en: "Only if the seller describes the process",
+              },
+            ],
+            [
+              { da: "Test før salg", en: "Testing before sale" },
+              { da: "Ikke underforstået", en: "Not implied" },
+              { da: "Underforstået, men ikke ensartet", en: "Implied, but not consistent" },
+            ],
+            [
+              { da: "Datasletning", en: "Data erasure" },
+              { da: "Ikke underforstået", en: "Not implied" },
+              {
+                da: "Varierer, og dokumentation er sjældnere end sletning",
+                en: "Varies, and documentation is rarer than erasure",
+              },
+            ],
+            [
+              { da: "Slidte dele skiftet", en: "Worn parts replaced" },
+              { da: "Nej", en: "No" },
+              {
+                da: "Nogle gange – batteri og disk oftest",
+                en: "Sometimes — battery and drive most often",
+              },
+            ],
+            [
+              { da: "Ord med en fast betydning", en: "A word with a fixed meaning" },
+              { da: "Ja, i praksis", en: "Yes, in practice" },
+              { da: "Nej", en: "No" },
+            ],
+          ],
+        },
+      },
+      {
+        heading: {
+          da: "Hvorfor forskellen ikke er garanteret",
+          en: "Why the difference is not guaranteed",
+        },
+        body: [
+          {
+            da: "Refurbished er et markedsføringsord, ikke en mærkning nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer per maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
+            en: "Refurbished is a marketing word, not a label anyone polices. There is no body that approves when a seller may use it, and there is no single set of steps everyone follows. A seller who spends three hours per machine and a seller who spends three minutes can write the same thing in the advert.",
+          },
+          {
+            da: "Det gør ikke ordet værdiløst. Det flytter bare, hvor man skal kigge: væk fra ordet og hen på beskrivelsen af, hvad der blev gjort. En sælger, der har lavet et reelt stykke arbejde, har som regel ikke noget imod at fortælle præcis hvilket – og en, der ikke har, svarer i almindeligheder.",
+            en: "That does not make the word worthless. It just moves where you have to look: away from the word and onto the description of what was done. A seller who has done real work usually has no objection to saying exactly what — and one who has not answers in generalities.",
+          },
+          {
+            da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en konkret sælger følger dem, er noget man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
+            en: "There are industry schemes and standards for parts of the work, particularly for data erasure, where recognised method descriptions exist. Whether a given seller follows them is something to ask about and get in writing. We do not point to a specific standard here, because we cannot confirm which one any given supplier works to.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvad der kan variere fra sælger til sælger",
+          en: "What varies from seller to seller",
+        },
+        body: [
+          {
+            da: "Når to tilbud på samme model ligger langt fra hinanden i pris, er forskellen sjældent maskinen. Den er som regel en eller flere af posterne herunder.",
+            en: "When two quotes on the same model are far apart on price, the difference is rarely the machine. It is usually one or more of the items below.",
+          },
+        ],
+        list: [
+          {
+            da: "Hvor grundigt der er testet: en visuel gennemgang, en opstartstest, eller en gennemgang af porte, tastatur, skærm, batteri og lagermedie hver for sig.",
+            en: "How thoroughly it was tested: a visual check, a boot test, or a run through ports, keyboard, screen, battery and drive one at a time.",
+          },
+          {
+            da: "Hvad der er skiftet: ingenting, kun det defekte, eller også det slidte – batteri og lagermedie er de to, der oftest afgør, hvor længe maskinen holder hos jer.",
+            en: "What was replaced: nothing, only what was broken, or the worn parts too — battery and drive are the two that most often decide how long the machine lasts with you.",
+          },
+          {
+            da: "Hvordan data er håndteret: en formatering, en installation ovenpå, eller en egentlig sletning af lagermediet. De tre er ikke det samme, og kun den sidste fjerner data.",
+            en: "How data was handled: a format, an install on top, or an actual erasure of the drive. The three are not the same, and only the last removes data.",
+          },
+          {
+            da: "Om der følger dokumentation med: en sletterapport, en liste over serienumre, en angivelse af batteriets målte tilstand. Dokumentation er det, der gør en påstand efterprøvelig.",
+            en: "Whether documentation comes with it: an erasure report, a list of serial numbers, a statement of the battery's measured condition. Documentation is what makes a claim checkable.",
+          },
+          {
+            da: "Hvordan stand er beskrevet: en bogstavskala, en fritekstbeskrivelse eller ingenting. Skalaerne er sælgerens egne og betyder ikke det samme to steder.",
+            en: "How condition is described: a letter scale, a free-text description, or nothing. The scales are the seller's own and do not mean the same thing in two places.",
+          },
+          {
+            da: "Hvilke vilkår der gælder bagefter: hvad der er aftalt om fejl, hvor længe, og hvad I skal gøre. Vores egne vilkår står på siden om stand og kvalitet.",
+            en: "What terms apply afterwards: what has been agreed about faults, for how long, and what you have to do. Our own terms are on the condition and quality page.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvad der ændrer sig, når I køber mange maskiner",
+          en: "What changes when you buy many machines",
+        },
+        body: [
+          {
+            da: "For én maskine er forskellen mellem brugt og refurbished en risiko, I bærer selv, og som kan løses med en returnering. For fyrre maskiner er den en driftsopgave. Det er dér, ordet holder op med at være en detalje.",
+            en: "For one machine, the difference between used and refurbished is a risk you carry yourself, and one a return can solve. For forty machines it is an operations problem. That is where the word stops being a detail.",
+          },
+          {
+            da: "Et konkret eksempel: fyrre maskiner købt som brugte uden ensartet proces kan have fem forskellige batteritilstande, tre forskellige diskstørrelser og to Windows-versioner. Hver afvigelse er en support-sag, der lander hos jer i løbet af det første år. Fyrre maskiner gennem den samme proces har den samme opsætning, og afvigelserne er kendt på forhånd.",
+            en: "A concrete example: forty machines bought as used with no consistent process can arrive with five different battery conditions, three different drive sizes and two Windows versions. Every deviation is a support case that lands with you during the first year. Forty machines through the same process have the same setup, and the deviations are known up front.",
+          },
+          {
+            da: "Derfor er det spørgsmål, der betyder mest ved et større indkøb, ikke hvad den enkelte maskine fejler, men om alle maskiner har været gennem det samme. En liste over serienumre med den enkelte maskines tilstand er mere værd end en pæn beskrivelse af partiet som helhed.",
+            en: "So the question that matters most on a larger purchase is not what is wrong with the individual machine, but whether all the machines went through the same thing. A list of serial numbers with each machine's condition is worth more than a nice description of the batch as a whole.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvad en virksomhed bør spørge om",
+          en: "What a company should ask about",
+        },
+        body: [
+          {
+            da: "Spørgsmålene herunder handler om sælgerens proces, ikke om den enkelte maskine – det sidste står i vejledningen om, hvad man skal tjekke på en brugt bærbar. Stil dem, før I beder om en pris, så svaret ikke bliver skrevet bagefter.",
+            en: "The questions below are about the seller's process, not the individual machine — that is covered in the guide on what to check on a used laptop. Ask them before you ask for a price, so the answer is not written afterwards.",
+          },
+        ],
+        list: [
+          {
+            da: "Hvad indeholder jeres proces konkret, trin for trin?",
+            en: "What does your process contain, step by step?",
+          },
+          {
+            da: "Hvad blev testet på denne maskine, og hvad var resultatet?",
+            en: "What was tested on this machine, and what was the result?",
+          },
+          {
+            da: "Hvordan er lagermediet håndteret, og får vi dokumentation for det?",
+            en: "How was the drive handled, and do we get documentation for it?",
+          },
+          {
+            da: "Er batteriets tilstand målt, og hvad står der?",
+            en: "Has the battery's condition been measured, and what does it say?",
+          },
+          {
+            da: "Hvad betyder jeres standsbetegnelse helt præcist?",
+            en: "What exactly does your condition grading mean?",
+          },
+          {
+            da: "Hvad er aftalt, hvis der viser sig en fejl, og hvor længe gælder det?",
+            en: "What is agreed if a fault turns up, and for how long does it apply?",
+          },
+          {
+            da: "Får vi den samme konfiguration på tværs af hele leverancen?",
+            en: "Do we get the same configuration across the whole delivery?",
+          },
+          {
+            da: "Kan vi få det skriftligt, før vi bestiller?",
+            en: "Can we have that in writing before we order?",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sådan ser vi på det hos Kestro", en: "How we see it at Kestro" },
+        body: [
+          {
+            da: "Vi bruger ordet refurbished, fordi det er det ord, markedet bruger, og fordi en indkøber leder efter det. Men vi går ikke ud fra, at ordet i sig selv fortæller jer noget. Vi holder ikke lager: vi skaffer maskinerne per ordre i vores leverandørnetværk, og det betyder, at vi kender det konkrete parti frem for at beskrive en generel proces.",
+            en: "We use the word refurbished because it is the word the market uses, and because a buyer looks for it. But we do not assume the word tells you anything by itself. We hold no stock: we source per order through our supplier network, which means we know the actual batch rather than describing a general process.",
+          },
+          {
+            da: "I praksis betyder det, at tilbuddet står på enhedsniveau frem for som ét tal: model, hukommelse, lagring, skærm, kosmetisk stand, batteri, tastaturlayout og styresystem. Eksempelsiden viser, hvordan det ser ud udfyldt. Vi tester og klargør maskinerne, før de sendes, og vi skifter tastaturlayout på maskiner, der kommer fra udlandet.",
+            en: "In practice that means the quote is written per unit rather than as a single number: model, memory, storage, screen, cosmetic condition, battery, keyboard layout and operating system. The example page shows what that looks like filled in. We test and prepare the machines before they are sent, and we change the keyboard layout on machines that come from abroad.",
+          },
+          {
+            da: "Og lige så vigtigt: vi lover ikke en fast proces på tværs af alt, hvad der findes i markedet. Hvad der kan skaffes til en given specifikation og et givent antal, afhænger af, hvad der er tilgængeligt, når I spørger. Kan vi ikke fylde specifikationen, siger vi det og foreslår det nærmeste alternativ. Det er en dårligere overskrift end et løfte – og det er det, der gør, at tallene i tilbuddet holder.",
+            en: "And just as importantly: we do not promise a fixed process across everything in the market. What can be sourced at a given specification and quantity depends on what is available when you ask. If we cannot meet the specification, we say so and propose the closest alternative. That is a worse headline than a promise — and it is what makes the numbers in the quote hold.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Skal I bruge udstyr og vil hellere have svarene end ordene, så send os specifikationen og antallet. I får et tilbud på enhedsniveau, hvor stand og opsætning står skriftligt, før I bestiller. Der er ingen binding i at spørge.",
+      en: "If you need equipment and would rather have the answers than the words, send us the specification and the quantity. You get a quote written per unit, with condition and setup in writing before you order. Asking commits you to nothing.",
+    },
+    related: [
+      {
+        href: "/kvalitet",
+        label: { da: "Vores standard, stand og vilkår", en: "Our standard, condition and terms" },
+      },
+      {
+        href: "/produkter",
+        label: { da: "Udstyr vi kan skaffe", en: "Equipment we can source" },
+      },
+      {
+        href: "/tilbud",
+        label: { da: "Få et tilbud på enhedsniveau", en: "Get a quote written per unit" },
+      },
+    ],
+    faqs: [
+      {
+        question: { da: "Hvad betyder refurbished?", en: "What does refurbished mean?" },
+        answer: {
+          da: "At nogen har haft maskinen gennem en proces, før den blev sat til salg – typisk kontrol, rengøring, sletning af data og udskiftning af det, der var slidt eller defekt. Ordet siger ikke i sig selv, hvad processen indeholdt, fordi der ikke findes én fælles definition.",
+          en: "That somebody put the machine through a process before it went up for sale — typically checking, cleaning, erasing data and replacing what was worn or broken. The word does not by itself say what the process contained, because there is no single shared definition.",
+        },
+      },
+      {
+        question: { da: "Hvad betyder brugt?", en: "What does used mean?" },
+        answer: {
+          da: "At maskinen har haft en ejer før og er solgt videre. Det er en oplysning om historie, ikke om stand: en brugt maskine kan være i fin stand eller defekt, og ordet skelner ikke.",
+          en: "That the machine had an owner before and has been sold on. It is a statement about history, not condition: a used machine can be in fine shape or broken, and the word does not distinguish.",
+        },
+      },
+      {
+        question: {
+          da: "Er refurbished bedre end brugt?",
+          en: "Is refurbished better than used?",
+        },
+        answer: {
+          da: "Som regel, men ikke automatisk. Refurbished betyder, at der er lavet et arbejde – ikke hvor meget. En brugt maskine fra en sælger, der beskriver den præcist, kan være et bedre køb end en refurbished maskine fra en, der ikke vil sige, hvad der blev gjort.",
+          en: "Usually, but not automatically. Refurbished means work was done — not how much. A used machine from a seller who describes it precisely can be a better buy than a refurbished one from a seller who will not say what was done.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad bør en virksomhed kontrollere?",
+          en: "What should a company check?",
+        },
+        answer: {
+          da: "Sælgerens proces frem for annoncens ord: hvad der blev testet, hvad der blev skiftet, hvordan lagermediet er håndteret, om der følger dokumentation med, hvad standsbetegnelsen betyder, hvilke vilkår der gælder ved fejl, og om hele leverancen har den samme opsætning.",
+          en: "The seller's process rather than the advert's wording: what was tested, what was replaced, how the drive was handled, whether documentation comes with it, what the condition grading means, what terms apply if there is a fault, and whether the whole delivery has the same setup.",
+        },
+      },
+      {
+        question: {
+          da: "Er alt refurbished udstyr testet?",
+          en: "Is all refurbished equipment tested?",
+        },
+        answer: {
+          da: "Nej. Det er den mest almindelige misforståelse. Ordet er ikke reguleret, så omfanget af test afhænger helt af sælgeren – og det er derfor, spørgsmålet skal stilles konkret frem for at blive taget for givet.",
+          en: "No. That is the most common misunderstanding. The word is not regulated, so how much testing happens depends entirely on the seller — which is why the question has to be asked specifically rather than assumed.",
         },
       },
     ],

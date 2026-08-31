@@ -244,6 +244,49 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                   </p>
                 ))}
 
+                {section.table && (
+                  /* A real table, in a container that scrolls on its own so a
+                     narrow screen never makes the page scroll sideways. */
+                  <div className="mt-6 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+                    <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
+                      <caption className="sr-only">{section.table.caption[lang]}</caption>
+                      <thead>
+                        <tr className="border-b border-white/20">
+                          {section.table.head.map((cell) => (
+                            <th
+                              key={cell.da}
+                              scope="col"
+                              className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
+                            >
+                              {cell[lang]}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {section.table.rows.map((row) => (
+                          <tr key={row[0].da} className="border-b border-white/10 align-top">
+                            <th
+                              scope="row"
+                              className="py-4 pr-5 font-semibold leading-6 text-paper/80"
+                            >
+                              {row[0][lang]}
+                            </th>
+                            {row.slice(1).map((cell) => (
+                              <td
+                                key={cell.da}
+                                className="py-4 pr-5 leading-6 text-paper/65 last:pr-0"
+                              >
+                                {cell[lang]}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
                 {section.list && (
                   <ul className="mt-6 space-y-3.5">
                     {section.list.map((item) => (
