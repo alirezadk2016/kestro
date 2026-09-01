@@ -11,6 +11,7 @@ import LanguageHint, { languageHintScript } from "@/components/LanguageHint";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 /* One family for the whole site. The wordmark is set in it too, so a heading
    next to the logo is the same letterforms rather than a near-miss. */
@@ -158,6 +159,7 @@ export default function RootLayout({
         <Reveal />
         <ConsentBanner lang={lang} />
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   );
