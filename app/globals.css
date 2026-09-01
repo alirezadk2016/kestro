@@ -395,15 +395,51 @@ html[data-lang-hint="on"] .lang-hint {
  * starts further back and rotated a few degrees more, so opening reads as the
  * part turning towards you rather than fading in.
  *
- * Only above 1024px. There is no hover on a phone, the figure is display:none
- * there, and a tap follows the link instead.
+ * Two ways in, because a phone has no pointer. Above 1024px the figure opens
+ * beside the machine when the line is hovered or focused. Below that it opens
+ * as a popover over the panel while the line is held down — press and it is
+ * there, lift and the tap follows the link, which is what a tap always did.
+ * All of the positioning lives here rather than in utilities, because the
+ * open state animates `transform` and a translate utility on the same element
+ * would be fighting it.
  */
 .spec-figure {
+  position: absolute;
+  left: 50%;
+  /* Above the line rather than over it: on a phone the thing opening it is a
+     finger, and a finger sitting in the middle of the drawing is most of the
+     drawing. */
+  bottom: calc(100% + 0.5rem);
+  z-index: 20;
+  width: min(94vw, 28rem);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translate(-50%, 10px);
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.65));
   transition:
     opacity 0.34s ease,
     transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Held down. The long-press callout is suppressed so the browser's own menu
+   does not land on top of the drawing the press just opened, and the tap
+   highlight with it, so the ring is the only thing that answers the finger. */
+@media (max-width: 1023px) {
+  .spec-row:active .spec-figure {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .spec-row:active .spec-ring {
+    opacity: 1;
+  }
+}
+
+.spec-row {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.spec-row a {
+  -webkit-touch-callout: none;
 }
 
 .spec-svg {
@@ -451,10 +487,21 @@ html[data-lang-hint="on"] .lang-hint {
 }
 
 @media (min-width: 1024px) {
+  /* Beside the machine instead of over the list, at the far end of the lead. */
+  .spec-figure {
+    left: auto;
+    right: 100%;
+    bottom: auto;
+    top: 50%;
+    margin-right: 2rem;
+    width: 26rem;
+    transform: translate(0, calc(-50% + 10px));
+  }
+
   .spec-row:hover .spec-figure,
   .spec-row:focus-within .spec-figure {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0, -50%);
   }
 
   .spec-row:hover .spec-lead,
@@ -497,6 +544,12 @@ html[data-lang-hint="on"] .lang-hint {
   .spec-row:hover .spec-trace,
   .spec-row:focus-within .spec-trace {
     animation: spec-run 2.4s linear infinite;
+  }
+}
+
+@media (min-width: 1280px) {
+  .spec-figure {
+    width: 30rem;
   }
 }
 

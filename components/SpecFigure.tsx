@@ -22,6 +22,10 @@ import type { Lang } from "@/lib/i18n";
  *
  * Motion is opt-in: the tilt and the trace pulse are removed entirely under
  * prefers-reduced-motion, and the figure still reads as a drawing of the part.
+ *
+ * Where it sits and how it opens is globals.css's business, not this file's —
+ * it is one drawing shown two ways, beside the machine on a wide screen and
+ * over the list under a held finger on a narrow one.
  */
 export type SpecKind = "ram" | "ssd" | "keyboard" | "battery" | "tested" | "warranty";
 
@@ -462,7 +466,7 @@ const caption: Record<SpecKind, Record<Lang, string>> = {
 
 export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang }) {
   return (
-    <span className="spec-figure pointer-events-none block">
+    <span className="spec-figure pointer-events-none">
       {/* Cropped tight around the part: the machine is behind this, and a tall
           empty frame would push the drawing into the header on the first row. */}
       <svg

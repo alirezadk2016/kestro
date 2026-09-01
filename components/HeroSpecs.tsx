@@ -33,9 +33,11 @@ import { localePath, type Lang } from "@/lib/i18n";
  * row, the footer swaps on :has() — so the list still costs no JavaScript and
  * still renders in full without any.
  *
- * On a narrow screen none of it opens. There is no hover to open it with, and
- * a tap should take you to the page rather than reveal a drawing — so the
- * footer line goes with it, rather than telling a phone to point at something.
+ * On a narrow screen there is no pointer to do any of that with, so the press
+ * is what opens it: hold a line and the part appears over the panel, lift and
+ * the tap follows the link as it always did. The ring comes with it; the lead
+ * and the footer line do not, because neither has anywhere to point on a
+ * phone.
  */
 type Row = {
   icon: typeof MemoryStick;
@@ -252,9 +254,11 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                 <dd className="mt-0.5 text-xs leading-5 text-paper/55">{row.note}</dd>
               </div>
 
-              <span className="pointer-events-none absolute right-full top-1/2 mr-8 hidden w-[26rem] -translate-y-1/2 drop-shadow-[0_24px_60px_rgba(0,0,0,0.65)] lg:block xl:w-[30rem]">
-                <SpecFigure kind={row.kind} lang={lang} />
-              </span>
+              {/* Placed entirely from globals.css: beside the machine on a
+                  wide screen, over the panel while the line is held on a
+                  narrow one. A translate utility here would be overwritten by
+                  the transform the open state animates. */}
+              <SpecFigure kind={row.kind} lang={lang} />
             </div>
           ))}
         </dl>
