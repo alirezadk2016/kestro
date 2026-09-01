@@ -197,18 +197,20 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
 
   return (
     <div className={className}>
-      {/* The panel is opaque rather than tinted glass. It sits over the
-          machine's key light, and a translucent surface here both moved the
-          measured contrast of every line with the glow behind it and left the
-          label chip on the top edge with nothing solid to cut the border
-          against. Opaque, the seam is invisible and the text is stable. */}
-      <div className="spec-panel relative rounded-2xl border border-brand-400/30 bg-[#080e1c] px-4 pb-4 pt-4 shadow-[0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
+      {/* Opaque, and in the page's own surface colour rather than a darker one
+          of its own. Opaque because the label chip needs something solid to cut
+          the top border against and because the lines need a stable ground to
+          be measured on; brand-950 because anything darker reads as a black
+          card dropped on a lit scene instead of a panel that belongs to it.
+          The border and the glow are what separate it from the field, not a
+          second shade of navy. */}
+      <div className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950 px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
         {/* The label cut into the top border, from xl only. It is 28
             characters of tracked uppercase and the column is three of twelve:
             below that width it wraps, and a wrapped label cannot cut a border
             cleanly, so there it simply sits inside the panel above the list.
             brand-200 rather than 300: at 300 it measured 3.84:1 here. */}
-        <p className="label mb-3 text-brand-200 xl:absolute xl:-top-[7px] xl:left-5 xl:mb-0 xl:whitespace-nowrap xl:bg-[#080e1c] xl:px-2 xl:leading-[14px]">
+        <p className="label mb-3 text-brand-200 xl:absolute xl:-top-[7px] xl:left-5 xl:mb-0 xl:whitespace-nowrap xl:bg-brand-950 xl:px-2 xl:leading-[14px]">
           {c.label}
         </p>
 
@@ -222,7 +224,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
             <div
               key={row.value}
               data-kind={row.kind}
-              className="spec-row relative flex items-center gap-3 py-3"
+              className="spec-row relative flex items-center gap-3 py-2.5 lg:py-3"
             >
               {/* The ring. Inset outwards so it reads as the row lighting up
                   rather than as a box drawn inside it. */}

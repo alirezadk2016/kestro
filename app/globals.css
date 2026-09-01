@@ -487,14 +487,17 @@ html[data-lang-hint="on"] .lang-hint {
 }
 
 @media (min-width: 1024px) {
-  /* Beside the machine instead of over the list, at the far end of the lead. */
+  /* Beside the machine instead of over the list, at the far end of the lead.
+     The width is what keeps it there: anchored to the right, every rem added
+     grows leftwards, and the gap between the headline column and the panel is
+     what it has to fit in. At 30rem it reached into the headline. */
   .spec-figure {
     left: auto;
     right: 100%;
     bottom: auto;
     top: 50%;
-    margin-right: 2rem;
-    width: 26rem;
+    margin-right: 1.5rem;
+    width: 22rem;
     transform: translate(0, calc(-50% + 10px));
   }
 
@@ -547,9 +550,10 @@ html[data-lang-hint="on"] .lang-hint {
   }
 }
 
+/* The gap it has to fit in grows with the container, so the drawing may. */
 @media (min-width: 1280px) {
   .spec-figure {
-    width: 30rem;
+    width: 25rem;
   }
 }
 

@@ -518,14 +518,17 @@ export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang 
         </defs>
 
         {/* Its own surface, so the drawing reads as a panel held over the
-            machine rather than as lines mixed into the photograph. */}
+            machine rather than as lines mixed into the photograph. The page's
+            own navy at 95%, not a darker one: the machine behind it stays
+            just visible, and the panel belongs to the scene rather than
+            punching a black rectangle through it. */}
         <rect
           x="18"
           y="118"
           width="864"
           height="324"
           rx="14"
-          className="fill-[#070c1a] stroke-brand-400/30"
+          className="fill-brand-950/95 stroke-brand-400/30"
           strokeWidth="1.4"
         />
         <rect x="18" y="118" width="864" height="324" rx="14" fill={`url(#spec-glow-${kind})`} />
