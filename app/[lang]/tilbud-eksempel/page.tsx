@@ -219,13 +219,18 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
 
   return (
     <>
-      <PageHeader
-        title={c.title}
-        description={c.description}
-        lang={lang}
-        href="/tilbud-eksempel"
-        crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
-      />
+      {/* In the shared Container like every other page's header. Without it
+          the breadcrumb and the h1 started at x=0 while the rest of the site
+          sat on the container inset. */}
+      <Container>
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/tilbud-eksempel"
+          crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
+        />
+      </Container>
 
       <section className="lit bg-brand-950 py-10 sm:py-20">
         <Container>

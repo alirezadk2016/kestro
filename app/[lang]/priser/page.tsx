@@ -194,13 +194,18 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <PageHeader
-        title={c.title}
-        description={c.description}
-        lang={lang}
-        href="/priser"
-        crumb={lang === "da" ? "Priser" : "Pricing"}
-      />
+      {/* In the shared Container like every other page's header. Without it
+          the breadcrumb and the h1 started at x=0 while the rest of the site
+          sat on the container inset. */}
+      <Container>
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/priser"
+          crumb={lang === "da" ? "Priser" : "Pricing"}
+        />
+      </Container>
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
