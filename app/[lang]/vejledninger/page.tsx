@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
-import { VidenHeroPlate } from "@/components/VidenPlate";
-import { guides, clusters, type Cluster } from "@/lib/guides";
+import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
+import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 /*
@@ -23,51 +22,6 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
  * back to — works for a crawler and with JavaScript switched off. No card
  * grid, no filter state, no gradients, no shadow.
  */
-
-/*
- * One render per cluster, from scripts/render-viden-stills.mjs — the same GLB
- * and the same studio lighting the front page's canvas uses, drawn from a
- * different camera for each subject. Stills rather than a live canvas: WebGL
- * here would cost the ~800 kB three.js bundle measured earlier, on a page whose
- * whole job is to send people somewhere else.
- */
-const renders: Record<Cluster, { src: string; alt: { da: string; en: string } }> = {
-  lifecycle: {
-    src: "/viden/lifecycle.webp",
-    alt: {
-      da: "Erhvervsbærbar set forfra med skærmen halvt lukket",
-      en: "Business laptop seen from the front with the lid half closed",
-    },
-  },
-  "buying-condition": {
-    src: "/viden/buying-condition.webp",
-    alt: {
-      da: "Tastatur og touchpad på en erhvervsbærbar set skråt oppefra",
-      en: "Keyboard and touchpad of a business laptop seen from above at an angle",
-    },
-  },
-  "memory-storage": {
-    src: "/viden/memory-storage.webp",
-    alt: {
-      da: "Undersiden af en lukket erhvervsbærbar set nedefra",
-      en: "Underside of a closed business laptop seen from below",
-    },
-  },
-  "workplace-hardware": {
-    src: "/viden/hero.webp",
-    alt: {
-      da: "Erhvervsbærbar set i tre kvart profil",
-      en: "Business laptop seen in three-quarter profile",
-    },
-  },
-  "uden-klynge": {
-    src: "/viden/uden-klynge.webp",
-    alt: {
-      da: "Erhvervsbærbar på afstand, delvist lukket",
-      en: "Business laptop at a distance, partly closed",
-    },
-  },
-};
 
 const copy = {
   da: {
@@ -152,25 +106,13 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
         {/* The plate sits behind the type and is clipped by the section, so it
             reads as a drawing the page is laid on rather than an illustration
             dropped into it. Fixed aspect, so nothing shifts as it paints. */}
-        <VidenHeroPlate className="pointer-events-none absolute inset-0 h-full w-full text-brand-300/[0.09]" />
-        <Image
-          src="/viden/hero.webp"
-          /* Decorative: the machine is described by every card below, and a
-             reader who cannot see it loses nothing by not hearing it named. */
-          alt=""
-          aria-hidden="true"
-          width={1600}
-          height={900}
-          priority
-          sizes="(max-width: 1023px) 100vw, 60vw"
-          className="pointer-events-none absolute -right-16 top-6 w-[44rem] max-w-none opacity-70 sm:-right-8 sm:top-0 sm:w-[58rem] lg:right-[-5rem] lg:top-1/2 lg:w-[58rem] lg:-translate-y-1/2 lg:opacity-100"
-        />
-        {/* Vertical wash on a phone, horizontal on a wide screen: the render
-            has to stay visible on the right where there is room, and stay out
+        <VidenHeroPlate className="pointer-events-none absolute -right-40 top-16 h-[20rem] w-[46rem] text-brand-300/45 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[70rem] lg:text-brand-300/25" />
+        {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
+            has to stay legible on the right where there is room, and stay out
             of the way of the type where there is not. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950/95 via-brand-950/80 to-brand-950 lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/75 lg:to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/60 to-brand-950 lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/85 lg:to-transparent"
         />
 
         <Container className="relative py-10 sm:py-16 lg:py-20">
@@ -214,20 +156,11 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                     href={`#${cluster.anchor}`}
                     className="group flex h-full flex-col p-5 transition-colors hover:bg-white/[0.04] sm:p-6"
                   >
-                    <div className="relative overflow-hidden border border-white/[0.07] bg-white/[0.02]">
-                      <Image
-                        src={renders[cluster.id].src}
-                        alt={renders[cluster.id].alt[lang]}
-                        width={900}
-                        height={675}
-                        loading="lazy"
-                        sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
-                        className="w-full transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                      <span className="label absolute left-3 top-3 text-paper/45">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
+                    <VidenClusterPlate
+                      cluster={cluster.id}
+                      index={String(i + 1).padStart(2, "0")}
+                      className="transition-opacity group-hover:opacity-100 sm:opacity-85"
+                    />
                     <h3 className="mt-5 font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
                       {cluster.name[lang]}
                     </h3>
@@ -257,17 +190,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                 is what makes a knowledge section read as a blog. */}
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
               <div className="lg:sticky lg:top-24 lg:self-start">
-                <div className="overflow-hidden border border-white/[0.07] bg-white/[0.02]">
-                  <Image
-                    src={renders[cluster.id].src}
-                    alt={renders[cluster.id].alt[lang]}
-                    width={900}
-                    height={675}
-                    loading="lazy"
-                    sizes="(max-width: 1023px) 100vw, 20rem"
-                    className="w-full"
-                  />
-                </div>
+                <VidenClusterPlate cluster={cluster.id} className="max-w-[15rem]" />
                 <h2 className="mt-6 font-display text-[clamp(1.5rem,3vw,2rem)] font-bold leading-tight tracking-tight text-paper">
                   {cluster.name[lang]}
                 </h2>
