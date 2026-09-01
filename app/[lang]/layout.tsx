@@ -12,12 +12,29 @@ import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
-/* One family for the whole site. The wordmark is set in it too, so a heading
-   next to the logo is the same letterforms rather than a near-miss. */
+/*
+ * One family for the whole site. The wordmark is set in it too, so a heading
+ * next to the logo is the same letterforms rather than a near-miss.
+ *
+ * adjustFontFallback is off on purpose, and the fallback face is written by
+ * hand in globals.css instead. Next's own version is `src: local("Arial")`,
+ * and Chromium resolves local() by exact family name rather than through
+ * fontconfig aliases — so on Android and most Linux, where nothing is
+ * literally called Arial, that face never loads. Text then renders in
+ * system-ui with none of the metric overrides, and when Plus Jakarta Sans
+ * finally swaps in, every line box changes height at once.
+ *
+ * Measured on a 390px viewport at Slow 4G and 4x CPU: CLS 0.259 on every page
+ * for a browser whose language is not Scandinavian, which is where the
+ * language bar at the top of the document turns a 16px height change into a
+ * shift of the whole page. Google's "poor" band starts at 0.25. With a
+ * fallback face that resolves, the same measurement is 0.000.
+ */
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+  adjustFontFallback: false,
 });
 
 export function generateStaticParams() {

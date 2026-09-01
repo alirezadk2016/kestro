@@ -70,12 +70,64 @@ function safeHeaderValue(value: string): string {
   return value.replace(/[\r\n]/g, " ");
 }
 
+/*
+ * Is this our own form, or somebody else's page using a visitor's browser?
+ *
+ * Request.json() parses whatever it is given regardless of Content-Type, so a
+ * third-party page could post a form with enctype="text/plain" whose body
+ * happens to be valid JSON and have a visitor send a real enquiry without
+ * knowing it. That is not an open relay — the recipient is pinned below and
+ * cannot be chosen by the caller — but it is forged mail into the inbox the
+ * business actually reads, attributed to real people's addresses.
+ *
+ * Three checks, in the order of how much they can be trusted:
+ *
+ *   1. Sec-Fetch-Site. Set by the browser itself and not settable from script,
+ *      so where it exists it is the answer. Every browser released since 2020
+ *      sends it on fetch(). "none" is a direct navigation, which cannot be a
+ *      POST from our form.
+ *   2. Content-Type. A cross-site form can only send form-encoded or plain
+ *      text without tripping a CORS preflight, and our form sends JSON, so
+ *      requiring JSON closes the enctype trick on anything older.
+ *   3. Origin against the host we were actually reached on — x-forwarded-host
+ *      first, because behind Vercel the Host header is the internal one.
+ *
+ * A same-origin submit from the site passes all three unchanged.
+ */
+function isSameSite(request: Request): boolean {
+  const site = request.headers.get("sec-fetch-site");
+  if (site) return site === "same-origin";
+
+  const origin = request.headers.get("origin");
+  if (!origin) {
+    /* No Origin and no Sec-Fetch-Site: not a browser form post at all. */
+    return true;
+  }
+
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  try {
+    return Boolean(host) && new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM;
 
   if (!apiKey || !from) {
     return NextResponse.json({ ok: false, configured: false }, { status: 503 });
+  }
+
+  if (!isSameSite(request)) {
+    return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
+  }
+
+  /* Our own form always sends JSON. Anything else is a cross-site form post
+     dressed up as one — see isSameSite above. */
+  if (!(request.headers.get("content-type") ?? "").toLowerCase().includes("application/json")) {
+    return NextResponse.json({ ok: false, error: "bad_request" }, { status: 415 });
   }
 
   const ip =

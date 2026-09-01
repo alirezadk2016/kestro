@@ -12,13 +12,42 @@ body {
   background: var(--background);
 }
 
+/*
+ * The metric-matched stand-in for Plus Jakarta Sans, used until it arrives.
+ *
+ * The override values are next/font's own, computed for Plus Jakarta Sans
+ * against Arial's metrics. What is different here is the src: Next writes
+ * `local("Arial")` and nothing else, and Chromium matches local() on the exact
+ * family name rather than through fontconfig aliases — so on Android, and on
+ * most Linux, that face simply fails and the browser falls back to system-ui
+ * with no overrides at all. The swap then changes every line box on the page.
+ *
+ * The chain below is ordered by how closely each face matches Arial's metrics,
+ * which is what the overrides are tuned to: Arial itself, then the two
+ * Helvetica names macOS answers to, then Liberation Sans, which is
+ * metric-compatible with Arial by design and is what desktop Linux ships, and
+ * finally Roboto so Android has something rather than nothing. A src list is
+ * tried in order and the first face that loads wins, so a device only ever
+ * reaches the entries it actually needs.
+ */
+@font-face {
+  font-family: "Jakarta Fallback";
+  src:
+    local("Arial"), local("Helvetica Neue"), local("Helvetica"), local("Liberation Sans"),
+    local("Roboto");
+  ascent-override: 98.88%;
+  descent-override: 21.15%;
+  line-gap-override: 0%;
+  size-adjust: 104.98%;
+}
+
 @layer base {
   /* Headings take the display face everywhere, so a page written months from
      now inherits the type system instead of re-stating it. */
   h1,
   h2,
   h3 {
-    font-family: var(--font-sans), system-ui, sans-serif;
+    font-family: var(--font-sans), "Jakarta Fallback", system-ui, sans-serif;
     letter-spacing: -0.025em;
   }
 }

@@ -73,8 +73,12 @@ const config: Config = {
       /* One family, as the brand board specifies. It carries the wordmark
          too, so headings set in it match the logo beside them. */
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        /* "Jakarta Fallback" is the metric-matched stand-in defined in
+           globals.css. It has to sit between the real face and system-ui in
+           every stack, or the page renders in un-adjusted metrics until the
+           font loads and then reflows. */
+        sans: ["var(--font-sans)", "Jakarta Fallback", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "Jakarta Fallback", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         display: "-0.035em",

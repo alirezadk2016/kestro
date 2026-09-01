@@ -33,10 +33,26 @@ const KEY = "kestro-lang-hint";
  * So the markup ships with the page and is hidden in CSS, and the script below
  * runs synchronously before the bar is parsed, flipping one attribute on
  * <html> when the visitor should see it. Whatever the browser paints first is
- * already correct, so nothing moves afterwards.
+ * already correct.
  *
  * It is a blocking inline script, which is normally worth avoiding — here it
  * is four lines and it runs before layout, which is exactly the point.
+ *
+ * That was necessary and not sufficient. The bar used to lay its three parts
+ * out with flex-wrap, so how tall it was depended on where the text happened
+ * to break — and the text breaks in a different place before the web font
+ * arrives than after. Measured on a 390px viewport: two rows and 85px in the
+ * fallback face, three rows and 101px once Plus Jakarta Sans swapped in, with
+ * the whole document below it moving down 16px. CLS 0.259 on every page, for
+ * every visitor whose browser language is not Scandinavian.
+ *
+ * A metric-matched fallback narrows that but cannot close it: size-adjust
+ * matches average advance width across the alphabet, not the width of one
+ * particular sentence, so the wrap threshold can still be crossed. The fix has
+ * to be a layout whose row count is not a function of text width. Below sm the
+ * three parts are stacked deliberately; from sm they sit on one row, where
+ * they have always fitted. Either way the height is decided by the layout and
+ * the font cannot change it.
  */
 export const languageHintScript = `(function(){try{
 if(localStorage.getItem(${JSON.stringify(KEY)})==="1")return;
@@ -70,7 +86,7 @@ export default function LanguageHint() {
 
   return (
     <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
-      <Container className="flex flex-wrap items-center gap-x-4 gap-y-2 py-2.5">
+      <Container className="flex flex-col items-start gap-y-1 py-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
         <p className="text-sm text-paper/75">This page is also available in English.</p>
         <Link
           href={href}

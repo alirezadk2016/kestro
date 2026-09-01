@@ -7,7 +7,7 @@ import {
   ShieldCheck,
   FileText,
 } from "lucide-react";
-import SpecFigure, { type SpecKind } from "./SpecFigure";
+import SpecFigure, { SpecFigureDefs, type SpecKind } from "./SpecFigure";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -197,6 +197,9 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
 
   return (
     <div className={className}>
+      {/* The gradients and the shadow every figure paints with, defined once
+          for the six of them rather than copied into each. */}
+      <SpecFigureDefs />
       {/* Opaque, and in the page's own surface colour rather than a darker one
           of its own. Opaque because the label chip needs something solid to cut
           the top border against and because the lines need a stable ground to

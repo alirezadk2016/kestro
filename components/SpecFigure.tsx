@@ -29,32 +29,12 @@ import type { Lang } from "@/lib/i18n";
  */
 export type SpecKind = "ram" | "ssd" | "keyboard" | "battery" | "tested" | "warranty";
 
-/* Gold contact fingers along the bottom edge, with the keying notch. */
-function fingers(kind: SpecKind, count: number, notchAt: number) {
-  const out = [];
-  for (let i = 0; i < count; i++) {
-    if (i === notchAt || i === notchAt + 1) continue;
-    out.push(
-      <rect
-        key={i}
-        x={78 + i * 12.6}
-        y={318}
-        width={7.4}
-        height={26}
-        rx={1}
-        fill={`url(#gold-${kind})`}
-      />,
-    );
-  }
-  return out;
-}
-
 /* One package: body, the sheen across its top face, silkscreen, pin-one dot. */
 function chip(kind: SpecKind, x: number, y: number, key: string) {
   return (
     <g key={key}>
-      <rect x={x} y={y} width={74} height={58} rx={3} fill={`url(#pkg-${kind})`} />
-      <rect x={x} y={y} width={74} height={26} rx={3} fill={`url(#sheen-${kind})`} />
+      <rect x={x} y={y} width={74} height={58} rx={3} fill={"url(#spec-pkg)"} />
+      <rect x={x} y={y} width={74} height={26} rx={3} fill={"url(#spec-sheen)"} />
       <rect
         x={x}
         y={y}
@@ -103,7 +83,7 @@ function node(cx: number, cy: number) {
 }
 
 function figure(kind: SpecKind) {
-  const pcb = `url(#pcb-${kind})`;
+  const pcb = "url(#spec-pcb)";
 
   switch (kind) {
     /* A DIMM, drawn from the contacts up: board, eight packages, SMD parts,
@@ -119,7 +99,7 @@ function figure(kind: SpecKind) {
           ])}
           {[node(848, 216), node(866, 210), node(46, 314), node(76, 400)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={64} y={196} width={732} height={124} rx={5} fill={pcb} />
             <rect
               x={64}
@@ -133,7 +113,10 @@ function figure(kind: SpecKind) {
             {/* Board edge highlight — one light source, upper left. */}
             <path d="M69 196h722" className="stroke-white/25" strokeWidth={1.4} fill="none" />
             <rect x={64} y={316} width={732} height={8} className="fill-[#0a0c12]" />
-            {fingers(kind, 56, 22)}
+            {/* 56 fingers on a 12.6 pitch, tiled rather than enumerated. The last
+            tile ends exactly at the last finger's right edge, and the keying
+            notch below is drawn over the two it interrupts, as before. */}
+            <rect x={78} y={318} width={700.4} height={26} fill="url(#spec-fingers-dimm)" />
             {/* Keying notch. */}
             <rect x={355} y={310} width={26} height={34} rx={2} className="fill-brand-950" />
 
@@ -169,7 +152,7 @@ function figure(kind: SpecKind) {
           {traces(["M700 176h90a14 14 0 0114 14v44", "M180 372H86a14 14 0 01-14-14v-40"])}
           {[node(818, 234), node(72, 318)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={150} y={214} width={600} height={96} rx={4} fill={pcb} />
             <rect
               x={150}
@@ -181,17 +164,9 @@ function figure(kind: SpecKind) {
               strokeWidth={1.2}
             />
             <path d="M154 214h592" className="stroke-white/25" strokeWidth={1.4} fill="none" />
-            {/* Contact edge and M-key notch. */}
-            {Array.from({ length: 22 }, (_, i) => (
-              <rect
-                key={i}
-                x={160 + i * 8.4}
-                y={214}
-                width={4.6}
-                height={22}
-                fill={`url(#gold-${kind})`}
-              />
-            ))}
+            {/* Contact edge and M-key notch — same tiling as the DIMM, on the
+                M.2 pitch. The notch rect below covers the first tab, as before. */}
+            <rect x={160} y={214} width={181} height={22} fill="url(#spec-fingers-m2)" />
             <rect x={160} y={214} width={9} height={96} className="fill-brand-950" />
             {/* Mounting cutout. */}
             <circle cx={742} cy={262} r={13} className="fill-brand-950" />
@@ -228,7 +203,7 @@ function figure(kind: SpecKind) {
           {traces(["M726 168h64a14 14 0 0114 14v48", "M172 380H84a14 14 0 01-14-14v-46"])}
           {[node(818, 230), node(70, 320)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={120} y={168} width={660} height={218} rx={10} fill={pcb} />
             <rect
               x={120}
@@ -262,7 +237,7 @@ function figure(kind: SpecKind) {
                       width={40}
                       height={16}
                       rx={5}
-                      fill={`url(#sheen-${kind})`}
+                      fill={"url(#spec-sheen)"}
                     />
                   </g>
                 );
@@ -292,7 +267,7 @@ function figure(kind: SpecKind) {
           {traces(["M700 158h90a14 14 0 0114 14v56", "M196 386H88a14 14 0 01-14-14v-44"])}
           {[node(818, 228), node(74, 328)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={160} y={190} width={600} height={176} rx={10} fill={pcb} />
             <rect
               x={160}
@@ -329,7 +304,7 @@ function figure(kind: SpecKind) {
                   width={166}
                   height={44}
                   rx={6}
-                  fill={`url(#sheen-${kind})`}
+                  fill={"url(#spec-sheen)"}
                 />
                 <rect
                   x={184 + i * 190}
@@ -361,7 +336,7 @@ function figure(kind: SpecKind) {
           {traces(["M712 172h78a14 14 0 0114 14v46", "M188 384H86a14 14 0 01-14-14v-42"])}
           {[node(818, 232), node(72, 328)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={182} y={150} width={520} height={266} rx={8} fill={pcb} />
             <rect
               x={182}
@@ -412,7 +387,7 @@ function figure(kind: SpecKind) {
           {traces(["M712 172h78a14 14 0 0114 14v46", "M188 384H86a14 14 0 01-14-14v-42"])}
           {[node(818, 232), node(72, 328)]}
 
-          <g className="spec-part" filter={`url(#drop-${kind})`}>
+          <g className="spec-part" filter={"url(#spec-drop)"}>
             <rect x={196} y={140} width={490} height={290} rx={8} fill={pcb} />
             <rect
               x={196}
@@ -464,6 +439,93 @@ const caption: Record<SpecKind, Record<Lang, string>> = {
   warranty: { da: "Perioden, skrevet i tilbuddet", en: "The period, written in the quote" },
 };
 
+/*
+ * The gradients and the drop shadow, defined once for all six figures.
+ *
+ * They used to be a <defs> block inside every figure — 22 elements repeated
+ * six times, identical apart from an id suffix, in the HTML and again in the
+ * RSC payload. An SVG id is document-global, so one copy is all that was ever
+ * needed; the suffixes existed only because there were six copies to keep
+ * apart. HeroSpecs renders this once, above the list.
+ *
+ * Not display:none: a hidden ancestor stops some browsers resolving paint
+ * servers referenced from elsewhere in the document. Zero-sized and taken out
+ * of flow does the same job and is safe.
+ */
+export function SpecFigureDefs() {
+  return (
+    <svg
+      width="0"
+      height="0"
+      aria-hidden="true"
+      focusable="false"
+      className="absolute"
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
+    >
+      <defs>
+        <radialGradient id="spec-glow" cx="50%" cy="50%" r="52%">
+          <stop offset="0%" stopColor="rgb(60,110,255)" stopOpacity="0.4" />
+          <stop offset="55%" stopColor="rgb(40,74,190)" stopOpacity="0.14" />
+          <stop offset="100%" stopColor="rgb(40,74,190)" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Gradients rather than flat fills: one light source from the upper
+            left, so the board has a lit edge and the packages have a top
+            face. It is what separates a drawing of a part from a part. */}
+        <linearGradient id="spec-pcb" x1="0" y1="0" x2="0.25" y2="1">
+          <stop offset="0%" stopColor="#1d2433" />
+          <stop offset="18%" stopColor="#11151f" />
+          <stop offset="100%" stopColor="#070910" />
+        </linearGradient>
+        <linearGradient id="spec-pkg" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stopColor="#2a2f3d" />
+          <stop offset="22%" stopColor="#14171f" />
+          <stop offset="100%" stopColor="#080a0f" />
+        </linearGradient>
+        <linearGradient id="spec-gold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f4d98a" />
+          <stop offset="35%" stopColor="#d8b25a" />
+          <stop offset="100%" stopColor="#8a6c2c" />
+        </linearGradient>
+        <linearGradient id="spec-sheen" x1="0" y1="0" x2="1" y2="0.4">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.16" />
+          <stop offset="45%" stopColor="#ffffff" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </linearGradient>
+        <filter id="spec-drop" x="-25%" y="-25%" width="150%" height="160%">
+          <feDropShadow dx="0" dy="16" stdDeviation="18" floodColor="#020510" floodOpacity="0.8" />
+        </filter>
+
+        {/* The contact fingers, as a tile rather than as one rect per finger.
+            A DIMM edge is 56 identical gold tabs on a fixed pitch and an M.2
+            edge is 22; drawn individually that was 76 elements saying the same
+            thing. The tile is the finger plus the gap after it, so a rect of
+            the right width reproduces the run exactly. */}
+        <pattern
+          id="spec-fingers-dimm"
+          x="78"
+          y="318"
+          width="12.6"
+          height="26"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect x="0" y="0" width="7.4" height="26" rx="1" fill="url(#spec-gold)" />
+        </pattern>
+        <pattern
+          id="spec-fingers-m2"
+          x="160"
+          y="214"
+          width="8.4"
+          height="22"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect x="0" y="0" width="4.6" height="22" fill="url(#spec-gold)" />
+        </pattern>
+      </defs>
+    </svg>
+  );
+}
+
 export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang }) {
   return (
     <span className="spec-figure pointer-events-none">
@@ -476,47 +538,6 @@ export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang 
         focusable="false"
         className="spec-svg w-full"
       >
-        <defs>
-          <radialGradient id={`spec-glow-${kind}`} cx="50%" cy="50%" r="52%">
-            <stop offset="0%" stopColor="rgb(60,110,255)" stopOpacity="0.4" />
-            <stop offset="55%" stopColor="rgb(40,74,190)" stopOpacity="0.14" />
-            <stop offset="100%" stopColor="rgb(40,74,190)" stopOpacity="0" />
-          </radialGradient>
-
-          {/* Gradients rather than flat fills: one light source from the upper
-              left, so the board has a lit edge and the packages have a top
-              face. It is what separates a drawing of a part from a part. */}
-          <linearGradient id={`pcb-${kind}`} x1="0" y1="0" x2="0.25" y2="1">
-            <stop offset="0%" stopColor="#1d2433" />
-            <stop offset="18%" stopColor="#11151f" />
-            <stop offset="100%" stopColor="#070910" />
-          </linearGradient>
-          <linearGradient id={`pkg-${kind}`} x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0%" stopColor="#2a2f3d" />
-            <stop offset="22%" stopColor="#14171f" />
-            <stop offset="100%" stopColor="#080a0f" />
-          </linearGradient>
-          <linearGradient id={`gold-${kind}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f4d98a" />
-            <stop offset="35%" stopColor="#d8b25a" />
-            <stop offset="100%" stopColor="#8a6c2c" />
-          </linearGradient>
-          <linearGradient id={`sheen-${kind}`} x1="0" y1="0" x2="1" y2="0.4">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.16" />
-            <stop offset="45%" stopColor="#ffffff" stopOpacity="0.03" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-          </linearGradient>
-          <filter id={`drop-${kind}`} x="-25%" y="-25%" width="150%" height="160%">
-            <feDropShadow
-              dx="0"
-              dy="16"
-              stdDeviation="18"
-              floodColor="#020510"
-              floodOpacity="0.8"
-            />
-          </filter>
-        </defs>
-
         {/* Its own surface, so the drawing reads as a panel held over the
             machine rather than as lines mixed into the photograph. The page's
             own navy at 95%, not a darker one: the machine behind it stays
@@ -531,7 +552,7 @@ export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang 
           className="fill-brand-950/95 stroke-brand-400/30"
           strokeWidth="1.4"
         />
-        <rect x="18" y="118" width="864" height="324" rx="14" fill={`url(#spec-glow-${kind})`} />
+        <rect x="18" y="118" width="864" height="324" rx="14" fill="url(#spec-glow)" />
 
         {/* Concentric rings, the way a service diagram frames the part it is
             calling out. */}

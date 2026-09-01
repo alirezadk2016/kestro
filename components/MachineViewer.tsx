@@ -65,6 +65,9 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
   const laptop = useRef<Laptop | null>(null);
   const [live, setLive] = useState(false);
   const [failed, setFailed] = useState(false);
+  /* Whether the canvas is close enough to the viewport to be worth the
+     download. See the effect below. */
+  const [near, setNear] = useState(false);
   const [active, setActive] = useState(exteriorViews[0]);
   const reduced = useReducedMotion();
 
@@ -79,8 +82,67 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
     laptop.current?.setTarget(next.pose);
   }, []);
 
+  /*
+   * three.js is ~736 kB of chunks, and it used to start downloading the moment
+   * this component mounted — whether or not the canvas was ever on screen.
+   * Measured on a 390px viewport at 4x CPU throttle, that put 1682 ms of long
+   * tasks on /maskinen against 228-493 ms on every other page: the main thread
+   * was busy parsing a renderer for a picture the visitor had not scrolled to.
+   *
+   * So the import waits for two things. The canvas has to be within 200 px of
+   * the viewport — and on a short screen, or a visitor who never scrolls, that
+   * alone means the renderer is never fetched at all. And the main thread has
+   * to be idle: on this page the viewer sits about 790 px down, which is
+   * inside a 900 px viewport, so the gate opens immediately and the work would
+   * otherwise land straight on top of hydration and first paint. Waiting for
+   * an idle callback moves it behind them without making anyone wait for it.
+   *
+   * The poster still underneath is the same image the no-WebGL path already
+   * falls back to, so nothing above the fold changes and the scene is warm by
+   * the time anyone reaches it.
+   */
   useEffect(() => {
     if (reduced) return;
+
+    const element = canvas.current;
+    if (!element) return;
+
+    /* No IntersectionObserver: load it rather than never show the scene. */
+    if (typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+
+    /* requestIdleCallback is not in Safari before 17, so fall back to a short
+       timeout — the point is only to yield the thread, not to be precise. */
+    const whenIdle: (run: () => void) => number =
+      typeof window.requestIdleCallback === "function"
+        ? (run) => window.requestIdleCallback(run, { timeout: 2000 })
+        : (run) => window.setTimeout(run, 300);
+
+    let scheduled: number | undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        scheduled = whenIdle(() => setNear(true));
+      },
+      { rootMargin: "200px" },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+      if (scheduled === undefined) return;
+      if (typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(scheduled);
+      else window.clearTimeout(scheduled);
+    };
+  }, [reduced]);
+
+  useEffect(() => {
+    if (reduced || !near) return;
 
     let disposed = false;
     let cleanup: (() => void) | undefined;
@@ -161,7 +223,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
       disposed = true;
       cleanup?.();
     };
-  }, [reduced]);
+  }, [reduced, near]);
 
   /* Pointer events rather than mouse and touch separately: one code path
      covers a mouse, a finger and a stylus, and setPointerCapture keeps the
