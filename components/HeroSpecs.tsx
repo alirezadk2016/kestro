@@ -21,17 +21,37 @@ import { localePath, type Lang } from "@/lib/i18n";
  * keyboard that was physically changed, a warranty period that is written down
  * rather than promised in advance.
  *
- * Each line is now a link, and points somewhere the claim is backed up. Hover
- * or focus one on a wide screen and the part it names is drawn over the
- * machine: the module, the drive, the keys that actually change. That is done
- * entirely in CSS — the figure is a child of the link, and :hover and
- * :focus-within open it — so the list still costs no JavaScript and still
- * renders in full without any.
+ * The list sits in a lit panel with its label cut into the top edge, and each
+ * line is a link that points somewhere the claim is backed up. Point at one on
+ * a wide screen and three things happen at once: the line is ringed, a lead
+ * runs left out of it, and the part it names is drawn over the machine at the
+ * other end of that lead. The footer line under the list changes with it, so
+ * the panel reads as an instrument showing one part at a time rather than as
+ * six drawings that happen to share a column.
  *
- * On a narrow screen the figures never open. There is no hover to open them
- * with, and a tap should take you to the page rather than reveal a drawing.
+ * All of it is CSS — the figure, the ring and the lead are children of the
+ * row, the footer swaps on :has() — so the list still costs no JavaScript and
+ * still renders in full without any.
+ *
+ * On a narrow screen none of it opens. There is no hover to open it with, and
+ * a tap should take you to the page rather than reveal a drawing — so the
+ * footer line goes with it, rather than telling a phone to point at something.
  */
-type Row = { icon: typeof MemoryStick; kind: SpecKind; value: string; note: string; href: string };
+type Row = {
+  icon: typeof MemoryStick;
+  kind: SpecKind;
+  value: string;
+  note: string;
+  href: string;
+  /*
+   * The line under the list while this row is pointed at. Context for the
+   * part, not a promise about it — each item either names something the
+   * drawing shows (a form factor, an interface, the three Nordic keys) or
+   * repeats something the site already states elsewhere and can back. Nothing
+   * here may become a guarantee we cannot stand behind.
+   */
+  stats: string[];
+};
 
 const rows = (lang: Lang): Row[] =>
   lang === "da"
@@ -42,6 +62,7 @@ const rows = (lang: Lang): Row[] =>
           value: "16 GB RAM",
           note: "Opgraderet efter behov",
           href: "/maskinen",
+          stats: ["SO-DIMM", "DDR4 / DDR5"],
         },
         {
           icon: HardDrive,
@@ -49,6 +70,7 @@ const rows = (lang: Lang): Row[] =>
           value: "512 GB NVMe SSD",
           note: "Skiftet hvis nødvendigt",
           href: "/maskinen",
+          stats: ["M.2 2280", "NVMe", "PCIe"],
         },
         {
           icon: Keyboard,
@@ -56,6 +78,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Dansk tastatur",
           note: "Fysisk skiftet",
           href: "/ydelser/nordisk-tilpasning",
+          stats: ["Nordisk layout", "Æ Ø Å"],
         },
         {
           icon: BatteryCharging,
@@ -63,6 +86,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Batteri 87 %",
           note: "Målt kapacitet, per enhed",
           href: "/kvalitet",
+          stats: ["Kapacitet i %", "Målt per enhed"],
         },
         {
           icon: ShieldCheck,
@@ -70,6 +94,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Testet og klargjort",
           note: "Før den sendes til jer",
           href: "/ydelser/klargoering-og-test",
+          stats: ["Skærm og tastatur", "Porte", "Hængsler"],
         },
         {
           icon: FileText,
@@ -77,6 +102,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Garanti på skrift",
           note: "Perioden står i tilbuddet",
           href: "/tilbud-eksempel",
+          stats: ["På skrift", "Periode i tilbuddet"],
         },
       ]
     : [
@@ -86,6 +112,7 @@ const rows = (lang: Lang): Row[] =>
           value: "16 GB RAM",
           note: "Upgraded where needed",
           href: "/maskinen",
+          stats: ["SO-DIMM", "DDR4 / DDR5"],
         },
         {
           icon: HardDrive,
@@ -93,6 +120,7 @@ const rows = (lang: Lang): Row[] =>
           value: "512 GB NVMe SSD",
           note: "Replaced where needed",
           href: "/maskinen",
+          stats: ["M.2 2280", "NVMe", "PCIe"],
         },
         {
           icon: Keyboard,
@@ -100,6 +128,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Danish keyboard",
           note: "Physically replaced",
           href: "/ydelser/nordisk-tilpasning",
+          stats: ["Nordic layout", "Æ Ø Å"],
         },
         {
           icon: BatteryCharging,
@@ -107,6 +136,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Battery 87%",
           note: "Measured, per unit",
           href: "/kvalitet",
+          stats: ["Capacity in %", "Measured per unit"],
         },
         {
           icon: ShieldCheck,
@@ -114,6 +144,7 @@ const rows = (lang: Lang): Row[] =>
           value: "Tested and prepared",
           note: "Before it ships to you",
           href: "/ydelser/klargoering-og-test",
+          stats: ["Screen and keyboard", "Ports", "Hinges"],
         },
         {
           icon: FileText,
@@ -121,55 +152,132 @@ const rows = (lang: Lang): Row[] =>
           value: "Warranty in writing",
           note: "The period is in the quote",
           href: "/tilbud-eksempel",
+          stats: ["In writing", "Period in the quote"],
         },
       ];
 
 const copy = {
-  da: { label: "Eksempel på en konfiguration", link: "Se hele tilbuddet" },
-  en: { label: "An example configuration", link: "See the full quote" },
+  da: {
+    label: "Eksempel på en konfiguration",
+    link: "Se hele tilbuddet",
+    rest: "Peg på en linje for at se delen",
+  },
+  en: {
+    label: "An example configuration",
+    link: "See the full quote",
+    rest: "Point at a line to see the part",
+  },
 } satisfies Record<Lang, Record<string, string>>;
+
+function Stats({ items, kind }: { items: string[]; kind: string }) {
+  return (
+    <span
+      data-stat={kind}
+      aria-hidden="true"
+      className="spec-stat absolute inset-x-0 top-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium leading-4 text-paper/70"
+    >
+      {items.map((item, i) => (
+        /* The separator trails the item it follows rather than leading the
+           next one. The column is narrow enough that this line can wrap, and
+           a wrapped line must not start with a stray dot. */
+        <span key={item} className="flex items-center gap-2">
+          {item}
+          {i < items.length - 1 && <span className="h-1 w-1 rounded-full bg-brand-400/60" />}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function HeroSpecs({ lang, className }: { lang: Lang; className?: string }) {
   const c = copy[lang];
+  const list = rows(lang);
 
   return (
     <div className={className}>
-      {/* brand-200 rather than 300: this label sits over the machine's glow
-          rather than on the flat page, and 300 measured 3.84:1 against it. */}
-      <p className="label text-brand-200">{c.label}</p>
+      {/* The panel is opaque rather than tinted glass. It sits over the
+          machine's key light, and a translucent surface here both moved the
+          measured contrast of every line with the glow behind it and left the
+          label chip on the top edge with nothing solid to cut the border
+          against. Opaque, the seam is invisible and the text is stable. */}
+      <div className="spec-panel relative rounded-2xl border border-brand-400/30 bg-[#080e1c] px-4 pb-4 pt-4 shadow-[0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
+        {/* The label cut into the top border, from xl only. It is 28
+            characters of tracked uppercase and the column is three of twelve:
+            below that width it wraps, and a wrapped label cannot cut a border
+            cleanly, so there it simply sits inside the panel above the list.
+            brand-200 rather than 300: at 300 it measured 3.84:1 here. */}
+        <p className="label mb-3 text-brand-200 xl:absolute xl:-top-[7px] xl:left-5 xl:mb-0 xl:whitespace-nowrap xl:bg-[#080e1c] xl:px-2 xl:leading-[14px]">
+          {c.label}
+        </p>
 
-      {/* Rows on hairlines rather than in a boxed panel: a card here reads as
-          a second surface floating over the hero, and the list is stronger
-          when the machine's own light is what it sits in. */}
-      <dl className="mt-4 divide-y divide-white/10 border-y border-white/10">
-        {rows(lang).map((row) => (
-          /* The row is the positioned ancestor, so the figure lands over the
-             machine beside whichever line the pointer is on. <dt> and <dd>
-             stay direct children of this div — wrapping them in the link
-             would make the list invalid — so the link is stretched over the
-             row with ::after instead. */
-          <div key={row.value} className="spec-row relative flex items-center gap-3 py-3">
-            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-brand-400/25 bg-brand-500/10 text-brand-300 transition-colors [.spec-row:hover_&]:border-brand-300/60 [.spec-row:hover_&]:bg-brand-500/20">
-              <row.icon className="h-4 w-4" strokeWidth={1.75} />
-            </span>
-            <div className="min-w-0">
-              <dt className="text-sm font-semibold leading-snug text-paper transition-colors [.spec-row:hover_&]:text-brand-100">
-                <Link
-                  href={localePath(row.href, lang)}
-                  className="rounded-sm after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
-                >
-                  {row.value}
-                </Link>
-              </dt>
-              <dd className="mt-0.5 text-xs leading-5 text-paper/55">{row.note}</dd>
+        <dl className="divide-y divide-white/10">
+          {list.map((row) => (
+            /* The row is the positioned ancestor, so the ring, the lead and
+               the figure all land against this line. <dt> and <dd> stay
+               direct children of this div — wrapping them in the link would
+               make the list invalid — so the link is stretched over the row
+               with ::after instead. */
+            <div
+              key={row.value}
+              data-kind={row.kind}
+              className="spec-row relative flex items-center gap-3 py-3"
+            >
+              {/* The ring. Inset outwards so it reads as the row lighting up
+                  rather than as a box drawn inside it. */}
+              <span
+                aria-hidden="true"
+                className="spec-ring pointer-events-none absolute -inset-x-2 inset-y-0.5 rounded-lg border border-brand-300/70 bg-brand-500/[0.07] shadow-[0_0_18px_-2px_rgba(60,110,255,0.55),inset_0_0_18px_-8px_rgba(147,174,251,0.9)]"
+              />
+
+              {/* The lead running left out of the row, to the figure. */}
+              <span
+                aria-hidden="true"
+                className="spec-lead pointer-events-none absolute right-full top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-l from-brand-300 to-brand-300/0 lg:block"
+              >
+                <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand-200 shadow-[0_0_10px_2px_rgba(147,174,251,0.7)]" />
+              </span>
+
+              <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-brand-400/25 bg-brand-500/10 text-brand-300 transition-colors [.spec-row:hover_&]:border-brand-300/60 [.spec-row:hover_&]:bg-brand-500/20">
+                <row.icon className="h-4 w-4" strokeWidth={1.75} />
+              </span>
+              <div className="relative min-w-0">
+                <dt className="text-sm font-semibold leading-snug text-paper transition-colors [.spec-row:hover_&]:text-brand-100">
+                  <Link
+                    href={localePath(row.href, lang)}
+                    className="rounded-sm after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+                  >
+                    {row.value}
+                  </Link>
+                </dt>
+                <dd className="mt-0.5 text-xs leading-5 text-paper/55">{row.note}</dd>
+              </div>
+
+              <span className="pointer-events-none absolute right-full top-1/2 mr-8 hidden w-[26rem] -translate-y-1/2 drop-shadow-[0_24px_60px_rgba(0,0,0,0.65)] lg:block xl:w-[30rem]">
+                <SpecFigure kind={row.kind} lang={lang} />
+              </span>
             </div>
+          ))}
+        </dl>
 
-            <span className="pointer-events-none absolute right-full top-1/2 mr-6 hidden w-[26rem] -translate-y-1/2 drop-shadow-[0_24px_60px_rgba(0,0,0,0.65)] lg:block xl:w-[30rem]">
-              <SpecFigure kind={row.kind} lang={lang} />
-            </span>
+        {/* The footer line. All seven states are stacked in the same box so
+            the panel never changes height, and only the resting one is in the
+            accessibility tree — the six others say the same thing the row
+            above them already says. Hidden below lg, where the row it belongs
+            to can never be pointed at. */}
+        <div className="relative mt-3 hidden h-10 border-t border-white/10 pt-3 lg:block">
+          <span
+            data-stat="rest"
+            className="spec-stat spec-stat-rest absolute inset-x-0 top-3 text-[11px] font-medium leading-4 text-paper/70"
+          >
+            {c.rest}
+          </span>
+          <div className="absolute inset-x-0 top-3">
+            {list.map((row) => (
+              <Stats key={row.kind} kind={row.kind} items={row.stats} />
+            ))}
           </div>
-        ))}
-      </dl>
+        </div>
+      </div>
 
       <Link
         href={localePath("/tilbud-eksempel", lang)}

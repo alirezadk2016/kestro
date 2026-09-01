@@ -423,11 +423,63 @@ html[data-lang-hint="on"] .lang-hint {
   stroke-dashoffset: 280;
 }
 
+/* The ring around the pointed-at line, and the lead running out of it to the
+   figure. Both are drawn at rest and revealed, so nothing is laid out twice
+   and the row cannot shift when it lights up. */
+.spec-ring,
+.spec-lead {
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.spec-row:hover .spec-ring,
+.spec-row:focus-within .spec-ring {
+  opacity: 1;
+}
+
+/* The footer line under the list, swapped by whichever row is pointed at.
+   :has() is what makes it possible without state: the panel matches on the
+   row inside it, and the matching line fades up in place. Where :has() is not
+   supported the resting line simply stays, which is the correct fallback. */
+.spec-stat {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.spec-stat-rest {
+  opacity: 1;
+}
+
 @media (min-width: 1024px) {
   .spec-row:hover .spec-figure,
   .spec-row:focus-within .spec-figure {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .spec-row:hover .spec-lead,
+  .spec-row:focus-within .spec-lead {
+    opacity: 1;
+  }
+
+  .spec-panel:has(.spec-row:hover) .spec-stat-rest,
+  .spec-panel:has(.spec-row:focus-within) .spec-stat-rest {
+    opacity: 0;
+  }
+
+  .spec-panel:has([data-kind="ram"]:hover) [data-stat="ram"],
+  .spec-panel:has([data-kind="ram"]:focus-within) [data-stat="ram"],
+  .spec-panel:has([data-kind="ssd"]:hover) [data-stat="ssd"],
+  .spec-panel:has([data-kind="ssd"]:focus-within) [data-stat="ssd"],
+  .spec-panel:has([data-kind="keyboard"]:hover) [data-stat="keyboard"],
+  .spec-panel:has([data-kind="keyboard"]:focus-within) [data-stat="keyboard"],
+  .spec-panel:has([data-kind="battery"]:hover) [data-stat="battery"],
+  .spec-panel:has([data-kind="battery"]:focus-within) [data-stat="battery"],
+  .spec-panel:has([data-kind="tested"]:hover) [data-stat="tested"],
+  .spec-panel:has([data-kind="tested"]:focus-within) [data-stat="tested"],
+  .spec-panel:has([data-kind="warranty"]:hover) [data-stat="warranty"],
+  .spec-panel:has([data-kind="warranty"]:focus-within) [data-stat="warranty"] {
+    opacity: 1;
   }
 
   .spec-row:hover .spec-svg,
@@ -457,7 +509,10 @@ html[data-lang-hint="on"] .lang-hint {
 @media (prefers-reduced-motion: reduce) {
   .spec-figure,
   .spec-svg,
-  .spec-part {
+  .spec-part,
+  .spec-ring,
+  .spec-lead,
+  .spec-stat {
     transition: none;
   }
 
