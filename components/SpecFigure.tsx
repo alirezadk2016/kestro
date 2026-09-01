@@ -29,6 +29,63 @@ import type { Lang } from "@/lib/i18n";
  */
 export type SpecKind = "ram" | "ssd" | "keyboard" | "battery" | "tested" | "warranty";
 
+/*
+ * One DRAM package on the DIMM.
+ *
+ * Its own function rather than the shared chip() below, because a memory
+ * package is a specific object and the SSD's controller is not: leads down
+ * both long edges, four lines of printing, a data-matrix square in the corner
+ * and a pin-one dot. The printing is drawn as bars rather than set as type —
+ * at the size this renders, real characters are three pixels tall and turn to
+ * mud, while bars still read as "this package is marked".
+ */
+function dramChip(x: number, y: number, key: string) {
+  const w = 60;
+  const h = 62;
+  return (
+    <g key={key}>
+      {/* Silkscreen outline, printed on the board under the package. */}
+      <rect
+        x={x - 4}
+        y={y - 4}
+        width={w + 8}
+        height={h + 8}
+        rx={1}
+        fill="none"
+        stroke="#dff0e6"
+        strokeOpacity={0.5}
+        strokeWidth={1}
+      />
+      {/* Leads. */}
+      <rect x={x - 7} y={y} width={9} height={h} fill="url(#spec-dram-pins)" />
+      <rect x={x + w - 2} y={y} width={9} height={h} fill="url(#spec-dram-pins)" />
+
+      <rect x={x} y={y} width={w} height={h} rx={2} fill="url(#spec-dram)" />
+      <rect x={x} y={y} width={w} height={22} rx={2} fill="url(#spec-sheen)" />
+      <rect
+        x={x}
+        y={y}
+        width={w}
+        height={h}
+        rx={2}
+        fill="none"
+        stroke="#4a4c54"
+        strokeWidth={0.8}
+      />
+
+      {/* Marking: manufacturer, part number, lot. */}
+      <rect x={x + 8} y={y + 12} width={22} height={2.8} rx={1} className="fill-white/55" />
+      <rect x={x + 8} y={y + 21} width={44} height={3.2} rx={1} className="fill-white/80" />
+      <rect x={x + 8} y={y + 30} width={17} height={2.8} rx={1} className="fill-white/45" />
+
+      {/* Data-matrix, bottom right, clear of the printing. */}
+      <rect x={x + 40} y={y + 41} width={14} height={14} fill="url(#spec-code)" />
+      {/* Pin one. */}
+      <circle cx={x + 7} cy={y + h - 7} r={2.2} className="fill-white/45" />
+    </g>
+  );
+}
+
 /* One package: body, the sheen across its top face, silkscreen, pin-one dot. */
 function chip(kind: SpecKind, x: number, y: number, key: string) {
   return (
@@ -100,46 +157,54 @@ function figure(kind: SpecKind) {
           {[node(848, 216), node(866, 210), node(46, 314), node(76, 400)]}
 
           <g className="spec-part" filter={"url(#spec-drop)"}>
-            <rect x={64} y={196} width={732} height={124} rx={5} fill={pcb} />
-            <rect
-              x={64}
-              y={196}
-              width={732}
-              height={124}
-              rx={5}
-              className="fill-none stroke-[#39415a]"
+            {/* The board, with the step each end takes in at the contact edge —
+                the profile a DIMM actually has, not a plain rectangle. */}
+            <path
+              d="M64 196H796V296H786V320H74V296H64Z"
+              fill="url(#spec-pcb-green)"
+              stroke="#0a3320"
               strokeWidth={1.2}
             />
-            {/* Board edge highlight — one light source, upper left. */}
-            <path d="M69 196h722" className="stroke-white/25" strokeWidth={1.4} fill="none" />
-            <rect x={64} y={316} width={732} height={8} className="fill-[#0a0c12]" />
+            {/* Lit top edge, one light source, upper left. */}
+            <path d="M66 196h728" className="stroke-white/25" strokeWidth={1.4} fill="none" />
+
+            {/* Trace fan running from the packages down to the contacts, and the
+                row of plated vias above them. Both are under the solder mask,
+                so they are green on green rather than bare copper. */}
+            <rect x={106} y={290} width={644} height={11} fill="url(#spec-vias)" />
+            <rect x={106} y={302} width={644} height={12} fill="url(#spec-fan)" />
+
+            {/* The two mounting holes at the ends. */}
+            <circle cx={76} cy={208} r={4.5} className="fill-brand-950" />
+            <circle cx={784} cy={208} r={4.5} className="fill-brand-950" />
+
             {/* 56 fingers on a 12.6 pitch, tiled rather than enumerated. The last
             tile ends exactly at the last finger's right edge, and the keying
             notch below is drawn over the two it interrupts, as before. */}
             <rect x={78} y={318} width={700.4} height={26} fill="url(#spec-fingers-dimm)" />
-            {/* Keying notch. */}
+            {/* Keying notch — off centre, the way the real one is keyed. */}
             <rect x={355} y={310} width={26} height={34} rx={2} className="fill-brand-950" />
 
-            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => chip(kind, 96 + i * 84, 224, `c${i}`))}
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => dramChip(106 + i * 82, 222, `c${i}`))}
 
-            {/* Passives along the top edge. */}
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+            {/* The SPD chip, small and on its own, where a module carries it. */}
+            <rect x={366} y={200} width={26} height={16} rx={1.5} fill="url(#spec-dram)" />
+            <rect x={366} y={198} width={26} height={2} fill="url(#spec-dram-pins)" />
+            <rect x={366} y={216} width={26} height={2} fill="url(#spec-dram-pins)" />
+
+            {/* Decoupling capacitors between the packages: the tan ones are
+                tantalum, the dark ones ceramic. */}
+            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
               <rect
                 key={`smd${i}`}
-                x={104 + i * 70}
-                y={204}
-                width={13}
+                x={140 + i * 82}
+                y={203}
+                width={12}
                 height={7}
                 rx={1}
-                className="fill-[#4a5470]"
+                fill={i % 2 ? "#17181c" : "#c39a5f"}
               />
             ))}
-
-            {/* Label. */}
-            <rect x={648} y={228} width={132} height={50} rx={2} className="fill-white/[0.9]" />
-            <rect x={658} y={238} width={78} height={5} rx={2} className="fill-brand-950/70" />
-            <rect x={658} y={249} width={104} height={4} rx={2} className="fill-brand-950/40" />
-            <rect x={658} y={258} width={60} height={4} rx={2} className="fill-brand-950/40" />
           </g>
         </>
       );
@@ -520,6 +585,54 @@ export function SpecFigureDefs() {
           patternUnits="userSpaceOnUse"
         >
           <rect x="0" y="0" width="4.6" height="22" fill="url(#spec-gold)" />
+        </pattern>
+
+        {/* The DIMM's own materials. A memory module is a green board with
+            black packages on it, and drawing it in the site's navy made it a
+            diagram of a part rather than the part. These are the colours the
+            thing actually is, lit from the same upper left as everything else
+            in the figure. */}
+        <linearGradient id="spec-pcb-green" x1="0" y1="0" x2="0.18" y2="1">
+          <stop offset="0%" stopColor="#3a9760" />
+          <stop offset="16%" stopColor="#1f6c43" />
+          <stop offset="100%" stopColor="#0c3d25" />
+        </linearGradient>
+        <linearGradient id="spec-dram" x1="0" y1="0" x2="0.25" y2="1">
+          <stop offset="0%" stopColor="#3a3b41" />
+          <stop offset="20%" stopColor="#1a1b1f" />
+          <stop offset="100%" stopColor="#0a0b0d" />
+        </linearGradient>
+
+        {/* Gull-wing leads down both long edges of every package. Eight chips
+            with two rows each is over two hundred rectangles drawn one at a
+            time; the rows are on a fixed pitch and all eight sit at the same
+            height, so one tile serves all sixteen. */}
+        <pattern
+          id="spec-dram-pins"
+          x="0"
+          y="231"
+          width="9"
+          height="5.4"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect x="0" y="0" width="9" height="2.5" rx="1" fill="#b9c0cb" />
+        </pattern>
+
+        {/* The data-matrix square every package carries. At this size a real
+            code would be mud, so it is the grid of cells that reads. */}
+        <pattern id="spec-code" width="3.2" height="3.2" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="1.7" height="1.7" fill="#e8ecf2" fillOpacity="0.55" />
+          <rect x="1.7" y="1.7" width="1.5" height="1.5" fill="#e8ecf2" fillOpacity="0.3" />
+        </pattern>
+
+        {/* Plated vias along the board edge, and the trace fan running down to
+            the contacts. Both are regular enough to tile. */}
+        <pattern id="spec-vias" x="0" y="0" width="11" height="11" patternUnits="userSpaceOnUse">
+          <circle cx="5.5" cy="5.5" r="2" fill="#d8b25a" />
+          <circle cx="5.5" cy="5.5" r="0.9" fill="#0a3320" />
+        </pattern>
+        <pattern id="spec-fan" x="0" y="0" width="6" height="12" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="1.2" height="12" fill="#4fb377" fillOpacity="0.38" />
         </pattern>
       </defs>
     </svg>
