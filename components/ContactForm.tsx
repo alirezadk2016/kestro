@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
@@ -181,6 +181,27 @@ export default function ContactForm({
     messagePlaceholder?.[lang] ?? (quote ? c.quoteMessagePlaceholder : c.defaultPlaceholder);
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
+
+  /*
+   * Where submitting lands you.
+   *
+   * Pressing send replaces the whole form with an outcome panel. React does
+   * not move focus when it does that, so the button you just pressed stops
+   * existing and focus falls to <body> — a keyboard user is put back at the
+   * top of the document, and a screen reader says nothing at all. Whether the
+   * message was sent or failed is then the one thing on the page you cannot
+   * find out without going looking.
+   *
+   * So the panel is focused when it appears, and it carries a live role:
+   * alert when the send did not happen, status when it did.
+   */
+  const outcomeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "sent" || status === "error" || status === "unavailable") {
+      outcomeRef.current?.focus();
+    }
+  }, [status]);
   const emptyValues = {
     navn: "",
     virksomhed: "",
@@ -331,8 +352,17 @@ export default function ContactForm({
     )}&body=${encodeURIComponent(body)}`;
 
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="alert"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {c.unavailableTitle}
         </h3>
         <p className="mt-3 text-base leading-7 text-paper/65">{c.unavailableBody}</p>
@@ -383,8 +413,17 @@ export default function ContactForm({
 
   if (status === "sent") {
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="status"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
         <p className="mt-3 text-base leading-7 text-paper/65">

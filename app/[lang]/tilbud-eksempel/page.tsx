@@ -340,7 +340,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
               </p>
               <Link
                 href={localePath("/priser", lang)}
-                className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
               >
                 {c.priceLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
