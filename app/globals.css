@@ -382,3 +382,95 @@ body {
 html[data-lang-hint="on"] .lang-hint {
   display: block;
 }
+
+/*
+ * The component figure that opens off a line in the hero spec list.
+ *
+ * All of it is CSS: the row carries .spec-row, the figure is inside it, and
+ * :hover / :focus-within on the row is what opens it. No state, no listener,
+ * no hydration — which is why it can sit on the homepage at all.
+ *
+ * The tilt is a real perspective transform rather than a skew, so the board
+ * has a near edge and a far one and the browser composites it on the GPU. It
+ * starts further back and rotated a few degrees more, so opening reads as the
+ * part turning towards you rather than fading in.
+ *
+ * Only above 1024px. There is no hover on a phone, the figure is display:none
+ * there, and a tap follows the link instead.
+ */
+.spec-figure {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.34s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.spec-svg {
+  transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 22deg) scale(0.94);
+  transform-origin: 55% 55%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The part lifts further than its traces, which is what makes the drawing read
+   as layered rather than flat. */
+.spec-part {
+  transform: translate3d(0, 6px, 0);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.spec-trace {
+  stroke-dashoffset: 280;
+}
+
+@media (min-width: 1024px) {
+  .spec-row:hover .spec-figure,
+  .spec-row:focus-within .spec-figure {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spec-row:hover .spec-svg,
+  .spec-row:focus-within .spec-svg {
+    transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 13deg) scale(1);
+  }
+
+  .spec-row:hover .spec-part,
+  .spec-row:focus-within .spec-part {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  /* Signal running out along the traces. Decorative, and the first thing
+     removed when less motion is asked for. */
+  .spec-row:hover .spec-trace,
+  .spec-row:focus-within .spec-trace {
+    animation: spec-run 2.4s linear infinite;
+  }
+}
+
+@keyframes spec-run {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spec-figure,
+  .spec-svg,
+  .spec-part {
+    transition: none;
+  }
+
+  .spec-svg {
+    transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 13deg);
+  }
+
+  .spec-part {
+    transform: none;
+  }
+
+  .spec-row:hover .spec-trace,
+  .spec-row:focus-within .spec-trace {
+    animation: none;
+  }
+}
