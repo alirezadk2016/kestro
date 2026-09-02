@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Container from "./Container";
+import { localePath } from "@/lib/i18n";
 
 /*
  * "This page is also available in English."
@@ -72,10 +73,15 @@ export default function LanguageHint() {
 
   if (dismissed) return null;
 
-  /* The same page in English. usePathname reports the rewritten /da path on
-     Danish pages, so strip it before prefixing. */
-  const clean = pathname.replace(/^\/da(?=\/|$)/, "");
-  const href = `/en${clean === "/" ? "" : clean}`;
+  /* The same page in English.
+     usePathname reports the rewritten /da path on Danish pages, so strip that
+     first — and then go through localePath rather than gluing "/en" on the
+     front. The English tree has its own addresses now (/products, not
+     /produkter), so concatenating produced a URL that 301s: the router
+     prefetched it, followed the redirect and threw, which is exactly what the
+     verify suite caught. localePath is the one place that knows the mapping. */
+  const clean = pathname.replace(/^\/da(?=\/|$)/, "") || "/";
+  const href = localePath(clean, "en");
 
   function dismiss() {
     try {

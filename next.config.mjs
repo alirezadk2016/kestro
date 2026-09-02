@@ -96,20 +96,73 @@ const seoRedirects = [
   ["/produkter/smartwatches", "/produkter/smartphones"],
 ];
 
+/*
+ * The English tree's own addresses.
+ *
+ * Every English page used to sit on the Danish slug — /en/produkter,
+ * /en/saelg-til-os, /en/vejledninger — so an English URL contained no English
+ * at all, and the transliterated digraphs read as noise to the person deciding
+ * whether to click. The route folders stay Danish, because that is the page's
+ * identity everywhere else in the codebase; only the address changes.
+ *
+ * Kept in lockstep with lib/routes.ts, which is what localePath renders from.
+ * If the two ever disagree, the site links to an address that does not resolve
+ * — so the pair is checked in scripts/verify/content.mjs rather than trusted.
+ *
+ * Danish URLs do not move. Every old English URL keeps answering, with a 301
+ * to its new address.
+ */
+const englishRoutes = [
+  ["/flaadeloesninger", "/fleet-solutions"],
+  ["/produkter", "/products"],
+  ["/modeller", "/models"],
+  ["/maskinen", "/inside-the-machine"],
+  ["/kvalitet", "/condition-and-quality"],
+  ["/priser", "/pricing"],
+  ["/tilbud-eksempel", "/sample-quote"],
+  ["/vejledninger", "/knowledge"],
+  ["/saelg-til-os", "/sell-to-us"],
+  ["/reparation", "/repairs"],
+  ["/ydelser", "/services"],
+  ["/tilbud", "/get-a-quote"],
+  ["/om-os", "/about-us"],
+  ["/kontakt", "/contact"],
+  ["/privatlivspolitik", "/privacy-policy"],
+  ["/handelsbetingelser", "/terms-of-sale"],
+];
+
 const nextConfig = {
   // Do not advertise the framework and its version.
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
-  async redirects() {
-    return seoRedirects.flatMap(([from, to]) => [
-      /* 301 rather than `permanent: true`, which Next emits as 308. Google
-         treats the two the same, but the approved plan says 301 and some
-         older crawlers still handle it more predictably. */
-      { source: from, destination: to, statusCode: 301 },
-      { source: `/en${from}`, destination: `/en${to}`, statusCode: 301 },
+  async rewrites() {
+    /* The English address serves the Danish route folder. A rewrite, not a
+       redirect: the address in the bar stays English, which is the whole
+       point, while Next resolves it against app/[lang]/<danish>/. */
+    return englishRoutes.flatMap(([da, en]) => [
+      { source: `/en${en}`, destination: `/en${da}` },
+      { source: `/en${en}/:path*`, destination: `/en${da}/:path*` },
     ]);
+  },
+  async redirects() {
+    return [
+      ...seoRedirects.flatMap(([from, to]) => [
+        /* 301 rather than `permanent: true`, which Next emits as 308. Google
+           treats the two the same, but the approved plan says 301 and some
+           older crawlers still handle it more predictably. */
+        { source: from, destination: to, statusCode: 301 },
+        { source: `/en${from}`, destination: `/en${to}`, statusCode: 301 },
+      ]),
+      /* The old English addresses, permanently. Listed before nothing and
+         after the folds above, so a page that was folded away is folded first
+         rather than being redirected to an address that then redirects again. */
+      ...englishRoutes.flatMap(([da, en]) => [
+        { source: `/en${da}`, destination: `/en${en}`, statusCode: 301 },
+        { source: `/en${da}/:path*`, destination: `/en${en}/:path*`, statusCode: 301 },
+      ]),
+    ];
   },
 };
 

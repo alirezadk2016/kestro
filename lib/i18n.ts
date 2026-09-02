@@ -5,6 +5,8 @@
  * changes address.
  */
 
+import { toDanishPath, toEnglishPath } from "./routes";
+
 export const langs = ["da", "en"] as const;
 
 export type Lang = (typeof langs)[number];
@@ -18,10 +20,22 @@ export function isLang(value: string): value is Lang {
   return (langs as readonly string[]).includes(value);
 }
 
-/** Prefix a site-internal path for the given language. */
+/**
+ * Render a site-internal path in the given language.
+ *
+ * Callers always pass the Danish path — that is the page's identity, the name
+ * of the route folder, and the key the sitemap uses. Danish returns it
+ * unchanged; English returns the translated address from lib/routes.ts.
+ *
+ * This is the one funnel. Canonical, hreflang, og:url, the sitemap and every
+ * link on the site resolve through here, so giving the English tree English
+ * addresses is a change to this function and nothing else — all 106 call
+ * sites keep passing exactly the Danish paths they always did.
+ */
 export function localePath(path: string, lang: Lang): string {
   const clean = path === "/" ? "" : path;
-  return lang === defaultLang ? clean || "/" : `/en${clean}`;
+  if (lang === defaultLang) return clean || "/";
+  return `/en${toEnglishPath(clean)}`;
 }
 
 /**
@@ -34,7 +48,14 @@ export function localePath(path: string, lang: Lang): string {
 export function stripLocale(pathname: string): string {
   for (const lang of langs) {
     if (pathname === `/${lang}`) return "/";
-    if (pathname.startsWith(`/${lang}/`)) return pathname.slice(lang.length + 1);
+    if (pathname.startsWith(`/${lang}/`)) {
+      const rest = pathname.slice(lang.length + 1);
+      /* An English URL carries the English address, so turn it back into the
+         Danish path before anything downstream looks it up or hands it to
+         localePath — otherwise the language switcher on /en/products would
+         build /en/products again instead of /produkter. */
+      return lang === "en" ? toDanishPath(rest) : rest;
+    }
   }
   return pathname;
 }

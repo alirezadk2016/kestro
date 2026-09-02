@@ -145,8 +145,50 @@ for (const block of blocks) {
   }
 }
 
+/*
+ * The English addresses are written twice, and they have to agree.
+ *
+ * lib/routes.ts is what localePath renders, so it decides what every link,
+ * canonical, hreflang entry and sitemap <loc> says. next.config.mjs is what
+ * rewrites that address onto the Danish route folder and 301s the old one.
+ * Nothing at runtime notices when they disagree — the site simply links to an
+ * address that answers 404, on every page at once, in the half of the site we
+ * look at least. So they are compared here instead of trusted.
+ */
+const routesTs = read("lib/routes.ts");
+const configMjs = read("next.config.mjs");
+
+const pairsIn = (source, start) => {
+  const body = source.slice(source.indexOf(start));
+  const end = body.indexOf(body.trimStart().startsWith("export const") ? "};" : "];");
+  return new Map(
+    [...body.slice(0, end).matchAll(/"(\/[a-z-]+)":?\s*,?\s*"(\/[a-z-]+)"/g)].map((m) => [
+      m[1],
+      m[2],
+    ]),
+  );
+};
+
+const fromRoutes = pairsIn(routesTs, "export const englishPath");
+const fromConfig = pairsIn(configMjs, "const englishRoutes");
+
+if (fromRoutes.size === 0) fail("lib/routes.ts: could not read englishPath");
+if (fromConfig.size === 0) fail("next.config.mjs: could not read englishRoutes");
+if (fromRoutes.size !== fromConfig.size)
+  fail(`englishPath has ${fromRoutes.size} routes, englishRoutes has ${fromConfig.size}`);
+
+for (const [da, en] of fromRoutes) {
+  if (!fromConfig.has(da)) fail(`${da} -> ${en} is in lib/routes.ts but not in next.config.mjs`);
+  else if (fromConfig.get(da) !== en)
+    fail(`${da} maps to ${en} in lib/routes.ts but ${fromConfig.get(da)} in next.config.mjs`);
+}
+for (const da of fromConfig.keys()) {
+  if (!fromRoutes.has(da)) fail(`${da} is in next.config.mjs but not in lib/routes.ts`);
+}
+
 console.log(
-  `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ${failures.length} failures`,
+  `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
+    `${fromRoutes.size} english routes, ${failures.length} failures`,
 );
 for (const message of failures) console.error("  " + message);
 process.exit(failures.length === 0 ? 0 : 1);
