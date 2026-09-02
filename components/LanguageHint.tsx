@@ -49,10 +49,15 @@ const KEY = "kestro-lang-hint";
  * A metric-matched fallback narrows that but cannot close it: size-adjust
  * matches average advance width across the alphabet, not the width of one
  * particular sentence, so the wrap threshold can still be crossed. The fix has
- * to be a layout whose row count is not a function of text width. Below sm the
- * three parts are stacked deliberately; from sm they sit on one row, where
- * they have always fitted. Either way the height is decided by the layout and
- * the font cannot change it.
+ * to be a layout whose row count is not a function of text width.
+ *
+ * So below sm it is two deliberate rows: the sentence, then the link and the
+ * dismiss together. Measured at 320px, the narrowest width worth supporting:
+ * the sentence is 234px in Plus Jakarta Sans and 244px in the fallback against
+ * 288px of room, and the second row is 166px. Neither can wrap in either face,
+ * so the height is decided by the layout and the font cannot change it. From
+ * sm the wrapper dissolves with display:contents and all three sit on one row,
+ * where they have always fitted.
  */
 export const languageHintScript = `(function(){try{
 if(localStorage.getItem(${JSON.stringify(KEY)})==="1")return;
@@ -88,20 +93,24 @@ export default function LanguageHint() {
     <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
       <Container className="flex flex-col items-start gap-y-1 py-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
         <p className="text-sm text-paper/75">This page is also available in English.</p>
-        <Link
-          href={href}
-          onClick={dismiss}
-          className="inline-flex min-h-[36px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
-        >
-          Read in English
-        </Link>
-        <button
-          type="button"
-          onClick={dismiss}
-          className="ml-auto inline-flex min-h-[36px] items-center text-sm text-paper/55 transition hover:text-paper"
-        >
-          Dismiss
-        </button>
+        {/* One row of its own below sm; dissolved into the parent from sm, so
+            the wide layout is exactly what it was. */}
+        <div className="flex w-full items-center gap-x-4 sm:contents">
+          <Link
+            href={href}
+            onClick={dismiss}
+            className="inline-flex min-h-[36px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
+          >
+            Read in English
+          </Link>
+          <button
+            type="button"
+            onClick={dismiss}
+            className="ml-auto inline-flex min-h-[36px] items-center text-sm text-paper/55 transition hover:text-paper"
+          >
+            Dismiss
+          </button>
+        </div>
       </Container>
     </div>
   );
