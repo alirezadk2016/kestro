@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /**
  * The contact form's actual destination.
@@ -29,6 +30,9 @@ const RESEND_ENDPOINT = process.env.RESEND_ENDPOINT ?? "https://api.resend.com/e
 /** Long enough for anything real, short enough to bound what we forward. */
 const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 };
 
+/* Comfortably above the sum of LIMITS, far below anything worth abusing. */
+const MAX_BODY_BYTES = 64 * 1024;
+
 /*
  * Rate limiting, such as it is.
  *
@@ -39,6 +43,37 @@ const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 }
  */
 const RATE_LIMIT = { max: 5, windowMs: 10 * 60 * 1000 };
 const seen = new Map<string, number[]>();
+
+/*
+ * Whose address to count against.
+ *
+ * Not the left-most x-forwarded-for. That is the value the *client* sent, and
+ * anything upstream only appends to it — so a caller who rotates the header
+ * gets a fresh bucket on every request and the limit stops existing. Measured:
+ * five requests from one spoofed address hit 429, and eight requests with the
+ * header rotated all returned 200.
+ *
+ * Vercel sets x-vercel-forwarded-for itself and overwrites whatever arrived,
+ * so it is the trustworthy one here. Failing that, the right hop is the
+ * right-most entry — the one our own proxy appended — never the left-most.
+ */
+function clientKey(request: Request): string {
+  const vercel = request.headers.get("x-vercel-forwarded-for")?.trim();
+  if (vercel) return vercel;
+
+  const real = request.headers.get("x-real-ip")?.trim();
+  if (real) return real;
+
+  const chain = request.headers.get("x-forwarded-for");
+  if (chain) {
+    const hops = chain
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean);
+    if (hops.length) return hops[hops.length - 1];
+  }
+  return "unknown";
+}
 
 function tooManyFrom(ip: string): boolean {
   const now = Date.now();
@@ -89,8 +124,11 @@ function safeHeaderValue(value: string): string {
  *   2. Content-Type. A cross-site form can only send form-encoded or plain
  *      text without tripping a CORS preflight, and our form sends JSON, so
  *      requiring JSON closes the enctype trick on anything older.
- *   3. Origin against the host we were actually reached on — x-forwarded-host
- *      first, because behind Vercel the Host header is the internal one.
+ *   3. Origin against the origin we are configured to be. Not against the
+ *      Host header: a caller who sets Origin can set Host to match it, and the
+ *      check passes itself. Measured — that combination returned 200 before
+ *      this was pinned to SITE_ORIGIN. In development the host is localhost,
+ *      so the loopback origins are accepted there and nowhere else.
  *
  * A same-origin submit from the site passes all three unchanged.
  */
@@ -104,12 +142,17 @@ function isSameSite(request: Request): boolean {
     return true;
   }
 
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  try {
-    return Boolean(host) && new URL(origin).host === host;
-  } catch {
-    return false;
+  if (origin === SITE_ORIGIN) return true;
+
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const { hostname } = new URL(origin);
+      return hostname === "localhost" || hostname === "127.0.0.1";
+    } catch {
+      return false;
+    }
   }
+  return false;
 }
 
 export async function POST(request: Request) {
@@ -130,18 +173,43 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 415 });
   }
 
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown";
-
-  if (tooManyFrom(ip)) {
+  if (tooManyFrom(clientKey(request))) {
     return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
   }
 
+  /*
+   * Read the body with a ceiling on it.
+   *
+   * Nothing bounded the request before: an 8 MB body was read, parsed and
+   * answered 200, and the fields were only truncated afterwards — so the
+   * memory had already been spent. Every field this route keeps is capped in
+   * LIMITS below and the largest is 5000 characters, so 64 KB is far more than
+   * an honest submission needs and far less than a cheap way to make the
+   * function work.
+   */
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (declared > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "too_large" }, { status: 413 });
+  }
+
+  const raw = await request.text();
+  if (raw.length > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "too_large" }, { status: 413 });
+  }
+
+  /*
+   * `null`, `[]` and `"string"` are all valid JSON, so parsing succeeding says
+   * nothing about the shape. Reading .website off a parsed `null` threw, and
+   * the request came back 500 — a 500 anyone could produce with four
+   * characters, and one Google reads as the host being unwell.
+   */
   let payload: Record<string, unknown>;
   try {
-    payload = await request.json();
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
+    }
+    payload = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }

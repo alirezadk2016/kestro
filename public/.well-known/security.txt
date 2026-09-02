@@ -1,0 +1,12 @@
+# Kestro — security contact, per RFC 9116.
+#
+# If you have found a vulnerability in kestro.dk, write to the address below.
+# Please include enough detail to reproduce it, and give us reasonable time to
+# fix it before publishing. We do not run a paid bounty programme, and we will
+# not pursue anyone who reports in good faith and does not access, alter or
+# retain other people's data.
+
+Contact: mailto:info@kestro.dk
+Expires: 2027-09-02T00:00:00.000Z
+Preferred-Languages: da, en
+Canonical: https://www.kestro.dk/.well-known/security.txt

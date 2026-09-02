@@ -26,6 +26,15 @@ const csp = [
   "base-uri 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  /* These four fall back to default-src 'self' anyway, so they close nothing
+     that was open — they are written out so the policy states its own intent
+     rather than leaving a reader to derive it, and so a later change to
+     default-src cannot quietly widen them. The site frames nothing, registers
+     no service worker, ships no manifest and plays no media. */
+  "frame-src 'none'",
+  "worker-src 'self'",
+  "manifest-src 'self'",
+  "media-src 'self'",
   "upgrade-insecure-requests",
 ].join("; ");
 
@@ -43,6 +52,24 @@ const securityHeaders = [
     value: "max-age=63072000; includeSubDomains; preload",
   },
   { key: "X-DNS-Prefetch-Control", value: "off" },
+  /*
+   * Cross-origin isolation, to the extent a site like this needs it.
+   *
+   * COOP severs the window.opener relationship, so a page that opens this one
+   * cannot reach into it. CORP stops another origin embedding our responses as
+   * a subresource — the read half of what frame-ancestors already refuses for
+   * framing. Both are same-origin because nothing here is meant to be consumed
+   * from anywhere else: no embeds, no widget, no cross-site API.
+   *
+   * COEP is deliberately not set. It would buy nothing without cross-origin
+   * isolation being needed, and it breaks any third-party resource that does
+   * not send CORP — including the tag, once statistics are accepted.
+   */
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+  /* Legacy Flash and PDF cross-domain policy files. Nothing here serves one,
+     and this says so rather than leaving the default to the reader. */
+  { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
 ];
 
 /*
