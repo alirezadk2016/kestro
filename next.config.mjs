@@ -131,6 +131,21 @@ const englishRoutes = [
   ["/handelsbetingelser", "/terms-of-sale"],
 ];
 
+/**
+ * The English address of a Danish path, for the redirect targets below.
+ *
+ * Only the leading segment is translated, which is all englishRoutes covers:
+ * /produkter/smartphones becomes /products/smartphones and a slug that has no
+ * English form of its own is left alone.
+ */
+function toEnglish(path) {
+  for (const [da, en] of englishRoutes) {
+    if (path === da) return en;
+    if (path.startsWith(`${da}/`)) return en + path.slice(da.length);
+  }
+  return path;
+}
+
 const nextConfig = {
   // Do not advertise the framework and its version.
   poweredByHeader: false,
@@ -153,7 +168,12 @@ const nextConfig = {
            treats the two the same, but the approved plan says 301 and some
            older crawlers still handle it more predictably. */
         { source: from, destination: to, statusCode: 301 },
-        { source: `/en${from}`, destination: `/en${to}`, statusCode: 301 },
+        /* Straight to the English destination's English address, not to its
+           Danish one. Pointing /en/produkter/gaming at /en/produkter made two
+           hops, because that address then 301s again to /en/products — and a
+           chain is crawled more slowly and passes less than a single hop.
+           Sending it to /en/products directly ends it in one. */
+        { source: `/en${from}`, destination: `/en${toEnglish(to)}`, statusCode: 301 },
       ]),
       /* The old English addresses, permanently. Listed before nothing and
          after the folds above, so a page that was folded away is folded first

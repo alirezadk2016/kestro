@@ -69,6 +69,32 @@ const meta = {
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 
+/*
+ * The Search Console and Bing ownership tags, if there are any.
+ *
+ * Without a verified property nobody can see a single search impression: the
+ * site can rank and be clicked and the only record of it is in Google's, not
+ * ours. Verification is one meta tag, but the token is issued per property and
+ * is not something that can be written here in advance — so it is read from
+ * the environment and the tag simply does not render until it is set.
+ *
+ * That means verifying is a variable in Vercel and a redeploy, with no code
+ * change and no commit. DNS verification stays the better option where the
+ * domain's records are reachable; this is the fallback that always works.
+ *
+ * Not a secret: the token is a public claim of ownership, visible in the page
+ * source of every verified site on the web. It is an environment variable
+ * because it differs per deployment, not because it needs hiding.
+ */
+const verification = {
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : {}),
+  ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+    ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+    : {}),
+};
+
 export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
   const lang: Lang = isLang(params.lang) ? params.lang : "da";
 
@@ -76,6 +102,7 @@ export function generateMetadata({ params }: { params: { lang: string } }): Meta
     metadataBase: new URL(SITE_ORIGIN),
     title: meta[lang].title,
     description: meta[lang].description,
+    ...(Object.keys(verification).length > 0 ? { verification } : {}),
     ...metaFor("/", lang),
   };
 }

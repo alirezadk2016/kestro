@@ -196,6 +196,12 @@ export default function ContactForm({
    *
    * So the panel is focused when it appears, and it carries a live role:
    * alert when the send did not happen, status when it did.
+   *
+   * Focusing scrolls, and the header is sticky, so the panel landed with its
+   * top edge at the top of the viewport and its heading behind the header —
+   * "Tak for jeres henvendelse" half hidden, on the one screen that has to be
+   * unambiguous. Measured: the header is 65px on a 390px viewport and 81px
+   * from lg. scroll-mt-24 is 96px, so the heading clears it in both.
    */
   const outcomeRef = useRef<HTMLDivElement>(null);
 
@@ -359,7 +365,7 @@ export default function ContactForm({
         role="alert"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="scroll-mt-24 border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
       >
         <h3
           id="kontakt-udfald"
@@ -420,7 +426,7 @@ export default function ContactForm({
         role="status"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="scroll-mt-24 border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
       >
         <h3
           id="kontakt-udfald"
