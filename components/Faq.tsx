@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import Container from "./Container";
+import { company } from "@/lib/company";
 import type { Lang, Localized } from "@/lib/i18n";
 
 export type FaqItem = { question: Localized; answer: Localized };
@@ -13,8 +14,11 @@ const defaultFaqs: FaqItem[] = [
   {
     question: { da: "Hvordan bestiller vi hos Kestro?", en: "How do we order from Kestro?" },
     answer: {
-      da: "I kontakter os via formularen eller på info@kestro.dk og fortæller om jeres behov – antal enheder, specifikationer og tidsramme. Derefter finder vi de enheder, der matcher, og aftaler pris og levering direkte med jer.",
-      en: "Contact us through the form or at info@kestro.dk and tell us what you need — number of devices, specifications and timing. We then find the machines that match and agree price and delivery directly with you.",
+      /* The address is interpolated rather than typed out: this answer is also
+         published as FAQPage structured data, so a stale address here would be
+         a wrong address in the search result as well as on the page. */
+      da: `I kontakter os via formularen eller på ${company.email} og fortæller om jeres behov – antal enheder, specifikationer og tidsramme. Derefter finder vi de enheder, der matcher, og aftaler pris og levering direkte med jer.`,
+      en: `Contact us through the form or at ${company.email} and tell us what you need — number of devices, specifications and timing. We then find the machines that match and agree price and delivery directly with you.`,
     },
   },
   {

@@ -7,7 +7,7 @@ import teamPhotos from "./team-photos.json";
  */
 export const company = {
   name: "Kestro",
-  email: "info@kestro.dk",
+  email: "kontakt@kestro.dk",
   /*
    * Empty until there is a number to publish. Nothing renders a phone that is
    * not here — the header's call button, the contact card, the footer's legal
@@ -50,6 +50,22 @@ export const company = {
   postcode: "" as string,
   /** When there is a place to meet. Empty means "by appointment" only. */
   openingHours: { da: "", en: "" } as Localized,
+  /*
+   * The profiles that are demonstrably Kestro's, and the reason they are here
+   * rather than hard-coded into the footer: they also go into the Organization
+   * schema as sameAs, which is how a search engine ties this site to those
+   * accounts as one entity rather than three unrelated pages. One list, read
+   * by both.
+   *
+   * The LinkedIn address is a lnkd.in short link, which is what we were given.
+   * It redirects, and a redirect is a weaker signal in sameAs than the profile
+   * URL itself — swap in the canonical linkedin.com/company/... address when
+   * it is to hand, and both the footer and the schema follow.
+   */
+  social: [
+    { name: "Instagram", href: "https://www.instagram.com/kestro.dk/" },
+    { name: "LinkedIn", href: "https://lnkd.in/p/eq5ygkM3" },
+  ],
 } as const;
 
 /** Whether there is enough to publish a legal-details block at all. */

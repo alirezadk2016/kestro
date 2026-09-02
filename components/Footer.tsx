@@ -14,6 +14,7 @@ const copy = {
     services: "Ydelser",
     company: "Virksomhed",
     delivers: "Leverer i",
+    follow: "Følg Kestro",
     rights: "Alle rettigheder forbeholdes.",
     cvrLabel: "CVR",
     trademarks:
@@ -25,12 +26,52 @@ const copy = {
     services: "Services",
     company: "Company",
     delivers: "Delivers in",
+    follow: "Follow Kestro",
     rights: "All rights reserved.",
     cvrLabel: "CVR",
     trademarks:
       "Product names and trademarks belong to their respective owners. Kestro is not affiliated with Lenovo, HP, Dell, Apple, Microsoft or any other manufacturer named on this site.",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+/*
+ * The two brand marks, drawn here.
+ *
+ * lucide dropped its brand icons at v1, so there is nothing to import — and
+ * pulling in a whole icon package for two glyphs would cost more than the
+ * glyphs. These are the standard outline shapes at the same 24px grid and the
+ * same stroke weight as every other icon on the site, so they sit with them
+ * rather than beside them.
+ */
+function SocialGlyph({ name }: { name: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      className="h-[18px] w-[18px]"
+    >
+      {name === "Instagram" ? (
+        <>
+          <rect x="2" y="2" width="20" height="20" rx="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z" />
+          <path d="M17.5 6.5h.01" />
+        </>
+      ) : (
+        <>
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 export default function Footer({ lang }: { lang: Lang }) {
   const c = copy[lang];
@@ -48,6 +89,25 @@ export default function Footer({ lang }: { lang: Lang }) {
               Kestro
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-6 text-ink-400">{c.blurb}</p>
+
+            {/* rel="me" alongside noopener: it is what marks these as the same
+                entity's own profiles rather than pages we merely link to, and
+                it says the same thing the Organization schema's sameAs says. */}
+            <ul className="mt-6 flex items-center gap-2">
+              {company.social.map((profile) => (
+                <li key={profile.href}>
+                  <a
+                    href={profile.href}
+                    rel="me noopener noreferrer"
+                    target="_blank"
+                    aria-label={`${c.follow} — ${profile.name}`}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-ink-400 transition hover:border-brand-400/50 hover:text-paper"
+                  >
+                    <SocialGlyph name={profile.name} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

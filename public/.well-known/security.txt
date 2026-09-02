@@ -6,7 +6,7 @@
 # not pursue anyone who reports in good faith and does not access, alter or
 # retain other people's data.
 
-Contact: mailto:info@kestro.dk
+Contact: mailto:kontakt@kestro.dk
 Expires: 2027-09-02T00:00:00.000Z
 Preferred-Languages: da, en
 Canonical: https://www.kestro.dk/.well-known/security.txt

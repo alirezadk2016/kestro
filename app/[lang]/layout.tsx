@@ -111,6 +111,10 @@ export default function RootLayout({
     },
     ...(company.cvr ? { vatID: `DK${company.cvr.replace(/\D/g, "")}`, taxID: company.cvr } : {}),
     areaServed: ["DK", "NO"],
+    /* The profiles that are this same organisation elsewhere. sameAs is how a
+       search engine resolves three separate pages to one entity instead of
+       guessing, and it reads from the same list the footer links from. */
+    sameAs: company.social.map((profile) => profile.href),
     contactPoint: {
       "@type": "ContactPoint",
       ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),

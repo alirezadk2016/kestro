@@ -6,7 +6,9 @@ import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
-const CONTACT_EMAIL = "info@kestro.dk";
+/* From lib/company.ts, so the fallback address in the "we could not send"
+   panel can never drift from the one the route delivers to. */
+const CONTACT_EMAIL = company.email;
 
 /*
  * The form posts to /api/kontakt, which sends the message and answers.

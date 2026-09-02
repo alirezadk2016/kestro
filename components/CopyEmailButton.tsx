@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { company } from "@/lib/company";
 import type { Lang } from "@/lib/i18n";
 
 const copy = {
@@ -16,7 +17,9 @@ const copy = {
   },
 } as const;
 
-const EMAIL = "info@kestro.dk";
+/* From lib/company.ts, not repeated here — an address written down twice
+   is an address that gets changed once. */
+const EMAIL = company.email;
 
 /*
  * The button reads as its own address on screen, which is what a visitor wants
@@ -46,7 +49,7 @@ export default function CopyEmailButton({ lang }: { lang: Lang }) {
         onClick={handleCopy}
         className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
       >
-        {/* Said first, so the name is "Copy the email address info@kestro.dk"
+        {/* Said first, so the name is "Copy the email address kontakt@kestro.dk"
             rather than an address with no verb in front of it. The visible
             label is still inside the name, which is what 2.5.3 asks for. */}
         <span className="sr-only">{`${c.action} `}</span>
