@@ -136,19 +136,6 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     },
   };
 
-  const faqJsonLd = guide.faqs?.length
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        inLanguage: htmlLang[lang],
-        mainEntity: guide.faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question[lang],
-          acceptedAnswer: { "@type": "Answer", text: faq.answer[lang] },
-        })),
-      }
-    : null;
-
   return (
     <>
       <script
@@ -157,14 +144,6 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
-      )}
 
       {/* The header carries depth by layering rather than by ornament: the mark
           sits behind the type on a wide screen and steps out of the way on a

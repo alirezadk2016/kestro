@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
+import FaqSchema from "@/components/FaqSchema";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import MachineViewer from "@/components/MachineViewer";
 import MachineInside from "@/components/MachineInside";
 import { interiorParts } from "@/lib/machine-parts";
-import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -62,32 +63,21 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
   const { lang } = params;
   const c = copy[lang];
 
-  /*
-   * Every part is a question and an answer, so the page is eligible for the
-   * FAQ rich result. This is the one page on the site that answers "what is
-   * RAM" in Danish with a business's own machines in front of it.
-   */
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: htmlLang[lang],
-    mainEntity: interiorParts.map((part) => ({
-      "@type": "Question",
-      name: part.name[lang],
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: `${part.what[lang]} ${part.upgrade[lang]}`,
-      },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
+      {/* Every part is a question and an answer, so the page is eligible for
+          the FAQ rich result — but the parts are laid out as cards rather than
+          an accordion, so the markup comes from the same array directly rather
+          than through <Faq>. */}
+      <FaqSchema
+        lang={lang}
+        items={interiorParts.map((part) => ({
+          question: part.name,
+          answer: {
+            da: `${part.what.da} ${part.upgrade.da}`,
+            en: `${part.what.en} ${part.upgrade.en}`,
+          },
+        }))}
       />
 
       <section className="py-10 sm:py-20">

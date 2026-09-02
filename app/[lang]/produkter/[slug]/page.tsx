@@ -11,6 +11,7 @@ import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => categories.map((category) => ({ lang, slug: category.slug })));
@@ -84,6 +85,43 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
   const categoryModels = getModelsForCategory(category.slug);
   const Icon = getCategoryIcon(category.slug);
 
+  /*
+   * The category as a collection, not just a page with a breadcrumb.
+   *
+   * Model pages already publish Product. What was missing was anything saying
+   * which products this page collects, so the commercial tree read as a set of
+   * unconnected product pages under some prose. ItemList is what ties them
+   * together, and the positions come from the same list the page renders below,
+   * so the markup cannot name a model the page does not show.
+   *
+   * Only where there is a list to describe. Two categories carry no popular
+   * models — we hold no stock and source per order, so a category without a
+   * models block is not broken — and an empty ItemList would be markup
+   * describing nothing.
+   */
+  const collectionJsonLd = categoryModels.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}#collection`,
+        name: category.name[lang],
+        description: category.metaDescription[lang],
+        url: `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}`,
+        isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+        about: { "@id": `${SITE_ORIGIN}/#organization` },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: categoryModels.length,
+          itemListElement: categoryModels.map((model, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: model.name,
+            url: `${SITE_ORIGIN}${localePath(`/modeller/${model.slug}`, lang)}`,
+          })),
+        },
+      }
+    : null;
+
   return (
     <>
       <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
@@ -106,6 +144,14 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 { name: category.name[lang], href: `/produkter/${category.slug}` },
               ]}
             />
+            {collectionJsonLd && (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+                }}
+              />
+            )}
             <nav aria-label={c.breadcrumbLabel} className="text-sm text-ink-400">
               <Link
                 href={localePath("/produkter", lang)}

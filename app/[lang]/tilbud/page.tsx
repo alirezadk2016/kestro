@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
-import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 /*
  * The quote, as its own page.
@@ -245,24 +245,8 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
   /* Built from the same array <Faq> renders, so the answers Google reads and
      the answers on the page are the same text by construction — the pattern
      /priser and /flaadeloesninger already use. */
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: htmlLang[lang],
-    mainEntity: quoteFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question[lang],
-      acceptedAnswer: { "@type": "Answer", text: faq.answer[lang] },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
-      />
-
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-5xl">

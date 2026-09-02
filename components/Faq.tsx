@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import Container from "./Container";
+import FaqSchema from "./FaqSchema";
 import { company } from "@/lib/company";
 import type { Lang, Localized } from "@/lib/i18n";
 
@@ -65,6 +66,9 @@ export default function Faq({
 }) {
   return (
     <section className="bg-brand-950 py-10 sm:py-20">
+      {/* From the same array rendered below, so the questions Google reads are
+          by construction the questions on the page. */}
+      <FaqSchema lang={lang} items={items} />
       <Container>
         {/* Left-aligned like every other section heading on the site. It was
             the one centred block, which is what made it read as bolted on. */}

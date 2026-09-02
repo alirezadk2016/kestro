@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
+import FaqSchema from "@/components/FaqSchema";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 /*
  * What it costs, without a price list.
@@ -173,25 +174,27 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
   /* The two questions a buyer types into a search box before they trust a
      supplier enough to write to them. Marked up so the answers can appear
      under the result rather than only on the page. */
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: htmlLang[lang],
-    mainEntity: [
-      { q: c.whyTitle, a: `${c.whyBody1} ${c.whyBody2}` },
-      { q: c.freeTitle, a: c.freeBody },
-    ].map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      {/* The two questions this page answers in full. Built from the copy
+          object rather than the language-resolved `c`, so both languages come
+          from one place, the way FaqSchema expects. */}
+      <FaqSchema
+        lang={lang}
+        items={[
+          {
+            question: { da: copy.da.whyTitle, en: copy.en.whyTitle },
+            answer: {
+              da: `${copy.da.whyBody1} ${copy.da.whyBody2}`,
+              en: `${copy.en.whyBody1} ${copy.en.whyBody2}`,
+            },
+          },
+          {
+            question: { da: copy.da.freeTitle, en: copy.en.freeTitle },
+            answer: { da: copy.da.freeBody, en: copy.en.freeBody },
+          },
+        ]}
       />
 
       {/* In the shared Container like every other page's header. Without it

@@ -57,14 +57,15 @@ export const company = {
    * accounts as one entity rather than three unrelated pages. One list, read
    * by both.
    *
-   * The LinkedIn address is a lnkd.in short link, which is what we were given.
-   * It redirects, and a redirect is a weaker signal in sameAs than the profile
-   * URL itself — swap in the canonical linkedin.com/company/... address when
-   * it is to hand, and both the footer and the schema follow.
+   * Both are the canonical profile addresses, with no tracking parameters on
+   * them. LinkedIn hands out share links carrying a ?lipi=... session token;
+   * that token belongs to whoever copied the link, and publishing it would put
+   * one person's tracking id on every page of the site as well as making the
+   * sameAs value point at a URL that is not the profile's own.
    */
   social: [
     { name: "Instagram", href: "https://www.instagram.com/kestro.dk/" },
-    { name: "LinkedIn", href: "https://lnkd.in/p/eq5ygkM3" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/kestro-dk" },
   ],
 } as const;
 

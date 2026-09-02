@@ -17,7 +17,7 @@ import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
-import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
@@ -416,23 +416,8 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
   /* Marked up from the same array <Faq> renders, so the answers Google reads
      and the answers on the page are the same text by construction. Same
      inline approach as /priser and /maskinen. */
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: htmlLang[lang],
-    mainEntity: enterpriseFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question[lang],
-      acceptedAnswer: { "@type": "Answer", text: faq.answer[lang] },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
-      />
       <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
           <Breadcrumbs
