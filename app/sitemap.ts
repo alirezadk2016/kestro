@@ -35,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tilbud" },
     { path: "/om-os" },
     { path: "/kontakt" },
+    { path: "/handelsbetingelser" },
     { path: "/privatlivspolitik" },
   ];
 

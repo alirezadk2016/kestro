@@ -53,6 +53,7 @@ export const companyNav: NavLink[] = [
   { href: "/om-os", label: { da: "Om os", en: "About us" } },
   { href: "/tilbud", label: { da: "Få et tilbud", en: "Get a quote" } },
   { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
+  { href: "/handelsbetingelser", label: { da: "Handelsbetingelser", en: "Terms of sale" } },
   { href: "/privatlivspolitik", label: { da: "Privatlivspolitik", en: "Privacy policy" } },
 ];
 
