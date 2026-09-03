@@ -124,6 +124,22 @@ export default function RootLayout({
     name: company.name,
     url: SITE_ORIGIN,
     description: meta[lang].description,
+    /* The mark at 512×512, from app/logo/route.tsx. Google reads `logo` for
+       the knowledge panel and states a 112px minimum, so neither the 32px
+       favicon nor the 1200×630 social card could stand in for it — one is too
+       small and the other is not a logo. Written as an ImageObject with its
+       dimensions so the size does not have to be fetched to be known. */
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_ORIGIN}/logo`,
+      width: 512,
+      height: 512,
+      caption: company.name,
+    },
+    /* The same file again as the organisation's general image. Distinct
+       property, same asset: `logo` is the mark, `image` is what may be shown
+       beside the entity. */
+    image: `${SITE_ORIGIN}/logo`,
     email: company.email,
     ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
     /* Street and CVR are added to the schema the moment they exist in

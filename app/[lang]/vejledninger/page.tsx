@@ -7,6 +7,7 @@ import CtaSection from "@/components/CtaSection";
 import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /*
  * Viden — the hub.
@@ -74,10 +75,25 @@ const copy = {
 
 export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
   const c = copy[params.lang];
+  const base = metaFor("/vejledninger", params.lang);
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    ...metaFor("/vejledninger", params.lang),
+    ...base,
+    /* The section's Atom feed, announced here so a reader that is handed the
+       index URL can find it without being told the address.
+       Danish only: the feed carries the Danish articles, and announcing it
+       from the English index would offer a subscriber a feed in a language
+       they did not choose.
+       Spread onto the alternates metaFor built rather than beside them: this
+       key is part of the same object, and writing it as a sibling would drop
+       the canonical and the language map. */
+    alternates: {
+      ...base.alternates,
+      ...(params.lang === "da"
+        ? { types: { "application/atom+xml": `${SITE_ORIGIN}/vejledninger/feed.xml` } }
+        : {}),
+    },
   };
 }
 

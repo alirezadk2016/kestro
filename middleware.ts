@@ -32,12 +32,20 @@ export const config = {
     /*
      * Everything except Next internals, the API routes (which have no language
      * and would be rewritten to /da/api/..., where nothing lives), the metadata
-     * routes outside app/[lang] (icon, opengraph-image, sitemap, robots) and
-     * any path that looks like a file.
+     * and image routes outside app/[lang] (icon, opengraph-image, logo,
+     * sitemap, robots) and any path that looks like a file.
+     *
+     * `logo` is in that list for the same reason `icon` is: it is an image
+     * route at the root, it has no language, and without the exemption it is
+     * rewritten to /da/logo — where nothing lives, so the Organization schema
+     * would cite a logo URL that answers 404.
+     *
+     * The feed needs no entry: it is /vejledninger/feed.xml, and the trailing
+     * `.*\.` already excludes every path containing a dot.
      *
      * A path with a dot that gets past this is not an error: app/[lang] rejects
      * anything that is not a language (dynamicParams = false) and answers 404.
      */
-    "/((?!_next/|api/|icon|opengraph-image|sitemap\\.xml|robots\\.txt|.*\\.).*)",
+    "/((?!_next/|api/|icon|opengraph-image|logo|sitemap\\.xml|robots\\.txt|.*\\.).*)",
   ],
 };

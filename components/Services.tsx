@@ -63,12 +63,42 @@ export default function Services({ lang }: { lang: Lang }) {
           <p className="mt-5 text-base leading-7 text-paper/70">{c.sub}</p>
         </div>
 
+        {/*
+         * A spine with a station at each step, not four columns in a fence.
+         *
+         * This used to divide the four steps with vertical rules. Two things
+         * were wrong with that. A rule between two things says they are
+         * separate, and these are the opposite — they are one sequence, and
+         * the only thing saying so was the numerals. And because the four
+         * texts are different lengths, the rules ran on past the shortest
+         * column and the row ended ragged.
+         *
+         * So the rules are gone and the line that was already across the top
+         * does the work: it runs unbroken through all four, and each step
+         * marks its place on it with a node and a drop tick. The eye reads
+         * left to right along a route, which is what the section is about.
+         *
+         * Below lg the steps stack, and a stack is already a sequence — there
+         * the horizontal dividers stay and the nodes are not drawn.
+         */}
         <ol className="mt-12 grid grid-cols-1 gap-x-6 border-t border-paper/15 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0">
           {services.map((service, i) => (
             <li
               key={service.title.da}
-              className="border-b border-paper/12 py-6 lg:border-b-0 lg:border-r lg:border-paper/12 lg:py-8 lg:pl-8 lg:pr-8 lg:first:pl-0 lg:last:border-r-0"
+              className="relative border-b border-paper/12 py-6 lg:border-b-0 lg:py-9 lg:pl-8 lg:pr-8 lg:first:pl-0"
             >
+              <span
+                aria-hidden="true"
+                /* Unfilled, so the spine shows through it rather than being
+                   painted over with a background that would have to match a
+                   gradient. */
+                className={`pointer-events-none absolute top-0 hidden flex-col items-start lg:flex ${
+                  i === 0 ? "left-0" : "left-8"
+                }`}
+              >
+                <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
+                <span className="ml-[3px] h-5 w-px bg-gradient-to-b from-paper/25 to-transparent" />
+              </span>
               <span className="font-display text-2xl font-extrabold tabular-nums tracking-display text-brand-300 lg:text-3xl">
                 {String(i + 1).padStart(2, "0")}
               </span>

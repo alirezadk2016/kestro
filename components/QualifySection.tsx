@@ -87,9 +87,26 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           <p className="mt-5 text-base leading-7 text-paper/65">{c.sub}</p>
         </div>
 
-        <ol className="mt-10 grid grid-cols-1 gap-x-12 border-t border-paper/15 md:grid-cols-2">
+        {/*
+         * The gap between the columns is padding, not a grid gap.
+         *
+         * With gap-x-12 the rule across the top ran the full width while every
+         * rule between the rows was cut in half by the gap — so the same table
+         * was ruled two different ways, once continuously and three times
+         * broken. Grid stretches both cells in a row to the same height, so
+         * with the space moved inside the cells their bottom borders meet and
+         * each rule runs unbroken like the one above them.
+         *
+         * No vertical rule between the columns on purpose: the 01-04 index
+         * already separates the four, and a fence down the middle would do to
+         * this section what it did to the process row.
+         */}
+        <ol className="mt-10 grid grid-cols-1 border-t border-paper/15 md:grid-cols-2">
           {situations.map((item, i) => (
-            <li key={item.href} className="border-b border-paper/10">
+            <li
+              key={item.href}
+              className="border-b border-paper/10 md:odd:pr-6 md:even:pl-6"
+            >
               <Link
                 href={localePath(item.href, lang)}
                 className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/5 sm:py-7"

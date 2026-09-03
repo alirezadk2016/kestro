@@ -237,6 +237,103 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
   ),
 };
 
+/*
+ * The same hand, at the size a list row allows.
+ *
+ * The hero's spec panel indexes six lines with a mark each, and it had lucide
+ * glyphs in them — the last generic icons above the fold. They cannot simply
+ * be the marks above shrunk: those are drawn for 28px, and at 20px the
+ * registration ticks fall under a pixel and the interior detail closes up.
+ *
+ * So this is a second, coarser set on a 24-unit grid: no corner ticks, four
+ * or five strokes each, and the same conventions that matter at any size —
+ * square caps, one accent, a wash on the subject. It is the same hand writing
+ * smaller, not the same drawing scaled down.
+ *
+ * These sit in the panel's rounded tiles rather than the square plates used
+ * elsewhere, and that is deliberate: the panel is a lit instrument with a
+ * 2xl radius of its own, and a square tile inside it would fight the object
+ * containing it.
+ */
+export type SpecMarkName = "ram" | "ssd" | "keyboard" | "battery" | "tested" | "warranty";
+
+const specMarks: Record<SpecMarkName, React.ReactNode> = {
+  /* A memory module: body, contacts, one package on it. */
+  ram: (
+    <>
+      <rect x="2" y="7" width="20" height="9" className="fill-brand-400/12" />
+      <rect x="2" y="7" width="20" height="9" />
+      <path d="M5 16v2M9 16v2M13 16v2M17 16v2" />
+      <rect x="5" y="9.5" width="6" height="4" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+  /* An M.2 stick: body, its key notch, the package, the mounting hole. */
+  ssd: (
+    <>
+      <rect x="2" y="9" width="17" height="7" className="fill-brand-400/12" />
+      <rect x="2" y="9" width="17" height="7" />
+      <path d="M6 9v7" />
+      <rect x="8" y="11" width="7" height="3" className="fill-brand-300 stroke-brand-300" />
+      <circle cx="21" cy="12.5" r="1.4" />
+    </>
+  ),
+  /* A keyboard in plan, with the key the Nordic claim is about. */
+  keyboard: (
+    <>
+      <rect x="2" y="7" width="20" height="10" className="fill-brand-400/8" />
+      <rect x="2" y="7" width="20" height="10" />
+      <path d="M5 10.5h14M5 13.5h9" />
+      <rect x="16" y="12.5" width="3.5" height="3" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+  /* A cell with its terminal and a measured level — the panel states a
+     measured percentage, so the mark shows a level rather than a full cell. */
+  battery: (
+    <>
+      <rect x="2" y="8" width="17" height="8" />
+      <rect x="19.5" y="10.5" width="2.5" height="3" className="fill-brand-400/30" />
+      <rect x="4" y="10" width="9" height="4" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+  /* The probe on the board, as above but with the pins reduced to two. */
+  tested: (
+    <>
+      <rect x="2" y="12" width="11" height="7" className="fill-brand-400/12" />
+      <rect x="2" y="12" width="11" height="7" />
+      <path d="M5 19v2M9 19v2" />
+      <path d="M21 5l-6 7" className="stroke-brand-300" />
+      <circle cx="14" cy="12.5" r="1.5" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+  /* The sheet and the mark that makes it binding. */
+  warranty: (
+    <>
+      <rect x="5" y="3" width="14" height="18" className="fill-brand-400/8" />
+      <rect x="5" y="3" width="14" height="18" />
+      <path d="M8 7.5h8M8 11h8" />
+      <rect x="13" y="14.5" width="4.5" height="4" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+};
+
+export function SpecMark({ name, className = "" }: { name: SpecMarkName; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      aria-hidden="true"
+      focusable="false"
+      className={className}
+    >
+      {specMarks[name]}
+    </svg>
+  );
+}
+
 export default function CraftMark({
   name,
   className = "",

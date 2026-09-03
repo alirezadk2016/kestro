@@ -1,13 +1,6 @@
 import Link from "next/link";
-import {
-  MemoryStick,
-  HardDrive,
-  Keyboard,
-  BatteryCharging,
-  ShieldCheck,
-  FileText,
-} from "lucide-react";
 import SpecFigure, { SpecFigureDefs, type SpecKind } from "./SpecFigure";
+import { SpecMark } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -40,7 +33,6 @@ import { localePath, type Lang } from "@/lib/i18n";
  * phone.
  */
 type Row = {
-  icon: typeof MemoryStick;
   kind: SpecKind;
   value: string;
   note: string;
@@ -59,7 +51,6 @@ const rows = (lang: Lang): Row[] =>
   lang === "da"
     ? [
         {
-          icon: MemoryStick,
           kind: "ram",
           value: "16 GB RAM",
           note: "Opgraderet efter behov",
@@ -67,7 +58,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["SO-DIMM", "DDR4 / DDR5"],
         },
         {
-          icon: HardDrive,
           kind: "ssd",
           value: "512 GB NVMe SSD",
           note: "Skiftet hvis nødvendigt",
@@ -75,7 +65,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["M.2 2280", "NVMe", "PCIe"],
         },
         {
-          icon: Keyboard,
           kind: "keyboard",
           value: "Dansk tastatur",
           note: "Fysisk skiftet",
@@ -83,7 +72,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Nordisk layout", "Æ Ø Å"],
         },
         {
-          icon: BatteryCharging,
           kind: "battery",
           value: "Batteri 87 %",
           note: "Målt kapacitet, per enhed",
@@ -91,7 +79,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Kapacitet i %", "Målt per enhed"],
         },
         {
-          icon: ShieldCheck,
           kind: "tested",
           value: "Testet og klargjort",
           note: "Før den sendes til jer",
@@ -99,7 +86,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Skærm og tastatur", "Porte", "Hængsler"],
         },
         {
-          icon: FileText,
           kind: "warranty",
           value: "Garanti på skrift",
           note: "Perioden står i tilbuddet",
@@ -109,7 +95,6 @@ const rows = (lang: Lang): Row[] =>
       ]
     : [
         {
-          icon: MemoryStick,
           kind: "ram",
           value: "16 GB RAM",
           note: "Upgraded where needed",
@@ -117,7 +102,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["SO-DIMM", "DDR4 / DDR5"],
         },
         {
-          icon: HardDrive,
           kind: "ssd",
           value: "512 GB NVMe SSD",
           note: "Replaced where needed",
@@ -125,7 +109,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["M.2 2280", "NVMe", "PCIe"],
         },
         {
-          icon: Keyboard,
           kind: "keyboard",
           value: "Danish keyboard",
           note: "Physically replaced",
@@ -133,7 +116,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Nordic layout", "Æ Ø Å"],
         },
         {
-          icon: BatteryCharging,
           kind: "battery",
           value: "Battery 87%",
           note: "Measured, per unit",
@@ -141,7 +123,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Capacity in %", "Measured per unit"],
         },
         {
-          icon: ShieldCheck,
           kind: "tested",
           value: "Tested and prepared",
           note: "Before it ships to you",
@@ -149,7 +130,6 @@ const rows = (lang: Lang): Row[] =>
           stats: ["Screen and keyboard", "Ports", "Hinges"],
         },
         {
-          icon: FileText,
           kind: "warranty",
           value: "Warranty in writing",
           note: "The period is in the quote",
@@ -245,7 +225,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
               </span>
 
               <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-brand-400/25 bg-brand-500/10 text-brand-300 transition-colors [.spec-row:hover_&]:border-brand-300/60 [.spec-row:hover_&]:bg-brand-500/20">
-                <row.icon className="h-4 w-4" strokeWidth={1.75} />
+                <SpecMark name={row.kind} className="h-5 w-5" />
               </span>
               <div className="relative min-w-0">
                 <dt className="text-sm font-semibold leading-snug text-paper transition-colors [.spec-row:hover_&]:text-brand-100">

@@ -119,6 +119,16 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
     inLanguage: htmlLang[lang],
     dateModified: guide.updated,
     datePublished: guide.updated,
+    /* Article rich results want an image, and this is the one the article
+       actually has: the same 1200×630 card the page already gives Open Graph
+       and Twitter. Claiming a photograph the guide does not contain would win
+       the same badge dishonestly. */
+    image: {
+      "@type": "ImageObject",
+      url: `${SITE_ORIGIN}/opengraph-image`,
+      width: 1200,
+      height: 630,
+    },
     /* A named person with a real role, from lib/company.ts. Organization said
        nothing a reader or a search engine could weigh. */
     author: {
