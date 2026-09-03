@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
 import { metaFor, type Lang, type Localized } from "@/lib/i18n";
+import { legalUpdated } from "@/lib/legal";
 
 /*
  * Required under GDPR art. 13 the moment a visitor can send us their name and
@@ -11,8 +12,9 @@ import { metaFor, type Lang, type Localized } from "@/lib/i18n";
  * visitor's own mail client rather than posting to a server of ours.
  */
 
-/** Fixed, so "last updated" does not silently become the build date. */
-const UPDATED = "2026-08-23";
+/* The date the sitemap also publishes, from lib/legal.ts — written once
+   so the page and the <lastmod> can never disagree. */
+const UPDATED = legalUpdated["/privatlivspolitik"];
 
 const copy = {
   da: {

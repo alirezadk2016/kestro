@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { models } from "@/lib/models";
 import { guides } from "@/lib/guides";
+import { legalUpdated } from "@/lib/legal";
 import { services } from "@/lib/services";
 import { localePath } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -35,8 +36,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tilbud" },
     { path: "/om-os" },
     { path: "/kontakt" },
-    { path: "/handelsbetingelser" },
-    { path: "/privatlivspolitik" },
+    /* The two documents that state their own "last updated" on the page. The
+       date is read from lib/legal.ts, which the pages read too, so the
+       <lastmod> and the line the visitor sees are the same value. */
+    { path: "/handelsbetingelser", lastModified: legalUpdated["/handelsbetingelser"] },
+    { path: "/privatlivspolitik", lastModified: legalUpdated["/privatlivspolitik"] },
   ];
 
   const categoryRoutes: Route[] = categories.map((category) => ({
@@ -48,8 +52,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   /*
-   * Guides are the only content carrying a real edit date, so they are the only
-   * pages that get a <lastmod>.
+   * Guides carry a real edit date, so they get a <lastmod> — as do the two
+   * legal documents above, which state their own on the page.
    *
    * Everything else deliberately has none. It used to be `new Date()`, which
    * stamped all 110 URLs with the moment of the last build — so a deploy that

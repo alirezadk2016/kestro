@@ -6,7 +6,6 @@ import Container from "@/components/Container";
 import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
-import { company } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -56,7 +55,9 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
     name: service.name[lang],
     description: service.metaDescription[lang],
     inLanguage: htmlLang[lang],
-    provider: { "@type": "Organization", name: company.name, url: SITE_ORIGIN },
+    /* By reference to the site-wide Organization node, not a second bare
+       copy of it — same reason as the Article's publisher. */
+    provider: { "@id": `${SITE_ORIGIN}/#organization` },
     areaServed: ["DK", "NO"],
     url: `${SITE_ORIGIN}${localePath(`/ydelser/${service.slug}`, lang)}`,
   };

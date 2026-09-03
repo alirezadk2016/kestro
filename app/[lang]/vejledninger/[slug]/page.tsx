@@ -10,7 +10,7 @@ import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
 import ClusterMark from "@/components/ClusterMark";
 import { guides, getGuide, getCluster } from "@/lib/guides";
-import { company, teamMember } from "@/lib/company";
+import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -123,13 +123,23 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
        nothing a reader or a search engine could weigh. */
     author: {
       "@type": "Person",
+      /* An @id, so the same person on eight articles is one entity rather
+         than eight people who happen to share a name. The fragment is the
+         team member's own anchor on /om-os, which is a page that actually
+         exists and describes them — the id resolves to something. */
+      "@id": `${SITE_ORIGIN}${localePath("/om-os", lang)}#${author.id}`,
       name: author.name,
       jobTitle: author.role[lang],
       url: `${SITE_ORIGIN}${localePath("/om-os", lang)}#${author.id}`,
-      worksFor: { "@type": "Organization", name: company.name },
+      worksFor: { "@id": `${SITE_ORIGIN}/#organization` },
     },
     articleSection: cluster.name[lang],
-    publisher: { "@type": "Organization", name: company.name },
+    /* The same node the site-wide Organization block defines, by reference
+       rather than by repeating a bare name. Without the @id these were two
+       unrelated organisations that both happened to be called Kestro, and
+       none of what the real one carries — sameAs, contact, area served —
+       reached the article. */
+    publisher: { "@id": `${SITE_ORIGIN}/#organization` },
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`,

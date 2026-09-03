@@ -4,6 +4,7 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company, postalAddress } from "@/lib/company";
 import { localePath, metaFor, type Lang, type Localized } from "@/lib/i18n";
+import { legalUpdated } from "@/lib/legal";
 
 /*
  * Salgs- og leveringsbetingelser.
@@ -33,8 +34,9 @@ import { localePath, metaFor, type Lang, type Localized } from "@/lib/i18n";
  * otherwise provides.
  */
 
-/** Fixed, so "last updated" does not silently become the build date. */
-const UPDATED = "2026-09-02";
+/* The date the sitemap also publishes, from lib/legal.ts — written once
+   so the page and the <lastmod> can never disagree. */
+const UPDATED = legalUpdated["/handelsbetingelser"];
 
 const copy = {
   da: {

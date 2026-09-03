@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Route, Recycle, Users } from "lucide-react";
 import Container from "@/components/Container";
+import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import WhyUs from "@/components/WhyUs";
@@ -42,7 +42,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const sections = [
   {
-    icon: Route,
+    mark: "network" as CraftMarkName,
     title: {
       da: "Vi er indkøbspartner – ikke webshop",
       en: "We are a sourcing partner, not a web shop",
@@ -53,7 +53,7 @@ const sections = [
     },
   },
   {
-    icon: Recycle,
+    mark: "no-stock" as CraftMarkName,
     title: {
       da: "Fordelen ved ikke at have lager",
       en: "The advantage of holding no stock",
@@ -64,7 +64,7 @@ const sections = [
     },
   },
   {
-    icon: Users,
+    mark: "who" as CraftMarkName,
     title: { da: "Hvem vi hjælper", en: "Who we help" },
     description: {
       da: "Vi arbejder med IT-indkøbere og beslutningstagere i danske og norske virksomheder – fra mindre virksomheder, der skal udstyre et nyt team, til større indkøb af flere enheder på én gang. Fortæl os om jeres behov, så finder vi de enheder, der matcher.",
@@ -92,8 +92,11 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
           <div className="mt-16 max-w-3xl space-y-10">
             {sections.map((section) => (
               <div key={section.title.da} className="flex gap-5">
-                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300">
-                  <section.icon className="h-5 w-5" strokeWidth={1.75} />
+                {/* Square plate and a hairline, the same as the feature row:
+                    the mark inside is an orthographic drawing, and a rounded
+                    pill around a technical drawing fights it. */}
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-white/10 bg-brand-500/[0.07] text-brand-300">
+                  <CraftMark name={section.mark} className="h-7 w-7" />
                 </span>
                 <div>
                   <h2 className="text-xl font-semibold text-paper">{section.title[lang]}</h2>
