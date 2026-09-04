@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
 import { SITE_ORIGIN } from "@/lib/site";
+import { saveEnquiry } from "@/lib/db";
 
 /**
  * The contact form's actual destination.
@@ -264,6 +265,25 @@ export async function POST(request: Request) {
     console.error(`Contact form: Resend returned ${response.status}`);
     return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
   }
+
+  /*
+   * The archive, so the enquiry is also readable and answerable in /admin.
+   *
+   * After the mail and never instead of it. The inbox is what a person watches
+   * and the panel is a convenience on top of it — if the database is missing or
+   * asleep, saveEnquiry returns false and the customer is still answered.
+   */
+  await saveEnquiry({
+    id: crypto.randomUUID(),
+    name,
+    company: organisation || null,
+    email,
+    phone: phone || null,
+    subject: subject || null,
+    message,
+    page: page || null,
+    source: subject.toLowerCase().includes("tilbud") ? "quote" : "contact",
+  });
 
   await forwardToCrm({ name, organisation, email, phone, message, subject, page });
 

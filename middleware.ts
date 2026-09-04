@@ -46,6 +46,13 @@ export const config = {
      * A path with a dot that gets past this is not an error: app/[lang] rejects
      * anything that is not a language (dynamicParams = false) and answers 404.
      */
-    "/((?!_next/|api/|icon|opengraph-image|logo|sitemap\\.xml|robots\\.txt|.*\\.).*)",
+    /*
+     * `admin` is in the list because the panel is not part of the public site
+     * and has no language: it lives at /admin, not /da/admin, and without the
+     * exemption the rewrite sends it to a route that does not exist. It is
+     * kept out of the index by a noindex header in next.config.mjs and by
+     * never being linked to — not by being hidden, which is not a control.
+     */
+    "/((?!_next/|api/|admin|icon|opengraph-image|logo|sitemap\\.xml|robots\\.txt|.*\\.).*)",
   ],
 };

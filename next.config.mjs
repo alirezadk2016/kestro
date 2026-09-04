@@ -162,7 +162,26 @@ const nextConfig = {
   // Do not advertise the framework and its version.
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      /*
+       * The panel, kept out of the index.
+       *
+       * A header rather than only the metadata robots tag, because this covers
+       * the API routes under it too — those render no HTML and so have nowhere
+       * to put a meta tag. Neither is the access control: the session is. This
+       * is so a panel that is briefly misconfigured does not end up in a
+       * search result.
+       */
+      {
+        source: "/admin/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
+      {
+        source: "/api/admin/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
+    ];
   },
   async rewrites() {
     /* The English address serves the Danish route folder. A rewrite, not a

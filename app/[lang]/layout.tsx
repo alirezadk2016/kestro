@@ -5,6 +5,7 @@ import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import PageViewTracker from "@/components/PageViewTracker";
 import Analytics from "@/components/Analytics";
 /* Aliased: the project already has a component called Analytics, and it is
    the Google one. Two different collectors with one name in one file is a
@@ -225,6 +226,9 @@ export default function RootLayout({
         </main>
         <Footer lang={lang} />
         <Reveal />
+        {/* Our own count, so the numbers also exist in our own panel and
+            survive a change of host or plan. Sends a path, nothing else. */}
+        <PageViewTracker />
         <ConsentBanner lang={lang} />
         <Analytics />
         {/*
