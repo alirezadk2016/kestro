@@ -23,13 +23,44 @@ import { neon } from "@neondatabase/serverless";
  * lost customer.
  */
 
-/* Vercel's Neon integration injects several of these; DATABASE_URL is what a
-   local .env would normally carry. First one that exists wins. */
-const CONNECTION =
-  process.env.DATABASE_URL ??
-  process.env.POSTGRES_URL ??
-  process.env.POSTGRES_PRISMA_URL ??
-  "";
+/*
+ * The connection string, whatever the integration decided to call it.
+ *
+ * Vercel's Neon integration names the variables itself, and the name depends
+ * on a "custom prefix" field in the connect dialog: leave it alone and you get
+ * DATABASE_URL, type STORAGE into it and you get STORAGE_URL instead. A local
+ * .env would normally carry DATABASE_URL, and a Postgres integration of a
+ * different vintage POSTGRES_URL.
+ *
+ * Rather than depend on somebody having left one field untouched, any variable
+ * whose name ends in _URL and whose value is a Postgres connection string will
+ * do. The named ones are tried first so an explicit choice always wins; the
+ * scan is the safety net, and it matches on the protocol rather than the name
+ * so a Redis or Blob URL sitting in the same environment cannot be picked up
+ * by mistake.
+ */
+const isPostgres = (value: string | undefined): value is string =>
+  typeof value === "string" && /^postgres(ql)?:\/\//.test(value);
+
+function connectionString(): string {
+  const named = [
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.POSTGRES_PRISMA_URL,
+    process.env.STORAGE_URL,
+  ].find(isPostgres);
+  if (named) return named;
+
+  /* Pooled connections first where both are offered: a serverless function is
+     short-lived and the unpooled endpoint runs out of connections first. */
+  const found = Object.entries(process.env)
+    .filter(([key, value]) => key.endsWith("_URL") && isPostgres(value))
+    .sort(([a], [b]) => Number(a.includes("UNPOOLED")) - Number(b.includes("UNPOOLED")));
+
+  return found[0]?.[1] ?? "";
+}
+
+const CONNECTION = connectionString();
 
 export const dbConfigured = CONNECTION.length > 0;
 
