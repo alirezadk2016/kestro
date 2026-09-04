@@ -148,27 +148,67 @@ function Row({ enquiry }: { enquiry: Enquiry }) {
  * of at most thirty numbers, and a dependency for that would cost more in
  * bundle than the whole panel. The scale is written on the tallest bar so the
  * chart is readable without an axis.
+ *
+ * The window is built here rather than taken from the rows, because a day with
+ * no visits has no row — and drawing only the days that exist makes one day of
+ * data fill the full width as a solid block, with the same date at both ends.
+ * That reads as "traffic every day for a month" when it means the opposite.
+ * Thirty slots always, most of them empty at the start.
  */
+const WINDOW_DAYS = 30;
+
+/* UTC, to match the database: page_views keys on CURRENT_DATE, and Neon runs
+   in UTC. Deriving the window in another zone would offset every bar by one. */
+const isoDay = (date: Date) => date.toISOString().slice(0, 10);
+
+const shortDay = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("da-DK", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  });
+
 function Chart({ daily }: { daily: { day: string; views: number }[] }) {
-  const peak = Math.max(...daily.map((d) => d.views), 1);
+  const byDay = new Map(daily.map((d) => [d.day, d.views]));
+
+  /* Normally today. The comparison is for the hour where the server has
+     rolled over to a new date and the database has not, or the reverse. */
+  const latest = daily.at(-1)?.day ?? "";
+  const today = isoDay(new Date());
+  const end = new Date(`${latest > today ? latest : today}T00:00:00Z`);
+
+  const days = Array.from({ length: WINDOW_DAYS }, (_, i) => {
+    const date = new Date(end);
+    date.setUTCDate(date.getUTCDate() - (WINDOW_DAYS - 1 - i));
+    const day = isoDay(date);
+    return { day, views: byDay.get(day) ?? 0 };
+  });
+
+  const peak = Math.max(...days.map((d) => d.views), 1);
 
   return (
     <div className="mt-8">
       <h2 className="text-xs uppercase tracking-[0.14em] text-paper/40">Seneste 30 dage</h2>
       <div className="mt-3 flex h-32 items-end gap-1 border-b border-white/10">
-        {daily.map((day) => (
+        {days.map((day) => (
           <div
             key={day.day}
-            title={`${day.day}: ${day.views}`}
-            style={{ height: `${Math.max((day.views / peak) * 100, 2)}%` }}
-            className="min-w-[3px] flex-1 bg-brand-500/60 transition-colors hover:bg-brand-300"
+            title={`${shortDay(day.day)}: ${day.views}`}
+            style={{ height: day.views > 0 ? `${(day.views / peak) * 100}%` : undefined }}
+            /* A day with no visits is a hairline on the axis, not a short bar:
+               a bar with a floor height claims traffic that was not there. */
+            className={
+              day.views > 0
+                ? "min-w-[3px] flex-1 bg-brand-500/60 transition-colors hover:bg-brand-300"
+                : "h-px min-w-[3px] flex-1 bg-white/15"
+            }
           />
         ))}
       </div>
       <div className="mt-2 flex justify-between text-xs tabular-nums text-paper/35">
-        <span>{daily[0]?.day}</span>
+        <span>{shortDay(days[0].day)}</span>
         <span>højeste dag: {peak}</span>
-        <span>{daily.at(-1)?.day}</span>
+        <span>{shortDay(days[days.length - 1].day)}</span>
       </div>
     </div>
   );
