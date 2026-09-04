@@ -60,6 +60,32 @@ function connectionString(): string {
   return found[0]?.[1] ?? "";
 }
 
+/**
+ * The names of the connection-string-shaped variables this deployment can see.
+ *
+ * Names only, never values — a connection string carries the password, and the
+ * panel is behind a password rather than behind a firewall. What this answers
+ * is the one question that is otherwise unanswerable from outside: when the
+ * panel says there is no database, is the variable there under a name nothing
+ * looks for, or is it not there at all? Those two have completely different
+ * fixes, and guessing between them costs a deploy each time.
+ */
+export function databaseEnvNames(): string[] {
+  return Object.entries(process.env)
+    .filter(([, value]) => isPostgres(value))
+    .map(([key]) => key)
+    .sort();
+}
+
+/** Every variable name the deployment has, for the same diagnosis one step out:
+ *  an integration that was never connected leaves no trace at all, and seeing
+ *  that the list has no PG-anything in it says so immediately. */
+export function envNameSample(): string[] {
+  return Object.keys(process.env)
+    .filter((key) => /(^PG|POSTGRES|DATABASE|NEON|STORAGE|_URL$)/i.test(key))
+    .sort();
+}
+
 const CONNECTION = connectionString();
 
 export const dbConfigured = CONNECTION.length > 0;

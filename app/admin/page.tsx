@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { listEnquiries, viewStats, dbConfigured, type Enquiry } from "@/lib/db";
+import {
+  listEnquiries,
+  viewStats,
+  dbConfigured,
+  databaseEnvNames,
+  envNameSample,
+  type Enquiry,
+} from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +33,13 @@ export default async function AdminHome() {
           mangler.
         </p>
         <p className="mt-4 text-sm leading-6 text-paper/65">
-          Opret en Neon-database under Storage i Vercel. Forbindelsen bliver sat som{" "}
-          <code className="bg-white/10 px-1.5 py-0.5 text-brand-200">DATABASE_URL</code> automatisk,
-          og tabellerne oprettes selv ved første besked.
+          Opret databasen under Storage i Vercel og forbind den til dette projekt. Enhver variabel
+          der ender på <code className="bg-white/10 px-1.5 py-0.5 text-brand-200">_URL</code> og
+          indeholder en Postgres-forbindelse bliver brugt — navnet er lige meget. Tabellerne
+          oprettes selv ved første besked.
         </p>
+
+        <Diagnosis />
       </div>
     );
   }
@@ -160,6 +170,62 @@ function Chart({ daily }: { daily: { day: string; views: number }[] }) {
         <span>højeste dag: {peak}</span>
         <span>{daily.at(-1)?.day}</span>
       </div>
+    </div>
+  );
+}
+
+/**
+ * What the deployment can actually see.
+ *
+ * "No database" has two causes that look identical from here — the integration
+ * was never connected to this project, or it was connected after the last
+ * build and the running deployment predates it — and telling them apart from
+ * the outside is guesswork that costs a redeploy per guess. Listing the
+ * variable names settles it in one look.
+ *
+ * Names, never values. A Postgres URL contains the password; this panel is
+ * behind a password, not behind a firewall, and the difference matters enough
+ * that the value never leaves the server. Nothing here is secret on its own:
+ * PGHOST existing is not a credential.
+ */
+function Diagnosis() {
+  const usable = databaseEnvNames();
+  const related = envNameSample();
+
+  return (
+    <div className="mt-8 border border-white/10 bg-white/[0.03] p-5">
+      <h2 className="text-xs uppercase tracking-[0.14em] text-paper/40">
+        Hvad denne deployment kan se
+      </h2>
+
+      {usable.length > 0 ? (
+        <p className="mt-3 text-sm leading-6 text-paper/70">
+          Der findes en brugbar forbindelse ({usable.join(", ")}), men den var der ikke da
+          processen startede. Kør Redeploy uden build-cache, så bygges siden med variablen på
+          plads.
+        </p>
+      ) : related.length > 0 ? (
+        <>
+          <p className="mt-3 text-sm leading-6 text-paper/70">
+            Ingen af variablerne herunder indeholder en Postgres-forbindelse. Databasen er
+            sandsynligvis oprettet, men ikke forbundet til dette projekt — eller denne deployment er
+            bygget før den blev det.
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {related.map((name) => (
+              <li key={name} className="bg-white/10 px-2 py-1 font-mono text-xs text-paper/60">
+                {name}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p className="mt-3 text-sm leading-6 text-paper/70">
+          Der er ingen database-variabler overhovedet i dette miljø. Integrationen er ikke forbundet
+          til projektet: Vercel → Storage → databasen → Connect to Project → vælg dette projekt, og
+          kør derefter Redeploy.
+        </p>
+      )}
     </div>
   );
 }
