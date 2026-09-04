@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
@@ -21,6 +22,24 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
+/*
+ * The same face as the site.
+ *
+ * The panel had no font at all, and it did not fall back to a sans — it fell
+ * back to Times. Tailwind's sans stack starts with var(--font-sans), the
+ * variable is set by the class next/font generates, and this layout never
+ * applied it. A var() pointing at a property that does not exist makes the
+ * whole font-family declaration invalid rather than skipping to the next name
+ * in the list, so the browser used its own default and the panel rendered in
+ * a serif.
+ */
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+  adjustFontFallback: false,
+});
+
 /* Session state is per request, so nothing here may be cached or prerendered. */
 export const dynamic = "force-dynamic";
 
@@ -39,7 +58,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <html lang="da">
-      <body className="min-h-dvh bg-brand-950 font-sans text-paper antialiased">
+      <body
+        className={`${jakarta.variable} min-h-dvh bg-brand-950 font-sans text-paper antialiased`}
+      >
         {authed ? (
           <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8">
             <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-white/10 pb-5">
