@@ -7,9 +7,11 @@ import { legalUpdated } from "@/lib/legal";
 
 /*
  * Required under GDPR art. 13 the moment a visitor can send us their name and
- * email. Everything here describes what the site actually does — it sets no
- * cookies, loads nothing from a third party, and the contact form opens the
- * visitor's own mail client rather than posting to a server of ours.
+ * email. Everything here describes what the site actually does, which is the
+ * only thing that makes it worth anything — so it has to be corrected whenever
+ * the site changes, and it has twice: the contact form posts to our own API
+ * now rather than opening a mail client, and visits are counted without
+ * cookies for everyone, not only for those who accept Google.
  */
 
 /* The date the sitemap also publishes, from lib/legal.ts — written once
@@ -20,19 +22,19 @@ const copy = {
   da: {
     metaTitle: "Privatlivspolitik | Kestro",
     metaDescription:
-      "Sådan behandler Kestro personoplysninger: kontaktformularerne, sprogcookien og den statistik, der kun kører, hvis I siger ja.",
+      "Sådan behandler Kestro personoplysninger: kontaktformularerne, de to værdier vi gemmer lokalt, cookiefri besøgstal — og den statistik fra Google, der kun kører, hvis I siger ja.",
     title: "Privatlivspolitik",
     description:
-      "Hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: hjemmesiden i sig selv indsamler ingenting.",
+      "Hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet der følger jer videre.",
     updated: "Senest opdateret",
   },
   en: {
     metaTitle: "Privacy policy | Kestro",
     metaDescription:
-      "How Kestro handles personal data: the contact forms, the language cookie, and the statistics that only run if you accept them.",
+      "How Kestro handles personal data: the contact forms, the two values we store locally, cookieless visit counts — and the Google statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
-      "What data we process, why, and what you can require. Short version: the website itself collects nothing.",
+      "What data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",
     updated: "Last updated",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -53,8 +55,8 @@ const sections: Section[] = [
     heading: { da: "Kort fortalt", en: "In short" },
     body: [
       {
-        da: "Denne hjemmeside viser ingen reklamer og deler ikke oplysninger til markedsføring. Skrifttyper og billeder ligger på vores eget domæne. Vi bruger Google Analytics til at se, hvilke sider der bliver læst – men kun hvis I aktivt siger ja. Siger I nej, bliver der ikke hentet noget fra Google overhovedet.",
-        en: "This website shows no advertising and shares nothing for marketing. Fonts and images are served from our own domain. We use Google Analytics to see which pages get read — but only if you actively say yes. If you say no, nothing is loaded from Google at all.",
+        da: "Denne hjemmeside viser ingen reklamer og deler ikke oplysninger til markedsføring. Skrifttyper og billeder ligger på vores eget domæne. Vi tæller besøg og måler hastighed uden cookies – det kører altid, og det følger jer ikke videre. Google Analytics bruger vi kun, hvis I aktivt siger ja; siger I nej, bliver der ikke hentet noget fra Google overhovedet.",
+        en: "This website shows no advertising and shares nothing for marketing. Fonts and images are served from our own domain. We count visits and measure speed without cookies — that always runs, and it does not follow you elsewhere. Google Analytics we use only if you actively say yes; if you say no, nothing is loaded from Google at all.",
       },
     ],
   },
@@ -119,6 +121,26 @@ const sections: Section[] = [
     ],
   },
   {
+    heading: {
+      da: "Besøgstal og hastighed (Vercel)",
+      en: "Visit counts and speed (Vercel)",
+    },
+    body: [
+      {
+        da: "Ud over Google Analytics tæller vi besøg med Vercel Analytics og måler sidernes hastighed med Vercel Speed Insights. Begge dele kører uanset, hvad I svarer i banneret, og det er der en grund til: de sætter ingen cookies, gemmer intet i jeres browser og følger jer ikke videre til andre hjemmesider. Der registreres et sidevisning, hvilket land forespørgslen kom fra, og hvor hurtigt siden blev vist.",
+        en: "Alongside Google Analytics we count visits with Vercel Analytics and measure page speed with Vercel Speed Insights. Both run whatever you answer in the banner, and there is a reason for that: they set no cookies, store nothing in your browser and do not follow you to other websites. What is recorded is a page view, which country the request came from, and how quickly the page rendered.",
+      },
+      {
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst og om den er hurtig nok – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand, og der indsamles ikke oplysninger, der kan pege på en bestemt person.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and whether it is fast enough — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish cookie order, and nothing is collected that can point to a particular person.",
+      },
+      {
+        da: "Vercel Inc. er amerikansk og behandler oplysningerne som databehandler for os, på grundlag af EU-Kommissionens standardkontraktbestemmelser. Vercel er i forvejen vores hostingudbyder, så forespørgslen når dem under alle omstændigheder.",
+        en: "Vercel Inc. is a US company and processes the data as our processor, on the basis of the European Commission's standard contractual clauses. Vercel already hosts the site, so the request reaches them in any case.",
+      },
+    ],
+  },
+  {
     heading: { da: "Serverlogs", en: "Server logs" },
     body: [
       {
@@ -131,7 +153,7 @@ const sections: Section[] = [
     heading: { da: "Leverandører og overførsel", en: "Providers and transfers" },
     body: [
       {
-        da: "Hjemmesiden hostes hos Vercel Inc. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle tre er databehandlere på vores vegne.",
+        da: "Hjemmesiden hostes hos Vercel Inc., som også leverer de besøgstal og hastighedsmålinger, der er beskrevet ovenfor. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle tre er databehandlere på vores vegne.",
         en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. If you accept statistics, Google LLC also processes visit data for us. All three are processors acting on our behalf.",
       },
       {

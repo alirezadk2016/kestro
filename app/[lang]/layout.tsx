@@ -6,6 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Analytics from "@/components/Analytics";
+/* Aliased: the project already has a component called Analytics, and it is
+   the Google one. Two different collectors with one name in one file is a
+   mistake waiting to be made. */
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ConsentBanner from "@/components/ConsentBanner";
 import LanguageHint, { languageHintScript } from "@/components/LanguageHint";
 import { company } from "@/lib/company";
@@ -222,6 +227,52 @@ export default function RootLayout({
         <Reveal />
         <ConsentBanner lang={lang} />
         <Analytics />
+        {/*
+         * Vercel's own two, beside Google's.
+         *
+         * The dashboard read zero visitors for the life of the site, and it
+         * was right to: switching Web Analytics on in Vercel only opens the
+         * endpoint. Nothing reports to it until the page ships the client that
+         * pings it, and the project had never installed one. Zero meant
+         * "nothing was ever sent", not "nobody came".
+         *
+         * These are deliberately not behind the consent banner, and Google's
+         * tag deliberately still is. The difference is what each one does:
+         * gtag sets identifiers and belongs to an advertising business, so it
+         * is asked for. Vercel's collector sets no cookie, writes nothing to
+         * the browser, and builds no cross-site profile — it counts a page
+         * view and derives a country. That is the same footing as the server
+         * log every host already keeps.
+         *
+         * It also fixes the hole that made the numbers useless: the tag only
+         * ever counted visitors who pressed "Accepter statistik". Everyone who
+         * declined or ignored the banner was invisible, and there is no way to
+         * know how large that group is from inside it. This one counts
+         * everybody, which is what makes a trend worth reading.
+         *
+         * Speed Insights is the one that matters for search: every Core Web
+         * Vital measured so far has been a lab number from a throttled
+         * headless browser here. This is field data from real devices, which
+         * is the kind Google actually ranks on.
+         *
+         * Both are declared in the privacy policy. If this should sit behind
+         * the banner after all, it is one condition here and nothing else.
+         *
+         * Only on Vercel, and that is not a detail. Both clients load from
+         * /_vercel/…, which Vercel's edge serves and Next does not — so
+         * everywhere else the browser gets a 404, refuses the HTML as a
+         * script, and logs two errors on every page. The verify suite checks
+         * the console on every route and caught exactly that. Teaching the
+         * check to ignore it would have blunted a guard that has already
+         * caught a real bug in this project; mounting them only where they
+         * resolve costs nothing and leaves the console clean everywhere.
+         */}
+        {process.env.VERCEL && (
+          <>
+            <VercelAnalytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );

@@ -15,6 +15,18 @@
  * the site, the practical XSS surface is the JSON-LD block, which is escaped
  * where it is written.
  */
+/*
+ * No Vercel host is listed here and none is missing.
+ *
+ * Vercel's analytics and speed-insights clients are served from this site's
+ * own origin in production — /_vercel/insights/script.js and its collector —
+ * so 'self' already covers both the script and the beacon. The external
+ * va.vercel-scripts.com address in the package is the debug build, used only
+ * when running locally, where this policy is not served.
+ *
+ * Being first-party is also why they are worth having: nothing to allow, and
+ * far less of the traffic lost to blockers than a third-party tag.
+ */
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
