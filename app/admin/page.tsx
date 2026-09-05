@@ -1,11 +1,16 @@
 import Link from "next/link";
+
+import LiveRefresh from "@/components/LiveRefresh";
 import {
   listEnquiries,
   viewStats,
+  liveStats,
   dbConfigured,
   databaseEnvNames,
   envNameSample,
+  type Breakdown,
   type Enquiry,
+  type LiveStats,
 } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -20,8 +25,50 @@ const when = (iso: string) =>
     timeZone: "Europe/Copenhagen",
   });
 
+/** Seconds as something a person reads at a glance: 0:47, 3:12, 1:04:30. */
+function duration(seconds: number): string {
+  if (seconds < 1) return "0:00";
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+}
+
+/*
+ * A country code as a name, and as a flag.
+ *
+ * Intl rather than a table of countries maintained by hand: the runtime
+ * already ships every name in Danish, and a hand-written list would be both
+ * incomplete on the day it was written and wrong a few years later. It is
+ * wrapped because a runtime built without full ICU has the class but not the
+ * data, and a missing country name should show the code rather than crash the
+ * panel.
+ */
+let names: Intl.DisplayNames | null = null;
+try {
+  names = new Intl.DisplayNames(["da"], { type: "region" });
+} catch {
+  names = null;
+}
+
+function countryName(code: string): string {
+  if (code === "??") return "Ukendt";
+  try {
+    return names?.of(code) ?? code;
+  } catch {
+    return code;
+  }
+}
+
+/** The two letters as the regional-indicator pair that renders as a flag. */
+function flag(code: string): string {
+  if (!/^[A-Z]{2}$/.test(code)) return "";
+  return String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
+}
+
 export default async function AdminHome() {
-  const [enquiries, stats] = await Promise.all([listEnquiries(), viewStats()]);
+  const [enquiries, stats, live] = await Promise.all([listEnquiries(), viewStats(), liveStats()]);
 
   if (!dbConfigured) {
     return (
@@ -45,56 +92,84 @@ export default async function AdminHome() {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <section>
-        <h1 className="font-display text-2xl font-bold tracking-tight">Besøg</h1>
-        <p className="mt-2 text-sm text-paper/55">
-          Sidevisninger målt af sitet selv. Tæller alle — ikke kun dem der siger ja til statistik.
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="font-display text-2xl font-bold tracking-tight">Besøg</h1>
+          <LiveRefresh />
+        </div>
 
-        <dl className="mt-6 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:grid-cols-3">
-          {[
-            { label: "I dag", value: stats.today },
-            { label: "Seneste 30 dage", value: stats.last30 },
-            { label: "I alt", value: stats.total },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-brand-950 p-5">
-              <dt className="text-xs uppercase tracking-[0.14em] text-paper/40">{stat.label}</dt>
-              <dd className="mt-2 font-display text-3xl font-extrabold tabular-nums tracking-tight">
-                {stat.value.toLocaleString("da-DK")}
-              </dd>
-            </div>
-          ))}
+        <Now live={live} />
+
+        <dl className="mt-8 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
+          <Stat label="Besøg i dag" value={live.visitsToday.toLocaleString("da-DK")} />
+          <Stat label="Besøg / 30 dage" value={live.visits30.toLocaleString("da-DK")} />
+          <Stat label="Sidevisninger i alt" value={stats.total.toLocaleString("da-DK")} />
+          <Stat
+            label="Gns. tid på sitet"
+            value={live.avgBasis > 0 ? duration(live.avgSeconds) : "—"}
+            note={
+              live.avgBasis > 0
+                ? `målt på ${live.avgBasis} besøg`
+                : "ingen besøg med mere end ét signal endnu"
+            }
+          />
+          <Stat
+            label="Læste kun én side"
+            value={live.bouncePct === null ? "—" : `${live.bouncePct} %`}
+            note={live.bouncePct === null ? "ingen besøg endnu" : "af besøgene på 30 dage"}
+          />
         </dl>
 
         {stats.daily.length > 0 && <Chart daily={stats.daily} />}
-
-        {stats.topPages.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-xs uppercase tracking-[0.14em] text-paper/40">Mest læste sider</h2>
-            <ul className="mt-3 border-t border-white/10">
-              {stats.topPages.map((page) => (
-                <li
-                  key={page.path}
-                  className="flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-2.5 text-sm"
-                >
-                  <span className="truncate text-paper/75">{page.path}</span>
-                  <span className="tabular-nums text-paper/50">{page.views}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </section>
+
+      <section>
+        <h2 className="font-display text-xl font-bold tracking-tight">Hvor de kommer fra</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-paper/55">
+          Besøg de seneste 30 dage. Et besøg tælles der, hvor det startede — går man videre inde på
+          sitet, bliver kilden ikke overskrevet.
+        </p>
+
+        <div className="mt-6 grid gap-px border border-white/10 bg-white/10 lg:grid-cols-3">
+          <Ranked title="Kilde" rows={live.sources} empty="Ingen besøg registreret endnu." />
+          <Ranked
+            title="Land"
+            rows={live.countries.map((row) => ({ ...row, name: countryName(row.name) }))}
+            flags={live.countries.map((row) => row.name)}
+            empty="Intet land registreret endnu."
+          />
+          <Ranked title="Enhed" rows={live.devices} empty="Ingen enheder registreret endnu." />
+        </div>
+      </section>
+
+      {stats.topPages.length > 0 && (
+        <section>
+          <h2 className="font-display text-xl font-bold tracking-tight">Mest læste sider</h2>
+          <ul className="mt-5 border-t border-white/10">
+            {stats.topPages.map((page) => (
+              <li
+                key={page.path}
+                className="flex items-baseline justify-between gap-4 border-b border-white/[0.07] py-2.5 text-sm"
+              >
+                <span className="truncate text-paper/75">{page.path}</span>
+                <span className="tabular-nums text-paper/55">
+                  {page.views.toLocaleString("da-DK")}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section>
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="font-display text-2xl font-bold tracking-tight">Beskeder</h2>
-          <span className="text-sm text-paper/45">{enquiries.length} i indbakken</span>
+          <span className="text-sm text-paper/55">{enquiries.length} i indbakken</span>
         </div>
 
         {enquiries.length === 0 ? (
-          <p className="mt-6 border border-dashed border-white/15 p-8 text-center text-sm text-paper/50">
+          <p className="mt-6 border border-dashed border-white/15 p-8 text-center text-sm text-paper/55">
             Ingen beskeder endnu. De lander her i samme øjeblik nogen sender formularen.
           </p>
         ) : (
@@ -105,6 +180,132 @@ export default async function AdminHome() {
           </ul>
         )}
       </section>
+    </div>
+  );
+}
+
+/**
+ * Who is on the site at this moment.
+ *
+ * The count is a full sentence in a status region rather than a bare number,
+ * so a screen reader announces "2 læser sitet lige nu" when it changes instead
+ * of reading out "2" with no idea what it belongs to. It never takes focus:
+ * this updates itself every fifteen seconds, and stealing focus from whoever
+ * is reading the page would be intolerable.
+ */
+function Now({ live }: { live: LiveStats }) {
+  return (
+    <div className="mt-6 border border-white/10 bg-gradient-to-br from-brand-900/40 to-transparent">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-6 pt-6">
+        <span
+          aria-hidden="true"
+          className={
+            live.online > 0
+              ? "h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.16)] motion-safe:animate-pulse"
+              : "h-2.5 w-2.5 rounded-full bg-paper/25"
+          }
+        />
+        <p role="status" aria-atomic="true" className="text-sm text-paper/70">
+          <span className="font-display text-4xl font-extrabold tabular-nums text-paper">
+            {live.online}
+          </span>{" "}
+          {live.online === 1 ? "person læser sitet lige nu" : "personer læser sitet lige nu"}
+        </p>
+      </div>
+
+      {live.reading.length === 0 ? (
+        <p className="px-6 pb-6 pt-3 text-sm text-paper/50">
+          Der er ingen på sitet i øjeblikket. Listen fylder sig selv, så snart nogen åbner en side.
+        </p>
+      ) : (
+        <ul className="mt-4 divide-y divide-white/[0.07] border-t border-white/10">
+          {live.reading.map((reader, index) => (
+            <li
+              key={`${reader.path}-${index}`}
+              className="flex flex-wrap items-baseline gap-x-4 gap-y-1 px-6 py-3 text-sm"
+            >
+              <span className="truncate font-medium text-paper/85">{reader.path ?? "—"}</span>
+              <span className="text-paper/55">
+                {reader.country ? (
+                  <>
+                    <span aria-hidden="true">{flag(reader.country)} </span>
+                    {countryName(reader.country)}
+                  </>
+                ) : (
+                  "Ukendt land"
+                )}
+              </span>
+              <span className="text-paper/45">{reader.device ?? "—"}</span>
+              <span className="text-paper/45">via {reader.source}</span>
+              <span className="ml-auto tabular-nums text-paper/55">{duration(reader.seconds)}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function Stat({ label, value, note }: { label: string; value: string; note?: string }) {
+  return (
+    <div className="bg-brand-950 p-5">
+      <dt className="text-xs uppercase tracking-[0.14em] text-paper/55">{label}</dt>
+      <dd className="mt-2 font-display text-3xl font-extrabold tabular-nums tracking-tight">
+        {value}
+      </dd>
+      {note && <p className="mt-1.5 text-xs leading-5 text-paper/45">{note}</p>}
+    </div>
+  );
+}
+
+/**
+ * A ranked breakdown, as bars behind the rows.
+ *
+ * Sorted descending with the value written on every row, because ranking is
+ * the whole insight and a bar whose only label is its own length cannot be
+ * read by anyone who cannot see it. The bar is decoration on top of text that
+ * already says everything — which is also why it is hidden from the
+ * accessibility tree rather than given a label of its own.
+ */
+function Ranked({
+  title,
+  rows,
+  flags,
+  empty,
+}: {
+  title: string;
+  rows: Breakdown[];
+  flags?: string[];
+  empty: string;
+}) {
+  const peak = Math.max(...rows.map((row) => row.visits), 1);
+
+  return (
+    <div className="bg-brand-950 p-5">
+      <h3 className="text-xs uppercase tracking-[0.14em] text-paper/55">{title}</h3>
+
+      {rows.length === 0 ? (
+        <p className="mt-4 text-sm text-paper/45">{empty}</p>
+      ) : (
+        <ul className="mt-4 space-y-1">
+          {rows.map((row, index) => (
+            <li key={row.name} className="relative flex items-baseline justify-between gap-3 py-1.5">
+              <span
+                aria-hidden="true"
+                style={{ width: `${(row.visits / peak) * 100}%` }}
+                className="absolute inset-y-0 left-0 bg-brand-500/20"
+              />
+              <span className="relative truncate text-sm text-paper/80">
+                {flags?.[index] && <span aria-hidden="true">{flag(flags[index])} </span>}
+                {row.name}
+              </span>
+              <span className="relative tabular-nums text-sm text-paper/60">
+                {row.visits.toLocaleString("da-DK")}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -187,8 +388,10 @@ function Chart({ daily }: { daily: { day: string; views: number }[] }) {
   const peak = Math.max(...days.map((d) => d.views), 1);
 
   return (
-    <div className="mt-8">
-      <h2 className="text-xs uppercase tracking-[0.14em] text-paper/40">Seneste 30 dage</h2>
+    <div className="mt-10">
+      <h2 className="text-xs uppercase tracking-[0.14em] text-paper/55">
+        Sidevisninger, seneste 30 dage
+      </h2>
       <div className="mt-3 flex h-32 items-end gap-1 border-b border-white/10">
         {days.map((day) => (
           <div
@@ -205,7 +408,7 @@ function Chart({ daily }: { daily: { day: string; views: number }[] }) {
           />
         ))}
       </div>
-      <div className="mt-2 flex justify-between text-xs tabular-nums text-paper/35">
+      <div className="mt-2 flex justify-between text-xs tabular-nums text-paper/50">
         <span>{shortDay(days[0].day)}</span>
         <span>højeste dag: {peak}</span>
         <span>{shortDay(days[days.length - 1].day)}</span>
@@ -234,15 +437,14 @@ function Diagnosis() {
 
   return (
     <div className="mt-8 border border-white/10 bg-white/[0.03] p-5">
-      <h2 className="text-xs uppercase tracking-[0.14em] text-paper/40">
+      <h2 className="text-xs uppercase tracking-[0.14em] text-paper/55">
         Hvad denne deployment kan se
       </h2>
 
       {usable.length > 0 ? (
         <p className="mt-3 text-sm leading-6 text-paper/70">
-          Der findes en brugbar forbindelse ({usable.join(", ")}), men den var der ikke da
-          processen startede. Kør Redeploy uden build-cache, så bygges siden med variablen på
-          plads.
+          Der findes en brugbar forbindelse ({usable.join(", ")}), men den var der ikke da processen
+          startede. Kør Redeploy uden build-cache, så bygges siden med variablen på plads.
         </p>
       ) : related.length > 0 ? (
         <>

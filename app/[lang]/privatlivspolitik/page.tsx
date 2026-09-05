@@ -122,6 +122,26 @@ const sections: Section[] = [
   },
   {
     heading: {
+      da: "Vores egen besøgsstatistik",
+      en: "Our own visit statistics",
+    },
+    body: [
+      {
+        da: "Vi fører vores eget besøgstal på vores egen server. For hvert sidevisning gemmer vi hvilken side der blev læst, hvilket land forespørgslen kom fra, om der blev læst på telefon, tablet eller computer, og hvilken hjemmeside eller app I kom fra – for eksempel Google eller Instagram. Vi gemmer også, hvor længe et besøg varede.",
+        en: "We keep our own visit count on our own server. For each page view we store which page was read, which country the request came from, whether it was read on a phone, tablet or computer, and which website or app you arrived from — for example Google or Instagram. We also store how long a visit lasted.",
+      },
+      {
+        da: "For at kunne se, at to sidevisninger hører til samme besøg, danner vi et tal ud fra jeres IP-adresse, jeres browserbetegnelse og en tilfældig værdi, der udskiftes hvert døgn. Selve IP-adressen bliver hverken gemt eller logget, og når døgnets tilfældige værdi er slettet, kan tallet ikke længere føres tilbage til en adresse – heller ikke af os. Der bliver stadig ikke sat cookies eller gemt noget i jeres browser.",
+        en: "To see that two page views belong to the same visit, we derive a number from your IP address, your browser identification and a random value that is replaced every 24 hours. The IP address itself is neither stored nor logged, and once the day's random value has been deleted the number can no longer be traced back to an address — not even by us. Still no cookies, and still nothing stored in your browser.",
+      },
+      {
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst og hvordan den findes – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand. Tallene ligger i vores egen database hos Neon, Inc. og bliver ikke delt med nogen.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and how it is found — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish cookie order. The numbers live in our own database with Neon, Inc. and are not shared with anyone.",
+      },
+    ],
+  },
+  {
+    heading: {
       da: "Besøgstal og hastighed (Vercel)",
       en: "Visit counts and speed (Vercel)",
     },
@@ -153,8 +173,8 @@ const sections: Section[] = [
     heading: { da: "Leverandører og overførsel", en: "Providers and transfers" },
     body: [
       {
-        da: "Hjemmesiden hostes hos Vercel Inc., som også leverer de besøgstal og hastighedsmålinger, der er beskrevet ovenfor. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle tre er databehandlere på vores vegne.",
-        en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. If you accept statistics, Google LLC also processes visit data for us. All three are processors acting on our behalf.",
+        da: "Hjemmesiden hostes hos Vercel Inc., som også leverer de besøgstal og hastighedsmålinger, der er beskrevet ovenfor. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto; samtidig gemmes de i vores database hos Neon, Inc., så vi kan svare på dem, uden at noget bliver væk. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle fire er databehandlere på vores vegne.",
+        en: "The website is hosted with Vercel Inc., which also provides the visit counts and speed measurements described above. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox; they are stored at the same time in our database with Neon, Inc., so we can answer them without anything going missing. If you accept statistics, Google LLC also processes visit data for us. All four are processors acting on our behalf.",
       },
       {
         da: "Vercel, Resend og Google er amerikanske leverandører. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
