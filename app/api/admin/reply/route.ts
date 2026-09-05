@@ -1,11 +1,26 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { SESSION_COOKIE, sessionValid } from "@/lib/admin-auth";
-import { getEnquiry, recordReply } from "@/lib/db";
+import {
+  SESSION_COOKIE,
+  MAIL_ERROR_COOKIE,
+  MAIL_ERROR_MAX_AGE,
+  sessionValid,
+} from "@/lib/admin-auth";
+import { getEnquiry, recordReply, scrubSecrets } from "@/lib/db";
 import { company } from "@/lib/company";
 import { seeOther } from "@/lib/redirect";
 
 export const runtime = "nodejs";
+
+function withReason(response: NextResponse, reason: string): NextResponse {
+  response.cookies.set(MAIL_ERROR_COOKIE, scrubSecrets(reason).slice(0, 300), {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/admin",
+    maxAge: MAIL_ERROR_MAX_AGE,
+  });
+  return response;
+}
 
 /**
  * Answer an enquiry without leaving the panel.
@@ -37,8 +52,11 @@ export async function POST(request: Request) {
   if (!enquiry) return new NextResponse("not found", { status: 404 });
 
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM;
-  if (!apiKey || !from) {
+  /* Same fallback as the contact form: the test sender is public and identical
+     for everybody, so it is not worth a variable that has to be set before any
+     mail can go at all. */
+  const from = process.env.CONTACT_FROM || "Kestro <onboarding@resend.dev>";
+  if (!apiKey) {
     return seeOther(`/admin/beskeder/${id}?fejl=mail`);
   }
 
@@ -70,13 +88,33 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      /* Never the body: an error echo from the provider can carry the key. */
+      /*
+       * The provider's own words, carried back.
+       *
+       * "Could not send" gives whoever is sitting here nothing to do next.
+       * "The domain is not verified" or "you can only send to your own
+       * address" names the exact thing to change. Scrubbed of anything
+       * key-shaped, capped, and put in a cookie that expires in half a minute
+       * — the page under this layout cannot read a query string reason of any
+       * useful length without it sticking to the URL afterwards.
+       */
+      const detail = await response.text().catch(() => "");
+      let reason = `HTTP ${response.status}`;
+      try {
+        const parsed = JSON.parse(detail) as { message?: unknown };
+        if (typeof parsed.message === "string") reason = parsed.message;
+      } catch {
+        if (detail) reason = detail.slice(0, 300);
+      }
       console.error(`Admin reply: Resend returned ${response.status}`);
-      return seeOther(`/admin/beskeder/${id}?fejl=send`);
+      return withReason(seeOther(`/admin/beskeder/${id}?fejl=send`), reason);
     }
   } catch {
     console.error("Admin reply: request failed");
-    return seeOther(`/admin/beskeder/${id}?fejl=send`);
+    return withReason(
+      seeOther(`/admin/beskeder/${id}?fejl=send`),
+      "Kunne ikke få forbindelse til mailudbyderen.",
+    );
   }
 
   /* Only after the send succeeded. Recording a reply that never left would be

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
 import { SITE_ORIGIN } from "@/lib/site";
-import { saveEnquiry } from "@/lib/db";
+import { noteMailFailure, saveEnquiry } from "@/lib/db";
 
 /**
  * The contact form's actual destination.
@@ -254,8 +254,9 @@ export async function POST(request: Request) {
    * happens to the mail, the message is already somewhere a person can read
    * and answer it.
    */
+  const id = crypto.randomUUID();
   const stored = await saveEnquiry({
-    id: crypto.randomUUID(),
+    id,
     name,
     company: organisation || null,
     email,
@@ -267,10 +268,21 @@ export async function POST(request: Request) {
   });
 
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM;
+  /*
+   * Resend's own test sender when nothing else is configured.
+   *
+   * It is not a secret and it is the same string for everybody, so making it
+   * an environment variable only meant one more thing to get right before any
+   * mail could be sent at all. Note that Resend will only deliver from this
+   * address to the address the Resend account was opened with, so CONTACT_TO
+   * has to be that address until a real domain is verified — and when it is
+   * not, the refusal is now written onto the enquiry rather than swallowed.
+   */
+  const from = process.env.CONTACT_FROM || "Kestro <onboarding@resend.dev>";
   let mailed = false;
+  let mailError: string | null = null;
 
-  if (apiKey && from) {
+  if (apiKey) {
     try {
       const response = await fetch(RESEND_ENDPOINT, {
         method: "POST",
@@ -292,13 +304,37 @@ export async function POST(request: Request) {
       });
       mailed = response.ok;
       if (!response.ok) {
-        /* The body can carry the key back in an error echo, so it is not logged. */
+        /*
+         * The provider's own reason, kept.
+         *
+         * "Resend returned 403" is not something anybody can act on. "You can
+         * only send testing emails to your own email address" is — it names
+         * the exact thing to change. It is scrubbed of anything key-shaped
+         * before it is stored, and it is only ever shown behind the panel's
+         * password.
+         */
+        const detail = await response.text().catch(() => "");
+        let reason = `HTTP ${response.status}`;
+        try {
+          const parsed = JSON.parse(detail) as { message?: unknown };
+          if (typeof parsed.message === "string") reason = parsed.message;
+        } catch {
+          if (detail) reason = detail.slice(0, 300);
+        }
+        mailError = reason;
         console.error(`Contact form: Resend returned ${response.status}`);
       }
     } catch {
+      mailError = "Kunne ikke få forbindelse til mailudbyderen.";
       console.error("Contact form: Resend request failed");
     }
+  } else {
+    mailError = "RESEND_API_KEY er ikke sat på denne deployment.";
   }
+
+  /* Attached to the message it belongs to, so the panel can say of this
+     enquiry that no mail copy left the building, and why. */
+  if (stored && !mailed && mailError) await noteMailFailure(id, mailError);
 
   /*
    * Nothing kept it. Only now is this a failure the visitor has to be told

@@ -145,6 +145,8 @@ export type Enquiry = {
   status: EnquiryStatus;
   replied_at: string | null;
   reply_body: string | null;
+  /** Null when the mail went out, or when there was nothing to send it with. */
+  mail_error: string | null;
 };
 
 /*
@@ -179,6 +181,15 @@ function ensureSchema(): Promise<void> {
         replied_at  TIMESTAMPTZ,
         reply_body  TEXT
       )`;
+    /*
+     * Why the mail copy did not go out, when it did not.
+     *
+     * Added after the fact rather than in the CREATE above, because the table
+     * already exists in production and this has to work on both. ADD COLUMN IF
+     * NOT EXISTS is a no-op the second time and every time after.
+     */
+    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
+
     /* The inbox is always read newest first, and the unread count is read on
        every page of the panel. */
     await sql`CREATE INDEX IF NOT EXISTS enquiries_created_idx ON enquiries (created_at DESC)`;
@@ -264,7 +275,7 @@ function ensureSchema(): Promise<void> {
 
 /** Store an enquiry. Returns false when there is nowhere to store it. */
 export async function saveEnquiry(
-  enquiry: Omit<Enquiry, "created_at" | "status" | "replied_at" | "reply_body">,
+  enquiry: Omit<Enquiry, "created_at" | "status" | "replied_at" | "reply_body" | "mail_error">,
 ): Promise<boolean> {
   if (!sql) return false;
   try {
@@ -329,6 +340,34 @@ export async function recordReply(id: string, body: string): Promise<void> {
   } catch (error) {
     console.error("recordReply failed", error);
   }
+}
+
+/**
+ * Record that the mail copy of an enquiry did not go out, and why.
+ *
+ * The enquiry itself is already stored by this point — that is the whole
+ * reason the order was changed — so this is not error handling, it is a note
+ * attached to a message that arrived. Without it the panel can say "no mail
+ * was sent" but not "the provider refused it because the sender domain is not
+ * verified", and those need different things done about them.
+ *
+ * The reason comes from the mail provider, so it is trimmed and scrubbed
+ * before it is stored: an API key must never end up in a row that is rendered
+ * back into a page, however unlikely the provider is to echo one.
+ */
+export async function noteMailFailure(id: string, reason: string): Promise<void> {
+  if (!sql) return;
+  try {
+    await ensureSchema();
+    await sql`UPDATE enquiries SET mail_error = ${scrubSecrets(reason).slice(0, 500)} WHERE id = ${id}`;
+  } catch (error) {
+    console.error("noteMailFailure failed", error);
+  }
+}
+
+/** Anything shaped like a Resend key, removed. */
+export function scrubSecrets(text: string): string {
+  return text.replace(/re_[A-Za-z0-9_-]{8,}/g, "re_***");
 }
 
 export async function countNew(): Promise<number> {

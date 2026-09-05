@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { AlertIcon, ArchiveIcon, ArrowLeftIcon, CheckIcon, SendIcon } from "@/components/admin/icons";
+import { MAIL_ERROR_COOKIE } from "@/lib/admin-auth";
 import { getEnquiry, setEnquiryStatus } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +36,7 @@ const OUTCOMES = {
   },
   send: {
     tone: "fejl",
-    text: "Kunne ikke sende svaret. Beskeden er ikke afsendt — prøv igen om lidt, eller svar fra mailen.",
+    text: "Svaret blev ikke sendt.",
   },
 } as const;
 
@@ -61,6 +63,9 @@ export default async function EnquiryPage({
           ? "send"
           : null;
   const outcome = key ? OUTCOMES[key] : null;
+  /* What the provider said, if it said anything. Set by the reply route and
+     expiring on its own — see MAIL_ERROR_COOKIE. */
+  const reason = key === "send" ? cookies().get(MAIL_ERROR_COOKIE)?.value : undefined;
 
   const facts = [
     { label: "E-mail", value: enquiry.email },
@@ -94,7 +99,10 @@ export default async function EnquiryPage({
           ) : (
             <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-red-300" />
           )}
-          {outcome.text}
+          <span>
+            {outcome.text}
+            {reason && <span className="mt-1 block text-red-50/80">{reason}</span>}
+          </span>
         </p>
       )}
 
@@ -113,6 +121,17 @@ export default async function EnquiryPage({
           </div>
         ))}
       </dl>
+
+      {enquiry.mail_error && (
+        <p className="mt-7 flex items-start gap-2.5 border-l-2 border-amber-400/70 bg-amber-400/[0.07] px-4 py-3 text-sm leading-6 text-amber-100/90">
+          <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-amber-300" />
+          <span>
+            Beskeden er gemt her, men kopien til {process.env.CONTACT_TO ?? "kontakt@kestro.dk"}{" "}
+            blev ikke sendt. Mailudbyderen svarede:{" "}
+            <span className="text-amber-50">{enquiry.mail_error}</span>
+          </span>
+        </p>
+      )}
 
       {/* whitespace-pre-wrap, because the visitor's line breaks are part of
           what they wrote and collapsing them rewrites their message. */}

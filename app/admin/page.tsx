@@ -35,8 +35,9 @@ export default async function AdminHome() {
   /* Whether a reply can leave the building. Beskeder still arrive without it —
      they are written to the database before the mail is attempted — but every
      answer sent from here would fail, and it is better to say so once at the
-     top than to let each attempt discover it. */
-  const mailReady = Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_FROM);
+     top than to let each attempt discover it. Only the key: the sender falls
+     back to Resend's test address, which needs no configuration. */
+  const mailReady = Boolean(process.env.RESEND_API_KEY);
 
   return (
     <div className="space-y-12">
@@ -51,11 +52,10 @@ export default async function AdminHome() {
         <p className="flex items-start gap-2.5 border-l-2 border-amber-400/70 bg-amber-400/[0.07] px-4 py-3 text-sm leading-6 text-amber-100/90">
           <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-amber-300" />
           <span>
-            E-mail er ikke sat op på denne deployment (
-            <code className="bg-white/10 px-1 py-0.5">RESEND_API_KEY</code> og{" "}
-            <code className="bg-white/10 px-1 py-0.5">CONTACT_FROM</code>). Beskeder lander stadig
-            her i panelet, men der bliver ikke sendt mail til kontakt@kestro.dk, og svar herfra kan
-            ikke afsendes.
+            <code className="bg-white/10 px-1 py-0.5">RESEND_API_KEY</code> er ikke sat på denne
+            deployment. Beskeder lander stadig her i panelet — de bliver gemt før mailen forsøges —
+            men der sendes ingen mail, og svar herfra kan ikke afsendes. Sæt nøglen i Vercel og kør
+            Redeploy.
           </span>
         </p>
       )}

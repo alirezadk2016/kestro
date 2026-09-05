@@ -45,6 +45,18 @@ export const SESSION_COOKIE = "kestro_admin";
 export const FAILED_COOKIE = "kestro_admin_fejl";
 export const FAILED_MAX_AGE = 10;
 
+/**
+ * Why a reply could not be sent, on its way back to the page.
+ *
+ * Same reason as above: the message page is rendered under a layout, and a
+ * reason long enough to be useful would otherwise have to ride in the query
+ * string and stay in the address bar afterwards. Thirty seconds is long enough
+ * to survive one redirect and short enough that it can never be read as
+ * current on a page opened later.
+ */
+export const MAIL_ERROR_COOKIE = "kestro_admin_mailfejl";
+export const MAIL_ERROR_MAX_AGE = 30;
+
 /** How long a session lasts before the password is asked for again. */
 const SESSION_MS = 7 * 24 * 60 * 60 * 1000;
 

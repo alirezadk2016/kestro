@@ -186,6 +186,14 @@ export function EnquiryRow({ enquiry }: { enquiry: Enquiry }) {
               {badge.label}
             </span>
           )}
+          {/* The message arrived; the mail copy of it did not. Worth seeing
+              from the list, because it changes nothing about answering this
+              one and everything about whether the inbox can be trusted. */}
+          {enquiry.mail_error && (
+            <span className="bg-amber-400/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-amber-200">
+              Ikke mailet
+            </span>
+          )}
         </span>
 
         <span className="text-right text-xs tabular-nums text-paper/40">
