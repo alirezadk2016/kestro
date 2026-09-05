@@ -3,6 +3,7 @@ import Link from "next/link";
 import LivePanel from "@/components/admin/LivePanel";
 import { Figure, Ranked, SectionHead, EnquiryRow } from "@/components/admin/parts";
 import {
+  AlertIcon,
   ClockIcon,
   DeviceIcon,
   ExitIcon,
@@ -20,6 +21,7 @@ import {
   databaseEnvNames,
   envNameSample,
 } from "@/lib/db";
+import { CARD, EYEBROW } from "@/components/admin/tokens";
 import { countryName, decimal, duration } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -30,14 +32,33 @@ export default async function AdminHome() {
   const [enquiries, stats, live] = await Promise.all([listEnquiries(), viewStats(), liveStats()]);
   const newest = enquiries.slice(0, 5);
 
+  /* Whether a reply can leave the building. Beskeder still arrive without it —
+     they are written to the database before the mail is attempted — but every
+     answer sent from here would fail, and it is better to say so once at the
+     top than to let each attempt discover it. */
+  const mailReady = Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_FROM);
+
   return (
-    <div className="space-y-14">
+    <div className="space-y-12">
       <header>
-        <h1 className="font-display text-[1.75rem] font-extrabold tracking-tight">Oversigt</h1>
+        <h1 className="font-display text-[1.625rem] font-extrabold tracking-[-0.02em]">Oversigt</h1>
         <p className="mt-1.5 text-sm text-paper/55">
           Trafik og henvendelser på kestro.dk. Tallene er sitets egne.
         </p>
       </header>
+
+      {!mailReady && (
+        <p className="flex items-start gap-2.5 border-l-2 border-amber-400/70 bg-amber-400/[0.07] px-4 py-3 text-sm leading-6 text-amber-100/90">
+          <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-amber-300" />
+          <span>
+            E-mail er ikke sat op på denne deployment (
+            <code className="bg-white/10 px-1 py-0.5">RESEND_API_KEY</code> og{" "}
+            <code className="bg-white/10 px-1 py-0.5">CONTACT_FROM</code>). Beskeder lander stadig
+            her i panelet, men der bliver ikke sendt mail til kontakt@kestro.dk, og svar herfra kan
+            ikke afsendes.
+          </span>
+        </p>
+      )}
 
       <LivePanel initial={live} />
 
@@ -46,7 +67,7 @@ export default async function AdminHome() {
             fifth figure alone on a row beside an empty cell that reads as a
             missing card. The fifth spans the pair below lg so the grid is
             always full. */}
-        <dl className="grid grid-cols-2 gap-px border border-white/[0.09] bg-white/[0.09] lg:grid-cols-5">
+        <dl className={`grid grid-cols-2 gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-5 ${CARD}`}>
           <Figure label="Besøg i dag" value={decimal(live.visitsToday)} Icon={PulseIcon} />
           <Figure label="Besøg / 30 dage" value={decimal(live.visits30)} Icon={PulseIcon} />
           <Figure
@@ -82,7 +103,7 @@ export default async function AdminHome() {
           title="Hvor de kommer fra"
           note="Besøg de seneste 30 dage. Et besøg tælles der, hvor det startede — går man videre inde på sitet, bliver kilden ikke skrevet om."
         />
-        <div className="mt-6 grid gap-px border border-white/[0.09] bg-white/[0.09] lg:grid-cols-3">
+        <div className={`mt-6 grid gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-3 ${CARD}`}>
           <Ranked
             title="Kilde"
             rows={live.sources}
@@ -112,11 +133,13 @@ export default async function AdminHome() {
       {stats.topPages.length > 0 && (
         <section>
           <SectionHead title="Mest læste sider" />
-          <Ranked
-            title="Sidevisninger i alt"
-            rows={stats.topPages.map((page) => ({ name: page.path, visits: page.views }))}
-            empty=""
-          />
+          <div className={`mt-6 overflow-hidden ${CARD}`}>
+            <Ranked
+              title="Sidevisninger i alt"
+              rows={stats.topPages.map((page) => ({ name: page.path, visits: page.views }))}
+              empty=""
+            />
+          </div>
         </section>
       )}
 
@@ -135,11 +158,11 @@ export default async function AdminHome() {
         />
 
         {newest.length === 0 ? (
-          <p className="mt-6 border border-dashed border-white/12 p-10 text-center text-sm leading-6 text-paper/50">
+          <p className="mt-6 border border-dashed border-white/[0.12] p-12 text-center text-sm leading-6 text-paper/45">
             Ingen beskeder endnu. De lander her i samme øjeblik nogen sender formularen.
           </p>
         ) : (
-          <ul className="mt-6 border-y border-white/[0.09]">
+          <ul className={`mt-6 divide-y divide-white/[0.06] overflow-hidden ${CARD}`}>
             {newest.map((enquiry) => (
               <EnquiryRow key={enquiry.id} enquiry={enquiry} />
             ))}
@@ -195,8 +218,8 @@ function Chart({ daily }: { daily: { day: string; views: number }[] }) {
   const peak = Math.max(...days.map((d) => d.views), 1);
 
   return (
-    <figure className="mt-10 border border-white/[0.09] p-6">
-      <figcaption className="text-[11px] uppercase tracking-[0.16em] text-paper/55">
+    <figure className={`mt-8 p-6 ${CARD}`}>
+      <figcaption className={EYEBROW}>
         Sidevisninger pr. dag, seneste 30 dage
       </figcaption>
       <div className="mt-5 flex h-36 items-end gap-[3px] border-b border-white/12">

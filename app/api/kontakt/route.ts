@@ -20,10 +20,12 @@ import { saveEnquiry } from "@/lib/db";
  * accepts an inbound JSON hook. It runs alongside the mail and is never
  * allowed to fail the visitor's request: the inbox is the source of truth.
  *
- * Until RESEND_API_KEY and CONTACT_FROM are set the route answers 503, and the
- * form tells the visitor plainly and hands them the finished message to copy
- * or mail. It does not redirect the browser and it does not pretend the
- * message arrived.
+ * The enquiry is written to our own database before any of that is attempted,
+ * so it is readable and answerable in /admin whatever the mail provider does.
+ * Only when neither the database nor the mail took it does the route answer
+ * 503 — and then the form tells the visitor plainly and hands them the
+ * finished message to copy or send themselves. It does not redirect the
+ * browser and it never pretends the message arrived.
  */
 
 const RESEND_ENDPOINT = process.env.RESEND_ENDPOINT ?? "https://api.resend.com/emails";
@@ -157,13 +159,6 @@ function isSameSite(request: Request): boolean {
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM;
-
-  if (!apiKey || !from) {
-    return NextResponse.json({ ok: false, configured: false }, { status: 503 });
-  }
-
   if (!isSameSite(request)) {
     return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
   }
@@ -242,38 +237,24 @@ export async function POST(request: Request) {
     message,
   ].filter((line): line is string => line !== null);
 
-  const response = await fetch(RESEND_ENDPOINT, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [process.env.CONTACT_TO ?? company.email],
-      /* So hitting reply in the inbox answers the customer, not ourselves. */
-      reply_to: safeHeaderValue(`${name} <${email}>`),
-      subject: safeHeaderValue(
-        organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
-      ),
-      text: lines.join("\n"),
-    }),
-  });
-
-  if (!response.ok) {
-    /* The body can carry the key back in an error echo, so it is not logged. */
-    console.error(`Contact form: Resend returned ${response.status}`);
-    return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
-  }
-
   /*
-   * The archive, so the enquiry is also readable and answerable in /admin.
+   * Store it first, then try to mail it.
    *
-   * After the mail and never instead of it. The inbox is what a person watches
-   * and the panel is a convenience on top of it — if the database is missing or
-   * asleep, saveEnquiry returns false and the customer is still answered.
+   * This used to be the other way round, and worse: the route returned 503
+   * before reading the body at all if RESEND_API_KEY or CONTACT_FROM was
+   * missing, and returned 502 without storing anything if the send failed. So
+   * on a deployment where the mail provider was not configured — or was having
+   * an afternoon — a visitor wrote a message, was told it could not be sent,
+   * and nothing anywhere kept a copy. There was nowhere to keep one at the
+   * time. There is now.
+   *
+   * The order follows from which of the two can lose the enquiry. A write to
+   * our own database either succeeds or reports that it did not; a mail
+   * provider can accept a request and drop the message later. Whichever
+   * happens to the mail, the message is already somewhere a person can read
+   * and answer it.
    */
-  await saveEnquiry({
+  const stored = await saveEnquiry({
     id: crypto.randomUUID(),
     name,
     company: organisation || null,
@@ -285,9 +266,54 @@ export async function POST(request: Request) {
     source: subject.toLowerCase().includes("tilbud") ? "quote" : "contact",
   });
 
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.CONTACT_FROM;
+  let mailed = false;
+
+  if (apiKey && from) {
+    try {
+      const response = await fetch(RESEND_ENDPOINT, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${apiKey}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          from,
+          to: [process.env.CONTACT_TO ?? company.email],
+          /* So hitting reply in the inbox answers the customer, not ourselves. */
+          reply_to: safeHeaderValue(`${name} <${email}>`),
+          subject: safeHeaderValue(
+            organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
+          ),
+          text: lines.join("\n"),
+        }),
+        signal: AbortSignal.timeout(10000),
+      });
+      mailed = response.ok;
+      if (!response.ok) {
+        /* The body can carry the key back in an error echo, so it is not logged. */
+        console.error(`Contact form: Resend returned ${response.status}`);
+      }
+    } catch {
+      console.error("Contact form: Resend request failed");
+    }
+  }
+
+  /*
+   * Nothing kept it. Only now is this a failure the visitor has to be told
+   * about, and the form falls back to handing them the finished message so
+   * their work is not lost.
+   */
+  if (!stored && !mailed) {
+    return NextResponse.json({ ok: false, configured: false }, { status: 503 });
+  }
+
   await forwardToCrm({ name, organisation, email, phone, message, subject, page });
 
-  return NextResponse.json({ ok: true, configured: true });
+  /* `mailed` so the panel's own copy is not silently the only one: a message
+     that reached the archive but not the inbox is worth knowing about. */
+  return NextResponse.json({ ok: true, configured: true, mailed });
 }
 
 /**
