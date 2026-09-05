@@ -45,7 +45,7 @@ export default function Breadcrumbs({
                 ) : (
                   <Link
                     href={localePath(crumb.href, lang)}
-                    className="inline-flex min-h-[32px] items-center transition hover:text-paper"
+                    className="inline-flex min-h-[44px] items-center transition hover:text-paper"
                   >
                     {crumb.name}
                   </Link>

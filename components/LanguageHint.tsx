@@ -97,7 +97,10 @@ export default function LanguageHint() {
 
   return (
     <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
-      <Container className="flex flex-col items-start gap-y-1 py-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
+      <Container /* The controls carry their own 44px now, so the bar does not need
+           to add height on top of them — without this the strip that sits
+           above the header on every page grew by a sixth. */
+        className="flex flex-col items-start gap-y-0 py-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 sm:py-2.5">
         <p className="text-sm text-paper/75">This page is also available in English.</p>
         {/* One row of its own below sm; dissolved into the parent from sm, so
             the wide layout is exactly what it was. */}
@@ -105,14 +108,14 @@ export default function LanguageHint() {
           <Link
             href={href}
             onClick={dismiss}
-            className="inline-flex min-h-[36px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
+            className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
           >
             Read in English
           </Link>
           <button
             type="button"
             onClick={dismiss}
-            className="ml-auto inline-flex min-h-[36px] items-center text-sm text-paper/55 transition hover:text-paper"
+            className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/55 transition hover:text-paper"
           >
             Dismiss
           </button>

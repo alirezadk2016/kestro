@@ -301,9 +301,23 @@ body {
     @apply text-xs font-semibold uppercase tracking-[0.16em];
   }
 
+  /*
+   * 0.7rem is 11.2px, and on a phone that is below what anybody reads
+   * comfortably — measured across the site, seven paragraphs, four headings
+   * and three definition terms were being set at it. The letterspacing makes
+   * it worse: tracked-out small caps need more height, not less. It steps up
+   * to 12px on small screens and keeps the tighter size where the viewport is
+   * wide enough for the label to read as a label.
+   */
   .label {
     @apply font-medium uppercase tracking-[0.12em];
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+  }
+
+  @screen sm {
+    .label {
+      font-size: 0.7rem;
+    }
   }
 }
 

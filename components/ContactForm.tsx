@@ -350,8 +350,17 @@ export default function ContactForm({
     }
   }
 
+  /*
+   * min-h-11 is 44px, which is the floor for something you tap.
+   *
+   * The padding alone gave 42, and two pixels does not sound like a bug until
+   * it is a phone, a thumb and the field that turns a visitor into an enquiry.
+   * The text stays at 16px so iOS does not zoom the page when the field takes
+   * focus — a smaller size there is the other classic way a mobile form loses
+   * people.
+   */
   const inputClasses =
-    "w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();

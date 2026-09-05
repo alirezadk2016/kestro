@@ -311,7 +311,12 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                        there but unlit until the row is pointed at, which is
                        what tells a flat list of headings that it is a list of
                        links. */
-                    className="group -mx-5 flex flex-col gap-x-8 gap-y-2 border-l-2 border-transparent py-6 pl-5 pr-5 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:flex-row sm:items-baseline sm:py-7"
+                    /* The negative margin has to match the gutter it is cancelling.
+                       Container is px-4 on a phone and px-6 from sm, so -mx-5
+                       pulled 20px out of a 16px inset and the whole page
+                       scrolled 4px sideways — measured: scrollWidth 394 in a
+                       390 viewport. */
+                    className="group -mx-4 flex flex-col gap-x-8 gap-y-2 border-l-2 border-transparent py-6 pl-4 pr-4 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:-mx-5 sm:flex-row sm:items-baseline sm:py-7 sm:pl-5 sm:pr-5"
                   >
                     <div className="min-w-0 flex-1">
                       <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
