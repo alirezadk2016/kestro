@@ -32,6 +32,19 @@ export const adminConfigured = PASSWORD.length > 0;
 
 export const SESSION_COOKIE = "kestro_admin";
 
+/**
+ * A wrong password, carried back to the login screen.
+ *
+ * The screen is rendered by the layout, and a layout cannot read the query
+ * string — it wraps every page under /admin, so ?fejl=1 would follow the
+ * reader from the login screen onto whatever they opened next. A cookie with a
+ * ten-second life is read once and then gone, without anything having to clear
+ * it. It holds no secret: it says that somebody typed the wrong password just
+ * now, which the person reading the screen already knows.
+ */
+export const FAILED_COOKIE = "kestro_admin_fejl";
+export const FAILED_MAX_AGE = 10;
+
 /** How long a session lasts before the password is asked for again. */
 const SESSION_MS = 7 * 24 * 60 * 60 * 1000;
 

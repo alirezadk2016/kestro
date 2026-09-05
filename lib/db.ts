@@ -90,9 +90,40 @@ export function envNameSample(): string[] {
 
 const CONNECTION = connectionString();
 
-export const dbConfigured = CONNECTION.length > 0;
+/*
+ * Connecting, without taking the site down if the string is wrong.
+ *
+ * neon() validates its argument and throws — at module scope, which is import
+ * time. Every route that touches this file imports it, so one malformed
+ * connection string did not disable the archive: it returned 500 for the admin
+ * panel and for /api/kontakt, which is the contact form. A typo in a Vercel
+ * variable could take the enquiry path down entirely, and everything else in
+ * this file is written specifically so that cannot happen.
+ *
+ * Found by starting the built site with a deliberately incomplete string.
+ */
+function connect(): ReturnType<typeof neon> | null {
+  if (!CONNECTION) return null;
+  try {
+    return neon(CONNECTION);
+  } catch (error) {
+    console.error("Database connection string is present but not usable", error);
+    return null;
+  }
+}
 
-const sql = dbConfigured ? neon(CONNECTION) : null;
+const sql = connect();
+
+export const dbConfigured = sql !== null;
+
+/**
+ * A connection string that exists and does not work.
+ *
+ * Distinct from having none, because the fixes are different: one is a missing
+ * integration, the other is a variable to correct. Without the distinction the
+ * panel would tell somebody to create a database they had already created.
+ */
+export const dbMisconfigured = CONNECTION.length > 0 && sql === null;
 
 /** How an enquiry reached us. */
 export type EnquirySource = "contact" | "quote" | "instagram";

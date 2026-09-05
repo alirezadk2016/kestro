@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, sessionValid } from "@/lib/admin-auth";
 import { getEnquiry, recordReply } from "@/lib/db";
 import { company } from "@/lib/company";
+import { seeOther } from "@/lib/redirect";
 
 export const runtime = "nodejs";
 
@@ -21,8 +22,6 @@ export const runtime = "nodejs";
  * out, not for owning the conversation.
  */
 export async function POST(request: Request) {
-  const origin = new URL(request.url).origin;
-
   if (!sessionValid(cookies().get(SESSION_COOKIE)?.value)) {
     return new NextResponse("forbidden", { status: 403 });
   }
@@ -31,7 +30,7 @@ export async function POST(request: Request) {
   const id = String(form.get("id") ?? "");
   const body = String(form.get("body") ?? "").trim().slice(0, 10000);
   if (!id || !body) {
-    return NextResponse.redirect(new URL(`/admin/beskeder/${id}`, origin), { status: 303 });
+    return seeOther(`/admin/beskeder/${id}`);
   }
 
   const enquiry = await getEnquiry(id);
@@ -40,9 +39,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM;
   if (!apiKey || !from) {
-    return NextResponse.redirect(new URL(`/admin/beskeder/${id}?fejl=mail`, origin), {
-      status: 303,
-    });
+    return seeOther(`/admin/beskeder/${id}?fejl=mail`);
   }
 
   /* The original underneath the reply, quoted. Without it the customer is
@@ -75,20 +72,20 @@ export async function POST(request: Request) {
     if (!response.ok) {
       /* Never the body: an error echo from the provider can carry the key. */
       console.error(`Admin reply: Resend returned ${response.status}`);
-      return NextResponse.redirect(new URL(`/admin/beskeder/${id}?fejl=send`, origin), {
-        status: 303,
-      });
+      return seeOther(`/admin/beskeder/${id}?fejl=send`);
     }
   } catch {
     console.error("Admin reply: request failed");
-    return NextResponse.redirect(new URL(`/admin/beskeder/${id}?fejl=send`, origin), {
-      status: 303,
-    });
+    return seeOther(`/admin/beskeder/${id}?fejl=send`);
   }
 
   /* Only after the send succeeded. Recording a reply that never left would be
      worse than not recording it: the message would look handled. */
   await recordReply(id, body);
 
-  return NextResponse.redirect(new URL(`/admin/beskeder/${id}`, origin), { status: 303 });
+  /* Say so. Every branch above already redirected with a reason, and the page
+     now reads all of them — including this one, because "the form cleared and
+     the page looks the same" is not the difference between sent and not
+     sent that anybody should have to infer. */
+  return seeOther(`/admin/beskeder/${id}?sendt=1`);
 }

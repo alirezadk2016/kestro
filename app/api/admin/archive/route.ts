@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { SESSION_COOKIE, sessionValid } from "@/lib/admin-auth";
 import { setEnquiryStatus } from "@/lib/db";
+import { seeOther } from "@/lib/redirect";
 
 export const runtime = "nodejs";
 
@@ -17,5 +18,7 @@ export async function POST(request: Request) {
   const id = String(form.get("id") ?? "");
   if (id) await setEnquiryStatus(id, "archived");
 
-  return NextResponse.redirect(new URL("/admin", new URL(request.url).origin), { status: 303 });
+  /* Back to the inbox rather than the dashboard: archiving happens while
+     working through messages, and the next thing wanted is the next message. */
+  return seeOther("/admin/beskeder");
 }
