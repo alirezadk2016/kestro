@@ -6,7 +6,6 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import MachineViewer from "@/components/MachineViewer";
 import MachineInside from "@/components/MachineInside";
-import BatteryHealth from "@/components/BatteryHealth";
 import { interiorParts } from "@/lib/machine-parts";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 
@@ -121,13 +120,6 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-12">
             <MachineInside lang={lang} />
-          </div>
-
-          {/* The battery is the part of this page a buyer asks about first,
-              and the only one the site quotes a number for. It gets the number
-              rather than a paragraph about it. */}
-          <div className="mt-20 border-t border-white/10 pt-16">
-            <BatteryHealth lang={lang} />
           </div>
 
           <p className="mt-12 max-w-2xl text-sm leading-7 text-paper/55">

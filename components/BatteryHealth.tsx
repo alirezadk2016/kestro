@@ -442,9 +442,6 @@ function Cell({ value, tone }: { value: number; tone: RGB }) {
         {/* 34px of surface rather than a hard white bar: the bar was a seam,
             this is a meniscus. */}
         <rect x={edge - 34} y={y} width={34} height={h} fill="url(#bh-meniscus)" />
-        {/* Light passing through the liquid and landing on the floor of the
-            chamber just past it. */}
-        <rect x={edge} y={y + h - 26} width={70} height={26} fill={rgb(tone, 0.22)} />
       </g>
 
       {/* Glass, over the liquid: a bright top edge, a soft bottom bounce, and a
