@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
+  BANDS,
   RESTING,
   SWEEP,
+  bandFor,
   clamp01,
   colourAt,
   rgb,
@@ -28,42 +30,6 @@ import { type Lang } from "@/lib/i18n";
  * itself.
  */
 
-/* The three bands, and the exact wording they carry. */
-const BANDS = [
-  {
-    id: "poor",
-    from: 0,
-    to: 79,
-    range: "0–79%",
-    title: "REPLACEMENT RECOMMENDED",
-    note: "Reduced capacity · Shorter runtime",
-    /* Deliberately lighter than the fill colour: the fill is a large shape and
-       can be saturated, a caption is small text on a dark ground and has to
-       clear 4.5:1 to be read at all. */
-    text: "#FCA5A5",
-  },
-  {
-    id: "good",
-    from: 80,
-    to: 89,
-    range: "80–89%",
-    title: "GOOD",
-    note: "Reliable for everyday use",
-    text: "#93AEFB",
-  },
-  {
-    id: "excellent",
-    from: 90,
-    to: 100,
-    range: "90–100%",
-    title: "EXCELLENT",
-    note: "Full performance · Extended runtime",
-    text: "#86EFAC",
-  },
-] as const;
-
-const bandFor = (value: number) =>
-  value >= 90 ? BANDS[2] : value >= 80 ? BANDS[1] : BANDS[0];
 
 /* How long a pointer or a keypress keeps the sweep out of the way. Long enough
    that reading a value you set yourself is not a race against the animation. */

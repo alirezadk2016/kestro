@@ -1,6 +1,6 @@
 "use client";
 
-import { colourAt, rgb } from "@/lib/battery";
+import { bandFor, colourAt, rgb } from "@/lib/battery";
 import { useBatterySweep } from "./useBatterySweep";
 
 /**
@@ -18,6 +18,8 @@ import { useBatterySweep } from "./useBatterySweep";
 export default function LiveBatteryFigure() {
   const value = useBatterySweep();
   const tone = colourAt(value);
+  const band = bandFor(value);
+  const shown = Math.round(value);
 
   const x = 196;
   const y = 206;
@@ -53,6 +55,33 @@ export default function LiveBatteryFigure() {
           <rect x={x} y={y} width={w} height={h} rx={20} />
         </clipPath>
       </defs>
+
+      {/*
+       * The reading, above the cell.
+       *
+       * The drawing shows how full it is; this says how full in a number, and
+       * the line under the cell says what that number means. All three take
+       * their colour from the same value, so a cell that has just gone blue
+       * cannot be sitting under an orange figure.
+       *
+       * The band name uses the band's own lighter tone rather than the fill
+       * colour: the fill is a large shape and can be saturated, this is small
+       * text on a dark ground and has to clear 4.5:1 to be read.
+       */}
+      <text
+        x={x + w / 2}
+        y={188}
+        textAnchor="middle"
+        fontSize="46"
+        fontWeight="800"
+        fill={rgb(tone)}
+        style={{ fontVariantNumeric: "tabular-nums" }}
+      >
+        {shown}
+        <tspan fontSize="24" dy="-14">
+          %
+        </tspan>
+      </text>
 
       <g clipPath="url(#spec-bat-chamber)">
         <rect x={x} y={y} width={w} height={h} fill="url(#spec-bat-void)" />
@@ -92,6 +121,31 @@ export default function LiveBatteryFigure() {
       <rect x={x - 26} y={y - 12} width={34} height={h + 24} rx={11} fill="url(#spec-bat-cap)" />
       <rect x={x + w - 8} y={y - 12} width={34} height={h + 24} rx={11} fill="url(#spec-bat-cap)" />
       <rect x={x + w + 26} y={y + 50} width={22} height={44} rx={7} fill="#465270" />
+
+      <text
+        x={x + w / 2}
+        y={y + h + 30}
+        textAnchor="middle"
+        fontSize="15"
+        fontWeight="700"
+        letterSpacing="2"
+        fill={band.text}
+      >
+        {band.title}
+      </text>
+      <text
+        x={x + w / 2}
+        /* Twenty-four units clear of the figure's own caption. At the first
+           spacing the range sat on top of "MÅLT KAPACITET, IKKE SKØNNET" and
+           the two lines read as one smudged line. */
+        y={y + h + 50}
+        textAnchor="middle"
+        fontSize="14"
+        fontWeight="500"
+        className="fill-paper/55"
+      >
+        {band.range}
+      </text>
     </>
   );
 }

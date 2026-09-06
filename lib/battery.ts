@@ -53,3 +53,47 @@ export const SWEEP = { min: 55, max: 100, seconds: 7 };
 
 /** What the figure shows when motion is turned down: the measured example. */
 export const RESTING = 87;
+
+/**
+ * The three bands, and the exact wording they carry.
+ *
+ * Here rather than in the section that displays them, because the cell in the
+ * hero's spec list names the band it is in too — and a band called GOOD in one
+ * place and Good in another, or starting at 80 here and 81 there, is the kind
+ * of drift that only shows up once it is in front of a customer.
+ */
+export const BANDS = [
+  {
+    id: "poor",
+    from: 0,
+    to: 79,
+    range: "0–79%",
+    title: "REPLACEMENT RECOMMENDED",
+    note: "Reduced capacity · Shorter runtime",
+    /* Deliberately lighter than the fill colour: the fill is a large shape and
+       can be saturated, a caption is small text on a dark ground and has to
+       clear 4.5:1 to be read at all. */
+    text: "#FCA5A5",
+  },
+  {
+    id: "good",
+    from: 80,
+    to: 89,
+    range: "80–89%",
+    title: "GOOD",
+    note: "Reliable for everyday use",
+    text: "#93AEFB",
+  },
+  {
+    id: "excellent",
+    from: 90,
+    to: 100,
+    range: "90–100%",
+    title: "EXCELLENT",
+    note: "Full performance · Extended runtime",
+    text: "#86EFAC",
+  },
+] as const;
+
+export const bandFor = (value: number) =>
+  value >= 90 ? BANDS[2] : value >= 80 ? BANDS[1] : BANDS[0];
