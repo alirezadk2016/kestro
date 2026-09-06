@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
-import GuidePlate, { GuidePlateStyles } from "@/components/GuidePlate";
+import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -131,10 +131,10 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
-      {/* One stylesheet for all eight guide plates. Rendered here rather than
-          inside each plate: eight identical copies of the same keyframes is
+      {/* One stylesheet for all eight guide panels. Rendered here rather than
+          inside each panel: eight identical copies of the same keyframes is
           thirty kilobytes of HTML saying one thing eight times. */}
-      <GuidePlateStyles />
+      <GuidePanelStyles />
 
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950">
         {/* The plate sits behind the type and is clipped by the section, so it
@@ -299,7 +299,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
              * be read sits in one narrower column beneath it.
              */}
             <ol className="max-w-5xl">
-              {articles.map((guide) => (
+              {articles.map((guide, index) => (
                 <li key={guide.slug} className="border-b border-white/[0.08] last:border-b-0">
                   {/*
                    * No number on the guide.
@@ -322,33 +322,33 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                        pulled 20px out of a 16px inset and the whole page
                        scrolled 4px sideways — measured: scrollWidth 394 in a
                        390 viewport. */
-                    className="group -mx-4 flex flex-col gap-x-8 gap-y-2 border-l-2 border-transparent py-6 pl-4 pr-4 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:-mx-5 sm:flex-row sm:items-baseline sm:py-7 sm:pl-5 sm:pr-5"
+                    className="group -mx-4 flex flex-col gap-5 border-l-2 border-transparent py-7 pl-4 pr-4 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:-mx-5 sm:gap-6 sm:py-9 sm:pl-5 sm:pr-5"
                   >
                     {/*
-                     * The guide's own drawing.
+                     * The guide's own panel.
                      *
                      * The section had pictures of its four topics and none of
                      * its eight guides, so three articles under "Levetid og
                      * udskiftning" shared one illustration and the list itself
-                     * had nothing to recognise a row by but its title. Each
-                     * plate draws the one thing its guide is about, and runs.
+                     * had nothing to recognise a row by but its title.
                      *
-                     * self-start rather than joining the baseline group: the
-                     * heading and the reading time still align to each other,
-                     * which is what the row was built to do.
+                     * It is drawn at 768x512 and rendered near that size. The
+                     * first attempt put the same subjects in a 124px thumbnail
+                     * beside the title, and at that size a drawing holds one
+                     * shape and nothing else — no reading, no label, no light —
+                     * so an illustration system arrived as eight small icons.
+                     * A panel needs the room to be a panel.
                      *
-                     * Hidden below sm on the same grounds the index plates are
-                     * — on a phone the column is the reading order, and eight
-                     * drawings in it is scrolling, not scanning. Fixed box, so
-                     * nothing shifts as it paints.
+                     * Fixed 3:2 box, so nothing shifts as it paints.
                      */}
-                    <GuidePlate
+                    <GuidePanel
                       slug={guide.slug}
-                      cluster={guide.cluster}
-                      frame={false}
-                      className="hidden h-[5.25rem] w-[7.75rem] flex-none self-start text-brand-300/40 transition-colors group-hover:text-brand-300/85 sm:block"
+                      lang={lang}
+                      priority={groupIndex === 0 && index === 0}
+                      className="aspect-[3/2] w-full overflow-hidden rounded-sm border border-white/10 transition-colors group-hover:border-brand-400/40"
                     />
 
+                    <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
                     <div className="min-w-0 flex-1">
                       <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
                         {guide.title[lang]}
@@ -375,6 +375,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                         strokeWidth={2}
                       />
                     </span>
+                    </div>
                     <span className="sr-only">{c.read}</span>
                   </Link>
                 </li>

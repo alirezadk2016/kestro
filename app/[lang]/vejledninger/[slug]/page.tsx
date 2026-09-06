@@ -8,7 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
-import GuidePlate, { GuidePlateStyles } from "@/components/GuidePlate";
+import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
 import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -169,20 +169,20 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
           sits behind the type on a wide screen and steps out of the way on a
           narrow one, where the words are the only thing worth the space. */}
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-16 lg:py-20">
-        {/* The guide's own plate, not its cluster's.
+        {/* The guide's own panel, not its cluster's.
             Three articles sit in "Levetid og udskiftning" and three in "Køb,
             stand og afhændelse", so the cluster mark put the same drawing
-            behind six of the eight headings. Same position, same breakpoint,
-            same weight — the only thing that changed is that it now says which
-            guide this is. Wider box because a plate is 224×150 and the mark
-            was square; a square frame would have letterboxed it. */}
-        <GuidePlateStyles />
-        <GuidePlate
+            behind six of the eight headings. Same corner, same breakpoint —
+            the only thing that changed is that it now says which guide this
+            is, and is large enough to be read. */}
+        <GuidePanelStyles />
+        <GuidePanel
           slug={guide.slug}
-          cluster={guide.cluster}
-          frame={false}
-          className="pointer-events-none absolute -right-10 top-1/2 hidden h-[21rem] w-[31rem] -translate-y-1/2 text-brand-300/[0.14] lg:block"
+          lang={lang}
+          priority
+          className="pointer-events-none absolute -right-16 top-1/2 hidden aspect-[3/2] w-[34rem] -translate-y-1/2 opacity-[0.5] lg:block"
         />
+
         <Container className="relative">
           <div className="max-w-3xl">
             <Breadcrumbs
