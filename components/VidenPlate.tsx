@@ -40,7 +40,7 @@ import type { Cluster } from "@/lib/guides";
  * ids are namespaced per plate instance, because two SVGs on the same page with
  * the same gradient id is a rendering bug waiting for the second one.
  */
-function PlateDefs({ id }: { id: string }) {
+export function PlateDefs({ id }: { id: string }) {
   return (
     <defs>
       {/* The top face: brightest, and brighter still on the corner nearest the
@@ -88,7 +88,7 @@ function PlateDefs({ id }: { id: string }) {
 }
 
 /** An isometric plane. 2:1 projection, the flattest one that still reads as depth. */
-function plane(cx: number, cy: number, a: number, b: number) {
+export function plane(cx: number, cy: number, a: number, b: number) {
   return `${cx},${cy} ${cx + 2 * a},${cy + a} ${cx + 2 * a - 2 * b},${cy + a + b} ${cx - 2 * b},${cy + b}`;
 }
 
@@ -104,7 +104,7 @@ function plane(cx: number, cy: number, a: number, b: number) {
  * Only the two near faces, because the far two are behind the top and drawing
  * them would only show through the wash.
  */
-function slabSide(cx: number, cy: number, a: number, b: number, h: number) {
+export function slabSide(cx: number, cy: number, a: number, b: number, h: number) {
   const right = [cx + 2 * a, cy + a];
   const front = [cx + 2 * a - 2 * b, cy + a + b];
   const left = [cx - 2 * b, cy + b];
@@ -133,7 +133,7 @@ function slabSide(cx: number, cy: number, a: number, b: number, h: number) {
  * The left face is lighter than the right: one implied source, up and to the
  * left, the same as every other drawing on the site.
  */
-function Slab({
+export function Slab({
   x,
   y,
   a,
@@ -350,7 +350,7 @@ export function VidenHeroPlate({ className = "" }: { className?: string }) {
  * index number and the drawing itself, so the hub's four topics read as four
  * plates in a folder rather than four icons in a grid.
  */
-const drawings: Record<Cluster, (id: string) => React.ReactNode> = {
+export const drawings: Record<Cluster, (id: string) => React.ReactNode> = {
   /*
    * Memory and storage: a SO-DIMM with its contact comb, and an M.2 stick set
    * back behind it. The two objects the cluster is actually about — the old

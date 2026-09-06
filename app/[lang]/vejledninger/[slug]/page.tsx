@@ -8,7 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
-import ClusterMark from "@/components/ClusterMark";
+import GuidePlate, { GuidePlateStyles } from "@/components/GuidePlate";
 import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -169,9 +169,19 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
           sits behind the type on a wide screen and steps out of the way on a
           narrow one, where the words are the only thing worth the space. */}
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-16 lg:py-20">
-        <ClusterMark
+        {/* The guide's own plate, not its cluster's.
+            Three articles sit in "Levetid og udskiftning" and three in "Køb,
+            stand og afhændelse", so the cluster mark put the same drawing
+            behind six of the eight headings. Same position, same breakpoint,
+            same weight — the only thing that changed is that it now says which
+            guide this is. Wider box because a plate is 224×150 and the mark
+            was square; a square frame would have letterboxed it. */}
+        <GuidePlateStyles />
+        <GuidePlate
+          slug={guide.slug}
           cluster={guide.cluster}
-          className="pointer-events-none absolute -right-8 top-1/2 hidden h-[26rem] w-[26rem] -translate-y-1/2 text-brand-300/10 lg:block"
+          frame={false}
+          className="pointer-events-none absolute -right-10 top-1/2 hidden h-[21rem] w-[31rem] -translate-y-1/2 text-brand-300/[0.14] lg:block"
         />
         <Container className="relative">
           <div className="max-w-3xl">

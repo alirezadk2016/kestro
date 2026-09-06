@@ -5,6 +5,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
+import GuidePlate, { GuidePlateStyles } from "@/components/GuidePlate";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -130,6 +131,11 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
+      {/* One stylesheet for all eight guide plates. Rendered here rather than
+          inside each plate: eight identical copies of the same keyframes is
+          thirty kilobytes of HTML saying one thing eight times. */}
+      <GuidePlateStyles />
+
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950">
         {/* The plate sits behind the type and is clipped by the section, so it
             reads as a drawing the page is laid on rather than an illustration
@@ -318,6 +324,31 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                        390 viewport. */
                     className="group -mx-4 flex flex-col gap-x-8 gap-y-2 border-l-2 border-transparent py-6 pl-4 pr-4 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:-mx-5 sm:flex-row sm:items-baseline sm:py-7 sm:pl-5 sm:pr-5"
                   >
+                    {/*
+                     * The guide's own drawing.
+                     *
+                     * The section had pictures of its four topics and none of
+                     * its eight guides, so three articles under "Levetid og
+                     * udskiftning" shared one illustration and the list itself
+                     * had nothing to recognise a row by but its title. Each
+                     * plate draws the one thing its guide is about, and runs.
+                     *
+                     * self-start rather than joining the baseline group: the
+                     * heading and the reading time still align to each other,
+                     * which is what the row was built to do.
+                     *
+                     * Hidden below sm on the same grounds the index plates are
+                     * — on a phone the column is the reading order, and eight
+                     * drawings in it is scrolling, not scanning. Fixed box, so
+                     * nothing shifts as it paints.
+                     */}
+                    <GuidePlate
+                      slug={guide.slug}
+                      cluster={guide.cluster}
+                      frame={false}
+                      className="hidden h-[5.25rem] w-[7.75rem] flex-none self-start text-brand-300/40 transition-colors group-hover:text-brand-300/85 sm:block"
+                    />
+
                     <div className="min-w-0 flex-1">
                       <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
                         {guide.title[lang]}
