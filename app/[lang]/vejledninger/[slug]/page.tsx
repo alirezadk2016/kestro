@@ -176,12 +176,44 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
             the only thing that changed is that it now says which guide this
             is, and is large enough to be read. */}
         <GuidePanelStyles />
-        <GuidePanel
-          slug={guide.slug}
-          lang={lang}
-          priority
-          className="pointer-events-none absolute -right-16 top-1/2 hidden aspect-[3/2] w-[34rem] -translate-y-1/2 opacity-[0.5] lg:block"
-        />
+        {/*
+         * Inside the frame, and fading rather than cut.
+         *
+         * This bled off the right at -right-16 so the drawing would run out of
+         * the page. That works for a transparent line drawing and fails for a
+         * rendered plate: the artwork carries its own frame in the pixels, so
+         * the section's overflow-hidden sliced a border in half and the panel
+         * read as a broken image rather than as a picture running off.
+         *
+         * Now it sits fully inside, and dissolves into the page on its left
+         * with a mask instead of ending on a hard vertical edge. The mask also
+         * does the work opacity used to: the part that passes behind the
+         * heading is the part that is gone.
+         *
+         * xl rather than lg, because at 1024 a 30rem plate and a max-w-3xl
+         * reading column want the same pixels and the column wins.
+         */}
+        <div className="pointer-events-none absolute right-0 top-1/2 hidden aspect-[3/2] w-[32rem] -translate-y-1/2 xl:block 2xl:w-[38rem]">
+          <GuidePanel
+            slug={guide.slug}
+            lang={lang}
+            priority
+            className="h-full w-full opacity-70"
+            style={{
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 42%, #000 100%)",
+              maskImage: "linear-gradient(to right, transparent 0%, #000 42%, #000 100%)",
+            }}
+          />
+          {/* The bottom edge, softened by painting the section's own colour
+              over it rather than by a second mask layer: two mask layers need
+              mask-composite to intersect, and where that is not supported they
+              union instead — which would remove the fade rather than add one.
+              A gradient in the background colour cannot fail that way. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-950 to-transparent"
+          />
+        </div>
 
         <Container className="relative">
           <div className="max-w-3xl">

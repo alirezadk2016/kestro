@@ -1466,11 +1466,14 @@ export default function GuidePanel({
   slug,
   lang,
   className = "",
+  style,
   priority = false,
 }: {
   slug: string;
   lang: Lang;
   className?: string;
+  /** For a caller that needs to mask or place the panel itself. */
+  style?: React.CSSProperties;
   /** The first panel on the page paints eagerly; the rest can wait. */
   priority?: boolean;
 }) {
@@ -1481,7 +1484,7 @@ export default function GuidePanel({
   const art = lang === "da" ? artwork[slug] : undefined;
   if (art) {
     return (
-      <div className={className}>
+      <div className={className} style={style}>
         <Image
           src={art.src}
           alt={art.alt}
@@ -1501,7 +1504,7 @@ export default function GuidePanel({
   const t: T = (l) => l[lang];
 
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       <svg
         viewBox="0 0 768 512"
         className={`h-full w-full gv-${clockOf[slug]}-panel`}
