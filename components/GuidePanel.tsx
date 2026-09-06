@@ -47,19 +47,19 @@ const C = {
  * eight of these share a document and the second one would silently take the
  * first one's gradient.
  */
-function Defs({ id }: { id: string }) {
+function Defs() {
   return (
     <defs>
       {/* Bloom. The single thing that separates a rendered panel from a
           wireframe: light that spills past the edge of the thing emitting it. */}
-      <filter id={`${id}-bloom`} x="-40%" y="-40%" width="180%" height="180%">
+      <filter id="gvx-bloom" x="-40%" y="-40%" width="180%" height="180%">
         <feGaussianBlur stdDeviation="7" result="b" />
         <feMerge>
           <feMergeNode in="b" />
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
-      <filter id={`${id}-soft`} x="-60%" y="-60%" width="220%" height="220%">
+      <filter id="gvx-soft" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur stdDeviation="16" />
       </filter>
 
@@ -67,29 +67,29 @@ function Defs({ id }: { id: string }) {
       {/* The room. Lifted hard from a 0.22 hint to something the subject
           actually stands in: beside a rendered plate the earlier value read as
           an unlit wireframe rather than as a lit object. */}
-      <radialGradient id={`${id}-air`} cx="0.5" cy="0.44" r="0.62">
+      <radialGradient id="gvx-air" cx="0.5" cy="0.44" r="0.62">
         <stop offset="0%" stopColor="#2E6BF0" stopOpacity="0.42" />
         <stop offset="45%" stopColor="#1E40FF" stopOpacity="0.16" />
         <stop offset="100%" stopColor={C.ink} stopOpacity="0" />
       </radialGradient>
 
       {/* A lit surface seen at three angles to one lamp above and to the left. */}
-      <linearGradient id={`${id}-top`} x1="0" y1="0" x2="0.5" y2="1">
+      <linearGradient id="gvx-top" x1="0" y1="0" x2="0.5" y2="1">
         <stop offset="0%" stopColor="#B9D0FF" stopOpacity="0.62" />
         <stop offset="55%" stopColor="#4B79E8" stopOpacity="0.34" />
         <stop offset="100%" stopColor="#26407F" stopOpacity="0.26" />
       </linearGradient>
-      <linearGradient id={`${id}-side`} x1="0" y1="0" x2="0.2" y2="1">
+      <linearGradient id="gvx-side" x1="0" y1="0" x2="0.2" y2="1">
         <stop offset="0%" stopColor="#4E7CE0" stopOpacity="0.6" />
         <stop offset="100%" stopColor="#162C63" stopOpacity="0.55" />
       </linearGradient>
-      <linearGradient id={`${id}-dark`} x1="0" y1="0" x2="0.3" y2="1">
+      <linearGradient id="gvx-dark" x1="0" y1="0" x2="0.3" y2="1">
         <stop offset="0%" stopColor="#1E3466" stopOpacity="0.55" />
         <stop offset="100%" stopColor="#0D1A38" stopOpacity="0.65" />
       </linearGradient>
 
       {/* What a screen does to the air in front of it. */}
-      <linearGradient id={`${id}-screen`} x1="0" y1="0" x2="0.35" y2="1">
+      <linearGradient id="gvx-screen" x1="0" y1="0" x2="0.35" y2="1">
         <stop offset="0%" stopColor="#B7CEFF" stopOpacity="0.5" />
         <stop offset="55%" stopColor={C.deep} stopOpacity="0.30" />
         <stop offset="100%" stopColor="#14275A" stopOpacity="0.40" />
@@ -98,24 +98,24 @@ function Defs({ id }: { id: string }) {
       {/* The pool of light an object stands in, and the streak it throws down
           the ground plane. A mirrored copy of the subject would double the DOM
           for every panel on the page; this says the same thing for four nodes. */}
-      <radialGradient id={`${id}-pool`} cx="0.5" cy="0.5" r="0.5">
+      <radialGradient id="gvx-pool" cx="0.5" cy="0.5" r="0.5">
         <stop offset="0%" stopColor="#6FA0FF" stopOpacity="0.6" />
         <stop offset="55%" stopColor="#4B79E8" stopOpacity="0.22" />
         <stop offset="100%" stopColor="#5B8CFF" stopOpacity="0" />
       </radialGradient>
-      <linearGradient id={`${id}-streak`} x1="0" y1="0" x2="0" y2="1">
+      <linearGradient id="gvx-streak" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#8FB6FF" stopOpacity="0.5" />
         <stop offset="100%" stopColor="#8FB6FF" stopOpacity="0" />
       </linearGradient>
 
       {/* The chip's own surface: dark glass, lighter along its top edge. */}
-      <linearGradient id={`${id}-glass`} x1="0" y1="0" x2="0" y2="1">
+      <linearGradient id="gvx-glass" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#1B2C55" stopOpacity="0.96" />
         <stop offset="100%" stopColor="#0D1732" stopOpacity="0.94" />
       </linearGradient>
 
       {/* A signal running along a wire, brightest at its head. */}
-      <linearGradient id={`${id}-sweep`} x1="0" y1="0" x2="1" y2="0">
+      <linearGradient id="gvx-sweep" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stopColor={C.deep} stopOpacity="0" />
         <stop offset="65%" stopColor={C.accent} stopOpacity="0.55" />
         <stop offset="100%" stopColor="#E6EDFF" stopOpacity="0.95" />
@@ -130,11 +130,11 @@ function Defs({ id }: { id: string }) {
  * Blueprint grid, a few circuit traces, the ground plane in perspective and
  * the frame. Identical on all eight panels — it is what makes them a set.
  */
-function Sheet({ id }: { id: string }) {
+function Sheet() {
   return (
     <>
       <rect x="0" y="0" width="768" height="512" fill={C.ink} />
-      <rect x="0" y="0" width="768" height="512" fill={`url(#${id}-air)`} />
+      <rect x="0" y="0" width="768" height="512" fill="url(#gvx-air)" />
 
       {/* Blueprint grid. Faint enough to be a surface, not a pattern. */}
       <g stroke={C.line} strokeWidth="0.75" opacity="0.075">
@@ -278,7 +278,6 @@ const glyphs = {
  * machine; a panel with them is an instrument reading one.
  */
 function Chip({
-  id,
   x,
   y,
   label,
@@ -287,7 +286,6 @@ function Chip({
   cls = "",
   w = 176,
 }: {
-  id: string;
   x: number;
   y: number;
   label: string;
@@ -300,7 +298,7 @@ function Chip({
   const h = note ? 52 : 38;
   return (
     <g>
-      <rect x={x} y={y} width={w} height={h} rx="6" fill={`url(#${id}-glass)`} />
+      <rect x={x} y={y} width={w} height={h} rx="6" fill="url(#gvx-glass)" />
       <rect
         x={x}
         y={y}
@@ -417,11 +415,11 @@ function Leader({
 }
 
 /** The pool of light and the streak beneath an object standing on the ground. */
-function Contact({ id, cx, cy, rx = 150 }: { id: string; cx: number; cy: number; rx?: number }) {
+function Contact({ cx, cy, rx = 150 }: { cx: number; cy: number; rx?: number }) {
   return (
     <>
-      <ellipse cx={cx} cy={cy} rx={rx} ry={rx * 0.16} fill={`url(#${id}-pool)`} />
-      <rect x={cx - rx * 0.34} y={cy} width={rx * 0.68} height="66" fill={`url(#${id}-streak)`} opacity="0.5" />
+      <ellipse cx={cx} cy={cy} rx={rx} ry={rx * 0.16} fill="url(#gvx-pool)" />
+      <rect x={cx - rx * 0.34} y={cy} width={rx * 0.68} height="66" fill="url(#gvx-streak)" opacity="0.5" />
     </>
   );
 }
@@ -434,18 +432,31 @@ function Contact({ id, cx, cy, rx = 150 }: { id: string; cx: number; cy: number;
  */
 function Laptop({
   id,
+  uid = "",
   x = 0,
   y = 0,
   scale = 1,
   screen,
 }: {
   id: string;
+  /**
+   * Distinguishes this machine's clip path from the others in the same panel.
+   *
+   * The lid's clipPath used to be keyed on the panel alone, so the lifecycle
+   * plate — which draws four machines — emitted four elements all claiming
+   * `#gv-…-lid`, and the last three clipped against the first one's shape.
+   * They are the same outline at different transforms, so it happened to look
+   * right; it is still invalid markup and one geometry change away from
+   * looking wrong.
+   */
+  uid?: string;
   x?: number;
   y?: number;
   scale?: number;
   /** Whatever is showing on the display. */
   screen?: React.ReactNode;
 }) {
+  const clip = `${id}-lid${uid}`;
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`}>
       {/*
@@ -459,7 +470,7 @@ function Laptop({
        * the top.
        */}
       <polygon points="-118,58 118,58 102,-106 -102,-106" fill={C.ink} />
-      <polygon points="-118,58 118,58 102,-106 -102,-106" fill={`url(#${id}-screen)`} />
+      <polygon points="-118,58 118,58 102,-106 -102,-106" fill="url(#gvx-screen)" />
       <polygon
         points="-118,58 118,58 102,-106 -102,-106"
         fill="none"
@@ -467,15 +478,15 @@ function Laptop({
         strokeOpacity="0.8"
         strokeWidth="1.7"
       />
-      <clipPath id={`${id}-lid`}>
+      <clipPath id={clip}>
         <polygon points="-110,52 110,52 96,-100 -96,-100" />
       </clipPath>
-      <g clipPath={`url(#${id}-lid)`}>{screen}</g>
+      <g clipPath={`url(#${clip})`}>{screen}</g>
 
       {/* Deck. */}
       <polygon points="-118,58 118,58 168,112 -168,112" fill={C.ink} />
-      <polygon points="-118,58 118,58 168,112 -168,112" fill={`url(#${id}-top)`} />
-      <polygon points="-168,112 168,112 168,121 -168,121" fill={`url(#${id}-dark)`} />
+      <polygon points="-118,58 118,58 168,112 -168,112" fill="url(#gvx-top)" />
+      <polygon points="-168,112 168,112 168,121 -168,121" fill="url(#gvx-dark)" />
       <polygon
         points="-118,58 118,58 168,112 -168,112"
         fill="none"
@@ -507,9 +518,9 @@ function Laptop({
  * gradients, tones and ids for a wordmark, and none of that belongs inside a
  * laptop screen. If the mark ever changes, it changes in both places.
  */
-function KMark({ id, scale = 1 }: { id: string; scale?: number }) {
+function KMark({ scale = 1 }: { scale?: number }) {
   return (
-    <g transform={`translate(${-57 * scale} ${-50 * scale}) scale(${scale})`} filter={`url(#${id}-bloom)`}>
+    <g transform={`translate(${-57 * scale} ${-50 * scale}) scale(${scale})`} filter="url(#gvx-bloom)">
       <path d="M0 0 H34 V44 L22 100 H0 Z" fill="#9CC0FF" fillOpacity="0.92" />
       <path d="M36 52 L60 0 H114 L67 52 Z" fill="#6C9DFF" fillOpacity="0.95" />
       <path d="M67 52 L114 100 H56 L36 52 Z" fill="#4B7FF0" fillOpacity="0.85" />
@@ -550,11 +561,11 @@ const panels: Record<string, PanelDef> = {
     right: [da("REGN PÅ DET", "DO THE ARITHMETIC"), da("FØR DU SKIFTER", "BEFORE YOU REPLACE")],
     draw: (id, t) => (
       <>
-        <Contact id={id} cx={384} cy={356} rx={130} />
+        <Contact cx={384} cy={356} rx={130} />
         <Laptop id={id} x={384} y={276} scale={0.6} screen={
           <>
-            <rect x="-120" y="-110" width="240" height="176" fill={`url(#${id}-pool)`} opacity="0.55" />
-            <KMark id={id} scale={0.62} />
+            <rect x="-120" y="-110" width="240" height="176" fill="url(#gvx-pool)" opacity="0.55" />
+            <KMark scale={0.62} />
           </>
         } />
 
@@ -585,10 +596,10 @@ const panels: Record<string, PanelDef> = {
           <circle r="4.5" fill="#EAF1FF" />
         </g>
 
-        <Chip id={id} x={42} y={148} w={176} glyph="arrows"
+        <Chip x={42} y={148} w={176} glyph="arrows"
               label={t(da("REPARÉR", "REPAIR"))} note={t(da("Delpris mod værdi", "Part cost vs value"))}
               cls="gv-c0" />
-        <Chip id={id} x={550} y={148} w={176} glyph="box"
+        <Chip x={550} y={148} w={176} glyph="box"
               label={t(da("UDSKIFT", "REPLACE"))} note={t(da("Brugt til samme opgave", "Used, same job"))}
               cls="gv-c1" />
 
@@ -598,7 +609,7 @@ const panels: Record<string, PanelDef> = {
           { x: 366, g: "cpu" as const, l: da("YDELSE", "PERFORMANCE") },
           { x: 536, g: "battery" as const, l: da("SLIDDELE", "WEAR PARTS") },
         ].map((c, i) => (
-          <Chip key={c.x} id={id} x={c.x} y={356} w={148} glyph={c.g} label={t(c.l)} cls={`gv-c${i}`} />
+          <Chip key={c.x} x={c.x} y={356} w={148} glyph={c.g} label={t(c.l)} cls={`gv-c${i}`} />
         ))}
       </>
     ),
@@ -612,13 +623,13 @@ const panels: Record<string, PanelDef> = {
     right: [da("HURTIGERE", "FASTER"), da("MERE PLADS", "MORE ROOM"), da("KLAR TIL MERE", "READY FOR MORE")],
     draw: (id, t) => (
       <>
-        <Contact id={id} cx={410} cy={372} rx={170} />
+        <Contact cx={410} cy={372} rx={170} />
 
         {/* The board, and the empty slot in it. */}
         <g>
           <polygon points="248,300 572,300 640,372 180,372" fill={C.ink} />
-          <polygon points="248,300 572,300 640,372 180,372" fill={`url(#${id}-top)`} />
-          <polygon points="180,372 640,372 640,382 180,382" fill={`url(#${id}-dark)`} />
+          <polygon points="248,300 572,300 640,372 180,372" fill="url(#gvx-top)" />
+          <polygon points="180,372 640,372 640,382 180,382" fill="url(#gvx-dark)" />
           <polygon points="248,300 572,300 640,372 180,372" fill="none" stroke={C.line} strokeOpacity="0.45" strokeWidth="1.3" />
           {/* Components on the board, so it is a board. */}
           <g fill={C.deep} fillOpacity="0.14" stroke={C.line} strokeOpacity="0.3">
@@ -644,10 +655,10 @@ const panels: Record<string, PanelDef> = {
          * an empty socket for the whole hold and never went in at all.
          */}
         <g className="gv-mod">
-          <g filter={`url(#${id}-bloom)`}>
+          <g filter="url(#gvx-bloom)">
             <polygon points="302,316 522,316 542,340 318,340" fill={C.ink} />
-            <polygon points="302,316 522,316 542,340 318,340" fill={`url(#${id}-top)`} />
-            <polygon points="318,340 542,340 542,352 318,352" fill={`url(#${id}-side)`} />
+            <polygon points="302,316 522,316 542,340 318,340" fill="url(#gvx-top)" />
+            <polygon points="318,340 542,340 542,352 318,352" fill="url(#gvx-side)" />
             <polygon points="302,316 522,316 542,340 318,340" fill="none" stroke={C.bright} strokeOpacity="0.6" strokeWidth="1.3" />
             {/* DRAM packages. */}
             <g fill={C.deep} fillOpacity="0.3" stroke={C.line} strokeOpacity="0.5">
@@ -673,13 +684,13 @@ const panels: Record<string, PanelDef> = {
           ))}
         </g>
 
-        <Chip id={id} x={42} y={150} w={196} glyph="chipIcon"
+        <Chip x={42} y={150} w={196} glyph="chipIcon"
               label={t(da("HUKOMMELSE", "MEMORY"))} note={t(da("Modul på vej i", "Module going in"))}
               cls="gv-c0" />
-        <Chip id={id} x={42} y={222} w={196} glyph="ports"
+        <Chip x={42} y={222} w={196} glyph="ports"
               label={t(da("SOKKEL", "SLOT"))} note={t(da("Kontakt sluttet", "Contact made"))}
               cls="gv-c1" />
-        <Chip id={id} x={42} y={294} w={196} glyph="gauge"
+        <Chip x={42} y={294} w={196} glyph="gauge"
               label={t(da("LÅST", "SEATED"))} note={t(da("Klar til brug", "Ready to use"))}
               cls="gv-c2" />
       </>
@@ -694,7 +705,7 @@ const panels: Record<string, PanelDef> = {
     right: [da("SÅDAN SER MAN", "THIS IS HOW YOU"), da("EN MASKINE EFTER", "CHECK A MACHINE")],
     draw: (id, t) => (
       <>
-        <Contact id={id} cx={384} cy={362} rx={150} />
+        <Contact cx={384} cy={362} rx={150} />
         <Laptop
           id={id}
           x={384}
@@ -745,7 +756,6 @@ const panels: Record<string, PanelDef> = {
         ].map((c, i) => (
           <Chip
             key={`${c.x}-${c.y}`}
-            id={id}
             x={c.x}
             y={c.y}
             glyph={c.g}
@@ -766,12 +776,12 @@ const panels: Record<string, PanelDef> = {
     right: [da("DELENE KAN KUN", "THE PARTS ONLY"), da("SIDDE ÉT STED", "FIT ONE WAY")],
     draw: (id, t) => (
       <>
-        <Contact id={id} cx={430} cy={382} rx={165} />
+        <Contact cx={430} cy={382} rx={165} />
         {/* The board everything lands on. */}
         <g>
           <polygon points="300,330 580,330 640,384 220,384" fill={C.ink} />
-          <polygon points="300,330 580,330 640,384 220,384" fill={`url(#${id}-top)`} />
-          <polygon points="220,384 640,384 640,394 220,394" fill={`url(#${id}-dark)`} />
+          <polygon points="300,330 580,330 640,384 220,384" fill="url(#gvx-top)" />
+          <polygon points="220,384 640,384 640,394 220,394" fill="url(#gvx-dark)" />
           <polygon points="300,330 580,330 640,384 220,384" fill="none" stroke={C.line} strokeOpacity="0.45" strokeWidth="1.3" />
         </g>
 
@@ -800,7 +810,7 @@ const panels: Record<string, PanelDef> = {
         ].map((p) => (
           <g key={p.c} className={p.c}>
             <polygon points={p.pts} fill={C.ink} />
-            <polygon points={p.pts} fill={`url(#${id}-top)`} />
+            <polygon points={p.pts} fill="url(#gvx-top)" />
             <polygon points={p.pts} fill="none" stroke={C.line} strokeOpacity="0.55" strokeWidth="1.2" />
             {p.bar && (
               <polygon points={p.bar} fill={C.deep} fillOpacity="0.24" stroke={C.line}
@@ -817,7 +827,7 @@ const panels: Record<string, PanelDef> = {
           { y: 260, g: "chipIcon" as const, l: da("HUKOMMELSE", "MEMORY") },
           { y: 326, g: "gauge" as const, l: da("GRAFIKKORT", "GRAPHICS") },
         ].map((c, i) => (
-          <Chip key={c.y} id={id} x={42} y={c.y} w={214} glyph={c.g} label={t(c.l)} cls={`gv-c${3 - i}`} />
+          <Chip key={c.y} x={42} y={c.y} w={214} glyph={c.g} label={t(c.l)} cls={`gv-c${3 - i}`} />
         ))}
       </>
     ),
@@ -831,7 +841,7 @@ const panels: Record<string, PanelDef> = {
     right: [da("SVARET AFHÆNGER", "THE ANSWER DEPENDS"), da("AF MASKINEN", "ON THE MACHINE")],
     draw: (id, t) => (
       <>
-        <Contact id={id} cx={196} cy={340} rx={112} />
+        <Contact cx={196} cy={340} rx={112} />
         <Laptop id={id} x={196} y={266} scale={0.55} screen={
           <g opacity="0.45" stroke={C.line} strokeWidth="1.6" fill="none">
             <path d="M-56 -30h112M-56 -8h78M-56 14h96" strokeOpacity="0.45" />
@@ -858,16 +868,16 @@ const panels: Record<string, PanelDef> = {
         {/* Three that a machine of this age normally clears, and one that is
             genuinely open. The panel must not answer a question the article
             spends a section refusing to answer for you. */}
-        <Chip id={id} x={432} y={148} w={228} glyph="cpu"
+        <Chip x={432} y={148} w={228} glyph="cpu"
               label={t(da("PROCESSOR", "PROCESSOR"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c0" />
-        <Chip id={id} x={432} y={222} w={228} glyph="shield"
+        <Chip x={432} y={222} w={228} glyph="shield"
               label={t(da("TPM 2.0", "TPM 2.0"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c1" />
-        <Chip id={id} x={432} y={296} w={228} glyph="chipIcon"
+        <Chip x={432} y={296} w={228} glyph="chipIcon"
               label={t(da("SIKKER OPSTART", "SECURE BOOT"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c2" />
 
         {/* The open one. Dashed, and it never resolves. */}
         <g>
-          <rect x="432" y="370" width="228" height="38" rx="6" fill={`url(#${id}-glass)`} />
+          <rect x="432" y="370" width="228" height="38" rx="6" fill="url(#gvx-glass)" />
           <rect x="432" y="370" width="228" height="38" rx="6" fill="none"
                 stroke={C.accent} strokeOpacity="0.4" strokeWidth="1" strokeDasharray="4 3" />
           <rect x="442" y="375" width="28" height="28" rx="4" fill={C.deep} fillOpacity="0.1"
@@ -924,14 +934,14 @@ const panels: Record<string, PanelDef> = {
 
       return (
         <>
-          <Contact id={id} cx={412} cy={330} rx={128} />
+          <Contact cx={412} cy={330} rx={128} />
           {/* The drive. */}
           <g>
             <polygon points={quad(0, 0, 1, 1)} fill={C.ink} />
-            <polygon points={quad(0, 0, 1, 1)} fill={`url(#${id}-top)`} />
+            <polygon points={quad(0, 0, 1, 1)} fill="url(#gvx-top)" />
             <polygon
               points={`${at(0, 1).x},${at(0, 1).y} ${at(1, 1).x},${at(1, 1).y} ${at(1, 1).x},${at(1, 1).y + 14} ${at(0, 1).x},${at(0, 1).y + 14}`}
-              fill={`url(#${id}-side)`}
+              fill="url(#gvx-side)"
             />
             <polygon points={quad(0, 0, 1, 1)} fill="none" stroke={C.line} strokeOpacity="0.5" strokeWidth="1.3" />
           </g>
@@ -958,7 +968,7 @@ const panels: Record<string, PanelDef> = {
           </g>
 
           {/* The write head, crossing the surface once. */}
-          <g className="gv-head" filter={`url(#${id}-bloom)`}>
+          <g className="gv-head" filter="url(#gvx-bloom)">
             <line
               x1={at(0.02, 0.02).x}
               y1={at(0.02, 0.02).y}
@@ -969,16 +979,16 @@ const panels: Record<string, PanelDef> = {
             />
           </g>
 
-          <Chip id={id} x={42} y={150} w={196} glyph="drive"
+          <Chip x={42} y={150} w={196} glyph="drive"
                 label={t(da("DATA FUNDET", "DATA FOUND"))} note={t(da("Hele lagringen", "The whole drive"))} cls="gv-c0" />
-          <Chip id={id} x={42} y={222} w={196} glyph="arrows"
+          <Chip x={42} y={222} w={196} glyph="arrows"
                 label={t(da("OVERSKRIVES", "OVERWRITTEN"))} note={t(da("Blok for blok", "Block by block"))} cls="gv-c1" />
-          <Chip id={id} x={42} y={294} w={196} glyph="shield"
+          <Chip x={42} y={294} w={196} glyph="shield"
                 label={t(da("VERIFICERET", "VERIFIED"))} note={t(da("Rapport udstedt", "Report issued"))} cls="gv-c2" />
 
           {/* The verification mark, landing once the surface is clear. */}
           <g className="gv-shield" style={{ transformOrigin: "662px 320px" }}>
-            <g filter={`url(#${id}-bloom)`}>
+            <g filter="url(#gvx-bloom)">
               <path
                 d="M662 286l30 13v21c0 21-13 30-30 34-17-4-30-13-30-34v-21z"
                 fill={C.deep}
@@ -1015,21 +1025,21 @@ const panels: Record<string, PanelDef> = {
           { x: 148, s: 0.3, o: 1 },
           { x: 268, s: 0.3, o: 0.82 },
           { x: 388, s: 0.3, o: 0.66 },
-        ].map((m) => (
+        ].map((m, i) => (
           <g key={m.x} opacity={m.o}>
-            <Contact id={id} cx={m.x} cy={356} rx={58} />
-            <Laptop id={id} x={m.x} y={318} scale={m.s} screen={<KMark id={id} scale={0.9} />} />
+            <Contact cx={m.x} cy={356} rx={58} />
+            <Laptop id={id} uid={`-f${i}`} x={m.x} y={318} scale={m.s} screen={<KMark scale={0.9} />} />
           </g>
         ))}
         <g opacity="0.55" className="gv-ghost">
-          <Laptop id={id} x={606} y={318} scale={0.3} />
+          <Laptop id={id} uid="-ghost" x={606} y={318} scale={0.3} />
         </g>
 
         {/* The date. A wall across the run of time, not a label — the article
             states it in type. Given a face as well as an edge, so it reads as
             something the updates stop at rather than as a stray rule. */}
         <rect x="492" y="196" width="16" height="160" fill={C.deep} opacity="0.12" />
-        <g filter={`url(#${id}-bloom)`}>
+        <g filter="url(#gvx-bloom)">
           <line x1="500" y1="188" x2="500" y2="356" stroke={C.accent} strokeWidth="1.8" />
           <path d="M492 188h16" stroke={C.bright} strokeWidth="2" strokeOpacity="0.8" />
           <circle cx="500" cy="356" r="6" fill={C.accent} />
@@ -1043,10 +1053,10 @@ const panels: Record<string, PanelDef> = {
           ))}
         </g>
 
-        <Chip id={id} x={42} y={128} w={214} glyph="shield"
+        <Chip x={42} y={128} w={214} glyph="shield"
               label={t(da("SIKKERHEDSOPDATERINGER", "SECURITY UPDATES"))}
               note={t(da("Stopper på datoen", "Stop on the date"))} cls="gv-c0" />
-        <Chip id={id} x={512} y={128} w={214} glyph="gauge"
+        <Chip x={512} y={128} w={214} glyph="gauge"
               label={t(da("MASKINEN KØRER VIDERE", "THE MACHINE RUNS ON"))}
               note={t(da("Uden nye rettelser", "Without new fixes"))} cls="gv-c1" />
       </>
@@ -1068,15 +1078,15 @@ const panels: Record<string, PanelDef> = {
          * describing was drawn on top of the thing it described.
          */}
         <g opacity="0.7">
-          <Contact id={id} cx={176} cy={386} rx={104} />
-          <Laptop id={id} x={176} y={336} scale={0.42} screen={<KMark id={id} scale={0.85} />} />
+          <Contact cx={176} cy={386} rx={104} />
+          <Laptop id={id} uid="-a" x={176} y={336} scale={0.42} screen={<KMark scale={0.85} />} />
         </g>
-        <Contact id={id} cx={556} cy={386} rx={104} />
-        <Laptop id={id} x={556} y={336} scale={0.42} screen={<KMark id={id} scale={0.85} />} />
+        <Contact cx={556} cy={386} rx={104} />
+        <Laptop id={id} uid="-b" x={556} y={336} scale={0.42} screen={<KMark scale={0.85} />} />
 
         {/* Over the left one: nothing stated. */}
         <g>
-          <rect x="86" y="196" width="200" height="34" rx="6" fill={`url(#${id}-glass)`} />
+          <rect x="86" y="196" width="200" height="34" rx="6" fill="url(#gvx-glass)" />
           <rect x="86" y="196" width="200" height="34" rx="6" fill="none" stroke={C.accent}
                 strokeOpacity="0.35" strokeWidth="1" strokeDasharray="4 3" className="gv-open" />
           <text x="186" y="218" fontSize="11.5" fontWeight="600" fill={C.paper} letterSpacing="1.1"
@@ -1096,7 +1106,7 @@ const panels: Record<string, PanelDef> = {
           { y: 238, g: "drive" as const, l: da("DOKUMENTERET", "DOCUMENTED") },
         ].map((c, i) => (
           <g key={c.y}>
-            <rect x="432" y={c.y} width="250" height="34" rx="6" fill={`url(#${id}-glass)`} />
+            <rect x="432" y={c.y} width="250" height="34" rx="6" fill="url(#gvx-glass)" />
             <rect x="432" y={c.y} width="250" height="34" rx="6" fill="none" stroke={C.accent}
                   strokeOpacity="0.2" strokeWidth="1" />
             <g className={`gv-step gv-c${i}`}>
@@ -1411,9 +1421,40 @@ ${[0, 1, 2, 3]
 @media (min-width: 640px) { .gv-lbl { display: block; } }
 `;
 
-/** The panels' stylesheet. Rendered once per page, never per panel. */
+/**
+ * The panels' stylesheet, and the parts of the drawing that are the same in
+ * every one of them. Rendered once per page, never per panel.
+ *
+ * Eight panels used to carry their own copy of eleven gradients, two filters
+ * and the whole blueprint sheet — about 107 kB of inline SVG on the hub, and
+ * the App Router serialises server-rendered markup a second time into the RSC
+ * payload, so every byte was paid for twice. The gradients were byte-for-byte
+ * identical and namespaced only to stop the ids colliding, which sharing
+ * settles by construction; the sheet is identical by design, because being
+ * identical is what makes eight drawings read as one system.
+ *
+ * The carrier is a zero-size svg, which is the ordinary way to put a defs
+ * block in a document without drawing it. aria-hidden and focusable="false"
+ * keep it out of the accessibility tree and the tab order.
+ */
 export function GuidePanelStyles() {
-  return <style dangerouslySetInnerHTML={{ __html: css }} />;
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+      <svg
+        width="0"
+        height="0"
+        aria-hidden="true"
+        focusable="false"
+        style={{ position: "absolute" }}
+      >
+        <Defs />
+        <symbol id="gvx-sheet" viewBox="0 0 768 512">
+          <Sheet />
+        </symbol>
+      </svg>
+    </>
+  );
 }
 
 /*
@@ -1449,6 +1490,16 @@ const artwork: Record<string, { src: string; alt: string }> = {
 };
 
 export const hasGuidePanel = (slug: string) => slug in panels;
+
+/**
+ * Whether a page showing this guide needs the drawn panels' chrome at all.
+ *
+ * Three guides render supplied artwork in Danish, and an <img> needs neither
+ * the keyframes nor the shared defs. An article page for one of them was
+ * shipping 17 kB of stylesheet and symbol for a drawing it does not contain.
+ */
+export const needsPanelChrome = (slug: string, lang: Lang) =>
+  !(lang === "da" && slug in artwork);
 
 /** Which clock a slug runs on, so its chips animate on its own cycle. */
 const clockOf: Record<string, string> = {
@@ -1515,8 +1566,9 @@ export default function GuidePanel({
            delay the largest paint. Everything below the fold decodes lazily. */
         style={{ contentVisibility: priority ? "visible" : "auto", containIntrinsicSize: "768px 512px" }}
       >
-        <Defs id={id} />
-        <Sheet id={id} />
+        {/* The frame, the grid, the traces and the ground, drawn once for the
+            page and referenced here. */}
+        <use href="#gvx-sheet" width="768" height="512" />
         {def.draw(id, t)}
         <Caption
           num={def.num}

@@ -31,7 +31,7 @@ const copy = {
   en: {
     metaTitle: "Privacy policy | Kestro",
     metaDescription:
-      "How Kestro handles personal data: the contact forms, the two values we store locally, cookieless visit counts — and the Google statistics that only run if you accept them.",
+      "How Kestro handles personal data: the contact forms, what we store locally, cookieless visit counts, and statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
       "What data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",

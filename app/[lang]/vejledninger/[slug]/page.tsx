@@ -8,7 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
-import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
+import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -175,7 +175,10 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
             behind six of the eight headings. Same corner, same breakpoint —
             the only thing that changed is that it now says which guide this
             is, and is large enough to be read. */}
-        <GuidePanelStyles />
+        {/* Only where a drawn panel is what renders: the three guides with
+            supplied artwork show an image, which needs neither the keyframes
+            nor the shared defs. */}
+        {needsPanelChrome(guide.slug, lang) && <GuidePanelStyles />}
         {/*
          * Inside the frame, and fading rather than cut.
          *
