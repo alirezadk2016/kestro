@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Lang, Localized } from "@/lib/i18n";
 
 /*
@@ -63,21 +64,24 @@ function Defs({ id }: { id: string }) {
       </filter>
 
       {/* The air in the room, behind the subject. */}
-      <radialGradient id={`${id}-air`} cx="0.5" cy="0.46" r="0.55">
-        <stop offset="0%" stopColor={C.deep} stopOpacity="0.22" />
-        <stop offset="55%" stopColor="#1E40FF" stopOpacity="0.07" />
+      {/* The room. Lifted hard from a 0.22 hint to something the subject
+          actually stands in: beside a rendered plate the earlier value read as
+          an unlit wireframe rather than as a lit object. */}
+      <radialGradient id={`${id}-air`} cx="0.5" cy="0.44" r="0.62">
+        <stop offset="0%" stopColor="#2E6BF0" stopOpacity="0.42" />
+        <stop offset="45%" stopColor="#1E40FF" stopOpacity="0.16" />
         <stop offset="100%" stopColor={C.ink} stopOpacity="0" />
       </radialGradient>
 
       {/* A lit surface seen at three angles to one lamp above and to the left. */}
       <linearGradient id={`${id}-top`} x1="0" y1="0" x2="0.5" y2="1">
-        <stop offset="0%" stopColor="#8FAEFF" stopOpacity="0.42" />
-        <stop offset="60%" stopColor="#4B79E8" stopOpacity="0.20" />
-        <stop offset="100%" stopColor="#2A4694" stopOpacity="0.14" />
+        <stop offset="0%" stopColor="#B9D0FF" stopOpacity="0.62" />
+        <stop offset="55%" stopColor="#4B79E8" stopOpacity="0.34" />
+        <stop offset="100%" stopColor="#26407F" stopOpacity="0.26" />
       </linearGradient>
       <linearGradient id={`${id}-side`} x1="0" y1="0" x2="0.2" y2="1">
-        <stop offset="0%" stopColor="#3E67C8" stopOpacity="0.45" />
-        <stop offset="100%" stopColor="#152A5E" stopOpacity="0.42" />
+        <stop offset="0%" stopColor="#4E7CE0" stopOpacity="0.6" />
+        <stop offset="100%" stopColor="#162C63" stopOpacity="0.55" />
       </linearGradient>
       <linearGradient id={`${id}-dark`} x1="0" y1="0" x2="0.3" y2="1">
         <stop offset="0%" stopColor="#1E3466" stopOpacity="0.55" />
@@ -86,27 +90,28 @@ function Defs({ id }: { id: string }) {
 
       {/* What a screen does to the air in front of it. */}
       <linearGradient id={`${id}-screen`} x1="0" y1="0" x2="0.35" y2="1">
-        <stop offset="0%" stopColor="#9EBBFF" stopOpacity="0.34" />
-        <stop offset="55%" stopColor={C.deep} stopOpacity="0.18" />
-        <stop offset="100%" stopColor="#12224A" stopOpacity="0.30" />
+        <stop offset="0%" stopColor="#B7CEFF" stopOpacity="0.5" />
+        <stop offset="55%" stopColor={C.deep} stopOpacity="0.30" />
+        <stop offset="100%" stopColor="#14275A" stopOpacity="0.40" />
       </linearGradient>
 
       {/* The pool of light an object stands in, and the streak it throws down
           the ground plane. A mirrored copy of the subject would double the DOM
           for every panel on the page; this says the same thing for four nodes. */}
       <radialGradient id={`${id}-pool`} cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%" stopColor="#5B8CFF" stopOpacity="0.34" />
+        <stop offset="0%" stopColor="#6FA0FF" stopOpacity="0.6" />
+        <stop offset="55%" stopColor="#4B79E8" stopOpacity="0.22" />
         <stop offset="100%" stopColor="#5B8CFF" stopOpacity="0" />
       </radialGradient>
       <linearGradient id={`${id}-streak`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#7EA6FF" stopOpacity="0.30" />
-        <stop offset="100%" stopColor="#7EA6FF" stopOpacity="0" />
+        <stop offset="0%" stopColor="#8FB6FF" stopOpacity="0.5" />
+        <stop offset="100%" stopColor="#8FB6FF" stopOpacity="0" />
       </linearGradient>
 
       {/* The chip's own surface: dark glass, lighter along its top edge. */}
       <linearGradient id={`${id}-glass`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#16224180" stopOpacity="0.95" />
-        <stop offset="100%" stopColor="#0C142B" stopOpacity="0.92" />
+        <stop offset="0%" stopColor="#1B2C55" stopOpacity="0.96" />
+        <stop offset="100%" stopColor="#0D1732" stopOpacity="0.94" />
       </linearGradient>
 
       {/* A signal running along a wire, brightest at its head. */}
@@ -132,7 +137,7 @@ function Sheet({ id }: { id: string }) {
       <rect x="0" y="0" width="768" height="512" fill={`url(#${id}-air)`} />
 
       {/* Blueprint grid. Faint enough to be a surface, not a pattern. */}
-      <g stroke={C.line} strokeWidth="0.75" opacity="0.05">
+      <g stroke={C.line} strokeWidth="0.75" opacity="0.075">
         {Array.from({ length: 24 }, (_, i) => (
           <line key={`v${i}`} x1={i * 32} y1="0" x2={i * 32} y2="512" />
         ))}
@@ -142,7 +147,7 @@ function Sheet({ id }: { id: string }) {
       </g>
 
       {/* Traces. A board under the drawing, not a decoration on top of it. */}
-      <g stroke={C.line} strokeWidth="1" fill="none" opacity="0.09">
+      <g stroke={C.line} strokeWidth="1" fill="none" opacity="0.13">
         <path d="M0 128h84l24 24v72h56" />
         <path d="M768 160h-96l-28 28v96" />
         <path d="M0 416h120l32-32h72" />
@@ -183,10 +188,10 @@ function Sheet({ id }: { id: string }) {
         height="480"
         fill="none"
         stroke={C.line}
-        strokeOpacity="0.13"
+        strokeOpacity="0.18"
         strokeWidth="1"
       />
-      <g stroke={C.accent} strokeOpacity="0.5" strokeWidth="1.4">
+      <g stroke={C.accent} strokeOpacity="0.75" strokeWidth="1.6">
         <path d="M16 44V16h28M724 16h28v28M752 468v28h-28M44 496H16v-28" fill="none" />
       </g>
     </>
@@ -304,15 +309,15 @@ function Chip({
         rx="6"
         fill="none"
         stroke={C.accent}
-        strokeOpacity="0.34"
-        strokeWidth="1"
+        strokeOpacity="0.6"
+        strokeWidth="1.2"
       />
       {/* Lit along the top edge, like every other surface here. */}
       <path
         d={`M${x + 6} ${y + 0.5}H${x + w - 6}`}
         stroke="#FFFFFF"
-        strokeOpacity="0.16"
-        strokeWidth="1"
+        strokeOpacity="0.3"
+        strokeWidth="1.2"
       />
 
       <rect
@@ -324,14 +329,14 @@ function Chip({
         fill={C.deep}
         fillOpacity="0.1"
         stroke={C.accent}
-        strokeOpacity="0.35"
+        strokeOpacity="0.55"
       />
       <g transform={`translate(${x + 14} ${y + (h - 28) / 2 + 4})`}>
         <path
           d={glyphs[glyph]}
           fill="none"
-          stroke={C.line}
-          strokeOpacity="0.85"
+          stroke="#CFE0FF"
+          strokeOpacity="0.95"
           strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -362,7 +367,7 @@ function Chip({
           >
             {note}
           </text>
-          <rect x={x + 48} y={y + 41} width={w - 62} height="3" rx="1.5" fill={C.line} fillOpacity="0.16" />
+          <rect x={x + 48} y={y + 41} width={w - 62} height="3" rx="1.5" fill={C.line} fillOpacity="0.22" />
           <rect
             x={x + 48}
             y={y + 41}
@@ -458,9 +463,9 @@ function Laptop({
       <polygon
         points="-118,58 118,58 102,-106 -102,-106"
         fill="none"
-        stroke={C.line}
-        strokeOpacity="0.5"
-        strokeWidth="1.4"
+        stroke="#B9D0FF"
+        strokeOpacity="0.8"
+        strokeWidth="1.7"
       />
       <clipPath id={`${id}-lid`}>
         <polygon points="-110,52 110,52 96,-100 -96,-100" />
@@ -474,21 +479,40 @@ function Laptop({
       <polygon
         points="-118,58 118,58 168,112 -168,112"
         fill="none"
-        stroke={C.line}
-        strokeOpacity="0.45"
-        strokeWidth="1.3"
+        stroke="#B9D0FF"
+        strokeOpacity="0.75"
+        strokeWidth="1.6"
       />
-      <path d="M-168 112h336v9h-336z" fill="none" stroke={C.line} strokeOpacity="0.3" strokeWidth="1" />
+      <path d="M-168 112h336v9h-336z" fill="none" stroke={C.line} strokeOpacity="0.5" strokeWidth="1.1" />
 
       {/* Keys and trackpad, as hatching rather than one key at a time. */}
-      <g stroke={C.line} strokeOpacity="0.22" strokeWidth="1">
+      <g stroke={C.line} strokeOpacity="0.4" strokeWidth="1">
         {Array.from({ length: 5 }, (_, i) => (
           <line key={i} x1={-106 - i * 12} y1={68 + i * 8.8} x2={106 + i * 12} y2={68 + i * 8.8} />
         ))}
       </g>
       <rect x="-32" y="96" width="64" height="11" rx="2" fill="none" stroke={C.line} strokeOpacity="0.28" />
       {/* The hinge, catching the lamp. */}
-      <path d="M-118 58h236" stroke="#CFE0FF" strokeOpacity="0.45" strokeWidth="1.6" />
+      <path d="M-118 58h236" stroke="#E7EFFF" strokeOpacity="0.85" strokeWidth="2.2" />
+    </g>
+  );
+}
+
+
+/**
+ * The Kestro mark, lit, for a machine that is switched on.
+ *
+ * The geometry is the one in Logo.tsx — a tapering stem, an arm and a fold —
+ * repeated here rather than imported because that component ships its own
+ * gradients, tones and ids for a wordmark, and none of that belongs inside a
+ * laptop screen. If the mark ever changes, it changes in both places.
+ */
+function KMark({ id, scale = 1 }: { id: string; scale?: number }) {
+  return (
+    <g transform={`translate(${-57 * scale} ${-50 * scale}) scale(${scale})`} filter={`url(#${id}-bloom)`}>
+      <path d="M0 0 H34 V44 L22 100 H0 Z" fill="#9CC0FF" fillOpacity="0.92" />
+      <path d="M36 52 L60 0 H114 L67 52 Z" fill="#6C9DFF" fillOpacity="0.95" />
+      <path d="M67 52 L114 100 H56 L36 52 Z" fill="#4B7FF0" fillOpacity="0.85" />
     </g>
   );
 }
@@ -528,9 +552,10 @@ const panels: Record<string, PanelDef> = {
       <>
         <Contact id={id} cx={384} cy={356} rx={130} />
         <Laptop id={id} x={384} y={276} scale={0.6} screen={
-          <g opacity="0.5">
-            <path d="M-70 -40h140M-70 -20h96M-70 0h120" stroke={C.line} strokeOpacity="0.4" strokeWidth="2" />
-          </g>
+          <>
+            <rect x="-120" y="-110" width="240" height="176" fill={`url(#${id}-pool)`} opacity="0.55" />
+            <KMark id={id} scale={0.62} />
+          </>
         } />
 
         {/* The two roads out of the machine. Dashed, and running — the
@@ -993,7 +1018,7 @@ const panels: Record<string, PanelDef> = {
         ].map((m) => (
           <g key={m.x} opacity={m.o}>
             <Contact id={id} cx={m.x} cy={356} rx={58} />
-            <Laptop id={id} x={m.x} y={318} scale={m.s} />
+            <Laptop id={id} x={m.x} y={318} scale={m.s} screen={<KMark id={id} scale={0.9} />} />
           </g>
         ))}
         <g opacity="0.55" className="gv-ghost">
@@ -1044,10 +1069,10 @@ const panels: Record<string, PanelDef> = {
          */}
         <g opacity="0.7">
           <Contact id={id} cx={176} cy={386} rx={104} />
-          <Laptop id={id} x={176} y={336} scale={0.42} />
+          <Laptop id={id} x={176} y={336} scale={0.42} screen={<KMark id={id} scale={0.85} />} />
         </g>
         <Contact id={id} cx={556} cy={386} rx={104} />
-        <Laptop id={id} x={556} y={336} scale={0.42} />
+        <Laptop id={id} x={556} y={336} scale={0.42} screen={<KMark id={id} scale={0.85} />} />
 
         {/* Over the left one: nothing stated. */}
         <g>
@@ -1391,6 +1416,38 @@ export function GuidePanelStyles() {
   return <style dangerouslySetInnerHTML={{ __html: css }} />;
 }
 
+/*
+ * Supplied artwork.
+ *
+ * Three of these guides have a rendered plate that Kestro had made rather
+ * than one drawn here, and where a real render exists it beats a drawing of
+ * one: the light, the depth of field and the material on a photographed board
+ * are not things inline SVG gets to for free.
+ *
+ * Danish only, and the reason is in the artwork. The labels inside these
+ * images — SKÆRM, TASTATUR, BATTERI, RAM, HURTIGERE ARBEJDSGANG — are baked
+ * into the pixels and cannot be swapped for a reader who chose English. The
+ * English hub keeps the drawn panel, which is the same picture in the
+ * language the reader asked for. That is a deliberate trade, not an oversight.
+ *
+ * Local WebP through next/image: 23-42 kB each, down from 400-480 kB as PNG,
+ * with a fixed 3:2 box so nothing shifts as they decode.
+ */
+const artwork: Record<string, { src: string; alt: string }> = {
+  "tjek-brugt-baerbar-foer-koeb": {
+    src: "/viden/inspektion.webp",
+    alt: "Bærbar under gennemgang med kontrolpunkter for skærm, tastatur, porte, batteri og hardware.",
+  },
+  "opgrader-ram-i-baerbar": {
+    src: "/viden/ydelse.webp",
+    alt: "Et RAM-modul og et NVMe SSD over hinanden, som de to opgraderinger der flytter mest.",
+  },
+  "windows-10-support-slutter": {
+    src: "/viden/levetid.webp",
+    alt: "En bærbar i midten af et livscyklusforløb: ny, udrullet, aktiv, opgraderet, udskiftet.",
+  },
+};
+
 export const hasGuidePanel = (slug: string) => slug in panels;
 
 /** Which clock a slug runs on, so its chips animate on its own cycle. */
@@ -1419,6 +1476,24 @@ export default function GuidePanel({
 }) {
   const def = panels[slug];
   if (!def) return null;
+
+  /* A rendered plate where one exists, in the language it is set in. */
+  const art = lang === "da" ? artwork[slug] : undefined;
+  if (art) {
+    return (
+      <div className={className}>
+        <Image
+          src={art.src}
+          alt={art.alt}
+          width={768}
+          height={512}
+          sizes="(min-width: 1024px) 768px, 100vw"
+          priority={priority}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    );
+  }
 
   /* One gradient and filter namespace per panel: eight of these share a
      document, and the second would silently take the first one's ids. */
