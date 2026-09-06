@@ -2,6 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import {
+  RESTING,
+  SWEEP,
+  clamp01,
+  colourAt,
+  rgb,
+  type RGB,
+} from "@/lib/battery";
 import { type Lang } from "@/lib/i18n";
 
 /**
@@ -54,60 +62,8 @@ const BANDS = [
   },
 ] as const;
 
-/*
- * The colour of a given capacity.
- *
- * Flat inside a band and blended across a two-point window at each boundary.
- * A hard switch would tear as the value crossed 80, and a gradient running the
- * whole way would put a half-blue colour on 79 — which reads as "nearly good"
- * on a figure the page calls "replacement recommended". This holds the band's
- * own colour everywhere it matters and only moves in the moment of crossing.
- */
-const RED: RGB = [239, 68, 68];
-const ORANGE: RGB = [249, 115, 22];
-const BLUE: RGB = [59, 130, 246]; // brand-500, the Kestro blue
-const GREEN: RGB = [34, 197, 94];
-
-type RGB = [number, number, number];
-
-const mix = (a: RGB, b: RGB, t: number): RGB => [
-  Math.round(a[0] + (b[0] - a[0]) * t),
-  Math.round(a[1] + (b[1] - a[1]) * t),
-  Math.round(a[2] + (b[2] - a[2]) * t),
-];
-
-const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
-
-function colourAt(value: number): RGB {
-  /*
-   * The blend finishes on the boundary, and starts at the half-point before it.
-   *
-   * A window straddling the boundary is the obvious way to write this and it
-   * is wrong: at exactly 80 — the first value of GOOD — the colour came out
-   * rgb(106 126 190), a washed blue-grey halfway from orange, and at 90 it was
-   * teal instead of green. Measured, both of them.
-   *
-   * Half a point is also exactly where the displayed figure rounds over, so
-   * every integer the reader can actually see carries its own band's colour,
-   * and the crossing still takes a continuous ramp rather than a cut.
-   */
-  if (value < 79.5) return mix(RED, ORANGE, clamp01(value / 79.5));
-  if (value < 80) return mix(ORANGE, BLUE, (value - 79.5) * 2);
-  if (value < 89.5) return BLUE;
-  if (value < 90) return mix(BLUE, GREEN, (value - 89.5) * 2);
-  return GREEN;
-}
-
-const rgb = (c: RGB, alpha = 1) =>
-  alpha === 1 ? `rgb(${c[0]} ${c[1]} ${c[2]})` : `rgb(${c[0]} ${c[1]} ${c[2]} / ${alpha})`;
-
 const bandFor = (value: number) =>
   value >= 90 ? BANDS[2] : value >= 80 ? BANDS[1] : BANDS[0];
-
-/* The sweep. Low to high and back, eased at both ends by the cosine rather
-   than by a curve applied on top of a linear ramp — the turn is where a loop
-   like this gives itself away. */
-const SWEEP = { min: 55, max: 100, seconds: 7 };
 
 /* How long a pointer or a keypress keeps the sweep out of the way. Long enough
    that reading a value you set yourself is not a race against the animation. */
@@ -162,7 +118,7 @@ export default function BatteryHealth({ lang }: { lang: Lang }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       /* No sweep at all for somebody who asked for no motion. The section is
          still worth having: a figure, and a scale they can move themselves. */
-      setValue(87);
+      setValue(RESTING);
       return;
     }
 

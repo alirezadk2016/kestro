@@ -1,3 +1,5 @@
+import LiveBatteryFigure from "./LiveBatteryFigure";
+import TestedFigure from "./TestedFigure";
 import type { Lang } from "@/lib/i18n";
 
 /*
@@ -326,101 +328,41 @@ function figure(kind: SpecKind) {
       );
 
     /*
-     * The cell, with the measured charge drawn as fill rather than asserted.
+     * The cell, drawn live.
      *
-     * The same glass the battery-health section is made of — one light source
-     * above and to the left, a tonal range across the chamber, a lit top edge
-     * and a meniscus where the charge ends. Two different batteries in two
-     * different materials on one page is the thing that makes a site look
-     * assembled, and this one sits directly above that section.
-     *
-     * Filled to 87%, which is the figure the row beside it states, in the blue
-     * that section gives the 80–89 band. A drawing that animated through the
-     * range here would be showing values the label next to it contradicts.
+     * The fill, its colour and the figure on the line beside it all read one
+     * clock in useBatterySweep, so the drawing and the label can never be a
+     * frame apart. Everything about how it is lit is in LiveBatteryFigure.
      */
     case "battery":
       return (
         <>
           {traces(["M700 158h90a14 14 0 0114 14v56", "M196 386H88a14 14 0 01-14-14v-44"])}
           {[node(818, 228), node(74, 328)]}
-
-          <defs>
-            <linearGradient id="spec-bat-void" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#1B2438" />
-              <stop offset="45%" stopColor="#0A1120" />
-              <stop offset="100%" stopColor="#16203a" />
-            </linearGradient>
-            <linearGradient id="spec-bat-liquid" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.7" />
-              <stop offset="42%" stopColor="#3B82F6" stopOpacity="1" />
-              <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.6" />
-            </linearGradient>
-            <linearGradient id="spec-bat-meniscus" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
-              <stop offset="72%" stopColor="#FFFFFF" stopOpacity="0.16" />
-              <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.75" />
-            </linearGradient>
-            <linearGradient id="spec-bat-cap" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#93A6CC" />
-              <stop offset="26%" stopColor="#4B5872" />
-              <stop offset="60%" stopColor="#212B42" />
-              <stop offset="100%" stopColor="#0E1524" />
-            </linearGradient>
-            <clipPath id="spec-bat-chamber">
-              <rect x={196} y={206} width={508} height={144} rx={20} />
-            </clipPath>
-          </defs>
-
           <g className="spec-part" filter={"url(#spec-drop)"}>
-            <g clipPath="url(#spec-bat-chamber)">
-              <rect x={196} y={206} width={508} height={144} fill="url(#spec-bat-void)" />
-              <rect x={196} y={206} width={508 * 0.87} height={144} fill="url(#spec-bat-liquid)" />
-              <rect
-                x={196 + 508 * 0.87 - 28}
-                y={206}
-                width={28}
-                height={144}
-                fill="url(#spec-bat-meniscus)"
-              />
-            </g>
-
-            <rect
-              x={196}
-              y={206}
-              width={508}
-              height={144}
-              rx={20}
-              fill="none"
-              stroke="#B6C8F0"
-              strokeOpacity="0.4"
-              strokeWidth={2}
-            />
-            <path
-              d="M222 226H654"
-              stroke="#FFFFFF"
-              strokeOpacity="0.32"
-              strokeWidth={6}
-              strokeLinecap="round"
-              fill="none"
-            />
-            <path
-              d="M236 336H612"
-              stroke="#FFFFFF"
-              strokeOpacity="0.12"
-              strokeWidth={3.5}
-              strokeLinecap="round"
-              fill="none"
-            />
-
-            {/* Caps, and the terminal at the positive end. */}
-            <rect x={170} y={194} width={34} height={168} rx={11} fill="url(#spec-bat-cap)" />
-            <rect x={696} y={194} width={34} height={168} rx={11} fill="url(#spec-bat-cap)" />
-            <rect x={730} y={256} width={22} height={44} rx={7} fill="#465270" />
+            <LiveBatteryFigure />
           </g>
         </>
       );
 
-    /* The test sheet, with the lines a real one carries. */
+    /*
+     * The diagnostic pass, running rather than drawn as a finished sheet.
+     *
+     * It replaced a static list of six ticked lines. The claim on the row
+     * beside it is that the machine is tested and prepared before it ships,
+     * and a finished sheet states that; a pass working through the checks
+     * shows it. Everything about how it moves is in TestedFigure, and all of
+     * it is CSS — no state, no effect, nothing to hydrate.
+     */
+    case "tested":
+      return (
+        <>
+          {traces(["M712 172h78a14 14 0 0114 14v46", "M188 384H86a14 14 0 01-14-14v-42"])}
+          {[node(818, 232), node(72, 328)]}
+          <TestedFigure />
+        </>
+      );
+
     case "tested":
       return (
         <>

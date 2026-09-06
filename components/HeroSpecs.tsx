@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SpecFigure, { SpecFigureDefs, type SpecKind } from "./SpecFigure";
 import { SpecMark } from "./CraftMark";
+import LiveBatteryValue from "./LiveBatteryValue";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -35,6 +36,16 @@ import { localePath, type Lang } from "@/lib/i18n";
 type Row = {
   kind: SpecKind;
   value: string;
+  /*
+   * The label a live figure is appended to.
+   *
+   * `value` stays as the row's stable identity — it is the React key and the
+   * fallback the server renders — and where this is set the number after it is
+   * replaced by one that moves with the drawing. Only the battery has it: the
+   * other five state a fixed part of the example configuration and there is
+   * nothing about them to animate.
+   */
+  live?: string;
   note: string;
   href: string;
   /*
@@ -74,6 +85,7 @@ const rows = (lang: Lang): Row[] =>
         {
           kind: "battery",
           value: "Batteri 87 %",
+          live: "Batteri",
           note: "Målt kapacitet, per enhed",
           href: "/kvalitet",
           stats: ["Kapacitet i %", "Målt per enhed"],
@@ -118,6 +130,7 @@ const rows = (lang: Lang): Row[] =>
         {
           kind: "battery",
           value: "Battery 87%",
+          live: "Battery",
           note: "Measured, per unit",
           href: "/kvalitet",
           stats: ["Capacity in %", "Measured per unit"],
@@ -233,7 +246,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                     href={localePath(row.href, lang)}
                     className="rounded-sm after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
                   >
-                    {row.value}
+                    {row.live ? <LiveBatteryValue label={row.live} /> : row.value}
                   </Link>
                 </dt>
                 <dd className="mt-0.5 text-xs leading-5 text-paper/55">{row.note}</dd>
