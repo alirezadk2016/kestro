@@ -141,7 +141,40 @@ const englishRoutes = [
   ["/kontakt", "/contact"],
   ["/privatlivspolitik", "/privacy-policy"],
   ["/handelsbetingelser", "/terms-of-sale"],
+
+  /* Stage two: the slugs. Kept byte-identical to englishPath in lib/routes.ts —
+     next.config.mjs cannot import TypeScript, so the list exists twice and
+     scripts/verify asserts the two are the same. */
+  ["/vejledninger/windows-10-support-slutter", "/knowledge/windows-10-end-of-support"],
+  ["/vejledninger/refurbished-eller-brugt", "/knowledge/refurbished-or-used"],
+  ["/vejledninger/reparere-eller-koebe-ny", "/knowledge/repair-or-replace"],
+  ["/vejledninger/opgrader-ram-i-baerbar", "/knowledge/upgrade-laptop-memory"],
+  ["/vejledninger/tjek-brugt-baerbar-foer-koeb", "/knowledge/check-a-used-laptop"],
+  ["/vejledninger/samle-din-egen-pc", "/knowledge/build-your-own-pc"],
+  ["/vejledninger/windows-11-paa-aeldre-maskine", "/knowledge/windows-11-on-older-hardware"],
+  ["/vejledninger/slet-data-foer-du-saelger", "/knowledge/erase-data-before-selling"],
+  ["/produkter/baerbare-computere", "/products/business-laptops"],
+  ["/produkter/stationaere-computere", "/products/desktop-computers"],
+  ["/produkter/skaerme", "/products/monitors"],
+  ["/produkter/dockingstationer", "/products/docking-stations"],
+  ["/ydelser/sourcing-og-indkoeb", "/services/sourcing-and-purchasing"],
+  ["/ydelser/klargoering-og-test", "/services/preparation-and-testing"],
+  ["/ydelser/nordisk-tilpasning", "/services/nordic-preparation"],
+  ["/ydelser/opstart-af-arbejdspladser", "/services/workstation-setup"],
+  ["/ydelser/overskudslager-og-returvarer", "/services/overstock-and-returns"],
+  ["/ydelser/levering", "/services/delivery"],
 ];
+
+/* Deepest first.
+ *
+ * Both the rewrites and the redirects below are emitted in this order, and
+ * order decides the match. "/vejledninger" -> "/knowledge" generates a
+ * wildcard rewrite of /en/knowledge/:path* onto /en/vejledninger/:path*; if it
+ * were emitted before the entry for a specific guide, /en/knowledge/repair-or-
+ * replace would be rewritten to /en/vejledninger/repair-or-replace, which is
+ * not a route, and every English guide would 404. Sorting by segment count
+ * puts every whole-path entry in front of the section it belongs to. */
+englishRoutes.sort((a, b) => b[0].split("/").length - a[0].split("/").length);
 
 /**
  * The English address of a Danish path, for the redirect targets below.
@@ -213,6 +246,26 @@ const nextConfig = {
         { source: `/en${da}`, destination: `/en${en}`, statusCode: 301 },
         { source: `/en${da}/:path*`, destination: `/en${en}/:path*`, statusCode: 301 },
       ]),
+      /*
+       * The half-translated address, permanently.
+       *
+       * Stage one gave the sections English names and left the slugs alone, so
+       * for a while the live address of an English guide was
+       * /en/knowledge/reparere-eller-koebe-ny — a form neither map above
+       * produces now. The entries above only cover the fully Danish path. This
+       * folds the half-way address onto the finished one in a single hop.
+       *
+       * Only for entries that carry a slug: for a plain section both sides of
+       * this pair would be the same address, and a rule whose source equals
+       * its destination is a redirect loop.
+       */
+      ...englishRoutes
+        .filter(([da]) => da.split("/").length > 2)
+        .map(([da, en]) => ({
+          source: `/en${en.slice(0, en.lastIndexOf("/"))}${da.slice(da.lastIndexOf("/"))}`,
+          destination: `/en${en}`,
+          statusCode: 301,
+        })),
     ];
   },
 };

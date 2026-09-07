@@ -162,7 +162,19 @@ const pairsIn = (source, start) => {
   const body = source.slice(source.indexOf(start));
   const end = body.indexOf(body.trimStart().startsWith("export const") ? "};" : "];");
   return new Map(
-    [...body.slice(0, end).matchAll(/"(\/[a-z-]+)":?\s*,?\s*"(\/[a-z-]+)"/g)].map((m) => [
+    /* Whole paths, not just the leading segment, and digits are part of a slug.
+       The pattern used to be /"(\/[a-z-]+)"…/ — one segment, no digits — so
+       when the map grew entries like
+         "/vejledninger/windows-10-support-slutter": "/knowledge/windows-10-end-of-support"
+       every one of them was skipped in both files at once. The two counts
+       still matched, so this check went on reporting no failures while
+       checking nothing about half the map. A guard that cannot see the rows it
+       is guarding is worse than no guard: it is a guard you believe. */
+    [
+      ...body
+        .slice(0, end)
+        .matchAll(/"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)":?\s*,?\s*"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)"/g),
+    ].map((m) => [
       m[1],
       m[2],
     ]),

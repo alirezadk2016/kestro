@@ -43,6 +43,44 @@ export const englishPath: Record<string, string> = {
   "/kontakt": "/contact",
   "/privatlivspolitik": "/privacy-policy",
   "/handelsbetingelser": "/terms-of-sale",
+
+  /*
+   * Stage two: the slugs.
+   *
+   * The sections above put English in the first segment, which left an English
+   * reader looking at /en/knowledge/reparere-eller-koebe-ny — half a sentence
+   * in their language and half in a language they do not read, with the two
+   * Danish digraphs transliterated into noise. The URL is rendered in the
+   * search result, so that string is doing work before anyone clicks.
+   *
+   * Written as whole paths rather than a separate slug map, because translate()
+   * looks the full path up first and only falls back to swapping the leading
+   * segment. One map, one lookup order, no second mechanism to keep in step.
+   *
+   * The English form is the query an English speaker types, not a translation
+   * of the Danish: "windows-10-end-of-support", not "windows-10-support-ended".
+   *
+   * Danish URLs do not move. Every old English address keeps answering through
+   * a 301 in next.config.mjs.
+   */
+  "/vejledninger/windows-10-support-slutter": "/knowledge/windows-10-end-of-support",
+  "/vejledninger/refurbished-eller-brugt": "/knowledge/refurbished-or-used",
+  "/vejledninger/reparere-eller-koebe-ny": "/knowledge/repair-or-replace",
+  "/vejledninger/opgrader-ram-i-baerbar": "/knowledge/upgrade-laptop-memory",
+  "/vejledninger/tjek-brugt-baerbar-foer-koeb": "/knowledge/check-a-used-laptop",
+  "/vejledninger/samle-din-egen-pc": "/knowledge/build-your-own-pc",
+  "/vejledninger/windows-11-paa-aeldre-maskine": "/knowledge/windows-11-on-older-hardware",
+  "/vejledninger/slet-data-foer-du-saelger": "/knowledge/erase-data-before-selling",
+  "/produkter/baerbare-computere": "/products/business-laptops",
+  "/produkter/stationaere-computere": "/products/desktop-computers",
+  "/produkter/skaerme": "/products/monitors",
+  "/produkter/dockingstationer": "/products/docking-stations",
+  "/ydelser/sourcing-og-indkoeb": "/services/sourcing-and-purchasing",
+  "/ydelser/klargoering-og-test": "/services/preparation-and-testing",
+  "/ydelser/nordisk-tilpasning": "/services/nordic-preparation",
+  "/ydelser/opstart-af-arbejdspladser": "/services/workstation-setup",
+  "/ydelser/overskudslager-og-returvarer": "/services/overstock-and-returns",
+  "/ydelser/levering": "/services/delivery",
 };
 
 /** The same map inverted, for turning an English address back into the path

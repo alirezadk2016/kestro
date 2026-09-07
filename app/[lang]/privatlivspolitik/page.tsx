@@ -29,7 +29,7 @@ const copy = {
     updated: "Senest opdateret",
   },
   en: {
-    metaTitle: "Privacy policy | Kestro",
+    metaTitle: "Privacy policy: how we handle your data | Kestro",
     metaDescription:
       "How Kestro handles personal data: the contact forms, what we store locally, cookieless visit counts, and statistics that only run if you accept them.",
     title: "Privacy policy",
