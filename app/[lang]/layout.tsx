@@ -123,9 +123,22 @@ export default function RootLayout({
   if (!isLang(params.lang)) notFound();
   const lang: Lang = params.lang;
 
+  /*
+   * Organization until there is a street address, LocalBusiness once there is.
+   *
+   * LocalBusiness is the type Google reads for the map pack, and for a company
+   * that sources and prepares machines in one city that listing is worth more
+   * than most links pointing at the site. But the type is a claim: it says
+   * this is a business a customer can come to, and asserting it while
+   * company.street is empty would be claiming a place that the markup cannot
+   * name. So the type follows the data rather than leading it — fill in
+   * street and postcode in lib/company.ts and the schema upgrades itself,
+   * along with the PostalAddress, telephone, taxID and DK-prefixed vatID that
+   * are already wired to those fields.
+   */
   const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": company.street ? "LocalBusiness" : "Organization",
     "@id": `${SITE_ORIGIN}/#organization`,
     name: company.name,
     url: SITE_ORIGIN,
