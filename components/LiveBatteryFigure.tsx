@@ -6,10 +6,14 @@ import { useBatterySweep } from "./useBatterySweep";
 /**
  * The cell in the hero's spec list, filling and emptying.
  *
- * The same glass as the battery-health section below it: one light source
+ * Glass, lit by the same lamp as every other drawing on the site: one source
  * above and to the left, a tonal range across the chamber, a lit top edge and
- * a meniscus where the charge ends. Two batteries in two materials, one
- * directly above the other, is what makes a page look assembled.
+ * a meniscus where the charge ends.
+ *
+ * This used to say "the same glass as the battery-health section below it".
+ * That section has been taken off the front page, so the sentence described a
+ * neighbour that is not there — and a comment naming something that no longer
+ * exists is worse than no comment, because the next reader goes looking for it.
  *
  * It reads the shared sweep, so the drawing and the figure on the line beside
  * it are the same number on every frame rather than two animations that happen
