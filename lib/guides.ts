@@ -881,6 +881,48 @@ export const guides: Guide[] = [
       },
       { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
     ],
+    faqs: [
+      {
+        question: {
+          da: "Hvornår kan det ikke betale sig at reparere en computer?",
+          en: "When is a computer not worth repairing?",
+        },
+        answer: {
+          da: "Slå op, hvad den samme model koster brugt i dag – det tal er loftet. Koster reparationen mere end halvdelen af det, skal du tænke dig om. Koster den mere end maskinen er værd, er svaret nej.",
+          en: "Look up what the same model costs used today — that figure is the ceiling. If the repair costs more than half of it, think twice. If it costs more than the machine is worth, the answer is no.",
+        },
+      },
+      {
+        question: {
+          da: "Hvorfor føles min gamle computer langsom?",
+          en: "Why does my old computer feel slow?",
+        },
+        answer: {
+          da: "Fire ting står bag langt de fleste henvendelser: et batteri der ikke holder en arbejdsdag, for lidt hukommelse, en gammeldags harddisk i stedet for SSD, og støv og gammel kølepasta, der får maskinen til at skrue ydelsen ned. Alle fire er billige at rette i forhold til en ny maskine.",
+          en: "Four things are behind the large majority of enquiries: a battery that no longer lasts a working day, too little memory, an old hard disk instead of an SSD, and dust and old thermal paste making the machine throttle itself. All four are cheap to fix compared with a new machine.",
+        },
+      },
+      {
+        question: {
+          da: "Hvilke reparationer er de dyre?",
+          en: "Which repairs are the expensive ones?",
+        },
+        answer: {
+          da: "Bundkort, hængsler der har revet kabinettet i stykker, og væskeskader. På en ældre maskine overstiger de næsten altid maskinens værdi. Skærme ligger midt imellem – prisen svinger meget efter model, så få den oplyst, før du beslutter.",
+          en: "Motherboards, hinges that have torn the chassis apart, and liquid damage. On an older machine they almost always exceed what the machine is worth. Screens sit in between — the price varies a lot by model, so get it quoted before you decide.",
+        },
+      },
+      {
+        question: {
+          da: "Skal tiden til opsætning regnes med?",
+          en: "Should the setup time be counted?",
+        },
+        answer: {
+          da: "Ja. En ny maskine skal sættes op, programmer installeres og filer flyttes. For en virksomhed er det ofte en halv arbejdsdag per medarbejder, og den udgift forsvinder, hvis den gamle maskine bare kører videre.",
+          en: "Yes. A new machine has to be set up, software installed and files moved. For a company that is often half a working day per employee, and the cost disappears if the old machine simply keeps running.",
+        },
+      },
+    ],
   },
   {
     slug: "opgrader-ram-i-baerbar",
@@ -995,6 +1037,48 @@ export const guides: Guide[] = [
       {
         href: "/modeller",
         label: { da: "Modeller, der er nemme at opgradere", en: "Models that are easy to upgrade" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Kan man opgradere hukommelsen i alle bærbare?",
+          en: "Can the memory be upgraded in every laptop?",
+        },
+        answer: {
+          da: "Nej. Mange tynde maskiner har hukommelsen loddet fast på bundkortet, og så kan den ikke skiftes – uanset hvad. Slå din præcise model op hos producenten eller i servicemanualen, før du køber noget.",
+          en: "No. Many thin machines have the memory soldered to the motherboard, and then it cannot be changed at all. Look your exact model up with the manufacturer or in the service manual before you buy anything.",
+        },
+      },
+      {
+        question: {
+          da: "Hvilken slags RAM skal jeg købe?",
+          en: "Which kind of RAM should I buy?",
+        },
+        answer: {
+          da: "Generationen skal passe – DDR3, DDR4 eller DDR5 passer ikke i hinandens sokler, og der findes ingen adapter. Formfaktoren skal passe: bærbare bruger SO-DIMM, stationære de lange DIMM-moduler. Et hurtigere modul kører ned til maskinens hastighed – det virker, men du betaler for noget, du ikke får.",
+          en: "The generation has to match — DDR3, DDR4 and DDR5 do not fit each other's sockets, and there is no adapter. The form factor has to match: laptops use SO-DIMM, desktops the long DIMM modules. A faster module runs down to the machine's speed — it works, but you pay for something you do not get.",
+        },
+      },
+      {
+        question: {
+          da: "Er to moduler bedre end ét stort?",
+          en: "Are two modules better than one large one?",
+        },
+        answer: {
+          da: "Hvis der er to sokler, ja. To ens moduler giver dobbelt båndbredde, og det kan mærkes på grafikken i maskiner uden grafikkort.",
+          en: "If there are two sockets, yes. Two matching modules give double the bandwidth, and that is noticeable on graphics in machines without a graphics card.",
+        },
+      },
+      {
+        question: {
+          da: "Maskinen ser kun halvdelen af hukommelsen – hvad er galt?",
+          en: "The machine only sees half the memory — what is wrong?",
+        },
+        answer: {
+          da: "Så sidder det ene modul ikke ordentligt. Tag det ud og sæt det i igen. Du kan se, hvor meget maskinen faktisk ser, under Indstillinger, System, Om i Windows.",
+          en: "One of the modules is not seated properly. Take it out and put it back in. You can see how much the machine actually sees under Settings, System, About in Windows.",
+        },
       },
     ],
   },
@@ -1118,6 +1202,48 @@ export const guides: Guide[] = [
       {
         href: "/produkter/baerbare-computere",
         label: { da: "Brugte bærbare computere", en: "Used business laptops" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Hvordan tjekker jeg batteriets tilstand på en brugt bærbar?",
+          en: "How do I check the battery condition on a used laptop?",
+        },
+        answer: {
+          da: "Åbn Kommandoprompt i Windows og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Under 70 procent betyder, at et nyt batteri er på vej.",
+          en: "Open the Command Prompt in Windows and type powercfg /batteryreport. The report shows the original capacity against the current one. Under 70 per cent means a new battery is on the way.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad skal jeg tjekke, før jeg køber en brugt bærbar?",
+          en: "What should I check before buying a used laptop?",
+        },
+        answer: {
+          da: "Batteriets tilstand, skærmen på både hvid og sort baggrund, hver eneste tast, alle porte med noget i dem, diskens SMART-data, blæseren under belastning, kamera og mikrofon og højttalere, hængslerne, BIOS-adgangskode og enhedslåse, at Windows er aktiveret, og om strømforsyningen følger med. Hvert punkt tager under et minut.",
+          en: "The battery condition, the screen on both a white and a black background, every single key, all the ports with something in them, the drive's SMART data, the fan under load, camera and microphone and speakers, the hinges, BIOS password and device locks, that Windows is activated, and whether the power supply is included. Each point takes under a minute.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad betyder grad A eller grad B?",
+          en: "What do grade A and grade B mean?",
+        },
+        answer: {
+          da: "Ikke noget fast. Der findes ingen fælles standard for, hvad bogstaverne betyder, og to sælgere kan kalde den samme maskine hver sit. Bed om standen beskrevet i ord.",
+          en: "Nothing fixed. There is no common standard for what the letters mean, and two sellers can call the same machine different things. Ask for the condition described in words.",
+        },
+      },
+      {
+        question: {
+          da: "Hvorfor er BIOS-adgangskoden vigtig på en brugt maskine?",
+          en: "Why does the BIOS password matter on a used machine?",
+        },
+        answer: {
+          da: "Fordi en maskine, der stadig er låst af en tidligere ejer, ikke altid kan låses op – heller ikke af os. Genstart og gå ind i BIOS, før du køber.",
+          en: "Because a machine still locked by a previous owner cannot always be unlocked — not even by us. Restart and go into the BIOS before you buy.",
+        },
       },
     ],
   },
@@ -1244,6 +1370,48 @@ export const guides: Guide[] = [
         label: { da: "Brugte stationære computere", en: "Used desktop computers" },
       },
     ],
+    faqs: [
+      {
+        question: {
+          da: "I hvilken rækkefølge skal delene vælges?",
+          en: "In what order should the parts be chosen?",
+        },
+        answer: {
+          da: "Processoren bestemmer soklen, og bundkortet skal have præcis den sokkel. Bundkortet bestemmer hukommelsens generation og antallet af moduler. Kabinettet bestemmer, hvor langt et grafikkort og hvor høj en køler der kan være. Strømforsyningen skal kunne klare grafikkortet med luft over. Vælg i den rækkefølge, så låser hvert valg det næste.",
+          en: "The processor decides the socket, and the motherboard has to have exactly that socket. The motherboard decides the memory generation and how many modules fit. The case decides how long a graphics card and how tall a cooler can be. The power supply has to handle the graphics card with headroom. Choose in that order and each choice locks the next.",
+        },
+      },
+      {
+        question: {
+          da: "Skal bundkortet samles i kabinettet?",
+          en: "Should the motherboard be assembled in the case?",
+        },
+        answer: {
+          da: "Nej. Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet, og det er den fejl, folk oftest fortryder.",
+          en: "No. Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case, and it is the mistake people most often regret.",
+        },
+      },
+      {
+        question: {
+          da: "Pc'en vil ikke starte første gang – hvad er det typisk?",
+          en: "The PC will not start the first time — what is it usually?",
+        },
+        answer: {
+          da: "Fire ting står bag næsten alle. Det ekstra 8-benede strømstik til processoren er ikke sat i, og så er maskinen helt død. Hukommelsen sidder i de forkerte sokler. Skærmen er sat i bundkortets udgang i stedet for grafikkortets, og så er billedet sort, selvom alt virker. Eller afstandsboltene mellem kabinet og bundkort mangler og kortslutter bundkortet mod pladen.",
+          en: "Four things are behind nearly all of them. The extra 8-pin processor power connector is not plugged in, and the machine is completely dead. The memory is in the wrong sockets. The monitor is plugged into the motherboard's output instead of the graphics card's, so the picture is black although everything works. Or the standoffs between case and motherboard are missing and short the board against the plate.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad skal man gøre, første gang maskinen starter?",
+          en: "What should be done the first time the machine starts?",
+        },
+        answer: {
+          da: "Gå i BIOS først. Tjek at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Derefter installerer du Windows fra en USB-nøgle.",
+          en: "Go into the BIOS first. Check that the processor, all the memory and the drive are there, and turn on XMP or EXPO so the memory runs at the speed you paid for. Then install Windows from a USB stick.",
+        },
+      },
+    ],
   },
   {
     slug: "windows-11-paa-aeldre-maskine",
@@ -1337,6 +1505,48 @@ export const guides: Guide[] = [
         label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
       },
     ],
+    faqs: [
+      {
+        question: {
+          da: "Hvad kræver Windows 11 af maskinen?",
+          en: "What does Windows 11 require of the machine?",
+        },
+        answer: {
+          da: "TPM 2.0, Secure Boot slået til, og at maskinen starter i UEFI-tilstand frem for den gamle Legacy-tilstand. Derudover skal processoren stå på Microsofts liste, og det er den grænse, der rammer hårdest – den kan ikke omgås ved at ændre en indstilling.",
+          en: "TPM 2.0, Secure Boot switched on, and the machine booting in UEFI mode rather than the old legacy mode. On top of that the processor has to be on Microsoft's list, and that is the limit that bites hardest — it cannot be got round by changing a setting.",
+        },
+      },
+      {
+        question: {
+          da: "Hvordan tjekker jeg, om min maskine opfylder kravene?",
+          en: "How do I check whether my machine meets the requirements?",
+        },
+        answer: {
+          da: "Tryk Windows-tasten og R, skriv tpm.msc og tryk enter – vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
+          en: "Press the Windows key and R, type tpm.msc and press enter — the window says whether there is a TPM and which version. Type msinfo32 in the same place: it shows both the BIOS mode, which has to be UEFI, and the Secure Boot state.",
+        },
+      },
+      {
+        question: {
+          da: "TPM står som slået fra – kan det laves om?",
+          en: "TPM shows as switched off — can that be changed?",
+        },
+        answer: {
+          da: "Ofte ja. Det er tit bare en indstilling i BIOS, og den hedder typisk PTT på Intel og fTPM på AMD.",
+          en: "Often yes. It is frequently just a setting in the BIOS, usually called PTT on Intel and fTPM on AMD.",
+        },
+      },
+      {
+        question: {
+          da: "Kan man omgå kravene til Windows 11?",
+          en: "Can the Windows 11 requirements be bypassed?",
+        },
+        answer: {
+          da: "Der findes vejledninger til det, men vi anbefaler det ikke på en maskine, der skal bruges i en virksomhed. Microsoft giver ingen garanti for opdateringer bagefter, og en maskine uden sikkerhedsopdateringer er et problem i sig selv.",
+          en: "Guides to doing it exist, but we do not recommend it on a machine that will be used in a company. Microsoft gives no guarantee of updates afterwards, and a machine without security updates is a problem in itself.",
+        },
+      },
+    ],
   },
   {
     slug: "slet-data-foer-du-saelger",
@@ -1424,6 +1634,48 @@ export const guides: Guide[] = [
       {
         href: "/ydelser/overskudslager-og-returvarer",
         label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Er det nok at slette filerne og tømme papirkurven?",
+          en: "Is deleting the files and emptying the recycle bin enough?",
+        },
+        answer: {
+          da: "Nej. Det fjerner ikke data. Brug Windows' egen nulstilling med indstillingen, der fjerner alt og renser drevet – den overskriver i stedet for bare at slette.",
+          en: "No. That does not remove the data. Use Windows' own reset with the option that removes everything and cleans the drive — it overwrites rather than just deleting.",
+        },
+      },
+      {
+        question: {
+          da: "Hvordan sletter man data på en SSD?",
+          en: "How is data erased on an SSD?",
+        },
+        answer: {
+          da: "På en SSD flytter controlleren data rundt, så en overskrivning ikke nødvendigvis rammer alle celler. Brug producentens Secure Erase. Har maskinen allerede kørt med diskkryptering slået til, er sagen enklere: slettes nøglen, er data i praksis uigenkaldelige.",
+          en: "On an SSD the controller moves data around, so overwriting does not necessarily reach every cell. Use the manufacturer's Secure Erase. If the machine has already been running with drive encryption switched on it is simpler: delete the key and the data is in practice unrecoverable.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad skal en virksomhed gøre ud over at slette?",
+          en: "What does a company have to do beyond erasing?",
+        },
+        answer: {
+          da: "Har maskinen indeholdt personoplysninger, skal I kunne dokumentere, at de er væk – ikke bare vide det. Forlang en sletterapport med serienummer for hver enkelt enhed fra den, der håndterer udstyret.",
+          en: "If the machine has held personal data, you have to be able to document that it is gone — not merely know it. Demand an erasure report with a serial number for each individual device from whoever handles the equipment.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad med BIOS-adgangskoder og enhedslåse?",
+          en: "What about BIOS passwords and device locks?",
+        },
+        answer: {
+          da: "De skal fjernes sammen med data. En maskine, der stadig er bundet til jeres administration, kan ikke bruges af den næste ejer.",
+          en: "They have to come off along with the data. A machine that is still tied to your administration cannot be used by the next owner.",
+        },
       },
     ],
   },
