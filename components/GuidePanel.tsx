@@ -73,6 +73,62 @@ function Defs() {
         <stop offset="100%" stopColor={C.ink} stopOpacity="0" />
       </radialGradient>
 
+      {/*
+       * The depth the drawn panels were missing.
+       *
+       * Beside a rendered plate these read as flat: a wireframe on a tinted
+       * rectangle, with nothing behind the subject and nothing under it. The
+       * difference between a diagram and a photograph is mostly what is NOT
+       * the subject — the distance behind it, the light in the air, the floor
+       * it stands on. That is what these five add, and they cost four nodes in
+       * a symbol the whole page shares.
+       */}
+
+      {/* The void, graded so the top of the frame is further away than the
+          bottom rather than the same flat navy all the way down. */}
+      <linearGradient id="gvx-void" x1="0" y1="0" x2="0.15" y2="1">
+        <stop offset="0%" stopColor="#0A1533" />
+        <stop offset="58%" stopColor="#060D22" />
+        <stop offset="100%" stopColor="#04070F" />
+      </linearGradient>
+
+      {/* Something at the far end of that distance.
+       *
+       * Pushed into the corner and cut to little more than half its first
+       * strength after seeing it on panel 04. The panels whose subject is a
+       * dark laptop carried it easily; the ones drawn as pale outlines on a
+       * dark ground — the exploded PC, the sockets — lost their edges in it,
+       * because this sits on top of the existing gvx-air wash rather than
+       * replacing it and the two together lifted the middle of the frame to
+       * roughly the value of the drawing itself. It has to read as sky behind
+       * everything, never as weather in front of it. */}
+      <radialGradient id="gvx-nebula" cx="0.84" cy="0.15" r="0.46">
+        <stop offset="0%" stopColor="#2E79FF" stopOpacity="0.17" />
+        <stop offset="42%" stopColor="#1B3FA8" stopOpacity="0.07" />
+        <stop offset="100%" stopColor="#2E79FF" stopOpacity="0" />
+      </radialGradient>
+
+      {/* The floor, as a polished surface rather than a drawn plane: dark and
+          reflective near the horizon, falling to black at the reader's feet. */}
+      <linearGradient id="gvx-floor" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#16306E" stopOpacity="0.42" />
+        <stop offset="30%" stopColor="#0A1738" stopOpacity="0.30" />
+        <stop offset="100%" stopColor="#03060E" stopOpacity="0.72" />
+      </linearGradient>
+
+      {/* A shaft of light through the haze, laid twice at different angles. */}
+      <linearGradient id="gvx-ray" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#8FB6FF" stopOpacity="0.085" />
+        <stop offset="100%" stopColor="#8FB6FF" stopOpacity="0" />
+      </linearGradient>
+
+      {/* Corners pulled down, so the eye lands on the subject and not on the
+          frame. The cheapest trick in lighting and the most effective. */}
+      <radialGradient id="gvx-vignette" cx="0.5" cy="0.48" r="0.75">
+        <stop offset="55%" stopColor="#000000" stopOpacity="0" />
+        <stop offset="100%" stopColor="#000000" stopOpacity="0.55" />
+      </radialGradient>
+
       {/* A lit surface seen at three angles to one lamp above and to the left. */}
       <linearGradient id="gvx-top" x1="0" y1="0" x2="0.5" y2="1">
         <stop offset="0%" stopColor="#B9D0FF" stopOpacity="0.62" />
@@ -130,10 +186,53 @@ function Defs() {
  * Blueprint grid, a few circuit traces, the ground plane in perspective and
  * the frame. Identical on all eight panels — it is what makes them a set.
  */
+/*
+ * A field of stars, fixed at module scope.
+ *
+ * Math.random() here would draw one sky on the server and a different one in
+ * the browser, and React would throw the mismatch back. A tiny LCG with a
+ * fixed seed gives the same sky to both, and the array is built once for the
+ * process rather than per panel.
+ *
+ * They are deliberately small and mostly dim. A sky reads as distance when
+ * most of it is barely there; an even field of bright dots reads as confetti.
+ */
+const stars = (() => {
+  let s = 20260912;
+  const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+  return Array.from({ length: 110 }, () => {
+    const r = rnd();
+    return {
+      x: +(rnd() * 768).toFixed(1),
+      y: +(rnd() * 400).toFixed(1),
+      /* Most of the field is sub-pixel; a handful carry the eye. */
+      r: +(0.35 + r * r * 1.15).toFixed(2),
+      o: +(0.12 + r * 0.5).toFixed(2),
+    };
+  });
+})();
+
 function Sheet() {
   return (
     <>
-      <rect x="0" y="0" width="768" height="512" fill={C.ink} />
+      {/* The void first, then what is in it, then what is in front of it. */}
+      <rect x="0" y="0" width="768" height="512" fill="url(#gvx-void)" />
+      <rect x="0" y="0" width="768" height="512" fill="url(#gvx-nebula)" />
+
+      {/* The sky, fading out before it reaches the floor: stars below the
+          horizon would sit under the subject's feet. */}
+      <g fill="#DCE8FF">
+        {stars.map((st, i) => (
+          <circle
+            key={i}
+            cx={st.x}
+            cy={st.y}
+            r={st.r}
+            opacity={st.o * Math.max(0, 1 - st.y / 400)}
+          />
+        ))}
+      </g>
+
       <rect x="0" y="0" width="768" height="512" fill="url(#gvx-air)" />
 
       {/* Blueprint grid. Faint enough to be a surface, not a pattern. */}
@@ -167,6 +266,21 @@ function Sheet() {
         ))}
       </g>
 
+      {/* Two shafts of light raking down from the upper right, the direction
+          every subject on these panels is lit from. Light you can see in the
+          air is most of what separates a lit scene from a tinted one. */}
+      <g fill="url(#gvx-ray)" opacity="0.85">
+        <path d="M612 -40 L768 -40 L768 140 L470 512 L330 512 Z" />
+        <path d="M742 -40 L768 -40 L768 60 L618 512 L556 512 Z" opacity="0.55" />
+      </g>
+
+      {/* The floor as a surface rather than a diagram: the plane is filled
+          first, so the perspective lines below sit IN it and the subject has
+          something to reflect in. */}
+      <path d="M0 360h768v152H0z" fill="url(#gvx-floor)" />
+      {/* The horizon itself, brightest where the light falls. */}
+      <line x1="0" y1="360" x2="768" y2="360" stroke="#5B8CFF" strokeOpacity="0.22" strokeWidth="1" />
+
       {/* The ground: a plane running away from the reader. The subject stands
           on it, which is what stops the drawing floating in nothing. */}
       <g opacity="0.5">
@@ -179,6 +293,10 @@ function Sheet() {
           ))}
         </g>
       </g>
+
+      {/* Corners down, last of the scene layers and before the frame, so the
+          frame stays crisp while everything behind it falls away. */}
+      <rect x="0" y="0" width="768" height="512" fill="url(#gvx-vignette)" />
 
       {/* The frame, with the corner ticks a drawing sheet carries. */}
       <rect
