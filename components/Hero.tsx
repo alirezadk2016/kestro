@@ -190,14 +190,38 @@ export default function Hero({ lang }: { lang: Lang }) {
                     "radial-gradient(50% 46% at 50% 46%, rgba(60,110,255,0.32) 0%, rgba(40,74,190,0.12) 42%, transparent 68%)",
                 }}
               />
+              {/*
+                The real machine, not a rendered impression of one.
+
+                This was an AI render whose lid read "ThinᛕPad" in a broken
+                glyph, with floating rock debris beside it — a games wallpaper
+                standing in for the product on the page every visitor sees
+                first. It was also 542x445, which is smaller than the box it
+                is drawn into, so it arrived soft on any retina screen.
+
+                This is the actual T480 product photograph already in the
+                repo at 1179x1115, cut out against transparency. It is sharp,
+                the Lenovo and ThinkPad marks are the real ones, and it is
+                the machine the alt text has always claimed it was.
+
+                The lighting that made the render feel at home in the hero is
+                done here instead: the radial glow above sits behind it, and
+                the two drop-shadows ground it and give the black chassis a
+                faint blue rim so its silhouette separates from the navy
+                rather than sinking into it.
+              */}
               <Image
-                src="/hero/hero-laptop.webp"
+                src="/thinkpad-t480-6-cutout.webp"
                 alt={c.machineAlt}
-                width={542}
-                height={445}
+                width={1179}
+                height={1115}
                 priority
                 sizes="(min-width: 1024px) 38vw, 96vw"
                 className="relative mx-auto w-full max-w-xl lg:max-w-none"
+                style={{
+                  filter:
+                    "drop-shadow(0 18px 40px rgba(0,0,0,0.55)) drop-shadow(0 0 26px rgba(60,110,255,0.26))",
+                }}
               />
             </div>
 
