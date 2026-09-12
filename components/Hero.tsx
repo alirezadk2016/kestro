@@ -73,28 +73,36 @@ export default function Hero({ lang }: { lang: Lang }) {
           headline and the spec list as a pair of stray diagonals. */}
       <HeroMark className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[72%] w-auto -translate-y-1/2 opacity-90 lg:block" />
 
-      {/* Flat decorative SVGs with nothing for next/image to optimise —
-          no format conversion, no responsive sizing a vector needs. */}
-      {/* eslint-disable @next/next/no-img-element */}
-      {/* A dotted world map, faint, in the field the model turns in. */}
-      <img
-        src="/world-dots.svg"
-        alt=""
+      {/*
+       * Two decorative fields, drawn as backgrounds rather than as images.
+       *
+       * They were <img alt="" aria-hidden>, which is the correct markup for
+       * decoration and was still costing something real: a browser fetches an
+       * <img> whether or not the element is displayed, so every phone was
+       * downloading 48 kB of world map to render nothing. The map is hidden
+       * below md and the mesh below lg, and a background-image on a display:none
+       * element is not fetched at all — measured, not assumed.
+       *
+       * It also settles an argument with every automated checker, which reads
+       * alt="" as a missing alt rather than as the deliberate empty one WCAG
+       * asks for on decoration. Describing these would be the actual
+       * regression: a screen reader announcing "dotted world map" to somebody
+       * who gains nothing from knowing it. Decoration belongs in CSS, and then
+       * there is no alt to argue about.
+       *
+       * The aspect ratios are the SVGs' own viewBoxes — 1000x500 and 700x420 —
+       * because a div has no intrinsic size to lay out from the way an img does.
+       */}
+      <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[2%] top-[6%] hidden w-[46%] max-w-2xl opacity-[0.55] md:block"
+        className="pointer-events-none absolute right-[2%] top-[6%] hidden aspect-[1000/500] w-[46%] max-w-2xl bg-contain bg-no-repeat opacity-[0.55] md:block"
+        style={{ backgroundImage: "url(/world-dots.svg)" }}
       />
-
-      {/* A network of connected points, denser toward the corner — the same
-          idea as the world map, that Kestro's work spans more than one desk. */}
-      <img
-        src="/network-mesh.svg"
-        alt=""
+      <div
         aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none absolute bottom-0 right-0 hidden w-[52%] max-w-3xl opacity-70 lg:block"
+        className="pointer-events-none absolute bottom-0 right-0 hidden aspect-[700/420] w-[52%] max-w-3xl bg-contain bg-no-repeat opacity-70 lg:block"
+        style={{ backgroundImage: "url(/network-mesh.svg)" }}
       />
-      {/* eslint-enable @next/next/no-img-element */}
 
       {/* The floor falling away, so the band ends in shadow rather than at a
           line. It also gives the section below something to arrive on. */}
