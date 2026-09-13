@@ -200,7 +200,13 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
           card dropped on a lit scene instead of a panel that belongs to it.
           The border and the glow are what separate it from the field, not a
           second shade of navy. */}
-      <div className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950 px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
+      <div /* Glass, not a solid card. It now sits over a photograph of the room
+             rather than over flat navy, and an opaque block there reads as a
+             sticker on the picture. Tinted to brand-950/85 rather than clear:
+             the scene has to show through, but the readings on it are the only
+             thing a buyer is meant to take away, and they have to stay above
+             AA on whatever the photograph happens to be doing behind them. */
+          className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950/85 backdrop-blur-md px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
         {/* The label cut into the top border, from xl only. It is 28
             characters of tracked uppercase and the column is three of twelve:
             below that width it wraps, and a wrapped label cannot cut a border
@@ -283,7 +289,12 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
 
       <Link
         href={localePath("/tilbud-eksempel", lang)}
-        className="mt-4 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 transition hover:text-paper"
+        /* Carries its own ground. It sits below the panel, so with a
+           photograph behind the hero it lands on whatever the picture happens
+           to be doing there — verify measured it at 2.24:1 on mid-grey stone
+           against the 4.5 it needs. The panel above it is glass for a reason;
+           this is the same glass, sized to the words. */
+        className="mt-4 inline-flex min-h-[44px] items-center rounded-lg bg-brand-950/85 px-3 text-sm font-semibold text-brand-300 backdrop-blur-md transition hover:bg-brand-950/95 hover:text-paper"
       >
         {c.link}
       </Link>

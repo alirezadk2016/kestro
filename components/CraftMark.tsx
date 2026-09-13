@@ -7,7 +7,7 @@
  * buyer sees first said "this is a website" rather than "this is Kestro".
  *
  * The site already has a drawing language and it is a good one:
- * ClusterMark, HeroMark and SpecFigure are orthographic, thin-stroked, one
+ * ClusterMark and SpecFigure are orthographic, thin-stroked, one
  * implied light, depth from layering rather than shadow — an engineering
  * document rather than an illustration. That language stopped at the large
  * marks. These carry it down to 28px, which is the size the argument is

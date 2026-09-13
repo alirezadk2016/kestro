@@ -1,10 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
-import HeroMark from "./HeroMark";
-import HeroWorld from "./HeroWorld";
 import HeroSpecs from "./HeroSpecs";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -67,27 +64,61 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      {/* The K mark, oversized and cropped by the left edge — a watermark
-          behind the headline rather than decoration competing with it.
-          Only from lg: below that the hero stacks, the section grows to twice
-          the height, and a mark sized against it runs straight through the
-          headline and the spec list as a pair of stray diagonals. */}
-      <HeroMark className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[72%] w-auto -translate-y-1/2 opacity-90 lg:block" />
+      {/*
+       * The scene.
+       *
+       * A photograph of the room the product stands in: the lit K cut into the
+       * wall, the glazing, the blue-hour waterfront, the machine on dark stone.
+       * It carries what three separate decorations used to be asked to carry —
+       * the K watermark, the world map, the cut-out laptop — so all three are
+       * gone. One picture, one story.
+       *
+       * It is a band lifted out of the supplied artwork rather than the
+       * artwork itself. That file is a mockup of the whole page: navigation,
+       * headline, buttons, a spec panel and a feature strip are painted into
+       * the pixels, and one of them reads "Professiomally". Used as-is, every
+       * real element on this page would land on top of a painted copy of
+       * itself. The band between the headline's last glyph and the painted
+       * panel has no text in it at all, and that is what this is.
+       *
+       * Its left edge is feathered in the asset — alpha 3 at x=0 rising to 255
+       * by x=400 — so it dissolves into the navy rather than ending at a line.
+       * The same lesson as the hub plate: a rectangle always shows.
+       */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[86%] bg-contain bg-right bg-no-repeat opacity-85 md:block lg:w-[68%] lg:opacity-100"
+        /* Contained, not oversized. Pushing it left to pull the machine out
+           from behind the spec panel worked, and cost more than it bought:
+           the lit K came forward onto the headline and took its legibility
+           with it. The machine reads through the glass panel instead, which
+           is what the panel is translucent for. */
+        style={{ backgroundImage: "url(/hero/scene.webp)" }}
+      />
+
 
       {/*
-       * The world map — the same flat one, with the markets lit on it.
+       * The scrim, over the photograph and under the words.
        *
-       * It was a static file that said "somewhere on Earth"; now Copenhagen,
-       * Oslo and Stockholm light in turn on it. Inline rather than a file so
-       * the beacons can sit in the same coordinate space as the land, which
-       * is what lets them be placed from real coordinates instead of by eye.
-       * See components/HeroWorld.tsx.
+       * Not a taste decision. Verify measured the headline at 2.25:1 against
+       * the lit stone the K is cut into — rgb(255,255,255) on rgb(169,173,180)
+       * — where 3 is the floor for type that size, and the English accent line
+       * at 1.20:1. A photograph has no obligation to be dark where a sentence
+       * lands, so the page has to make it so.
        *
-       * Positioned by where the beacons land, not by where the rectangle looks
-       * tidy: Scandinavia is a small part of a world map, and the open band on
-       * this layout is the strip above the machine and left of the spec panel.
+       * Opaque at the left edge and gone by 62%, which is past the last glyph
+       * and short of the machine. The brief asked for the left of the frame to
+       * stay calm and high-contrast; this is that, enforced rather than hoped
+       * for.
        */}
-      <HeroWorld className="pointer-events-none absolute right-[15%] top-[7%] hidden w-[52%] max-w-3xl opacity-75 md:block lg:opacity-90" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgb(9,14,30) 0%, rgba(9,14,30,0.97) 26%, rgba(9,14,30,0.78) 44%, rgba(9,14,30,0.3) 56%, rgba(9,14,30,0) 66%)",
+        }}
+      />
 
       {/* The floor falling away, so the band ends in shadow rather than at a
           line. It also gives the section below something to arrive on. */}
@@ -102,7 +133,7 @@ export default function Hero({ lang }: { lang: Lang }) {
       <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
         <Container>
           <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6">
               <div className="rise">
                 <span className="inline-flex items-center rounded-full border border-brand-400/35 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
                   {c.eyebrow}
@@ -154,63 +185,8 @@ export default function Hero({ lang }: { lang: Lang }) {
               </div>
             </div>
 
-            {/* The machine, and the configuration beside it — the two halves
-                of the same claim: this is the kind of hardware we source, and
-                this is what you get told about it before you order.
 
-                The machine is lit rather than cut out on white: it arrives
-                with its own key light, rim and floor, and the glow underneath
-                carries that light out into the page so it stands in the hero
-                rather than sitting on top of it. Its edges are feathered in
-                the asset itself, so there is no rectangle to hide. */}
-            <div className="settle relative lg:col-span-4">
-              <div
-                aria-hidden="true"
-                /* Kept close to the machine. At 18% it spilled under the spec
-                   column and lifted the ground there to rgb(57,77,123), which
-                   took the list's label under AA. */
-                className="pointer-events-none absolute -inset-x-[6%] -inset-y-[10%]"
-                style={{
-                  background:
-                    "radial-gradient(50% 46% at 50% 46%, rgba(60,110,255,0.32) 0%, rgba(40,74,190,0.12) 42%, transparent 68%)",
-                }}
-              />
-              {/*
-                The real machine, not a rendered impression of one.
-
-                This was an AI render whose lid read "ThinᛕPad" in a broken
-                glyph, with floating rock debris beside it — a games wallpaper
-                standing in for the product on the page every visitor sees
-                first. It was also 542x445, which is smaller than the box it
-                is drawn into, so it arrived soft on any retina screen.
-
-                This is the actual T480 product photograph already in the
-                repo at 1179x1115, cut out against transparency. It is sharp,
-                the Lenovo and ThinkPad marks are the real ones, and it is
-                the machine the alt text has always claimed it was.
-
-                The lighting that made the render feel at home in the hero is
-                done here instead: the radial glow above sits behind it, and
-                the two drop-shadows ground it and give the black chassis a
-                faint blue rim so its silhouette separates from the navy
-                rather than sinking into it.
-              */}
-              <Image
-                src="/thinkpad-t480-6-cutout.webp"
-                alt={c.machineAlt}
-                width={1179}
-                height={1115}
-                priority
-                sizes="(min-width: 1024px) 38vw, 96vw"
-                className="relative mx-auto w-full max-w-xl lg:max-w-none"
-                style={{
-                  filter:
-                    "drop-shadow(0 18px 40px rgba(0,0,0,0.55)) drop-shadow(0 0 26px rgba(60,110,255,0.26))",
-                }}
-              />
-            </div>
-
-            <div className="rise rise-3 lg:col-span-3">
+            <div className="rise rise-3 lg:col-span-4 lg:col-start-9">
               <HeroSpecs lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
             </div>
           </div>
