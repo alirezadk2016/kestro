@@ -174,10 +174,7 @@ const pairsIn = (source, start) => {
       ...body
         .slice(0, end)
         .matchAll(/"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)":?\s*,?\s*"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)"/g),
-    ].map((m) => [
-      m[1],
-      m[2],
-    ]),
+    ].map((m) => [m[1], m[2]]),
   );
 };
 
@@ -198,9 +195,42 @@ for (const da of fromConfig.keys()) {
   if (!fromRoutes.has(da)) fail(`${da} is in next.config.mjs but not in lib/routes.ts`);
 }
 
+/*
+ * The keyword map's English addresses, against the ones the site renders.
+ *
+ * docs/seo-keyword-map.csv is where a target URL gets looked up before anything
+ * is written or linked, and it was filled in while /en still carried the Danish
+ * slugs: /en/kvalitet, /en/ydelser/nordisk-tilpasning. Those addresses do still
+ * answer, through the 301s in next.config.mjs, so nothing breaks loudly. The map
+ * simply hands the pre-translation address to whoever reads it next, and a
+ * redirect ends up published as though it were the canonical one. That is a
+ * quiet failure with no build step to catch it, which is the argument for
+ * catching it here.
+ *
+ * Longest match wins, so /produkter/skaerme is reported against its own entry
+ * rather than against /produkter.
+ */
+const keywordMap = read("docs/seo-keyword-map.csv");
+let englishMapRows = 0;
+for (const [, url] of keywordMap.matchAll(/,(\/en(?:\/[a-z0-9/-]*)?)[,\n]/g)) {
+  englishMapRows += 1;
+  const danish = url.slice("/en".length);
+  const stale = [...fromRoutes.keys()]
+    .filter((path) => danish === path || danish.startsWith(path + "/"))
+    .sort((a, b) => b.length - a.length)[0];
+  if (stale)
+    fail(
+      `docs/seo-keyword-map.csv: ${url} is the pre-translation address — ` +
+        `lib/routes.ts maps ${stale} to ${fromRoutes.get(stale)}`,
+    );
+}
+if (englishMapRows === 0)
+  fail("docs/seo-keyword-map.csv: no /en URLs found — has the column order changed?");
+
 console.log(
   `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
-    `${fromRoutes.size} english routes, ${failures.length} failures`,
+    `${fromRoutes.size} english routes, ${englishMapRows} mapped keywords, ` +
+    `${failures.length} failures`,
 );
 for (const message of failures) console.error("  " + message);
 process.exit(failures.length === 0 ? 0 : 1);
