@@ -1592,18 +1592,83 @@ export function GuidePanelStyles() {
  * Local WebP through next/image: 23-42 kB each, down from 400-480 kB as PNG,
  * with a fixed 3:2 box so nothing shifts as they decode.
  */
-const artwork: Record<string, { src: string; alt: string }> = {
+/*
+ * The rendered plates.
+ *
+ * `neutral` is the whole of the language question. The first three plates were
+ * supplied with their labels baked into the pixels, and two of those labels are
+ * Danish — "HURTIGERE ARBEJDSGANG" is painted into ydelse.webp and no amount of
+ * routing will translate it. Those stay on the Danish pages only.
+ *
+ * The five newer ones carry no text at all, which is what makes them usable in
+ * both languages: nothing in the image has a language to be wrong in. That is
+ * worth more than it sounds. Until now an English visitor saw drawn panels on
+ * every guide and never one of these plates.
+ */
+type Art = { src: string; alt: Localized; neutral?: boolean };
+
+const artwork: Record<string, Art> = {
   "tjek-brugt-baerbar-foer-koeb": {
     src: "/viden/inspektion.webp",
-    alt: "Bærbar under gennemgang med kontrolpunkter for skærm, tastatur, porte, batteri og hardware.",
+    alt: {
+      da: "Bærbar under gennemgang med kontrolpunkter for skærm, tastatur, porte, batteri og hardware.",
+      en: "Laptop under inspection with checkpoints for screen, keyboard, ports, battery and hardware.",
+    },
   },
   "opgrader-ram-i-baerbar": {
     src: "/viden/ydelse.webp",
-    alt: "Et RAM-modul og et NVMe SSD over hinanden, som de to opgraderinger der flytter mest.",
+    alt: {
+      da: "Et RAM-modul og et NVMe SSD over hinanden, som de to opgraderinger der flytter mest.",
+      en: "A memory module and an NVMe SSD, one above the other, as the two upgrades that move the most.",
+    },
   },
   "windows-10-support-slutter": {
     src: "/viden/levetid.webp",
-    alt: "En bærbar i midten af et livscyklusforløb: ny, udrullet, aktiv, opgraderet, udskiftet.",
+    alt: {
+      da: "En bærbar i midten af et livscyklusforløb: ny, udrullet, aktiv, opgraderet, udskiftet.",
+      en: "A laptop at the centre of a lifecycle: new, deployed, active, upgraded, replaced.",
+    },
+  },
+
+  "reparere-eller-koebe-ny": {
+    src: "/viden/beslutning.webp",
+    neutral: true,
+    alt: {
+      da: "En bærbar svævende mellem to strømme af lys: til venstre reservedele, til højre en anden maskine.",
+      en: "A laptop suspended between two streams of light: spare parts to the left, another machine to the right.",
+    },
+  },
+  "samle-din-egen-pc": {
+    src: "/viden/montering.webp",
+    neutral: true,
+    alt: {
+      da: "Et åbent pc-kabinet med komponenterne svævende omkring sig, hver forbundet til sin egen plads med en tråd af lys.",
+      en: "An open PC chassis with its components floating around it, each tied to its own slot by a thread of light.",
+    },
+  },
+  "windows-11-paa-aeldre-maskine": {
+    src: "/viden/kompatibilitet.webp",
+    neutral: true,
+    alt: {
+      da: "En chip svævende foran en lysende port, som spørgsmålet om en ældre maskine kommer igennem eller ej.",
+      en: "A chip floating before a gateway of light, as the question of whether an older machine passes or not.",
+    },
+  },
+  "slet-data-foer-du-saelger": {
+    src: "/viden/datasikkerhed.webp",
+    neutral: true,
+    alt: {
+      da: "Et NVMe-drev, hvis bagkant opløses i lysende partikler, mens forkanten står skarp.",
+      en: "An NVMe drive whose trailing edge dissolves into luminous particles while its leading edge stays sharp.",
+    },
+  },
+  "refurbished-eller-brugt": {
+    src: "/viden/stand.webp",
+    neutral: true,
+    alt: {
+      da: "To ens bærbare side om side: den ene mat og træt, den anden med lys langs hver kant.",
+      en: "Two identical laptops side by side: one dulled and tired, the other with light along every edge.",
+    },
   },
 };
 
@@ -1616,8 +1681,21 @@ export const hasGuidePanel = (slug: string) => slug in panels;
  * the keyframes nor the shared defs. An article page for one of them was
  * shipping 17 kB of stylesheet and symbol for a drawing it does not contain.
  */
-export const needsPanelChrome = (slug: string, lang: Lang) =>
-  !(lang === "da" && slug in artwork);
+export const needsPanelChrome = (slug: string, lang: Lang) => !plateFor(slug, lang);
+
+/**
+ * The plate to show this reader, or nothing if they should get the drawing.
+ *
+ * A plate whose labels are painted into the pixels can only be shown to the
+ * language those labels are in; one with no text in it at all can be shown to
+ * anybody. Both the renderer and the chrome check go through here so they can
+ * never disagree about which a page is getting.
+ */
+function plateFor(slug: string, lang: Lang): Art | undefined {
+  const art = artwork[slug];
+  if (!art) return undefined;
+  return art.neutral || lang === "da" ? art : undefined;
+}
 
 /** Which clock a slug runs on, so its chips animate on its own cycle. */
 const clockOf: Record<string, string> = {
@@ -1649,14 +1727,14 @@ export default function GuidePanel({
   const def = panels[slug];
   if (!def) return null;
 
-  /* A rendered plate where one exists, in the language it is set in. */
-  const art = lang === "da" ? artwork[slug] : undefined;
+  /* A rendered plate where one exists and the reader can read it. */
+  const art = plateFor(slug, lang);
   if (art) {
     return (
       <div className={className} style={style}>
         <Image
           src={art.src}
-          alt={art.alt}
+          alt={art.alt[lang]}
           width={768}
           height={512}
           sizes="(min-width: 1024px) 768px, 100vw"

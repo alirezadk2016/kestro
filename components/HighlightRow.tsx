@@ -120,8 +120,12 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <Image
                 src="/cards/exploded.webp"
                 alt={c.refurbAlt}
+                /* The plate's own ratio, 880x1176. It is drawn with h-auto, so
+                   the height follows the intrinsic aspect and a declaration
+                   that disagrees with it reserves the wrong box and shifts the
+                   list beside it on load. */
                 width={200}
-                height={250}
+                height={267}
                 sizes="(min-width: 1024px) 16vw, 40vw"
                 className="h-auto w-3/4 max-w-[240px] flex-shrink-0 self-center sm:w-[38%] sm:max-w-[200px]"
               />
