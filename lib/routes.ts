@@ -72,6 +72,7 @@ export const englishPath: Record<string, string> = {
   "/vejledninger/windows-11-paa-aeldre-maskine": "/knowledge/windows-11-on-older-hardware",
   "/vejledninger/slet-data-foer-du-saelger": "/knowledge/erase-data-before-selling",
   "/vejledninger/vaelg-erhvervsbaerbar": "/knowledge/thinkpad-vs-elitebook-vs-latitude",
+  "/vejledninger/dock-og-skaerme-til-arbejdspladsen": "/knowledge/how-many-monitors-can-a-dock-run",
   "/produkter/baerbare-computere": "/products/business-laptops",
   "/produkter/stationaere-computere": "/products/desktop-computers",
   "/produkter/skaerme": "/products/monitors",

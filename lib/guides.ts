@@ -1949,6 +1949,230 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "dock-og-skaerme-til-arbejdspladsen",
+    cluster: "workplace-hardware",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "hvor mange skærme kan en dock klare",
+    author: "alireza",
+    title: {
+      da: "Dock og skærme: hvor mange kan en arbejdsplads klare?",
+      en: "Docks and monitors: how many can one desk take?",
+    },
+    metaTitle: {
+      da: "Hvor mange skærme kan en dockingstation klare? | Kestro",
+      en: "How many monitors can a docking station run? | Kestro",
+    },
+    metaDescription: {
+      da: "Antallet af skærme afhænger af docken, ikke af computeren. Forskellen på mekaniske docks og USB-C, hvad de hver især kan trække, og hvorfor stikkene skal passe i begge ender.",
+      en: "The number of monitors depends on the dock, not the computer. The difference between mechanical and USB-C docks, what each can drive, and why the connectors have to match at both ends.",
+    },
+    summary: {
+      da: "Docken afgør, hvor mange skærme der kan sidde på pladsen. Sådan finder I ud af hvilken, før I køber skærmene.",
+      en: "The dock decides how many monitors a desk can run. How to work out which one before you buy the monitors.",
+    },
+    audience: {
+      da: "IT-ansvarlige, der skal sætte faste arbejdspladser op",
+      en: "IT managers setting up fixed desks",
+    },
+    readingMinutes: 7,
+    updated: "2026-09-13",
+    tldr: {
+      da: "Det er docken, ikke computeren, der sætter grænsen for antallet af skærme. Mekaniske docks klikker fast under maskinen og passer kun til én serie; USB-C-docks virker på tværs af mærker. To skærme klarer stort set alle docks, tre kræver den rigtige variant. Tjek stikkene i begge ender, før I køber – ældre docks har DVI og VGA, som nye skærme sjældent har.",
+      en: "It is the dock, not the computer, that caps how many monitors a desk can run. Mechanical docks click onto the bottom of the machine and fit only one series; USB-C docks work across brands. Two monitors is within reach of almost any dock, three needs the right variant. Check the connectors at both ends before buying — older docks have DVI and VGA, which new monitors rarely do.",
+    },
+    intro: {
+      da: "Spørgsmålet kommer altid i den forkerte rækkefølge. Skærmene bliver købt først, og så viser det sig, at docken på pladsen kun kan trække to af dem, eller at den har et stik, ingen af skærmene har. Docken er den billigste del af arbejdspladsen og den, der bestemmer mest. Den bør vælges først.",
+      en: "The question almost always arrives in the wrong order. The monitors get bought first, and then it turns out the dock at the desk will only drive two of them, or that it has a connector none of the monitors has. The dock is the cheapest part of the desk and the part that decides the most. It should be chosen first.",
+    },
+    sections: [
+      {
+        heading: { da: "To slags docks", en: "Two kinds of dock" },
+        body: [
+          {
+            da: "Mekaniske docks klikker fast i et stik i bunden af maskinen. ThinkPad Ultra Dock er den udbredte af slagsen: maskinen sættes ned i docken, og alt er forbundet. Det er hurtigt og holdbart, men stikket findes kun på én producents maskiner og kun på bestemte generationer.",
+            en: "Mechanical docks click into a connector on the underside of the machine. The ThinkPad Ultra Dock is the common one: the machine drops onto the dock and everything is connected. It is fast and durable, but the connector exists only on one manufacturer's machines, and only on certain generations.",
+          },
+          {
+            da: "USB-C-docks forbinder med ét kabel, der klarer data, skærm og strøm på én gang. Dell WD19 og HP USB-C Dock G5 er de to, vi oftest skaffer. Fordelen er, at de virker på tværs af mærker – en WD19 kører fint på en EliteBook.",
+            en: "USB-C docks connect with a single cable carrying data, display and power at once. The Dell WD19 and the HP USB-C Dock G5 are the two we source most often. The advantage is that they work across brands — a WD19 runs an EliteBook perfectly well.",
+          },
+          {
+            da: "Har I ældre Dell E-Port-docks stående, passer de ikke til den nuværende generation Latitude. Det er værd at få afklaret, før docken regnes med som noget, I allerede har.",
+            en: "If you have older Dell E-Port docks in a cupboard, they do not fit the current generation of Latitude. Worth settling before the dock is counted as something you already own.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "De tre docks, vi oftest skaffer",
+            en: "The three docks we source most often",
+          },
+          head: [
+            { da: "", en: "" },
+            { da: "ThinkPad Ultra Dock", en: "ThinkPad Ultra Dock" },
+            { da: "Dell WD19", en: "Dell WD19" },
+            { da: "HP USB-C Dock G5", en: "HP USB-C Dock G5" },
+          ],
+          rows: [
+            [
+              { da: "Forbindelse", en: "Connection" },
+              { da: "Mekanisk stik under maskinen", en: "Mechanical connector under the machine" },
+              { da: "USB-C, ét kabel", en: "USB-C, one cable" },
+              { da: "USB-C, ét kabel", en: "USB-C, one cable" },
+            ],
+            [
+              { da: "Skærme", en: "Monitors" },
+              { da: "Op til tre", en: "Up to three" },
+              { da: "Op til tre afhængigt af variant", en: "Up to three depending on the variant" },
+              { da: "To", en: "Two" },
+            ],
+            [
+              { da: "Skærmstik", en: "Display outputs" },
+              { da: "DisplayPort, DVI og VGA", en: "DisplayPort, DVI and VGA" },
+              { da: "DisplayPort og HDMI", en: "DisplayPort and HDMI" },
+              { da: "DisplayPort og HDMI", en: "DisplayPort and HDMI" },
+            ],
+            [
+              { da: "Passer til", en: "Fits" },
+              { da: "Kun ThinkPads med dockstik", en: "Only ThinkPads with the dock connector" },
+              { da: "USB-C-maskiner, også andre mærker", en: "USB-C machines, other brands too" },
+              { da: "USB-C-maskiner, oftest HP", en: "USB-C machines, usually HP" },
+            ],
+          ],
+        },
+      },
+      {
+        heading: { da: "Hvor mange skærme", en: "How many monitors" },
+        body: [
+          {
+            da: "To skærme er inden for rækkevidde af stort set enhver dock på listen. Tre er det ikke. ThinkPad Ultra Dock kan tre samtidig, WD19 kan tre på nogle varianter og to på andre, og G5-docken er en to-skærms dock.",
+            en: "Two monitors is within reach of essentially any dock on the list. Three is not. The ThinkPad Ultra Dock will do three at once, the WD19 does three on some variants and two on others, and the G5 is a two-monitor dock.",
+          },
+          {
+            da: "Variant er det vigtige ord ved WD19. Docken findes i flere udgaver, der ligner hinanden udvendigt, og antallet af skærme følger udgaven. Skal der tre skærme på pladsen, skal den præcise variant stå i tilbuddet – ikke bare modelnavnet.",
+            en: "Variant is the important word with the WD19. The dock exists in several versions that look alike from the outside, and the monitor count follows the version. If a desk needs three monitors, the exact variant has to be in the quote — not just the model name.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Stikkene skal passe i begge ender",
+          en: "The connectors have to match at both ends",
+        },
+        body: [
+          {
+            da: "Det er her, de fleste opsætninger går galt. ThinkPad Ultra Dock har DisplayPort, DVI og VGA. DVI og VGA er fra en tid, hvor skærme havde dem, og en ny kontorskærm har det sjældent. Docken kan altså trække tre skærme, som skærmene ikke kan tage imod.",
+            en: "This is where most setups come apart. The ThinkPad Ultra Dock has DisplayPort, DVI and VGA. DVI and VGA are from a time when monitors had them, and a current office monitor rarely does. So the dock can drive three monitors the monitors cannot accept.",
+          },
+          {
+            da: "Adaptere findes og virker, men de er en ekstra ting per plads, der kan blive væk, og en ekstra ting at bestille i antal. Er der frit valg, er det nemmere at vælge dock og skærme med de samme stik end at samle to generationer med adaptere.",
+            en: "Adapters exist and work, but they are one more thing per desk to lose, and one more thing to order in quantity. Given a free choice, it is easier to pick a dock and monitors with the same connectors than to bridge two generations with adapters.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Skærmene", en: "The monitors" },
+        body: [
+          {
+            da: "Til almindeligt kontorarbejde er 24 tommer IPS med mat overflade det, der går igen – Dell UltraSharp U2419H, HP EliteDisplay E243 og Lenovo ThinkVision T24i er alle i den klasse. Mat overflade betyder færre genskin fra vinduer og loftslys, og det mærkes mere i hverdagen end et par hundrede pixels.",
+            en: "For ordinary office work, a 24-inch IPS panel with a matte finish is what keeps coming up — the Dell UltraSharp U2419H, HP EliteDisplay E243 and Lenovo ThinkVision T24i are all in that class. A matte finish means fewer reflections from windows and ceiling lights, and that is felt more day to day than a few hundred extra pixels.",
+          },
+          {
+            da: "Skal der stå to ved siden af hinanden, er rammen værd at kigge på. Tynde rammer betyder, at der ikke løber en tyk streg ned midt i synsfeltet, hvor de to skærme mødes.",
+            en: "If two are going side by side, the bezel is worth a look. Thin bezels mean there is no thick bar running down the middle of the field of view where the two monitors meet.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Én dock på alle pladser", en: "One dock at every desk" },
+        body: [
+          {
+            da: "Det billigste, I kan gøre for en flåde, er at have den samme dock på hver plads. Så kan enhver maskine sættes ved enhver plads, en defekt dock kan byttes fra lageret uden at nogen skal tænke over det, og der er én slags kabel at bestille.",
+            en: "The cheapest thing you can do for a fleet is to have the same dock at every desk. Then any machine can sit at any desk, a failed dock can be swapped from the shelf without anyone having to think about it, and there is one kind of cable to order.",
+          },
+          {
+            da: "Det taler for USB-C frem for mekanisk, selv i en ren ThinkPad-flåde. Mekaniske docks er gode, så længe alle maskiner har stikket – og den dag en enkelt afdeling får en anden model, holder det op med at være sandt.",
+            en: "That argues for USB-C over mechanical, even in an all-ThinkPad fleet. Mechanical docks are good for as long as every machine has the connector — and the day one department gets a different model, that stops being true.",
+          },
+        ],
+        list: [
+          {
+            da: "Vælg docken før skærmene. Den sætter grænsen, ikke computeren.",
+            en: "Choose the dock before the monitors. It sets the limit, not the computer.",
+          },
+          {
+            da: "Skal der tre skærme på, skal den præcise dockvariant stå i tilbuddet.",
+            en: "If three monitors are going on, the exact dock variant has to be in the quote.",
+          },
+          {
+            da: "Tjek at dockens skærmstik findes på de skærme, I køber.",
+            en: "Check that the dock's display outputs exist on the monitors you are buying.",
+          },
+          {
+            da: "Samme dock på alle pladser slår den bedste dock på hver enkelt plads.",
+            en: "The same dock at every desk beats the best dock at each individual desk.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Skriv til os med, hvor mange skærme der skal stå på pladsen, og hvilke maskiner der skal kunne sættes ved den. Så finder vi docken, der passer til begge dele, og skriver varianten ind i tilbuddet, så der ikke er noget at gætte på ved leveringen.",
+      en: "Write to us with how many monitors a desk needs and which machines have to be able to sit at it. We will find the dock that fits both and write the variant into the quote, so there is nothing to guess at on delivery.",
+    },
+    related: [
+      {
+        href: "/produkter/dockingstationer",
+        label: { da: "Dockingstationer, vi skaffer", en: "The docks we source" },
+      },
+      {
+        href: "/produkter/skaerme",
+        label: { da: "Skærme til kontoret", en: "Monitors for the office" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Kan jeg bruge en Dell-dock til en HP-maskine?",
+          en: "Can I use a Dell dock with an HP machine?",
+        },
+        answer: {
+          da: "Ja, hvis det er en USB-C-dock. WD19 forbinder over USB-C og er ikke bundet til Dell-maskiner. Mekaniske docks kan ikke – de sidder i et stik, som kun findes på én producents maskiner.",
+          en: "Yes, if it is a USB-C dock. The WD19 connects over USB-C and is not tied to Dell machines. Mechanical docks cannot — they sit in a connector that exists only on one manufacturer's machines.",
+        },
+      },
+      {
+        question: {
+          da: "Oplader docken også maskinen?",
+          en: "Does the dock charge the machine too?",
+        },
+        answer: {
+          da: "USB-C-docks gør, over det samme kabel som skærm og data. Det er hele pointen med ét kabel: maskinen sættes på pladsen med én forbindelse og lader imens. Hvor meget strøm docken kan levere, varierer, og en maskine med et krævende grafikkort kan trække mere, end docken giver.",
+          en: "USB-C docks do, over the same cable as display and data. That is the whole point of one cable: the machine arrives at the desk on a single connection and charges while it sits there. How much power a dock can deliver varies, and a machine with a demanding graphics card can draw more than the dock supplies.",
+        },
+      },
+      {
+        question: {
+          da: "Er to skærme bedre end én stor?",
+          en: "Are two monitors better than one large one?",
+        },
+        answer: {
+          da: "Til sagsbehandling og arbejde med to dokumenter ved siden af hinanden, som regel ja – vinduer kan ligge fast hver sit sted. Til arbejde i ét stort program kan én bred skærm være bedre. To ens 24-tommers er den nemmeste at skaffe i antal og den billigste at erstatte, når en går i stykker.",
+          en: "For casework and anything that means two documents side by side, usually yes — windows can stay put in their own place. For work inside one large application, a single wide monitor can be better. Two identical 24-inch panels are the easiest to source in quantity and the cheapest to replace when one fails.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad hvis skærmene har DisplayPort og docken kun har VGA?",
+          en: "What if the monitors have DisplayPort and the dock only has VGA?",
+        },
+        answer: {
+          da: "Så skal der adapter på, og VGA er analogt – billedet bliver mærkbart blødere end over DisplayPort. På en enkelt plads er det til at leve med. På tredive er det nemmere og billigere at finde en dock, der passer til skærmene.",
+          en: "Then an adapter is needed, and VGA is analogue — the picture is noticeably softer than over DisplayPort. At one desk that is liveable. At thirty it is easier and cheaper to find a dock that matches the monitors.",
+        },
+      },
+    ],
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {
