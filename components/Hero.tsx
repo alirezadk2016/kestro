@@ -68,18 +68,6 @@ export default function Hero({ lang }: { lang: Lang }) {
      * catches it if that ever stops being true.
      */
     <section className="grain relative flex w-full flex-col overflow-hidden bg-brand-950 md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
-      {/* Something for the phone to stand on, where the photograph is not
-          drawn. Above md the picture brings its own light and a second one
-          laid over it only flattens the window. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 md:hidden"
-        style={{
-          background:
-            "radial-gradient(115% 95% at 76% 20%, rgba(46,121,255,0.20) 0%, rgba(24,50,124,0.10) 36%, transparent 70%)",
-        }}
-      />
-
       {/*
        * The scene.
        *
@@ -122,6 +110,13 @@ export default function Hero({ lang }: { lang: Lang }) {
         media="(min-width: 768px)"
         fetchPriority="high"
       />
+      <link
+        rel="preload"
+        as="image"
+        href="/hero/scene-mobile.webp"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
 
       <div
         aria-hidden="true"
@@ -140,7 +135,7 @@ export default function Hero({ lang }: { lang: Lang }) {
        */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 hidden md:block"
         style={{
           background:
             "linear-gradient(90deg, rgba(4,7,17,0.82) 0%, rgba(4,7,17,0.90) 11%, rgba(4,7,17,0.88) 34%, rgba(4,7,17,0.60) 45%, rgba(4,7,17,0.20) 55%, rgba(4,7,17,0) 66%)",
@@ -263,6 +258,37 @@ export default function Hero({ lang }: { lang: Lang }) {
           </div>
         </Container>
       </div>
+
+      {/*
+        The phone's version of the room, as a band rather than a backdrop.
+
+        The scene was hidden below md, which meant the screen most B2B traffic
+        arrives on — the most important screen there is — was flat navy with
+        type on it while the desktop got the room.
+
+        Laying the same photograph behind the copy does not fix it and cannot:
+        the hero stacks on a phone, so the band is 390 by about 900, a ratio of
+        0.43, and no crop of a 2.7:1 photograph fills that without enlarging it
+        until only a vertical sliver of the middle survives. Tried, measured,
+        and it is exactly what happened — the room vanished and the machine
+        slid down behind the trust strip.
+
+        So the picture gets a frame of its own at a ratio it can hold, after
+        the words and before the facts, which is the shape of every mobile hero
+        that works. The file is the phone's own cut: a square taken at 56%
+        across the plate, chosen by rendering four candidates and looking, which
+        holds the lit K, the machine and the water. 33kB against the desktop's
+        85. The top edge fades into the copy above rather than starting on a
+        line.
+      */}
+      <div
+        aria-hidden="true"
+        className="relative z-10 aspect-[4/3] w-full bg-cover bg-center bg-no-repeat md:hidden"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgb(11,20,38) 0%, rgba(11,20,38,0.6) 12%, rgba(11,20,38,0) 32%), url(/hero/scene-mobile.webp)",
+        }}
+      />
 
       <FeatureStrip lang={lang} />
     </section>
