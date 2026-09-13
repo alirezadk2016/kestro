@@ -158,6 +158,7 @@ const englishRoutes = [
     "/vejledninger/dock-og-skaerme-til-arbejdspladsen",
     "/knowledge/how-many-monitors-can-a-dock-run",
   ],
+  ["/vejledninger/standardiser-firmacomputere", "/knowledge/standardise-company-computers"],
   ["/produkter/baerbare-computere", "/products/business-laptops"],
   ["/produkter/stationaere-computere", "/products/desktop-computers"],
   ["/produkter/skaerme", "/products/monitors"],

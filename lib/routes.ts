@@ -73,6 +73,7 @@ export const englishPath: Record<string, string> = {
   "/vejledninger/slet-data-foer-du-saelger": "/knowledge/erase-data-before-selling",
   "/vejledninger/vaelg-erhvervsbaerbar": "/knowledge/thinkpad-vs-elitebook-vs-latitude",
   "/vejledninger/dock-og-skaerme-til-arbejdspladsen": "/knowledge/how-many-monitors-can-a-dock-run",
+  "/vejledninger/standardiser-firmacomputere": "/knowledge/standardise-company-computers",
   "/produkter/baerbare-computere": "/products/business-laptops",
   "/produkter/stationaere-computere": "/products/desktop-computers",
   "/produkter/skaerme": "/products/monitors",

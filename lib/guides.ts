@@ -2173,6 +2173,240 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "standardiser-firmacomputere",
+    cluster: "lifecycle",
+    type: "erhvervs-it",
+    intent: "informational-commercial",
+    primaryKeyword: "standardisering af computere i virksomheden",
+    author: "alireza",
+    title: {
+      da: "Standardisering: hvorfor ens maskiner er billigere end de bedste",
+      en: "Standardising: why identical machines cost less than the best ones",
+    },
+    metaTitle: {
+      da: "Standardisering af computere i virksomheden | Kestro",
+      en: "Standardising computers across a company | Kestro",
+    },
+    metaDescription: {
+      da: "Hver ekstra model koster ikke bare en maskine mere – den koster docks, strømforsyninger, reservedele og en ting mere, IT skal kunne. Hvad standardisering faktisk sparer, og hvornår man ikke skal.",
+      en: "Every extra model costs more than one more machine — it costs docks, power supplies, spare parts and one more thing IT has to know. What standardising actually saves, and when not to do it.",
+    },
+    summary: {
+      da: "Den bedste maskine til hver medarbejder er dyrere end den samme maskine til alle. Her er regnestykket, der sjældent bliver stillet op.",
+      en: "The best machine for each employee costs more than the same machine for everyone. Here is the sum that rarely gets written down.",
+    },
+    audience: {
+      da: "IT-ansvarlige og indkøbere med en flåde at holde kørende",
+      en: "IT managers and buyers with a fleet to keep running",
+    },
+    readingMinutes: 8,
+    updated: "2026-09-13",
+    tldr: {
+      da: "En ekstra model i flåden koster mere end den ene maskine. Den koster en dock mere på lageret, en strømforsyning mere, et sæt reservedele mere og en ting mere, IT skal kunne i hovedet. Standardisering betyder ikke ens maskiner til alle – det betyder få niveauer frem for mange. To eller tre konfigurationer dækker de fleste virksomheder, og de skal stå på skrift, så den næste bestilling ikke starter forfra.",
+      en: "An extra model in the fleet costs more than the one machine. It costs another dock on the shelf, another power supply, another set of spare parts and one more thing IT has to keep in its head. Standardising does not mean identical machines for everyone — it means few tiers rather than many. Two or three configurations cover most companies, and they need to be written down so the next order does not start from scratch.",
+    },
+    intro: {
+      da: "Beslutningen bliver sjældent taget. Den sker: en afdeling får et behov, der bliver købt noget andet den gang, og to år senere står der fire modeller på kontoret, som ingen har valgt tilsammen. Hver enkelt indkøb var fornuftigt. Summen er ikke.",
+      en: "The decision is rarely made. It happens: one department has a need, something different gets bought that time, and two years later there are four models in the office that nobody chose together. Each purchase on its own was sensible. The sum is not.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Hvad der bliver dobbelt, når der er to modeller",
+          en: "What doubles when there are two models",
+        },
+        body: [
+          {
+            da: "En maskine er ikke bare en maskine. Den kommer med en dock, den skal have strøm fra en bestemt slags forsyning, den har et tastatur, der kan gå i stykker, og en måde at blive sat op på. Alt det ganges med antallet af modeller, ikke med antallet af medarbejdere.",
+            en: "A machine is not just a machine. It comes with a dock, it takes power from a particular kind of supply, it has a keyboard that can break, and a way of being set up. All of that multiplies by the number of models, not by the number of employees.",
+          },
+          {
+            da: "Tyve ens maskiner har én slags reservedel. Ti og ti har to. Det er den samme flåde og den samme pris på maskinerne, men det andet lager er dobbelt så bredt, og den dag noget går i stykker, er sandsynligheden for at have den rigtige del på hylden lavere.",
+            en: "Twenty identical machines have one kind of spare part. Ten and ten have two. Same fleet, same price on the machines, but the second store cupboard is twice as wide, and the day something breaks, the odds of having the right part on the shelf are lower.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "Hvad der skal holdes styr på per model i flåden",
+            en: "What has to be kept track of per model in the fleet",
+          },
+          head: [
+            { da: "", en: "" },
+            { da: "Én model", en: "One model" },
+            { da: "To modeller", en: "Two models" },
+          ],
+          rows: [
+            [
+              { da: "Docks på lageret", en: "Docks on the shelf" },
+              { da: "Én type", en: "One type" },
+              {
+                da: "To typer, hvis dockstikket er forskelligt",
+                en: "Two types, if the dock connector differs",
+              },
+            ],
+            [
+              { da: "Strømforsyninger", en: "Power supplies" },
+              { da: "Én type", en: "One type" },
+              {
+                da: "To typer, medmindre begge bruger USB-C",
+                en: "Two types, unless both use USB-C",
+              },
+            ],
+            [
+              { da: "Reservedele", en: "Spare parts" },
+              { da: "Ét sæt: tastatur, batteri, disk", en: "One set: keyboard, battery, disk" },
+              { da: "To sæt", en: "Two sets" },
+            ],
+            [
+              { da: "Opsætning", en: "Setup" },
+              { da: "Én fremgangsmåde", en: "One procedure" },
+              { da: "To, med hver sine drivere", en: "Two, each with its own drivers" },
+            ],
+            [
+              { da: "Når en maskine dør", en: "When a machine dies" },
+              { da: "Enhver låner fra puljen", en: "Anyone borrows from the pool" },
+              { da: "Kun halvdelen passer til pladsen", en: "Only half of them fit the desk" },
+            ],
+          ],
+        },
+      },
+      {
+        heading: {
+          da: "Standardisering er ikke ens maskiner til alle",
+          en: "Standardising is not identical machines for everyone",
+        },
+        body: [
+          {
+            da: "Her går de fleste diskussioner i hårdknude, fordi ordet bliver hørt som om alle skal have den samme maskine. Det skal de ikke. Grafikeren har brug for mere, end bogholderiet har, og det er ikke en holdning, man kan standardisere sig ud af.",
+            en: "This is where most of these discussions tie themselves in knots, because the word gets heard as everyone having the same machine. They should not. The designer needs more than the finance department does, and that is not an opinion you can standardise your way out of.",
+          },
+          {
+            da: "Det, der standardiseres, er antallet af niveauer. To eller tre dækker de fleste virksomheder: en almindelig kontormaskine, en med mere hukommelse og disk til de tunge brugere, og eventuelt en let en til dem, der rejser. Samme serie, samme dock, samme reservedele – forskellig konfiguration.",
+            en: "What gets standardised is the number of tiers. Two or three cover most companies: an ordinary office machine, one with more memory and disk for the heavy users, and perhaps a light one for the people who travel. Same series, same dock, same spare parts — different configuration.",
+          },
+          {
+            da: "Det er forskellen på at vælge én serie og at vælge én maskine. Serien holder lageret smalt. Konfigurationen inden for serien lader folk få det, de skal bruge.",
+            en: "That is the difference between choosing one series and choosing one machine. The series keeps the store cupboard narrow. The configuration within the series lets people have what they need.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Konfigurationen skal stå på skrift",
+          en: "The configuration has to be written down",
+        },
+        body: [
+          {
+            da: "En standard, der kun findes i hovedet på den, der købte sidst, holder indtil den person er på ferie. Skriv niveauerne ned: serie, processor, hukommelse, disk, skærmstørrelse, tastaturlayout og hvilken dock der hører til.",
+            en: "A standard that exists only in the head of whoever bought last time lasts until that person is on holiday. Write the tiers down: series, processor, memory, disk, screen size, keyboard layout and which dock goes with it.",
+          },
+          {
+            da: "Vi holder en aftalt konfiguration på skrift for de kunder, der beder om det, så den næste medarbejder får samme opsætning som resten uden at nogen skal starte et indkøb forfra. Det er den billigste del af hele øvelsen og den, der oftest bliver sprunget over.",
+            en: "We keep an agreed configuration on file for the customers who ask for it, so the next employee gets the same setup as everyone else without anyone starting a purchase from scratch. It is the cheapest part of the whole exercise and the one most often skipped.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Hvornår man ikke skal standardisere", en: "When not to standardise" },
+        body: [
+          {
+            da: "Standardisering er en fordel, der vokser med antallet. Under omkring ti maskiner er der ikke rigtig et lager at holde smalt, og så er det mere værd at give hver enkelt den maskine, der passer bedst.",
+            en: "Standardising is an advantage that grows with the count. Under about ten machines there is not really a store cupboard to keep narrow, and then it is worth more to give each person the machine that fits them best.",
+          },
+          {
+            da: "Den anden undtagelse er den enlige specialist. Har I én medarbejder, der har brug for en mobil arbejdsstation med 64 GB hukommelse og et rigtigt grafikkort, er det en dårlig handel at holde hele flåden tilbage for at slippe for én ekstra model. Køb den maskine, skriv den ind som en undtagelse, og lad resten være standarden.",
+            en: "The other exception is the lone specialist. If you have one employee who needs a mobile workstation with 64 GB of memory and a real graphics card, holding the whole fleet back to avoid one extra model is a bad trade. Buy that machine, write it in as an exception, and let the rest be the standard.",
+          },
+          {
+            da: "Undtagelsen er ikke problemet. Problemet er undtagelsen, der ikke blev skrevet ned, og som to år senere ligner en model, nogen valgte med vilje.",
+            en: "The exception is not the problem. The problem is the exception nobody wrote down, which two years later looks like a model somebody chose on purpose.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sådan kommer I i gang", en: "How to start" },
+        body: [
+          {
+            da: "Man behøver ikke skifte hele flåden for at standardisere den. Det sker af sig selv over et par udskiftningsrunder, hvis beslutningen bliver truffet én gang og skrevet ned.",
+            en: "You do not have to replace a whole fleet to standardise it. It happens on its own over a couple of replacement rounds, as long as the decision gets made once and written down.",
+          },
+        ],
+        list: [
+          {
+            da: "Tæl, hvad der står nu: modeller, ikke maskiner. Tallet plejer at overraske.",
+            en: "Count what is there now: models, not machines. The number usually surprises.",
+          },
+          {
+            da: "Vælg én serie, I kan skaffe brugt i antal over flere år.",
+            en: "Pick one series you can source used, in quantity, over several years.",
+          },
+          {
+            da: "Læg to eller tre niveauer inden for den serie – ikke flere.",
+            en: "Set two or three tiers inside that series — no more.",
+          },
+          {
+            da: "Vælg docken til serien, og hold den samme på alle pladser.",
+            en: "Choose the dock for the series, and keep it the same at every desk.",
+          },
+          {
+            da: "Skriv niveauerne ned et sted, den næste indkøber kan finde dem.",
+            en: "Write the tiers down somewhere the next buyer can find them.",
+          },
+          {
+            da: "Udskift efterhånden som maskinerne går af, ikke på én gang.",
+            en: "Replace as machines retire, not all at once.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Skal I lægge en standard, kan vi skaffe den samme serie i antal over tid frem for det, der tilfældigvis er på lager en given uge. Skriv til os med, hvad der står nu, og hvor mange I skal bruge – så foreslår vi niveauerne og holder dem på skrift til næste bestilling.",
+      en: "If you are setting a standard, we can source the same series in quantity over time rather than whatever happens to be in stock in a given week. Write to us with what you have now and how many you need — we will propose the tiers and keep them on file for the next order.",
+    },
+    related: [
+      {
+        href: "/flaadeloesninger",
+        label: { da: "Flåder og større leverancer", en: "Fleets and larger deliveries" },
+      },
+      {
+        href: "/vejledninger/vaelg-erhvervsbaerbar",
+        label: { da: "Hvilken serie skal I vælge?", en: "Which series should you choose?" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Hvor mange maskiner skal der til, før standardisering betaler sig?",
+          en: "How many machines does it take before standardising pays off?",
+        },
+        answer: {
+          da: "Omkring ti er der, hvor det begynder at kunne mærkes, og over tredive er det svært at argumentere imod. Under ti er der ikke nok af hver ting til, at et smalt lager betyder noget.",
+          en: "Around ten is where it starts to be felt, and over thirty it is hard to argue against. Under ten there is not enough of each thing for a narrow store cupboard to matter.",
+        },
+      },
+      {
+        question: {
+          da: "Kan I skaffe den samme model i flere år?",
+          en: "Can you source the same model for several years?",
+        },
+        answer: {
+          da: "På de udbredte erhvervsserier, ja – de blev solgt i meget store antal til virksomheder, og de kommer på det brugte marked i mange år derefter. Det er en af grundene til at vælge en udbredt serie frem for en sjælden: den sjældne er svær at skaffe igen, når I skal bruge tre mere.",
+          en: "On the common business series, yes — they were sold to companies in very large numbers, and they reach the used market for many years afterwards. That is one reason to pick a common series over a rare one: the rare one is hard to source again when you need three more.",
+        },
+      },
+      {
+        question: {
+          da: "Skal skærmene også være ens?",
+          en: "Do the monitors have to be identical too?",
+        },
+        answer: {
+          da: "Det betyder mindre end maskinerne, fordi en skærm passer til alt med det rigtige stik. Men står der to ved siden af hinanden på samme plads, bør de to være ens – forskellig størrelse eller farvegengivelse ved siden af hinanden er en daglig irritation.",
+          en: "It matters less than the machines, because a monitor fits anything with the right connector. But if two are sitting side by side at the same desk, those two should match — different sizes or colour rendering next to each other is a daily irritation.",
+        },
+      },
+    ],
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {

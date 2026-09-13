@@ -11,8 +11,8 @@ it-udstyr til virksomheder,da,commercial,Kerne,/produkter,Secondary,High,Existin
 refurbished it,da,commercial,Kerne,/produkter,Secondary,Medium,Existing,"MELLEM – /modeller bærer også ""brugte erhvervscomputere"" i sin title.",Ja,unknown,unknown,unknown,
 genbrugt it-udstyr,da,commercial,Kerne,/produkter,Secondary,Medium,Existing,"MELLEM – /modeller bærer også ""brugte erhvervscomputere"" i sin title.",Ja,unknown,unknown,unknown,
 bæredygtig it til virksomheder,da,commercial,Kerne,/om-os,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,Bæredygtighed er et købsargument i dansk B2B-indkøb.
-hvad er refurbished,da,informational,Kerne,/vejledninger/refurbished-eller-brugt,Secondary,Low,New,None,Ja,unknown,unknown,unknown,Definitionsside – trækker toppen af tragten.
-refurbished vs brugt,da,informational,Kerne,/vejledninger/refurbished-eller-brugt,Primary,Medium,New,None,Ja,unknown,unknown,unknown,Direkte relevant for Kestros positionering.
+hvad er refurbished,da,informational,Kerne,/vejledninger/refurbished-eller-brugt,Secondary,Low,Existing,None,Ja,unknown,unknown,unknown,Definitionsside – trækker toppen af tragten.
+refurbished vs brugt,da,informational,Kerne,/vejledninger/refurbished-eller-brugt,Primary,Medium,Existing,None,Ja,unknown,unknown,unknown,Direkte relevant for Kestros positionering.
 brugte bærbare computere,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,
 refurbished bærbar,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Secondary,High,Existing,None,Delvist,unknown,unknown,unknown,
 brugt bærbar til erhverv,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Secondary,High,Existing,None,Ja,unknown,unknown,unknown,
@@ -21,7 +21,7 @@ billige bærbare computere til virksomheder,da,commercial,Produkt: bærbare,/pro
 bærbar computer til kontor,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Secondary,Medium,Existing,None,Delvist,unknown,unknown,unknown,
 erhvervsbærbar,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,
 brugte laptops,da,commercial,Produkt: bærbare,/produkter/baerbare-computere,Secondary,Medium,Existing,None,Delvist,unknown,unknown,unknown,
-hvilken bærbar til virksomheden,da,informational,Produkt: bærbare,/vejledninger/vaelg-erhvervsbaerbar,Secondary,Medium,New,None,Ja,unknown,unknown,unknown,
+hvilken bærbar til virksomheden,da,informational,Produkt: bærbare,/vejledninger/vaelg-erhvervsbaerbar,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,
 brugte stationære computere,da,commercial,Produkt: stationære,/produkter/stationaere-computere,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,
 refurbished stationær pc,da,commercial,Produkt: stationære,/produkter/stationaere-computere,Secondary,High,Existing,None,Delvist,unknown,unknown,unknown,
 stationær computer til kontor,da,commercial,Produkt: stationære,/produkter/stationaere-computere,Secondary,Medium,Existing,None,Delvist,unknown,unknown,unknown,
@@ -62,14 +62,14 @@ lenovo thinkvision t24i,da,commercial,Mærke/model,/modeller/lenovo-thinkvision-
 dell wd19 dock,da,commercial,Mærke/model,/modeller/dell-wd19,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,Modelsider findes allerede – lav-konkurrence long tail med reel købsintention.
 hp usb-c dock g5,da,commercial,Mærke/model,/modeller/hp-usb-c-dock-g5,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,Modelsider findes allerede – lav-konkurrence long tail med reel købsintention.
 lenovo thinkpad ultra dock,da,commercial,Mærke/model,/modeller/lenovo-thinkpad-ultra-dock,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,Modelsider findes allerede – lav-konkurrence long tail med reel købsintention.
-hvor mange skærme kan en dock klare,da,informational,Produkt: docks,/vejledninger/dock-og-skaerme-til-arbejdspladsen,Primary,Medium,New,None,Ja,unknown,unknown,unknown,Docken sætter grænsen for antal skærme – ikke computeren. Trækker toppen af tragten til /produkter/dockingstationer.
-thinkpad vs elitebook vs latitude,da,commercial investigation,Mærke/model,/vejledninger/vaelg-erhvervsbaerbar,Primary,High,New,None,Delvist,unknown,unknown,unknown,"Sammenligningsside – høj intention, ingen konkurrent ejer den på dansk."
-thinkpad t480 vs t14,da,commercial investigation,Mærke/model,/vejledninger/vaelg-erhvervsbaerbar,Secondary,Medium,New,None,Delvist,unknown,unknown,unknown,
+hvor mange skærme kan en dock klare,da,informational,Produkt: docks,/vejledninger/dock-og-skaerme-til-arbejdspladsen,Primary,Medium,Existing,None,Ja,unknown,unknown,unknown,Docken sætter grænsen for antal skærme – ikke computeren. Trækker toppen af tragten til /produkter/dockingstationer.
+thinkpad vs elitebook vs latitude,da,commercial investigation,Mærke/model,/vejledninger/vaelg-erhvervsbaerbar,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,"Sammenligningsside – høj intention, ingen konkurrent ejer den på dansk."
+thinkpad t480 vs t14,da,commercial investigation,Mærke/model,/vejledninger/vaelg-erhvervsbaerbar,Secondary,Medium,Existing,None,Delvist,unknown,unknown,unknown,
 computere til flere medarbejdere,da,commercial,B2B: flåde,/flaadeloesninger,Primary,High,Existing,"MELLEM – overlapper /ydelser/opstart-af-arbejdspladser på ""udstyr til medarbejdere"".",Ja,unknown,unknown,unknown,
 it-udstyr til nye medarbejdere,da,commercial,B2B: flåde,/ydelser/opstart-af-arbejdspladser,Primary,High,Existing,MELLEM – overlapper /flaadeloesninger.,Ja,unknown,unknown,unknown,
 indkøb af 20 computere,da,transactional,B2B: flåde,/flaadeloesninger,Secondary,High,Existing,"MELLEM – overlapper /ydelser/opstart-af-arbejdspladser på ""udstyr til medarbejdere"".",Ja,unknown,unknown,unknown,Long tail der matcher Kestros antalsbånd direkte.
 udskiftning af firmacomputere,da,commercial,B2B: flåde,/flaadeloesninger,Secondary,High,Existing,"MELLEM – overlapper /ydelser/opstart-af-arbejdspladser på ""udstyr til medarbejdere"".",Ja,unknown,unknown,unknown,
-standardisering af computere i virksomheden,da,informational,B2B: flåde,/vejledninger/standardiser-firmacomputere,Primary,High,New,None,Ja,unknown,unknown,unknown,
+standardisering af computere i virksomheden,da,informational,B2B: flåde,/vejledninger/standardiser-firmacomputere,Primary,High,Existing,None,Ja,unknown,unknown,unknown,
 it-udstyr til nystartet virksomhed,da,commercial,B2B: flåde,/vejledninger/it-til-nystartet-virksomhed,Primary,High,New,None,Ja,unknown,unknown,unknown,"Segmentside – reel efterspørgsel, matcher Kestros kunder."
 it til mindre virksomheder,da,commercial,B2B: flåde,/vejledninger/it-til-mindre-virksomheder,Primary,High,New,None,Ja,unknown,unknown,unknown,
 it-indkøb til erhverv,da,commercial,B2B: indkøb,/ydelser/sourcing-og-indkoeb,Primary,High,Existing,None,Ja,unknown,unknown,unknown,
@@ -99,7 +99,7 @@ hvor meget ram har man brug for,da,informational,Service: reparation,/vejledning
 skifte ssd i bærbar,da,informational,Service: reparation,/vejledninger/ram-og-ssd-til-kontormaskiner,Secondary,Medium,New,None,Delvist,unknown,unknown,unknown,
 reparere eller købe ny computer,da,commercial investigation,Service: reparation,/vejledninger/reparere-eller-koebe-ny,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,
 windows 11 krav gammel computer,da,informational,Service: reparation,/vejledninger/windows-11-paa-aeldre-maskine,Primary,High,Existing,None,Delvist,unknown,unknown,unknown,Windows 10 end-of-life driver reel efterspørgsel lige nu.
-windows 10 support slut virksomhed,da,informational,Service: reparation,/vejledninger/windows-10-support-slutter,Primary,High,New,None,Ja,unknown,unknown,unknown,Tidsbestemt efterspørgsel – stærk anledning til at kontakte Kestro.
+windows 10 support slut virksomhed,da,informational,Service: reparation,/vejledninger/windows-10-support-slutter,Primary,High,Existing,None,Ja,unknown,unknown,unknown,Tidsbestemt efterspørgsel – stærk anledning til at kontakte Kestro.
 nordisk tastatur på importeret computer,da,informational,Service: klargøring,/ydelser/nordisk-tilpasning,Primary,Medium,Existing,None,Ja,unknown,unknown,unknown,
 dansk tastatur skift,da,informational,Service: klargøring,/ydelser/nordisk-tilpasning,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,
 klargøring af computere til medarbejdere,da,commercial,Service: klargøring,/ydelser/klargoering-og-test,Primary,High,Existing,MELLEM – overlapper /kvalitet på funktionstest-ord.,Ja,unknown,unknown,unknown,
@@ -134,7 +134,7 @@ brugt hardware til virksomheder,da,commercial,Kerne,/produkter,Secondary,Medium,
 indkøb af 50 bærbare,da,transactional,B2B: flåde,/flaadeloesninger,Secondary,Medium,Existing,"MELLEM – overlapper /ydelser/opstart-af-arbejdspladser på ""udstyr til medarbejdere"".",Ja,unknown,unknown,unknown,
 computere til hele kontoret,da,commercial,B2B: flåde,/flaadeloesninger,Secondary,High,Existing,"MELLEM – overlapper /ydelser/opstart-af-arbejdspladser på ""udstyr til medarbejdere"".",Ja,unknown,unknown,unknown,
 udrulning af nye computere,da,commercial,B2B: flåde,/ydelser/levering,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,
-ens computere til alle medarbejdere,da,commercial,B2B: flåde,/vejledninger/standardiser-firmacomputere,Secondary,High,New,None,Ja,unknown,unknown,unknown,
+ens computere til alle medarbejdere,da,commercial,B2B: flåde,/vejledninger/standardiser-firmacomputere,Secondary,High,Existing,None,Ja,unknown,unknown,unknown,
 it-udstyr til skoler og institutioner,da,commercial,B2B: flåde,— (ikke målrettet),—,Low,—,None,Ja,unknown,unknown,unknown,"Offentligt indkøb kræver udbudserfaring, der ikke er beskrevet nogen steder."
 indkøbspartner it-udstyr,da,commercial,B2B: indkøb,/ydelser/sourcing-og-indkoeb,Secondary,High,Existing,None,Ja,unknown,unknown,unknown,
 skaffe specifik computermodel,da,transactional,B2B: indkøb,/ydelser/sourcing-og-indkoeb,Secondary,Medium,Existing,None,Ja,unknown,unknown,unknown,Matcher præcis Kestros model: vi sourcer per ordre.
