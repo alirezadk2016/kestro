@@ -37,18 +37,64 @@ export const poly = (pts) => pts.map(pt).join(" ");
  * artboard's <defs>, in boards.mjs.
  */
 export const FACE = { top: "url(#lit)", key: "url(#keyf)", fill: "url(#fillf)" };
-export const EDGE = { lit: "rgba(246,238,223,0.62)", dim: "rgba(146,172,204,0.30)" };
 
-/* A rectangular solid: the three faces the viewer can see, back to front. */
+/*
+ * The rim light is the whole trick. A mid-grey body with a mid-grey edge is a
+ * clay render — which is exactly what the first version of these looked like.
+ * A near-black body with a hot cream edge is a product shot. The light does
+ * not land on the faces; it catches the edges, and the faces stay dark.
+ */
+/*
+ * Three lights, which is how anything gets photographed. `lit` is the warm
+ * key, up and to the left, off the concrete in the hero plate. `mid` is the
+ * chamfer between two lit faces. `rim` is the kicker: a cool hard light from
+ * behind and right whose only job is to draw the far silhouette so a
+ * near-black object separates from a near-black room. Without it the shadow
+ * side of every one of these dissolved into the background.
+ */
+export const EDGE = {
+  lit: "rgba(255,243,222,0.92)",
+  mid: "rgba(196,206,226,0.34)",
+  rim: "rgba(152,190,255,0.52)",
+  dim: "rgba(110,138,184,0.20)",
+};
+
+/*
+ * A rectangular solid.
+ *
+ * The faces carry no outline of their own. Every edge is drawn separately and
+ * weighted by where the light is, which is up and to the left — the hero's
+ * key. A box stroked at one value the whole way round is clip art: the tell
+ * is that the edge running away from the light is as bright as the edge
+ * facing it, which happens in no photograph ever taken.
+ *
+ * Screen positions of the eight corners, in this projection: A is the top
+ * point, C the bottom of the lit face, D the left, B the right. So D-A is the
+ * upper-left silhouette and takes the light full on; B-C faces away and is
+ * barely there.
+ */
 export function box(x, y, z, w, h, d, o = {}) {
-  const top = [P(x, y + h, z), P(x + w, y + h, z), P(x + w, y + h, z + d), P(x, y + h, z + d)];
-  const key = [P(x, y, z + d), P(x, y + h, z + d), P(x + w, y + h, z + d), P(x + w, y, z + d)];
-  const fil = [P(x + w, y, z), P(x + w, y + h, z), P(x + w, y + h, z + d), P(x + w, y, z + d)];
+  const A = [x, y + h, z];
+  const B = [x + w, y + h, z];
+  const C = [x + w, y + h, z + d];
+  const D = [x, y + h, z + d];
+  const b0 = [x + w, y, z];
+  const c0 = [x + w, y, z + d];
+  const d0 = [x, y, z + d];
   const sw = o.sw ?? 1.7;
+  const face = (pts, fill) => `<polygon points="${poly(pts.map((p) => P(...p)))}" fill="${fill}"/>`;
+  const edge = (p, q, stroke, mul) => seg(p, q, { stroke, sw: sw * mul });
   return [
-    `<polygon points="${poly(fil)}" fill="${o.fill ?? FACE.fill}" stroke="${EDGE.dim}" stroke-width="${sw * 0.8}"/>`,
-    `<polygon points="${poly(key)}" fill="${o.keyFill ?? FACE.key}" stroke="${EDGE.lit}" stroke-width="${sw}"/>`,
-    `<polygon points="${poly(top)}" fill="${o.topFill ?? FACE.top}" stroke="${EDGE.lit}" stroke-width="${sw}"/>`,
+    face([b0, B, C, c0], o.fill ?? FACE.fill),
+    face([d0, D, C, c0], o.keyFill ?? FACE.key),
+    face([A, B, C, D], o.topFill ?? FACE.top),
+    edge(D, A, EDGE.lit, 1),
+    edge(A, B, EDGE.lit, 0.8),
+    edge(D, C, EDGE.lit, 0.72),
+    edge(B, C, EDGE.rim, 0.7),
+    edge(D, d0, EDGE.lit, 0.68),
+    edge(C, c0, EDGE.mid, 0.6),
+    edge(B, b0, EDGE.rim, 0.6),
   ].join("");
 }
 
@@ -87,5 +133,9 @@ export function stack(items) {
 export function shadow(cx, cz, w, d, o = {}) {
   const [x, y] = P(cx, 0, cz);
   const rx = (w + d) * 0.46 * (o.scale ?? 1);
-  return `<ellipse cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" rx="${rx.toFixed(2)}" ry="${(rx * 0.4).toFixed(2)}" fill="url(#contact)"/>`;
+  /* data-flat marks it as belonging to the floor rather than to the object:
+     the reflection strips these out. Mirrored, a contact shadow lands on top
+     of the bright edges it is supposed to be reflecting and cancels them,
+     which is why the first reflection looked like nothing at all. */
+  return `<ellipse data-flat="1" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" rx="${rx.toFixed(2)}" ry="${(rx * 0.4).toFixed(2)}" fill="url(#contact)"/>`;
 }

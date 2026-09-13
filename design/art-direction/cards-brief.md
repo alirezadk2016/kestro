@@ -175,19 +175,73 @@ faces and contact shadows: drawn translucent and flat, as the first passes
 were, a four-layer teardown and a room of desks read as wireframe soup rather
 than as things.
 
+### The second pass: they were lifeless
+
+The first version passed every number in the checker and still looked like
+nothing: mid-grey boxes with a uniform hairline all the way round, sitting on
+a blurred photograph that read as smudge. Passing the measurements is not the
+same as being good, and the measurements were a proxy for the problem, not the
+problem.
+
+What changed, and why each one matters:
+
+- **Graphite, not grey.** A mid-grey body with a mid-grey edge is a clay
+  render. A near-black body with a hot cream edge is a product shot. The light
+  does not land on the faces; it catches the edges, and the faces stay dark.
+- **Every edge is weighted by where the light is.** A box stroked at one value
+  the whole way round is clip art — the tell is that the edge running away
+  from the light is as bright as the edge facing it, which happens in no
+  photograph ever taken. The upper-left silhouette takes the key full on; the
+  far side gets a cool kicker whose only job is to separate a near-black
+  object from a near-black room; the rest falls away.
+- **The screens emit.** The same shape, blurred and bright underneath the
+  panel, is what the eye reads as a lit display. Without it a screen is a blue
+  rectangle painted on a dark box.
+- **A stage, a floor and a reflection.** One warm pool behind the object, a
+  floor that arrives rather than starting at a hard line, and the drawing
+  mirrored about its own foot and faded out. The reflection is the cheapest
+  thing that separates a product shot from a diagram — and it showed nothing
+  at first because the contact shadow was being mirrored along with the
+  object, landing on top of the bright edges it was meant to be reflecting.
+- **The photograph is texture now, not subject.** At full strength it competed
+  with the object and lost; at a third opacity and heavy blur it is the grain
+  of a room rather than a picture of one.
+- **The tower turned to face the room.** Seen edge-on it was a narrow column
+  in a 16:9 frame and measured 14.3 on local contrast — mush. Front-on, with
+  a recessed intake well to be light against, it fills the same frame and
+  measures 19.3.
+
+One rule in the checker changed with it. The warmth test now ignores emissive
+pixels: a lit screen is supposed to be the brightest blue thing in the frame,
+and if a powered display counted against the test, the only way to pass would
+be to stop drawing screens that are switched on. The test is about where the
+key light comes from, which is what it was always for.
+
 ### Measured, after
 
 ```
-cat-laptops.webp     1200x675  ratio 1.778  mean L  36.3  highlight r-b   7.0  sd@render 25.5
-cat-desktops.webp    1200x675  ratio 1.778  mean L  43.3  highlight r-b   7.0  sd@render 26.9
-cat-monitors.webp    1200x675  ratio 1.778  mean L  45.6  highlight r-b   7.5  sd@render 28.6
-cat-fleet.webp       1200x675  ratio 1.778  mean L  51.3  highlight r-b   8.5  sd@render 42.3
-exploded.webp         900x1200 ratio 0.750  mean L  51.9  highlight r-b   4.5  sd@render 35.4
-fleet-scene.webp      900x1350 ratio 0.667  mean L  39.8  highlight r-b   2.4  sd@render 36.0
+cat-laptops.webp     1200x675  ratio 1.778  mean L  29.8  highlight r-b  -5.7  sd@render 26.8
+cat-desktops.webp    1200x675  ratio 1.778  mean L  26.0  highlight r-b   2.4  sd@render 19.3
+cat-monitors.webp    1200x675  ratio 1.778  mean L  30.3  highlight r-b  -4.5  sd@render 24.4
+cat-fleet.webp       1200x675  ratio 1.778  mean L  27.9  highlight r-b  10.2  sd@render 22.9
+exploded.webp         900x1200 ratio 0.750  mean L  37.0  highlight r-b  -0.5  sd@render 28.2
+fleet-scene.webp      900x1350 ratio 0.667  mean L  21.7  highlight r-b  -1.9  sd@render 19.7
 ```
 
-Every ratio now matches its slot, every card sits in the hero's exposure
-band, and every highlight is warm — against `-42.7` to `-108.7` before.
+Every ratio matches its slot, every card sits in the hero's exposure band, and
+every highlight is warm or neutral — against `-42.7` to `-108.7` before.
+
+### The frame around them
+
+The cards sat in `border border-white/10` over a flat 4% fill: one hairline of
+the same value on all four sides, over a surface with no falloff across it.
+That is a rectangle, not an object, and it is lit by nothing in the room it
+sits in. `.plate` in `app/globals.css` replaces it — a surface that falls off
+from top to bottom, a warm lip along the top edge, black along the underside
+so the lip reads as raised, and a shadow so the panel sits on the page rather
+than being printed on it. `.plate-lift` is the clickable version; `.plate-edge`
+puts the same edge on a pseudo-element for panels whose own content covers
+their background; `.plate-well` is the recess a picture sits in.
 
 ## Handover
 

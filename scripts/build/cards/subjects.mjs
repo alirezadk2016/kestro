@@ -22,6 +22,13 @@
 import { P, box, keyFace, seg, shadow, stack, FACE, EDGE, poly } from "./iso.mjs";
 
 const SCREEN = "url(#screen)";
+
+/* A lit screen throws light into the room. Drawing the same shape blurred and
+   bright underneath the panel is what the eye reads as emission — without it
+   the screen is a blue rectangle painted on a dark box, which is what the
+   first version of these looked like. */
+const glow = (points, o = 0.8) =>
+  `<g filter="url(#bloom)" opacity="${o}"><polygon points="${points}" fill="#5b83ff"/></g>`;
 const BLUE_EDGE = "rgba(126,162,255,0.62)";
 const BLUE_FACE = "rgba(46,92,255,0.26)";
 const WARM = "rgba(246,238,223,0.62)";
@@ -85,6 +92,7 @@ function laptop(sx = 0, sy = 0, sz = 0, s = 1) {
     lid(W - b, LH - b * 1.9, TH + 0.02),
     lid(b, LH - b * 1.9, TH + 0.02),
   ].map((p) => P(...p));
+  g.push(glow(poly(glass)));
   g.push(
     `<polygon points="${poly(glass)}" fill="${SCREEN}" stroke="${BLUE_EDGE}" stroke-width="${1.1 * s}"/>`,
   );
@@ -102,39 +110,57 @@ export const SUBJECTS = {
      the translucent faces let its edges show straight through, so the card
      read as two wireframes passing through each other. A category card is
      330 px wide in the grid: one object, clearly lit, beats two. */
+  /* The tower. A plain box measured 15.6 on local contrast at the size the
+     card renders — mush. The fix is structure, not brightness: a recessed
+     intake well and a drive bay give the face something dark to be light
+     against, which is what a photograph of a computer actually has. */
   "cat-desktops": () => {
-    const W = 27,
-      Hh = 48,
-      D = 44;
+    /* Turned to face the room. Seen edge-on the tower was a narrow column in
+       a 16:9 frame with most of the card empty around it; front-on it fills
+       the same frame, which is also how anybody actually looks at one. */
+    const W = 44,
+      Hh = 50,
+      D = 27,
+      F = D + 0.02;
     const g = [shadow(W / 2, D / 2, W, D)];
     g.push(box(0, 0, 0, W, Hh, D));
-    // the ventilated intake, on the warm-key face
-    for (let i = 0; i < 8; i++) {
-      const y = 5 + i * 2.6;
+    g.push(
+      keyFace(3.2, 4, F, W - 6.4, 25, {
+        fill: "rgba(6,10,18,0.88)",
+        stroke: "rgba(226,236,252,0.30)",
+        sw: 1.2,
+      }),
+    );
+    for (let i = 0; i < 7; i++) {
+      const y = 6.2 + i * 3.4;
       g.push(
-        seg([3.5, y, D + 0.02], [W - 3.5, y, D + 0.02], {
-          stroke: "rgba(206,220,240,0.26)",
-          sw: 1.5,
-        }),
+        seg([5, y, F + 0.01], [W - 5, y, F + 0.01], { stroke: "rgba(232,240,255,0.52)", sw: 1.9 }),
       );
     }
-    // the drive bay seam and the optical slot
-    g.push(seg([2.6, 30, D + 0.02], [W - 2.6, 30, D + 0.02], { stroke: WARM, sw: 1.2 }));
     g.push(
-      seg([5, 35, D + 0.02], [W - 5, 35, D + 0.02], { stroke: "rgba(206,220,240,0.34)", sw: 2.2 }),
+      keyFace(3.2, 31, F, W - 6.4, 9, {
+        fill: "rgba(18,24,36,0.82)",
+        stroke: "rgba(226,236,252,0.26)",
+        sw: 1.1,
+      }),
     );
-    // the power light
-    const d = P(W / 2, 42, D + 0.03);
     g.push(
-      `<circle cx="${d[0].toFixed(2)}" cy="${d[1].toFixed(2)}" r="2.4" fill="${BLUE_FACE}" stroke="${BLUE_EDGE}" stroke-width="1.4"/>`,
+      seg([6, 35.5, F + 0.01], [W - 6, 35.5, F + 0.01], {
+        stroke: "rgba(236,244,255,0.60)",
+        sw: 2.6,
+      }),
     );
-    // the exhaust grid on the lit top face
+    const d = P(W / 2, 44, F + 0.03);
+    g.push(
+      `<g filter="url(#bloom)" opacity="0.95"><circle cx="${d[0].toFixed(2)}" cy="${d[1].toFixed(2)}" r="3.6" fill="#6a8dff"/></g>`,
+      `<circle cx="${d[0].toFixed(2)}" cy="${d[1].toFixed(2)}" r="2.1" fill="#b9cdff"/>`,
+    );
     for (let i = 1; i < 5; i++) {
       const z = (D * i) / 5;
       g.push(
-        seg([4, Hh + 0.02, z], [W - 4, Hh + 0.02, z], {
-          stroke: "rgba(246,238,223,0.24)",
-          sw: 1.2,
+        seg([5, Hh + 0.02, z], [W - 5, Hh + 0.02, z], {
+          stroke: "rgba(250,242,226,0.42)",
+          sw: 1.4,
         }),
       );
     }
@@ -147,6 +173,13 @@ export const SUBJECTS = {
     g.push(box(27.5, 1.6, 5, 7, 15, 7, { sw: 1.4 })); // neck, meeting the panel back
     g.push(box(0, 15.5, 0, 62, 37, 3.2)); // panel
     const b = 2.4;
+    g.push(
+      glow(
+        keyFace(b, 15.5 + b, 3.22, 62 - 2 * b, 37 - 2 * b, { fill: "none" }).match(
+          /points="([^"]+)"/,
+        )[1],
+      ),
+    );
     g.push(
       keyFace(b, 15.5 + b, 3.22, 62 - 2 * b, 37 - 2 * b, {
         fill: SCREEN,
@@ -268,6 +301,12 @@ export const SUBJECTS = {
         );
       }
       if (L.part === "screen") {
+        g.push(
+          glow(
+            poly([P(3.2, f, 3.2), P(W - 3.2, f, 3.2), P(W - 3.2, f, D - 5.5), P(3.2, f, D - 5.5)]),
+            0.7,
+          ),
+        );
         g.push(plate(3.2, 3.2, W - 3.2, D - 5.5, SCREEN, BLUE_EDGE, 1.2));
       }
     }
@@ -339,6 +378,7 @@ export const SUBJECTS = {
           const top = [lid(0, 17, 0), lid(28, 17, 0), lid(28, 17, 1), lid(0, 17, 1)].map((q) =>
             P(...q),
           );
+          g.push(glow(poly(front), 0.9));
           g.push(
             `<polygon points="${poly(front)}" fill="${SCREEN}" stroke="${BLUE_EDGE}" stroke-width="1.5"/>`,
           );

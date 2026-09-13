@@ -44,7 +44,13 @@ for (const asset of ASSETS) {
     const l = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
     sum += l;
     n++;
-    if (l > 150) bright.push([data[i], data[i + 1], data[i + 2]]);
+    /* A lit screen is supposed to be the brightest blue thing in the frame,
+       so it is excluded from the sample. The test is about where the key
+       light comes from — if a powered display counted, the only way to pass
+       would be to stop drawing screens that are switched on. Anything whose
+       blue runs well ahead of its red and green is emission, not key light. */
+    const emissive = data[i + 2] > data[i] + 55 && data[i + 2] > data[i + 1] + 35;
+    if (l > 150 && !emissive) bright.push([data[i], data[i + 1], data[i + 2]]);
   }
   const mean = sum / n;
 
@@ -56,7 +62,8 @@ for (const asset of ASSETS) {
   }
 
   /* 3. is the key light warm? the brief's whole point. A blue key is what made
-        the previous set look pasted onto the page. */
+        the previous set look pasted onto the page. Emissive pixels are already
+        out of the sample above, so this measures the light in the room. */
   let warmth = null;
   if (bright.length > 200) {
     const avg = bright

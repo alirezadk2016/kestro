@@ -93,9 +93,9 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
             <li key={card.href}>
               <Link
                 href={localePath(card.href, lang)}
-                className="group flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.04] transition duration-300 hover:-translate-y-0.5 hover:border-brand-400/40 hover:bg-white/[0.07]"
+                className="plate plate-lift group flex h-full flex-col overflow-hidden"
               >
-                <div className="relative aspect-[16/9] overflow-hidden bg-ink-950/50">
+                <div className="plate-well aspect-[16/9] overflow-hidden bg-ink-950/50">
                   <Image
                     src={card.image}
                     alt={card.alt[lang]}

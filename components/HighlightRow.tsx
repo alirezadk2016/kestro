@@ -102,7 +102,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
       <Container>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Send us a spec */}
-          <div className="flex flex-col justify-between border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:col-span-4">
+          <div className="plate flex flex-col justify-between p-6 sm:p-8 lg:col-span-4">
             <div>
               <span className="eyebrow text-brand-300">{c.askEyebrow}</span>
               <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
@@ -134,7 +134,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
           </div>
 
           {/* How a machine is prepared */}
-          <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:col-span-5">
+          <div className="plate p-6 sm:p-8 lg:col-span-5">
             <span className="eyebrow text-brand-300">{c.refurbEyebrow}</span>
             <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.refurbTitle}
@@ -189,7 +189,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
           {/* Fleet */}
           <Link
             href={localePath("/flaadeloesninger", lang)}
-            className="group relative flex min-h-[280px] flex-col justify-end overflow-hidden border border-white/10 p-6 transition hover:border-brand-400/40 sm:p-8 lg:col-span-3"
+            className="plate plate-lift plate-edge group flex min-h-[280px] flex-col justify-end overflow-hidden p-6 sm:p-8 lg:col-span-3"
           >
             <Image
               src="/cards/fleet-scene.webp"
