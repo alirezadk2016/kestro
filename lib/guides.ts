@@ -1695,8 +1695,8 @@ export const guides: Guide[] = [
       en: "ThinkPad vs EliteBook vs Latitude for business | Kestro",
     },
     metaDescription: {
-      da: "De tre store erhvervsserier ligner hinanden på databladet. Forskellene ligger i hukommelsesloftet, tastaturet, dokken og kortlæseren – og de koster først noget, når maskinerne står på bordene.",
-      en: "The three big business series look alike on a spec sheet. The differences are in the memory ceiling, the keyboard, the dock and the card reader — and they only cost you something once the machines are on the desks.",
+      da: "De tre store erhvervsserier ligner hinanden på databladet. Forskellen ligger i hukommelsesloftet, tastaturet, dokken og kortlæseren – og hvad de koster jer.",
+      en: "The three big business series look alike on a spec sheet. The difference is in the memory ceiling, the keyboard, the dock and the card reader.",
     },
     summary: {
       da: "Tre serier bygget til det samme arbejde. Hvor de faktisk skiller sig – og hvilken forskel der rammer jer.",
@@ -1965,8 +1965,8 @@ export const guides: Guide[] = [
       en: "How many monitors can a docking station run? | Kestro",
     },
     metaDescription: {
-      da: "Antallet af skærme afhænger af docken, ikke af computeren. Forskellen på mekaniske docks og USB-C, hvad de hver især kan trække, og hvorfor stikkene skal passe i begge ender.",
-      en: "The number of monitors depends on the dock, not the computer. The difference between mechanical and USB-C docks, what each can drive, and why the connectors have to match at both ends.",
+      da: "Antallet af skærme afhænger af docken, ikke af computeren. Mekanisk eller USB-C, hvad hver især kan trække, og hvorfor stikkene skal passe.",
+      en: "The number of monitors depends on the dock, not the computer. Mechanical or USB-C, what each can drive, and why the connectors have to match.",
     },
     summary: {
       da: "Docken afgør, hvor mange skærme der kan sidde på pladsen. Sådan finder I ud af hvilken, før I køber skærmene.",
@@ -2189,8 +2189,8 @@ export const guides: Guide[] = [
       en: "Standardising computers across a company | Kestro",
     },
     metaDescription: {
-      da: "Hver ekstra model koster ikke bare en maskine mere – den koster docks, strømforsyninger, reservedele og en ting mere, IT skal kunne. Hvad standardisering faktisk sparer, og hvornår man ikke skal.",
-      en: "Every extra model costs more than one more machine — it costs docks, power supplies, spare parts and one more thing IT has to know. What standardising actually saves, and when not to do it.",
+      da: "Hver ekstra model koster mere end én maskine: docks, strømforsyninger, reservedele og en ting mere, IT skal kunne. Og hvornår man ikke skal.",
+      en: "Every extra model costs more than one machine: docks, power supplies, spare parts, one more thing IT has to know. And when not to bother.",
     },
     summary: {
       da: "Den bedste maskine til hver medarbejder er dyrere end den samme maskine til alle. Her er regnestykket, der sjældent bliver stillet op.",

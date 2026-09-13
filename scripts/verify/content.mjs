@@ -125,6 +125,43 @@ for (const block of blocks) {
     seenKeywords.set(keyword, slug);
   }
 
+  /*
+   * What the search result is allowed to be.
+   *
+   * A meta description past roughly 160 characters is cut off mid-sentence in
+   * the result, so the last clause — usually the one carrying the reason to
+   * click — is written for nobody. A metaTitle past 60 goes the same way. The
+   * eight guides written before this check sat between 105 and 158; the three
+   * added after it ran to 214 before anyone measured, which is the argument
+   * for measuring here rather than trusting the eye.
+   *
+   * Both languages, because the English half of the site is the half that gets
+   * read least and drifts first.
+   */
+  for (const [fieldName, limit, floor] of [
+    ["metaDescription", 160, 80],
+    ["metaTitle", 60, 0],
+  ]) {
+    const pair = block.match(
+      new RegExp(
+        `\\n    ${fieldName}: \\{\\n      da: "((?:[^"\\\\]|\\\\.)*)",\\n      en: "((?:[^"\\\\]|\\\\.)*)",`,
+      ),
+    );
+    if (!pair) {
+      fail(`${at} has no readable ${fieldName}`);
+      continue;
+    }
+    for (const [lang, text] of [
+      ["Danish", pair[1]],
+      ["English", pair[2]],
+    ]) {
+      if (text.length > limit)
+        fail(`${at} ${lang} ${fieldName} is ${text.length} characters, over ${limit}`);
+      if (floor && text.length < floor)
+        fail(`${at} ${lang} ${fieldName} is ${text.length} characters, under ${floor}`);
+    }
+  }
+
   if (!block.includes("\n    tldr: {")) fail(`${at} has no tldr`);
 
   /* Word count on the Danish tldr: the answer, not a teaser and not an essay. */
