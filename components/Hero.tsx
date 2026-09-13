@@ -4,6 +4,7 @@ import { ArrowRight, LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
 import HeroMark from "./HeroMark";
+import HeroGlobe from "./HeroGlobe";
 import HeroSpecs from "./HeroSpecs";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -74,35 +75,28 @@ export default function Hero({ lang }: { lang: Lang }) {
       <HeroMark className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[72%] w-auto -translate-y-1/2 opacity-90 lg:block" />
 
       {/*
-       * Two decorative fields, drawn as backgrounds rather than as images.
+       * The globe.
        *
-       * They were <img alt="" aria-hidden>, which is the correct markup for
-       * decoration and was still costing something real: a browser fetches an
-       * <img> whether or not the element is displayed, so every phone was
-       * downloading 48 kB of world map to render nothing. The map is hidden
-       * below md and the mesh below lg, and a background-image on a display:none
-       * element is not fetched at all — measured, not assumed.
+       * This was a flat dotted world map and a mesh of lines: 53 kB of two
+       * files that said "somewhere on Earth" and sat on the background like a
+       * printed pattern. The globe says where — Denmark, then Norway, then
+       * Sweden, lighting in turn — and it is built from the same land data,
+       * re-projected onto a sphere. See components/HeroGlobe.tsx.
        *
-       * It also settles an argument with every automated checker, which reads
-       * alt="" as a missing alt rather than as the deliberate empty one WCAG
-       * asks for on decoration. Describing these would be the actual
-       * regression: a screen reader announcing "dotted world map" to somebody
-       * who gains nothing from knowing it. Decoration belongs in CSS, and then
-       * there is no alt to argue about.
+       * Hung off the right edge and cropped by it, so it reads as something
+       * the page is a window onto rather than an ornament placed on it. It
+       * costs no request at all now: the markup is inline and the two files
+       * it replaces are gone.
        *
-       * The aspect ratios are the SVGs' own viewBoxes — 1000x500 and 700x420 —
-       * because a div has no intrinsic size to lay out from the way an img does.
+       * Placed by where the beacons land, not by where the circle looks tidy.
+       * The projection is turned so the Nordics face the LEFT of the disc,
+       * and the disc is hung off the right edge — which puts the three lights
+       * in the open band above the machine, and leaves the ocean and the limb
+       * to fall behind the machine and the spec panel where nothing is lost.
+       * The obvious composition, centred on the Nordics, hid the entire point
+       * of it behind the panel.
        */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[2%] top-[6%] hidden aspect-[1000/500] w-[46%] max-w-2xl bg-contain bg-no-repeat opacity-[0.55] md:block"
-        style={{ backgroundImage: "url(/world-dots.svg)" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 hidden aspect-[700/420] w-[52%] max-w-3xl bg-contain bg-no-repeat opacity-70 lg:block"
-        style={{ backgroundImage: "url(/network-mesh.svg)" }}
-      />
+      <HeroGlobe className="pointer-events-none absolute -right-[10%] top-[-26%] hidden h-[128%] w-auto opacity-70 md:block lg:-right-[6%] lg:opacity-95" />
 
       {/* The floor falling away, so the band ends in shadow rather than at a
           line. It also gives the section below something to arrive on. */}
