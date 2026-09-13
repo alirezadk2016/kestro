@@ -61,18 +61,20 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
                   under a photograph read as five buttons — a second row of
                   chrome directly under the two real ones in the hero. The
                   drawing is the mark; the bar it sits on is the frame. */}
-              <span className="flex-shrink-0 pt-0.5 text-paper/70">
+              <span className="flex-shrink-0 pt-0.5 text-paper/85">
                 <CraftMark name={feature.mark} className="h-6 w-6" />
               </span>
               <div className="min-w-0">
-                <p className="text-[13px] font-semibold leading-5 text-paper">{feature.title[lang]}</p>
+                <p className="text-[13px] font-semibold leading-5 text-paper">
+                  {feature.title[lang]}
+                </p>
                 <p className="mt-0.5 text-[11px] leading-4 text-paper/55">{feature.sub[lang]}</p>
               </div>
             </li>
           ))}
         </ul>
       </Container>
-          {/* The closing mark. English in both languages, like the rest of the
+      {/* The closing mark. English in both languages, like the rest of the
           editorial set: it is a strapline, not a sentence to translate. */}
       <div
         aria-hidden="true"

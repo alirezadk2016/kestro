@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
+import CraftMark, { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const services = [
@@ -48,6 +49,11 @@ const copy = {
     link: "See the whole process",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+/* One mark per station, in the order the steps run. Kept beside the component
+   rather than in lib/services.ts: these four are the front page's summary of
+   the process, not the service records themselves. */
+const STEP_MARKS: CraftMarkName[] = ["network", "tested", "nordic", "delivery"];
 
 export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
@@ -99,10 +105,23 @@ export default function Services({ lang }: { lang: Lang }) {
                 <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
                 <span className="ml-[3px] h-5 w-px bg-gradient-to-b from-paper/25 to-transparent" />
               </span>
-              <span className="font-display text-2xl font-extrabold tabular-nums tracking-display text-brand-300 lg:text-3xl">
+              {/*
+                The step drawn as well as numbered.
+
+                Four numerals over four paragraphs is a sequence a reader has
+                to take on trust: nothing about "02" says testing. The mark
+                says what happens at the station — the suppliers reached, the
+                lens over the work, the Nordic key, the van — so the route can
+                be read at a glance and the numeral goes back to doing what a
+                numeral is for, which is order.
+              */}
+              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90 lg:mb-5">
+                <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
+              </span>
+              <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-3 font-display text-base font-bold tracking-tight text-paper lg:mt-4 lg:text-lg">
+              <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
                 {service.title[lang]}
               </h3>
               <p className="mt-2 text-sm leading-6 text-paper/65">{service.description[lang]}</p>

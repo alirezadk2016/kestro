@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
+import CraftMark, { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const situations = [
@@ -13,6 +14,7 @@ const situations = [
       da: "Ofte er det ét batteri, for lidt RAM eller en langsom disk. Vi opgraderer i stedet for at udskifte – og siger det ærligt, hvis det ikke kan betale sig.",
       en: "Often it is one battery, too little memory or a slow disk. We upgrade instead of replacing — and say so honestly when it is not worth it.",
     },
+    mark: "adjust" as CraftMarkName,
     href: "/reparation",
     linkLabel: { da: "Se opgradering", en: "See upgrades" },
   },
@@ -25,6 +27,7 @@ const situations = [
       da: "Vi køber brugte erhvervsmaskiner og henter dem. Er der data på enhederne, sletter vi lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
       en: "We buy used business machines and collect them. If there is data on the units, we erase the storage media before they get a second life. You get a valuation before you decide.",
     },
+    mark: "sustainable" as CraftMarkName,
     href: "/saelg-til-os",
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
   },
@@ -37,6 +40,7 @@ const situations = [
       da: "Fra ti maskiner til hele flåden. Samme konfiguration hele vejen rundt, de specifikationer opgaven kræver, og mulighed for at bytte det gamle ind.",
       en: "From ten machines to the whole fleet. The same configuration throughout, the specifications the work actually needs, and the option to trade the old kit in.",
     },
+    mark: "batch" as CraftMarkName,
     href: "/flaadeloesninger",
     linkLabel: { da: "Se flådeløsninger", en: "See fleet solutions" },
   },
@@ -49,6 +53,7 @@ const situations = [
       da: "Skal arbejdspladserne stå klar til første arbejdsdag, hjælper vi med at vælge udstyret, klargøre det og få det leveret samlet.",
       en: "If the desks have to be ready for the first day of work, we help choose the equipment, prepare it and deliver it all at once.",
     },
+    mark: "delivery" as CraftMarkName,
     href: "/kontakt",
     linkLabel: { da: "Tal med os om opstart", en: "Talk to us about setup" },
   },
@@ -88,49 +93,50 @@ export default function QualifySection({ lang }: { lang: Lang }) {
         </div>
 
         {/*
-         * The gap between the columns is padding, not a grid gap.
+         * Cards, not ruled rows.
          *
-         * With gap-x-12 the rule across the top ran the full width while every
-         * rule between the rows was cut in half by the gap — so the same table
-         * was ruled two different ways, once continuously and three times
-         * broken. Grid stretches both cells in a row to the same height, so
-         * with the space moved inside the cells their bottom borders meet and
-         * each rule runs unbroken like the one above them.
+         * This was four entries in a two-column table separated by hairlines,
+         * and on a page that is already mostly hairlines and type it read as
+         * the terms and conditions rather than as the four doors into the
+         * business — which is what this section is. These are the highest
+         * intent moments on the front page: a visitor who recognises their own
+         * situation here is the one who writes to us.
          *
-         * No vertical rule between the columns on purpose: the 01-04 index
-         * already separates the four, and a fence down the middle would do to
-         * this section what it did to the process row.
+         * Each carries the mark of what happens next — the values we change,
+         * the second life, the lot, the delivery — so the four are told apart
+         * by a picture before a word of them is read. A surface and a border
+         * that both answer to hover give the row something to be pressed,
+         * which a rule between two paragraphs never does.
          */}
-        <ol className="mt-10 grid grid-cols-1 border-t border-paper/15 md:grid-cols-2">
+        <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {situations.map((item, i) => (
-            <li
-              key={item.href}
-              className="border-b border-paper/10 md:odd:pr-6 md:even:pl-6"
-            >
+            <li key={item.href}>
               <Link
                 href={localePath(item.href, lang)}
-                className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/5 sm:py-7"
+                className="group relative flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.03] p-6 transition duration-200 hover:border-brand-400/40 hover:bg-white/[0.06] sm:p-7"
               >
-                <div className="flex gap-5">
-                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-paper/55 transition-colors group-hover:text-brand-300">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90 transition-colors group-hover:border-brand-400/40 group-hover:text-brand-200">
+                    <CraftMark name={item.mark} className="h-6 w-6" />
+                  </span>
+                  <span className="font-mono text-xs tabular-nums text-paper/30">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-xl">
-                      {item.question[lang]}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-paper/65 sm:mt-3 sm:text-base sm:leading-7">
-                      {item.answer[lang]}
-                    </p>
-                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
-                      {item.linkLabel[lang]}
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                        strokeWidth={2}
-                      />
-                    </span>
-                  </div>
                 </div>
+
+                <h3 className="mt-5 font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-100 sm:text-xl">
+                  {item.question[lang]}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-paper/65 sm:text-base sm:leading-7">
+                  {item.answer[lang]}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                  {item.linkLabel[lang]}
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={2}
+                  />
+                </span>
               </Link>
             </li>
           ))}
