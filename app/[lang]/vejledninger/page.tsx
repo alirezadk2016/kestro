@@ -143,7 +143,12 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
         {/* Committed to, rather than left at a quarter opacity under a wash
             where it read as a smudge. It is the only drawing in the hero, so
             it either carries the space on the right or should not be there. */}
-        <VidenHeroPlate className="pointer-events-none absolute -right-40 top-16 h-[20rem] w-[46rem] text-brand-300/40 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:text-brand-300/55" />
+        {/* The colour classes here used to set the drawing's stroke, and with
+            it how present it was: dimmer on a phone where it crowds the type,
+            stronger on a wide screen where it has the room. The plate is a
+            render now and takes no colour from CSS, so the same intent is
+            carried by opacity. */}
+        <VidenHeroPlate className="pointer-events-none absolute -right-40 top-16 h-[20rem] w-[46rem] opacity-60 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
         {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
             has to stay legible on the right where there is room, and stay out
             of the way of the type where there is not. */}
@@ -155,7 +160,15 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
         <Container className="relative py-10 sm:py-16 lg:py-20">
           <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
 
-          <p className="eyebrow mt-8 text-brand-300">{c.eyebrow}</p>
+          {/* w-fit so the box is the width of the label.
+              As a block <p> it measured 1216px across — twelve characters of
+              text claiming the full content column, most of it lying over the
+              plate on the right. Nothing renders there, but a box is what an
+              automated contrast check has to sample, so it read the lit part
+              of the render as this text's background and called 3.11:1 on
+              type that actually sits on 8.48:1. The label is a label; its box
+              should say so. */}
+          <p className="eyebrow mt-8 w-fit text-brand-300">{c.eyebrow}</p>
           <h1 className="mt-4 max-w-3xl text-balance font-display text-[clamp(2.25rem,6vw,4.25rem)] font-extrabold leading-[0.98] tracking-display text-paper">
             {c.title}
           </h1>
