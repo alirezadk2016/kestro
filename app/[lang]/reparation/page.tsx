@@ -1,19 +1,6 @@
 import type { Metadata } from "next";
-import {
-  BatteryCharging,
-  MemoryStick,
-  MonitorSmartphone,
-  Wrench,
-  Cog,
-  Fan,
-  HardDriveDownload,
-  Cpu,
-  Sparkles,
-  Keyboard,
-  MonitorCog,
-  BadgeCheck,
-} from "lucide-react";
 import Container from "@/components/Container";
+import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
@@ -86,7 +73,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const services = [
   {
-    icon: MemoryStick,
+    mark: "memory" as CraftMarkName,
     title: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
     description: {
       da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
@@ -94,7 +81,7 @@ const services = [
     },
   },
   {
-    icon: BatteryCharging,
+    mark: "battery" as CraftMarkName,
     title: { da: "Batteriskift", en: "Battery replacement" },
     description: {
       da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
@@ -102,7 +89,7 @@ const services = [
     },
   },
   {
-    icon: MonitorSmartphone,
+    mark: "screen" as CraftMarkName,
     title: { da: "Skærmskift", en: "Screen replacement" },
     description: {
       da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
@@ -110,7 +97,7 @@ const services = [
     },
   },
   {
-    icon: Keyboard,
+    mark: "keyboard" as CraftMarkName,
     title: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
     description: {
       da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk/nordisk layout, så æ, ø og å sidder, hvor de skal.",
@@ -118,7 +105,7 @@ const services = [
     },
   },
   {
-    icon: Cog,
+    mark: "parts" as CraftMarkName,
     title: { da: "Reservedele og komponentskift", en: "Spare parts and components" },
     description: {
       da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
@@ -126,7 +113,7 @@ const services = [
     },
   },
   {
-    icon: Fan,
+    mark: "cooling" as CraftMarkName,
     title: { da: "Rens og køling", en: "Cleaning and cooling" },
     description: {
       da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
@@ -134,7 +121,7 @@ const services = [
     },
   },
   {
-    icon: MonitorCog,
+    mark: "install" as CraftMarkName,
     title: { da: "Windows-installation", en: "Windows installation" },
     description: {
       da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
@@ -142,7 +129,7 @@ const services = [
     },
   },
   {
-    icon: BadgeCheck,
+    mark: "written" as CraftMarkName,
     title: { da: "Software og licenser", en: "Software and licences" },
     description: {
       da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
@@ -150,7 +137,7 @@ const services = [
     },
   },
   {
-    icon: HardDriveDownload,
+    mark: "adjust" as CraftMarkName,
     title: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
     description: {
       da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
@@ -158,7 +145,7 @@ const services = [
     },
   },
   {
-    icon: Wrench,
+    mark: "repair" as CraftMarkName,
     title: { da: "Fejlfinding", en: "Troubleshooting" },
     description: {
       da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
@@ -166,7 +153,7 @@ const services = [
     },
   },
   {
-    icon: Cpu,
+    mark: "assembly" as CraftMarkName,
     title: { da: "Samling af pc", en: "PC assembly" },
     description: {
       da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
@@ -174,7 +161,7 @@ const services = [
     },
   },
   {
-    icon: Sparkles,
+    mark: "tested" as CraftMarkName,
     title: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
     description: {
       da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
@@ -285,7 +272,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
                 className="border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
               >
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                  <service.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
+                  <CraftMark name={service.mark} className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
                 <h3 className="mt-3 text-sm font-semibold text-paper sm:mt-4 sm:text-base">
                   {service.title[lang]}

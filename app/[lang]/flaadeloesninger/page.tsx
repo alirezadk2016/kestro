@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Users,
-  Layers,
-  Cpu,
-  Repeat,
-  CalendarClock,
-  ArrowRight,
-  Phone,
-  MonitorCog,
-  Keyboard,
-} from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/Container";
+import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
@@ -109,7 +100,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const capabilities = [
   {
-    icon: Layers,
+    mark: "batch" as CraftMarkName,
     title: {
       da: "Ensartet opsætning på tværs af flåden",
       en: "One configuration across the fleet",
@@ -120,7 +111,7 @@ const capabilities = [
     },
   },
   {
-    icon: Cpu,
+    mark: "assembly" as CraftMarkName,
     title: {
       da: "Specifikationer tilpasset opgaven",
       en: "Specifications matched to the work",
@@ -131,7 +122,7 @@ const capabilities = [
     },
   },
   {
-    icon: Users,
+    mark: "who" as CraftMarkName,
     title: {
       da: "Fra enkelte teams til hele virksomheden",
       en: "From a single team to the whole company",
@@ -142,7 +133,7 @@ const capabilities = [
     },
   },
   {
-    icon: MonitorCog,
+    mark: "install" as CraftMarkName,
     title: { da: "Windows, software og licenser", en: "Windows, software and licences" },
     description: {
       da: "Maskinerne leveres med Windows installeret, drivere på plads og dansk sprogopsætning. Vi hjælper med at få licenserne i orden – eller bruger jeres eksisterende aftaler – så flåden kører lovligt fra dag ét.",
@@ -150,7 +141,7 @@ const capabilities = [
     },
   },
   {
-    icon: Keyboard,
+    mark: "nordic" as CraftMarkName,
     title: {
       da: "Nordisk tastatur i hele leverancen",
       en: "A Nordic keyboard across the delivery",
@@ -161,7 +152,7 @@ const capabilities = [
     },
   },
   {
-    icon: CalendarClock,
+    mark: "schedule" as CraftMarkName,
     title: {
       da: "Løbende leverance til nye medarbejdere",
       en: "Ongoing supply for new employees",
@@ -489,7 +480,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                 className="flex gap-4 border border-white/10 bg-white/[0.04] p-5 sm:block sm:p-8"
               >
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-brand-300 sm:h-11 sm:w-11">
-                  <item.icon className="h-5 w-5" strokeWidth={1.75} />
+                  <CraftMark name={item.mark} className="h-6 w-6" />
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-paper sm:mt-4">{item.title[lang]}</h3>
@@ -623,7 +614,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"
         />
         <Container className="relative flex flex-col items-center gap-5 text-center">
-          <Repeat className="h-8 w-8 text-brand-400" strokeWidth={1.75} />
+          <CraftMark name="sustainable" className="h-8 w-8 text-brand-400" />
           <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {c.ctaTitle}
           </h2>

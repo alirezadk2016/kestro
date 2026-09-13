@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ClipboardList, Handshake, ShieldCheck, Banknote, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
+import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
@@ -82,7 +83,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const steps = [
   {
-    icon: ClipboardList,
+    mark: "written" as CraftMarkName,
     title: { da: "1. Send os en liste", en: "1. Send us a list" },
     description: {
       da: "Fortæl os hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
@@ -90,7 +91,7 @@ const steps = [
     },
   },
   {
-    icon: Handshake,
+    mark: "network" as CraftMarkName,
     title: { da: "2. I får et tilbud", en: "2. You get an offer" },
     description: {
       da: "Vi vurderer udstyret og vender tilbage med et bud. I er ikke bundet af noget, før I siger ja.",
@@ -98,7 +99,7 @@ const steps = [
     },
   },
   {
-    icon: ShieldCheck,
+    mark: "tested" as CraftMarkName,
     title: { da: "3. Afhentning og datasletning", en: "3. Collection and data erasure" },
     description: {
       da: "Vi aftaler afhentning, og er der data på enhederne, slettes lagermedierne, før de klargøres til videresalg.",
@@ -106,7 +107,7 @@ const steps = [
     },
   },
   {
-    icon: Banknote,
+    mark: "who" as CraftMarkName,
     title: { da: "4. Betaling", en: "4. Payment" },
     description: {
       da: "Betaling sker efter den aftale, vi indgår – vi gennemgår vilkårene på forhånd.",
@@ -155,7 +156,7 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
               {steps.map((step) => (
                 <div key={step.title.da} className="flex gap-5">
                   <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300">
-                    <step.icon className="h-5 w-5" strokeWidth={1.75} />
+                    <CraftMark name={step.mark} className="h-6 w-6" />
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>

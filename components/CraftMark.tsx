@@ -59,7 +59,19 @@ export type CraftMarkName =
   | "written"
   | "network"
   | "no-stock"
-  | "who";
+  | "who"
+  /* The service marks. Added when the repair, fleet and services pages were
+     brought into this language — see the note above the set below. */
+  | "screen"
+  | "repair"
+  | "parts"
+  | "cooling"
+  | "install"
+  | "assembly"
+  | "schedule"
+  | "memory"
+  | "battery"
+  | "keyboard";
 
 const marks: Record<CraftMarkName, React.ReactNode> = {
   /*
@@ -225,6 +237,129 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="12.5" y="13" width="7" height="14" />
       <rect x="21" y="6" width="7" height="21" className="fill-brand-400/10 stroke-brand-300" />
       <path d="M23.5 27v-4h2v4" className="stroke-brand-300" />
+    </>
+  ),
+
+  /*
+   * The service marks.
+   *
+   * /reparation, /ydelser, /flaadeloesninger and /saelg-til-os listed their
+   * services with lucide glyphs in the same plates these marks sit in — so
+   * the site ran two icon languages at once, one with round caps and one with
+   * square, and a visitor moving from the front page to Repairs crossed from
+   * one product into another. The split that remains is the one worth having:
+   * lucide for interface affordances (the arrow on a link, the chevron on a
+   * menu, the tick in a list), these for anything that names a subject.
+   *
+   * Same rules as above — silhouette first, four interior strokes, one accent.
+   * The gear is the only circle with teeth, the spanner the only diagonal, the
+   * heatsink the only run of fins, so they survive a row of twelve.
+   */
+
+  /* A screen on a pedestal. The laptop mark is the trapezoid; this is the one
+     with a foot, which is what tells the two apart at 24px. */
+  screen: (
+    <>
+      <rect x="3" y="5" width="26" height="16" className="fill-brand-400/10" />
+      <rect x="3" y="5" width="26" height="16" />
+      <path d="M16 21v5" />
+      <path d="M10 26h12" className="stroke-brand-300" />
+    </>
+  ),
+
+  /* A spanner. The only diagonal silhouette in the set. */
+  repair: (
+    <>
+      <path
+        d="M20.5 4.5a6.5 6.5 0 00-8.4 8.4L4 21l3.5 3.5 8.1-8.1a6.5 6.5 0 008.4-8.4l-3.6 3.6-3.1-3.1z"
+        className="fill-brand-400/10"
+      />
+      <path d="M20.5 4.5a6.5 6.5 0 00-8.4 8.4L4 21l3.5 3.5 8.1-8.1a6.5 6.5 0 008.4-8.4l-3.6 3.6-3.1-3.1z" />
+      <path d="M6.5 21.5l2 2" className="stroke-brand-300" />
+    </>
+  ),
+
+  /* A gear: the only toothed circle. */
+  parts: (
+    <>
+      <path d="M16 3v4M16 25v4M3 16h4M25 16h4M7 7l3 3M22 22l3 3M25 7l-3 3M10 22l-3 3" />
+      <circle cx="16" cy="16" r="8" className="fill-brand-400/10" />
+      <circle cx="16" cy="16" r="8" />
+      <circle cx="16" cy="16" r="3" className="stroke-brand-300" />
+    </>
+  ),
+
+  /* A heatsink with the air moving over it: a run of fins under two passes.
+     The only comb shape in the set. */
+  cooling: (
+    <>
+      <path d="M5 6c3 3 6-3 9 0s6-3 9 0" className="stroke-brand-300" />
+      <path d="M5 12c3 3 6-3 9 0s6-3 9 0" className="stroke-brand-300 opacity-60" />
+      <rect x="4" y="18" width="24" height="9" className="fill-brand-400/10" />
+      <path d="M9 18v9M14 18v9M19 18v9M24 18v9" />
+    </>
+  ),
+
+  /* A system being written onto the machine: the arrow down into a drive. */
+  install: (
+    <>
+      <path d="M16 4v13" className="stroke-brand-300" />
+      <path d="M11 13l5 5 5-5" className="stroke-brand-300" />
+      <rect x="4" y="21" width="24" height="7" className="fill-brand-400/10" />
+      <rect x="4" y="21" width="24" height="7" />
+      <path d="M8 24.5h3" />
+    </>
+  ),
+
+  /* A processor: the only square with legs on all four sides. */
+  assembly: (
+    <>
+      <rect x="8" y="8" width="16" height="16" className="fill-brand-400/10" />
+      <rect x="8" y="8" width="16" height="16" />
+      <rect x="13" y="13" width="6" height="6" className="stroke-brand-300" />
+      <path d="M12 4v4M20 4v4M12 24v4M20 24v4M4 12h4M4 20h4M24 12h4M24 20h4" />
+    </>
+  ),
+
+  /* A calendar: the lead time, which is the thing a fleet buyer asks for. */
+  schedule: (
+    <>
+      <rect x="4" y="6" width="24" height="22" className="fill-brand-400/8" />
+      <rect x="4" y="6" width="24" height="22" />
+      <path d="M4 12h24" />
+      <path d="M10 3v5M22 3v5" />
+      <rect x="9" y="16" width="5" height="5" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+
+  /* A memory module, at the 32-grid size. The spec panel has its own. */
+  memory: (
+    <>
+      <rect x="3" y="9" width="26" height="12" className="fill-brand-400/12" />
+      <rect x="3" y="9" width="26" height="12" />
+      <path d="M7 21v3M12 21v3M17 21v3M22 21v3" />
+      <rect x="7" y="12" width="9" height="6" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+
+  /* A cell with a measured level. */
+  battery: (
+    <>
+      <rect x="3" y="10" width="22" height="12" rx="2" />
+      <path d="M27.5 14v4" className="stroke-[3]" />
+      <rect x="6" y="13" width="10" height="6" className="fill-brand-300 stroke-brand-300" />
+    </>
+  ),
+
+  /* A keyboard in plan, with the Nordic key picked out. The single keycap is
+     the "nordic" mark; this is the whole board, for a row that is about the
+     hardware rather than about the layout. */
+  keyboard: (
+    <>
+      <rect x="3" y="8" width="26" height="16" rx="2" className="fill-brand-400/8" />
+      <rect x="3" y="8" width="26" height="16" rx="2" />
+      <path d="M7 12.5h3M13 12.5h3M19 12.5h3M7 17.5h10" />
+      <rect x="20" y="15.5" width="5" height="4" className="fill-brand-300 stroke-brand-300" />
     </>
   ),
 };

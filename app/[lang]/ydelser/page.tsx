@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  PackageSearch,
-  ShieldCheck,
-  Keyboard,
-  Truck,
-  Building2,
-  Wrench,
-  Recycle,
-  Boxes,
-  Rocket,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
+import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
@@ -66,7 +56,7 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const services = [
   {
-    icon: PackageSearch,
+    mark: "network" as CraftMarkName,
     title: { da: "Indkøb og sourcing", en: "Sourcing and purchasing" },
     description: {
       da: "I fortæller, hvad I skal bruge. Vi finder maskinerne i vores leverandørnetværk, klargør dem og leverer dem – fra enkelte enheder til hele afdelinger.",
@@ -76,7 +66,7 @@ const services = [
     linkLabel: { da: "Se hvad vi skaffer", en: "See what we source" },
   },
   {
-    icon: Building2,
+    mark: "who" as CraftMarkName,
     title: { da: "Flådeleverancer", en: "Fleet deliveries" },
     description: {
       da: "Samme konfiguration til alle medarbejdere, faste specifikationer og mulighed for at bytte det gamle udstyr ind som en del af aftalen.",
@@ -86,7 +76,7 @@ const services = [
     linkLabel: { da: "Se flådeløsninger", en: "See fleet solutions" },
   },
   {
-    icon: Wrench,
+    mark: "repair" as CraftMarkName,
     title: { da: "Opgradering og reparation", en: "Upgrades and repairs" },
     description: {
       da: "Mere hukommelse, ny disk, nyt batteri, nordisk tastatur, Windows og licenser. Ofte billigere end at udskifte maskinen – og vi siger til, hvis det ikke kan betale sig.",
@@ -96,7 +86,7 @@ const services = [
     linkLabel: { da: "Se opgraderinger", en: "See upgrades" },
   },
   {
-    icon: Recycle,
+    mark: "sustainable" as CraftMarkName,
     title: { da: "Opkøb af brugt udstyr", en: "Buying used equipment" },
     description: {
       da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi dem og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
@@ -106,7 +96,7 @@ const services = [
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
   },
   {
-    icon: Boxes,
+    mark: "batch" as CraftMarkName,
     title: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
     description: {
       da: "Ligger der udstyr, der aldrig kom ud til kunderne – returvarer, demoenheder eller varer fra en aflyst ordre? Vi finder køberne i stedet for, at det står og taber værdi.",
@@ -116,7 +106,7 @@ const services = [
     linkLabel: { da: "Læs mere", en: "Read more" },
   },
   {
-    icon: Rocket,
+    mark: "install" as CraftMarkName,
     title: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
     description: {
       da: "Skal alt stå klar til første arbejdsdag, hjælper vi med at vælge udstyret, klargøre det og få det leveret samlet – skærme, docks og kabler indregnet.",
@@ -129,7 +119,7 @@ const services = [
 
 const steps = [
   {
-    icon: PackageSearch,
+    mark: "network" as CraftMarkName,
     slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
@@ -138,7 +128,7 @@ const steps = [
     },
   },
   {
-    icon: ShieldCheck,
+    mark: "tested" as CraftMarkName,
     slug: "klargoering-og-test",
     title: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     description: {
@@ -147,7 +137,7 @@ const steps = [
     },
   },
   {
-    icon: Keyboard,
+    mark: "nordic" as CraftMarkName,
     slug: "nordisk-tilpasning",
     title: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     description: {
@@ -156,7 +146,7 @@ const steps = [
     },
   },
   {
-    icon: Truck,
+    mark: "delivery" as CraftMarkName,
     slug: "levering",
     title: { da: "Levering til virksomheden", en: "Delivery to the company" },
     description: {
@@ -199,7 +189,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
                 className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-brand-300">
-                  <service.icon className="h-5 w-5" strokeWidth={1.75} />
+                  <CraftMark name={service.mark} className="h-6 w-6" />
                 </span>
                 <h2 className="mt-4 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                   {service.title[lang]}
@@ -237,7 +227,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
                   className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
                 >
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300 shadow-sm">
-                    <step.icon className="h-5 w-5" strokeWidth={1.75} />
+                    <CraftMark name={step.mark} className="h-6 w-6" />
                   </span>
                   <div>
                     <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
