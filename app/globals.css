@@ -177,10 +177,31 @@ body {
     border-bottom: 1px solid rgb(255 255 255 / 0.06);
   }
 
+  /*
+   * The floating panel the products menu opens into.
+   *
+   * It used to share .glass-nav, which is wrong now that .glass-nav is a
+   * gradient: that gradient is measured for an 81px bar, and stretched down a
+   * 478px panel it reached 58% opacity by the bottom — six of the twelve
+   * links were sitting on the hero photograph with almost nothing behind
+   * them. A panel that covers content is not the same object as a bar that
+   * sits on top of the page, and it wants a flat, near-opaque ground.
+   */
+  .glass-panel {
+    background-color: rgb(7 12 25 / 0.96);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+
   @supports not (backdrop-filter: blur(1px)) {
     .glass-nav {
       background-image: none;
       background-color: rgb(7 12 25 / 0.97);
+    }
+
+    .glass-panel {
+      background-color: rgb(7 12 25 / 0.99);
     }
   }
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
@@ -15,6 +15,8 @@ export default function Header({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const burger = useRef<HTMLButtonElement>(null);
+  const productsTrigger = useRef<HTMLButtonElement>(null);
 
   /*
    * Hold the page still while the drawer is open.
@@ -32,6 +34,27 @@ export default function Header({ lang }: { lang: Lang }) {
       document.body.style.overflow = previous;
     };
   }, [open]);
+  /*
+   * Escape closes the drawer.
+   *
+   * It is what anyone who uses a keyboard reaches for first, and without it
+   * the only way out of an open menu was to find the button again — which, on
+   * a panel that covers the screen, means tabbing past every link in it.
+   * Focus goes back to the control that opened it, so the next Tab carries on
+   * from where it was rather than from the top of the document.
+   */
+  useEffect(() => {
+    if (!open) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      setMobileProductsOpen(false);
+      burger.current?.focus();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const pathname = usePathname() ?? "/";
 
   /** The same page in the other language. */
@@ -92,23 +115,66 @@ export default function Header({ lang }: { lang: Lang }) {
           aria-label={ui.mainNav[lang]}
           className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7"
         >
+          {/*
+            A link and a disclosure, not a link pretending to be one.
+ 
+            This was a single <Link> carrying aria-expanded, with the panel
+            opening on mouseenter. Two things were wrong with that. The panel
+            was unreachable from a keyboard — Tab put focus on the link and
+            Enter navigated to the hub, so the nine pages inside were not in
+            the tab order of any page on the site, which is WCAG 2.1.1 at
+            Level A. And aria-expanded on a link tells a screen reader the
+            control expands something when what it actually does is leave the
+            page.
+ 
+            So the label stays a link to the hub and the chevron becomes a
+            button that owns the panel. Pointer behaviour is unchanged; focus
+            moving anywhere inside the wrapper opens it, focus leaving the
+            wrapper closes it, and Escape closes it and puts focus back on the
+            button. onFocus and onBlur are React's focusin/focusout, so they
+            catch focus arriving in the panel's children too.
+          */}
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}
             onMouseLeave={() => setProductsOpen(false)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setProductsOpen(false);
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape" || !productsOpen) return;
+              setProductsOpen(false);
+              productsTrigger.current?.focus();
+            }}
           >
-            <Link
-              href={localePath(productsNav.hub.href, lang)}
-              className="flex items-center gap-1 text-sm font-medium text-paper/75 transition hover:text-paper"
-              aria-expanded={productsOpen}
-            >
-              {productsNav.hub.label[lang]}
-              <ChevronDown className="h-4 w-4" strokeWidth={2} />
-            </Link>
+            <div className="flex items-center gap-1">
+              <Link
+                href={localePath(productsNav.hub.href, lang)}
+                className="text-sm font-medium text-paper/75 transition hover:text-paper"
+              >
+                {productsNav.hub.label[lang]}
+              </Link>
+              <button
+                ref={productsTrigger}
+                type="button"
+                onClick={() => setProductsOpen((v) => !v)}
+                aria-expanded={productsOpen}
+                aria-controls="header-products"
+                aria-label={ui.showProducts[lang]}
+                className="inline-flex h-6 w-5 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+              >
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`}
+                  strokeWidth={2}
+                />
+              </button>
+            </div>
 
             {productsOpen && (
-              <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
-                <div className="glass-nav rounded-xl p-2 shadow-xl shadow-black/40">
+              <div id="header-products" className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
+                <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
@@ -196,6 +262,7 @@ export default function Header({ lang }: { lang: Lang }) {
           )}
 
           <button
+            ref={burger}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}

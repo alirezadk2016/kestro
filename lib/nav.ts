@@ -78,4 +78,7 @@ export const ui = {
   language: { da: "Sprog", en: "Language" },
   callUs: { da: "Ring til os", en: "Call us" },
   skipToContent: { da: "Gå til indhold", en: "Skip to content" },
+  /* The header's products disclosure. It is a separate control from the link
+     beside it: the link goes to the hub, this opens the list. */
+  showProducts: { da: "Vis produktsider", en: "Show product pages" },
 } satisfies Record<string, Localized>;

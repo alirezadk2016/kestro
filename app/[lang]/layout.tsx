@@ -48,19 +48,31 @@ export function generateStaticParams() {
 }
 
 /*
- * Only "da" and "en" are languages.
+ * Only "da" and "en" are languages — but that is now settled before the
+ * router sees the request, not here.
  *
- * Without this, anything with a dot in it that middleware leaves alone —
- * /index.html, /wp-login.php, /style.css, and every path a scanner tries all
- * night — matched this segment with lang="index.html". The layout calls
- * notFound() for that, but the page beside it renders in parallel and reaches
- * copy[lang] first, throws, and the request comes back 500 instead of 404.
+ * This used to be `dynamicParams = false`. The problem it solved was real:
+ * anything with a dot in it that middleware left alone — /index.html,
+ * /wp-login.php, /style.css, and every path a scanner tries all night —
+ * matched this segment with lang="index.html", and while the layout calls
+ * notFound() for that, the page beside it renders in parallel, reaches
+ * copy[lang] first, throws, and the request comes back 500. Google treats a
+ * 5xx as "the host is unwell" and slows the crawl of the whole site.
  *
- * Google treats a 5xx as "the host is unwell" and slows the crawl of the whole
- * site; a 404 costs nothing. Rejecting the param at the routing layer fixes it
- * for every page at once rather than one guard per file.
+ * What it cost was invisible until someone typed a wrong URL. Route segment
+ * config applies to the whole subtree, so refusing unknown params here
+ * refused them for every dynamic segment below — /produkter/<typo> and
+ * /en/<anything> were rejected at the routing layer, the notFound() guards in
+ * those pages never ran, and no not-found boundary was ever reached. Every
+ * 404 on the site was Next's built-in page: black on white, English only, no
+ * header, no footer, no way back.
+ *
+ * middleware.ts now decides what is a file and what is a path by extension
+ * rather than by "has a dot", so a junk path gets the language prefix like
+ * any other and this segment is never handed something that is not a
+ * language. The isLang guard below stays as the second line of defence.
  */
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 const meta = {
   da: {

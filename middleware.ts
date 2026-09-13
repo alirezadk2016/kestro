@@ -19,8 +19,29 @@ import { NextResponse, type NextRequest } from "next/server";
  * English site by a banner instead (components/LanguageHint.tsx), which is
  * client-side, cacheable, and cannot cost the Danish index anything.
  */
+/*
+ * Files that are served from public/ rather than rendered.
+ *
+ * The matcher used to exclude every path containing a dot, which kept these
+ * safe but also let /index.html and /wp-login.php through to the router — and
+ * [lang] matches any single segment, so they arrived as lang="index.html".
+ * app/[lang]/layout.tsx answered that with dynamicParams = false, which fixed
+ * the 500 and, because segment config applies to the whole subtree, also
+ * meant no unmatched URL anywhere on the site could reach a not-found
+ * boundary: every 404 fell through to Next's built-in page.
+ *
+ * Naming the extensions instead draws the line where it actually is. A real
+ * asset is passed through; anything else with a dot in it is a path like any
+ * other and gets the language prefix, so [lang] is never handed something
+ * that is not a language and the 404 is the site's own.
+ */
+const STATIC_FILE =
+  /\.(?:jpg|jpeg|png|gif|webp|avif|svg|ico|bmp|glb|gltf|woff2?|ttf|otf|eot|mp4|webm|mov|mp3|wav|ogg|xml|txt|json|csv|pdf|zip|js|mjs|css|map|webmanifest)$/i;
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (STATIC_FILE.test(pathname)) return NextResponse.next();
 
   if (pathname === "/en" || pathname.startsWith("/en/")) return NextResponse.next();
 
@@ -40,11 +61,10 @@ export const config = {
      * rewritten to /da/logo — where nothing lives, so the Organization schema
      * would cite a logo URL that answers 404.
      *
-     * The feed needs no entry: it is /vejledninger/feed.xml, and the trailing
-     * `.*\.` already excludes every path containing a dot.
-     *
-     * A path with a dot that gets past this is not an error: app/[lang] rejects
-     * anything that is not a language (dynamicParams = false) and answers 404.
+     * The feed needs no entry: it is /vejledninger/feed.xml, and .xml is in
+     * the STATIC_FILE list above, which is what now decides whether a path
+     * with a dot in it is a file or just a path. That list replaced a
+     * `.*\.` exclusion here — see the note on STATIC_FILE for why.
      */
     /*
      * `admin` is in the list because the panel is not part of the public site
@@ -53,6 +73,6 @@ export const config = {
      * kept out of the index by a noindex header in next.config.mjs and by
      * never being linked to — not by being hidden, which is not a control.
      */
-    "/((?!_next/|api/|admin|icon|opengraph-image|logo|sitemap\\.xml|robots\\.txt|.*\\.).*)",
+    "/((?!_next/|api/|admin|icon|opengraph-image|logo|sitemap\\.xml|robots\\.txt).*)",
   ],
 };

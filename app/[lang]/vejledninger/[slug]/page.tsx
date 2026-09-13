@@ -14,6 +14,21 @@ import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
+/*
+ * Overrides the language layout's `dynamicParams = false` for this segment
+ * only.
+ *
+ * That flag is there so a scanner asking for /wp-login.php is rejected before
+ * anything renders, and it still is — it governs the [lang] segment's own
+ * param. Inherited down here, though, it meant an unknown slug was rejected at
+ * the routing layer too, so the notFound() below never ran and the visitor got
+ * Next's built-in 404: black on white, English only, no header and no link
+ * back. Letting the segment render lets it answer with the site's own 404.
+ * The page does nothing before that guard, so an unknown slug still costs a
+ * lookup and a redirect to the boundary.
+ */
+export const dynamicParams = true;
+
 export function generateStaticParams() {
   return langs.flatMap((lang) => guides.map((guide) => ({ lang, slug: guide.slug })));
 }

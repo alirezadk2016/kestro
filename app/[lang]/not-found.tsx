@@ -1,40 +1,14 @@
-import Link from "next/link";
-import Container from "@/components/Container";
+import NotFoundPanel from "@/components/NotFoundPanel";
 
 /*
- * Middleware rewrites unprefixed paths to /da, so an unknown Danish URL lands
- * here. There is no language segment to read at this point, so the page shows
- * both languages rather than guessing.
+ * The 404 for anything that gets as far as a language segment — a page under
+ * /da or /en calling notFound(). It renders inside this segment's layout, so
+ * it arrives with the header, the footer and the site's own surface.
+ *
+ * A URL that never matches a route at all does not reach here; it is caught by
+ * app/not-found.tsx, which has to carry its own document. Both draw the same
+ * panel so the two cannot drift apart.
  */
 export default function NotFound() {
-  return (
-    <section className="flex min-h-[60vh] items-center py-20">
-      <Container className="text-center">
-        <p className="text-sm font-semibold text-brand-600">404</p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
-          Siden blev ikke fundet
-        </h1>
-        <p className="mx-auto mt-4 max-w-md text-base leading-7 text-ink-600">
-          Siden findes ikke, eller er blevet flyttet. Prøv forsiden, eller kontakt os direkte.
-        </p>
-        <p className="mx-auto mt-2 max-w-md text-base leading-7 text-ink-500">
-          This page does not exist or has moved. Try the front page, or contact us directly.
-        </p>
-        <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-          <Link
-            href="/"
-            className="bg-brand-600 px-7 py-3.5 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
-          >
-            Til forsiden / Front page
-          </Link>
-          <Link
-            href="/kontakt"
-            className="rounded-full border border-ink-200 px-7 py-3 text-sm font-semibold text-ink-800 transition hover:border-ink-400 hover:bg-paper-dim"
-          >
-            Kontakt os / Contact
-          </Link>
-        </div>
-      </Container>
-    </section>
-  );
+  return <NotFoundPanel />;
 }
