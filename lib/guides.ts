@@ -1679,6 +1679,276 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "vaelg-erhvervsbaerbar",
+    cluster: "buying-condition",
+    type: "beslutning",
+    intent: "commercial-education",
+    primaryKeyword: "thinkpad vs elitebook vs latitude",
+    author: "alireza",
+    title: {
+      da: "ThinkPad, EliteBook eller Latitude: hvilken skal I vælge?",
+      en: "ThinkPad, EliteBook or Latitude: which should you choose?",
+    },
+    metaTitle: {
+      da: "ThinkPad vs EliteBook vs Latitude til erhverv | Kestro",
+      en: "ThinkPad vs EliteBook vs Latitude for business | Kestro",
+    },
+    metaDescription: {
+      da: "De tre store erhvervsserier ligner hinanden på databladet. Forskellene ligger i hukommelsesloftet, tastaturet, dokken og kortlæseren – og de koster først noget, når maskinerne står på bordene.",
+      en: "The three big business series look alike on a spec sheet. The differences are in the memory ceiling, the keyboard, the dock and the card reader — and they only cost you something once the machines are on the desks.",
+    },
+    summary: {
+      da: "Tre serier bygget til det samme arbejde. Hvor de faktisk skiller sig – og hvilken forskel der rammer jer.",
+      en: "Three series built for the same job. Where they actually differ — and which difference will hit you.",
+    },
+    audience: {
+      da: "Indkøbere og IT-ansvarlige, der skal vælge én serie til flere maskiner",
+      en: "Buyers and IT managers choosing one series for several machines",
+    },
+    readingMinutes: 9,
+    updated: "2026-09-13",
+    tldr: {
+      da: "Alle tre serier er bygget til kontorarbejde og holder til det. Forskellene, der koster noget: Latitude tager mest hukommelse (op til 64 GB i to sokler), EliteBook har intet TrackPoint, og Dells ældre E-Port-docks passer ikke til den nuværende generation. Skal medarbejderne bruge adgangskort, skal kortlæseren bestilles bevidst – den sidder ikke i alle modeller.",
+      en: "All three series are built for office work and stand up to it. The differences that cost you something: the Latitude takes the most memory (up to 64 GB across two slots), the EliteBook has no TrackPoint, and Dell's older E-Port docks do not fit the current generation. If staff use access cards, the card reader has to be ordered deliberately — it is not in every model.",
+    },
+    intro: {
+      da: "ThinkPad T-serien, EliteBook 800-serien og Latitude 5000-serien fylder mest på det brugte erhvervsmarked. De er bygget til det samme, de holder omtrent lige længe, og på et datablad ligner de hinanden. Forskellene dukker først op, når maskinerne skal stå på fyrre borde og dele docks, skærme og adgangskort med det udstyr, der allerede er i huset.",
+      en: "The ThinkPad T series, the EliteBook 800 series and the Latitude 5000 series dominate the used business market. They are built for the same job, they last about as long, and on a spec sheet they look alike. The differences only surface when the machines have to sit on forty desks and share docks, monitors and access cards with the equipment already in the building.",
+    },
+    sections: [
+      {
+        heading: { da: "De tre serier, kort", en: "The three series, briefly" },
+        body: [
+          {
+            da: "T14 er det, T480 blev til: erhvervskabinet, godt tastatur og dele, der kan skaffes. Den findes både med Intel og med AMD Ryzen PRO. EliteBook 840 er HP's svar på samme opgave – tynd, meget udbredt og derfor nem at skaffe i antal. Latitude 5410 er Dells arbejdsmaskine med alle porte i behold.",
+            en: "The T14 is what the T480 turned into: a business chassis, a good keyboard and parts you can get. It comes with either Intel or AMD Ryzen PRO. The EliteBook 840 is HP's answer to the same job — thin, very common, and therefore easy to source in quantity. The Latitude 5410 is Dell's workhorse with every port still on it.",
+          },
+          {
+            da: "Tallene herunder er dem, maskinerne typisk kommer med, når vi sourcer dem. Hukommelse og disk kan ændres inden levering; resten kan ikke.",
+            en: "The figures below are what the machines typically arrive with when we source them. Memory and disk can be changed before delivery; the rest cannot.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "ThinkPad T14, EliteBook 840 og Latitude 5410 sammenlignet",
+            en: "ThinkPad T14, EliteBook 840 and Latitude 5410 compared",
+          },
+          head: [
+            { da: "", en: "" },
+            { da: "ThinkPad T14", en: "ThinkPad T14" },
+            { da: "EliteBook 840", en: "EliteBook 840" },
+            { da: "Latitude 5410", en: "Latitude 5410" },
+          ],
+          rows: [
+            [
+              { da: "Hukommelse", en: "Memory" },
+              { da: "8–16 GB, kan typisk udvides", en: "8–16 GB, usually expandable" },
+              { da: "8–32 GB i to sokler", en: "8–32 GB across two slots" },
+              { da: "8–64 GB i to sokler", en: "8–64 GB across two slots" },
+            ],
+            [
+              { da: "Processor", en: "Processor" },
+              {
+                da: "Intel 10./11. gen. eller AMD Ryzen PRO",
+                en: "Intel 10th/11th gen or AMD Ryzen PRO",
+              },
+              { da: "Intel 8. generation", en: "Intel 8th generation" },
+              { da: "Intel 10. eller 11. generation", en: "Intel 10th or 11th generation" },
+            ],
+            [
+              { da: "Lagring", en: "Storage" },
+              { da: "256–512 GB NVMe, kan udskiftes", en: "256–512 GB NVMe, replaceable" },
+              { da: "256–512 GB NVMe, kan udskiftes", en: "256–512 GB NVMe, replaceable" },
+              { da: "256–512 GB NVMe, kan udskiftes", en: "256–512 GB NVMe, replaceable" },
+            ],
+            [
+              { da: "Porte", en: "Ports" },
+              {
+                da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, kortlæser, combo-jack",
+                en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, card reader, combo jack",
+              },
+              {
+                da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, combo-jack",
+                en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, combo jack",
+              },
+              {
+                da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, combo-jack – smartkortlæser på nogle modeller",
+                en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, combo jack — smart card reader on some models",
+              },
+            ],
+            [
+              { da: "Styresystem", en: "Operating system" },
+              { da: "Windows 11", en: "Windows 11" },
+              { da: "Windows 10 eller 11", en: "Windows 10 or 11" },
+              { da: "Windows 10 eller 11", en: "Windows 10 or 11" },
+            ],
+          ],
+        },
+      },
+      {
+        heading: {
+          da: "Hukommelsesloftet er den forskel, der holder længst",
+          en: "The memory ceiling is the difference that lasts longest",
+        },
+        body: [
+          {
+            da: "Processorgenerationen bestemmer, hvor hurtig maskinen er i dag. Hukommelsesloftet bestemmer, hvor længe den bliver ved med at være hurtig nok. Latitude 5410 tager op til 64 GB i to sokler, EliteBook 840 op til 32 GB i to sokler, og T14 leveres typisk med 8–16 GB, som normalt kan udvides.",
+            en: "The processor generation decides how fast the machine is today. The memory ceiling decides how long it goes on being fast enough. The Latitude 5410 takes up to 64 GB across two slots, the EliteBook 840 up to 32 GB across two slots, and the T14 typically ships with 8–16 GB that can usually be expanded.",
+          },
+          {
+            da: "For almindeligt kontorarbejde er 16 GB rigeligt, og loftet er ligegyldigt. Skal maskinen bruges til udvikling, tunge regneark, billedarbejde eller mange virtuelle maskiner, er det loftet, der afgør, om I kan opgradere om to år i stedet for at købe igen.",
+            en: "For ordinary office work 16 GB is plenty and the ceiling is irrelevant. If the machine is going to run development work, heavy spreadsheets, image work or several virtual machines, the ceiling is what decides whether you can upgrade in two years instead of buying again.",
+          },
+          {
+            da: "Vær opmærksom på de tynde modeller. X1 Carbon og tilsvarende ultrabooks har hukommelsen loddet fast på bundkortet, og så er den mængde, maskinen købes med, den mængde, den har resten af sit liv.",
+            en: "Watch out for the thin models. The X1 Carbon and comparable ultrabooks have the memory soldered to the motherboard, and then whatever the machine is bought with is what it has for the rest of its life.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Tastaturet er en migreringsomkostning",
+          en: "The keyboard is a migration cost",
+        },
+        body: [
+          {
+            da: "EliteBook 840 har ikke noget TrackPoint. Kommer medarbejderne fra ThinkPads, er det den største omstilling – større end processoren og større end skærmen. Det står sjældent i regnearket, men det er den forskel, folk lægger mærke til den første uge.",
+            en: "The EliteBook 840 has no TrackPoint. If your staff are coming from ThinkPads, that is the biggest adjustment — bigger than the processor and bigger than the screen. It rarely makes it into the spreadsheet, but it is the difference people notice in the first week.",
+          },
+          {
+            da: "Den anden vej rundt gælder det samme: skifter I fra HP eller Dell til ThinkPad, får I en pegepind midt i tastaturet, som nogle bruger hver dag og andre aldrig rører. Ingen af delene er et argument mod en serie. Det er et argument for at vælge én serie og blive ved den.",
+            en: "It works the same way round: move from HP or Dell to ThinkPad and you get a pointing stick in the middle of the keyboard that some people use every day and others never touch. Neither is an argument against a series. It is an argument for picking one series and staying with it.",
+          },
+          {
+            da: "Uanset hvilken serie I vælger, skifter vi tastaturet fysisk til dansk eller norsk layout på maskiner, der kommer fra udlandet, så æ, ø og å sidder rigtigt og tegnene er trykt på tasterne.",
+            en: "Whichever series you choose, we physically change the keyboard to a Danish or Norwegian layout on machines that come from abroad, so æ, ø and å sit where they should and the characters are printed on the keys.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Docks og adgangskort", en: "Docks and access cards" },
+        body: [
+          {
+            da: "Har I docks i forvejen, er de tit den dyreste del af beslutningen. Dells docks til denne generation bruger USB-C, og ældre E-Port-docks fra Dell passer ikke. Har I et lager fuldt af dem, er de ikke et argument for Latitude – de er et argument for at regne på, hvad udskiftningen koster.",
+            en: "If you already have docks, they are often the most expensive part of the decision. Dell's docks for this generation use USB-C, and older Dell E-Port docks do not fit. If you have a cupboard full of them, they are not an argument for the Latitude — they are an argument for working out what replacing them costs.",
+          },
+          {
+            da: "Arbejdspladser med HP-docks i forvejen har den samme overvejelse den anden vej, og her er EliteBook 840 den nemme vej. ThinkPad-siden har både mekaniske dockstik på de ældre modeller og USB-C på de nyere, så dér afhænger det af, hvilken generation I har stående.",
+            en: "Workplaces that already have HP docks have the same consideration in reverse, and there the EliteBook 840 is the easy path. The ThinkPad side has mechanical dock connectors on the older models and USB-C on the newer ones, so there it depends which generation you already have.",
+          },
+          {
+            da: "Bruger medarbejderne adgangskort, skal smartkortlæseren bestilles bevidst. Den sidder på nogle Latitude-modeller og ikke på andre, og det er ikke noget, der kan sættes i bagefter. Det er værd at få skrevet ind i tilbuddet frem for at opdage det ved udrulningen.",
+            en: "If staff use access cards, the smart card reader has to be ordered deliberately. It is on some Latitude models and not on others, and it is not something that can be added afterwards. Worth writing into the quote rather than discovering at rollout.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sure View: vælg det bevidst", en: "Sure View: choose it deliberately" },
+        body: [
+          {
+            da: "Nogle EliteBook-modeller har Sure View, et indbygget privatlivsfilter, der kan slås til. Det er godt i toget og i en lufthavn. Det gør også skærmen mørkere på kontoret, hver dag, for den medarbejder der sidder med den.",
+            en: "Some EliteBook models have Sure View, a built-in privacy filter you can switch on. It is good on a train and in an airport. It also makes the screen darker in the office, every day, for whoever is sitting at it.",
+          },
+          {
+            da: "Det er hverken en fejl eller en bonus – det er et valg. Skal maskinerne bruges af folk, der rejser med fortrolige data, er det pengene værd. Skal de stå på faste pladser på et kontor, er det en ulempe, I betaler for.",
+            en: "It is neither a fault nor a bonus — it is a choice. If the machines are for people travelling with confidential data, it earns its place. If they are going to sit at fixed desks in an office, it is a drawback you are paying for.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sådan vælger I", en: "How to choose" },
+        body: [
+          {
+            da: "Rækkefølgen herunder er den, der plejer at give det rigtige svar hurtigst. Den starter med det, der er dyrest at tage fejl af.",
+            en: "The order below is the one that usually gets to the right answer fastest. It starts with what is most expensive to get wrong.",
+          },
+        ],
+        list: [
+          {
+            da: "Hvad står der allerede? Docks, skærme og kabler afgør ofte valget før specifikationerne gør.",
+            en: "What is already there? Docks, monitors and cables often decide the choice before the specifications do.",
+          },
+          {
+            da: "Skal medarbejderne bruge adgangskort? Så skal kortlæseren stå i tilbuddet.",
+            en: "Do staff need access cards? Then the card reader has to be in the quote.",
+          },
+          {
+            da: "Hvad skal maskinen lave om to år? Det afgør, hvor højt hukommelsesloftet skal være.",
+            en: "What will the machine be doing in two years? That decides how high the memory ceiling needs to be.",
+          },
+          {
+            da: "Hvad kommer folk fra? TrackPoint eller ej er den forskel, brugerne mærker først.",
+            en: "What are people coming from? TrackPoint or not is the difference users feel first.",
+          },
+          {
+            da: "Rejser de med maskinen? Kun dér giver Sure View mening.",
+            en: "Do they travel with it? Only then does Sure View make sense.",
+          },
+          {
+            da: "Vælg så én serie til hele holdet. Ens maskiner er nemmere at udrulle, understøtte og udskifte end den bedste maskine til hver enkelt.",
+            en: "Then pick one series for the whole team. Identical machines are easier to roll out, support and replace than the best machine for each individual.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Er I i tvivl mellem to serier, så skriv til os med, hvad I har stående i forvejen, og hvad maskinerne skal bruges til. Vi sourcer alle tre serier og har ingen grund til at anbefale den ene frem for den anden – vi sender et skriftligt tilbud på den, der passer, uden at der er bundet noget op.",
+      en: "If you are torn between two series, write to us with what you already have and what the machines are for. We source all three series and have no reason to favour one over another — we will send a written quote on whichever fits, with nothing committed.",
+    },
+    related: [
+      {
+        href: "/produkter/baerbare-computere",
+        label: { da: "De bærbare, vi skaffer", en: "The laptops we source" },
+      },
+      {
+        href: "/tilbud",
+        label: { da: "Få et skriftligt tilbud", en: "Get a written quote" },
+      },
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Er ThinkPad bedre end EliteBook og Latitude?",
+          en: "Is the ThinkPad better than the EliteBook and the Latitude?",
+        },
+        answer: {
+          da: "Nej. Alle tre er bygget til erhvervsbrug og holder til daglig kontorbrug. Forskellene ligger i hukommelsesloft, tastatur, dockstik og kortlæser – ikke i kvalitet. Den rigtige serie er den, der passer til det udstyr og de vaner, I har i forvejen.",
+          en: "No. All three are built for business use and stand up to daily office work. The differences are in the memory ceiling, the keyboard, the dock connector and the card reader — not in quality. The right series is the one that fits the equipment and the habits you already have.",
+        },
+      },
+      {
+        question: {
+          da: "Skal vi vælge Intel eller AMD i en T14?",
+          en: "Should we choose Intel or AMD in a T14?",
+        },
+        answer: {
+          da: "De to varianter er ikke helt ens. AMD Ryzen PRO giver typisk flere kerner for pengene, Intel-varianterne har oftere Thunderbolt. Er der software i huset, der er certificeret til det ene, følger valget den software. Er der ikke, betyder forskellen lidt til almindeligt kontorarbejde.",
+          en: "The two variants are not quite the same. AMD Ryzen PRO typically gives more cores for the money; the Intel variants more often have Thunderbolt. If there is software in the building certified for one of them, the choice follows that software. If not, the difference means little for ordinary office work.",
+        },
+      },
+      {
+        question: {
+          da: "Kan vi blande serierne i den samme leverance?",
+          en: "Can we mix the series in the same delivery?",
+        },
+        answer: {
+          da: "Ja, og nogle gange giver det mening – for eksempel en tyndere maskine til dem, der rejser, og en opgraderbar til dem, der sidder fast. Men jo flere serier, jo flere docks, strømforsyninger og reservedele skal I holde styr på. Under omkring ti maskiner er det sjældent besværet værd.",
+          en: "Yes, and sometimes it makes sense — a thinner machine for the people who travel and an upgradable one for those at fixed desks, for instance. But the more series you run, the more docks, power supplies and spare parts you have to keep track of. Under about ten machines it is rarely worth the trouble.",
+        },
+      },
+      {
+        question: {
+          da: "Får vi dansk tastatur uanset hvilken serie vi vælger?",
+          en: "Do we get a Danish keyboard whichever series we choose?",
+        },
+        answer: {
+          da: "Ja. Maskiner sourcet i udlandet kommer ofte med spansk eller italiensk layout, og vi skifter tastaturet fysisk til dansk eller norsk, før de leveres. Det er et fysisk skift, ikke en indstilling i Windows – tasterne har de rigtige tegn trykt på.",
+          en: "Yes. Machines sourced abroad often arrive with Spanish or Italian layouts, and we physically change the keyboard to Danish or Norwegian before delivery. It is a physical swap, not a Windows setting — the keys have the right characters printed on them.",
+        },
+      },
+    ],
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {

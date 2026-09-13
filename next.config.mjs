@@ -153,6 +153,7 @@ const englishRoutes = [
   ["/vejledninger/samle-din-egen-pc", "/knowledge/build-your-own-pc"],
   ["/vejledninger/windows-11-paa-aeldre-maskine", "/knowledge/windows-11-on-older-hardware"],
   ["/vejledninger/slet-data-foer-du-saelger", "/knowledge/erase-data-before-selling"],
+  ["/vejledninger/vaelg-erhvervsbaerbar", "/knowledge/thinkpad-vs-elitebook-vs-latitude"],
   ["/produkter/baerbare-computere", "/products/business-laptops"],
   ["/produkter/stationaere-computere", "/products/desktop-computers"],
   ["/produkter/skaerme", "/products/monitors"],
