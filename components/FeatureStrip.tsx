@@ -48,9 +48,12 @@ const features = [
 
 export default function FeatureStrip({ lang }: { lang: Lang }) {
   return (
+    /* relative, because the closing strapline is placed against its right
+       edge the way the reference sets it — inside the bar, past the last
+       item, with a rule between. */
     <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
       <Container>
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-8 sm:grid-cols-3 sm:gap-y-7 sm:py-9 lg:grid-cols-5 lg:gap-x-8">
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-8 sm:grid-cols-3 sm:gap-y-7 sm:py-9 lg:grid-cols-5 lg:gap-x-8 2xl:pr-44">
           {features.map((feature) => (
             <li key={feature.title.da} className="flex items-start gap-3.5">
               {/* A square plate, not a rounded tile: the mark inside it is an
@@ -67,6 +70,19 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
           ))}
         </ul>
       </Container>
+          {/* The closing mark. English in both languages, like the rest of the
+          editorial set: it is a strapline, not a sentence to translate. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-6 hidden items-center gap-5 2xl:flex"
+      >
+        <span className="h-12 w-px bg-white/10" />
+        <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.3em] text-paper/40">
+          Good IT
+          <br />
+          Goes further
+        </p>
+      </div>
     </div>
   );
 }

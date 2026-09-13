@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, LayoutGrid } from "lucide-react";
+import { ArrowDown, ArrowRight, LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import FeatureStrip from "./FeatureStrip";
-import HeroSpecs from "./HeroSpecs";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -22,7 +21,8 @@ const copy = {
        hierarchy inside itself rather than being one even block. */
     headlineTop: "Erhvervscomputere.",
     headlineAccent: "Klar til Norden.",
-    sub: "Vi finder maskinerne hos de rigtige leverandører og oplyser pris, stand og garantivilkår skriftligt, før I bestiller. Fra enkelte maskiner til hele medarbejderflåden.",
+    subLead: "Pålidelig. Testet. Bæredygtig.",
+    sub: "IT der holder jeres forretning i gang.",
     secondary: "Se hvad vi skaffer",
     machineAlt: "Lenovo ThinkPad T480, åbnet og set forfra",
   },
@@ -30,7 +30,8 @@ const copy = {
     eyebrow: "Refurbished business IT",
     headlineTop: "Business computers.",
     headlineAccent: "Ready for the Nordics.",
-    sub: "We find the machines with the right suppliers and put the price, the condition and the warranty terms in writing before you order. From single machines to the whole staff fleet.",
+    subLead: "Reliable. Tested. Sustainable.",
+    sub: "IT that keeps your business moving.",
     secondary: "See what we source",
     machineAlt: "Lenovo ThinkPad T480, open and seen from the front",
   },
@@ -139,6 +140,51 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
+      {/*
+       * The editorial marks from the reference: two stanzas set into the room
+       * and a scroll cue at the right edge.
+       *
+       * They are HTML, not painted into the plate, which is the only reason
+       * they stay sharp at any zoom and can be read aloud or translated later.
+       * Deliberately quiet — paper/30 to paper/45, wide tracking, small — so
+       * they read as marks on the architecture rather than as copy competing
+       * with the headline. Hidden below lg, where there is no room in the
+       * frame for them and they would land on the machine.
+       */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 hidden lg:block"
+      >
+        <p className="absolute left-[51%] top-[19%] text-[11px] font-medium uppercase leading-[1.9] tracking-[0.34em] text-paper/45">
+          People
+          <br />
+          Technology
+          <br />
+          A cleaner
+          <br />
+          Tomorrow
+        </p>
+
+        <div className="absolute left-[85%] top-[19%]">
+          <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.34em] text-paper/40">
+            It today
+            <br />
+            A brighter
+            <br />
+            Tomorrow
+          </p>
+          <span className="mt-3 block h-px w-8 bg-paper/25" />
+        </div>
+
+        <div className="absolute right-[2.5%] top-[52%] flex flex-col items-center gap-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.34em] text-paper/40">
+            Scroll
+          </span>
+          <span className="h-12 w-px bg-gradient-to-b from-paper/30 to-transparent" />
+          <ArrowDown className="h-3.5 w-3.5 text-paper/35" strokeWidth={1.5} />
+        </div>
+      </div>
+
       {/* Sized to the photograph, not to the copy. The plate is 2252x1268, so
             the band it fills has to be about 1.78:1 or cover starts cropping to
             fill the difference — at min-h-[680px] plus padding plus the trust
@@ -147,7 +193,7 @@ export default function Hero({ lang }: { lang: Lang }) {
       <div className="relative z-10 flex min-h-[420px] items-center pb-14 pt-14 sm:pb-16 sm:pt-16 md:min-h-[480px] md:pt-20 lg:min-h-[540px]">
         <Container>
           <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-7">
               <div className="rise">
                 <span className="inline-flex items-center rounded-full border border-brand-400/35 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
                   {c.eyebrow}
@@ -162,8 +208,9 @@ export default function Hero({ lang }: { lang: Lang }) {
                   <span className="block text-brand-500">{c.headlineAccent}</span>
                 </h1>
 
-                <p className="mt-6 max-w-xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
-                  {c.sub}
+                <p className="mt-6 max-w-xl text-base leading-8 sm:text-lg sm:leading-9">
+                  <span className="block text-paper">{c.subLead}</span>
+                  <span className="block text-paper/70">{c.sub}</span>
                 </p>
               </div>
 
@@ -200,9 +247,6 @@ export default function Hero({ lang }: { lang: Lang }) {
             </div>
 
 
-            <div className="rise rise-3 lg:col-span-4 lg:col-start-9">
-              <HeroSpecs lang={lang} className="mx-auto w-full max-w-lg lg:max-w-none" />
-            </div>
           </div>
         </Container>
       </div>
