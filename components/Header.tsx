@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown, Phone } from "lucide-react";
+import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import { categories } from "@/lib/categories";
@@ -169,9 +169,13 @@ export default function Header({ lang }: { lang: Lang }) {
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/tilbud", lang)}
-            className="hidden min-h-[44px] items-center whitespace-nowrap bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 xl:inline-flex"
+            className="group hidden min-h-[44px] items-center gap-2.5 whitespace-nowrap rounded-lg bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-500 xl:inline-flex"
           >
             {ui.bookCall[lang]}
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              strokeWidth={2}
+            />
           </Link>
         </div>
 
@@ -334,11 +338,14 @@ function LanguageSwitcher({
   onNavigate?: () => void;
 }) {
   return (
-    <div
-      className="flex w-fit items-center border border-white/15"
-      role="group"
-      aria-label={ui.language[lang]}
-    >
+    /* Two words and a rule, not a segmented control.
+       It was a bordered pair with the current language filled in brand blue,
+       which put a third button-shaped object in a bar that already has one
+       real button — and a filled chip reads as "press me" when the thing it
+       marks is simply where you already are. The reference underlines the
+       current language and leaves the other quiet, which is what a state
+       marker should look like. */
+    <div className="flex w-fit items-center gap-4" role="group" aria-label={ui.language[lang]}>
       {langs.map((code) => (
         <Link
           key={code}
@@ -346,8 +353,10 @@ function LanguageSwitcher({
           onClick={onNavigate}
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
-          className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-brand-600 text-paper" : "text-paper/70 hover:text-paper"
+          className={`inline-flex min-h-[44px] items-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
+            code === lang
+              ? "border-b-2 border-paper pt-0.5 text-paper"
+              : "border-b-2 border-transparent pt-0.5 text-paper/55 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

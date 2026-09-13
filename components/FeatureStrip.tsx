@@ -53,18 +53,20 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
        item, with a rule between. */
     <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
       <Container>
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-8 sm:grid-cols-3 sm:gap-y-7 sm:py-9 lg:grid-cols-5 lg:gap-x-8 2xl:pr-44">
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-7 sm:grid-cols-3 sm:gap-y-6 sm:py-8 lg:grid-cols-5 lg:gap-x-7 2xl:pr-44">
           {features.map((feature) => (
-            <li key={feature.title.da} className="flex items-start gap-3.5">
-              {/* A square plate, not a rounded tile: the mark inside it is an
-                  orthographic drawing, and a pill around a technical drawing
-                  fights it. The hairline is what a drawing sits on. */}
-              <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-white/10 bg-brand-500/[0.07] text-brand-300">
-                <CraftMark name={feature.mark} className="h-7 w-7" />
+            <li key={feature.title.da} className="flex items-start gap-3">
+              {/* The mark stands on the bar, not in a box.
+                  It was in a bordered square plate, and five plates in a row
+                  under a photograph read as five buttons — a second row of
+                  chrome directly under the two real ones in the hero. The
+                  drawing is the mark; the bar it sits on is the frame. */}
+              <span className="flex-shrink-0 pt-0.5 text-paper/70">
+                <CraftMark name={feature.mark} className="h-6 w-6" />
               </span>
-              <div className="min-w-0 pt-0.5">
-                <p className="text-sm font-semibold text-paper">{feature.title[lang]}</p>
-                <p className="mt-0.5 text-xs leading-5 text-paper/55">{feature.sub[lang]}</p>
+              <div className="min-w-0">
+                <p className="text-[13px] font-semibold leading-5 text-paper">{feature.title[lang]}</p>
+                <p className="mt-0.5 text-[11px] leading-4 text-paper/55">{feature.sub[lang]}</p>
               </div>
             </li>
           ))}

@@ -159,16 +159,28 @@ body {
    * AA. The base is the page's own background colour, so at the top of a page
    * the header reads as part of the field rather than as a bar laid on it.
    */
+  /*
+   * The bar over the picture.
+   *
+   * It was a flat rgb(11 20 38 / 0.82). Over the hero photograph — whose top
+   * band is near-black — that fill is *lighter* than what it covers, so the
+   * bar drew itself as a pale slab with a hard edge across a dark ceiling.
+   * A darker tint and a gradient that thins downward let the ceiling and the
+   * window mullions carry on up behind it, which is what the artwork shows,
+   * while the blur keeps the links readable once the page scrolls and real
+   * content runs under it.
+   */
   .glass-nav {
-    background-color: rgb(11 20 38 / 0.82);
+    background-image: linear-gradient(180deg, rgb(5 9 20 / 0.88) 0%, rgb(5 9 20 / 0.58) 100%);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    border-bottom: 1px solid rgb(255 255 255 / 0.06);
   }
 
   @supports not (backdrop-filter: blur(1px)) {
     .glass-nav {
-      background-color: rgb(11 20 38 / 0.97);
+      background-image: none;
+      background-color: rgb(7 12 25 / 0.97);
     }
   }
 

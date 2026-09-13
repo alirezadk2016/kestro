@@ -6,11 +6,9 @@ import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
- * No "use client" here on purpose. The hero is text, two links and a table of
- * facts — it renders on the server and ships no JavaScript of its own. The
- * entrance is the .rise utility in globals.css, and only the two pieces that
- * genuinely need the browser (the cycling enquiry panel, the WebGL laptop) are
- * client components.
+ * No "use client" here on purpose. The hero is a photograph, six lines of text
+ * and two links — it renders on the server and ships no JavaScript of its own.
+ * The entrance is the .rise utility in globals.css.
  */
 
 const copy = {
@@ -19,46 +17,63 @@ const copy = {
     /* Two lines, two weights of attention: what it is, then who it is for.
        The second line carries the brand colour, so the headline has a
        hierarchy inside itself rather than being one even block. */
-    headlineTop: "Erhvervscomputere.",
+    headlineTop: ["Erhvervscomputere."],
     headlineAccent: "Klar til Norden.",
     subLead: "Pålidelig. Testet. Bæredygtig.",
     sub: "IT der holder jeres forretning i gang.",
     secondary: "Se hvad vi skaffer",
-    machineAlt: "Lenovo ThinkPad T480, åbnet og set forfra",
   },
   en: {
-    eyebrow: "Refurbished business IT",
-    headlineTop: "Business computers.",
+    eyebrow: "Refurbished IT for businesses",
+    headlineTop: ["Business", "computers."],
     headlineAccent: "Ready for the Nordics.",
     subLead: "Reliable. Tested. Sustainable.",
     sub: "IT that keeps your business moving.",
-    secondary: "See what we source",
-    machineAlt: "Lenovo ThinkPad T480, open and seen from the front",
+    secondary: "Explore computers",
   },
-} satisfies Record<Lang, Record<string, string>>;
+} satisfies Record<Lang, Record<string, string | string[]>>;
 
 export default function Hero({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="grain relative overflow-hidden bg-brand-950">
-      {/*
-        The room the carousel stands in, in three layers.
-
-        The carousel brings its own lit backdrop and floor, but they stop at
-        the edge of its canvas — and a lit object on a flat rectangle of navy
-        reads as a picture pasted onto a wall rather than as something standing
-        in the page. These continue that light outwards, so the glow behind the
-        panes carries on into the hero and the field has a near side and a far
-        side instead of being one even colour.
-
-        All three are CSS, so they cost no request and nothing to draw.
-      */}
-
-      {/* The key light, sitting behind the model and spilling left. */}
+    /*
+     * Sized to the photograph from md up.
+     *
+     * The scene fills the section with background-size: cover, and cover
+     * crops whichever axis is proportionally longer. A section whose height
+     * came from its copy was 2.06:1 against a 2.70:1 plate, so cover scaled to
+     * the height and ate 450px off the sides — the plant on the left and the
+     * right-hand window with it. Giving the section the plate's own ratio
+     * means nothing is cropped and the composition arrives as it was framed.
+     *
+     * w-full is not decorative: without it the ratio drives the width as well
+     * as the height, and at 1440 the section measured 1456px inside a 1440px
+     * viewport.
+     *
+     * 1460px is where the ratio starts being affordable. An aspect-ratio is a
+     * height, not a minimum, so below that width it asks for a box shorter
+     * than the copy needs and the copy is simply clipped — at 1024 the ratio
+     * wanted 422px against the 622px the words, the padding and the trust bar
+     * actually occupy. Under 1460 the section is as tall as its contents and
+     * cover crops the sides instead, which is the ordinary trade; over it,
+     * nothing is cropped and the composition arrives as it was framed.
+     *
+     * The negative top margin is the header's own height, so the photograph
+     * runs up behind it the way the reference does — the nav is 82% glass, and
+     * a dark ceiling reading faintly through it is the difference between a
+     * picture that starts under a bar and a room the bar is standing in. The
+     * matching padding puts the copy back below it. 81px is what the header
+     * measures at every width from 768 up; verify's overflow pass is what
+     * catches it if that ever stops being true.
+     */
+    <section className="grain relative flex w-full flex-col overflow-hidden bg-brand-950 md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
+      {/* Something for the phone to stand on, where the photograph is not
+          drawn. Above md the picture brings its own light and a second one
+          laid over it only flattens the window. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 md:hidden"
         style={{
           background:
             "radial-gradient(115% 95% at 76% 20%, rgba(46,121,255,0.20) 0%, rgba(24,50,124,0.10) 36%, transparent 70%)",
@@ -68,94 +83,63 @@ export default function Hero({ lang }: { lang: Lang }) {
       {/*
        * The scene.
        *
-       * A photograph of the room the product stands in: the lit K cut into the
-       * wall, the glazing, the blue-hour waterfront, the machine on dark stone.
-       * It carries what three separate decorations used to be asked to carry —
+       * The room the product stands in: the lit K cut into the wall, the
+       * glazing, the blue-hour waterfront, the machine on dark stone. It
+       * carries what three separate decorations used to be asked to carry —
        * the K watermark, the world map, the cut-out laptop — so all three are
        * gone. One picture, one story.
        *
-       * It is a band lifted out of the supplied artwork rather than the
-       * artwork itself. That file is a mockup of the whole page: navigation,
-       * headline, buttons, a spec panel and a feature strip are painted into
-       * the pixels, and one of them reads "Professiomally". Used as-is, every
-       * real element on this page would land on top of a painted copy of
-       * itself. The band between the headline's last glyph and the painted
-       * panel has no text in it at all, and that is what this is.
-       *
-       * Its left edge is feathered in the asset — alpha 3 at x=0 rising to 255
-       * by x=400 — so it dissolves into the navy rather than ending at a line.
-       * The same lesson as the hub plate: a rectangle always shows.
+       * Every word in it has been taken out of the pixels rather than covered
+       * up: the supplied artwork is a mockup of this whole page, with the
+       * headline, both buttons, all four editorial marks and the trust bar
+       * painted in. Used as-is, every real element here would land on top of a
+       * painted copy of itself. The removal is a morphological opening — erode
+       * then dilate — which deletes light strokes and puts the ground's own
+       * level back, followed by a Coons patch over the block that remains.
+       * See the note in the cleaning script for why that order and not the
+       * other one.
        */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden bg-cover bg-no-repeat md:block"
-        /* Contained, not oversized. Pushing it left to pull the machine out
-           from behind the spec panel worked, and cost more than it bought:
-           the lit K came forward onto the headline and took its legibility
-           with it. The machine reads through the glass panel instead, which
-           is what the panel is translucent for. */
-        style={{
-          backgroundImage: "url(/hero/scene.webp)",
-          /* Anchored right of centre rather than centred: cover crops the
-             sides, and the machine and the lit K both live in the right two
-             thirds of the plate. Anchored hard right, cover cropped the lit K clean
-             out of the frame; 56% brings the wall back and keeps the machine. */
-          backgroundPosition: "50% center",
-        }}
+        className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
+        style={{ backgroundImage: "url(/hero/scene.webp)" }}
       />
-
 
       {/*
        * The scrim, over the photograph and under the words.
        *
-       * Not a taste decision. Verify measured the headline at 2.25:1 against
-       * the lit stone the K is cut into — rgb(255,255,255) on rgb(169,173,180)
-       * — where 3 is the floor for type that size, and the English accent line
-       * at 1.20:1. A photograph has no obligation to be dark where a sentence
-       * lands, so the page has to make it so.
-       *
-       * Reaching further than it first did. At 0.78 by 44% the blue accent
-       * line sat on lit stone at 2.40:1 against the 3 it needs, because the K
-       * is cut into the wall the headline ends over. It holds 0.93 to 46% now
-       * and lets go by 80% — the K still reads, the sentence still reads. The brief asked for the left of the frame to
-       * stay calm and high-contrast; this is that, enforced rather than hoped
-       * for.
+       * Not a taste decision. Verify measures the headline against whatever
+       * the picture is doing behind it, and a photograph has no obligation to
+       * be dark where a sentence lands. The left third of this plate is
+       * already near-black, so this only has to hold that and let go early —
+       * by 64% the window, the machine and the lit K are untouched.
        */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgb(9,14,30) 0%, rgba(9,14,30,0.98) 30%, rgba(9,14,30,0.93) 46%, rgba(9,14,30,0.6) 58%, rgba(9,14,30,0.18) 70%, rgba(9,14,30,0) 80%)",
-        }}
-      />
-
-      {/* The floor falling away, so the band ends in shadow rather than at a
-          line. It also gives the section below something to arrive on. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5"
-        style={{
-          background: "linear-gradient(180deg, rgba(4,8,18,0) 0%, rgba(4,8,18,0.5) 100%)",
+            "linear-gradient(90deg, rgba(4,7,17,0.82) 0%, rgba(4,7,17,0.90) 11%, rgba(4,7,17,0.88) 34%, rgba(4,7,17,0.60) 45%, rgba(4,7,17,0.20) 55%, rgba(4,7,17,0) 66%)",
         }}
       />
 
       {/*
-       * The editorial marks from the reference: two stanzas set into the room
-       * and a scroll cue at the right edge.
+       * The editorial marks: two stanzas set into the room and a scroll cue at
+       * the right edge, placed where the reference sets them — the percentages
+       * are that artwork's own coordinates divided by its 1942x719 frame, so
+       * the type lands on the same pillar and the same pane it was drawn on.
        *
        * They are HTML, not painted into the plate, which is the only reason
-       * they stay sharp at any zoom and can be read aloud or translated later.
-       * Deliberately quiet — paper/30 to paper/45, wide tracking, small — so
-       * they read as marks on the architecture rather than as copy competing
-       * with the headline. Hidden below lg, where there is no room in the
-       * frame for them and they would land on the machine.
+       * they stay sharp at any zoom and can be translated later. Deliberately
+       * quiet — paper/30 to paper/45, wide tracking, small — so they read as
+       * marks on the architecture rather than as copy competing with the
+       * headline. Hidden below lg, where there is no room for them in frame.
        */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 hidden lg:block"
       >
-        <p className="absolute left-[51%] top-[19%] text-[11px] font-medium uppercase leading-[1.9] tracking-[0.34em] text-paper/45">
+        <p className="absolute left-[51.3%] top-[17.2%] text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/45">
           People
           <br />
           Technology
@@ -165,8 +149,8 @@ export default function Hero({ lang }: { lang: Lang }) {
           Tomorrow
         </p>
 
-        <div className="absolute left-[85%] top-[19%]">
-          <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.34em] text-paper/40">
+        <div className="absolute left-[86.5%] top-[17.3%]">
+          <p className="text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/40">
             It today
             <br />
             A brighter
@@ -176,77 +160,90 @@ export default function Hero({ lang }: { lang: Lang }) {
           <span className="mt-3 block h-px w-8 bg-paper/25" />
         </div>
 
-        <div className="absolute right-[2.5%] top-[52%] flex flex-col items-center gap-3">
+        <div className="absolute left-[95.3%] top-[75.4%] flex flex-col items-center gap-3">
           <span className="text-[10px] font-medium uppercase tracking-[0.34em] text-paper/40">
             Scroll
           </span>
-          <span className="h-12 w-px bg-gradient-to-b from-paper/30 to-transparent" />
+          <span className="h-10 w-px bg-gradient-to-b from-paper/30 to-transparent" />
           <ArrowDown className="h-3.5 w-3.5 text-paper/35" strokeWidth={1.5} />
         </div>
       </div>
 
-      {/* Sized to the photograph, not to the copy. The plate is 2252x1268, so
-            the band it fills has to be about 1.78:1 or cover starts cropping to
-            fill the difference — at min-h-[680px] plus padding plus the trust
-            strip the section reached 1.44:1 and cover ate the lit K entirely.
-            These heights put the section back at roughly the plate's own ratio. */}
-      <div className="relative z-10 flex min-h-[420px] items-center pb-14 pt-14 sm:pb-16 sm:pt-16 md:min-h-[480px] md:pt-20 lg:min-h-[540px]">
+      <div /* Centred, but not in the middle. The reference sets the block
+                  high in the frame — 87px of air above the eyebrow against 259
+                  below the buttons — because the machine and the waterfront
+                  need the lower half. A heavier bottom padding does that
+                  without pinning the block to a pixel offset, and it is held
+                  back until 2xl: below that the frame has no spare height to
+                  give, and asking for it only makes the box taller than the
+                  photograph's own ratio, which is paid for in cropped sides. */
+              className="relative z-10 flex flex-1 items-center pb-12 pt-12 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10">
         <Container>
-          <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-7">
-              <div className="rise">
-                <span className="inline-flex items-center rounded-full border border-brand-400/35 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
-                  {c.eyebrow}
-                </span>
+          <div className="max-w-2xl lg:max-w-[54%]">
+            <div className="rise">
+              {/*
+                A line of tracked capitals, not a chip.
+                
+                It was a bordered pill in brand blue, which put a second
+                button-shaped object directly above the two real buttons. The
+                reference sets it as a quiet label — the same weight as the
+                marks out in the room — and that is what an eyebrow is for.
+                w-fit so a contrast checker measures the label rather than the
+                full width of the block it sits in.
+              */}
+              <p className="w-fit text-[clamp(0.66rem,0.62vw,0.78rem)] font-medium uppercase tracking-[0.3em] text-paper/55">
+                {c.eyebrow}
+              </p>
 
-                {/* Sized for the longest word it has to hold rather than for
-                    the English: "Erhvervscomputere." is one 18-character word
-                    that cannot break, and at a 4rem cap it ran straight out of
-                    this column and into the machine beside it. */}
-                <h1 className="mt-6 font-display text-[clamp(2rem,3.8vw,3.4rem)] font-extrabold leading-[1.04] tracking-display">
-                  <span className="block text-paper">{c.headlineTop}</span>
-                  <span className="block text-brand-500">{c.headlineAccent}</span>
-                </h1>
+              {/* Sized for the longest word it has to hold rather than for
+                  the English: "Erhvervscomputere." is one 18-character word
+                  that cannot break, and at too large a cap it runs straight
+                  out of this column and into the machine beside it. */}
+              <h1 className="mt-6 font-display text-[clamp(1.85rem,2.63vw,3.25rem)] font-extrabold leading-[1.02] tracking-display">
+                {/* w-fit, not just block. A block span fills the column, and
+                    the contrast check samples the whole box it is given — so
+                    the blue line was being measured against the lit stone 150px
+                    past its last glyph and failing at 1.57:1, while the ground
+                    the letters actually sit on is the near-black wall. Shrink
+                    the box to the words and the reading is the real one. */}
+                {c.headlineTop.map((line) => (
+                  <span key={line} className="block w-fit text-paper">
+                    {line}
+                  </span>
+                ))}
+                <span className="block w-fit text-brand-500">{c.headlineAccent}</span>
+              </h1>
 
-                <p className="mt-6 max-w-xl text-base leading-8 sm:text-lg sm:leading-9">
-                  <span className="block text-paper">{c.subLead}</span>
-                  <span className="block text-paper/70">{c.sub}</span>
-                </p>
-              </div>
-
-              <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                {/*
-                  The same words as the header's button and the closing one,
-                  from lib/nav.ts.
-
-                  This said "Få tilbud på jeres IT-behov" while the button
-                  fixed to the top of the same screen said "Få en pris på jeres
-                  løsning" — one destination, one form, two promises, both in
-                  view at once. A buyer reading them has to work out whether
-                  they are the same thing. There is one primary action on this
-                  site and it is worded in one place.
-                */}
-                <Link
-                  href={localePath("/tilbud", lang)}
-                  className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 text-sm font-semibold tracking-tight text-white transition hover:bg-brand-500"
-                >
-                  {ui.bookCall[lang]}
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
-                </Link>
-                <Link
-                  href={localePath("/produkter", lang)}
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-7 text-sm font-semibold tracking-tight text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
-                >
-                  {c.secondary}
-                  <LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />
-                </Link>
-              </div>
+              <p className="mt-5 max-w-xl text-[clamp(0.95rem,0.98vw,1.2rem)] leading-[1.72]">
+                <span className="block text-paper">{c.subLead}</span>
+                <span className="block text-paper/70">{c.sub}</span>
+              </p>
             </div>
 
-
+            <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              {/*
+                The same words as the header's button and the closing one,
+                from lib/nav.ts. There is one primary action on this site and
+                it is worded in one place.
+              */}
+              <Link
+                href={localePath("/tilbud", lang)}
+                className="group inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-lg bg-brand-600 px-8 text-sm font-semibold tracking-tight text-white transition hover:bg-brand-500"
+              >
+                {ui.bookCall[lang]}
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={2}
+                />
+              </Link>
+              <Link
+                href={localePath("/produkter", lang)}
+                className="inline-flex min-h-[50px] items-center justify-center gap-3 rounded-lg border border-white/15 bg-white/[0.04] px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
+              >
+                {c.secondary}
+                <LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />
+              </Link>
+            </div>
           </div>
         </Container>
       </div>
