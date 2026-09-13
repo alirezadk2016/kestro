@@ -17,6 +17,7 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
@@ -170,6 +171,14 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/ydelser"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -178,6 +187,8 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/ydelser"
             crumb={lang === "da" ? "Ydelser" : "Services"}
+
+            updated="/ydelser"
           />
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">

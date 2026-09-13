@@ -12,6 +12,8 @@ import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 /*
  * Overrides the language layout's `dynamicParams = false` for this segment
@@ -139,6 +141,8 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
   return (
     <>
+      <PageSchema lang={lang} route="/produkter/[slug]" />
+
       <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
         {/* Brand glow for depth — no product photography, since we source per order */}
         <div
@@ -391,6 +395,8 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
       )}
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

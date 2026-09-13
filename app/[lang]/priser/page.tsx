@@ -6,6 +6,8 @@ import FaqSchema from "@/components/FaqSchema";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 /*
  * What it costs, without a price list.
@@ -177,6 +179,8 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
+      <PageSchema lang={lang} route="/priser" name={c.title} description={c.description} />
+
       {/* The two questions this page answers in full. Built from the copy
           object rather than the language-resolved `c`, so both languages come
           from one place, the way FaqSchema expects. */}
@@ -207,6 +211,8 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
           lang={lang}
           href="/priser"
           crumb={lang === "da" ? "Priser" : "Pricing"}
+
+          updated="/priser"
         />
       </Container>
 
@@ -305,6 +311,8 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
       </section>
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["dkWarranty"]} />
     </>
   );
 }

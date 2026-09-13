@@ -9,6 +9,7 @@ import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Viden — the hub.
@@ -131,6 +132,8 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
+      <PageSchema lang={lang} type="CollectionPage" route="/vejledninger" />
+
       {/* One stylesheet for all eight guide panels. Rendered here rather than
           inside each panel: eight identical copies of the same keyframes is
           thirty kilobytes of HTML saying one thing eight times. */}
@@ -362,32 +365,32 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                     />
 
                     <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
-                    <div className="min-w-0 flex-1">
-                      <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
-                        {guide.title[lang]}
-                      </h3>
-                      {/* One measure for the whole block: the heading used to
+                      <div className="min-w-0 flex-1">
+                        <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
+                          {guide.title[lang]}
+                        </h3>
+                        {/* One measure for the whole block: the heading used to
                           run to the column edge while the summary stopped two
                           thirds of the way, which left a ragged right side and
                           a void before the minutes. */}
-                      <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/65">
-                        {guide.summary[lang]}
-                      </p>
-                    </div>
+                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/65">
+                          {guide.summary[lang]}
+                        </p>
+                      </div>
 
-                    {/* A duration reads as a duration: "7 min." in the same
+                      {/* A duration reads as a duration: "7 min." in the same
                         case as everything else, not "7 MIN." letterspaced like
                         a category tag. */}
-                    <span className="flex flex-none items-center gap-3.5 sm:w-24 sm:justify-end">
-                      <span className="whitespace-nowrap text-sm tabular-nums text-paper/50">
-                        {guide.readingMinutes} {c.readingSuffix}
+                      <span className="flex flex-none items-center gap-3.5 sm:w-24 sm:justify-end">
+                        <span className="whitespace-nowrap text-sm tabular-nums text-paper/50">
+                          {guide.readingMinutes} {c.readingSuffix}
+                        </span>
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="h-4 w-4 flex-none text-paper/40 transition-all group-hover:translate-x-1 group-hover:text-brand-300"
+                          strokeWidth={2}
+                        />
                       </span>
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="h-4 w-4 flex-none text-paper/40 transition-all group-hover:translate-x-1 group-hover:text-brand-300"
-                        strokeWidth={2}
-                      />
-                    </span>
                     </div>
                     <span className="sr-only">{c.read}</span>
                   </Link>

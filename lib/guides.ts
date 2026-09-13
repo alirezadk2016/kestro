@@ -1,4 +1,5 @@
 import type { Localized } from "./i18n";
+import { guideSource } from "@/lib/sources";
 
 /**
  * The guide section.
@@ -733,6 +734,7 @@ export const guides: Guide[] = [
         label: { da: "Få et tilbud på enhedsniveau", en: "Get a quote written per unit" },
       },
     ],
+    sources: [guideSource("dkWarranty"), guideSource("ewasteMonitor")],
     faqs: [
       {
         question: { da: "Hvad betyder refurbished?", en: "What does refurbished mean?" },
@@ -881,6 +883,7 @@ export const guides: Guide[] = [
       },
       { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
     ],
+    sources: [guideSource("repairDirective"), guideSource("ewasteMonitor")],
     faqs: [
       {
         question: {
@@ -1039,6 +1042,7 @@ export const guides: Guide[] = [
         label: { da: "Modeller, der er nemme at opgradere", en: "Models that are easy to upgrade" },
       },
     ],
+    sources: [guideSource("repairDirective")],
     faqs: [
       {
         question: {
@@ -1204,6 +1208,7 @@ export const guides: Guide[] = [
         label: { da: "Brugte bærbare computere", en: "Used business laptops" },
       },
     ],
+    sources: [guideSource("dkWarranty")],
     faqs: [
       {
         question: {
@@ -1505,6 +1510,7 @@ export const guides: Guide[] = [
         label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
       },
     ],
+    sources: [guideSource("windows11Requirements"), guideSource("windows10Eol")],
     faqs: [
       {
         question: {
@@ -1636,6 +1642,7 @@ export const guides: Guide[] = [
         label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
       },
     ],
+    sources: [guideSource("nistSanitization")],
     faqs: [
       {
         question: {

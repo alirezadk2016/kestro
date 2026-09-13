@@ -5,6 +5,7 @@ import PageHeader from "@/components/PageHeader";
 import { company, postalAddress } from "@/lib/company";
 import { localePath, metaFor, type Lang, type Localized } from "@/lib/i18n";
 import { legalUpdated } from "@/lib/legal";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Salgs- og leveringsbetingelser.
@@ -255,94 +256,103 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
   const address = postalAddress(lang);
 
   return (
-    <section className="py-10 sm:py-20">
-      <Container>
-        <PageHeader
-          title={c.title}
-          description={c.description}
-          lang={lang}
-          href="/handelsbetingelser"
-          crumb={lang === "da" ? "Handelsbetingelser" : "Terms of sale"}
-        />
+    <>
+      <PageSchema
+        lang={lang}
+        route="/handelsbetingelser"
+        name={c.title}
+        description={c.description}
+      />
 
-        <div className="mt-14 max-w-3xl">
-          {clauses.map((clause) => (
-            <div key={clause.heading.da} className="border-t border-white/10 py-8">
+      <section className="py-10 sm:py-20">
+        <Container>
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/handelsbetingelser"
+            crumb={lang === "da" ? "Handelsbetingelser" : "Terms of sale"}
+          />
+
+          <div className="mt-14 max-w-3xl">
+            {clauses.map((clause) => (
+              <div key={clause.heading.da} className="border-t border-white/10 py-8">
+                <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+                  {clause.heading[lang]}
+                </h2>
+                {clause.body.map((paragraph) => (
+                  <p
+                    key={paragraph.da}
+                    className="mt-4 text-base leading-7 text-paper/65 sm:leading-8"
+                  >
+                    {paragraph[lang]}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            {/* The disclosure e-handelsloven §7 requires. Each row renders only
+                when lib/company.ts actually holds the value — a legal page is the
+                last place to print a placeholder where a registration number
+                belongs. */}
+            <div className="border-t border-white/10 py-8">
               <h2 className="font-display text-xl font-bold tracking-tight text-paper">
-                {clause.heading[lang]}
+                {c.detailsTitle}
               </h2>
-              {clause.body.map((paragraph) => (
-                <p
-                  key={paragraph.da}
-                  className="mt-4 text-base leading-7 text-paper/65 sm:leading-8"
-                >
-                  {paragraph[lang]}
-                </p>
-              ))}
+              <dl className="mt-4 space-y-2 text-base leading-7 text-paper/65 sm:leading-8">
+                <div className="flex gap-x-3">
+                  <dt className="text-paper/45">{lang === "da" ? "Navn" : "Name"}</dt>
+                  <dd>
+                    {company.name}
+                    {company.legalForm ? ` ${company.legalForm}` : ""}
+                  </dd>
+                </div>
+                {address && (
+                  <div className="flex gap-x-3">
+                    <dt className="text-paper/45">{lang === "da" ? "Adresse" : "Address"}</dt>
+                    <dd>{address}</dd>
+                  </div>
+                )}
+                {company.cvr && (
+                  <div className="flex gap-x-3">
+                    <dt className="text-paper/45">CVR</dt>
+                    <dd>{company.cvr}</dd>
+                  </div>
+                )}
+                <div className="flex gap-x-3">
+                  <dt className="text-paper/45">{lang === "da" ? "E-mail" : "Email"}</dt>
+                  <dd>
+                    <a href={`mailto:${company.email}`} className="underline underline-offset-4">
+                      {company.email}
+                    </a>
+                  </dd>
+                </div>
+                {company.phoneDisplay && (
+                  <div className="flex gap-x-3">
+                    <dt className="text-paper/45">{lang === "da" ? "Telefon" : "Phone"}</dt>
+                    <dd>{company.phoneDisplay}</dd>
+                  </div>
+                )}
+              </dl>
             </div>
-          ))}
 
-          {/* The disclosure e-handelsloven §7 requires. Each row renders only
-              when lib/company.ts actually holds the value — a legal page is the
-              last place to print a placeholder where a registration number
-              belongs. */}
-          <div className="border-t border-white/10 py-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-paper">
-              {c.detailsTitle}
-            </h2>
-            <dl className="mt-4 space-y-2 text-base leading-7 text-paper/65 sm:leading-8">
-              <div className="flex gap-x-3">
-                <dt className="text-paper/45">{lang === "da" ? "Navn" : "Name"}</dt>
-                <dd>
-                  {company.name}
-                  {company.legalForm ? ` ${company.legalForm}` : ""}
-                </dd>
-              </div>
-              {address && (
-                <div className="flex gap-x-3">
-                  <dt className="text-paper/45">{lang === "da" ? "Adresse" : "Address"}</dt>
-                  <dd>{address}</dd>
-                </div>
-              )}
-              {company.cvr && (
-                <div className="flex gap-x-3">
-                  <dt className="text-paper/45">CVR</dt>
-                  <dd>{company.cvr}</dd>
-                </div>
-              )}
-              <div className="flex gap-x-3">
-                <dt className="text-paper/45">{lang === "da" ? "E-mail" : "Email"}</dt>
-                <dd>
-                  <a href={`mailto:${company.email}`} className="underline underline-offset-4">
-                    {company.email}
-                  </a>
-                </dd>
-              </div>
-              {company.phoneDisplay && (
-                <div className="flex gap-x-3">
-                  <dt className="text-paper/45">{lang === "da" ? "Telefon" : "Phone"}</dt>
-                  <dd>{company.phoneDisplay}</dd>
-                </div>
-              )}
-            </dl>
+            <p className="border-t border-white/10 pt-8 text-sm leading-6 text-paper/55">
+              {c.privacyLead}{" "}
+              <Link
+                href={localePath("/privatlivspolitik", lang)}
+                className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
+              >
+                {c.privacyLink}
+              </Link>
+              .
+            </p>
+
+            <p className="mt-4 text-sm text-paper/55">
+              {c.updated}: {UPDATED}
+            </p>
           </div>
-
-          <p className="border-t border-white/10 pt-8 text-sm leading-6 text-paper/55">
-            {c.privacyLead}{" "}
-            <Link
-              href={localePath("/privatlivspolitik", lang)}
-              className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
-            >
-              {c.privacyLink}
-            </Link>
-            .
-          </p>
-
-          <p className="mt-4 text-sm text-paper/55">
-            {c.updated}: {UPDATED}
-          </p>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * The quote, as its own page.
@@ -247,6 +248,8 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
      /priser and /flaadeloesninger already use. */
   return (
     <>
+      <PageSchema lang={lang} type="ContactPage" route="/tilbud" />
+
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-5xl">

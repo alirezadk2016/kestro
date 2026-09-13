@@ -13,6 +13,8 @@ import { getCategory } from "@/lib/categories";
 import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 /*
  * Overrides the language layout's `dynamicParams = false` for this segment
@@ -134,6 +136,8 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
   return (
     <>
+      <PageSchema lang={lang} route="/modeller/[slug]" />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -383,6 +387,8 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       )}
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

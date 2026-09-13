@@ -7,6 +7,7 @@ import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
 import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
@@ -63,6 +64,14 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/produkter"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -71,6 +80,8 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/produkter"
             crumb={lang === "da" ? "Hvad vi skaffer" : "What we source"}
+
+            updated="/produkter"
           />
 
           <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">

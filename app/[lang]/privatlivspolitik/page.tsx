@@ -4,6 +4,7 @@ import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
 import { metaFor, type Lang, type Localized } from "@/lib/i18n";
 import { legalUpdated } from "@/lib/legal";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Required under GDPR art. 13 the moment a visitor can send us their name and
@@ -220,38 +221,47 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
   const c = copy[lang];
 
   return (
-    <section className="py-10 sm:py-20">
-      <Container>
-        <PageHeader
-          title={c.title}
-          description={c.description}
-          lang={lang}
-          href="/privatlivspolitik"
-          crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
-        />
+    <>
+      <PageSchema
+        lang={lang}
+        route="/privatlivspolitik"
+        name={c.title}
+        description={c.description}
+      />
 
-        <div className="mt-14 max-w-3xl">
-          {sections.map((section) => (
-            <div key={section.heading.da} className="border-t border-white/10 py-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
-                {section.heading[lang]}
-              </h2>
-              {section.body.map((paragraph) => (
-                <p
-                  key={paragraph.da}
-                  className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
-                >
-                  {paragraph[lang]}
-                </p>
-              ))}
-            </div>
-          ))}
+      <section className="py-10 sm:py-20">
+        <Container>
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/privatlivspolitik"
+            crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
+          />
 
-          <p className="border-t border-white/10 pt-8 text-sm text-paper/55">
-            {c.updated}: {UPDATED}
-          </p>
-        </div>
-      </Container>
-    </section>
+          <div className="mt-14 max-w-3xl">
+            {sections.map((section) => (
+              <div key={section.heading.da} className="border-t border-white/10 py-8">
+                <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+                  {section.heading[lang]}
+                </h2>
+                {section.body.map((paragraph) => (
+                  <p
+                    key={paragraph.da}
+                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                  >
+                    {paragraph[lang]}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            <p className="border-t border-white/10 pt-8 text-sm text-paper/55">
+              {c.updated}: {UPDATED}
+            </p>
+          </div>
+        </Container>
+      </section>
+    </>
   );
 }

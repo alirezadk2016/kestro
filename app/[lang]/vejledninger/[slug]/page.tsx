@@ -13,6 +13,7 @@ import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Overrides the language layout's `dynamicParams = false` for this segment
@@ -173,6 +174,8 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
 
   return (
     <>
+      <PageSchema lang={lang} route="/vejledninger/[slug]" />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

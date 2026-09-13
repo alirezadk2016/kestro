@@ -8,6 +8,8 @@ import MachineViewer from "@/components/MachineViewer";
 import MachineInside from "@/components/MachineInside";
 import { interiorParts } from "@/lib/machine-parts";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -65,6 +67,8 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
+      <PageSchema lang={lang} route="/maskinen" name={c.title} description={c.description} />
+
       {/* Every part is a question and an answer, so the page is eligible for
           the FAQ rich result — but the parts are laid out as cards rather than
           an accordion, so the markup comes from the same array directly rather
@@ -88,6 +92,8 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/maskinen"
             crumb={lang === "da" ? "Maskinen indeni" : "Inside the machine"}
+
+            updated="/maskinen"
           />
         </Container>
       </section>
@@ -136,6 +142,8 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
       </section>
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["repairDirective", "windows11Requirements"]} />
     </>
   );
 }

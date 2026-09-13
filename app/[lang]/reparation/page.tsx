@@ -19,6 +19,8 @@ import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
 import { metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -250,6 +252,8 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
+      <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -258,6 +262,8 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/reparation"
             crumb={lang === "da" ? "Reparation" : "Repairs"}
+
+            updated="/reparation"
           />
 
           <div className="mt-12 max-w-3xl">
@@ -342,6 +348,8 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
       <Faq lang={lang} items={repairFaqs} />
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["repairDirective"]} />
     </>
   );
 }

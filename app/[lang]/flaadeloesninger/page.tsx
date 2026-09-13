@@ -18,6 +18,8 @@ import TeamAvatar from "@/components/TeamAvatar";
 import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -418,6 +420,8 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
      inline approach as /priser and /maskinen. */
   return (
     <>
+      <PageSchema lang={lang} route="/flaadeloesninger" />
+
       <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
         <Container>
           <Breadcrumbs
@@ -668,6 +672,8 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           },
         ]}
       />
+
+      <FactNote lang={lang} ids={["ewasteMonitor", "windows10Eol"]} />
     </>
   );
 }

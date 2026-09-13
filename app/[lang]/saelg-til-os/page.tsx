@@ -7,6 +7,8 @@ import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -130,6 +132,8 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
+      <PageSchema lang={lang} route="/saelg-til-os" name={c.title} description={c.description} />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -138,6 +142,8 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/saelg-til-os"
             crumb={lang === "da" ? "Sælg til os" : "Sell to us"}
+
+            updated="/saelg-til-os"
           />
 
           <div className="mt-16 max-w-3xl">
@@ -246,6 +252,8 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
       />
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["nistSanitization", "ewasteMonitor"]} />
     </>
   );
 }

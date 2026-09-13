@@ -99,6 +99,30 @@ export default function Hero({ lang }: { lang: Lang }) {
        * See the note in the cleaning script for why that order and not the
        * other one.
        */}
+      {/*
+        Told to the browser before the stylesheet is parsed.
+
+        The scene is a CSS background, which is the right call — it is
+        decoration with no alt text to argue about, and it has to behave like
+        cover/center, which an <img> does not do for free. The cost is that the
+        preload scanner cannot see it: it is the largest element on the page,
+        and the browser only learns the URL exists once two stylesheets have
+        downloaded and parsed. Measured on the live site: 910ms of resource
+        load delay against 240ms of actual download.
+
+        This link is in the markup from the first byte, so the fetch starts
+        with the CSS rather than after it. media, because the layer it belongs
+        to is hidden below md — a phone should not spend its first connection
+        on 85kB it will never draw.
+      */}
+      <link
+        rel="preload"
+        as="image"
+        href="/hero/scene.webp"
+        media="(min-width: 768px)"
+        fetchPriority="high"
+      />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
@@ -135,10 +159,7 @@ export default function Hero({ lang }: { lang: Lang }) {
        * marks on the architecture rather than as copy competing with the
        * headline. Hidden below lg, where there is no room for them in frame.
        */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 hidden lg:block"
-      >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 hidden lg:block">
         <p className="absolute left-[51.3%] top-[17.2%] text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/45">
           People
           <br />
@@ -177,7 +198,8 @@ export default function Hero({ lang }: { lang: Lang }) {
                   back until 2xl: below that the frame has no spare height to
                   give, and asking for it only makes the box taller than the
                   photograph's own ratio, which is paid for in cropped sides. */
-              className="relative z-10 flex flex-1 items-center pb-12 pt-12 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10">
+        className="relative z-10 flex flex-1 items-center pb-12 pt-12 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
+      >
         <Container>
           <div className="max-w-2xl lg:max-w-[54%]">
             <div className="rise">

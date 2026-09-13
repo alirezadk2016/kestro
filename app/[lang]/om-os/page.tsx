@@ -7,6 +7,7 @@ import WhyUs from "@/components/WhyUs";
 import TeamSection from "@/components/TeamSection";
 import { primaryContact } from "@/lib/company";
 import { metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
@@ -79,6 +80,14 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
   const salesContact = primaryContact(lang);
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="AboutPage"
+        route="/om-os"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -87,6 +96,8 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/om-os"
             crumb={lang === "da" ? "Om os" : "About us"}
+
+            updated="/om-os"
           />
 
           <div className="mt-16 max-w-3xl space-y-10">

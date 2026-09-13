@@ -8,6 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Overrides the language layout's `dynamicParams = false` for this segment
@@ -84,6 +85,8 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
 
   return (
     <>
+      <PageSchema lang={lang} route="/ydelser/[slug]" />
+
       <BreadcrumbSchema lang={lang} trail={trail} />
       <script
         type="application/ld+json"

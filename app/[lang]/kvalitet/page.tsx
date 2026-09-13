@@ -6,6 +6,8 @@ import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -201,6 +203,8 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
   const c = copy[lang];
   return (
     <>
+      <PageSchema lang={lang} route="/kvalitet" name={c.title} description={c.description} />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -209,6 +213,8 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/kvalitet"
             crumb={lang === "da" ? "Stand og kvalitet" : "Condition and quality"}
+
+            updated="/kvalitet"
           />
 
           <div className="mt-12 max-w-3xl">
@@ -345,6 +351,8 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
       />
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["dkWarranty", "repairDirective"]} />
     </>
   );
 }

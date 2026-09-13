@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { company } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * What a quote from us actually looks like.
@@ -219,6 +220,8 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
 
   return (
     <>
+      <PageSchema lang={lang} route="/tilbud-eksempel" name={c.title} description={c.description} />
+
       {/* In the shared Container like every other page's header. Without it
           the breadcrumb and the h1 started at x=0 while the rest of the site
           sat on the container inset. */}
@@ -229,6 +232,8 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
           lang={lang}
           href="/tilbud-eksempel"
           crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
+
+          updated="/tilbud-eksempel"
         />
       </Container>
 

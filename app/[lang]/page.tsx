@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import AnswerBlock from "@/components/AnswerBlock";
 import CategoryCards from "@/components/CategoryCards";
 import HighlightRow from "@/components/HighlightRow";
 import Statement from "@/components/Statement";
@@ -8,6 +9,7 @@ import ExampleMachine from "@/components/ExampleMachine";
 import TrustStrip from "@/components/TrustStrip";
 import CtaSection from "@/components/CtaSection";
 import type { Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * The front page is the one route a junk first segment can still reach.
@@ -30,7 +32,14 @@ export default function Home({ params }: { params: { lang: Lang } }) {
 
   return (
     <>
+      <PageSchema
+        lang={lang}
+        route="/"
+        sources={["ewasteMonitor", "windows10Eol", "repairDirective"]}
+      />
+
       <Hero lang={lang} />
+      <AnswerBlock lang={lang} />
       <CategoryCards lang={lang} />
       <HighlightRow lang={lang} />
       <Statement lang={lang} />
