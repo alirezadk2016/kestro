@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  ExternalIcon,
-  GaugeIcon,
-  InboxIcon,
-  LogoutIcon,
-} from "@/components/admin/icons";
+import { ExternalIcon, GaugeIcon, InboxIcon, LogoutIcon } from "@/components/admin/icons";
 import { EYEBROW } from "@/components/admin/tokens";
 
 const items = [
@@ -67,7 +62,9 @@ export default function AdminNav({ unread }: { unread: number }) {
                       : "border-transparent text-paper/60 hover:bg-white/[0.035] hover:text-paper"
                   }`}
                 >
-                  <Icon className={`h-[18px] w-[18px] flex-none ${active ? "text-brand-300" : ""}`} />
+                  <Icon
+                    className={`h-[18px] w-[18px] flex-none ${active ? "text-brand-300" : ""}`}
+                  />
                   {label}
                   {href === "/admin/beskeder" && unread > 0 && (
                     <span className="ml-auto inline-flex min-w-[1.375rem] justify-center bg-brand-600 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-paper">

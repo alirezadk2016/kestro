@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
+import Button from "./Button";
 import TeamAvatar from "./TeamAvatar";
 import { enquiryContacts } from "@/lib/company";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -50,22 +51,16 @@ export default function CtaSection({
           <p className="mt-5 text-base leading-7 sm:leading-8 text-paper/60">{c.body}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={localePath("/tilbud", lang)}
-              className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
-            >
+            {/* The same two controls as the hero, from the same component.
+                These were a white hard-cornered rectangle and a bare outline —
+                on the closing band of the front page, which is the last thing a
+                buyer sees before deciding whether to write. */}
+            <Button href={localePath("/tilbud", lang)} size="lg">
               {ui.bookCall[lang]}
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2}
-              />
-            </Link>
-            <Link
-              href={localePath("/flaadeloesninger", lang)}
-              className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
-            >
+            </Button>
+            <Button href={localePath("/flaadeloesninger", lang)} intent="secondary" size="lg">
               {c.secondary}
-            </Link>
+            </Button>
           </div>
         </div>
 

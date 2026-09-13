@@ -67,7 +67,7 @@ export default function PriceOnRequest({
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Link
           href={localePath(href, lang)}
-          className="group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-500"
+          className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
         >
           {c.cta}
           <ArrowRight

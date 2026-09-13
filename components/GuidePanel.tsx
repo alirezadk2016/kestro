@@ -199,7 +199,7 @@ function Defs() {
  */
 const stars = (() => {
   let s = 20260912;
-  const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+  const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
   return Array.from({ length: 110 }, () => {
     const r = rnd();
     return {
@@ -279,7 +279,15 @@ function Sheet() {
           something to reflect in. */}
       <path d="M0 360h768v152H0z" fill="url(#gvx-floor)" />
       {/* The horizon itself, brightest where the light falls. */}
-      <line x1="0" y1="360" x2="768" y2="360" stroke="#5B8CFF" strokeOpacity="0.22" strokeWidth="1" />
+      <line
+        x1="0"
+        y1="360"
+        x2="768"
+        y2="360"
+        stroke="#5B8CFF"
+        strokeOpacity="0.22"
+        strokeWidth="1"
+      />
 
       {/* The ground: a plane running away from the reader. The subject stands
           on it, which is what stops the drawing floating in nothing. */}
@@ -350,12 +358,14 @@ function Caption({
         {category}
       </text>
 
-      <g className="gv-lbl"
-         fontSize="10"
-         fontWeight="500"
-         fill={C.bright}
-         fillOpacity="0.42"
-         letterSpacing="3.1">
+      <g
+        className="gv-lbl"
+        fontSize="10"
+        fontWeight="500"
+        fill={C.bright}
+        fillOpacity="0.42"
+        letterSpacing="3.1"
+      >
         {left.map((l, i) => (
           <text key={l} x="42" y={430 + i * 15}>
             {l}
@@ -483,7 +493,15 @@ function Chip({
           >
             {note}
           </text>
-          <rect x={x + 48} y={y + 41} width={w - 62} height="3" rx="1.5" fill={C.line} fillOpacity="0.22" />
+          <rect
+            x={x + 48}
+            y={y + 41}
+            width={w - 62}
+            height="3"
+            rx="1.5"
+            fill={C.line}
+            fillOpacity="0.22"
+          />
           <rect
             x={x + 48}
             y={y + 41}
@@ -512,17 +530,7 @@ function Chip({
 }
 
 /** A node on the subject, with the hairline that runs to its chip. */
-function Leader({
-  d,
-  cx,
-  cy,
-  cls = "",
-}: {
-  d: string;
-  cx: number;
-  cy: number;
-  cls?: string;
-}) {
+function Leader({ d, cx, cy, cls = "" }: { d: string; cx: number; cy: number; cls?: string }) {
   return (
     <g className={cls}>
       <path d={d} fill="none" stroke={C.line} strokeOpacity="0.4" strokeWidth="1" />
@@ -537,7 +545,14 @@ function Contact({ cx, cy, rx = 150 }: { cx: number; cy: number; rx?: number }) 
   return (
     <>
       <ellipse cx={cx} cy={cy} rx={rx} ry={rx * 0.16} fill="url(#gvx-pool)" />
-      <rect x={cx - rx * 0.34} y={cy} width={rx * 0.68} height="66" fill="url(#gvx-streak)" opacity="0.5" />
+      <rect
+        x={cx - rx * 0.34}
+        y={cy}
+        width={rx * 0.68}
+        height="66"
+        fill="url(#gvx-streak)"
+        opacity="0.5"
+      />
     </>
   );
 }
@@ -612,7 +627,13 @@ function Laptop({
         strokeOpacity="0.75"
         strokeWidth="1.6"
       />
-      <path d="M-168 112h336v9h-336z" fill="none" stroke={C.line} strokeOpacity="0.5" strokeWidth="1.1" />
+      <path
+        d="M-168 112h336v9h-336z"
+        fill="none"
+        stroke={C.line}
+        strokeOpacity="0.5"
+        strokeWidth="1.1"
+      />
 
       {/* Keys and trackpad, as hatching rather than one key at a time. */}
       <g stroke={C.line} strokeOpacity="0.4" strokeWidth="1">
@@ -620,13 +641,21 @@ function Laptop({
           <line key={i} x1={-106 - i * 12} y1={68 + i * 8.8} x2={106 + i * 12} y2={68 + i * 8.8} />
         ))}
       </g>
-      <rect x="-32" y="96" width="64" height="11" rx="2" fill="none" stroke={C.line} strokeOpacity="0.28" />
+      <rect
+        x="-32"
+        y="96"
+        width="64"
+        height="11"
+        rx="2"
+        fill="none"
+        stroke={C.line}
+        strokeOpacity="0.28"
+      />
       {/* The hinge, catching the lamp. */}
       <path d="M-118 58h236" stroke="#E7EFFF" strokeOpacity="0.85" strokeWidth="2.2" />
     </g>
   );
 }
-
 
 /**
  * The Kestro mark, lit, for a machine that is switched on.
@@ -638,7 +667,10 @@ function Laptop({
  */
 function KMark({ scale = 1 }: { scale?: number }) {
   return (
-    <g transform={`translate(${-57 * scale} ${-50 * scale}) scale(${scale})`} filter="url(#gvx-bloom)">
+    <g
+      transform={`translate(${-57 * scale} ${-50 * scale}) scale(${scale})`}
+      filter="url(#gvx-bloom)"
+    >
       <path d="M0 0 H34 V44 L22 100 H0 Z" fill="#9CC0FF" fillOpacity="0.92" />
       <path d="M36 52 L60 0 H114 L67 52 Z" fill="#6C9DFF" fillOpacity="0.95" />
       <path d="M67 52 L114 100 H56 L36 52 Z" fill="#4B7FF0" fillOpacity="0.85" />
@@ -680,12 +712,25 @@ const panels: Record<string, PanelDef> = {
     draw: (id, t) => (
       <>
         <Contact cx={384} cy={356} rx={130} />
-        <Laptop id={id} x={384} y={276} scale={0.6} screen={
-          <>
-            <rect x="-120" y="-110" width="240" height="176" fill="url(#gvx-pool)" opacity="0.55" />
-            <KMark scale={0.62} />
-          </>
-        } />
+        <Laptop
+          id={id}
+          x={384}
+          y={276}
+          scale={0.6}
+          screen={
+            <>
+              <rect
+                x="-120"
+                y="-110"
+                width="240"
+                height="176"
+                fill="url(#gvx-pool)"
+                opacity="0.55"
+              />
+              <KMark scale={0.62} />
+            </>
+          }
+        />
 
         {/* The two roads out of the machine. Dashed, and running — the
             "small animated data lines" the system is built on. */}
@@ -714,12 +759,24 @@ const panels: Record<string, PanelDef> = {
           <circle r="4.5" fill="#EAF1FF" />
         </g>
 
-        <Chip x={42} y={148} w={176} glyph="arrows"
-              label={t(da("REPARÉR", "REPAIR"))} note={t(da("Delpris mod værdi", "Part cost vs value"))}
-              cls="gv-c0" />
-        <Chip x={550} y={148} w={176} glyph="box"
-              label={t(da("UDSKIFT", "REPLACE"))} note={t(da("Brugt til samme opgave", "Used, same job"))}
-              cls="gv-c1" />
+        <Chip
+          x={42}
+          y={148}
+          w={176}
+          glyph="arrows"
+          label={t(da("REPARÉR", "REPAIR"))}
+          note={t(da("Delpris mod værdi", "Part cost vs value"))}
+          cls="gv-c0"
+        />
+        <Chip
+          x={550}
+          y={148}
+          w={176}
+          glyph="box"
+          label={t(da("UDSKIFT", "REPLACE"))}
+          note={t(da("Brugt til samme opgave", "Used, same job"))}
+          cls="gv-c1"
+        />
 
         {/* What the decision is actually made on. */}
         {[
@@ -738,7 +795,11 @@ const panels: Record<string, PanelDef> = {
     num: "02",
     category: da("YDELSE", "PERFORMANCE"),
     left: [da("SMÅ OPGRADERINGER", "SMALL UPGRADES"), da("STORE FORSKELLE", "BIG DIFFERENCES")],
-    right: [da("HURTIGERE", "FASTER"), da("MERE PLADS", "MORE ROOM"), da("KLAR TIL MERE", "READY FOR MORE")],
+    right: [
+      da("HURTIGERE", "FASTER"),
+      da("MERE PLADS", "MORE ROOM"),
+      da("KLAR TIL MERE", "READY FOR MORE"),
+    ],
     draw: (id, t) => (
       <>
         <Contact cx={410} cy={372} rx={170} />
@@ -748,7 +809,13 @@ const panels: Record<string, PanelDef> = {
           <polygon points="248,300 572,300 640,372 180,372" fill={C.ink} />
           <polygon points="248,300 572,300 640,372 180,372" fill="url(#gvx-top)" />
           <polygon points="180,372 640,372 640,382 180,382" fill="url(#gvx-dark)" />
-          <polygon points="248,300 572,300 640,372 180,372" fill="none" stroke={C.line} strokeOpacity="0.45" strokeWidth="1.3" />
+          <polygon
+            points="248,300 572,300 640,372 180,372"
+            fill="none"
+            stroke={C.line}
+            strokeOpacity="0.45"
+            strokeWidth="1.3"
+          />
           {/* Components on the board, so it is a board. */}
           <g fill={C.deep} fillOpacity="0.14" stroke={C.line} strokeOpacity="0.3">
             <polygon points="286,312 350,312 358,326 292,326" />
@@ -756,7 +823,12 @@ const panels: Record<string, PanelDef> = {
             <polygon points="232,346 300,346 310,360 240,360" />
           </g>
           {/* The slot: a recess with the board's own contacts in it. */}
-          <polygon points="300,334 520,334 540,358 316,358" fill="#060B18" stroke={C.line} strokeOpacity="0.4" />
+          <polygon
+            points="300,334 520,334 540,358 316,358"
+            fill="#060B18"
+            stroke={C.line}
+            strokeOpacity="0.4"
+          />
           <g stroke={C.accent} strokeOpacity="0.35" strokeWidth="1">
             {Array.from({ length: 22 }, (_, i) => (
               <line key={i} x1={310 + i * 10} y1={340} x2={313 + i * 10} y2={352} />
@@ -777,11 +849,20 @@ const panels: Record<string, PanelDef> = {
             <polygon points="302,316 522,316 542,340 318,340" fill={C.ink} />
             <polygon points="302,316 522,316 542,340 318,340" fill="url(#gvx-top)" />
             <polygon points="318,340 542,340 542,352 318,352" fill="url(#gvx-side)" />
-            <polygon points="302,316 522,316 542,340 318,340" fill="none" stroke={C.bright} strokeOpacity="0.6" strokeWidth="1.3" />
+            <polygon
+              points="302,316 522,316 542,340 318,340"
+              fill="none"
+              stroke={C.bright}
+              strokeOpacity="0.6"
+              strokeWidth="1.3"
+            />
             {/* DRAM packages. */}
             <g fill={C.deep} fillOpacity="0.3" stroke={C.line} strokeOpacity="0.5">
               {[0, 1, 2, 3, 4].map((i) => (
-                <polygon key={i} points={`${320 + i * 42},320 ${354 + i * 42},320 ${360 + i * 42},334 ${326 + i * 42},334`} />
+                <polygon
+                  key={i}
+                  points={`${320 + i * 42},320 ${354 + i * 42},320 ${360 + i * 42},334 ${326 + i * 42},334`}
+                />
               ))}
             </g>
             {/* The contact comb along the near edge — visible on the way in,
@@ -798,19 +879,44 @@ const panels: Record<string, PanelDef> = {
             slot, rather than sparks at it. */}
         <g className="gv-pulse-streaks" stroke="#9EC2FF" strokeWidth="1.4">
           {Array.from({ length: 13 }, (_, i) => (
-            <line key={i} x1={296 + i * 20} y1={306} x2={302 + i * 20} y2={334} strokeOpacity={0.12 + (i % 3) * 0.22} />
+            <line
+              key={i}
+              x1={296 + i * 20}
+              y1={306}
+              x2={302 + i * 20}
+              y2={334}
+              strokeOpacity={0.12 + (i % 3) * 0.22}
+            />
           ))}
         </g>
 
-        <Chip x={42} y={150} w={196} glyph="chipIcon"
-              label={t(da("HUKOMMELSE", "MEMORY"))} note={t(da("Modul på vej i", "Module going in"))}
-              cls="gv-c0" />
-        <Chip x={42} y={222} w={196} glyph="ports"
-              label={t(da("SOKKEL", "SLOT"))} note={t(da("Kontakt sluttet", "Contact made"))}
-              cls="gv-c1" />
-        <Chip x={42} y={294} w={196} glyph="gauge"
-              label={t(da("LÅST", "SEATED"))} note={t(da("Klar til brug", "Ready to use"))}
-              cls="gv-c2" />
+        <Chip
+          x={42}
+          y={150}
+          w={196}
+          glyph="chipIcon"
+          label={t(da("HUKOMMELSE", "MEMORY"))}
+          note={t(da("Modul på vej i", "Module going in"))}
+          cls="gv-c0"
+        />
+        <Chip
+          x={42}
+          y={222}
+          w={196}
+          glyph="ports"
+          label={t(da("SOKKEL", "SLOT"))}
+          note={t(da("Kontakt sluttet", "Contact made"))}
+          cls="gv-c1"
+        />
+        <Chip
+          x={42}
+          y={294}
+          w={196}
+          glyph="gauge"
+          label={t(da("LÅST", "SEATED"))}
+          note={t(da("Klar til brug", "Ready to use"))}
+          cls="gv-c2"
+        />
       </>
     ),
   },
@@ -819,7 +925,11 @@ const panels: Record<string, PanelDef> = {
   "tjek-brugt-baerbar-foer-koeb": {
     num: "03",
     category: da("INSPEKTION", "INSPECTION"),
-    left: [da("KVALITET", "QUALITY"), da("KONTROL", "CONTROL"), da("I HVER DETALJE", "IN EVERY DETAIL")],
+    left: [
+      da("KVALITET", "QUALITY"),
+      da("KONTROL", "CONTROL"),
+      da("I HVER DETALJE", "IN EVERY DETAIL"),
+    ],
     right: [da("SÅDAN SER MAN", "THIS IS HOW YOU"), da("EN MASKINE EFTER", "CHECK A MACHINE")],
     draw: (id, t) => (
       <>
@@ -900,12 +1010,24 @@ const panels: Record<string, PanelDef> = {
           <polygon points="300,330 580,330 640,384 220,384" fill={C.ink} />
           <polygon points="300,330 580,330 640,384 220,384" fill="url(#gvx-top)" />
           <polygon points="220,384 640,384 640,394 220,394" fill="url(#gvx-dark)" />
-          <polygon points="300,330 580,330 640,384 220,384" fill="none" stroke={C.line} strokeOpacity="0.45" strokeWidth="1.3" />
+          <polygon
+            points="300,330 580,330 640,384 220,384"
+            fill="none"
+            stroke={C.line}
+            strokeOpacity="0.45"
+            strokeWidth="1.3"
+          />
         </g>
 
         {/* Alignment guides: what makes it an exploded view and not four
             things drifting. */}
-        <g className="gv-guides" stroke={C.accent} strokeOpacity="0.35" strokeDasharray="3 6" strokeWidth="1">
+        <g
+          className="gv-guides"
+          stroke={C.accent}
+          strokeOpacity="0.35"
+          strokeDasharray="3 6"
+          strokeWidth="1"
+        >
           <line x1="404" y1="150" x2="404" y2="358" />
           <line x1="500" y1="150" x2="500" y2="358" />
         </g>
@@ -918,9 +1040,17 @@ const panels: Record<string, PanelDef> = {
          */}
         {[
           /* graphics: the long one, landing on the board first */
-          { c: "gv-p3", pts: "352,290 560,290 596,320 316,320", bar: "372,296 540,296 548,304 380,304" },
+          {
+            c: "gv-p3",
+            pts: "352,290 560,290 596,320 316,320",
+            bar: "372,296 540,296 548,304 380,304",
+          },
           /* memory: a narrow stick */
-          { c: "gv-p2", pts: "382,246 518,246 542,268 406,268", bar: "396,251 512,251 518,259 402,259" },
+          {
+            c: "gv-p2",
+            pts: "382,246 518,246 542,268 406,268",
+            bar: "396,251 512,251 518,259 402,259",
+          },
           /* processor: small and square */
           { c: "gv-p1", pts: "412,204 490,204 506,222 428,222" },
           /* storage: the last thing in */
@@ -929,10 +1059,22 @@ const panels: Record<string, PanelDef> = {
           <g key={p.c} className={p.c}>
             <polygon points={p.pts} fill={C.ink} />
             <polygon points={p.pts} fill="url(#gvx-top)" />
-            <polygon points={p.pts} fill="none" stroke={C.line} strokeOpacity="0.55" strokeWidth="1.2" />
+            <polygon
+              points={p.pts}
+              fill="none"
+              stroke={C.line}
+              strokeOpacity="0.55"
+              strokeWidth="1.2"
+            />
             {p.bar && (
-              <polygon points={p.bar} fill={C.deep} fillOpacity="0.24" stroke={C.line}
-                       strokeOpacity="0.35" strokeWidth="0.9" />
+              <polygon
+                points={p.bar}
+                fill={C.deep}
+                fillOpacity="0.24"
+                stroke={C.line}
+                strokeOpacity="0.35"
+                strokeWidth="0.9"
+              />
             )}
           </g>
         ))}
@@ -960,11 +1102,17 @@ const panels: Record<string, PanelDef> = {
     draw: (id, t) => (
       <>
         <Contact cx={196} cy={340} rx={112} />
-        <Laptop id={id} x={196} y={266} scale={0.55} screen={
-          <g opacity="0.45" stroke={C.line} strokeWidth="1.6" fill="none">
-            <path d="M-56 -30h112M-56 -8h78M-56 14h96" strokeOpacity="0.45" />
-          </g>
-        } />
+        <Laptop
+          id={id}
+          x={196}
+          y={266}
+          scale={0.55}
+          screen={
+            <g opacity="0.45" stroke={C.line} strokeWidth="1.6" fill="none">
+              <path d="M-56 -30h112M-56 -8h78M-56 14h96" strokeOpacity="0.45" />
+            </g>
+          }
+        />
 
         {/* The interrogation itself: a wire from the machine to the list of
             requirements, with the question running along it. */}
@@ -986,25 +1134,80 @@ const panels: Record<string, PanelDef> = {
         {/* Three that a machine of this age normally clears, and one that is
             genuinely open. The panel must not answer a question the article
             spends a section refusing to answer for you. */}
-        <Chip x={432} y={148} w={228} glyph="cpu"
-              label={t(da("PROCESSOR", "PROCESSOR"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c0" />
-        <Chip x={432} y={222} w={228} glyph="shield"
-              label={t(da("TPM 2.0", "TPM 2.0"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c1" />
-        <Chip x={432} y={296} w={228} glyph="chipIcon"
-              label={t(da("SIKKER OPSTART", "SECURE BOOT"))} note={t(da("Kontrolleres", "Being checked"))} cls="gv-c2" />
+        <Chip
+          x={432}
+          y={148}
+          w={228}
+          glyph="cpu"
+          label={t(da("PROCESSOR", "PROCESSOR"))}
+          note={t(da("Kontrolleres", "Being checked"))}
+          cls="gv-c0"
+        />
+        <Chip
+          x={432}
+          y={222}
+          w={228}
+          glyph="shield"
+          label={t(da("TPM 2.0", "TPM 2.0"))}
+          note={t(da("Kontrolleres", "Being checked"))}
+          cls="gv-c1"
+        />
+        <Chip
+          x={432}
+          y={296}
+          w={228}
+          glyph="chipIcon"
+          label={t(da("SIKKER OPSTART", "SECURE BOOT"))}
+          note={t(da("Kontrolleres", "Being checked"))}
+          cls="gv-c2"
+        />
 
         {/* The open one. Dashed, and it never resolves. */}
         <g>
           <rect x="432" y="370" width="228" height="38" rx="6" fill="url(#gvx-glass)" />
-          <rect x="432" y="370" width="228" height="38" rx="6" fill="none"
-                stroke={C.accent} strokeOpacity="0.4" strokeWidth="1" strokeDasharray="4 3" />
-          <rect x="442" y="375" width="28" height="28" rx="4" fill={C.deep} fillOpacity="0.1"
-                stroke={C.accent} strokeOpacity="0.3" />
+          <rect
+            x="432"
+            y="370"
+            width="228"
+            height="38"
+            rx="6"
+            fill="none"
+            stroke={C.accent}
+            strokeOpacity="0.4"
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <rect
+            x="442"
+            y="375"
+            width="28"
+            height="28"
+            rx="4"
+            fill={C.deep}
+            fillOpacity="0.1"
+            stroke={C.accent}
+            strokeOpacity="0.3"
+          />
           <g transform="translate(446 379)">
-            <path d={glyphs.gauge} fill="none" stroke={C.line} strokeOpacity="0.8" strokeWidth="1.2"
-                  strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d={glyphs.gauge}
+              fill="none"
+              stroke={C.line}
+              strokeOpacity="0.8"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </g>
-          <text x="480" y="394" fontSize="11.5" fontWeight="600" fill={C.paper} letterSpacing="1.1" className="gv-lbl">
+          <text
+            x="480"
+            y="394"
+            fontSize="11.5"
+            fontWeight="600"
+            fill={C.paper}
+            letterSpacing="1.1"
+            className="gv-lbl"
+          >
             {t(da("AFHÆNGER AF MODEL", "DEPENDS ON MODEL"))}
           </text>
           {/* The open state, in the place the others carry a mark, so the row
@@ -1061,7 +1264,13 @@ const panels: Record<string, PanelDef> = {
               points={`${at(0, 1).x},${at(0, 1).y} ${at(1, 1).x},${at(1, 1).y} ${at(1, 1).x},${at(1, 1).y + 14} ${at(0, 1).x},${at(0, 1).y + 14}`}
               fill="url(#gvx-side)"
             />
-            <polygon points={quad(0, 0, 1, 1)} fill="none" stroke={C.line} strokeOpacity="0.5" strokeWidth="1.3" />
+            <polygon
+              points={quad(0, 0, 1, 1)}
+              fill="none"
+              stroke={C.line}
+              strokeOpacity="0.5"
+              strokeWidth="1.3"
+            />
           </g>
 
           {/* Twelve blocks. The outlines never move; only what is in them goes. */}
@@ -1080,7 +1289,10 @@ const panels: Record<string, PanelDef> = {
           <g stroke={C.line} strokeOpacity="0.35" strokeWidth="1" fill="none">
             {[0, 1, 2, 3].map((i) =>
               [0, 1, 2].map((j) => (
-                <polygon key={`${i}-${j}`} points={quad(0.06 + i * 0.225, 0.08 + j * 0.29, 0.185, 0.235)} />
+                <polygon
+                  key={`${i}-${j}`}
+                  points={quad(0.06 + i * 0.225, 0.08 + j * 0.29, 0.185, 0.235)}
+                />
               )),
             )}
           </g>
@@ -1097,12 +1309,33 @@ const panels: Record<string, PanelDef> = {
             />
           </g>
 
-          <Chip x={42} y={150} w={196} glyph="drive"
-                label={t(da("DATA FUNDET", "DATA FOUND"))} note={t(da("Hele lagringen", "The whole drive"))} cls="gv-c0" />
-          <Chip x={42} y={222} w={196} glyph="arrows"
-                label={t(da("OVERSKRIVES", "OVERWRITTEN"))} note={t(da("Blok for blok", "Block by block"))} cls="gv-c1" />
-          <Chip x={42} y={294} w={196} glyph="shield"
-                label={t(da("VERIFICERET", "VERIFIED"))} note={t(da("Rapport udstedt", "Report issued"))} cls="gv-c2" />
+          <Chip
+            x={42}
+            y={150}
+            w={196}
+            glyph="drive"
+            label={t(da("DATA FUNDET", "DATA FOUND"))}
+            note={t(da("Hele lagringen", "The whole drive"))}
+            cls="gv-c0"
+          />
+          <Chip
+            x={42}
+            y={222}
+            w={196}
+            glyph="arrows"
+            label={t(da("OVERSKRIVES", "OVERWRITTEN"))}
+            note={t(da("Blok for blok", "Block by block"))}
+            cls="gv-c1"
+          />
+          <Chip
+            x={42}
+            y={294}
+            w={196}
+            glyph="shield"
+            label={t(da("VERIFICERET", "VERIFIED"))}
+            note={t(da("Rapport udstedt", "Report issued"))}
+            cls="gv-c2"
+          />
 
           {/* The verification mark, landing once the surface is clear. */}
           <g className="gv-shield" style={{ transformOrigin: "662px 320px" }}>
@@ -1114,8 +1347,14 @@ const panels: Record<string, PanelDef> = {
                 stroke={C.accent}
                 strokeWidth="1.6"
               />
-              <path d="M650 322l9 9 16-18" fill="none" stroke="#CFE4FF" strokeWidth="2.6"
-                    strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M650 322l9 9 16-18"
+                fill="none"
+                stroke="#CFE4FF"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </g>
           </g>
         </>
@@ -1127,8 +1366,15 @@ const panels: Record<string, PanelDef> = {
   "windows-10-support-slutter": {
     num: "07",
     category: da("LEVETID", "LIFECYCLE"),
-    left: [da("PLANLÆG", "PLAN"), da("PRIORITÉR", "PRIORITISE"), da("SKIFT I TAKT", "REPLACE IN STAGES")],
-    right: [da("SUPPORTEN STOPPER", "SUPPORT ENDS"), da("MASKINEN GØR IKKE", "THE MACHINE DOES NOT")],
+    left: [
+      da("PLANLÆG", "PLAN"),
+      da("PRIORITÉR", "PRIORITISE"),
+      da("SKIFT I TAKT", "REPLACE IN STAGES"),
+    ],
+    right: [
+      da("SUPPORTEN STOPPER", "SUPPORT ENDS"),
+      da("MASKINEN GØR IKKE", "THE MACHINE DOES NOT"),
+    ],
     draw: (id, t) => (
       <>
         {/* The run of time the fleet stands on. */}
@@ -1146,7 +1392,14 @@ const panels: Record<string, PanelDef> = {
         ].map((m, i) => (
           <g key={m.x} opacity={m.o}>
             <Contact cx={m.x} cy={356} rx={58} />
-            <Laptop id={id} uid={`-f${i}`} x={m.x} y={318} scale={m.s} screen={<KMark scale={0.9} />} />
+            <Laptop
+              id={id}
+              uid={`-f${i}`}
+              x={m.x}
+              y={318}
+              scale={m.s}
+              screen={<KMark scale={0.9} />}
+            />
           </g>
         ))}
         <g opacity="0.55" className="gv-ghost">
@@ -1161,7 +1414,15 @@ const panels: Record<string, PanelDef> = {
           <line x1="500" y1="188" x2="500" y2="356" stroke={C.accent} strokeWidth="1.8" />
           <path d="M492 188h16" stroke={C.bright} strokeWidth="2" strokeOpacity="0.8" />
           <circle cx="500" cy="356" r="6" fill={C.accent} />
-          <circle cx="500" cy="356" r="15" fill="none" stroke={C.accent} strokeOpacity="0.5" className="gv-ring" />
+          <circle
+            cx="500"
+            cy="356"
+            r="15"
+            fill="none"
+            stroke={C.accent}
+            strokeOpacity="0.5"
+            className="gv-ring"
+          />
         </g>
 
         {/* Updates arriving along the line — and then none. */}
@@ -1171,12 +1432,24 @@ const panels: Record<string, PanelDef> = {
           ))}
         </g>
 
-        <Chip x={42} y={128} w={214} glyph="shield"
-              label={t(da("SIKKERHEDSOPDATERINGER", "SECURITY UPDATES"))}
-              note={t(da("Stopper på datoen", "Stop on the date"))} cls="gv-c0" />
-        <Chip x={512} y={128} w={214} glyph="gauge"
-              label={t(da("MASKINEN KØRER VIDERE", "THE MACHINE RUNS ON"))}
-              note={t(da("Uden nye rettelser", "Without new fixes"))} cls="gv-c1" />
+        <Chip
+          x={42}
+          y={128}
+          w={214}
+          glyph="shield"
+          label={t(da("SIKKERHEDSOPDATERINGER", "SECURITY UPDATES"))}
+          note={t(da("Stopper på datoen", "Stop on the date"))}
+          cls="gv-c0"
+        />
+        <Chip
+          x={512}
+          y={128}
+          w={214}
+          glyph="gauge"
+          label={t(da("MASKINEN KØRER VIDERE", "THE MACHINE RUNS ON"))}
+          note={t(da("Uden nye rettelser", "Without new fixes"))}
+          cls="gv-c1"
+        />
       </>
     ),
   },
@@ -1205,14 +1478,40 @@ const panels: Record<string, PanelDef> = {
         {/* Over the left one: nothing stated. */}
         <g>
           <rect x="86" y="196" width="200" height="34" rx="6" fill="url(#gvx-glass)" />
-          <rect x="86" y="196" width="200" height="34" rx="6" fill="none" stroke={C.accent}
-                strokeOpacity="0.35" strokeWidth="1" strokeDasharray="4 3" className="gv-open" />
-          <text x="186" y="218" fontSize="11.5" fontWeight="600" fill={C.paper} letterSpacing="1.1"
-                textAnchor="middle" className="gv-lbl">
+          <rect
+            x="86"
+            y="196"
+            width="200"
+            height="34"
+            rx="6"
+            fill="none"
+            stroke={C.accent}
+            strokeOpacity="0.35"
+            strokeWidth="1"
+            strokeDasharray="4 3"
+            className="gv-open"
+          />
+          <text
+            x="186"
+            y="218"
+            fontSize="11.5"
+            fontWeight="600"
+            fill={C.paper}
+            letterSpacing="1.1"
+            textAnchor="middle"
+            className="gv-lbl"
+          >
             {t(da("INGEN DOKUMENTATION", "NO DOCUMENTATION"))}
           </text>
-          <line x1="186" y1="230" x2="186" y2="286" stroke={C.line} strokeOpacity="0.3"
-                strokeDasharray="3 5" />
+          <line
+            x1="186"
+            y1="230"
+            x2="186"
+            y2="286"
+            stroke={C.line}
+            strokeOpacity="0.3"
+            strokeDasharray="3 5"
+          />
         </g>
 
         {/* Over the right one: four steps, landing one at a time. */}
@@ -1225,26 +1524,81 @@ const panels: Record<string, PanelDef> = {
         ].map((c, i) => (
           <g key={c.y}>
             <rect x="432" y={c.y} width="250" height="34" rx="6" fill="url(#gvx-glass)" />
-            <rect x="432" y={c.y} width="250" height="34" rx="6" fill="none" stroke={C.accent}
-                  strokeOpacity="0.2" strokeWidth="1" />
+            <rect
+              x="432"
+              y={c.y}
+              width="250"
+              height="34"
+              rx="6"
+              fill="none"
+              stroke={C.accent}
+              strokeOpacity="0.2"
+              strokeWidth="1"
+            />
             <g className={`gv-step gv-c${i}`}>
-              <rect x="432" y={c.y} width="250" height="34" rx="6" fill={C.deep} fillOpacity="0.1" />
-              <rect x="432" y={c.y} width="250" height="34" rx="6" fill="none" stroke={C.accent}
-                    strokeOpacity="0.75" strokeWidth="1.2" />
+              <rect
+                x="432"
+                y={c.y}
+                width="250"
+                height="34"
+                rx="6"
+                fill={C.deep}
+                fillOpacity="0.1"
+              />
+              <rect
+                x="432"
+                y={c.y}
+                width="250"
+                height="34"
+                rx="6"
+                fill="none"
+                stroke={C.accent}
+                strokeOpacity="0.75"
+                strokeWidth="1.2"
+              />
             </g>
-            <rect x="441" y={c.y + 4} width="26" height="26" rx="4" fill={C.deep} fillOpacity="0.1"
-                  stroke={C.accent} strokeOpacity="0.3" />
+            <rect
+              x="441"
+              y={c.y + 4}
+              width="26"
+              height="26"
+              rx="4"
+              fill={C.deep}
+              fillOpacity="0.1"
+              stroke={C.accent}
+              strokeOpacity="0.3"
+            />
             <g transform={`translate(444 ${c.y + 7})`}>
-              <path d={glyphs[c.g]} fill="none" stroke={C.line} strokeOpacity="0.85" strokeWidth="1.2"
-                    strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d={glyphs[c.g]}
+                fill="none"
+                stroke={C.line}
+                strokeOpacity="0.85"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </g>
-            <text x="478" y={c.y + 22} fontSize="11.5" fontWeight="600" fill={C.paper}
-                  letterSpacing="1.1" className="gv-lbl">
+            <text
+              x="478"
+              y={c.y + 22}
+              fontSize="11.5"
+              fontWeight="600"
+              fill={C.paper}
+              letterSpacing="1.1"
+              className="gv-lbl"
+            >
               {t(c.l)}
             </text>
             <g className={`gv-tick gv-c${i}`} style={{ transformOrigin: `664px ${c.y + 17}px` }}>
-              <path d={`M658 ${c.y + 17} l4 4 7-8`} fill="none" stroke="#9EC2FF" strokeWidth="2"
-                    strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d={`M658 ${c.y + 17} l4 4 7-8`}
+                fill="none"
+                stroke="#9EC2FF"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </g>
           </g>
         ))}
@@ -1263,10 +1617,26 @@ const panels: Record<string, PanelDef> = {
  * seconds, which is what keeps eight animations on one page from reading as
  * eight different tempos.
  */
-const CYCLE = { decide: 14, socket: 13, inspect: 16, build: 15, gates: 13, erase: 14, life: 14, cond: 13 };
+const CYCLE = {
+  decide: 14,
+  socket: 13,
+  inspect: 16,
+  build: 15,
+  gates: 13,
+  erase: 14,
+  life: 14,
+  cond: 13,
+};
 
 /** Six chips resolving in order over one pass: bar fills, then the mark lands. */
-function sequence(prefix: string, count: number, start: number, step: number, hold: number, cycle: number) {
+function sequence(
+  prefix: string,
+  count: number,
+  start: number,
+  step: number,
+  hold: number,
+  cycle: number,
+) {
   const at = (s: number) => `${((s / cycle) * 100).toFixed(2)}%`;
   const out: string[] = [];
   for (let i = 0; i < count; i++) {
@@ -1760,7 +2130,10 @@ export default function GuidePanel({
         preserveAspectRatio="xMidYMid slice"
         /* Fixed aspect and no external request, so it cannot shift the page or
            delay the largest paint. Everything below the fold decodes lazily. */
-        style={{ contentVisibility: priority ? "visible" : "auto", containIntrinsicSize: "768px 512px" }}
+        style={{
+          contentVisibility: priority ? "visible" : "auto",
+          containIntrinsicSize: "768px 512px",
+        }}
       >
         {/* The frame, the grid, the traces and the ground, drawn once for the
             page and referenced here. */}

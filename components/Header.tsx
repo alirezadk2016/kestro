@@ -173,7 +173,10 @@ export default function Header({ lang }: { lang: Lang }) {
             </div>
 
             {productsOpen && (
-              <div id="header-products" className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
+              <div
+                id="header-products"
+                className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
+              >
                 <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
@@ -235,7 +238,7 @@ export default function Header({ lang }: { lang: Lang }) {
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/tilbud", lang)}
-            className="group hidden min-h-[44px] items-center gap-2.5 whitespace-nowrap rounded-lg bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-500 xl:inline-flex"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
           >
             {ui.bookCall[lang]}
             <ArrowRight

@@ -437,7 +437,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
                 href={localePath(QUOTE_HREF, lang)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-brand-950 transition hover:bg-paper-dim"
+                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
               >
                 {c.sendEnquiry}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -445,7 +445,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               {salesContact.phoneHref && (
                 <a
                   href={`tel:${salesContact.phoneHref}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                 >
                   <Phone className="h-4 w-4" strokeWidth={2} />
                   {salesContact.phoneDisplay}
@@ -626,7 +626,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             {salesContact.phoneHref && (
               <a
                 href={`tel:${salesContact.phoneHref}`}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
               >
                 <Phone className="h-4 w-4" strokeWidth={2} />
                 {salesContact.phoneDisplay}
@@ -636,8 +636,8 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
               href={localePath(QUOTE_HREF, lang)}
               className={
                 salesContact.phoneHref
-                  ? "inline-flex items-center justify-center border border-paper/25 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-                  : "inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+                  ? "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08] px-6"
+                  : "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
               }
             >
               {c.ctaButton}

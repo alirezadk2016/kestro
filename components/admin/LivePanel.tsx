@@ -129,7 +129,9 @@ export default function LivePanel({ initial }: { initial: LiveStats }) {
             />
             {running ? "Live" : "Pause"}
           </button>
-          <p className={`text-[11px] tabular-nums ${stale ? "text-amber-300/90" : "text-paper/35"}`}>
+          <p
+            className={`text-[11px] tabular-nums ${stale ? "text-amber-300/90" : "text-paper/35"}`}
+          >
             {!running
               ? "sat på pause"
               : updatedAt === null

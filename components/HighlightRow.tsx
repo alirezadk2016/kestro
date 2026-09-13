@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
+import CraftMark, { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -40,6 +41,22 @@ const steps = [
     title: { da: "Klar til brug", en: "Ready for work" },
     note: { da: "Nordisk tastatur, Windows sat op", en: "Nordic keyboard, Windows set up" },
   },
+];
+
+/*
+ * The three things an enquiry has to say, taken out of the sentence above them.
+ *
+ * The card said "Quantity, specification and timing" in a paragraph and then
+ * left 200px of nothing before its button, because the grid stretches all
+ * three cards to the tallest and this one had the least in it. Setting the
+ * same three words as rows fills that space with the thing the card is
+ * actually asking for rather than with air — and tells a reader what the form
+ * on the other side of the button will want before they press it.
+ */
+const asks: { mark: CraftMarkName; label: { da: string; en: string } }[] = [
+  { mark: "batch", label: { da: "Antal", en: "Quantity" } },
+  { mark: "adjust", label: { da: "Specifikation", en: "Specification" } },
+  { mark: "schedule", label: { da: "Tidsramme", en: "Timing" } },
 ];
 
 const copy = {
@@ -92,10 +109,21 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
                 {c.askTitle}
               </h2>
               <p className="mt-4 text-sm leading-6 text-paper/65">{c.askBody}</p>
+
+              <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
+                {asks.map((ask) => (
+                  <li key={ask.mark} className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90">
+                      <CraftMark name={ask.mark} className="h-5 w-5" />
+                    </span>
+                    <span className="text-sm font-semibold text-paper/85">{ask.label[lang]}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
             <Link
               href={localePath("/tilbud", lang)}
-              className="group mt-8 inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-700 sm:w-auto"
+              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-8 w-full sm:w-auto"
             >
               {c.askLink}
               <ArrowRight
@@ -171,13 +199,24 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
             {/* The picture is a backdrop for the words, so it gets a ramp dark
-                enough to read on rather than a flat tint. */}
+                enough to read on rather than a flat tint — but only where the
+                words are. At 0.55 across the top the photograph was gone: the
+                card read as an empty navy rectangle beside two cards that had
+                something in them. The ramp now starts light and does its work
+                in the bottom half, where the heading and the body actually
+                sit.
+
+                The second attempt at this measured 3.81:1 on the link — the
+                photograph came back and took the text's ground with it. The
+                stops moved rather than the opacity: light to 36%, then hard
+                over to 0.90 by 62%, which is above where any of the type
+                begins. */}
             <div
               aria-hidden="true"
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(180deg, rgba(6,11,22,0.55) 0%, rgba(6,11,22,0.80) 55%, rgba(6,11,22,0.94) 100%)",
+                  "linear-gradient(180deg, rgba(6,11,22,0.18) 0%, rgba(6,11,22,0.44) 36%, rgba(6,11,22,0.90) 62%, rgba(6,11,22,0.97) 100%)",
               }}
             />
             <div className="relative">

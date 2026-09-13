@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import CraftMark, { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -38,6 +39,7 @@ const copy = {
 const promises = [
   {
     href: "/ydelser/levering",
+    mark: "written" as CraftMarkName,
     term: { da: "Skriftligt, før I bestiller", en: "In writing, before you order" },
     body: {
       da: "Pris, stand, batteritilstand og garantivilkår per enhed – på skrift, mens I stadig kan sige nej.",
@@ -47,6 +49,7 @@ const promises = [
   },
   {
     href: "/ydelser/nordisk-tilpasning",
+    mark: "nordic" as CraftMarkName,
     term: { da: "Nordisk tastatur, fysisk skiftet", en: "Nordic keyboard, physically swapped" },
     body: {
       da: "Maskinerne kommer med spansk eller italiensk layout. Tastaturet bliver skiftet – det er ikke en indstilling i Windows.",
@@ -56,6 +59,7 @@ const promises = [
   },
   {
     href: "/ydelser/klargoering-og-test",
+    mark: "tested" as CraftMarkName,
     term: { da: "Testet enhed for enhed", en: "Tested unit by unit" },
     body: {
       da: "Hver tast trykkes igennem, og vi kan oplyse batteriets faktiske kapacitet i procent – ikke bare som “OK”.",
@@ -93,6 +97,14 @@ export default function Statement({ lang }: { lang: Lang }) {
               key={promise.href}
               className="flex flex-col border-b border-paper/10 py-5 sm:h-full sm:border-b-0 sm:py-7"
             >
+              {/* The mark of the thing being promised, not a bullet. Three
+                  paragraphs under one label read as a footnote; the paper, the
+                  key and the lens say which promise is which before the words
+                  do, and they are the same three marks these claims carry
+                  everywhere else on the site. */}
+              <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90">
+                <CraftMark name={promise.mark} className="h-5 w-5" />
+              </span>
               <dt className="font-display text-base font-bold leading-snug tracking-tight text-paper">
                 {promise.term[lang]}
               </dt>

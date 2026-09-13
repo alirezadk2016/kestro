@@ -67,7 +67,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
 
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-paper">{member.name}</h3>
-                <p className="mt-1.5 inline-flex items-center rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-300 ring-1 ring-inset ring-brand-400/30">
+                <p className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08] px-6 mt-1.5">
                   {member.role[lang]}
                 </p>
                 <p className="mt-4 text-sm leading-6 text-paper/65">{member.bio[lang]}</p>
@@ -78,7 +78,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                   {member.phoneHref && (
                     <a
                       href={`tel:${member.phoneHref}`}
-                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+                      className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                     >
                       <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                       {member.phoneDisplay}
@@ -89,7 +89,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     className={
                       member.phoneHref
                         ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 transition hover:border-white/35 hover:bg-white/5"
-                        : "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+                        : "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                     }
                   >
                     <Mail

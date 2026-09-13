@@ -164,7 +164,12 @@ export default function TestedFigure() {
           <stop offset="100%" stopColor={ACCENT_SOFT} stopOpacity="0" />
         </linearGradient>
         <clipPath id="st-rows">
-          <rect x={ROW.left} y={ROW.top} width={ROW.right - ROW.left} height={ITEMS.length * ROW.height} />
+          <rect
+            x={ROW.left}
+            y={ROW.top}
+            width={ROW.right - ROW.left}
+            height={ITEMS.length * ROW.height}
+          />
         </clipPath>
       </defs>
 
@@ -182,7 +187,13 @@ export default function TestedFigure() {
           stroke="#39415a"
           strokeWidth={1.2}
         />
-        <path d={`M${PANEL.x + 8} ${PANEL.y}H${PANEL.x + PANEL.w - 8}`} stroke="#FFFFFF" strokeOpacity="0.22" strokeWidth={1.4} fill="none" />
+        <path
+          d={`M${PANEL.x + 8} ${PANEL.y}H${PANEL.x + PANEL.w - 8}`}
+          stroke="#FFFFFF"
+          strokeOpacity="0.22"
+          strokeWidth={1.4}
+          fill="none"
+        />
 
         <text
           x={ROW.left}
@@ -252,9 +263,23 @@ export default function TestedFigure() {
                     strokeOpacity="0.55"
                     strokeWidth={1.1}
                   />
-                  <rect x={ROW.left + 9} y={mid - 4} width={8} height={8} rx={1.5} fill={ACCENT} fillOpacity="0.75" />
+                  <rect
+                    x={ROW.left + 9}
+                    y={mid - 4}
+                    width={8}
+                    height={8}
+                    rx={1.5}
+                    fill={ACCENT}
+                    fillOpacity="0.75"
+                  />
 
-                  <text x={ROW.left + 38} y={mid + 6} className="fill-paper/85" fontSize="19" fontWeight="500">
+                  <text
+                    x={ROW.left + 38}
+                    y={mid + 6}
+                    className="fill-paper/85"
+                    fontSize="19"
+                    fontWeight="500"
+                  >
                     {item}
                   </text>
 
@@ -274,7 +299,15 @@ export default function TestedFigure() {
 
                   {/* The mark. Blue, like everything else here. */}
                   <g className={`st-check st-check-${i}`}>
-                    <circle cx={ROW.right - 14} cy={mid} r={11} fill="rgb(59 130 246 / 0.16)" stroke={ACCENT} strokeOpacity="0.6" strokeWidth={1.1} />
+                    <circle
+                      cx={ROW.right - 14}
+                      cy={mid}
+                      r={11}
+                      fill="rgb(59 130 246 / 0.16)"
+                      stroke={ACCENT}
+                      strokeOpacity="0.6"
+                      strokeWidth={1.1}
+                    />
                     <path
                       d={`M${ROW.right - 19.5} ${mid} l4 4 7.5 -8.5`}
                       stroke="#C9D8FF"
@@ -309,7 +342,6 @@ export default function TestedFigure() {
             );
           })}
         </g>
-
       </g>
     </>
   );

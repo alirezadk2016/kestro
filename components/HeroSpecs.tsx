@@ -206,7 +206,8 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
              the scene has to show through, but the readings on it are the only
              thing a buyer is meant to take away, and they have to stay above
              AA on whatever the photograph happens to be doing behind them. */
-          className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950/85 backdrop-blur-md px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5">
+        className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950/85 backdrop-blur-md px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5"
+      >
         {/* The label cut into the top border, from xl only. It is 28
             characters of tracked uppercase and the column is three of twelve:
             below that width it wraps, and a wrapped label cannot cut a border

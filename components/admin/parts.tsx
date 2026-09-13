@@ -23,7 +23,9 @@ export function SectionHead({
   aside?: React.ReactNode;
 }) {
   return (
-    <div className={`flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b pb-4 ${HAIRLINE}`}>
+    <div
+      className={`flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b pb-4 ${HAIRLINE}`}
+    >
       <div>
         {/* A rule under every section heading, so the page has a structure the
             eye can follow at a glance instead of an even stack of blocks. */}
@@ -57,7 +59,9 @@ export function Figure({
   className?: string;
 }) {
   return (
-    <div className={`group relative bg-brand-950 p-5 transition-colors hover:bg-white/[0.03] ${className}`}>
+    <div
+      className={`group relative bg-brand-950 p-5 transition-colors hover:bg-white/[0.03] ${className}`}
+    >
       <div className={`flex items-center gap-2 ${EYEBROW}`}>
         {Icon && <Icon className="h-4 w-4 flex-none text-paper/30" />}
         {label}
@@ -105,7 +109,10 @@ export function Ranked({
       ) : (
         <ul className="mt-4 space-y-0.5">
           {rows.map((row) => (
-            <li key={row.name} className="relative flex items-baseline justify-between gap-3 py-2 pl-2.5 pr-2">
+            <li
+              key={row.name}
+              className="relative flex items-baseline justify-between gap-3 py-2 pl-2.5 pr-2"
+            >
               {/* The bar sits behind the row with a lit left edge, so the
                   ranking is readable as a shape and the label is not printed
                   on top of a hard boundary. */}

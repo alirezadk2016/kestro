@@ -133,7 +133,7 @@ function Face({
           <a
             href={`tel:${member.phoneHref || company.phoneHref}`}
             tabIndex={hidden ? -1 : undefined}
-            className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-4 w-full sm:w-auto"
           >
             <Phone className="h-5 w-5" strokeWidth={2} />
             {member.phoneDisplay || company.phoneDisplay}

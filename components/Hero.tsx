@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ArrowDown, ArrowRight, LayoutGrid } from "lucide-react";
+import { ArrowDown, LayoutGrid } from "lucide-react";
 import Container from "./Container";
+import Button from "./Button";
 import FeatureStrip from "./FeatureStrip";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -248,23 +248,17 @@ export default function Hero({ lang }: { lang: Lang }) {
                 from lib/nav.ts. There is one primary action on this site and
                 it is worded in one place.
               */}
-              <Link
-                href={localePath("/tilbud", lang)}
-                className="group inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-lg bg-brand-600 px-8 text-sm font-semibold tracking-tight text-white transition hover:bg-brand-500"
-              >
+              <Button href={localePath("/tilbud", lang)} size="lg">
                 {ui.bookCall[lang]}
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2}
-                />
-              </Link>
-              <Link
+              </Button>
+              <Button
                 href={localePath("/produkter", lang)}
-                className="inline-flex min-h-[50px] items-center justify-center gap-3 rounded-lg border border-white/15 bg-white/[0.04] px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
+                intent="secondary"
+                size="lg"
+                icon={<LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />}
               >
                 {c.secondary}
-                <LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />
-              </Link>
+              </Button>
             </div>
           </div>
         </Container>
