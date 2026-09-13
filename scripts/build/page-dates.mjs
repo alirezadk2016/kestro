@@ -62,14 +62,35 @@ function resolveImport(spec, fromFile) {
  * change to the site's chrome and not to any page's content.
  */
 const SHARED = [
-  "components/Container", "components/Header", "components/Footer",
-  "components/Breadcrumbs", "components/BreadcrumbSchema", "components/CtaSection",
-  "components/Reveal", "components/ConsentBanner", "components/LanguageHint",
-  "components/PageViewTracker", "components/Analytics", "components/Logo",
-  "components/NotFoundPanel", "components/PageSchema", "components/SourceList",
-  "lib/i18n", "lib/site", "lib/nav", "lib/company", "lib/format", "lib/routes",
-  "lib/redirect", "lib/consent", "lib/db", "lib/analytics", "lib/visits",
-  "lib/page-dates", "lib/sources", "lib/use-reduced-motion",
+  "components/Container",
+  "components/Header",
+  "components/Footer",
+  "components/Breadcrumbs",
+  "components/BreadcrumbSchema",
+  "components/CtaSection",
+  "components/Reveal",
+  "components/ConsentBanner",
+  "components/LanguageHint",
+  "components/PageViewTracker",
+  "components/Analytics",
+  "components/Logo",
+  "components/NotFoundPanel",
+  "components/PageSchema",
+  "components/SourceList",
+  "lib/i18n",
+  "lib/site",
+  "lib/nav",
+  "lib/company",
+  "lib/format",
+  "lib/routes",
+  "lib/redirect",
+  "lib/consent",
+  "lib/db",
+  "lib/analytics",
+  "lib/visits",
+  "lib/page-dates",
+  "lib/sources",
+  "lib/use-reduced-motion",
 ];
 
 const isShared = (file) => {
@@ -139,11 +160,10 @@ for (const [route, rel] of Object.entries(routes)) {
 }
 
 const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
-writeFileSync(
-  join(ROOT, "lib", "page-dates.json"),
-  JSON.stringify(sorted, null, 2) + "\n",
-);
+writeFileSync(join(ROOT, "lib", "page-dates.json"), JSON.stringify(sorted, null, 2) + "\n");
 console.log(`wrote lib/page-dates.json — ${Object.keys(sorted).length} routes`);
 for (const [route, d] of Object.entries(sorted)) {
-  console.log(` ${route.padEnd(24)} published ${d.published}  modified ${d.modified}  (${d.files} files)`);
+  console.log(
+    ` ${route.padEnd(24)} published ${d.published}  modified ${d.modified}  (${d.files} files)`,
+  );
 }

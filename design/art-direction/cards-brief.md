@@ -121,3 +121,40 @@ to the repo, and the integration happens against the committed asset.
 That is why the first pass is two variants of one subject rather than six
 subjects: the style block has to be confirmed by someone who can see it before
 the remaining renders are paid for.
+
+## Measured state of the assets being replaced
+
+`node scripts/build/check-cards.mjs`, run against the six files in
+`public/cards` before any of them were replaced:
+
+```
+cat-laptops.webp     1000x565  ratio 1.770  mean L  21.2  highlight r-b  -80.7  sd@render 23.5
+cat-desktops.webp    1000x565  ratio 1.770  mean L  29.3  highlight r-b  -97.4  sd@render 25.2
+cat-monitors.webp    1000x565  ratio 1.770  mean L  31.0  highlight r-b  -79.5  sd@render 27.5
+cat-fleet.webp       1000x565  ratio 1.770  mean L  28.5  highlight r-b -108.7  sd@render 22.9
+exploded.webp         880x1176 ratio 0.748  mean L  34.5  highlight r-b  -42.7  sd@render 34.5
+fleet-scene.webp     1100x733  ratio 1.501  mean L  64.1  highlight r-b  -63.8  sd@render 50.7
+```
+
+`highlight r-b` is red minus blue averaged over everything brighter than 150.
+**All six are negative, four of them heavily** — the brightest part of every
+card is blue. The hero's key light falls on concrete at `#4d473c`, which is
+warm. That single number is what "they look pasted onto the page" means when
+it stops being a matter of taste, and it is the thing the replacements have to
+fix.
+
+The other two findings confirm what the browser measurement showed: the fleet
+asset is 1.501 against a slot that wants 0.667, and at mean luminance 64 it is
+also the one image that does not live in the hero's exposure.
+
+## Handover
+
+1. Download the six renders from the generator widget, in the order they were
+   submitted (1 laptops, 2 desktops, 3 monitors, 4 fleet stack, 5 exploded,
+   6 fleet room).
+2. `node scripts/build/ingest-cards.mjs <folder>` — crops each to its slot's
+   ratio and writes the webp into `public/cards`.
+3. `node scripts/build/check-cards.mjs` — re-measures against the numbers
+   above. The highlight figures should come back positive or near zero.
+4. `npm run verify` before committing: two of these sit under text, and the
+   contrast check is what catches a card that got too light.
