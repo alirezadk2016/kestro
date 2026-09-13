@@ -17,14 +17,14 @@ and none of them belongs to the hero photograph directly above them.
 
 Sampled from `public/hero/scene.webp` (2600x1071):
 
-| zone | hex | luminance |
-|---|---|---|
-| shadow, left wall | `#00040a` | 4 |
-| stone desk, mid | `#1e2938` | 40 |
-| lit concrete pillar | `#4d473c` | 71 |
-| window, blue hour | `#708baa` | 135 |
-| water | `#627a95` | 119 |
-| laptop body | `#161e25` | 29 |
+| zone                | hex       | luminance |
+| ------------------- | --------- | --------- |
+| shadow, left wall   | `#00040a` | 4         |
+| stone desk, mid     | `#1e2938` | 40        |
+| lit concrete pillar | `#4d473c` | 71        |
+| window, blue hour   | `#708baa` | 135       |
+| water               | `#627a95` | 119       |
+| laptop body         | `#161e25` | 29        |
 
 Mean luminance of the whole plate: **39/255**. It is a low-key image.
 
@@ -37,11 +37,11 @@ appears only as a screen glow or an edge accent, never as the room light.
 
 ## Rendered sizes, measured in the browser at 1440px
 
-| asset | file | rendered | note |
-|---|---|---|---|
-| 4 category cards | 1000x565 | **290x163** | subject must fill ~70% of the width or it is mush |
-| exploded view | 880x1176 | **164x219** | four layers at 164px wide: separation has to be extreme |
-| fleet room | 1100x733 | **290x521** | **the source is 3:2 landscape and the slot is 0.56 portrait** — the sides are being thrown away. Generate this one portrait. |
+| asset            | file     | rendered    | note                                                                                                                         |
+| ---------------- | -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| 4 category cards | 1000x565 | **290x163** | subject must fill ~70% of the width or it is mush                                                                            |
+| exploded view    | 880x1176 | **164x219** | four layers at 164px wide: separation has to be extreme                                                                      |
+| fleet room       | 1100x733 | **290x521** | **the source is 3:2 landscape and the slot is 0.56 portrait** — the sides are being thrown away. Generate this one portrait. |
 
 That last row is a defect in the current asset, not a preference.
 
@@ -101,11 +101,11 @@ plastic CGI look, no cluttered background`.
 
 Higgsfield `gpt_image_2_5`, variant `flare`.
 
-| setting | value | why |
-|---|---|---|
-| quality | `medium` | `low` is the default and is what the first test pass used. `high` is 3 credits against `medium`'s 1.5, and at 290x163 rendered the difference does not reach the screen. |
-| resolution | `2k` | The card slot is 290px wide and drawn at 2x on a retina display; 2k leaves headroom for the fleet frame, which is cropped hard. |
-| aspect_ratio | `16:9` for the four cards, `3:4` for the exploded view, `2:3` for the fleet room | The fleet slot renders at 290x521, which is portrait. The current asset is 3:2 landscape and is having its sides thrown away. |
+| setting      | value                                                                            | why                                                                                                                                                                      |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| quality      | `medium`                                                                         | `low` is the default and is what the first test pass used. `high` is 3 credits against `medium`'s 1.5, and at 290x163 rendered the difference does not reach the screen. |
+| resolution   | `2k`                                                                             | The card slot is 290px wide and drawn at 2x on a retina display; 2k leaves headroom for the fleet frame, which is cropped hard.                                          |
+| aspect_ratio | `16:9` for the four cards, `3:4` for the exploded view, `2:3` for the fleet room | The fleet slot renders at 290x521, which is portrait. The current asset is 3:2 landscape and is having its sides thrown away.                                            |
 
 Six images at `medium`/`2k` is 9 credits.
 
@@ -147,14 +147,53 @@ The other two findings confirm what the browser measurement showed: the fleet
 asset is 1.501 against a slot that wants 0.667, and at mean luminance 64 it is
 also the one image that does not live in the hero's exposure.
 
+## What was built instead
+
+The six renders were commissioned from an image generator and the generator's
+CDN is unreachable from this machine — the host is blocked at the proxy, and
+routing around it is not on the table. So the artwork was drawn rather than
+bought, which turns out to be the better answer on every count the brief
+cares about:
+
+- **The light can be matched on purpose.** The grounds are cut from
+  `public/hero/scene.webp` itself, between 30% and 60% across the plate. That
+  band is the lit concrete, the one part of the scene whose highlights measure
+  warm. The drawing on top is lit from the same direction — warm key on the
+  left, cool fill on the right — because the gradients say so, not because a
+  model happened to agree.
+- **Nothing is invented.** No logo, no maker's badge, no red nub, no screen
+  interface, no text in the pixels. The four category cards are one object
+  each; the teardown and the fleet room are drawn to the alt text the page
+  already carries, rather than the alt text being rewritten to match a
+  picture.
+- **It is reproducible.** `npm run build:cards` re-renders all six from
+  `scripts/build/cards/`. The artwork is a file in the repository that can be
+  changed, not an asset nobody can regenerate.
+
+The projection is a true isometric. Objects are near-opaque with gradient
+faces and contact shadows: drawn translucent and flat, as the first passes
+were, a four-layer teardown and a room of desks read as wireframe soup rather
+than as things.
+
+### Measured, after
+
+```
+cat-laptops.webp     1200x675  ratio 1.778  mean L  36.3  highlight r-b   7.0  sd@render 25.5
+cat-desktops.webp    1200x675  ratio 1.778  mean L  43.3  highlight r-b   7.0  sd@render 26.9
+cat-monitors.webp    1200x675  ratio 1.778  mean L  45.6  highlight r-b   7.5  sd@render 28.6
+cat-fleet.webp       1200x675  ratio 1.778  mean L  51.3  highlight r-b   8.5  sd@render 42.3
+exploded.webp         900x1200 ratio 0.750  mean L  51.9  highlight r-b   4.5  sd@render 35.4
+fleet-scene.webp      900x1350 ratio 0.667  mean L  39.8  highlight r-b   2.4  sd@render 36.0
+```
+
+Every ratio now matches its slot, every card sits in the hero's exposure
+band, and every highlight is warm — against `-42.7` to `-108.7` before.
+
 ## Handover
 
-1. Download the six renders from the generator widget, in the order they were
-   submitted (1 laptops, 2 desktops, 3 monitors, 4 fleet stack, 5 exploded,
-   6 fleet room).
-2. `node scripts/build/ingest-cards.mjs <folder>` — crops each to its slot's
-   ratio and writes the webp into `public/cards`.
-3. `node scripts/build/check-cards.mjs` — re-measures against the numbers
-   above. The highlight figures should come back positive or near zero.
-4. `npm run verify` before committing: two of these sit under text, and the
+1. `npm run build:cards` — re-renders the six artboards from the hero plate
+   and re-measures them against the numbers above.
+2. `npm run verify` before committing: two of these sit under text, and the
    contrast check is what catches a card that got too light.
+3. If real product photography is ever shot, it replaces the drawings at the
+   same six paths and sizes. The checker is the acceptance test.

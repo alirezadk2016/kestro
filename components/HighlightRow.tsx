@@ -148,7 +148,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <Image
                 src="/cards/exploded.webp"
                 alt={c.refurbAlt}
-                /* The plate's own ratio, 880x1176. It is drawn with h-auto, so
+                /* The plate's own ratio, 900x1200. It is drawn with h-auto, so
                    the height follows the intrinsic aspect and a declaration
                    that disagrees with it reserves the wrong box and shifts the
                    list beside it on load. */

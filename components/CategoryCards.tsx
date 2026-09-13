@@ -19,8 +19,8 @@ const cards = [
   {
     href: "/produkter/baerbare-computere",
     image: "/cards/cat-laptops.webp",
-    width: 247,
-    height: 116,
+    width: 1200,
+    height: 675,
     title: { da: "Bærbare computere", en: "Business laptops" },
     brands: "Lenovo · HP · Dell",
     alt: {
@@ -31,8 +31,8 @@ const cards = [
   {
     href: "/produkter/stationaere-computere",
     image: "/cards/cat-desktops.webp",
-    width: 237,
-    height: 116,
+    width: 1200,
+    height: 675,
     title: { da: "Stationære computere", en: "Desktop PCs" },
     brands: "HP · Dell · Lenovo",
     alt: {
@@ -43,8 +43,8 @@ const cards = [
   {
     href: "/produkter/skaerme",
     image: "/cards/cat-monitors.webp",
-    width: 252,
-    height: 116,
+    width: 1200,
+    height: 675,
     title: { da: "Skærme og docking", en: "Monitors and docks" },
     brands: "Dell · Lenovo · HP",
     alt: {
@@ -55,8 +55,8 @@ const cards = [
   {
     href: "/flaadeloesninger",
     image: "/cards/cat-fleet.webp",
-    width: 337,
-    height: 116,
+    width: 1200,
+    height: 675,
     title: { da: "Flådeløsninger", en: "Fleet solutions" },
     brands: { da: "Fra 10 til 500+ enheder", en: "From 10 to 500+ devices" },
     alt: {

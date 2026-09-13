@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "build:model": "node scripts/build-model.mjs && node scripts/render-hero-still.mjs",
     "build:team-photos": "node scripts/build-team-photos.mjs",
+    "build:cards": "node scripts/build/cards/render.mjs && node scripts/build/check-cards.mjs",
     "verify": "node scripts/verify/run.mjs"
   },
   "dependencies": {
