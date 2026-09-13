@@ -110,7 +110,7 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                     <li key={model.slug}>
                       <Link
                         href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
+                        className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
                       >
                         <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
                           {model.brand} · {model.format[lang]}

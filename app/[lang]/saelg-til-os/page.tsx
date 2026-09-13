@@ -227,7 +227,7 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             </h2>
             <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
 
-            <div className="mt-8 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}

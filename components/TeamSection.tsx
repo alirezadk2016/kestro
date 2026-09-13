@@ -49,7 +49,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
             <div
               key={member.name}
               id={member.id}
-              className="group relative flex flex-col gap-6 overflow-hidden border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06] sm:flex-row sm:items-start sm:p-8 sm:text-left"
+              className="plate plate-lift group relative flex flex-col gap-6 overflow-hidden p-6 text-center sm:flex-row sm:items-start sm:p-8 sm:text-left"
             >
               <span
                 aria-hidden="true"
@@ -88,7 +88,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     href={`mailto:${member.email ?? company.email}`}
                     className={
                       member.phoneHref
-                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 transition hover:border-white/35 hover:bg-white/5"
+                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 hover:bg-white/5"
                         : "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                     }
                   >

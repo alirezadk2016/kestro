@@ -104,23 +104,18 @@ export function VidenClusterPlate({
         style={{ backgroundImage: `url(${plate[cluster]})` }}
       />
 
-      {/* Corner frame — a drawing in a folder, not an icon in a box. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 border border-white/10"
-        style={{
-          clipPath:
-            "polygon(0 0, 34% 0, 34% 1.5px, 1.5px 1.5px, 1.5px 34%, 0 34%, 0 66%, 1.5px 66%, 1.5px calc(100% - 1.5px), 34% calc(100% - 1.5px), 34% 100%, 0 100%)",
-        }}
-      />
-
       {/* Kept as text rather than baked into the render: it stays sharp at any
           size, and the number is the card's position in the index, which the
           picture has no business knowing. */}
+      {/* The plate number, on a chip rather than floating on the picture.
+          Set straight onto the image it sat at 40% white over whatever the
+          drawing happened to put underneath it — legible on one card and
+          gone on the next. A chip carries its own ground, so the number
+          reads the same on all four. */}
       {index && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-[6%] top-[8%] font-mono text-[13px] leading-none text-paper/40"
+          className="pointer-events-none absolute left-3 top-3 inline-flex items-center bg-ink-950/70 px-2 py-1 font-mono text-[11px] leading-none text-paper/70 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.10),inset_0_1px_0_0_rgb(255_247_233/0.16)] backdrop-blur-sm"
           style={{ letterSpacing: "0.14em" }}
         >
           {index}

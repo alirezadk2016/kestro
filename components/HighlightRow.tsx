@@ -113,7 +113,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
                 {asks.map((ask) => (
                   <li key={ask.mark} className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90">
+                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90">
                       <CraftMark name={ask.mark} className="h-5 w-5" />
                     </span>
                     <span className="text-sm font-semibold text-paper/85">{ask.label[lang]}</span>

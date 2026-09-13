@@ -225,10 +225,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-8 space-y-4">
               {grades.map((grade) => (
-                <div
-                  key={grade.grade.da}
-                  className="border border-white/10 bg-white/[0.04] p-5 sm:p-6"
-                >
+                <div key={grade.grade.da} className="plate p-5 sm:p-6">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <h3 className="text-lg font-bold text-paper">{grade.grade[lang]}</h3>
                     <span className="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-300">
@@ -311,7 +308,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </ul>
 
-            <div className="mt-10 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-10 plate p-6 sm:p-8">
               <h3 className="text-base font-semibold text-paper">{c.notIncludedTitle}</h3>
               <p className="mt-2 text-base leading-7 text-paper/65">{c.notIncludedBody}</p>
               <Link

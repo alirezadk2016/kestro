@@ -52,7 +52,7 @@ export default function PriceOnRequest({
   const href = equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud";
 
   return (
-    <div className={`border border-white/10 bg-white/[0.04] p-6 sm:p-7 ${className}`}>
+    <div className={`plate p-6 sm:p-7 ${className}`}>
       <p className="label text-brand-300">{c.label}</p>
       <p className="mt-2 font-display text-2xl font-extrabold tracking-display text-paper">
         {c.heading}

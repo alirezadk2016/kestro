@@ -398,6 +398,41 @@ body {
   }
 
   /*
+   * The same edge at control size. A chip or a small button wants the lit lip
+   * and the ring, but not a panel's 34px ambient shadow — at that size it
+   * reads as a smudge under the element rather than as depth.
+   */
+  .plate-sm {
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.07) 0%,
+      rgb(255 255 255 / 0.03) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.14),
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.4),
+      0 1px 2px -1px rgb(2 5 12 / 0.55);
+    transition:
+      box-shadow 200ms ease,
+      background-image 200ms ease;
+  }
+
+  .plate-sm:hover,
+  .plate-sm:focus-visible {
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.1) 0%,
+      rgb(255 255 255 / 0.045) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.22),
+      inset 0 0 0 1px rgb(96 128 255 / 0.38),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.4),
+      0 1px 3px -1px rgb(2 5 12 / 0.6);
+  }
+
+  /*
    * A plate you can click. It lifts, the light on its top edge gets stronger
    * because it has moved closer to it, and the hairline turns to brand blue
    * with a glow that stays tucked under the panel.

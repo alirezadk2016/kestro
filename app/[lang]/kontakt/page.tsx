@@ -83,7 +83,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
             <div className="lg:col-span-3">
-              <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+              <div className="plate p-6 sm:p-8">
                 <ContactForm lang={lang} />
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
                 <CopyEmailButton lang={lang} />
               </div>
 
-              <div className="border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+              <div className="plate p-6 sm:p-8">
                 <h2 className="text-base font-semibold text-paper">{c.companyTitle}</h2>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">

@@ -97,7 +97,7 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {c.columns.map((column) => (
-          <div key={column.heading} className="border border-white/10 bg-white/[0.04] p-5">
+          <div key={column.heading} className="plate p-5">
             <CraftMark name={column.mark} className="h-7 w-7 text-brand-300" />
             <h3 className="mt-3 text-sm font-semibold text-paper">{column.heading}</h3>
             <ul className="mt-3 space-y-2">

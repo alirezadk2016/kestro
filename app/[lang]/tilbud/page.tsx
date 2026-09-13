@@ -266,7 +266,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
             </p>
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
-              <div className="border border-white/10 bg-white/[0.04] p-6 shadow-sm sm:p-8">
+              <div className="plate p-6 sm:p-8">
                 <h2 className="font-display text-lg font-bold tracking-tight text-paper">
                   {c.formTitle}
                 </h2>
@@ -363,7 +363,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {c.needItems.map((item) => (
-              <div key={item.title} className="border border-white/10 bg-white/[0.04] p-5 sm:p-8">
+              <div key={item.title} className="plate p-5 sm:p-8">
                 <h3 className="flex gap-2.5 text-base font-semibold text-paper">
                   <Check className="mt-1 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={2.5} />
                   {item.title}

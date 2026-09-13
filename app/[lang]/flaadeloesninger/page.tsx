@@ -475,10 +475,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {capabilities.map((item) => (
-              <div
-                key={item.title.da}
-                className="flex gap-4 border border-white/10 bg-white/[0.04] p-5 sm:block sm:p-8"
-              >
+              <div key={item.title.da} className="flex gap-4 plate p-5 sm:block sm:p-8">
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-brand-300 sm:h-11 sm:w-11">
                   <CraftMark name={item.mark} className="h-6 w-6" />
                 </span>
@@ -506,10 +503,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
             {scaleTiers.map((tier) => (
-              <div
-                key={tier.range.da}
-                className="border border-white/10 bg-white/[0.04] p-5 sm:p-8"
-              >
+              <div key={tier.range.da} className="plate p-5 sm:p-8">
                 <h3 className="text-base font-semibold text-paper">{tier.range[lang]}</h3>
                 <p className="mt-2 text-sm leading-6 text-paper/65">{tier.body[lang]}</p>
               </div>

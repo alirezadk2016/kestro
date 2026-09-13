@@ -209,12 +209,24 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
         <Container>
           <h2 className="eyebrow text-paper/40">{c.indexTitle}</h2>
           <nav aria-label={c.jump}>
-            <ul className="mt-6 grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Four cards, not four cells.
+             *
+             * This was a `gap-px` grid inside a bordered box — the trick where
+             * the container's background shows through one-pixel gaps to draw
+             * the rules. It is cheap to write and it reads as a spreadsheet:
+             * four compartments of one table, every rule the same weight, no
+             * card with an edge of its own. Separate plates on a real gap read
+             * as four things you can pick up, which is what a jump list is.
+             */}
+            <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               {groups.map(({ cluster, articles }, i) => (
-                <li key={cluster.id} className="bg-brand-950">
+                <li key={cluster.id}>
                   <a
                     href={`#${cluster.anchor}`}
-                    className="group flex h-full flex-col px-5 py-4 transition-colors hover:bg-white/[0.04] sm:p-6"
+                    /* The picture runs to the card's own edge. Inset inside
+                       the padding it was a framed rectangle sitting inside a
+                       framed rectangle, and the eye counts both. */
+                    className="plate plate-lift group flex h-full flex-col overflow-hidden"
                   >
                     {/*
                      * The drawing and the description are for a wide screen.
@@ -230,20 +242,25 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                     <VidenClusterPlate
                       cluster={cluster.id}
                       index={String(i + 1).padStart(2, "0")}
-                      className="hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-85"
+                      className="plate-well hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-90"
                     />
-                    <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:mt-5">
-                      {cluster.name[lang]}
-                    </h3>
-                    <p className="mt-2 hidden flex-1 text-sm leading-6 text-paper/55 sm:block">
-                      {cluster.description[lang]}
-                    </p>
-                    {/* On its own rule at the foot of the card, so four cards
-                        with descriptions of four different lengths still end on
-                        one line across the row. */}
-                    <p className="label mt-2 text-paper/45 sm:mt-5 sm:border-t sm:border-white/10 sm:pt-4">
-                      {articles.length} {articles.length === 1 ? c.article : c.articles}
-                    </p>
+                    <div className="flex flex-1 flex-col px-5 py-4 sm:p-5">
+                      <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                        {cluster.name[lang]}
+                      </h3>
+                      <p className="mt-2 hidden flex-1 text-sm leading-6 text-paper/55 sm:block">
+                        {cluster.description[lang]}
+                      </p>
+                      {/* On its own rule at the foot of the card, so four cards
+                          with descriptions of four different lengths still end
+                          on one line across the row. The rule fades out rather
+                          than running the full width at one value — a hairline
+                          that stops dead is the loudest thing on a quiet
+                          card. */}
+                      <p className="label relative mt-2 text-paper/45 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
+                        {articles.length} {articles.length === 1 ? c.article : c.articles}
+                      </p>
+                    </div>
                   </a>
                 </li>
               ))}

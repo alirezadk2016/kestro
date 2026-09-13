@@ -186,7 +186,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
               <Link
                 key={service.title.da}
                 href={localePath(service.href, lang)}
-                className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
+                className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-brand-300">
                   <CraftMark name={service.mark} className="h-6 w-6" />
@@ -248,7 +248,7 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
               ))}
             </div>
 
-            <div className="mt-12 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-12 plate p-6 sm:p-8">
               <h3 className="text-lg font-semibold text-paper">{c.qualityTitle}</h3>
               <p className="mt-3 text-base leading-7 text-paper/65">{c.qualityBody}</p>
               <Link

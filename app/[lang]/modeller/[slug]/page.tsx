@@ -374,7 +374,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
                     >
                       {other.name}
                     </Link>

@@ -115,7 +115,7 @@ export default function Services({ lang }: { lang: Lang }) {
                 be read at a glance and the numeral goes back to doing what a
                 numeral is for, which is order.
               */}
-              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90 lg:mb-5">
+              <span className="mb-4 flex h-11 w-11 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90 lg:mb-5">
                 <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
               </span>
               <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">

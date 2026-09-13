@@ -306,7 +306,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <li key={model.slug}>
                     <Link
                       href={localePath(`/modeller/${model.slug}`, lang)}
-                      className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35"
+                      className="plate plate-lift group flex h-full flex-col p-5"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
                         {model.format[lang]}
@@ -377,7 +377,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 px-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
                     >
                       <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
                       {other.name[lang]}

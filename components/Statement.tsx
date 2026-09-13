@@ -102,7 +102,7 @@ export default function Statement({ lang }: { lang: Lang }) {
                   key and the lens say which promise is which before the words
                   do, and they are the same three marks these claims carry
                   everywhere else on the site. */}
-              <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-brand-500/[0.10] text-paper/90">
+              <span className="mb-4 flex h-10 w-10 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90">
                 <CraftMark name={promise.mark} className="h-5 w-5" />
               </span>
               <dt className="font-display text-base font-bold leading-snug tracking-tight text-paper">

@@ -101,7 +101,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
+                  className="group flex flex-col plate p-4 sm:p-6"
                 >
                   <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
                     <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
@@ -121,7 +121,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             })}
           </div>
 
-          <div className="mx-auto mt-14 max-w-3xl border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm sm:p-8">
+          <div className="mx-auto mt-14 max-w-3xl plate p-6 text-center sm:p-8">
             <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.modelsTitle}
             </h2>

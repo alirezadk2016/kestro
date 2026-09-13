@@ -267,10 +267,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-4">
             {services.map((service) => (
-              <div
-                key={service.title.da}
-                className="border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
-              >
+              <div key={service.title.da} className="plate p-4 sm:p-6">
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
                   <CraftMark name={service.mark} className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
@@ -320,7 +317,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             </h2>
             <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
 
-            <div className="mt-8 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}
