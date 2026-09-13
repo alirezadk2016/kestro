@@ -87,13 +87,20 @@ export default function Hero({ lang }: { lang: Lang }) {
        */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[86%] bg-contain bg-right bg-no-repeat opacity-85 md:block lg:w-[68%] lg:opacity-100"
+        className="pointer-events-none absolute inset-0 hidden bg-cover bg-no-repeat md:block"
         /* Contained, not oversized. Pushing it left to pull the machine out
            from behind the spec panel worked, and cost more than it bought:
            the lit K came forward onto the headline and took its legibility
            with it. The machine reads through the glass panel instead, which
            is what the panel is translucent for. */
-        style={{ backgroundImage: "url(/hero/scene.webp)" }}
+        style={{
+          backgroundImage: "url(/hero/scene.webp)",
+          /* Anchored right of centre rather than centred: cover crops the
+             sides, and the machine and the lit K both live in the right two
+             thirds of the plate. Anchored hard right, cover cropped the lit K clean
+             out of the frame; 56% brings the wall back and keeps the machine. */
+          backgroundPosition: "50% center",
+        }}
       />
 
 
@@ -106,8 +113,10 @@ export default function Hero({ lang }: { lang: Lang }) {
        * at 1.20:1. A photograph has no obligation to be dark where a sentence
        * lands, so the page has to make it so.
        *
-       * Opaque at the left edge and gone by 62%, which is past the last glyph
-       * and short of the machine. The brief asked for the left of the frame to
+       * Reaching further than it first did. At 0.78 by 44% the blue accent
+       * line sat on lit stone at 2.40:1 against the 3 it needs, because the K
+       * is cut into the wall the headline ends over. It holds 0.93 to 46% now
+       * and lets go by 80% — the K still reads, the sentence still reads. The brief asked for the left of the frame to
        * stay calm and high-contrast; this is that, enforced rather than hoped
        * for.
        */}
@@ -116,7 +125,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgb(9,14,30) 0%, rgba(9,14,30,0.97) 26%, rgba(9,14,30,0.78) 44%, rgba(9,14,30,0.3) 56%, rgba(9,14,30,0) 66%)",
+            "linear-gradient(90deg, rgb(9,14,30) 0%, rgba(9,14,30,0.98) 30%, rgba(9,14,30,0.93) 46%, rgba(9,14,30,0.6) 58%, rgba(9,14,30,0.18) 70%, rgba(9,14,30,0) 80%)",
         }}
       />
 
@@ -130,7 +139,12 @@ export default function Hero({ lang }: { lang: Lang }) {
         }}
       />
 
-      <div className="relative z-10 pb-14 pt-14 sm:pb-20 sm:pt-20 md:pt-24">
+      {/* Sized to the photograph, not to the copy. The plate is 2252x1268, so
+            the band it fills has to be about 1.78:1 or cover starts cropping to
+            fill the difference — at min-h-[680px] plus padding plus the trust
+            strip the section reached 1.44:1 and cover ate the lit K entirely.
+            These heights put the section back at roughly the plate's own ratio. */}
+      <div className="relative z-10 flex min-h-[420px] items-center pb-14 pt-14 sm:pb-16 sm:pt-16 md:min-h-[480px] md:pt-20 lg:min-h-[540px]">
         <Container>
           <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-6">
