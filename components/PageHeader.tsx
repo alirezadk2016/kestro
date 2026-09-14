@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Breadcrumbs from "./Breadcrumbs";
 import type { Lang } from "@/lib/i18n";
+import { formatDate } from "@/lib/i18n";
 import { pageUpdated, type Route } from "./PageSchema";
 
 /*
@@ -49,10 +50,13 @@ export default function PageHeader({
         {description}
       </p>
       {updated && (
-        <p className="mt-5 text-xs text-paper/45 leading-[1.45]">
+        /* The same meta line as the guides index: label case, one weight up on
+           the value. It printed the raw ISO date at 12px roman, which is the
+           data rather than a date. */
+        <p className="label mt-6 text-paper/45">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
-          <time dateTime={pageUpdated(updated)} className="tabular-nums">
-            {pageUpdated(updated)}
+          <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/80">
+            {formatDate(pageUpdated(updated), lang ?? "da")}
           </time>
         </p>
       )}

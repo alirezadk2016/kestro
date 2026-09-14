@@ -41,7 +41,20 @@ const plate: Record<Cluster, string> = {
  * headline sits — so it needs no wash of its own beyond the one the page
  * already lays over it.
  */
-export function VidenHeroPlate({ className = "" }: { className?: string }) {
+export function VidenHeroPlate({
+  className = "",
+  /**
+   * `wash` is the feathered plate that lies behind the masthead on a wide
+   * screen. `band` is the same artwork as an actual picture — which is what a
+   * phone needs, because at 390px the wash is bg-contain inside a mask that
+   * removes three quarters of it, and what arrives is a few diagonal lines at
+   * the right edge that read as dirt rather than as a graphic.
+   */
+  variant = "wash",
+}: {
+  className?: string;
+  variant?: "wash" | "band";
+}) {
   /*
    * Feathered, because a rectangle shows.
    *
@@ -67,6 +80,16 @@ export function VidenHeroPlate({ className = "" }: { className?: string }) {
    */
   const feather =
     "radial-gradient(ellipse 58% 80% at 76% 50%, #000 30%, rgba(0,0,0,0.5) 62%, transparent 100%)";
+
+  if (variant === "band") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`plate-well bg-cover bg-center bg-no-repeat ${className}`}
+        style={{ backgroundImage: "url(/viden/k-hero.webp)" }}
+      />
+    );
+  }
 
   return (
     <div

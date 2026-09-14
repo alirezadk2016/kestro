@@ -7,7 +7,7 @@ import CtaSection from "@/components/CtaSection";
 import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
 import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
-import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
 
@@ -118,17 +118,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
     .sort()
     .at(-1);
 
-  /* A date a person reads, not the ISO string the data is stored in. It sat
-     beside "8" and "4" at the same display size, which made a ten-character
-     machine timestamp the largest thing in the row. */
-  const updatedLabel = lastUpdated
-    ? new Date(`${lastUpdated}T00:00:00Z`).toLocaleDateString(lang === "da" ? "da-DK" : "en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        timeZone: "UTC",
-      })
-    : "";
+  const updatedLabel = lastUpdated ? formatDate(lastUpdated, lang) : "";
 
   return (
     <>
@@ -151,7 +141,12 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
             stronger on a wide screen where it has the room. The plate is a
             render now and takes no colour from CSS, so the same intent is
             carried by opacity. */}
-        <VidenHeroPlate className="pointer-events-none absolute -right-40 top-16 h-[20rem] w-[46rem] opacity-60 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
+        {/* Not on a phone. At 390px this is bg-contain inside a mask that
+            removes three quarters of it, so what arrived was a few diagonal
+            lines behind the heading — dirt rather than a graphic, and it took
+            contrast off the type it lay under. The phone gets the same
+            artwork as an actual picture further down instead. */}
+        <VidenHeroPlate className="pointer-events-none absolute hidden opacity-60 sm:-right-24 sm:top-8 sm:block sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
         {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
             has to stay legible on the right where there is room, and stay out
             of the way of the type where there is not. */}
@@ -160,7 +155,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950 lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/70 lg:to-transparent"
         />
 
-        <Container className="relative py-10 sm:py-16 lg:py-20">
+        <Container className="relative py-6 sm:py-16 lg:py-20">
           <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
 
           {/* w-fit so the box is the width of the label.
@@ -171,7 +166,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
               of the render as this text's background and called 3.11:1 on
               type that actually sits on 8.48:1. The label is a label; its box
               should say so. */}
-          <p className="eyebrow mt-8 w-fit text-brand-300">{c.eyebrow}</p>
+          <p className="eyebrow mt-6 w-fit text-brand-300 sm:mt-8">{c.eyebrow}</p>
           <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
             {c.title}
           </h1>
@@ -179,27 +174,41 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
             {c.description}
           </p>
 
-          <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-5 border-t border-white/10 pt-6 sm:mt-14">
-            {[
-              { n: String(guides.length), l: c.statGuides, wide: false },
-              { n: String(groups.length), l: c.statClusters, wide: false },
-              { n: updatedLabel, l: c.statUpdated, wide: true },
-            ].map((stat) => (
-              <div key={stat.l}>
-                <dt className="label text-paper/40">{stat.l}</dt>
-                {/* A count and a date are not the same kind of value and should
-                    not be set at the same size: the count is the figure, the
-                    date is a note about it. */}
-                <dd
-                  className={`mt-1 font-display font-bold tracking-tight text-paper ${
-                    stat.wide ? "text-lg text-paper/80" : "text-2xl tabular-nums"
-                  }`}
-                >
-                  {stat.n}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          {/* A meta line, not a dashboard.
+           *
+           * These were three tiles with the counts set at 24px over 12px
+           * labels. On a phone the third wrapped to its own row and the group
+           * came out ragged, and the counts — the least interesting thing on
+           * the page — carried the most weight on the first screen. What they
+           * are is the page's metadata, so they are set like metadata. */}
+          {/* Each item whole, and no separators.
+           *
+           * Set as one run of text it broke as "SENEST / OPDATERET 31. AUG.
+           * 2026", and a label split across two lines is the loudest thing
+           * on an otherwise quiet screen. Middots fixed that and introduced
+           * their own: whichever item wraps leaves a "·" hanging at the end
+           * of the line above it. Space separates these perfectly well, and
+           * space cannot orphan. */}
+          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/45 sm:mt-8">
+            <span className="whitespace-nowrap">
+              <span className="tabular-nums text-paper/80">{guides.length}</span> {c.statGuides}
+            </span>
+            <span className="whitespace-nowrap">
+              <span className="tabular-nums text-paper/80">{groups.length}</span> {c.statClusters}
+            </span>
+            <span className="whitespace-nowrap">
+              {c.statUpdated} <span className="tabular-nums text-paper/80">{updatedLabel}</span>
+            </span>
+          </p>
+
+          {/* The first screen needs a picture on it.
+           *
+           * Measured on a 390px phone: the first image on this page sat at
+           * y=1387 — most of two screens of breadcrumb, heading, paragraph
+           * and counts before anything was drawn. The plate behind the
+           * masthead does not count: at that width it is bg-contain inside a
+           * mask that removes three quarters of it. Here it is a picture. */}
+          <VidenHeroPlate variant="band" className="mt-8 aspect-[16/10] w-full sm:hidden" />
         </Container>
       </section>
 
@@ -242,7 +251,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                     <VidenClusterPlate
                       cluster={cluster.id}
                       index={String(i + 1).padStart(2, "0")}
-                      className="plate-well hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-90"
+                      className="plate-well transition-opacity group-hover:opacity-100 sm:opacity-90"
                     />
                     <div className="flex flex-1 flex-col px-5 py-4 sm:p-5">
                       <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">

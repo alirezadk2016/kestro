@@ -97,32 +97,32 @@ export default function LanguageHint() {
 
   return (
     <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
-      <Container /* The controls carry their own 44px now, so the bar does not need
-           to add height on top of them — without this the strip that sits
-           above the header on every page grew by a sixth. */
-        className="flex flex-col items-start gap-y-0 py-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 sm:py-2.5"
+      <Container
+        /* One row on a phone.
+         *
+         * The sentence and the controls were stacked, which made a
+         * dismissible notice 150px of an 844px screen — 18% of the first
+         * thing anybody sees, on every page. The link says what the sentence
+         * said, so below sm the sentence goes and the row is 46px. */
+        className="flex items-center gap-x-4 py-1 sm:flex-wrap sm:gap-x-4 sm:gap-y-2 sm:py-2.5"
       >
-        <p className="text-sm text-paper/75 leading-[1.6]">
+        <p className="hidden text-sm leading-[1.6] text-paper/75 sm:block">
           This page is also available in English.
         </p>
-        {/* One row of its own below sm; dissolved into the parent from sm, so
-            the wide layout is exactly what it was. */}
-        <div className="flex w-full items-center gap-x-4 sm:contents">
-          <Link
-            href={href}
-            onClick={dismiss}
-            className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
-          >
-            Read in English
-          </Link>
-          <button
-            type="button"
-            onClick={dismiss}
-            className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/55 transition hover:text-paper"
-          >
-            Dismiss
-          </button>
-        </div>
+        <Link
+          href={href}
+          onClick={dismiss}
+          className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
+        >
+          Read in English
+        </Link>
+        <button
+          type="button"
+          onClick={dismiss}
+          className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/55 transition hover:text-paper"
+        >
+          Dismiss
+        </button>
       </Container>
     </div>
   );

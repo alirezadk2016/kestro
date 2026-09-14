@@ -147,3 +147,21 @@ export function metaFor(path: string, lang: Lang) {
     },
   };
 }
+
+/**
+ * A date a person reads, not the ISO string it is stored as.
+ *
+ * There were two of these. The guides index formatted "31. aug. 2026" and
+ * every page using PageHeader printed the raw "2026-09-02" straight out of
+ * the data, on the same site, in the same language, four scroll positions
+ * apart. A machine timestamp on a page a customer reads is a tell.
+ */
+export function formatDate(iso: string, lang: Lang) {
+  if (!iso) return "";
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(lang === "da" ? "da-DK" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
