@@ -102,10 +102,10 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
         <Container>
           <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.outsideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.outsideTitle}
             </h2>
-            <p className="mt-5 text-base leading-7 text-paper/65">{c.outsideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.outsideBody}</p>
           </div>
 
           <div className="mt-12">
@@ -118,17 +118,17 @@ export default function MaskinenPage({ params }: { params: { lang: Lang } }) {
         <Container>
           <div className="max-w-3xl">
             <span className="eyebrow text-brand-300">{c.insideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.insideTitle}
             </h2>
-            <p className="mt-5 text-base leading-7 text-paper/65">{c.insideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.insideBody}</p>
           </div>
 
           <div className="mt-12">
             <MachineInside lang={lang} />
           </div>
 
-          <p className="mt-12 max-w-2xl text-sm leading-7 text-paper/55">
+          <p className="mt-12 max-w-2xl text-sm leading-[1.6] text-paper/55">
             {c.guidesPre}{" "}
             <Link
               href={localePath("/vejledninger", lang)}

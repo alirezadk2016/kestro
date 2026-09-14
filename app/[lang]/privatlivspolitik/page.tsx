@@ -248,7 +248,7 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65"
                   >
                     {paragraph[lang]}
                   </p>
@@ -256,7 +256,7 @@ export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang
               </div>
             ))}
 
-            <p className="border-t border-white/10 pt-8 text-sm text-paper/55">
+            <p className="border-t border-white/10 pt-8 text-sm text-paper/55 leading-[1.6]">
               {c.updated}: {UPDATED}
             </p>
           </div>

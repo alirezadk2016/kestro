@@ -58,7 +58,9 @@ export default function ArticleToc({ items, lang }: { items: TocItem[]; lang: La
             <path d="M5 8l5 5 5-5" />
           </svg>
         </summary>
-        <p className="hidden text-sm font-semibold text-paper sm:block">{copy[lang].title}</p>
+        <p className="hidden text-sm font-semibold text-paper sm:block leading-[1.6]">
+          {copy[lang].title}
+        </p>
         {list}
       </details>
     </nav>

@@ -143,7 +143,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
     <>
       <PageSchema lang={lang} route="/produkter/[slug]" />
 
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-10 sm:py-20">
         {/* Brand glow for depth — no product photography, since we source per order */}
         <div
           aria-hidden="true"
@@ -192,11 +192,13 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {category.name[lang]}
                 </h1>
-                <p className="mt-2 text-base text-ink-300 sm:text-lg">{category.tagline[lang]}</p>
+                <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                  {category.tagline[lang]}
+                </p>
               </div>
             </div>
 
-            <p className="mt-8 text-base leading-7 text-ink-300">{category.intro[lang]}</p>
+            <p className="mt-8 text-base leading-[1.75] text-ink-300">{category.intro[lang]}</p>
           </div>
         </Container>
       </section>
@@ -207,7 +209,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">
               {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
             </p>
 
@@ -222,7 +224,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               ))}
             </ul>
 
-            <p className="mt-6 max-w-2xl text-sm leading-6 text-paper/55">{c.brandsNote}</p>
+            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/55">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -239,9 +241,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {exampleModel.name}
                 </h2>
-                <p className="mt-3 text-base leading-7 text-paper/65">{exampleModel.intro[lang]}</p>
+                <p className="mt-3 text-base leading-[1.75] text-paper/65">
+                  {exampleModel.intro[lang]}
+                </p>
 
-                <p className="mt-5 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-paper/55">{c.imageNote}</p>
 
                 <Link
                   href={localePath(`/modeller/${exampleModel.slug}`, lang)}
@@ -298,8 +302,8 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 text-paper/65">{c.modelsBody}</p>
-              <p className="mt-1.5 text-sm leading-6 text-paper/55">{c.priceNote}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.modelsBody}</p>
+              <p className="mt-1.5 text-sm leading-[1.6] text-paper/55">{c.priceNote}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
@@ -360,7 +364,9 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
 
             <div className="mt-10 border border-white/10 bg-white/5 p-6">
               <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
-              <p className="mt-2 text-base leading-7 text-paper/65">{category.specNote[lang]}</p>
+              <p className="mt-2 text-base leading-[1.75] text-paper/65">
+                {category.specNote[lang]}
+              </p>
             </div>
           </div>
         </Container>

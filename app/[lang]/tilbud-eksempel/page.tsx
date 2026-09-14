@@ -345,7 +345,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                   </div>
                 ))}
               </dl>
-              <p className="mt-4 border-l-2 border-brand-600 pl-4 text-sm leading-6 text-ink-600">
+              <p className="mt-4 border-l-2 border-brand-600 pl-4 text-sm leading-[1.6] text-ink-600">
                 {c.priceNote}
               </p>
               <Link
@@ -362,7 +362,9 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              {c.whyBody}
+            </p>
 
             <p className="eyebrow mt-10 text-brand-700">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">

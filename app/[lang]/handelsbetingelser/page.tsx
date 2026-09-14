@@ -283,7 +283,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
                 {clause.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-7 text-paper/65 sm:leading-8"
+                    className="mt-4 text-base leading-[1.75] text-paper/65 sm:leading-[1.75]"
                   >
                     {paragraph[lang]}
                   </p>
@@ -336,7 +336,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
               </dl>
             </div>
 
-            <p className="border-t border-white/10 pt-8 text-sm leading-6 text-paper/55">
+            <p className="border-t border-white/10 pt-8 text-sm leading-[1.6] text-paper/55">
               {c.privacyLead}{" "}
               <Link
                 href={localePath("/privatlivspolitik", lang)}
@@ -347,7 +347,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
               .
             </p>
 
-            <p className="mt-4 text-sm text-paper/55">
+            <p className="mt-4 text-sm text-paper/55 leading-[1.6]">
               {c.updated}: {UPDATED}
             </p>
           </div>

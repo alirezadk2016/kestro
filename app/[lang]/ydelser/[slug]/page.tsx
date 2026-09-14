@@ -107,10 +107,10 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
               </Link>
             </nav>
 
-            <h1 className="mt-4 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <h1 className="mt-4 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {service.name[lang]}
             </h1>
-            <p className="mt-5 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
+            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
               {service.summary[lang]}
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-7 sm:text-lg sm:leading-8 text-paper/80">
+            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/80">
               {service.intro[lang]}
             </p>
 
@@ -133,7 +133,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65"
                   >
                     {paragraph[lang]}
                   </p>

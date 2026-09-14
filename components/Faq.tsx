@@ -73,7 +73,7 @@ export default function Faq({
         {/* Left-aligned like every other section heading on the site. It was
             the one centred block, which is what made it read as bolted on. */}
         <div className="max-w-2xl">
-          <h2 className="text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {title[lang]}
           </h2>
         </div>
@@ -91,7 +91,7 @@ export default function Faq({
                   aria-hidden="true"
                 />
               </summary>
-              <p className="pb-5 pr-9 text-base leading-7 text-paper/65">{faq.answer[lang]}</p>
+              <p className="pb-5 pr-9 text-base leading-[1.75] text-paper/65">{faq.answer[lang]}</p>
             </details>
           ))}
         </div>

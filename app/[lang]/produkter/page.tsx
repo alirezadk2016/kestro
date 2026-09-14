@@ -86,8 +86,8 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noPrices2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noPrices1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noPrices2}</p>
           </div>
 
           <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-paper sm:text-3xl">
@@ -109,7 +109,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
                   <h3 className="mt-3 text-sm font-semibold text-paper group-hover:text-paper sm:mt-4 sm:text-base">
                     {category.name[lang]}
                   </h3>
-                  <p className="mt-1.5 flex-1 text-xs leading-5 text-paper/65 sm:mt-2 sm:text-sm sm:leading-6">
+                  <p className="mt-1.5 flex-1 text-xs leading-[1.6] text-paper/65 sm:mt-2 sm:text-sm sm:leading-[1.6]">
                     {category.tagline[lang]}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300 sm:mt-4 sm:text-sm">
@@ -125,7 +125,7 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.modelsTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-paper/65">
+            <p className="mx-auto mt-3 max-w-xl text-base leading-[1.75] text-paper/65">
               {c.modelsBody}
             </p>
             <Link

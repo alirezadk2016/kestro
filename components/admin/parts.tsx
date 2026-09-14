@@ -30,7 +30,7 @@ export function SectionHead({
         {/* A rule under every section heading, so the page has a structure the
             eye can follow at a glance instead of an even stack of blocks. */}
         <h2 className="font-display text-[1.0625rem] font-bold tracking-tight">{title}</h2>
-        {note && <p className="mt-1.5 max-w-2xl text-sm leading-6 text-paper/55">{note}</p>}
+        {note && <p className="mt-1.5 max-w-2xl text-sm leading-[1.6] text-paper/55">{note}</p>}
       </div>
       {aside}
     </div>
@@ -67,7 +67,7 @@ export function Figure({
         {label}
       </div>
       <p className={`mt-3.5 text-[2rem] leading-none ${FIGURE}`}>{value}</p>
-      {note && <p className="mt-2 text-xs leading-5 text-paper/40">{note}</p>}
+      {note && <p className="mt-2 text-xs leading-[1.45] text-paper/40">{note}</p>}
     </div>
   );
 }
@@ -105,7 +105,7 @@ export function Ranked({
       </h3>
 
       {rows.length === 0 ? (
-        <p className="mt-4 text-sm leading-6 text-paper/45">{empty}</p>
+        <p className="mt-4 text-sm leading-[1.6] text-paper/45">{empty}</p>
       ) : (
         <ul className="mt-4 space-y-0.5">
           {rows.map((row) => (

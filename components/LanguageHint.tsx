@@ -102,7 +102,9 @@ export default function LanguageHint() {
            above the header on every page grew by a sixth. */
         className="flex flex-col items-start gap-y-0 py-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 sm:py-2.5"
       >
-        <p className="text-sm text-paper/75">This page is also available in English.</p>
+        <p className="text-sm text-paper/75 leading-[1.6]">
+          This page is also available in English.
+        </p>
         {/* One row of its own below sm; dissolved into the parent from sm, so
             the wide layout is exactly what it was. */}
         <div className="flex w-full items-center gap-x-4 sm:contents">

@@ -258,10 +258,10 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
               trail={[{ name: lang === "da" ? "Få et tilbud" : "Get a quote", href: "/tilbud" }]}
               className="mb-5"
             />
-            <h1 className="max-w-3xl text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {c.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
+            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
               {c.lead}
             </p>
 
@@ -304,7 +304,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
                   <h2 className="font-display text-base font-bold tracking-tight text-paper">
                     {c.exampleTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-6 text-paper/70">{c.exampleBody}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/70">{c.exampleBody}</p>
                   <Link
                     href={localePath("/tilbud-eksempel", lang)}
                     className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
@@ -337,7 +337,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
                   <h2 className="font-display text-base font-bold tracking-tight text-paper">
                     {c.otherTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-6 text-paper/65">{c.otherBody}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/65">{c.otherBody}</p>
                   <Link
                     href={localePath("/kontakt", lang)}
                     className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
@@ -358,7 +358,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.needTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.needLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.needLead}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
@@ -368,7 +368,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
                   <Check className="mt-1 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={2.5} />
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-paper/65">{item.body}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{item.body}</p>
               </div>
             ))}
           </div>
@@ -389,7 +389,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.processTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.processLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.processLead}</p>
 
             <ol className="mt-10 space-y-6">
               {c.processSteps.map((step, i) => (
@@ -399,7 +399,7 @@ export default function QuotePage({ params }: { params: { lang: Lang } }) {
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title}</h3>
-                    <p className="mt-1 text-base leading-7 text-paper/65">{step.body}</p>
+                    <p className="mt-1 text-base leading-[1.75] text-paper/65">{step.body}</p>
                   </div>
                 </li>
               ))}

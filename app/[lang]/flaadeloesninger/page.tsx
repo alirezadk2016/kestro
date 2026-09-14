@@ -413,7 +413,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
     <>
       <PageSchema lang={lang} route="/flaadeloesninger" />
 
-      <section className="bg-brand-950 py-14 text-white sm:py-20 lg:py-24">
+      <section className="bg-brand-950 py-14 text-white sm:py-10 sm:py-20">
         <Container>
           <Breadcrumbs
             lang={lang}
@@ -432,7 +432,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
               {c.title}
             </h1>
-            <p className="mt-4 text-base leading-7 text-ink-300 sm:text-lg">{c.intro}</p>
+            <p className="mt-4 text-base leading-[1.65] text-ink-300 sm:text-lg">{c.intro}</p>
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
@@ -481,7 +481,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-paper sm:mt-4">{item.title[lang]}</h3>
-                  <p className="mt-1.5 text-sm leading-6 text-paper/65 sm:mt-2">
+                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65 sm:mt-2">
                     {item.description[lang]}
                   </p>
                 </div>
@@ -498,20 +498,20 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.scaleTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.scaleLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.scaleLead}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
             {scaleTiers.map((tier) => (
               <div key={tier.range.da} className="plate p-5 sm:p-8">
                 <h3 className="text-base font-semibold text-paper">{tier.range[lang]}</h3>
-                <p className="mt-2 text-sm leading-6 text-paper/65">{tier.body[lang]}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{tier.body[lang]}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-8 max-w-2xl">
-            <p className="text-base leading-7 text-paper/65">{c.scaleClose}</p>
+            <p className="text-base leading-[1.75] text-paper/65">{c.scaleClose}</p>
             <Link
               href={localePath("/priser", lang)}
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
@@ -530,7 +530,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.rolloutTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.rolloutLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.rolloutLead}</p>
 
             <ol className="mt-10 space-y-6">
               {rolloutPhases.map((phase, i) => (
@@ -540,7 +540,9 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{phase.when[lang]}</h3>
-                    <p className="mt-1 text-base leading-7 text-paper/65">{phase.body[lang]}</p>
+                    <p className="mt-1 text-base leading-[1.75] text-paper/65">
+                      {phase.body[lang]}
+                    </p>
                     {phase.link && (
                       <Link
                         href={localePath(phase.link.href, lang)}
@@ -565,7 +567,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.tradeTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.tradeBody}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.tradeBody}</p>
 
             <ol className="mt-10 space-y-6">
               {tradeInSteps.map((step, i) => (
@@ -575,7 +577,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>
-                    <p className="mt-1 text-base leading-7 text-paper/65">
+                    <p className="mt-1 text-base leading-[1.75] text-paper/65">
                       {step.description[lang]}
                     </p>
                   </div>
@@ -612,7 +614,7 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
           <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {c.ctaTitle}
           </h2>
-          <p className="max-w-xl text-base leading-7 text-ink-400">{c.ctaBody}</p>
+          <p className="max-w-xl text-base leading-[1.75] text-ink-400">{c.ctaBody}</p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             {/* Only when there is a number. Without the guard this rendered a
                 filled blue pill with a phone icon, no label and href="tel:" —

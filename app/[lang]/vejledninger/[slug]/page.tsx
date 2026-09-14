@@ -186,7 +186,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       {/* The header carries depth by layering rather than by ornament: the mark
           sits behind the type on a wide screen and steps out of the way on a
           narrow one, where the words are the only thing worth the space. */}
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-10 sm:py-20">
         {/* The guide's own panel, not its cluster's.
             Three articles sit in "Levetid og udskiftning" and three in "Køb,
             stand og afhændelse", so the cluster mark put the same drawing
@@ -258,13 +258,13 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               </Link>
             </p>
 
-            <h1 className="mt-3 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {guide.title[lang]}
             </h1>
 
             {/* The answer, before the scroll. Someone who reads only this
                 should still have got what they came for. */}
-            <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-7 text-paper/85 sm:text-lg sm:leading-8">
+            <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
               {guide.tldr[lang]}
             </p>
 
@@ -283,7 +283,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
+            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
               {guide.intro[lang]}
             </p>
 
@@ -300,7 +300,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65"
                   >
                     {paragraph[lang]}
                   </p>
@@ -369,7 +369,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
               <h2 className="font-display text-lg font-bold tracking-tight text-paper">
                 {c.closingTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 sm:leading-8 text-paper/65">
+              <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
                 {guide.closing[lang]}
               </p>
               <Link
@@ -430,7 +430,7 @@ export default function GuidePage({ params }: { params: { lang: Lang; slug: stri
       </section>
 
       {inCluster.length > 0 && (
-        <section className="border-t border-white/10 py-10 sm:py-16">
+        <section className="border-t border-white/10 py-10 sm:py-20">
           <Container>
             <div className="max-w-3xl">
               <p className="eyebrow text-brand-300">

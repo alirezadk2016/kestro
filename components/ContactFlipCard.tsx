@@ -122,11 +122,13 @@ function Face({
           <h2 className="text-base font-semibold">
             {member.phoneHref ? c.callDirect : c.writeDirect} {member.name}
           </h2>
-          <p className="text-sm text-ink-400">{member.role[lang]}</p>
+          <p className="text-sm text-ink-400 leading-[1.6]">{member.role[lang]}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-6 text-ink-300">{member.phoneHref ? c.busy : c.lands}</p>
+      <p className="mt-4 text-sm leading-[1.6] text-ink-300">
+        {member.phoneHref ? c.busy : c.lands}
+      </p>
 
       <div className="mt-auto pt-4">
         {(member.phoneHref || company.phoneHref) && (
@@ -141,7 +143,7 @@ function Face({
         )}
 
         {member.phoneHref && company.phoneDisplay && (
-          <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
+          <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400 leading-[1.45]">
             {c.mainNumber}: {company.phoneDisplay}
           </p>
         )}

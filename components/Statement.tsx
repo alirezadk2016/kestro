@@ -81,11 +81,13 @@ export default function Statement({ lang }: { lang: Lang }) {
             <span className="eyebrow text-brand-300">{c.label}</span>
           </div>
 
-          <p className="mt-6 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+          <p className="mt-6 text-balance font-display t-display font-extrabold tracking-display text-paper">
             {c.lead}
           </p>
-          <p className="mt-6 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">{c.body}</p>
-          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-7 sm:leading-8 text-paper/90">
+          <p className="mt-6 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
+            {c.body}
+          </p>
+          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-[1.75] sm:leading-[1.75] text-paper/90">
             {c.kicker}
           </p>
         </div>

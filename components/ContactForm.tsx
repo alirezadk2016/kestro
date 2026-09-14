@@ -382,7 +382,7 @@ export default function ContactForm({
         >
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.unavailableBody}</p>
 
         <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
           {body}
@@ -405,7 +405,7 @@ export default function ContactForm({
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-6 text-paper/55">
+          <p className="mt-5 text-sm leading-[1.6] text-paper/55">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
@@ -443,7 +443,7 @@ export default function ContactForm({
         >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">
+        <p className="mt-3 text-base leading-[1.75] text-paper/65">
           {quote ? c.quoteThanksBody : c.thanksBody}
         </p>
 
@@ -505,7 +505,7 @@ export default function ContactForm({
               </label>
             ))}
           </div>
-          <p className="mt-2 text-xs leading-5 text-paper/50">{c.quantityHelp}</p>
+          <p className="mt-2 text-xs leading-[1.45] text-paper/50">{c.quantityHelp}</p>
         </fieldset>
       )}
 
@@ -712,7 +712,7 @@ export default function ContactForm({
           {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>
 
-        <p className="mt-3 text-xs leading-5 text-paper/50">
+        <p className="mt-3 text-xs leading-[1.45] text-paper/50">
           {c.privacy}{" "}
           <Link
             href={localePath("/privatlivspolitik", lang)}

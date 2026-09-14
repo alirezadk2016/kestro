@@ -144,7 +144,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
           __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-10 sm:py-20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
@@ -196,13 +196,15 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                       {model.name}
                     </h1>
-                    <p className="mt-2 text-base text-ink-300 sm:text-lg">{model.tagline[lang]}</p>
+                    <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                      {model.tagline[lang]}
+                    </p>
                   </div>
                 </div>
 
-                <p className="mt-8 text-base leading-7 text-ink-300">{model.intro[lang]}</p>
+                <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
 
-                <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-ink-300">
+                <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-[1.6] text-ink-300">
                   {c.notStock}
                 </p>
 
@@ -244,7 +246,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     ))}
                   </div>
 
-                  <p className="pt-1 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+                  <p className="pt-1 text-sm leading-[1.6] text-paper/55">{c.imageNote}</p>
                 </div>
               )}
             </div>
@@ -258,7 +260,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             <div className="overflow-hidden border border-white/10">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
-                <p className="mt-1 text-sm leading-6 text-paper/65">{c.configBody}</p>
+                <p className="mt-1 text-sm leading-[1.6] text-paper/65">{c.configBody}</p>
               </div>
 
               <dl className="lg:grid lg:grid-cols-2">
@@ -339,7 +341,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.ctaBody}</p>
+              <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/65">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-5"
@@ -349,7 +351,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             </div>
 
             {category && (
-              <p className="mt-8 text-sm leading-6 text-paper/55">
+              <p className="mt-8 text-sm leading-[1.6] text-paper/55">
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}

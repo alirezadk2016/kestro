@@ -297,7 +297,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           )}
         </div>
 
-        {failed && <p className="mt-4 text-sm leading-7 text-paper/50">{c.fallback}</p>}
+        {failed && <p className="mt-4 text-sm leading-[1.6] text-paper/50">{c.fallback}</p>}
       </div>
 
       <div className="lg:col-span-5">
@@ -325,7 +325,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           <h3 className="font-display text-xl font-bold tracking-tight text-paper">
             {active.name[lang]}
           </h3>
-          <p className="mt-3 text-base leading-7 text-paper/65">{active.summary[lang]}</p>
+          <p className="mt-3 text-base leading-[1.75] text-paper/65">{active.summary[lang]}</p>
 
           <p className="label mt-8 text-brand-300">{c.checks}</p>
           <ul className="mt-4 space-y-3">

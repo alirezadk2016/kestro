@@ -59,14 +59,14 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-12 sm:py-24" data-reveal>
+    <section className="stage py-10 sm:py-20" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-7 text-paper/70">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/70">{c.sub}</p>
         </div>
 
         {/*
@@ -124,7 +124,9 @@ export default function Services({ lang }: { lang: Lang }) {
               <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
                 {service.title[lang]}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-paper/65">{service.description[lang]}</p>
+              <p className="mt-2 text-sm leading-[1.6] text-paper/65">
+                {service.description[lang]}
+              </p>
             </li>
           ))}
         </ol>

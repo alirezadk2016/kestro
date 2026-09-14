@@ -111,7 +111,7 @@ export default function OmOsPage({ params }: { params: { lang: Lang } }) {
                 </span>
                 <div>
                   <h2 className="text-xl font-semibold text-paper">{section.title[lang]}</h2>
-                  <p className="mt-3 text-base leading-7 text-paper/65">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/65">
                     {section.description[lang]}
                   </p>
                 </div>

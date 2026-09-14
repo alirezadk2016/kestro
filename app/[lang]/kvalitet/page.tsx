@@ -221,7 +221,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.gradingTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.gradingBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.gradingBody}</p>
 
             <div className="mt-8 space-y-4">
               {grades.map((grade) => (
@@ -232,10 +232,10 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
                       {grade.label[lang]}
                     </span>
                   </div>
-                  <p className="mt-3 text-base leading-7 text-paper/65">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/65">
                     {grade.description[lang]}
                   </p>
-                  <p className="mt-3 text-sm leading-6 text-paper/55">
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/55">
                     <span className="font-semibold text-paper/80">{c.suits}</span>{" "}
                     {grade.suits[lang]}
                   </p>
@@ -245,7 +245,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-6 flex gap-3 border-l-2 border-white/30 bg-white/5 p-5">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
-              <p className="text-sm leading-6 text-paper/80">{c.warning}</p>
+              <p className="text-sm leading-[1.6] text-paper/80">{c.warning}</p>
             </div>
           </div>
         </Container>
@@ -257,7 +257,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.testTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.testBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.testBody}</p>
 
             <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {testPoints.map((point) => (
@@ -268,7 +268,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </ul>
 
-            <p className="mt-8 max-w-2xl text-sm leading-6 text-paper/65">{c.testNote}</p>
+            <p className="mt-8 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.testNote}</p>
           </div>
         </Container>
       </section>
@@ -279,14 +279,14 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.dataTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.dataBody1}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.dataBody2}</p>
 
             <h2 className="mt-12 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.warrantyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.warrantyBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.warrantyBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.warrantyBody1}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.warrantyBody2}</p>
           </div>
         </Container>
       </section>
@@ -297,7 +297,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.disclosureTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.disclosureBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.disclosureBody}</p>
 
             <ul className="mt-8 space-y-3">
               {disclosure.map((item) => (
@@ -310,7 +310,7 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
 
             <div className="mt-10 plate p-6 sm:p-8">
               <h3 className="text-base font-semibold text-paper">{c.notIncludedTitle}</h3>
-              <p className="mt-2 text-base leading-7 text-paper/65">{c.notIncludedBody}</p>
+              <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-5"

@@ -27,7 +27,7 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
   const c = copy[lang];
 
   return (
-    <section className="border-t border-white/10 bg-brand-950 py-12 sm:py-16" data-reveal>
+    <section className="border-t border-white/10 bg-brand-950 py-10 sm:py-20" data-reveal>
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
@@ -38,8 +38,8 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
             <ul className="mt-6 space-y-5">
               {sourceList(ids).map((source) => (
                 <li key={source.id} className="border-l-2 border-brand-500/40 pl-4">
-                  <p className="text-sm leading-6 text-paper/75">{source.claim[lang]}</p>
-                  <p className="mt-1 text-xs text-paper/45">
+                  <p className="text-sm leading-[1.6] text-paper/75">{source.claim[lang]}</p>
+                  <p className="mt-1 text-xs text-paper/45 leading-[1.45]">
                     {source.publisher}
                     {source.published ? `, ${source.published}` : ""}
                   </p>

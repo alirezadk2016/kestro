@@ -160,7 +160,7 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>
-                    <p className="mt-1.5 text-base leading-7 text-paper/65">
+                    <p className="mt-1.5 text-base leading-[1.75] text-paper/65">
                       {step.description[lang]}
                     </p>
                   </div>
@@ -188,20 +188,20 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-sm leading-6 text-paper/55">{c.buyNote}</p>
+              <p className="mt-5 text-sm leading-[1.6] text-paper/55">{c.buyNote}</p>
             </div>
 
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.dataTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.dataBody}</p>
             </div>
           </div>
 
           <div className="mt-12 max-w-5xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
             <h2 className="text-lg font-semibold text-paper">{c.fleetTitle}</h2>
-            <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.fleetBody}</p>
+            <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/65">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
               className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
@@ -219,13 +219,13 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.overstockTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.overstockBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.overstockBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.overstockBody1}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.overstockBody2}</p>
 
             <h2 className="mt-14 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.formBody}</p>
 
             <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm

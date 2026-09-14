@@ -144,7 +144,7 @@ export default function LivePanel({ initial }: { initial: LiveStats }) {
       </header>
 
       {live.reading.length === 0 ? (
-        <p className="relative px-6 pb-7 pt-5 text-sm leading-6 text-paper/50">
+        <p className="relative px-6 pb-7 pt-5 text-sm leading-[1.6] text-paper/50">
           Ingen på sitet i øjeblikket. Listen fylder sig selv, så snart nogen åbner en side.
         </p>
       ) : (

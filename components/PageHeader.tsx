@@ -42,14 +42,14 @@ export default function PageHeader({
       {lang && href && (
         <Breadcrumbs lang={lang} trail={[{ name: crumb ?? title, href }]} className="mb-5" />
       )}
-      <h1 className="text-balance font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.03] tracking-display text-paper">
+      <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
         {title}
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
+      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/65 sm:text-lg sm:leading-[1.65]">
         {description}
       </p>
       {updated && (
-        <p className="mt-5 text-xs text-paper/45">
+        <p className="mt-5 text-xs text-paper/45 leading-[1.45]">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
           <time dateTime={pageUpdated(updated)} className="tabular-nums">
             {pageUpdated(updated)}

@@ -98,7 +98,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-white/10 bg-ink-900 py-12 sm:py-16" data-reveal>
+    <section className="border-b border-white/10 bg-ink-900 py-10 sm:py-20" data-reveal>
       <Container>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Send us a spec */}
@@ -108,7 +108,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
                 {c.askTitle}
               </h2>
-              <p className="mt-4 text-sm leading-6 text-paper/65">{c.askBody}</p>
+              <p className="mt-4 text-sm leading-[1.6] text-paper/65">{c.askBody}</p>
 
               <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
                 {asks.map((ask) => (
@@ -164,10 +164,10 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
                       {step.n}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold leading-snug text-paper">
+                      <p className="text-sm font-semibold leading-[1.6] text-paper">
                         {step.title[lang]}
                       </p>
-                      <p className="text-xs leading-5 text-paper/55">{step.note[lang]}</p>
+                      <p className="text-xs leading-[1.45] text-paper/55">{step.note[lang]}</p>
                     </div>
                   </li>
                 ))}
@@ -224,7 +224,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               <h2 className="mt-3 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper">
                 {c.fleetTitle}
               </h2>
-              <p className="mt-3 text-sm leading-6 text-paper/75">{c.fleetBody}</p>
+              <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.fleetBody}</p>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                 {c.fleetLink}
                 <ArrowRight

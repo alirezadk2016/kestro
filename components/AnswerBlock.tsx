@@ -102,7 +102,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
   const ids = FACTS.map((fact) => fact.id);
 
   return (
-    <section className="border-b border-white/10 bg-brand-950 py-12 sm:py-16" data-reveal>
+    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-20" data-reveal>
       <FaqSchema lang={lang} items={faqs} />
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
@@ -115,9 +115,9 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
             <h2 className="mt-4 font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.question}
             </h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-paper/75">{c.answer}</p>
+            <p className="mt-4 max-w-2xl text-base leading-[1.75] text-paper/75">{c.answer}</p>
 
-            <p className="mt-6 text-xs text-paper/45">
+            <p className="mt-6 text-xs text-paper/45 leading-[1.45]">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums">
                 {updated}
@@ -148,7 +148,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
                   <p className="font-display text-2xl font-extrabold tracking-display text-paper tabular-nums">
                     {fact.figure}
                   </p>
-                  <p className="mt-1 text-sm leading-6 text-paper/65">
+                  <p className="mt-1 text-sm leading-[1.6] text-paper/65">
                     {fact.note[lang]}{" "}
                     <span className="text-paper/40">— {sources[fact.id].publisher}</span>
                   </p>

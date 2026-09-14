@@ -172,10 +172,10 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
               type that actually sits on 8.48:1. The label is a label; its box
               should say so. */}
           <p className="eyebrow mt-8 w-fit text-brand-300">{c.eyebrow}</p>
-          <h1 className="mt-4 max-w-3xl text-balance font-display text-[clamp(2.25rem,6vw,4.25rem)] font-extrabold leading-[0.98] tracking-display text-paper">
+          <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
             {c.title}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-paper/70 sm:text-lg sm:leading-8">
+          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/70 sm:text-lg sm:leading-[1.65]">
             {c.description}
           </p>
 
@@ -205,7 +205,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
 
       {/* The index: four plates in a folder. Each is a real link to the anchor
           its section carries, which is also what an article links back to. */}
-      <section className="border-b border-white/10 py-10 sm:py-16">
+      <section className="border-b border-white/10 py-10 sm:py-20">
         <Container>
           <h2 className="eyebrow text-paper/40">{c.indexTitle}</h2>
           <nav aria-label={c.jump}>
@@ -248,7 +248,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                       <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {cluster.name[lang]}
                       </h3>
-                      <p className="mt-2 hidden flex-1 text-sm leading-6 text-paper/55 sm:block">
+                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/55 sm:block">
                         {cluster.description[lang]}
                       </p>
                       {/* On its own rule at the foot of the card, so four cards
@@ -273,7 +273,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
         <section
           key={cluster.id}
           id={cluster.anchor}
-          className="scroll-mt-20 border-b border-white/10 py-12 sm:py-16"
+          className="scroll-mt-20 border-b border-white/10 py-10 sm:py-20"
         >
           <Container>
             {/*
@@ -314,7 +314,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                 </span>
                 <span className="tabular-nums">{String(groups.length).padStart(2, "0")}</span>
               </p>
-              <h2 className="mt-3 font-display text-[clamp(1.5rem,2.8vw,2.125rem)] font-bold leading-tight tracking-tight text-paper">
+              <h2 className="mt-3 font-display t-h2 font-bold tracking-tight text-paper">
                 {cluster.name[lang]}
               </h2>
               <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/60">
@@ -355,7 +355,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                        pulled 20px out of a 16px inset and the whole page
                        scrolled 4px sideways — measured: scrollWidth 394 in a
                        390 viewport. */
-                    className="group -mx-4 flex flex-col gap-5 border-l-2 border-transparent py-7 pl-4 pr-4 transition-colors hover:border-brand-400 hover:bg-white/[0.03] sm:-mx-5 sm:gap-6 sm:py-9 sm:pl-5 sm:pr-5"
+                    className="group relative -mx-4 flex flex-col gap-5 py-7 pl-4 pr-4 transition-colors before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-brand-400 before:to-brand-400/0 before:opacity-0 before:transition-opacity hover:bg-white/[0.03] hover:before:opacity-100 sm:-mx-5 sm:flex-row sm:items-center sm:gap-7 sm:py-7 sm:pl-5 sm:pr-5"
                   >
                     {/*
                      * The guide's own panel.
@@ -365,12 +365,17 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                      * udskiftning" shared one illustration and the list itself
                      * had nothing to recognise a row by but its title.
                      *
-                     * It is drawn at 768x512 and rendered near that size. The
-                     * first attempt put the same subjects in a 124px thumbnail
-                     * beside the title, and at that size a drawing holds one
-                     * shape and nothing else — no reading, no label, no light —
-                     * so an illustration system arrived as eight small icons.
-                     * A panel needs the room to be a panel.
+                     * Beside the title, not above it. Stacked full width it
+                     * was 700x470 in a 1280 container, so three links came to
+                     * 2,900px of section — a list you scroll for three screens
+                     * to read three lines, in a column using 55% of the page
+                     * with the rest empty. That is what "the site looks zoomed
+                     * in" means when it stops being a feeling.
+                     *
+                     * 320px is the size to land on. An earlier attempt used a
+                     * 124px thumbnail and at that size a drawing holds one
+                     * shape and nothing else — no reading, no label, no light.
+                     * At 320 it is still a panel, and the row is a row.
                      *
                      * Fixed 3:2 box, so nothing shifts as it paints.
                      */}
@@ -378,7 +383,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                       slug={guide.slug}
                       lang={lang}
                       priority={groupIndex === 0 && index === 0}
-                      className="aspect-[3/2] w-full overflow-hidden rounded-sm border border-white/10 transition-colors group-hover:border-brand-400/40"
+                      className="plate-well aspect-[3/2] w-full shrink-0 overflow-hidden sm:w-[17.5rem] lg:w-[20rem]"
                     />
 
                     <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">

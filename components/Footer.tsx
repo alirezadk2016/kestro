@@ -88,7 +88,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               <Logo className="h-7 w-auto" idPrefix="footer" />
               Kestro
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-ink-400">{c.blurb}</p>
+            <p className="mt-4 max-w-sm text-sm leading-[1.6] text-ink-400">{c.blurb}</p>
 
             {/* rel="me" alongside noopener: it is what marks these as the same
                 entity's own profiles rather than pages we merely link to, and
@@ -145,7 +145,7 @@ export default function Footer({ lang }: { lang: Lang }) {
 
         <div className="mt-10 flex flex-col gap-6 border-t border-ink-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-ink-400">
+            <p className="text-sm text-ink-400 leading-[1.6]">
               {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
             </p>
             <a
@@ -169,7 +169,7 @@ export default function Footer({ lang }: { lang: Lang }) {
             the CVR before ordering, and e-handelsloven §7 requires them; each
             part appears when there is a real value for it. */}
         <div className="mt-12 space-y-3 border-t border-white/10 pt-6 text-sm text-ink-400">
-          <p className="text-xs leading-6">
+          <p className="text-xs leading-[1.45]">
             {[
               company.legalForm ? `${company.name} ${company.legalForm}` : company.name,
               postalAddress(lang),
@@ -180,7 +180,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               .filter(Boolean)
               .join(" · ")}
           </p>
-          <p className="max-w-3xl text-xs leading-6">{c.trademarks}</p>
+          <p className="max-w-3xl text-xs leading-[1.45]">{c.trademarks}</p>
           <p>
             &copy; {new Date().getFullYear()} Kestro. {c.rights}
           </p>

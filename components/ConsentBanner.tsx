@@ -60,8 +60,8 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     >
       <Container className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold text-paper">{c.title}</p>
-          <p className="mt-1 text-sm leading-6 text-paper/65">
+          <p className="text-sm font-semibold text-paper leading-[1.6]">{c.title}</p>
+          <p className="mt-1 text-sm leading-[1.6] text-paper/65">
             {c.body}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}

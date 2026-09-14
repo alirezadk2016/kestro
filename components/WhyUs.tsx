@@ -53,10 +53,10 @@ export default function WhyUs({ lang }: { lang: Lang }) {
       <Container>
         <div className="max-w-3xl">
           <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-7 text-paper/65">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.sub}</p>
         </div>
 
         <dl className="mt-10 grid grid-cols-1 gap-x-12 border-t border-paper/15 sm:grid-cols-2">

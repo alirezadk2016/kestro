@@ -93,7 +93,7 @@ export default function KontaktPage({ params }: { params: { lang: Lang } }) {
 
               <div className="border border-white/10 bg-white/5 p-6 sm:p-8">
                 <h2 className="text-base font-semibold text-paper">{c.emailTitle}</h2>
-                <p className="mt-2 text-sm leading-6 text-paper/65">{c.emailBody}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />
               </div>
 

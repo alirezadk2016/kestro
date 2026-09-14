@@ -82,10 +82,10 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
 
           <div>
             <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {model.name}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65 sm:text-lg">{c.body}</p>
+            <p className="mt-4 text-base leading-[1.65] text-paper/65 sm:text-lg">{c.body}</p>
 
             <ul className="mt-6 flex flex-wrap gap-2">
               {highlights.map((highlight) => (

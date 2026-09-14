@@ -26,7 +26,7 @@ export default function RelatedLinks({
   const heading = title ?? { da: "Videre herfra", en: "Where to go next" };
 
   return (
-    <section className="border-t border-white/10 py-10 sm:py-16">
+    <section className="border-t border-white/10 py-10 sm:py-20">
       <Container>
         <div className="max-w-6xl">
           <p className="eyebrow text-brand-300">{heading[lang]}</p>

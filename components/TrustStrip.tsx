@@ -62,7 +62,9 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
             <h2 className="mt-4 text-balance font-display text-2xl font-extrabold tracking-display text-paper sm:text-3xl">
               {c.title}
             </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-paper/65 sm:text-base">{c.sub}</p>
+            <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-paper/65 sm:text-base">
+              {c.sub}
+            </p>
 
             <Link
               href={localePath("/tilbud-eksempel", lang)}

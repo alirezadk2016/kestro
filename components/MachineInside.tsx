@@ -277,7 +277,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
           </svg>
         </div>
 
-        <p className="mt-4 max-w-2xl text-xs leading-6 text-paper/50">{c.note}</p>
+        <p className="mt-4 max-w-2xl text-xs leading-[1.45] text-paper/50">{c.note}</p>
       </div>
 
       <div className="lg:col-span-5">
@@ -331,20 +331,22 @@ export default function MachineInside({ lang }: { lang: Lang }) {
                 </span>
               </div>
 
-              <p className="mt-2 font-mono text-xs leading-6 text-paper/50">
+              <p className="mt-2 font-mono text-xs leading-[1.45] text-paper/50">
                 {selected.spec[lang]}
               </p>
 
               <p className="label mt-8 text-brand-300">{c.what}</p>
-              <p className="mt-3 text-base leading-7 text-paper/65">{selected.what[lang]}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/65">{selected.what[lang]}</p>
 
               <p className="label mt-8 text-brand-300">{c.upgrade}</p>
-              <p className="mt-3 text-base leading-7 text-paper/65">{selected.upgrade[lang]}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/65">
+                {selected.upgrade[lang]}
+              </p>
             </>
           ) : (
             <>
               <h3 className="font-display text-xl font-bold tracking-tight text-paper">{c.pick}</h3>
-              <p className="mt-3 text-base leading-7 text-paper/65">{c.pickBody}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.pickBody}</p>
             </>
           )}
         </div>

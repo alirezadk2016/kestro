@@ -80,8 +80,8 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
 
           <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noShopBody2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noShopBody1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noShopBody2}</p>
             <Link
               href={localePath("/kvalitet", lang)}
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
@@ -100,10 +100,10 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                 <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 max-w-3xl text-base leading-7 text-paper/65">
+                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/65">
                   {group.description[lang]}
                 </p>
-                <p className="mt-1 max-w-3xl text-sm leading-6 text-paper/55">{c.priceNote}</p>
+                <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/55">{c.priceNote}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
@@ -118,7 +118,7 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                         <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
+                        <p className="mt-2 flex-1 text-sm leading-[1.6] text-paper/65">
                           {model.tagline[lang]}
                         </p>
                         <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">

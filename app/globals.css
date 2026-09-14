@@ -322,6 +322,49 @@ body {
   }
 
   /*
+   * The display scale.
+   *
+   * There were eight of these, all doing the same two jobs. A page title was
+   * 68px on the guides index, 56px on four other pages and 52px in a
+   * pull-quote, while the front page's own headline sits at 38 — so every
+   * interior page shouted louder than the hero, which is the measurable half
+   * of "the site looks zoomed in". The vw coefficients disagreed as badly:
+   * 6vw against 2.63vw for the same kind of heading, so the relationship
+   * between two headings changed at every window width, and there was no
+   * width at which the page was the one it was designed at.
+   *
+   * Four steps now, with coefficients in proportion, so the scale holds
+   * across the whole range instead of at one screen size:
+   *
+   *   t-display  34 → 52   the one big moment on a page
+   *   t-h1       30 → 44   a page title
+   *   t-h2       24 → 34   a section
+   *   t-h3       17 → 21   a block inside one
+   *
+   * They carry size and leading only. Weight, tracking and colour stay at the
+   * call site, because those do change with the surface.
+   */
+  .t-display {
+    font-size: clamp(2.125rem, 3.6vw, 3.25rem);
+    line-height: 1.05;
+  }
+
+  .t-h1 {
+    font-size: clamp(1.875rem, 3.05vw, 2.75rem);
+    line-height: 1.06;
+  }
+
+  .t-h2 {
+    font-size: clamp(1.5rem, 2.35vw, 2.125rem);
+    line-height: 1.12;
+  }
+
+  .t-h3 {
+    font-size: clamp(1.0625rem, 1.45vw, 1.3125rem);
+    line-height: 1.35;
+  }
+
+  /*
    * Two small-caps labels, not the five near-identical ones that had grown
    * across the pages. An eyebrow sits above a heading; a label names a value
    * in a data row. Both were 10–11 px, which is under-sized on a phone, so

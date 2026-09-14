@@ -57,9 +57,9 @@ export default function PriceOnRequest({
       <p className="mt-2 font-display text-2xl font-extrabold tracking-display text-paper">
         {c.heading}
       </p>
-      <p className="mt-3 text-sm leading-6 text-paper/65">{c.body}</p>
+      <p className="mt-3 text-sm leading-[1.6] text-paper/65">{c.body}</p>
 
-      <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-6 text-paper/75">
+      <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">
         <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={1.75} />
         {c.volume}
       </p>

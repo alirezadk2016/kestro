@@ -41,14 +41,14 @@ export default function CtaSection({
   const team = enquiryContacts(lang);
 
   return (
-    <section className="stage py-12 sm:py-24" data-reveal>
+    <section className="stage py-10 sm:py-20" data-reveal>
       <Container>
         <div className="max-w-3xl">
           <span className="h-px w-8 bg-brand-400" />
-          <h2 className="mt-6 text-balance font-display text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+          <h2 className="mt-6 text-balance font-display t-display font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-7 sm:leading-8 text-paper/60">{c.body}</p>
+          <p className="mt-5 text-base leading-[1.75] sm:leading-[1.75] text-paper/60">{c.body}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             {/* The same two controls as the hero, from the same component.
@@ -66,7 +66,7 @@ export default function CtaSection({
 
         {people && (
           <div className="mt-12 border-t border-paper/15 pt-8 lg:mt-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/60">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/60 leading-[1.45]">
               {c.who}
             </p>
             <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-10 sm:gap-y-5">
@@ -74,8 +74,8 @@ export default function CtaSection({
                 <div key={member.id} className="flex items-center gap-3">
                   <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-paper">{member.name}</p>
-                    <p className="text-sm text-paper/60">{member.role[lang]}</p>
+                    <p className="text-sm font-semibold text-paper leading-[1.6]">{member.name}</p>
+                    <p className="text-sm text-paper/60 leading-[1.6]">{member.role[lang]}</p>
                   </div>
                 </div>
               ))}

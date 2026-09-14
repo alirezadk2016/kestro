@@ -222,14 +222,20 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody1}</p>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              {c.whyBody1}
+            </p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              {c.whyBody2}
+            </p>
 
             <div className="mt-12 border-t border-white/15 pt-8">
               <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                 {c.driversTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.driversLead}</p>
+              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+                {c.driversLead}
+              </p>
             </div>
           </div>
 
@@ -244,7 +250,7 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
                     <h3 className="font-display text-base font-bold tracking-tight text-paper">
                       {driver.heading[lang]}
                     </h3>
-                    <p className="mt-2 text-sm leading-7 text-paper/65">{driver.body[lang]}</p>
+                    <p className="mt-2 text-sm leading-[1.6] text-paper/65">{driver.body[lang]}</p>
                   </div>
                 </div>
               </li>
@@ -255,7 +261,7 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-lg font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.quoteLead}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.quoteLead}</p>
             <ul className="mt-5 space-y-3">
               {c.quotePoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-7 text-paper/80">
@@ -273,14 +279,18 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.freeTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.freeBody}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              {c.freeBody}
+            </p>
           </div>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.fastTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.fastLead}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              {c.fastLead}
+            </p>
             <ul className="mt-5 space-y-2.5">
               {c.fastPoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-7 text-paper/65">

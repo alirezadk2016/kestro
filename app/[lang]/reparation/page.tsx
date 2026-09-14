@@ -254,7 +254,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
           />
 
           <div className="mt-12 max-w-3xl">
-            <p className="text-base leading-7 text-paper/65">{c.intro}</p>
+            <p className="text-base leading-[1.75] text-paper/65">{c.intro}</p>
           </div>
         </Container>
       </section>
@@ -274,7 +274,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
                 <h3 className="mt-3 text-sm font-semibold text-paper sm:mt-4 sm:text-base">
                   {service.title[lang]}
                 </h3>
-                <p className="mt-1.5 text-xs leading-5 text-paper/65 sm:mt-2 sm:text-sm sm:leading-6">
+                <p className="mt-1.5 text-xs leading-[1.6] text-paper/65 sm:mt-2 sm:text-sm sm:leading-[1.6]">
                   {service.description[lang]}
                 </p>
               </div>
@@ -303,7 +303,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.pricesTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-paper/65">{c.pricesBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.pricesBody}</p>
             </div>
           </div>
         </Container>
@@ -315,7 +315,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.formBody}</p>
 
             <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
