@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/Container";
 import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import ForgedPanel from "@/components/ForgedPanel";
+import MarkWell from "@/components/MarkWell";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
@@ -473,19 +475,17 @@ export default function FlaadeloesningerPage({ params }: { params: { lang: Lang 
             </h2>
           </div>
 
+          {/* Panels, not cards: these describe what the service covers and
+              there is nowhere for them to go. ForgedPanel without an href is
+              static — no tilt, no pointer light — because a card that lifts
+              when you point at it is saying it is clickable. */}
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {capabilities.map((item) => (
-              <div key={item.title.da} className="flex gap-4 plate p-5 sm:block sm:p-8">
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-brand-300 sm:h-11 sm:w-11">
-                  <CraftMark name={item.mark} className="h-6 w-6" />
-                </span>
-                <div>
-                  <h3 className="text-base font-semibold text-paper sm:mt-4">{item.title[lang]}</h3>
-                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65 sm:mt-2">
-                    {item.description[lang]}
-                  </p>
-                </div>
-              </div>
+              <ForgedPanel key={item.title.da} faceClassName="p-5 sm:p-8">
+                <MarkWell mark={item.mark} />
+                <h3 className="mt-4 text-base font-semibold text-paper">{item.title[lang]}</h3>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{item.description[lang]}</p>
+              </ForgedPanel>
             ))}
           </div>
         </Container>

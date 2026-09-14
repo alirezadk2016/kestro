@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import ServiceTile from "@/components/ServiceTile";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
@@ -181,30 +182,21 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
             updated="/ydelser"
           />
 
+          {/* Was a hand-rolled Link card with a .plate and an 11px chip. It is
+              the same object as the repair tiles — a card that goes somewhere,
+              with a mark naming what is there — so it is the same component,
+              and the site stops running two card languages on two pages. */}
           <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {services.map((service) => (
-              <Link
+              <ServiceTile
                 key={service.title.da}
                 href={localePath(service.href, lang)}
-                className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
-              >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-brand-300">
-                  <CraftMark name={service.mark} className="h-6 w-6" />
-                </span>
-                <h2 className="mt-4 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
-                  {service.title[lang]}
-                </h2>
-                <p className="mt-2 flex-1 text-sm leading-[1.6] text-paper/65">
-                  {service.description[lang]}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
-                  {service.linkLabel[lang]}
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
-                </span>
-              </Link>
+                mark={service.mark}
+                title={service.title[lang]}
+                summary={service.description[lang]}
+                prompt={service.linkLabel[lang]}
+                headingLevel={2}
+              />
             ))}
           </div>
         </Container>
