@@ -239,19 +239,36 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             </div>
           </div>
 
-          <ol className="mt-8 grid grid-cols-1 gap-x-12 border-t border-white/15 md:grid-cols-2">
+          {/*
+           * A spine below md, two columns from md.
+           *
+           * Six numbered rows separated by hairlines read as a table, and
+           * these are not rows — they are the six things that move a price,
+           * in order. One line down through all six with the numeral as the
+           * station says so. From md the grid splits in two and a spine
+           * through a two-column grid would be drawing a route that does not
+           * exist, so it stops there and the numerals go back to being
+           * numerals.
+           */}
+          <ol className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2 md:border-t md:border-white/15">
             {drivers.map((driver, i) => (
-              <li key={driver.heading.da} className="border-b border-white/10 py-6">
-                <div className="flex gap-5">
-                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-paper/55">
+              <li
+                key={driver.heading.da}
+                className="relative flex gap-5 pb-8 last:pb-0 md:border-b md:border-white/10 md:py-6 md:last:pb-6"
+              >
+                <div aria-hidden="true" className="relative w-10 flex-none">
+                  {i < drivers.length - 1 && (
+                    <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/45 via-paper/12 to-paper/5 md:hidden" />
+                  )}
+                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/55 md:shadow-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base font-bold tracking-tight text-paper">
-                      {driver.heading[lang]}
-                    </h3>
-                    <p className="mt-2 text-sm leading-[1.6] text-paper/65">{driver.body[lang]}</p>
-                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-base font-bold tracking-tight text-paper">
+                    {driver.heading[lang]}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.6] text-paper/65">{driver.body[lang]}</p>
                 </div>
               </li>
             ))}

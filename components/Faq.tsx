@@ -80,10 +80,20 @@ export default function Faq({
 
         {/* Native <details> keeps this a server component: no JS, keyboard and
             screen-reader behaviour come for free. */}
-        <div className="mt-10 max-w-3xl divide-y divide-white/10 border-y border-white/10 sm:mt-12">
+        {/*
+         * Plates, not a divided list.
+         *
+         * A stack of rows separated by hairlines reads as a table, and these
+         * are not rows of one thing — each is a question somebody actually
+         * asked. Given its own ground, a question is a thing you open; ruled
+         * off from its neighbours it is a line in a register. Same <details>
+         * underneath, so keyboard and screen-reader behaviour still come for
+         * free and the component stays server-rendered.
+         */}
+        <div className="mt-10 max-w-3xl space-y-3 sm:mt-12">
           {items.map((faq) => (
-            <details key={faq.question.da} className="group">
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors hover:text-paper [&::-webkit-details-marker]:hidden">
+            <details key={faq.question.da} className="plate group px-5 open:pb-1 sm:px-6">
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors group-open:text-brand-200 hover:text-brand-200 [&::-webkit-details-marker]:hidden">
                 {faq.question[lang]}
                 <ChevronDown
                   className="h-5 w-5 flex-shrink-0 text-paper/45 transition-transform duration-200 group-open:rotate-180"
