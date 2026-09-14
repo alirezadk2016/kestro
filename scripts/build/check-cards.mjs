@@ -36,7 +36,20 @@ for (const asset of ASSETS) {
     problems.push(`${asset.file}: ratio ${ratio.toFixed(3)}, slot wants ${asset.ratio.toFixed(3)}`);
   }
 
-  const { data } = await sharp(path).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  /* The fleet plate is a backdrop, not a picture: its lower third is ramped
+     to near-black on purpose so a heading has something to sit on. Exposure
+     and key colour are read over the artwork for the same reason the local
+     contrast is — measuring a region that is deliberately black measures the
+     ramp. Every other asset is measured whole. */
+  const sample = asset.crop
+    ? sharp(path).extract({
+        left: 0,
+        top: 0,
+        width: meta.width,
+        height: Math.round(meta.height * asset.crop),
+      })
+    : sharp(path);
+  const { data } = await sample.removeAlpha().raw().toBuffer({ resolveWithObject: true });
   let sum = 0;
   let n = 0;
   const bright = [];

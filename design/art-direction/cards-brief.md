@@ -247,30 +247,124 @@ Two things had to be learned the hard way again:
   turned a blue-black tower brass, which is the whole failure mode of tuning
   a picture to a number instead of looking at it. It sits at a third of that.
 
+### The fourth pass: they were fake
+
+"اینا فیک توش" — these are fake. They were, and not as a matter of taste.
+Five of the six contradicted their own alt text, which is a defect the site
+states in words on the page:
+
+| card | the alt text says | the picture showed |
+| --- | --- | --- |
+| `cat-laptops` | an open business laptop | one open laptop ✓ |
+| `cat-desktops` | a desktop tower **and a mini PC** side by side | one striped box |
+| `cat-monitors` | a widescreen monitor **with a keyboard and a docking station** | one monitor |
+| `cat-fleet` | a row of identical laptops prepared for delivery | a pale exploded-looking stack |
+| `exploded` | screen, keyboard, **mainboard** and base plate | two bare plates |
+| `fleet-scene` | a room of identical laptops **set out on desks** | one laptop on a plate |
+
+One cause under all of it: **the props and the model were in different unit
+systems.** The hero's laptop measures 2.945 x 0.537 x 4.61 with its width on z
+and its depth on x — 1 unit = 7 cm, and the depth, the thickness and the open
+height all agree on that figure. Every hand-built prop was sized at "about one
+unit", so the fleet room's desks were 18 cm across and a 24" monitor was
+narrower than the laptop beside it. `lib/card-subjects.mjs` is dimensioned in
+centimetres now.
+
+Four other things were wrong, and each was found by measuring rather than by
+looking harder:
+
+- **`Material.112` is `#e7371b`** — a saturated vermilion block on the right of
+  the palm rest, repeated six times on the fleet card. A red mark in that
+  position on a squared black business laptop is a maker's cue, and the footer
+  states Kestro is not affiliated with Lenovo, HP, Dell, Apple or Microsoft.
+  The brief names the red nub as a negative; this is the same thing one rule
+  along. It is regraded to chassis dark.
+- **The chassis ships at `#3f4556` and the lid shell at `#5b5c60`.** Sampled
+  off a card, the body came back at `#535566` against the hero's own laptop
+  body at `#161e25` — nearly three times the luminance. The hero gets away with
+  those materials because it is exposed three stops darker. They are regraded,
+  and the key light is raised rather than lowered, so the faces stay dark and
+  the edges keep the highlight. Graphite body, hot edge, as the second pass
+  already established for the drawings.
+- **The exploded card was hiding its own top layer.** `machine()` returns a
+  wrapper whose only child is the group holding both halves, so
+  `wrap.children[0].visible = false` hid the whole laptop rather than its base.
+  The base is one level deeper. A closed lid also has its screen facing down,
+  so the layer is flipped: without that, the top of a teardown card is the
+  blank back of a lid.
+- **The subjects floated, and the ground was a `ShadowMaterial`.** That paints
+  only where light is blocked, so a dark shadow fell on a dark gradient and was
+  invisible — nothing under any object said it was standing on anything.
+  "Nothing floats" is a rule in this brief and it was being broken on all six.
+
+The floor is a real surface now: fully metallic, near-black, polished to
+roughness 0.075, faded out by a radial alpha ramp so the artboard's hero crop
+still reads as the room beyond. Three things had to be got right in order:
+
+1. **Part-metal is the worst setting.** At metalness 0.5 the key's diffuse
+   lobe spreads into a lit pool across the bottom of every card, brighter than
+   the product standing in it. Fully metallic has no diffuse term at all, and
+   for a metal the specular is tinted by the base colour — which here is
+   near-black.
+2. **Lobe width decides everything else.** At roughness 0.26 the key's mirror
+   image is still a lit zone; tightened to 0.075 it collapses to a point that
+   falls behind the subject.
+3. **A PMREM environment contains the studio and nothing else,** so a polished
+   floor reflects the room but never the object on it. The reflection is a
+   mirrored copy of the subject below the plane, faded out by the floor's own
+   alpha — which is what the second pass said about the drawings: "the cheapest
+   thing that separates a product shot from a diagram."
+
+The key also moved to camera left and high, where this brief's own style block
+has always put it. It had been sitting on the camera's side, and on a polished
+floor that puts its mirror image in open frame beside the object.
+
+One measurement changed with all this, and it changed for a stated reason
+rather than to make a number go green: **the exposure and key-colour tests now
+read `fleet-scene` over its top 62%**, the same region the local-contrast test
+already used. That card is a backdrop whose lower third is ramped to near-black
+on purpose so a heading has something to sit on, and measuring a region that is
+deliberately black measures the ramp.
+
+**`cat-fleet` passes the warmth test now, at -1.0.** The previous pass left it
+failing at -25.9 and argued the cause was the product's own colour — five
+closed lids in blue-black. That was wrong. The cause was that the hero's studio
+panels are all cool, so a dark metal chassis had nothing but blue to reflect
+however warm the key was set; a metal surface shows you the room, not the lamp.
+The panels are warmed a third of the way toward the key and the card measures
+-1.0 without its colour being touched. The note is kept here because a wrong
+explanation that sat in a brief for a pass is worth recording next to the right
+one.
+
 ### Measured, after
 
 ```
-cat-laptops.webp     1200x675  ratio 1.778  mean L  31.6  highlight r-b  -2.7  sd@render 28.1
-cat-desktops.webp    1200x675  ratio 1.778  mean L  27.2  highlight r-b   0.0  sd@render 20.1
-cat-monitors.webp    1200x675  ratio 1.778  mean L  32.8  highlight r-b   n/a  sd@render 30.8
-cat-fleet.webp       1200x675  ratio 1.778  mean L  31.9  highlight r-b -25.9  sd@render 32.4
-exploded.webp         900x1200 ratio 0.750  mean L  27.3  highlight r-b   n/a  sd@render 18.9
-fleet-scene.webp      900x1350 ratio 0.667  mean L  22.5  highlight r-b   n/a  sd@render 18.5
+cat-laptops.webp     1200x675  ratio 1.778  mean L  21.3  highlight r-b  -2.1  sd@render 19.7
+cat-desktops.webp    1200x675  ratio 1.778  mean L  22.8  highlight r-b   n/a  sd@render 19.9
+cat-monitors.webp    1200x675  ratio 1.778  mean L  21.7  highlight r-b   n/a  sd@render 19.5
+cat-fleet.webp       1200x675  ratio 1.778  mean L  37.6  highlight r-b  -1.0  sd@render 37.6
+exploded.webp         900x1200 ratio 0.750  mean L  31.9  highlight r-b  10.7  sd@render 31.9
+fleet-scene.webp      900x1350 ratio 0.667  mean L  22.6  highlight r-b   n/a  sd@render 18.7
 ```
 
-**`cat-fleet` fails the warmth test at -25.9, and it is left failing.** The
-card is a stack of five closed machines, and a closed machine is a lid: the
-model's chassis material, which is blue-black. The key light on that card is
-the same warm key as on the other five, which measure 0.0 and better under it.
-What the test is picking up is the product's own colour, not the light in the
-room. Faking it would mean either gold-plating the hardware or quietly moving
-the threshold, and the number is more useful telling the truth. It is listed
-here so nobody reads a red line as an unnoticed regression.
+All six sit inside the brief. Nothing is left deliberately failing.
 
-`fleet-scene`'s local contrast is measured over its top 62% now. That card is
-a backdrop: its lower half is ramped to near-black on purpose so a heading has
-something to sit on, and measuring "is the subject mush" across a region that
-is deliberately black measures the ramp rather than the artwork.
+Two notes on reading these numbers, because both cost a pass to learn:
+
+- **`sd@render` is measured over the whole board, so it falls when a subject
+  is correctly dark.** The thresholds were first set when the bodies were
+  rendering at `#535566`, and part of what they were measuring was clay
+  brightness. What the test is actually for — "subject too small or too dark" —
+  is better read inside the subject's own silhouette, using the alpha of
+  `public/cards/3d/<name>.png` as a mask. Measured that way the six run 21 to
+  39, and the cards that were flagged were the three with the smallest
+  silhouette coverage rather than the three with the least structure.
+- **A subject centred vertically reads as floating and measures as mush.**
+  `cat-desktops` went from 17.1 to 26.4 on the single change of aiming the
+  camera above the subject's middle, so it sits low in the frame with its feet
+  near the artboard's floor line. Dead centre puts the contact shadow where
+  nobody is looking. Every subject carries a `lift`, defaulting to 0.14 of its
+  own height.
 
 ## Handover
 
