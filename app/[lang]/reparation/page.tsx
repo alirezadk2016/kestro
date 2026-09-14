@@ -169,7 +169,10 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             {c.whatWeDo}
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-4">
+          {/* One column on a phone. At 390px two columns give a 170px card, and
+              the summaries were wrapping to six lines inside it — which is also
+              why there was no room for an icon big enough to read. */}
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {repairs.map((repair) => (
               <ServiceTile
                 key={repair.slug}

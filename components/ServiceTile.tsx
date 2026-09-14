@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import { type CraftMarkName } from "@/components/CraftMark";
 import PointerLight from "@/components/PointerLight";
 
 /*
@@ -45,8 +45,30 @@ export default function ServiceTile({
         {/* The frame holds a face, and the face holds the card. Two surfaces at
             two depths is the whole thing — see .forge-face in globals.css. */}
         <span className="forge-face flex h-full flex-col rounded-[8px] p-4 sm:p-5">
-          <span className="tile-z tile-z-near well flex h-12 w-12 items-center justify-center rounded-lg text-brand-300 sm:h-14 sm:w-14">
-            <CraftMark name={mark} className="mark-cut h-6 w-6 sm:h-7 sm:w-7" />
+          {/*
+            The mark as a rendered object, not a drawing of one.
+
+            scripts/build/marks3d renders every CraftMark through the cards'
+            own studio — extruded, given side walls, lit by the same warm key
+            and cool kicker. Measured against a size ladder it is mush at 28px,
+            starts to read at 44 and is good at 56, which is the whole reason
+            this well is 64px rather than the 48 it was: a 3D icon in a small
+            plate is strictly worse than a flat one, and shipping it anyway
+            because it is "more 3D" would be the same mistake the flat set made
+            when it was composed at 96 and deployed at 24.
+
+            Decorative: the repair is named in the heading directly below it.
+          */}
+          <span className="tile-z tile-z-near well flex h-16 w-16 items-center justify-center rounded-xl sm:h-[72px] sm:w-[72px]">
+            <img
+              src={`/marks3d/${mark}.webp`}
+              alt=""
+              width={52}
+              height={52}
+              loading="lazy"
+              decoding="async"
+              className="h-11 w-11 sm:h-[52px] sm:w-[52px]"
+            />
           </span>
 
           <h3 className="tile-z tile-z-far mt-4 text-sm font-semibold text-paper group-hover:text-brand-200 sm:text-base">
