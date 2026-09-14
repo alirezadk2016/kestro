@@ -243,6 +243,50 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
     });
 }
 
+/*
+ * The SEO rules that a regex can hold.
+ *
+ * CLAUDE.md carries the whole list, but a rule only written down is a rule
+ * that survives until somebody is in a hurry. These three each shipped as a
+ * real defect once and were found by an outside audit rather than by us, so
+ * they fail the build now instead.
+ */
+
+/* 1. An FAQ question is a heading.
+ *
+ * It was bare text inside a <summary>, which is a control — so four pages
+ * whose lower half is questions had no question-style headings at all in the
+ * document outline, and an audit reporting exactly that was reading them
+ * correctly. */
+const faq = read("components/Faq.tsx");
+if (!/<summary[\s\S]{0,400}?<h3/.test(faq)) {
+  fail("components/Faq.tsx: the question must be an <h3> inside the <summary>");
+}
+
+/* 2. The legal links carry their registered relations.
+ *
+ * Both pages are in the footer of every page and an auditor still reported
+ * them missing: it looks for the English words, and /privatlivspolitik and
+ * /handelsbetingelser contain neither. Renaming the routes to satisfy a
+ * string match would break canonicals, hreflang and the sitemap. */
+const nav = read("lib/nav.ts");
+for (const rel of ["privacy-policy", "terms-of-service"]) {
+  if (!nav.includes(`rel: "${rel}"`)) fail(`lib/nav.ts: the legal link is missing rel="${rel}"`);
+}
+
+/* 3. A date a person reads, never the ISO string.
+ *
+ * pageUpdated() returns 2026-09-02. Printed straight into a page it is the
+ * data rather than a date, and it shipped that way twice — once in
+ * PageHeader and once in AnswerBlock, on the same site in the same language
+ * four scroll positions apart. */
+for (const file of [...walk(join(root, "components")), ...walk(join(root, "app"))]) {
+  const body = readFileSync(file, "utf8");
+  if (/\{\s*pageUpdated\([^)]*\)\s*\}/.test(body) && !body.includes("formatDate")) {
+    fail(`${file.slice(root.length)}: renders pageUpdated() raw — wrap it in formatDate()`);
+  }
+}
+
 console.log(
   `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
     `${fromRoutes.size} english routes, ${failures.length} failures`,
