@@ -8,7 +8,7 @@
  * as webp. Run scripts/build/check-cards.mjs afterwards: it measures the
  * output against design/art-direction/cards-brief.md.
  */
-import { mkdtemp, writeFile, rm, stat } from "node:fs/promises";
+import { mkdtemp, writeFile, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
@@ -39,8 +39,13 @@ try {
     await cut.resize(b.w, b.h, { fit: "cover", position: "centre" }).png().toFile(groundPath);
 
     const objectPath = join(root3d, `${name}.png`);
+    /* Written alongside the render: the line where the subject meets the
+       floor, which is what the reflection is flipped about. */
+    const { baseline } = JSON.parse(
+      await readFile(join(root3d, `${name}.json`), "utf8"),
+    );
     const page = join(work, `${name}.html`);
-    await writeFile(page, artboardHtml(name, b, groundPath, objectPath));
+    await writeFile(page, artboardHtml(name, b, groundPath, objectPath, baseline));
 
     /* Shot at 2x and resampled down, so the strokes land on the delivered
        pixel grid rather than being rasterised straight onto it. */

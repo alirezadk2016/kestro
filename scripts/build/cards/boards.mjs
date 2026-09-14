@@ -63,11 +63,25 @@ export const BOARDS = {
 };
 
 /* The site's own grain, lifted verbatim from .grain in app/globals.css, so
-   the cards carry the same texture as the sections they sit in. */
+   the cards carry the same texture as the sections they sit in. It is a
+   surface texture at 0.055 and it is not sensor noise — SENSOR below is. */
 const GRAIN =
   "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E\")";
 
-export function artboardHtml(name, b, groundPath, objectPath) {
+/*
+ * Sensor noise, at the strength a real one has.
+ *
+ * Every photograph ever taken carries it. These cards carried the site's
+ * surface grain at 0.055 opacity, which is a texture on a panel, not a camera
+ * — and a picture with mathematically clean gradients is one of the few things
+ * a viewer reads as "rendered" without being able to say why. This is a
+ * per-pixel monochrome noise at an ISO-800-ish strength, strongest in the
+ * shadows where a sensor's noise actually lives.
+ */
+const SENSOR = (w) =>
+  "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23s)' opacity='0.16'/%3E%3C/svg%3E\")";
+
+export function artboardHtml(name, b, groundPath, objectPath, baseline = 0.62) {
   /* Strokes are non-scaling, so their widths are output pixels. The drawing
      is written at a nominal 1200px board and scaled from there. */
   const K = (1.9 * b.w) / 1200;
@@ -97,17 +111,62 @@ export function artboardHtml(name, b, groundPath, objectPath) {
      on a transparent ground with its own cast shadow, so everything behind it
      here is still the artboard's: the hero crop, the warm pool and the grain. */
   .subject{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+  /*
+   * The reflection: the subject's own image, flipped about the line where it
+   * meets the floor, which scripts/build/cards3d measures and hands over.
+   *
+   * It used to be a mirrored copy of the geometry under the floor plane in the
+   * 3D scene. Mirroring geometry flips its normals, so the copy was lit on the
+   * faces the real object has in shadow and came back brighter than the thing
+   * it reflected. Flipping the finished picture cannot be brighter than the
+   * picture: the exposure is right by construction.
+   *
+   * The mask fades with distance from the contact line, which before the flip
+   * is distance ABOVE it — a mask is painted before the transform, so the
+   * gradient has to be written upside down to come out the right way up.
+   */
+  .reflection{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    transform:scaleY(-1);transform-origin:50% ${(baseline * 100).toFixed(2)}%;
+    filter:blur(${(3.5 * b.w) / 1200}px);opacity:.3;
+    -webkit-mask-image:linear-gradient(180deg,
+      rgba(0,0,0,0) ${Math.max(0, baseline * 100 - 26).toFixed(2)}%,
+      rgba(0,0,0,0.85) ${(baseline * 100).toFixed(2)}%,
+      rgba(0,0,0,0) ${(baseline * 100 + 0.4).toFixed(2)}%);
+    mask-image:linear-gradient(180deg,
+      rgba(0,0,0,0) ${Math.max(0, baseline * 100 - 26).toFixed(2)}%,
+      rgba(0,0,0,0.85) ${(baseline * 100).toFixed(2)}%,
+      rgba(0,0,0,0) ${(baseline * 100 + 0.4).toFixed(2)}%)}
+  .sensor{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;
+    opacity:.55;background-image:${SENSOR(b.w)};
+    background-size:${(260 * b.w) / 1200}px ${(260 * b.w) / 1200}px}
   .grain{position:absolute;inset:0;opacity:.5;background-image:
     radial-gradient(120% 120% at 50% 45%, transparent 54%, rgba(1,3,8,0.62) 100%), ${GRAIN};
     background-size:100% 100%, ${(140 * b.w) / 1200}px ${(140 * b.w) / 1200}px}
+
+  /* The lens and the sensor, applied over everything — the subject, the floor
+     and the room alike, because that is the order a camera does it in. Putting
+     any of this on the subject alone is what makes a composite look composited.
+
+     Vignette: every fast lens falls off in the corners. This one is gentle and
+     off-centre, matching where the key is.
+     Bloom is NOT here: it was, as the subject's own silhouette blurred and
+     screened, and CSS brightness/contrast cannot threshold — so every mid-grey
+     panel glowed and the cards came back hazy. It lives in the render pass
+     now, where the luminance can actually be tested. */
+  .vignette{position:absolute;inset:0;pointer-events:none;background:
+    radial-gradient(118% 104% at 44% 40%, rgba(0,0,0,0) 46%, rgba(2,4,10,0.30) 78%, rgba(1,2,6,0.62) 100%)}
+
   </style>
   <div class="board">
     <img class="ground" src="file://${groundPath}">
     <div class="scrim"></div>
     <div class="floor"></div>
+    <img class="reflection" src="file://${objectPath}">
     <img class="subject" src="file://${objectPath}">
     ${b.ramp ? '<div class="ramp"></div>' : ""}
     <div class="grain"></div>
+    <div class="vignette"></div>
+    <div class="sensor"></div>
   </div>
   `;
 }

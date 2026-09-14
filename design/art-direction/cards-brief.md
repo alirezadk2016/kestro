@@ -336,16 +336,118 @@ The panels are warmed a third of the way toward the key and the card measures
 explanation that sat in a brief for a pass is worth recording next to the right
 one.
 
-### Measured, after
+### The fifth pass: it was still a render
 
+Still artificial. Correct content, correct light, and it still did not read as a
+photograph — because four things a camera does had never been in this pipeline
+at all, and no amount of relighting substitutes for any of them.
+
+**Not one mesh in either GLB carries a UV set.** Checked, both files, every
+mesh. That is why every panel was mathematically uniform: with no UVs there was
+nowhere to hang a roughness map, a normal map, dust or a fingerprint, so an
+object was one polish value from corner to corner, which nothing in the world
+is. The UVs are generated now — a box projection, each vertex assigned to the
+axis its normal points along most — which gives one consistent texel density
+across parts modelled at different scales. A four-octave value noise then drives
+roughness and a shallow normal map, so a lid runs between about 0.7 and 1.0 of
+its nominal polish instead of being exactly one number.
+
+The screen quad gets the same treatment by a different route: four corners
+define their own basis, so projecting each onto the two edge vectors gives UVs
+for a mesh that has none. It is the largest surface on two of the six cards and
+it had only ever been able to be a flat colour or a plain mirror.
+
+**The style block says "100mm macro, f/5.6" and every render was sharp from the
+nearest corner to the far wall.** A 100mm macro at f/5.6 focused on a laptop
+holds a few centimetres. three ships a BokehPass and it is no use here — it
+writes opaque RGB, and these renders have to come out on a transparent ground
+— so the blur is done in the render pass, with two details that decide whether
+it works:
+
+- **Premultiplied accumulation.** Blurring straight RGBA pulls the black behind
+  transparent pixels into every soft edge and the subject gets a dark halo.
+- **Scatter as gather.** Taps go out to the full aperture every time, not to
+  the centre pixel's own blur radius, and each contributes only where its OWN
+  circle of confusion reaches. Without that a defocused background bleeds over
+  a sharp subject, which reads as a halo rather than as depth.
+
+Rendering to a target turned out to have a consequence worth writing down:
+**three applies tone mapping and the sRGB transfer only when it draws to the
+canvas.** A render target gets neither, so the first pass came back three stops
+dark. Both are done in the shader now, which is the better order anyway — the
+blur happens in linear light, so a defocused highlight blooms out the way a lens
+does instead of smearing a clipped white.
+
+**Bloom, thresholded.** It was first tried in CSS as the subject's own
+silhouette blurred and screened, and CSS brightness/contrast cannot threshold —
+every mid-grey panel glowed and the cards came back hazy. In the shader the
+luminance can actually be tested, and where the spill lands outside the
+silhouette it raises alpha, so the glow reaches the artboard instead of being
+clipped to the object.
+
+**The lens and the sensor, over everything.** Vignette, lateral chromatic
+aberration — under a pixel, never visible as colour at card size; what it
+removes is the digital perfection of an edge — and per-pixel sensor noise at an
+ISO-800-ish strength. The cards carried the site's surface grain at 0.055
+opacity, which is a texture on a panel, not a camera. All of it goes over the
+subject, the floor and the room alike, because that is the order a camera does
+it in; putting any of it on the subject alone is what makes a composite look
+composited.
+
+Three faults were found by rendering the card with a layer removed rather than
+by reasoning about it, after the wrong thing had been blamed each time:
+
+- **A hard white oval beside the tower** survived moving the key and softening
+  the overhead, because it was neither: it was the floor mirroring the hero's
+  rim strip, a 1.2 x 16 panel at intensity 5 that is by a long way the
+  brightest thing in this environment. Two fixes, both of which a real floor
+  already has — a roughness ramp, mirror-sharp where the object meets it and
+  dissolving within a foot, and a cap on any panel bright enough to be a lamp
+  in its own right. On a card the rim comes from a directional light anyway.
+- **A white slab under the fleet stack** was the reflection. A clone at
+  `scale.y = -1` is the correct mirror transform for geometry and the wrong one
+  for light: flipping y flips the normals with it, so every surface facing away
+  from the key in the real object faced into it in the copy, and the reflection
+  came out brighter than the thing it reflected. Lighting it correctly would
+  mean mirroring every light and the environment too. A photograph does not
+  need that — the reflection of a subject is the subject's own image, flipped
+  about the line where it meets the floor. The render hands that baseline to
+  the artboard, which does the flip, and the exposure is then right by
+  construction.
+- **Twelve identical streaks** across twelve screens in the fleet room. An
+  emissive map is view-independent, so every machine carried the same
+  reflection, which is the clearest possible statement that they are copies of
+  one object. Held down to 0.55 the view-dependent mirror dominates instead,
+  and a screen at a different angle to the room shows a different room.
+
+### Measured, after
 ```
-cat-laptops.webp     1200x675  ratio 1.778  mean L  21.3  highlight r-b  -2.1  sd@render 19.7
-cat-desktops.webp    1200x675  ratio 1.778  mean L  22.8  highlight r-b   n/a  sd@render 19.9
-cat-monitors.webp    1200x675  ratio 1.778  mean L  21.7  highlight r-b   n/a  sd@render 19.5
-cat-fleet.webp       1200x675  ratio 1.778  mean L  37.6  highlight r-b  -1.0  sd@render 37.6
-exploded.webp         900x1200 ratio 0.750  mean L  31.9  highlight r-b  10.7  sd@render 31.9
-fleet-scene.webp      900x1350 ratio 0.667  mean L  22.6  highlight r-b   n/a  sd@render 18.7
+cat-laptops.webp     1200x675  ratio 1.778  mean L  29.3  highlight r-b  11.9  sd@render 22.9
+cat-desktops.webp    1200x675  ratio 1.778  mean L  29.1  highlight r-b   n/a  sd@render 21.9
+cat-monitors.webp    1200x675  ratio 1.778  mean L  24.3  highlight r-b  16.5  sd@render 18.8
+cat-fleet.webp       1200x675  ratio 1.778  mean L  41.9  highlight r-b   1.7  sd@render 43.4
+exploded.webp         900x1200 ratio 0.750  mean L  28.4  highlight r-b  20.9  sd@render 24.6
+fleet-scene.webp      900x1350 ratio 0.667  mean L  24.1  highlight r-b   9.5  sd@render 18.6
 ```
+
+One of these was earned rather than tuned, and it is worth the paragraph.
+**`fleet-scene` sat at 17.0–17.5 through four compositions** — a lighter bench,
+a closer camera, a defocused foreground bench cropped by the bottom edge. Each
+improved the picture; none moved the number much, and measured inside its own
+silhouette the card came back at 14.4 where the other five run 22 to 49. So it
+was not the dilution the other cards suffer from, where a correctly dark subject
+is averaged against a correctly dark board: this room genuinely had no tonal
+range.
+
+The cause was the lighting model. Every card is lit by directional light, which
+is parallel — it cannot tell a near bench from a far one, so four benches came
+out the same value, and four benches at the same value is a pattern rather than
+a room. Two point lights hung over the benches obey the inverse square, and that
+falloff is the depth: the near bench reads, the third is half gone, the fourth
+is a suggestion. 18.6, and the picture is better for the same reason the number
+is.
+
+
 
 All six sit inside the brief. Nothing is left deliberately failing.
 

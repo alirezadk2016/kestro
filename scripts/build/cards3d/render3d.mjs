@@ -43,7 +43,7 @@ const page = `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;bac
 <script type="module">
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { buildSubject } from "/lib/card-subjects.mjs";
+import { buildSubject, screenSheen } from "/lib/card-subjects.mjs";
 
 const VIEW = ${JSON.stringify(view)};
 const BOARDS = ${JSON.stringify(BOARDS)};
@@ -70,10 +70,22 @@ function studio(panels) {
 
 window.__render = async function (name) {
   const [W, H] = BOARDS[name];
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    /* The depth-of-field pass writes straight (unpremultiplied) RGBA. With the
+       context's default premultiplied alpha the browser would divide the
+       colour through by alpha again on read-back and every soft edge would
+       come out bright. */
+    premultipliedAlpha: false,
+  });
   renderer.setSize(W, H);
   renderer.setPixelRatio(1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  /* Kept for reference only: three applies tone mapping and the sRGB
+     transfer when it draws to the CANVAS, and this scene is drawn to a render
+     target so the depth-of-field pass can read it. Both are done in that
+     pass's shader instead, at this same exposure. */
   renderer.toneMappingExposure = VIEW.exposure * 2.35;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -99,14 +111,30 @@ window.__render = async function (name) {
      reflection of this room rather than a lit face — which is why the
      highlights measured blue however warm the key was set. A metal surface
      shows you the room, not the lamp, so the room is warmed a third of the
-     way toward the key and the relative intensities are left alone. */
+     way toward the key and the relative intensities are left alone.
+
+     Better than half, in the end: at a third the chassis edge still came back
+     periwinkle at 1:1 — a business laptop the colour of a school folder — and
+     what a metal edge shows is this room. */
   const KEY_TINT = new THREE.Color("#fff0d8");
   const panels = [
+    /* Capped. The hero's rim strip runs at intensity 5 — a 1.2 x 16 panel that
+       is by a long way the brightest thing in this environment, and its job
+       there is to separate one machine from a blue-lit photograph. On a card
+       the rim comes from a directional light instead, and all that panel does
+       is put a hard white shape into any polished surface facing up. */
     ...VIEW.studio.map((p) => ({
       ...p,
-      color: "#" + new THREE.Color(p.color).lerp(KEY_TINT, 0.34).getHexString(),
+      intensity: Math.min(p.intensity, 2.2),
+      color: "#" + new THREE.Color(p.color).lerp(KEY_TINT, 0.55).getHexString(),
     })),
-    { position: [0.5, 9, 1.5], size: [11, 8], color: "#fff0d8", intensity: 1.0 },
+    /* Big and soft, not small and hot. A horizontal polished floor
+       reflects the ceiling, and the ceiling here is this panel: at 11x8 its
+       mirror image was a hard white oval sitting in open frame beside the
+       tower, reading as a lamp somebody left in the shot. Same energy spread
+       over nine times the area, and the reflection becomes the wide gentle
+       falloff a softbox actually gives. */
+    { position: [0.5, 9, -1.0], size: [30, 22], color: "#fff0d8", intensity: 0.34 },
   ];
   const env = pmrem.fromScene(studio(panels), 0.02);
   scene.environment = env.texture;
@@ -185,22 +213,73 @@ window.__render = async function (name) {
     metalness: 0.96,
     roughness: 0.05,
     envMapIntensity: 2.6,
+    /* The same single graze of light the monitor's panel carries. A pure
+       mirror facing a dark room comes back pure black, and at 290px a pure
+       black panel is a hole punched in the picture rather than glass. Usable
+       only now that the quad has UVs. */
+    /* Weak on purpose. An emissive map is view-independent, so twelve
+       machines on three benches all carried the identical streak across their
+       screens — and a dozen identical reflections is the clearest possible
+       statement that these are copies of one object. Held down, the
+       view-dependent mirror dominates instead, and a screen at a different
+       angle to the room shows a different room. */
+    emissive: 0xffffff,
+    emissiveMap: screenSheen(),
+    emissiveIntensity: 0.55,
   });
   const REGRADE = {
-    "Material.007": { color: 0x212636 }, // chassis, from #3f4556
+    /* Neutral-cool, not blue. At #212636 the blue runs 21 points ahead of
+       the red, and under the cool rim that lands as periwinkle: a business
+       laptop the colour of a school folder. The hero's own body is #161e25,
+       where the same gap is 15 at half the luminance. */
+    "Material.007": { color: 0x23262c }, // chassis, from #3f4556
     /* The lid shell, from #5b5c60. Roughness goes up with it: on the fleet
        card six lids lie flat under a steep key, and at the model's own
        polish that is six white rectangles — the one surface in the set where
        the key lands square instead of grazing. */
-    "Material.044": { color: 0x22252d, roughness: 0.62 },
+    "Material.044": { color: 0x212429, roughness: 0.62 },
     "Material.111": { color: 0x33363d }, // trim, from #696969
     "Material.112": { color: 0x1c2029 }, // the vermilion block; see 3 above
   };
+  /** UVs for a four-corner quad, from its own edges. */
+  function quadUv(geom) {
+    const pos = geom.attributes.position;
+    if (geom.attributes.uv || pos.count !== 4) return;
+    const p = [];
+    for (let i = 0; i < 4; i++) p.push(new THREE.Vector3().fromBufferAttribute(pos, i));
+    const o = p[0];
+    let u = p[1].clone().sub(o);
+    let v = p[2].clone().sub(o);
+    /* Whichever pair is closest to perpendicular is the quad's own frame. */
+    if (Math.abs(u.clone().normalize().dot(v.clone().normalize())) > 0.4) {
+      v = p[3].clone().sub(o);
+    }
+    const lu = u.lengthSq();
+    const lv = v.lengthSq();
+    const uv = new Float32Array(8);
+    for (let i = 0; i < 4; i++) {
+      const d = p[i].clone().sub(o);
+      uv[i * 2] = d.dot(u) / lu;
+      uv[i * 2 + 1] = d.dot(v) / lv;
+    }
+    geom.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  }
+
   const dress = (root) =>
     root.traverse((o) => {
       if (!o.isMesh || !o.material) return;
       const n = o.material.name;
-      if (n === "Material.099") return void (o.material = GLASS);
+      if (n === "Material.099") {
+        /* The panel is a four-vertex quad with no UVs, which is why it has
+           only ever been able to be a flat colour or a plain mirror. A quad
+           carries its own basis, though: project each corner onto the two edge
+           vectors and the UVs follow. It is then the same glass as the
+           monitor's, with the same single graze of light across it — and it is
+           the largest surface on two of these six cards. */
+        quadUv(o.geometry);
+        o.material = GLASS;
+        return;
+      }
       if (!(n in REGRADE)) return;
       /* Object3D.clone shares materials by reference, so a clone must get its
          own before its colour is touched or every machine in the scene
@@ -211,8 +290,176 @@ window.__render = async function (name) {
       Object.assign(o.material, rest);
     });
 
+  /*
+   * Surface imperfection.
+   *
+   * Not one mesh in either GLB carries a UV set — checked, both files, every
+   * mesh. That is why every panel in these renders is mathematically uniform:
+   * with no UVs there has never been anywhere to hang a roughness map, a
+   * normal map, dust or a fingerprint, so the whole object is one polish value
+   * from corner to corner. Nothing in the world is. It is the reason the
+   * chassis reads as a solid colour rather than as a material, and no amount
+   * of relighting fixes it.
+   *
+   * So the UVs are generated: a box projection, each vertex assigned to the
+   * axis its normal points along most, the other two position components
+   * becoming u and v. It seams at every corner, which does not matter for
+   * noise, and it gives one consistent texel density across parts that were
+   * modelled at different scales — a fingerprint on the lid is the same size
+   * as one on the palm rest, which is the whole point.
+   *
+   * At 1 unit = 7 cm, a tile of 2.6 units is about 18 cm, so the 512px map
+   * lands roughly three features per millimetre.
+   */
+  function boxUv(geom, tile) {
+    if (geom.attributes.uv) return;
+    const pos = geom.attributes.position;
+    const nor = geom.attributes.normal;
+    const uv = new Float32Array(pos.count * 2);
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i);
+      const y = pos.getY(i);
+      const z = pos.getZ(i);
+      const ax = Math.abs(nor ? nor.getX(i) : 0);
+      const ay = Math.abs(nor ? nor.getY(i) : 1);
+      const az = Math.abs(nor ? nor.getZ(i) : 0);
+      let u;
+      let v;
+      if (ax >= ay && ax >= az) { u = z; v = y; }
+      else if (ay >= az) { u = x; v = z; }
+      else { u = x; v = y; }
+      uv[i * 2] = u / tile;
+      uv[i * 2 + 1] = v / tile;
+    }
+    geom.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  }
+
+  /* Value noise, four octaves, drawn once. The low octaves are the uneven
+     polish a moulded panel actually has; the high one is the grain. */
+  function noiseCanvas(size, octaves, contrast) {
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const x = c.getContext("2d");
+    const img = x.createImageData(size, size);
+    const grids = [];
+    for (let o = 0; o < octaves; o++) {
+      const n = 4 << o;
+      const g = new Float32Array(n * n);
+      for (let i = 0; i < g.length; i++) g[i] = Math.random();
+      grids.push([n, g]);
+    }
+    const smooth = (t) => t * t * (3 - 2 * t);
+    for (let py = 0; py < size; py++) {
+      for (let px = 0; px < size; px++) {
+        let v = 0;
+        let amp = 1;
+        let norm = 0;
+        for (const [n, g] of grids) {
+          const fx = (px / size) * n;
+          const fy = (py / size) * n;
+          const x0 = Math.floor(fx) % n;
+          const y0 = Math.floor(fy) % n;
+          const x1 = (x0 + 1) % n;
+          const y1 = (y0 + 1) % n;
+          const tx = smooth(fx - Math.floor(fx));
+          const ty = smooth(fy - Math.floor(fy));
+          const a = g[y0 * n + x0] * (1 - tx) + g[y0 * n + x1] * tx;
+          const b = g[y1 * n + x0] * (1 - tx) + g[y1 * n + x1] * tx;
+          v += (a * (1 - ty) + b * ty) * amp;
+          norm += amp;
+          amp *= 0.55;
+        }
+        v /= norm;
+        v = 0.5 + (v - 0.5) * contrast;
+        const i = (py * size + px) * 4;
+        const b = Math.max(0, Math.min(255, Math.round(v * 255)));
+        img.data[i] = b;
+        img.data[i + 1] = b;
+        img.data[i + 2] = b;
+        img.data[i + 3] = 255;
+      }
+    }
+    x.putImageData(img, 0, 0);
+    return c;
+  }
+
+  /* Height to normal, by central difference. three can shade a normal map
+     without a tangent attribute — it derives the frame from screen-space
+     derivatives — which is what makes this usable on generated UVs. */
+  function toNormal(src, strength) {
+    const size = src.width;
+    const sx = src.getContext("2d").getImageData(0, 0, size, size).data;
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const x = c.getContext("2d");
+    const img = x.createImageData(size, size);
+    const at = (px, py) =>
+      sx[(((py + size) % size) * size + ((px + size) % size)) * 4] / 255;
+    for (let py = 0; py < size; py++) {
+      for (let px = 0; px < size; px++) {
+        const dx = (at(px + 1, py) - at(px - 1, py)) * strength;
+        const dy = (at(px, py + 1) - at(px, py - 1)) * strength;
+        const len = Math.sqrt(dx * dx + dy * dy + 1);
+        const i = (py * size + px) * 4;
+        img.data[i] = Math.round(((-dx / len) * 0.5 + 0.5) * 255);
+        img.data[i + 1] = Math.round(((-dy / len) * 0.5 + 0.5) * 255);
+        img.data[i + 2] = Math.round((1 / len) * 0.5 * 255 + 127.5);
+        img.data[i + 3] = 255;
+      }
+    }
+    x.putImageData(img, 0, 0);
+    return c;
+  }
+
+  const grain = noiseCanvas(512, 4, 0.55);
+  const ROUGH = new THREE.CanvasTexture(grain);
+  const BUMP = new THREE.CanvasTexture(toNormal(grain, 5));
+  for (const t of [ROUGH, BUMP]) {
+    t.wrapS = THREE.RepeatWrapping;
+    t.wrapT = THREE.RepeatWrapping;
+  }
+
+  /* Applied to everything standing in the shot, after it is built: the model's
+     own panels and the props alike, so a monitor bezel and a laptop lid are
+     the same plastic. The screens and the floor are left out — a mirror with
+     dust in it reads as a dirty mirror, which is a different picture. */
+  const weather = (root) =>
+    root.traverse((o) => {
+      const m = o.isMesh && o.material;
+      if (!m || !m.isMeshStandardMaterial) return;
+      if (m === GLASS || m.name === "Material.099" || m.name === "screen") return;
+      if (m.__weathered) return;
+      m.__weathered = true;
+      boxUv(o.geometry, 2.6);
+      m.roughnessMap = ROUGH;
+      /* roughnessMap multiplies, so the base has to sit at the rough end and
+         the map carries it back down; a panel then runs between about 0.7 and
+         1.0 of its nominal polish instead of being exactly one number. */
+      m.roughness = Math.min(1, m.roughness * 1.18);
+      m.normalMap = BUMP;
+      m.normalScale = new THREE.Vector2(0.12, 0.12);
+      m.needsUpdate = true;
+    });
+
   const built = buildSubject(name, machine, dress);
+  weather(built.object);
   scene.add(built.object);
+
+  /* A subject may ask for practicals of its own — a lamp in the scene rather
+     than a lamp on the set. Only the fleet room does, and the reason is in
+     card-subjects: a directional light is parallel, so it cannot tell a near
+     bench from a far one, and without that falloff a room of desks is a
+     pattern rather than a room. */
+  for (const l of built.lights ?? []) {
+    const p = new THREE.PointLight(l.color, l.intensity, l.distance ?? 0, l.decay ?? 2);
+    p.position.set(l.position[0], l.position[1], l.position[2]);
+    p.castShadow = true;
+    p.shadow.mapSize.set(1024, 1024);
+    p.shadow.bias = -0.002;
+    scene.add(p);
+  }
 
 
   const box = new THREE.Box3().setFromObject(built.object);
@@ -243,18 +490,44 @@ window.__render = async function (name) {
    * alpha is a radial ramp, opaque under the subject and gone by the edge of
    * the frame, so the artboard's hero crop still reads as the room beyond.
    */
-  const fade = document.createElement("canvas");
-  fade.width = 512;
-  fade.height = 512;
-  {
-    const x = fade.getContext("2d");
+  const ramp = (stops) => {
+    const c = document.createElement("canvas");
+    c.width = 512;
+    c.height = 512;
+    const x = c.getContext("2d");
     const r = x.createRadialGradient(256, 256, 20, 256, 256, 220);
-    r.addColorStop(0, "#b4b4b4");
-    r.addColorStop(0.42, "#6e6e6e");
-    r.addColorStop(1, "#000000");
+    for (const [at, col] of stops) r.addColorStop(at, col);
     x.fillStyle = r;
     x.fillRect(0, 0, 512, 512);
-  }
+    return c;
+  };
+  const fade = ramp([
+    [0, "#b4b4b4"],
+    [0.42, "#6e6e6e"],
+    [1, "#000000"],
+  ]);
+  /*
+   * A roughness ramp, and it is the thing that makes this floor behave.
+   *
+   * A uniformly polished floor is a mirror of the whole room, and this room
+   * contains the hero's rim strip — a 1.2 x 16 panel at intensity 5, by a long
+   * way the brightest thing in the environment. Mirrored, it lands as a hard
+   * white oval in open frame beside the subject and reads as a lamp somebody
+   * left in the shot. Moving the key did not touch it and neither did
+   * softening the overhead, because it was never either of those: rendering
+   * the card with the floor removed is what settled it.
+   *
+   * Every polished floor in the world behaves this way instead — mirror-sharp
+   * where the object meets it, dissolving within a foot or so. So: smooth at
+   * the centre, rough by a third of the way out. The object keeps its
+   * reflection; the room does not get one.
+   */
+  const polish = ramp([
+    [0, "#3c3c3c"],
+    [0.12, "#5c5c5c"],
+    [0.34, "#dcdcdc"],
+    [1, "#ffffff"],
+  ]);
   const ground = new THREE.Mesh(
     new THREE.PlaneGeometry(radius * 7, radius * 7),
     new THREE.MeshStandardMaterial({
@@ -271,12 +544,13 @@ window.__render = async function (name) {
          near-black, so the key leaves a sheen rather than a spill. */
       color: 0x0b0e15,
       metalness: 1.0,
+      roughnessMap: new THREE.CanvasTexture(polish),
       /* Polished, not satin. The lobe width is the whole story here: at 0.26
          the key's mirror image spreads into a lit zone across the bottom-left
          of every card; tightened, it collapses to a point that falls behind
          the subject, and what is left on the floor is the environment and the
          object's own reflection. */
-      roughness: 0.075,
+      roughness: 0.62,
       transparent: true,
       alphaMap: new THREE.CanvasTexture(fade),
       /* A horizontal mirror reflects the ceiling, and the ceiling here is the
@@ -284,7 +558,7 @@ window.__render = async function (name) {
          every card, brighter than the product standing in it — the brief wants
          a near-black ground falling to #00040a. Held right down, what is left
          is the sheen and the object's own reflection, which is all it was for. */
-      envMapIntensity: 0.42,
+      envMapIntensity: 0.32,
     }),
   );
   ground.rotation.x = -Math.PI / 2;
@@ -292,32 +566,24 @@ window.__render = async function (name) {
   ground.receiveShadow = true;
 
   /*
-   * The reflection, as the brief describes it for the drawings: "the drawing
-   * mirrored about its own foot and faded out … the cheapest thing that
-   * separates a product shot from a diagram."
+   * The reflection is NOT built here, and the reason is worth keeping.
    *
-   * A PMREM environment map contains the studio and nothing else, so a
-   * polished floor under this scene reflects the room but never the object
-   * standing on it. A mirrored copy below the floor plane is what puts the
-   * object back into its own reflection, and the floor's alpha ramp is what
-   * fades it out. It casts and receives nothing — it is an image, not a thing.
+   * It was: a clone of the subject with scale.y = -1 below the floor plane.
+   * That is the correct mirror transform for geometry, and it is wrong for
+   * light. Flipping y flips the normals with it, so every surface that faced
+   * away from the key in the real object faces into it in the copy — the
+   * reflection came out BRIGHTER than the thing it was reflecting, and on the
+   * fleet card it was a white slab under the stack that took the whole picture
+   * with it. Rendering the card with the mirror removed is what settled that,
+   * after the floor and then the lights had each been blamed for it.
+   *
+   * Lighting it correctly would mean mirroring every light and the environment
+   * as well. A photograph does not need that: the reflection of the subject is
+   * the subject's own image, flipped about the line where it meets the floor.
+   * So the baseline goes out with the render and the artboard does the flip,
+   * which is exact in brightness by construction.
    */
-  const mirror = built.object.clone(true);
-  mirror.scale.y = -1;
-  mirror.position.y = box.min.y * 2;
-  mirror.traverse((o) => {
-    if (!o.isMesh) return;
-    o.castShadow = false;
-    o.receiveShadow = false;
-    o.material = o.material.clone();
-    o.material.color.multiplyScalar(0.45);
-    if (o.material.emissiveIntensity) o.material.emissiveIntensity *= 0.4;
-  });
-  /* Inverting one axis flips the winding, so front faces point away. */
-  mirror.traverse((o) => {
-    if (o.isMesh) o.material.side = THREE.BackSide;
-  });
-  scene.add(mirror, ground);
+  scene.add(ground);
 
   const key = new THREE.DirectionalLight("#fff2e0", VIEW.lights.key.intensity * 6.0);
   /* Camera left and high, which is where the brief puts it — "warm tungsten
@@ -325,8 +591,10 @@ window.__render = async function (name) {
      camera's own side, and on a polished floor that means the key's mirror
      image lands in open frame beside the object: a hard white oval that reads
      as lens spill and is the brightest thing on the card. From up and left the
-     hotspot falls behind the subject. */
-  key.position.set(-radius * 2.4, radius * 3.8, radius * 0.2);
+     hotspot falls behind the subject — which needs it BEHIND the subject on
+     z as well, or on a card shot from further round it walks back into open
+     frame as a hard white oval, and reads as a lamp someone left in the shot. */
+  key.position.set(-radius * 2.2, radius * 3.6, -radius * 1.6);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.near = 0.1;
@@ -388,10 +656,209 @@ window.__render = async function (name) {
   }
   place(dist);
 
+  /*
+   * Depth of field.
+   *
+   * The style block at the top of the brief says "100mm macro, f/5.6, shot at
+   * desk height", and a 100mm macro at f/5.6 focused on a laptop holds a few
+   * centimetres. Every render up to here was sharp from the nearest corner of
+   * the frame to the far wall, which no photograph has ever been, and it is
+   * the loudest single thing in these pictures saying "rendered".
+   *
+   * three ships a BokehPass and it is no use here: it writes opaque RGB, and
+   * these renders have to come out on a transparent ground for the artboard to
+   * composite them. So the blur is done by hand, with two details that matter:
+   *
+   *  - **Premultiplied accumulation.** Blurring straight RGBA pulls the black
+   *    behind transparent pixels into every soft edge, and the subject gets a
+   *    dark halo. Colour is accumulated weighted by alpha and divided back out
+   *    at the end.
+   *  - **Scatter as gather.** A sample only contributes where its own circle
+   *    of confusion actually reaches the pixel being written. Without that, a
+   *    defocused background bleeds over a subject that is in focus, which
+   *    reads as a halo rather than as depth.
+   */
+  const target = new THREE.WebGLRenderTarget(W, H, {
+    samples: 4,
+    type: THREE.HalfFloatType,
+  });
+  target.depthTexture = new THREE.DepthTexture(W, H);
+  target.depthTexture.type = THREE.UnsignedIntType;
+
+  renderer.setRenderTarget(target);
   renderer.render(scene, camera);
+  renderer.setRenderTarget(null);
+
+  /* Focus on the subject's own centre, and let the aperture be per-subject:
+     a teardown wants most of its layers readable, a single machine can fall
+     away hard. */
+  const focus = camera.position.distanceTo(centre);
+  const quad = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 2),
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      blending: THREE.NoBlending,
+      uniforms: {
+        tColor: { value: target.texture },
+        tDepth: { value: target.depthTexture },
+        uNear: { value: camera.near },
+        uFar: { value: camera.far },
+        uFocus: { value: focus },
+        uScale: { value: (built.aperture ?? 1) * 0.42 },
+        uMaxPx: { value: Math.max(W, H) * 0.0055 },
+        uExposure: { value: VIEW.exposure * 2.35 },
+        uBloomPx: { value: Math.max(W, H) * 0.02 },
+        uBloom: { value: 0.4 },
+        uTexel: { value: new THREE.Vector2(1 / W, 1 / H) },
+      },
+      vertexShader: \`
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }
+      \`,
+      fragmentShader: \`
+        precision highp float;
+        varying vec2 vUv;
+        uniform sampler2D tColor;
+        uniform sampler2D tDepth;
+        uniform float uNear, uFar, uFocus, uScale, uMaxPx, uExposure;
+        uniform float uBloomPx, uBloom;
+        uniform vec2 uTexel;
+
+        float viewZ(vec2 uv) {
+          float d = texture2D(tDepth, uv).x * 2.0 - 1.0;
+          return (2.0 * uNear * uFar) / (uFar + uNear - d * (uFar - uNear));
+        }
+
+        /* Circle of confusion in pixels. Clamped, or a far background turns to
+           porridge and takes the room with it. */
+        float coc(float z) {
+          return min(abs(z - uFocus) / max(z, 0.001) * uScale, 1.0) * uMaxPx;
+        }
+
+        /* three applies tone mapping and the sRGB transfer only when it draws
+           to the canvas — a render target gets neither. This pass reads a
+           linear HDR target, so it has to do both itself, and that is the
+           right order anyway: the blur happens in linear light, which is what
+           makes a defocused highlight bloom out the way a lens does rather
+           than smearing a clipped white. */
+        vec3 aces(vec3 c) {
+          const mat3 IN = mat3(
+            0.59719, 0.07600, 0.02840,
+            0.35458, 0.90834, 0.13383,
+            0.04823, 0.01566, 0.83777);
+          const mat3 OUT = mat3(
+             1.60475, -0.10208, -0.00327,
+            -0.53108,  1.10813, -0.07276,
+            -0.07367, -0.00605,  1.07602);
+          c = IN * c;
+          vec3 a = c * (c + 0.0245786) - 0.000090537;
+          vec3 b = c * (0.983729 * c + 0.432951) + 0.238081;
+          return clamp(OUT * (a / b), 0.0, 1.0);
+        }
+
+        vec3 srgb(vec3 c) {
+          return mix(pow(c, vec3(0.41666)) * 1.055 - 0.055, c * 12.92,
+                     step(c, vec3(0.0031308)));
+        }
+
+        const int RINGS = 4;
+        const int PER = 10;
+
+        void main() {
+          float zc = viewZ(vUv);
+          float rc = coc(zc);
+
+          vec4 c0 = texture2D(tColor, vUv);
+          vec3 sum = c0.rgb * c0.a;
+          float aSum = c0.a;
+          float wSum = 1.0;
+
+          /* Taps go out to the full aperture every time, not to this pixel's
+             own blur radius: a sample contributes where its OWN circle of
+             confusion reaches, which is the only way a defocused foreground
+             can spread over something sharp behind it. */
+          for (int r = 1; r <= RINGS; r++) {
+            float rad = uMaxPx * (float(r) / float(RINGS));
+            for (int i = 0; i < PER; i++) {
+              float a = (float(i) / float(PER)) * 6.2831853 + float(r) * 0.61;
+              vec2 uv = vUv + vec2(cos(a), sin(a)) * rad * uTexel;
+              float zs = viewZ(uv);
+              float w = clamp(coc(zs) - rad + 1.0, 0.0, 1.0);
+              /* A sample behind a pixel that is in focus must not bleed onto
+                 it — that is a halo, not depth. One in front still may. */
+              if (zs > zc) w *= smoothstep(0.0, 1.5, rc);
+              vec4 cs = texture2D(tColor, uv);
+              sum += cs.rgb * cs.a * w;
+              aSum += cs.a * w;
+              wSum += w;
+            }
+          }
+
+          float alpha = aSum / wSum;
+          vec3 lin = alpha > 0.0001 ? sum / aSum : vec3(0.0);
+
+          /* Lateral chromatic aberration. The red and blue channels of a real
+             lens do not land on the same photosite away from the axis, and the
+             error grows with the square of the distance from centre. It is
+             under a pixel here and never reads as colour at card size — what
+             it removes is the digital perfection of an edge, which is one of
+             the things a viewer reads as "rendered" without being able to say
+             why. Sampled off the already-defocused colour, so it rides on the
+             blur rather than fighting it. */
+          vec2 d = vUv - 0.5;
+          float r2 = dot(d, d);
+          vec2 shift = d * r2 * 0.0065;
+          float rr = texture2D(tColor, vUv - shift).r;
+          float bb = texture2D(tColor, vUv + shift).b;
+          lin = mix(lin, vec3(rr, lin.g, bb), smoothstep(0.02, 0.22, r2) * alpha);
+
+          vec3 lit = lin * uExposure;
+
+          /* Bloom, thresholded in linear light after exposure.
+             A highlight on a real lens is not bounded by the object's edge —
+             it spills, which is why a chrome bevel in a photograph has a halo
+             and the same bevel in a render has a hairline. Only what is
+             genuinely brighter than the threshold contributes, so a mid-grey
+             panel glows not at all; and where the spill lands outside the
+             silhouette it raises alpha, so the glow reaches the artboard
+             instead of being clipped to the object. */
+          vec3 halo = vec3(0.0);
+          float hw = 0.0;
+          for (int r = 1; r <= 3; r++) {
+            float rad = uBloomPx * (float(r) / 3.0);
+            for (int i = 0; i < 8; i++) {
+              float a = (float(i) / 8.0) * 6.2831853 + float(r) * 1.13;
+              vec4 cs = texture2D(tColor, vUv + vec2(cos(a), sin(a)) * rad * uTexel);
+              vec3 e = max(cs.rgb * cs.a * uExposure - 1.35, 0.0);
+              float w = 1.0 / float(r);
+              halo += e * w;
+              hw += w;
+            }
+          }
+          halo = halo / max(hw, 0.001) * uBloom;
+          lit += halo;
+          float glow = clamp(dot(halo, vec3(0.2126, 0.7152, 0.0722)) * 1.4, 0.0, 0.8);
+
+          gl_FragColor = vec4(srgb(aces(lit)), max(alpha, glow));
+        }
+      \`,
+    }),
+  );
+  const flat = new THREE.Scene();
+  flat.add(quad);
+  renderer.render(flat, new THREE.Camera());
+
+  /* Where the subject meets the floor, as a fraction of board height, so the
+     artboard knows which line to flip the reflection about. */
+  const foot = new THREE.Vector3(centre.x, box.min.y, centre.z).project(camera);
+  const baseline = (1 - foot.y) / 2;
+
   const url = renderer.domElement.toDataURL("image/png");
+  target.dispose();
   renderer.dispose();
-  return url;
+  return { url, baseline };
 };
 window.__ready = 1;
 </script>`;
@@ -429,11 +896,12 @@ await tab.goto(`http://127.0.0.1:${server.address().port}`);
 await tab.waitForFunction("window.__ready", { timeout: 60000 });
 
 for (const name of Object.keys(BOARDS)) {
-  const url = await tab.evaluate((n) => window.__render(n), name);
+  const { url, baseline } = await tab.evaluate((n) => window.__render(n), name);
   const data = Buffer.from(url.split(",")[1], "base64");
   const file = join(out, `${name}.png`);
   writeFileSync(file, data);
-  console.log(`${name.padEnd(14)} ${(data.length / 1024).toFixed(0)} kB`);
+  writeFileSync(join(out, `${name}.json`), JSON.stringify({ baseline }));
+  console.log(`${name.padEnd(14)} ${(data.length / 1024).toFixed(0)} kB  baseline ${baseline.toFixed(3)}`);
 }
 
 await browser.close();
