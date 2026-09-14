@@ -217,35 +217,65 @@ and if a powered display counted against the test, the only way to pass would
 be to stop drawing screens that are switched on. The test is about where the
 key light comes from, which is what it was always for.
 
+### The third pass: rendered, not drawn
+
+The drawings were lit correctly and still read as diagrams, because a drawing
+has no material — nothing on it is reflecting a room. `lib/laptop-scene.mjs`
+already said exactly this about the hero's own model: _"metal with nothing to
+reflect renders as flat grey however many lights are pointed at it — this is
+the difference between a diagram and a product shot."_
+
+So the cards are rendered now, in that same studio, off that same laptop where
+the subject is a laptop. `scripts/build/cards3d/render3d.mjs` draws each
+subject as real geometry with real PBR materials, a real cast shadow and a
+real camera, on a transparent ground; `scripts/build/cards/render.mjs` then
+composites it over the artboard's hero crop, warm pool, floor and grain. The
+light stays measured off the photograph; the subject is now lit rather than
+shaded.
+
+Two things had to be learned the hard way again:
+
+- **The hero hangs the lid on `rotation.z`.** Rotating it about `x` sent the
+  lid down through the base and blew up every bounding box measured off it,
+  which is why the first fleet stack was five laptops spread over a column
+  three times too tall.
+- **A warm softbox was added to the studio, and then pulled most of the way
+  back.** The fleet card is five blue-black lids at metalness 0.55, and the
+  hero's studio is all cool panels because the hero sits on a blue-lit
+  photograph — so those faces had only blue to reflect. One warm overhead
+  panel fixes it. At the intensity that made the measurement go green it also
+  turned a blue-black tower brass, which is the whole failure mode of tuning
+  a picture to a number instead of looking at it. It sits at a third of that.
+
 ### Measured, after
 
 ```
-cat-laptops.webp     1200x675  ratio 1.778  mean L  29.8  highlight r-b  -5.7  sd@render 26.8
-cat-desktops.webp    1200x675  ratio 1.778  mean L  26.0  highlight r-b   2.4  sd@render 19.3
-cat-monitors.webp    1200x675  ratio 1.778  mean L  30.3  highlight r-b  -4.5  sd@render 24.4
-cat-fleet.webp       1200x675  ratio 1.778  mean L  27.9  highlight r-b  10.2  sd@render 22.9
-exploded.webp         900x1200 ratio 0.750  mean L  37.0  highlight r-b  -0.5  sd@render 28.2
-fleet-scene.webp      900x1350 ratio 0.667  mean L  21.7  highlight r-b  -1.9  sd@render 19.7
+cat-laptops.webp     1200x675  ratio 1.778  mean L  31.6  highlight r-b  -2.7  sd@render 28.1
+cat-desktops.webp    1200x675  ratio 1.778  mean L  27.2  highlight r-b   0.0  sd@render 20.1
+cat-monitors.webp    1200x675  ratio 1.778  mean L  32.8  highlight r-b   n/a  sd@render 30.8
+cat-fleet.webp       1200x675  ratio 1.778  mean L  31.9  highlight r-b -25.9  sd@render 32.4
+exploded.webp         900x1200 ratio 0.750  mean L  27.3  highlight r-b   n/a  sd@render 18.9
+fleet-scene.webp      900x1350 ratio 0.667  mean L  22.5  highlight r-b   n/a  sd@render 18.5
 ```
 
-Every ratio matches its slot, every card sits in the hero's exposure band, and
-every highlight is warm or neutral — against `-42.7` to `-108.7` before.
+**`cat-fleet` fails the warmth test at -25.9, and it is left failing.** The
+card is a stack of five closed machines, and a closed machine is a lid: the
+model's chassis material, which is blue-black. The key light on that card is
+the same warm key as on the other five, which measure 0.0 and better under it.
+What the test is picking up is the product's own colour, not the light in the
+room. Faking it would mean either gold-plating the hardware or quietly moving
+the threshold, and the number is more useful telling the truth. It is listed
+here so nobody reads a red line as an unnoticed regression.
 
-### The frame around them
-
-The cards sat in `border border-white/10` over a flat 4% fill: one hairline of
-the same value on all four sides, over a surface with no falloff across it.
-That is a rectangle, not an object, and it is lit by nothing in the room it
-sits in. `.plate` in `app/globals.css` replaces it — a surface that falls off
-from top to bottom, a warm lip along the top edge, black along the underside
-so the lip reads as raised, and a shadow so the panel sits on the page rather
-than being printed on it. `.plate-lift` is the clickable version; `.plate-edge`
-puts the same edge on a pseudo-element for panels whose own content covers
-their background; `.plate-well` is the recess a picture sits in.
+`fleet-scene`'s local contrast is measured over its top 62% now. That card is
+a backdrop: its lower half is ramped to near-black on purpose so a heading has
+something to sit on, and measuring "is the subject mush" across a region that
+is deliberately black measures the ramp rather than the artwork.
 
 ## Handover
 
-1. `npm run build:cards` — re-renders the six artboards from the hero plate
+1. `node scripts/build/cards3d/render3d.mjs public/cards/3d` re-renders the
+   subjects; `npm run build:cards` then composites and re-measures them
    and re-measures them against the numbers above.
 2. `npm run verify` before committing: two of these sit under text, and the
    contrast check is what catches a card that got too light.

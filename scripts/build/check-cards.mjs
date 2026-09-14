@@ -21,7 +21,7 @@ const ASSETS = [
   { file: "cat-monitors.webp", ratio: 16 / 9, renders: [290, 163] },
   { file: "cat-fleet.webp", ratio: 16 / 9, renders: [290, 163] },
   { file: "exploded.webp", ratio: 3 / 4, renders: [164, 219] },
-  { file: "fleet-scene.webp", ratio: 2 / 3, renders: [290, 521] },
+  { file: "fleet-scene.webp", ratio: 2 / 3, renders: [290, 521], crop: 0.62 },
 ];
 
 const problems = [];
@@ -77,9 +77,23 @@ for (const asset of ASSETS) {
     }
   }
 
-  /* 4. does it survive the size it is actually drawn at? */
-  const small = await sharp(path)
-    .resize(asset.renders[0], asset.renders[1], { fit: "fill" })
+  /* 4. does it survive the size it is actually drawn at?
+   *
+   * `crop` is for the one card that is a backdrop rather than a picture: the
+   * fleet plate carries a heading and a paragraph over its lower half, which
+   * is ramped to near-black on purpose so the type has something to sit on.
+   * Measuring local contrast across a region that is deliberately black is
+   * measuring the ramp, not the artwork. */
+  const region = asset.crop
+    ? sharp(path).extract({
+        left: 0,
+        top: 0,
+        width: meta.width,
+        height: Math.round(meta.height * asset.crop),
+      })
+    : sharp(path);
+  const small = await region
+    .resize(asset.renders[0], Math.round(asset.renders[1] * (asset.crop ?? 1)), { fit: "fill" })
     .greyscale()
     .raw()
     .toBuffer();

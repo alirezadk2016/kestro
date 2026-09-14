@@ -1,6 +1,5 @@
 /*
- * Renders public/cards/*.webp from the hero photograph and the drawings in
- * subjects.mjs.
+ * Renders public/cards/*.webp from the hero photograph and the 3D subjects.
  *
  *   node scripts/build/cards/render.mjs
  *
@@ -11,14 +10,16 @@
  */
 import { mkdtemp, writeFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import sharp from "sharp";
 import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
 import { BOARDS, artboardHtml } from "./boards.mjs";
-import { SUBJECTS } from "./subjects.mjs";
 
 const PLATE = "public/hero/scene.webp";
 const OUT = "public/cards";
+/* Written by scripts/build/cards3d/render3d.mjs. Absolute, because it goes
+   into a file:// URL in a page that lives in a temp directory. */
+const root3d = resolve("public/cards/3d");
 
 const work = await mkdtemp(join(tmpdir(), "kestro-cards-"));
 const { width: PW, height: PH } = await sharp(PLATE).metadata();
@@ -37,8 +38,9 @@ try {
     const groundPath = join(work, `ground-${name}.png`);
     await cut.resize(b.w, b.h, { fit: "cover", position: "centre" }).png().toFile(groundPath);
 
+    const objectPath = join(root3d, `${name}.png`);
     const page = join(work, `${name}.html`);
-    await writeFile(page, artboardHtml(name, b, groundPath, SUBJECTS[name]()));
+    await writeFile(page, artboardHtml(name, b, groundPath, objectPath));
 
     /* Shot at 2x and resampled down, so the strokes land on the delivered
        pixel grid rather than being rasterised straight onto it. */
@@ -47,7 +49,15 @@ try {
       deviceScaleFactor: 2,
     });
     await tab.goto(`file://${page}`);
-    await tab.waitForFunction(() => document.documentElement.dataset.ready === "1");
+    /* Both layers are files on disk and both are large. Screenshotting before
+       they decode gives a 7 kB black rectangle, which is exactly what the
+       first run of this produced. */
+    await tab.waitForFunction(
+      () => Array.from(document.images).every((i) => i.complete && i.naturalWidth > 0),
+      null,
+      { timeout: 30000 },
+    );
+    await tab.waitForTimeout(150);
     const shot = await tab.locator(".board").screenshot();
     await tab.close();
 
