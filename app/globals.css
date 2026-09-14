@@ -397,6 +397,128 @@ body {
   }
 
   /*
+   * A tile with depth.
+   *
+   * The card grids were flat rectangles that did nothing when you pointed at
+   * them, which is also how they told you they were not clickable — and they
+   * were not, which was the bigger problem.
+   *
+   * The depth is real rather than drawn: the grid cell carries the
+   * perspective, the tile rotates about its own bottom edge, and the icon
+   * sits on its own plane 34px in front of the face, so it separates from the
+   * card the way an object separates from a wall. Nothing here follows the
+   * mouse — a tilt that tracks the cursor is a demo, and by the fourth card
+   * on a page it is noise.
+   */
+  .tilt {
+    perspective: 900px;
+  }
+
+  .tile {
+    transform-style: preserve-3d;
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-image 420ms ease;
+  }
+
+  .tilt:hover .tile,
+  .tile:focus-visible {
+    transform: translateY(-6px) rotateX(7deg) scale(1.012);
+    transform-origin: center bottom;
+  }
+
+  /* The icon, the heading and the prompt each sit at their own depth, so the
+     card opens up rather than simply growing. */
+  .tile-z {
+    transform: translateZ(0);
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 240ms ease;
+  }
+
+  .tilt:hover .tile-z-far,
+  .tile:focus-visible .tile-z-far {
+    transform: translateZ(14px);
+  }
+
+  .tilt:hover .tile-z-near,
+  .tile:focus-visible .tile-z-near {
+    transform: translateZ(34px);
+    box-shadow:
+      0 14px 22px -10px rgb(2 5 12 / 0.9),
+      inset 0 1px 0 0 rgb(255 247 233 / 0.22),
+      inset 0 0 0 1px rgb(96 128 255 / 0.32);
+  }
+
+  /* The line that says the card goes somewhere. It is not there at rest,
+     because at rest twelve of them would be twelve repetitions of the same
+     four words. */
+  .tile-prompt {
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 300ms ease,
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tilt:hover .tile-prompt,
+  .tile:focus-visible .tile-prompt {
+    opacity: 1;
+    transform: translateY(0) translateZ(20px);
+  }
+
+  /* A specular sweep across the face, so the tile reads as a surface catching
+     a light rather than as a rectangle changing colour. */
+  .tile-sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      104deg,
+      transparent 34%,
+      rgb(255 250 238 / 0.09) 48%,
+      transparent 62%
+    );
+    transition: opacity 420ms ease;
+  }
+
+  .tilt:hover .tile-sheen::before,
+  .tile-sheen:focus-visible::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile,
+    .tile-z,
+    .tile-prompt,
+    .tile-sheen::before {
+      transition-duration: 1ms;
+    }
+
+    .tilt:hover .tile,
+    .tile:focus-visible {
+      transform: none;
+    }
+
+    .tilt:hover .tile-z-far,
+    .tilt:hover .tile-z-near,
+    .tile:focus-visible .tile-z-far,
+    .tile:focus-visible .tile-z-near {
+      transform: none;
+    }
+
+    .tilt:hover .tile-prompt,
+    .tile:focus-visible .tile-prompt {
+      transform: none;
+    }
+  }
+
+  /*
    * The panel edge.
    *
    * Every card and panel on the site was `border border-white/10` over a flat

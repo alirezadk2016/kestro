@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
-import { metaFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import ServiceTile from "@/components/ServiceTile";
+import { repairs } from "@/lib/repairs";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 
@@ -19,6 +20,7 @@ const copy = {
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
       "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det ét enkelt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
+    read: "Læs mere",
     whatWeDo: "Hvad vi laver",
     howTitle: "Sådan foregår det",
     step1: "Du beskriver problemet i formularen – gerne med model og hvad der sker.",
@@ -40,6 +42,7 @@ const copy = {
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:
       "Most machines get replaced long before they are worn out. Often it is a single battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
+    read: "Read more",
     whatWeDo: "What we do",
     howTitle: "How it works",
     step1: "You describe the problem in the form — ideally with the model and what happens.",
@@ -70,105 +73,6 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
     ...metaFor("/reparation", params.lang),
   };
 }
-
-const services = [
-  {
-    mark: "memory" as CraftMarkName,
-    title: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
-    description: {
-      da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
-      en: "More memory and faster storage is often the cheapest route to a noticeably quicker machine.",
-    },
-  },
-  {
-    mark: "battery" as CraftMarkName,
-    title: { da: "Batteriskift", en: "Battery replacement" },
-    description: {
-      da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
-      en: "Laptop no longer lasting a working day? The battery is one of the cheapest parts to change — we quote the price before we start.",
-    },
-  },
-  {
-    mark: "screen" as CraftMarkName,
-    title: { da: "Skærmskift", en: "Screen replacement" },
-    description: {
-      da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
-      en: "Cracked or faulty screens on laptops, tablets and phones.",
-    },
-  },
-  {
-    mark: "keyboard" as CraftMarkName,
-    title: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
-    description: {
-      da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk/nordisk layout, så æ, ø og å sidder, hvor de skal.",
-      en: "Faulty keyboards replaced — and imported machines can get a Danish or Norwegian layout, so æ, ø and å sit where they should.",
-    },
-  },
-  {
-    mark: "parts" as CraftMarkName,
-    title: { da: "Reservedele og komponentskift", en: "Spare parts and components" },
-    description: {
-      da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
-      en: "Fans, hinges, charging ports, speakers, cables and other worn parts replaced so the machine keeps going.",
-    },
-  },
-  {
-    mark: "cooling" as CraftMarkName,
-    title: { da: "Rens og køling", en: "Cleaning and cooling" },
-    description: {
-      da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
-      en: "Dust and old thermal paste make a machine hot and loud. A clean can bring back quiet and stability.",
-    },
-  },
-  {
-    mark: "install" as CraftMarkName,
-    title: { da: "Windows-installation", en: "Windows installation" },
-    description: {
-      da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
-      en: "A clean Windows install with drivers and updates, so the machine starts up like new.",
-    },
-  },
-  {
-    mark: "written" as CraftMarkName,
-    title: { da: "Software og licenser", en: "Software and licences" },
-    description: {
-      da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
-      en: "We install the programs you use and help get the licences in place, so the machines run legally from day one.",
-    },
-  },
-  {
-    mark: "adjust" as CraftMarkName,
-    title: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
-    description: {
-      da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
-      en: "A fresh operating system install, with your files and programs carried across.",
-    },
-  },
-  {
-    mark: "repair" as CraftMarkName,
-    title: { da: "Fejlfinding", en: "Troubleshooting" },
-    description: {
-      da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
-      en: "The machine will not start, crashes or behaves oddly — we find the cause and tell you what it costs to fix.",
-    },
-  },
-  {
-    mark: "assembly" as CraftMarkName,
-    title: { da: "Samling af pc", en: "PC assembly" },
-    description: {
-      da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
-      en: "We build a machine to your spec — either from scratch or by upgrading the one you have.",
-    },
-  },
-  {
-    mark: "tested" as CraftMarkName,
-    title: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
-    description: {
-      da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
-      en: "Bought a used machine? We check it over, set it up and make it ready to use.",
-    },
-  },
-];
 
 const repairFaqs = [
   {
@@ -266,18 +170,15 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
           </h2>
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-4">
-            {services.map((service) => (
-              <div key={service.title.da} className="plate p-4 sm:p-6">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                  <CraftMark name={service.mark} className="h-5 w-5 sm:h-6 sm:w-6" />
-                </span>
-                <h3 className="mt-3 text-sm font-semibold text-paper sm:mt-4 sm:text-base">
-                  {service.title[lang]}
-                </h3>
-                <p className="mt-1.5 text-xs leading-[1.6] text-paper/65 sm:mt-2 sm:text-sm sm:leading-[1.6]">
-                  {service.description[lang]}
-                </p>
-              </div>
+            {repairs.map((repair) => (
+              <ServiceTile
+                key={repair.slug}
+                href={localePath(`/reparation/${repair.slug}`, lang)}
+                mark={repair.mark}
+                title={repair.name[lang]}
+                summary={repair.summary[lang]}
+                prompt={c.read}
+              />
             ))}
           </div>
         </Container>

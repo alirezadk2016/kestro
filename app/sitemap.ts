@@ -4,6 +4,7 @@ import { models } from "@/lib/models";
 import { guides } from "@/lib/guides";
 import { legalUpdated } from "@/lib/legal";
 import { services } from "@/lib/services";
+import { repairs } from "@/lib/repairs";
 import { localePath } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -71,12 +72,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     path: `/ydelser/${service.slug}`,
   }));
 
+  const repairRoutes: Route[] = repairs.map((repair) => ({
+    path: `/reparation/${repair.slug}`,
+  }));
+
   const routes: Route[] = [
     ...staticRoutes,
     ...categoryRoutes,
     ...modelRoutes,
     ...guideRoutes,
     ...serviceRoutes,
+    ...repairRoutes,
   ];
 
   /*
