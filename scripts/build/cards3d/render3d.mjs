@@ -68,6 +68,27 @@ function studio(panels) {
   return s;
 }
 
+/*
+ * Six frames from one shoot are not identical, and six frames that ARE
+ * identical is a thing the eye notices without being able to name it: the set
+ * reads as one file rendered six times rather than as an afternoon's work. A
+ * stable hash of the card's name gives each one its own small trim — under a
+ * fiftieth of a stop and a couple of percent of white balance, which is less
+ * than the drift between two frames on the same roll.
+ */
+function shotTrim(name) {
+  let h = 2166136261;
+  for (let i = 0; i < name.length; i++) {
+    h ^= name.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const r = (n) => (((h >>> (n * 8)) & 255) / 255 - 0.5) * 2;
+  return {
+    exposure: 1 + r(0) * 0.035,
+    balance: [1 + r(1) * 0.022, 1 + r(2) * 0.012, 1 - r(1) * 0.022],
+  };
+}
+
 window.__render = async function (name) {
   const [W, H] = BOARDS[name];
   const renderer = new THREE.WebGLRenderer({
@@ -225,7 +246,7 @@ window.__render = async function (name) {
        angle to the room shows a different room. */
     emissive: 0xffffff,
     emissiveMap: screenSheen(),
-    emissiveIntensity: 0.55,
+    emissiveIntensity: 0.26,
   });
   const REGRADE = {
     /* Neutral-cool, not blue. At #212636 the blue runs 21 points ahead of
@@ -335,8 +356,23 @@ window.__render = async function (name) {
   }
 
   /* Value noise, four octaves, drawn once. The low octaves are the uneven
-     polish a moulded panel actually has; the high one is the grain. */
+     polish a moulded panel actually has; the high one is the grain.
+   *
+   * Seeded, not Math.random(). The first line of the brief is that this set
+   * has to be re-runnable — "if a render has to be redone in six months it
+   * must come back matching" — and an unseeded noise map means every run
+   * produces a different surface and therefore different measurements. Two
+   * consecutive runs of the checker disagreeing by a point is not a change you
+   * made; it is the floor moving under you, and it wastes a pass every time. */
   function noiseCanvas(size, octaves, contrast) {
+    /* xorshift32, because it only has to be repeatable, not good. */
+    let seed = 0x9e3779b9;
+    const rand = () => {
+      seed ^= seed << 13;
+      seed ^= seed >>> 17;
+      seed ^= seed << 5;
+      return ((seed >>> 0) % 100000) / 100000;
+    };
     const c = document.createElement("canvas");
     c.width = size;
     c.height = size;
@@ -346,7 +382,7 @@ window.__render = async function (name) {
     for (let o = 0; o < octaves; o++) {
       const n = 4 << o;
       const g = new Float32Array(n * n);
-      for (let i = 0; i < g.length; i++) g[i] = Math.random();
+      for (let i = 0; i < g.length; i++) g[i] = rand();
       grids.push([n, g]);
     }
     const smooth = (t) => t * t * (3 - 2 * t);
@@ -425,14 +461,62 @@ window.__render = async function (name) {
      own panels and the props alike, so a monitor bezel and a laptop lid are
      the same plastic. The screens and the floor are left out — a mirror with
      dust in it reads as a dirty mirror, which is a different picture. */
+  /*
+   * Edge wear, from the geometry's own normals.
+   *
+   * These renders are of a company that sells REFURBISHED hardware, and every
+   * object in them came out of the box this morning. Nothing about a factory-
+   * perfect chassis is honest here and nothing about it is photographic: a
+   * used machine is worn where it is handled, and on a chamfered black body
+   * that wear is a bright line along every edge — the anodising rubbed back to
+   * the metal under it. It is the single clearest signal that an object has a
+   * history, and no lighting change substitutes for it.
+   *
+   * There is no wear map and, on geometry with no UVs worth the name, no way
+   * to paint one. But this hardware is boxes with chamfers, and a chamfer has
+   * a normal that points between two axes where a face has one that points
+   * along one. So "how far is this vertex's normal from the nearest axis" is a
+   * curvature mask for free, and it is exact on exactly the shapes this set is
+   * made of.
+   *
+   * Vertex colours multiply, and multiplying cannot brighten. So the material
+   * takes the WORN colour and the flat faces are darkened back down to the
+   * body colour by their own vertex colour — the inverse of how it reads.
+   */
+  const WORN = 2.15;
+  function wear(geom) {
+    if (geom.__worn) return;
+    geom.__worn = true;
+    const nor = geom.attributes.normal;
+    if (!nor) return;
+    const n = nor.count;
+    const col = new Float32Array(n * 3);
+    const flat = 1 / WORN;
+    for (let i = 0; i < n; i++) {
+      const ax = Math.abs(nor.getX(i));
+      const ay = Math.abs(nor.getY(i));
+      const az = Math.abs(nor.getZ(i));
+      /* 0 on a face, 0.29 on a 45 degree bevel, 0.42 on a corner. */
+      const e = 1 - Math.max(ax, ay, az);
+      const t = Math.min(1, Math.max(0, (e - 0.04) / 0.22));
+      const w = t * t * (3 - 2 * t);
+      const v = flat + (1 - flat) * w;
+      col[i * 3] = v;
+      col[i * 3 + 1] = v;
+      col[i * 3 + 2] = v;
+    }
+    geom.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  }
+
   const weather = (root) =>
     root.traverse((o) => {
       const m = o.isMesh && o.material;
       if (!m || !m.isMeshStandardMaterial) return;
       if (m === GLASS || m.name === "Material.099" || m.name === "screen") return;
+      boxUv(o.geometry, 2.6);
+      wear(o.geometry);
       if (m.__weathered) return;
       m.__weathered = true;
-      boxUv(o.geometry, 2.6);
       m.roughnessMap = ROUGH;
       /* roughnessMap multiplies, so the base has to sit at the rough end and
          the map carries it back down; a panel then runs between about 0.7 and
@@ -440,6 +524,8 @@ window.__render = async function (name) {
       m.roughness = Math.min(1, m.roughness * 1.18);
       m.normalMap = BUMP;
       m.normalScale = new THREE.Vector2(0.12, 0.12);
+      m.vertexColors = true;
+      m.color.multiplyScalar(WORN);
       m.needsUpdate = true;
     });
 
@@ -501,9 +587,26 @@ window.__render = async function (name) {
     x.fillRect(0, 0, 512, 512);
     return c;
   };
+  /*
+   * How far the floor reaches, and it is the reason the set looked hazy.
+   *
+   * Settled by looking at the alpha channel rather than by counting it, after
+   * the bloom had been blamed and tightened to no effect and this ramp had
+   * been tightened for another three percent. The plane was radius x 7 — wide
+   * enough that its pool filled the lower half of every frame and ran up both
+   * sides, which at partial alpha is not a floor, it is fog, sitting over the
+   * room the artboard had gone to some trouble to put behind the subject.
+   *
+   * Two numbers do this, and only one of them is the ramp: the plane is a
+   * little over three radii now, and the ramp is gone by half of that. A
+   * polished surface in a low-key shot is visible where the object meets it
+   * and gone within a foot — the same thing the roughness ramp below says
+   * about its reflection.
+   */
   const fade = ramp([
-    [0, "#b4b4b4"],
-    [0.42, "#6e6e6e"],
+    [0, "#a8a8a8"],
+    [0.22, "#5e5e5e"],
+    [0.52, "#161616"],
     [1, "#000000"],
   ]);
   /*
@@ -529,7 +632,7 @@ window.__render = async function (name) {
     [1, "#ffffff"],
   ]);
   const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(radius * 7, radius * 7),
+    new THREE.PlaneGeometry(radius * 3.1, radius * 3.1),
     new THREE.MeshStandardMaterial({
       /* Dark and polished, not dark and matte. At roughness 0.42 the key's
          lobe spreads across the whole plane and the card comes back as a
@@ -624,6 +727,29 @@ window.__render = async function (name) {
     scene.add(d);
   }
 
+  /*
+   * The kicker, which is the light this set was missing.
+   *
+   * These objects are graphite on a near-black ground, and until now the only
+   * thing separating them from it was a floor pool bright enough to read as
+   * fog. Take the fog away and a black laptop sits on black. The answer is not
+   * more ambient — it is the light every product photographer puts behind and
+   * to the side of a dark subject: a hard source raking the far edge, drawing
+   * one bright line down the silhouette and stopping there.
+   *
+   * It is also the light the edge wear was drawn for. A rubbed chamfer is only
+   * visible when something grazes it, and a key from the front cannot: the two
+   * were built for each other, and the card only reads as used hardware with
+   * both.
+   *
+   * Cool, because the brief's fill is blue-hour through glazing and this is
+   * that window. Warm key, cool kicker, near-black between them.
+   */
+  const kicker = new THREE.DirectionalLight("#cfd9f2", VIEW.lights.key.intensity * 3.6);
+  kicker.position.set(radius * 2.6, radius * 1.5, -radius * 2.4);
+  kicker.target.position.copy(centre);
+  scene.add(kicker, kicker.target);
+
   const camera = new THREE.PerspectiveCamera(built.fov, W / H, 0.01, 500);
   const place = (dist) => {
     camera.position.set(
@@ -693,6 +819,7 @@ window.__render = async function (name) {
      a teardown wants most of its layers readable, a single machine can fall
      away hard. */
   const focus = camera.position.distanceTo(centre);
+  const trim = shotTrim(name);
   const quad = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2),
     new THREE.ShaderMaterial({
@@ -708,9 +835,15 @@ window.__render = async function (name) {
         uFocus: { value: focus },
         uScale: { value: (built.aperture ?? 1) * 0.42 },
         uMaxPx: { value: Math.max(W, H) * 0.0055 },
-        uExposure: { value: VIEW.exposure * 2.35 },
-        uBloomPx: { value: Math.max(W, H) * 0.02 },
-        uBloom: { value: 0.4 },
+        /* 2.35 was set when a floor pool the size of the frame was carrying
+           a third of every card's light. With that gone the whole set sat at
+           the bottom of the brief's band — means of 26 against a hero of 39 —
+           so the exposure that was always notionally right is now actually
+           needed. */
+        uExposure: { value: VIEW.exposure * 2.8 * trim.exposure },
+        uBalance: { value: new THREE.Vector3(...trim.balance) },
+        uBloomPx: { value: Math.max(W, H) * 0.009 },
+        uBloom: { value: 0.3 },
         uTexel: { value: new THREE.Vector2(1 / W, 1 / H) },
       },
       vertexShader: \`
@@ -724,6 +857,7 @@ window.__render = async function (name) {
         uniform sampler2D tDepth;
         uniform float uNear, uFar, uFocus, uScale, uMaxPx, uExposure;
         uniform float uBloomPx, uBloom;
+        uniform vec3 uBalance;
         uniform vec2 uTexel;
 
         float viewZ(vec2 uv) {
@@ -839,9 +973,45 @@ window.__render = async function (name) {
           }
           halo = halo / max(hw, 0.001) * uBloom;
           lit += halo;
-          float glow = clamp(dot(halo, vec3(0.2126, 0.7152, 0.0722)) * 1.4, 0.0, 0.8);
+          /* Tight and weak. A bloom is light added at an edge, not coverage
+             added to a frame — at a 48px radius with a 0.8 ceiling this was
+             lifting alpha well away from anything bright. (It was NOT the
+             cause of the grey wash over these cards, which is what it was
+             first blamed for: tightening it moved the frame's faint-alpha
+             coverage by 0.0%. The floor was.) */
+          float glow = clamp(dot(halo, vec3(0.2126, 0.7152, 0.0722)) * 0.35, 0.0, 0.18);
 
-          gl_FragColor = vec4(srgb(aces(lit)), max(alpha, glow));
+          /*
+           * The grade.
+           *
+           * ACES and an sRGB transfer is a correct picture and not yet a
+           * photograph. Three things every capture has and no renderer gives
+           * you for free:
+           *
+           *  - **A toe.** A lens flares, a sensor has a floor, and a print has
+           *    ink: the blacks in a photograph are never zero. Clamping them
+           *    to zero is most of what makes a dark render look like a dark
+           *    render — the shadows go dead rather than deep.
+           *  - **Split tone.** Every film stock and every colourist separates
+           *    the ends: shadows toward the cool end, highlights toward the
+           *    warm. It is the same separation this set's lighting is built on
+           *    — warm key, cool blue-hour fill — carried into the grade, so
+           *    the light and the print agree instead of fighting.
+           *  - **A shoulder.** Contrast added as a smooth S rather than a
+           *    gain, so the midtones firm up without the highlights clipping.
+           */
+          vec3 g = aces(lit) * uBalance;
+          /* Weighted by coverage: a toe belongs under the picture, and the
+             bloom's outer spill is not picture — lifting it is how a halo
+             turns into fog. */
+          g = g + vec3(0.013, 0.015, 0.022) * (1.0 - g) * alpha;
+          float lum = dot(g, vec3(0.2126, 0.7152, 0.0722));
+          vec3 cool = vec3(0.955, 0.985, 1.055);
+          vec3 warm = vec3(1.045, 1.0, 0.945);
+          g *= mix(cool, warm, smoothstep(0.10, 0.70, lum));
+          g = mix(g, g * g * (3.0 - 2.0 * g), 0.24);
+
+          gl_FragColor = vec4(srgb(clamp(g, 0.0, 1.0)), max(alpha, glow));
         }
       \`,
     }),

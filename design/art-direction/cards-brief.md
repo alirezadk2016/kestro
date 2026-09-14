@@ -420,14 +420,64 @@ by reasoning about it, after the wrong thing had been blamed each time:
   one object. Held down to 0.55 the view-dependent mirror dominates instead,
   and a screen at a different angle to the room shows a different room.
 
+### The sixth pass: wear, a grade, and a light for both
+
+Three things, and the first is the one that matters.
+
+**Edge wear, from the geometry's own normals.** These renders are of a company
+that sells refurbished hardware and every object in them came out of the box
+this morning. That is not honest and it is not photographic: a used machine is
+worn where it is handled, and on a chamfered black body that wear is a bright
+line along every edge — the anodising rubbed back to the metal under it. There
+is no wear map and, on geometry whose UVs had to be generated in the first
+place, nowhere to paint one. But this hardware is boxes with chamfers, and a
+chamfer has a normal pointing between two axes where a face has one pointing
+along one. "How far is this vertex's normal from the nearest axis" is a
+curvature mask for free, and it is exact on exactly the shapes this set is made
+of. Vertex colours multiply and multiplying cannot brighten, so the material
+takes the worn colour and the flat faces are darkened back down to the body
+colour — the inverse of how it reads.
+
+**A grade.** ACES and an sRGB transfer is a correct picture and not yet a
+photograph. A toe, because a lens flares and a sensor has a floor and the
+blacks in a photograph are never zero — clamping them is most of what makes a
+dark render look like a dark render, the shadows going dead rather than deep. A
+split tone, shadows cool and highlights warm, which is the same separation this
+set's lighting is already built on. A shoulder rather than a gain, so the
+midtones firm up without the highlights clipping. And a per-card trim from a
+hash of its own name: six frames from one shoot are not identical, and six that
+are is something the eye notices without being able to name it.
+
+**A kicker.** The one the set was missing. These objects are graphite on a
+near-black ground, and the only thing separating them from it was a floor pool
+bright enough to read as fog. It is also the light the edge wear was drawn for:
+a rubbed chamfer is only visible when something grazes it, and a key from the
+front cannot. Warm key, cool kicker, near-black between them.
+
+Two process notes, both of which cost a pass:
+
+- **The grey veil was the floor, and it took three wrong answers to find.** The
+  bloom was blamed and tightened — the frame's faint-alpha coverage moved by
+  0.0%. The floor's alpha ramp was tightened — three percent. Looking at the
+  alpha channel instead of counting it settled it in one go: the plane was
+  radius x 7, wide enough that its pool filled the lower half of every frame
+  and ran up both sides. Counting a number tells you how much; looking at the
+  channel tells you where, and where was the whole answer.
+- **The noise map was unseeded.** The first line of this brief is that the set
+  has to be re-runnable, and `Math.random()` in the surface generator meant
+  every run produced a different material and therefore different
+  measurements. Two consecutive checker runs disagreeing by a point is not a
+  change anybody made; it is the floor moving underfoot, and it wasted a pass
+  chasing a warmth regression that did not exist. Seeded now.
+
 ### Measured, after
 ```
-cat-laptops.webp     1200x675  ratio 1.778  mean L  29.3  highlight r-b  11.9  sd@render 22.9
-cat-desktops.webp    1200x675  ratio 1.778  mean L  29.1  highlight r-b   n/a  sd@render 21.9
-cat-monitors.webp    1200x675  ratio 1.778  mean L  24.3  highlight r-b  16.5  sd@render 18.8
-cat-fleet.webp       1200x675  ratio 1.778  mean L  41.9  highlight r-b   1.7  sd@render 43.4
-exploded.webp         900x1200 ratio 0.750  mean L  28.4  highlight r-b  20.9  sd@render 24.6
-fleet-scene.webp      900x1350 ratio 0.667  mean L  24.1  highlight r-b   9.5  sd@render 18.6
+cat-laptops.webp     1200x675  ratio 1.778  mean L  27.4  highlight r-b  -9.2  sd@render 20.8
+cat-desktops.webp    1200x675  ratio 1.778  mean L  30.0  highlight r-b   4.9  sd@render 29.8
+cat-monitors.webp    1200x675  ratio 1.778  mean L  27.5  highlight r-b  11.3  sd@render 18.2
+cat-fleet.webp       1200x675  ratio 1.778  mean L  37.3  highlight r-b   9.6  sd@render 38.5
+exploded.webp         900x1200 ratio 0.750  mean L  32.6  highlight r-b  10.9  sd@render 27.3
+fleet-scene.webp      900x1350 ratio 0.667  mean L  27.3  highlight r-b   7.2  sd@render 19.1
 ```
 
 One of these was earned rather than tuned, and it is worth the paragraph.
