@@ -152,7 +152,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <div className="flex items-center gap-1">
               <Link
                 href={localePath(productsNav.hub.href, lang)}
-                className="text-sm font-medium text-paper/75 transition hover:text-paper"
+                className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
               >
                 {productsNav.hub.label[lang]}
               </Link>
@@ -227,7 +227,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <Link
               key={link.href}
               href={localePath(link.href, lang)}
-              className="text-sm font-medium text-paper/75 transition hover:text-paper"
+              className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
             >
               {link.label[lang]}
             </Link>

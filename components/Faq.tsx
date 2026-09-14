@@ -93,8 +93,24 @@ export default function Faq({
         <div className="mt-10 max-w-3xl space-y-3 sm:mt-12">
           {items.map((faq) => (
             <details key={faq.question.da} className="plate group px-5 open:pb-1 sm:px-6">
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors group-open:text-brand-200 hover:text-brand-200 [&::-webkit-details-marker]:hidden">
-                {faq.question[lang]}
+              {/*
+               * The question is a heading.
+               *
+               * It was bare text inside the <summary>, which is a control —
+               * so a page with five questions on it had five question-style
+               * headings as far as a reader was concerned and none at all as
+               * far as a parser was concerned. An AI-SEO audit reported "no
+               * question-style headings" on pages whose whole lower half is
+               * questions, and it was reading the document correctly.
+               *
+               * A heading inside a summary is valid and is what a
+               * well-formed FAQ does: the disclosure stays a disclosure, and
+               * the question joins the outline under the section's own h2.
+               */}
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 transition-colors [&::-webkit-details-marker]:hidden">
+                <h3 className="text-base font-semibold text-paper transition-colors group-open:text-brand-200 group-hover:text-brand-200">
+                  {faq.question[lang]}
+                </h3>
                 <ChevronDown
                   className="h-5 w-5 flex-shrink-0 text-paper/55 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}

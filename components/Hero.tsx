@@ -181,7 +181,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             Scroll
           </span>
           <span className="h-10 w-px bg-gradient-to-b from-paper/30 to-transparent" />
-          <ArrowDown className="h-3.5 w-3.5 text-paper/35" strokeWidth={1.5} />
+          <ArrowDown aria-hidden="true" className="h-3.5 w-3.5 text-paper/55" strokeWidth={1.5} />
         </div>
       </div>
 

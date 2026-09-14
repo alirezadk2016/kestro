@@ -119,7 +119,10 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                   <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90 transition-colors group-hover:text-brand-200">
                     <CraftMark name={item.mark} className="h-6 w-6" />
                   </span>
-                  <span className="font-mono text-xs tabular-nums text-paper/30">
+                  {/* aria-hidden as well as lighter: the ordinal is a
+                      decoration beside a heading that already says which card
+                      this is, and at 30% white it measured 2.9:1. */}
+                  <span aria-hidden="true" className="font-mono text-xs tabular-nums text-paper/55">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>

@@ -71,7 +71,9 @@ export default function NotFoundPanel() {
                   className="inline-flex min-h-[32px] items-center text-sm font-medium text-paper/60 transition hover:text-paper"
                 >
                   {way.da}
-                  <span className="px-1.5 text-paper/25">/</span>
+                  <span aria-hidden="true" className="px-1.5 text-paper/55">
+                    /
+                  </span>
                   {way.en}
                 </Link>
               </li>

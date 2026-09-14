@@ -202,8 +202,10 @@ for (const da of fromConfig.keys()) {
  *
  * Measured against brand-950 (#0B1426), which is what almost every dark
  * surface here is: white at 40% lands at 3.81:1, under the 4.5 that normal
- * body text needs, and at 45% it lands at 4.51 — close enough to the line
- * that any lighter band underneath breaks it.
+ * body text needs, at 30% it is 2.9:1, and at 45% it lands at 4.51 — close
+ * enough to the line that any lighter band underneath breaks it. Everything
+ * below 55 is barred: the first pass of this guard covered only the two
+ * alphas that had been found, and Lighthouse came straight back with a /30.
  *
  * The browser contrast check in checks.mjs should have caught this and did
  * not: it only samples elements lying fully inside the current viewport, and
@@ -216,7 +218,7 @@ for (const da of fromConfig.keys()) {
  * The admin screens are excluded: they are an internal surface with their own
  * grounds and are not part of the public audit.
  */
-const FAINT = /\btext-paper\/(?:40|45)\b/;
+const FAINT = /\btext-paper\/(?:[123]0|[12]5|35|40|45)\b/;
 const walk = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = join(dir, entry.name);
@@ -228,9 +230,15 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
   readFileSync(file, "utf8")
     .split("\n")
     .forEach((line, i) => {
-      if (FAINT.test(line)) {
+      /* aria-hidden text is decoration — a "/" between two crumbs, a rule,
+         an arrow. WCAG contrast does not apply to it and axe skips it, and
+         forcing it up makes a separator louder than the words it separates.
+         Anything a reader actually reads has no aria-hidden on it. */
+      if (FAINT.test(line) && !/aria-hidden/.test(line)) {
         const where = `${file.slice(root.length)}:${i + 1}`;
-        fail(`${where}: text-paper/40 is 3.81:1 on brand-950 — use /55 or lighter`);
+        fail(
+          `${where}: faint text-paper alpha — /45 is 4.51:1 on brand-950 and below that fails; use /55`,
+        );
       }
     });
 }
