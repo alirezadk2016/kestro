@@ -360,7 +360,7 @@ export default function ContactForm({
    * people.
    */
   const inputClasses =
-    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/55 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -532,7 +532,7 @@ export default function ContactForm({
             {companyRequired ? (
               <span className="text-brand-400">*</span>
             ) : (
-              <span className="text-paper/45">{c.optional}</span>
+              <span className="text-paper/55">{c.optional}</span>
             )}
           </label>
           <input
@@ -671,7 +671,7 @@ export default function ContactForm({
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
           {quote ? c.quoteMessage : c.message}{" "}
           {quote ? (
-            <span className="text-paper/45">{c.optional}</span>
+            <span className="text-paper/55">{c.optional}</span>
           ) : (
             <span className="text-brand-400">*</span>
           )}

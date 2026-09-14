@@ -301,7 +301,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
               </h2>
               <dl className="mt-4 space-y-2 text-base leading-7 text-paper/65 sm:leading-8">
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/45">{lang === "da" ? "Navn" : "Name"}</dt>
+                  <dt className="text-paper/55">{lang === "da" ? "Navn" : "Name"}</dt>
                   <dd>
                     {company.name}
                     {company.legalForm ? ` ${company.legalForm}` : ""}
@@ -309,18 +309,18 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
                 </div>
                 {address && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/45">{lang === "da" ? "Adresse" : "Address"}</dt>
+                    <dt className="text-paper/55">{lang === "da" ? "Adresse" : "Address"}</dt>
                     <dd>{address}</dd>
                   </div>
                 )}
                 {company.cvr && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/45">CVR</dt>
+                    <dt className="text-paper/55">CVR</dt>
                     <dd>{company.cvr}</dd>
                   </div>
                 )}
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/45">{lang === "da" ? "E-mail" : "Email"}</dt>
+                  <dt className="text-paper/55">{lang === "da" ? "E-mail" : "Email"}</dt>
                   <dd>
                     <a href={`mailto:${company.email}`} className="underline underline-offset-4">
                       {company.email}
@@ -329,7 +329,7 @@ export default function TermsPage({ params }: { params: { lang: Lang } }) {
                 </div>
                 {company.phoneDisplay && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/45">{lang === "da" ? "Telefon" : "Phone"}</dt>
+                    <dt className="text-paper/55">{lang === "da" ? "Telefon" : "Phone"}</dt>
                     <dd>{company.phoneDisplay}</dd>
                   </div>
                 )}

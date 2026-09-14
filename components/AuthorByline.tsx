@@ -46,9 +46,9 @@ export default function AuthorByline({
         >
           {author.name}
         </Link>
-        <span className="text-paper/45"> · {author.role[lang]}</span>
+        <span className="text-paper/55"> · {author.role[lang]}</span>
       </p>
-      <p className="label ml-auto text-paper/45">
+      <p className="label ml-auto text-paper/55">
         <time dateTime={updated}>
           {c.updated} {updated}
         </time>

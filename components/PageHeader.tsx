@@ -53,7 +53,7 @@ export default function PageHeader({
         /* The same meta line as the guides index: label case, one weight up on
            the value. It printed the raw ISO date at 12px roman, which is the
            data rather than a date. */
-        <p className="label mt-6 text-paper/45">
+        <p className="label mt-6 text-paper/55">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
           <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/80">
             {formatDate(pageUpdated(updated), lang ?? "da")}

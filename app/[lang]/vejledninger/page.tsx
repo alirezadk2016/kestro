@@ -189,7 +189,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
            * their own: whichever item wraps leaves a "·" hanging at the end
            * of the line above it. Space separates these perfectly well, and
            * space cannot orphan. */}
-          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/45 sm:mt-8">
+          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/55 sm:mt-8">
             <span className="whitespace-nowrap">
               <span className="tabular-nums text-paper/80">{guides.length}</span> {c.statGuides}
             </span>
@@ -216,7 +216,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
           its section carries, which is also what an article links back to. */}
       <section className="border-b border-white/10 py-10 sm:py-20">
         <Container>
-          <h2 className="eyebrow text-paper/40">{c.indexTitle}</h2>
+          <h2 className="eyebrow text-paper/55">{c.indexTitle}</h2>
           <nav aria-label={c.jump}>
             {/* Four cards, not four cells.
              *
@@ -266,7 +266,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                           than running the full width at one value — a hairline
                           that stops dead is the loudest thing on a quiet
                           card. */}
-                      <p className="label relative mt-2 text-paper/45 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
+                      <p className="label relative mt-2 text-paper/55 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
                         {articles.length} {articles.length === 1 ? c.article : c.articles}
                       </p>
                     </div>
@@ -314,7 +314,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                   "01 / EMNER" on every section — the label of the index above,
                   repeated four times, saying the same thing about four
                   different topics. A chapter marker says something. */}
-              <p className="eyebrow text-paper/40">
+              <p className="eyebrow text-paper/55">
                 <span className="tabular-nums text-brand-300">
                   {String(groupIndex + 1).padStart(2, "0")}
                 </span>
@@ -418,7 +418,7 @@ export default function VidenPage({ params }: { params: { lang: Lang } }) {
                         </span>
                         <ArrowRight
                           aria-hidden="true"
-                          className="h-4 w-4 flex-none text-paper/40 transition-all group-hover:translate-x-1 group-hover:text-brand-300"
+                          className="h-4 w-4 flex-none text-paper/55 transition-all group-hover:translate-x-1 group-hover:text-brand-300"
                           strokeWidth={2}
                         />
                       </span>

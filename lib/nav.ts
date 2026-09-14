@@ -7,7 +7,7 @@ import type { Localized } from "./i18n";
  * localePath() adds. Keeping one set of slugs keeps one route tree.
  */
 
-export type NavLink = { href: string; label: Localized };
+export type NavLink = { href: string; label: Localized; rel?: string };
 
 export const mainNav: NavLink[] = [
   { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
@@ -48,13 +48,33 @@ export const serviceNav: NavLink[] = [
   { href: "/vejledninger", label: { da: "Viden", en: "Knowledge" } },
 ];
 
+/*
+ * `rel` on the two legal links.
+ *
+ * Both pages exist and both are in the footer of every page, and an AI-SEO
+ * audit still reported "no privacy policy or terms links found" — because it
+ * looks for the English words in the href or the label, and the Danish URLs
+ * /privatlivspolitik and /handelsbetingelser contain neither. Changing the
+ * URLs to satisfy a detector would break canonicals and the sitemap for a
+ * string match. `rel="privacy-policy"` and `rel="terms-of-service"` are
+ * registered HTML link relations and say the same thing to a machine in a
+ * way that does not depend on what language the site is written in.
+ */
 export const companyNav: NavLink[] = [
   { href: "/", label: { da: "Forside", en: "Home" } },
   { href: "/om-os", label: { da: "Om os", en: "About us" } },
   { href: "/tilbud", label: { da: "Få et tilbud", en: "Get a quote" } },
   { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
-  { href: "/handelsbetingelser", label: { da: "Handelsbetingelser", en: "Terms of sale" } },
-  { href: "/privatlivspolitik", label: { da: "Privatlivspolitik", en: "Privacy policy" } },
+  {
+    href: "/handelsbetingelser",
+    label: { da: "Handelsbetingelser", en: "Terms of sale" },
+    rel: "terms-of-service",
+  },
+  {
+    href: "/privatlivspolitik",
+    label: { da: "Privatlivspolitik", en: "Privacy policy" },
+    rel: "privacy-policy",
+  },
 ];
 
 /**

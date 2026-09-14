@@ -8,6 +8,7 @@ import CtaSection from "@/components/CtaSection";
 import CraftMark from "@/components/CraftMark";
 import PageSchema from "@/components/PageSchema";
 import ServiceTile from "@/components/ServiceTile";
+import FactNote from "@/components/FactNote";
 import { repairs, getRepair } from "@/lib/repairs";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 
@@ -22,20 +23,20 @@ export function generateStaticParams() {
 const copy = {
   da: {
     breadcrumb: "Reparation",
-    does: "Det gør vi",
-    needs: "Det skal vi bruge",
-    bands: "Sådan læser vi procenten",
-    howTo: "Sådan tjekker du det selv",
+    does: "Hvad gør vi?",
+    needs: "Hvad skal vi bruge fra jer?",
+    bands: "Hvor lav må batteriprocenten være?",
+    howTo: "Hvordan tjekker jeg selv mit batteri?",
     more: "Andre reparationer",
     read: "Læs mere",
     back: "Alle reparationer",
   },
   en: {
     breadcrumb: "Repairs",
-    does: "What we do",
-    needs: "What we need",
-    bands: "How we read the percentage",
-    howTo: "How to check it yourself",
+    does: "What do we do?",
+    needs: "What do we need from you?",
+    bands: "How low can the battery percentage go?",
+    howTo: "How do I check my battery myself?",
     more: "Other repairs",
     read: "Read more",
     back: "All repairs",
@@ -78,7 +79,7 @@ export default function RepairPage({ params }: Params) {
 
       <section className="py-10 sm:py-20">
         <Container>
-          <nav className="label text-paper/40">
+          <nav className="label text-paper/55">
             <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/70">
               {c.breadcrumb}
             </Link>
@@ -95,7 +96,15 @@ export default function RepairPage({ params }: Params) {
             </div>
           </div>
 
-          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/70">
+          {/* The answer first, then the context.
+           *
+           * Both paragraphs were already written; they were in the wrong
+           * order. A reader skimming and a model quoting both take the first
+           * one, and the first one used to be the throat-clearing. */}
+          <p className="mt-8 max-w-2xl border-l-2 border-brand-400 pl-5 text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
+            {repair.answer[lang]}
+          </p>
+          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/65">
             {repair.intro[lang]}
           </p>
         </Container>
@@ -214,6 +223,14 @@ export default function RepairPage({ params }: Params) {
           </ul>
         </Container>
       </section>
+
+      {/* FactNote rather than SourceList: on a short page the same two
+          sources listed once and quoted once is the same citation printed
+          twice. This one states the fact in the source's own words, names the
+          publisher and links the primary document — so a reader can check it
+          and a model summarising the page has something quotable instead of
+          an assertion to repeat. */}
+      {repair.sources && repair.sources.length > 0 && <FactNote lang={lang} ids={repair.sources} />}
 
       <CtaSection lang={lang} />
     </>

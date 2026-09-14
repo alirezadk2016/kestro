@@ -49,7 +49,7 @@ export default function ArticleToc({ items, lang }: { items: TocItem[]; lang: La
           {copy[lang].title}
           <svg
             viewBox="0 0 20 20"
-            className="h-4 w-4 text-paper/45 transition-transform"
+            className="h-4 w-4 text-paper/55 transition-transform"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"

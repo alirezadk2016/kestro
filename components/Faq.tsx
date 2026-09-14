@@ -96,7 +96,7 @@ export default function Faq({
               <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors group-open:text-brand-200 hover:text-brand-200 [&::-webkit-details-marker]:hidden">
                 {faq.question[lang]}
                 <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-paper/45 transition-transform duration-200 group-open:rotate-180"
+                  className="h-5 w-5 flex-shrink-0 text-paper/55 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden="true"
                 />

@@ -155,7 +155,7 @@ export default function Hero({ lang }: { lang: Lang }) {
        * headline. Hidden below lg, where there is no room for them in frame.
        */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 hidden lg:block">
-        <p className="absolute left-[51.3%] top-[17.2%] text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/45">
+        <p className="absolute left-[51.3%] top-[17.2%] text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/55">
           People
           <br />
           Technology
@@ -166,7 +166,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         </p>
 
         <div className="absolute left-[86.5%] top-[17.3%]">
-          <p className="text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/40">
+          <p className="text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/55">
             It today
             <br />
             A brighter
@@ -177,7 +177,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         </div>
 
         <div className="absolute left-[95.3%] top-[75.4%] flex flex-col items-center gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.34em] text-paper/40">
+          <span className="text-[10px] font-medium uppercase tracking-[0.34em] text-paper/55">
             Scroll
           </span>
           <span className="h-10 w-px bg-gradient-to-b from-paper/30 to-transparent" />

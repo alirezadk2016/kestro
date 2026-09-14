@@ -34,7 +34,7 @@ export default function SourceList({
       <ol className="mt-4 space-y-4">
         {items.map((source, index) => (
           <li key={source.id} className="flex gap-3 text-sm leading-6">
-            <span className="font-mono text-xs leading-6 text-paper/40 tabular-nums">
+            <span className="font-mono text-xs leading-6 text-paper/55 tabular-nums">
               {String(index + 1).padStart(2, "0")}
             </span>
             <div className="min-w-0">

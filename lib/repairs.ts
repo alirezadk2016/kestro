@@ -1,5 +1,6 @@
 import type { Localized } from "./i18n";
 import type { CraftMarkName } from "@/components/CraftMark";
+import type { SourceId } from "./sources";
 
 /*
  * The repair pages.
@@ -27,8 +28,24 @@ export type Repair = {
   metaDescription: Localized;
   /** The line on the tile. */
   summary: Localized;
+  /**
+   * The answer, first.
+   *
+   * An AI-SEO audit reported no answer-first structure on these pages, and it
+   * was right: every one of them opened with context and got to the point in
+   * the third sentence. A reader skimming, and a model quoting, both take the
+   * first paragraph. So the first paragraph is now the answer, in two or
+   * three sentences, and the context follows it.
+   */
+  answer: Localized;
   /** The paragraph under the heading. */
   intro: Localized;
+  /**
+   * Sources from lib/sources.ts that this page actually leans on. Only where
+   * a verified source genuinely bears on the work — an invented citation is
+   * worse than none.
+   */
+  sources?: readonly SourceId[];
   /** What the job consists of. */
   does: Localized[];
   /** What we need before we can start. */
@@ -55,6 +72,10 @@ export const repairs: Repair[] = [
     summary: {
       da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
       en: "Laptop no longer lasting a working day? The battery is one of the cheapest parts to change — we quote the price before we start.",
+    },
+    answer: {
+      da: "Et batteri er slidt, når det ikke længere holder en arbejdsdag. Tallet at gå efter er batteriets kapacitet i procent af da det var nyt: over 80% er almindeligt slid, under 70% er det tid til at skifte. Du finder tallet selv på ti sekunder — powercfg /batteryreport på Windows, Systemindstillinger → Batteri på en Mac.",
+      en: "A battery is worn out when it no longer lasts a working day. The number to go by is its capacity as a percentage of new: above 80% is normal wear, below 70% it is time to replace it. You can find the number yourself in ten seconds — powercfg /batteryreport on Windows, System Settings → Battery on a Mac.",
     },
     intro: {
       da: "Et batteri mister kapacitet, mens det bliver brugt. Det er ikke en fejl – det er sådan litium-ion opfører sig. Spørgsmålet er ikke, om kapaciteten falder, men hvornår faldet begynder at koste dig en arbejdsdag. Det tal kan du selv slå op på ti sekunder, og herunder står både hvordan og hvad tallet betyder.",
@@ -172,6 +193,10 @@ export const repairs: Repair[] = [
       da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
       en: "More memory and faster storage is often the cheapest route to a noticeably quicker machine.",
     },
+    answer: {
+      da: "Mere RAM eller en SSD er som regel billigere end en ny maskine og gør større forskel. Hvilken af de to der hjælper, afhænger af hvad maskinen venter på: en langsom disk mærkes ved opstart og når programmer åbner, for lidt hukommelse mærkes når der er mange ting åbne på én gang.",
+      en: "More memory or an SSD is usually cheaper than a new machine and makes more difference. Which of the two helps depends on what the machine is waiting for: a slow disk shows at startup and when programs open, too little memory shows when a lot is open at once.",
+    },
     intro: {
       da: "En maskine, der føles langsom, er sjældent langsom af samme grund hver gang. Skal den vente på disken, eller er den løbet tør for hukommelse? De to problemer føles ens og koster ikke det samme at løse, så vi kigger efter, hvad der faktisk er flaskehalsen, før vi foreslår en del.",
       en: "A machine that feels slow is rarely slow for the same reason twice. Is it waiting on the disk, or has it run out of memory? The two feel alike and do not cost the same to fix, so we look for what the bottleneck actually is before proposing a part.",
@@ -214,6 +239,10 @@ export const repairs: Repair[] = [
       da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
       en: "Cracked or faulty screens on laptops, tablets and phones.",
     },
+    answer: {
+      da: "En revnet eller defekt skærm kan skiftes på de fleste bærbare, tablets og telefoner. Det afgørende er ikke maskinens model alene — den samme model er ofte solgt med flere forskellige paneler, så vi skal vide hvilket der sidder i netop din.",
+      en: "A cracked or faulty screen can be replaced on most laptops, tablets and phones. What decides it is not the model alone — the same model was often sold with several different panels, so we need to know which one is in yours.",
+    },
     intro: {
       da: "En revne breder sig, og en skærm med en død stribe bliver ikke bedre af at vente. Den samme maskinmodel er ofte solgt med flere forskellige paneler, så det afgørende er ikke modellen alene – det er hvilket panel der sidder i netop din.",
       en: "A crack spreads, and a screen with a dead line does not improve by waiting. The same model was often sold with several different panels, so the model alone is not what decides it — it is which panel is in yours.",
@@ -251,6 +280,10 @@ export const repairs: Repair[] = [
     summary: {
       da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk/nordisk layout, så æ, ø og å sidder, hvor de skal.",
       en: "Faulty keyboards replaced — and imported machines can get a Danish or Norwegian layout, so æ, ø and å sit where they should.",
+    },
+    answer: {
+      da: "Ja, importerede maskiner kan få dansk eller nordisk tastatur. Det er et fysisk skift, ikke en indstilling: man kan ændre layoutet i Windows, men så står der stadig det forkerte på tasterne, og det er æ, ø og å man rammer forkert hele dagen.",
+      en: "Yes, imported machines can get a Danish or Nordic keyboard. It is a physical swap, not a setting: you can change the layout in Windows, but the keys still say the wrong thing, and æ, ø and å are what you then mistype all day.",
     },
     intro: {
       da: "Brugt erhvervsudstyr kommer ofte ind med tysk eller amerikansk tastatur. Man kan skifte layoutet i Windows, men så står der stadig det forkerte på tasterne, og det er de tre danske bogstaver, man rammer forkert hele dagen. Vi skifter det fysiske tastatur i stedet.",
@@ -290,6 +323,11 @@ export const repairs: Repair[] = [
       da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
       en: "Fans, hinges, charging ports, speakers, cables and other worn parts replaced so the machine keeps going.",
     },
+    answer: {
+      da: "De fleste maskiner der bliver kasseret, fejler én ting: et hængsel, et ladestik, en blæser. Den slags dele kan skiftes, og EU's reparationsdirektiv forpligter producenter til ikke at spærre for brugte og kompatible reservedele.",
+      en: "Most machines that get scrapped have one thing wrong with them: a hinge, a charging port, a fan. Parts like that can be replaced, and the EU repair directive obliges manufacturers not to block the use of used and compatible spare parts.",
+    },
+    sources: ["repairDirective"] as const,
     intro: {
       da: "De fleste maskiner, der bliver skiftet ud, fejler én ting. Et hængsel, der har revet sig løs, eller et ladestik, der er blevet slidt af fem år med samme kabel. Det er den slags, der afgør, om en maskine har tre år mere i sig eller ryger på lageret.",
       en: "Most machines that get replaced have one thing wrong with them. A hinge that has torn loose, or a charging port worn out by five years of the same cable. That is the kind of thing that decides whether a machine has three more years in it or goes on a shelf.",
@@ -328,6 +366,10 @@ export const repairs: Repair[] = [
       da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
       en: "Dust and old thermal paste make a machine hot and loud. A clean can bring back quiet and stability.",
     },
+    answer: {
+      da: "En maskine, der er blevet varm og larmende, er som regel stoppet til med støv og har tør kølepasta. Den er ikke bare højlydt — den sætter også sig selv ned i fart for ikke at tage skade, og det bliver ofte læst som at maskinen er for gammel.",
+      en: "A machine that has gone hot and loud is usually clogged with dust with dried-out thermal paste. It is not just noisy — it also slows itself down to avoid damage, and that often gets read as the machine being past it.",
+    },
     intro: {
       da: "En maskine, der bliver for varm, sætter sig selv ned i fart for ikke at tage skade. Den er altså ikke bare larmende – den er også langsommere, og det bliver ofte læst som at maskinen er ved at være for gammel. Tit er den bare stoppet til.",
       en: "A machine that gets too hot slows itself down to avoid damage. So it is not just loud — it is slower too, and that often gets read as the machine being past it. Often it is simply clogged.",
@@ -365,6 +407,11 @@ export const repairs: Repair[] = [
       da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
       en: "A clean Windows install with drivers and updates, so the machine starts up like new.",
     },
+    answer: {
+      da: "En ren Windows-installation fjerner alt på maskinen og sætter styresystemet op fra bunden med de rigtige drivere. Det er den hurtigste måde at gøre en fem år gammel maskine brugbar igen — og fordi den fjerner alt, skal data der skal med over, siges før og ikke efter.",
+      en: "A clean Windows install wipes the machine and sets the operating system up from scratch with the right drivers. It is the quickest way to make a five-year-old machine usable again — and because it removes everything, data that has to come across must be named before, not after.",
+    },
+    sources: ["windows10Eol", "windows11Requirements"] as const,
     intro: {
       da: "En maskine, der har kørt i fem år, har lag på lag af programmer, den ikke bruger længere. En ren installation fjerner dem alle sammen på én gang – men den fjerner også alt andet, så rækkefølgen betyder noget.",
       en: "A machine that has run for five years has layer on layer of software it no longer uses. A clean install removes all of it at once — but it removes everything else too, so the order matters.",
@@ -403,6 +450,10 @@ export const repairs: Repair[] = [
       da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
       en: "We install the programs you use and help get the licences in order, so the machines run legally from day one.",
     },
+    answer: {
+      da: "Licenser følger ikke automatisk med brugt hardware. De to ting købes hver for sig, og det er værd at have afklaret, hvilke licenser I allerede har, før maskinerne står på skrivebordene.",
+      en: "Licences do not automatically come with used hardware. The two are bought separately, and it is worth settling which licences you already hold before the machines are on the desks.",
+    },
     intro: {
       da: "Brugt hardware og licenser er to forskellige ting, og den ene følger ikke automatisk med den anden. Det er værd at have styr på, før maskinerne står på skrivebordene.",
       en: "Used hardware and licences are two different things, and one does not automatically come with the other. Worth settling before the machines are on the desks.",
@@ -438,6 +489,11 @@ export const repairs: Repair[] = [
       da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
       en: "A fresh operating system install, with your files and software moved across.",
     },
+    answer: {
+      da: "Ved et maskinskift er det ikke maskinen der tager tid — det er de to dage bagefter, hvor man opdager hvad der ikke kom med over. Derfor gennemgår vi listen over filer, profiler og programmer før flytningen, og først derefter bliver den gamle maskine slettet.",
+      en: "With a new machine it is not the machine that takes time — it is the two days afterwards spent finding what did not come across. So we go through the list of files, profiles and software before the move, and only then is the old machine wiped.",
+    },
+    sources: ["nistSanitization"] as const,
     intro: {
       da: "Det, der tager tid ved en ny maskine, er sjældent maskinen. Det er de to dage, hvor man opdager, hvad der ikke kom med over. Derfor gennemgår vi, hvad der skal flyttes, før vi går i gang – ikke bagefter.",
       en: "What takes time with a new machine is rarely the machine. It is the two days spent discovering what did not come across. So we go through what has to move before we start, not after.",
@@ -476,6 +532,11 @@ export const repairs: Repair[] = [
       da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
       en: "The machine will not start, crashes or behaves oddly — we find the cause and tell you what a fix would cost.",
     },
+    answer: {
+      da: "Vi finder årsagen først og melder tilbage med, hvad en reparation vil koste, før vi retter noget. Det vi leder efter er et mønster: hvornår sker fejlen, og hvad kører der, når den sker.",
+      en: "We find the cause first and report back with what a repair would cost before fixing anything. What we look for is a pattern: when does the fault happen, and what is running when it does.",
+    },
+    sources: ["dkWarranty"] as const,
     intro: {
       da: "En maskine, der går ned en gang om ugen, er sværere at finde fejlen på end en, der slet ikke starter. Det første vi leder efter, er et mønster: hvornår sker det, og hvad kører der, når det sker.",
       en: "A machine that crashes once a week is harder to diagnose than one that will not start at all. The first thing we look for is a pattern: when does it happen, and what is running when it does.",
@@ -513,6 +574,10 @@ export const repairs: Repair[] = [
     summary: {
       da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
       en: "We build a machine to your specification — from scratch, or by upgrading the one you have.",
+    },
+    answer: {
+      da: "Vi bygger efter opgaven, ikke efter et datablad. Det der afgør delene er, hvad maskinen skal kunne — og om der allerede står en maskine, der kan bygges videre på i stedet for at starte forfra.",
+      en: "We build for the job, not to a spec sheet. What decides the parts is what the machine has to do — and whether there is already a machine to build on rather than start over.",
     },
     intro: {
       da: "En maskine, der skal kunne én bestemt ting rigtig godt, er sjældent den, der står på hylden. Vi bygger efter opgaven, ikke efter et datablad.",
@@ -552,6 +617,11 @@ export const repairs: Repair[] = [
       da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
       en: "Bought a used machine? We check it over, set it up and get it ready to use.",
     },
+    answer: {
+      da: "En brugt maskine er en ukendt størrelse, indtil nogen har set efter. Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget er slidt nok til at skulle skiftes.",
+      en: "A used machine is an unknown until somebody has looked. We go through it, give the battery's actual capacity as a percentage, set it up, and say so if anything is worn enough to need replacing.",
+    },
+    sources: ["dkWarranty"] as const,
     intro: {
       da: "En brugt maskine, der lige er kommet ind ad døren, er en ukendt størrelse, indtil nogen har set efter. Det, der er værd at vide, er hvad der er slidt, og hvad der er skiftet – og det står sjældent i annoncen.",
       en: "A used machine that has just come through the door is an unknown until somebody has looked. What is worth knowing is what is worn and what has been replaced — and that is rarely in the listing.",

@@ -118,7 +118,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-[1.75] text-paper/75">{c.answer}</p>
 
-            <p className="mt-6 text-xs text-paper/45 leading-[1.45]">
+            <p className="mt-6 text-xs text-paper/55 leading-[1.45]">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums">
                 {formatDate(updated, lang)}
@@ -151,7 +151,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
                   </p>
                   <p className="mt-1 text-sm leading-[1.6] text-paper/65">
                     {fact.note[lang]}{" "}
-                    <span className="text-paper/40">— {sources[fact.id].publisher}</span>
+                    <span className="text-paper/55">— {sources[fact.id].publisher}</span>
                   </p>
                 </li>
               ))}

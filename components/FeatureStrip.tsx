@@ -81,7 +81,7 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
         className="pointer-events-none absolute inset-y-0 right-6 hidden items-center gap-5 2xl:flex"
       >
         <span className="h-12 w-px bg-white/10" />
-        <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.3em] text-paper/40">
+        <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.3em] text-paper/55">
           Good IT
           <br />
           Goes further

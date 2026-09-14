@@ -13,7 +13,9 @@
  *
  * Exits non-zero on any failure.
  */
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
 
@@ -174,10 +176,7 @@ const pairsIn = (source, start) => {
       ...body
         .slice(0, end)
         .matchAll(/"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)":?\s*,?\s*"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)"/g),
-    ].map((m) => [
-      m[1],
-      m[2],
-    ]),
+    ].map((m) => [m[1], m[2]]),
   );
 };
 
@@ -196,6 +195,44 @@ for (const [da, en] of fromRoutes) {
 }
 for (const da of fromConfig.keys()) {
   if (!fromRoutes.has(da)) fail(`${da} is in next.config.mjs but not in lib/routes.ts`);
+}
+
+/*
+ * Text colours that do not survive the site's own ground.
+ *
+ * Measured against brand-950 (#0B1426), which is what almost every dark
+ * surface here is: white at 40% lands at 3.81:1, under the 4.5 that normal
+ * body text needs, and at 45% it lands at 4.51 — close enough to the line
+ * that any lighter band underneath breaks it.
+ *
+ * The browser contrast check in checks.mjs should have caught this and did
+ * not: it only samples elements lying fully inside the current viewport, and
+ * the attributions on the source list are short inline spans that its scroll
+ * steps went past. Lighthouse found them instead. The pixel check stays,
+ * because it catches things a class name cannot — this is the cheap
+ * deterministic guard underneath it, so a value known to fail cannot come
+ * back by being typed again.
+ *
+ * The admin screens are excluded: they are an internal surface with their own
+ * grounds and are not part of the public audit.
+ */
+const FAINT = /\btext-paper\/(?:40|45)\b/;
+const walk = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return entry.name === "admin" ? [] : walk(full);
+    return full.endsWith(".tsx") ? [full] : [];
+  });
+const root = fileURLToPath(new URL("../..", import.meta.url));
+for (const file of [...walk(join(root, "components")), ...walk(join(root, "app"))]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, i) => {
+      if (FAINT.test(line)) {
+        const where = `${file.slice(root.length)}:${i + 1}`;
+        fail(`${where}: text-paper/40 is 3.81:1 on brand-950 — use /55 or lighter`);
+      }
+    });
 }
 
 console.log(

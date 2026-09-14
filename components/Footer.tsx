@@ -133,6 +133,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
+                    rel={link.rel}
                     className="-my-1 block py-3 text-sm text-ink-400 transition hover:text-paper"
                   >
                     {link.label[lang]}
