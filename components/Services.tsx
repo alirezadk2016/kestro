@@ -87,7 +87,21 @@ export default function Services({ lang }: { lang: Lang }) {
          * Below lg the steps stack, and a stack is already a sequence — there
          * the horizontal dividers stay and the nodes are not drawn.
          */}
-        <ol className="mt-12 grid grid-cols-1 gap-x-6 lg:grid-cols-4 lg:gap-x-0 lg:border-t lg:border-paper/15">
+        <ol className="relative mt-12 grid grid-cols-1 gap-x-6 lg:grid-cols-4 lg:gap-x-0">
+          {/*
+           * The rail, and it stops at the fourth station.
+           *
+           * It was a `border-t` on this list, so it ran the full width of the
+           * grid — a quarter of the page past the last node, ending in mid-air
+           * on the right. The vertical version of this same idea already knew
+           * better and says so in the note below: it stops at the last station
+           * because the process does. Four equal columns with no gap put that
+           * node at 75% plus the column's own left padding.
+           */}
+          <span
+            aria-hidden="true"
+            className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-paper/15 lg:block"
+          />
           {services.map((service, i) => (
             <li
               key={service.title.da}
@@ -128,7 +142,11 @@ export default function Services({ lang }: { lang: Lang }) {
                 }`}
               >
                 <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
-                <span className="ml-[3px] h-5 w-px bg-gradient-to-b from-paper/25 to-transparent" />
+                {/* h-9, which is the list's own lg:py-9 — the tick has to reach
+                    the plate. At h-5 it stopped twelve pixels short, so the
+                    node floated above a gap and the station read as two
+                    unrelated things stacked rather than one. */}
+                <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-paper/25 to-transparent" />
               </span>
 
               <div className="min-w-0 flex-1 lg:flex-none">
