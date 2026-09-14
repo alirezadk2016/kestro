@@ -87,12 +87,37 @@ export default function Services({ lang }: { lang: Lang }) {
          * Below lg the steps stack, and a stack is already a sequence — there
          * the horizontal dividers stay and the nodes are not drawn.
          */}
-        <ol className="mt-12 grid grid-cols-1 gap-x-6 border-t border-paper/15 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0">
+        <ol className="mt-12 grid grid-cols-1 gap-x-6 lg:grid-cols-4 lg:gap-x-0 lg:border-t lg:border-paper/15">
           {services.map((service, i) => (
             <li
               key={service.title.da}
-              className="relative border-b border-paper/12 py-6 lg:border-b-0 lg:py-9 lg:pl-8 lg:pr-8 lg:first:pl-0"
+              className="relative flex gap-5 pb-9 last:pb-0 lg:block lg:gap-0 lg:py-9 lg:pb-9 lg:pl-8 lg:pr-8 lg:first:pl-0"
             >
+              {/*
+               * The rail, on the screens the spine used to skip.
+               *
+               * The horizontal version of this idea has existed since the
+               * four columns were built, and it was drawn `hidden lg:flex` —
+               * so the whole graphic argument of the section lived on the
+               * desktop and a phone got four rows separated by hairlines,
+               * which reads as a table. A stack is not automatically a
+               * sequence; a rule between two rows says they are separate,
+               * which is the opposite of what four steps are.
+               *
+               * Same idea, turned ninety degrees: one line running down
+               * through all four, each step a station on it, the mark saying
+               * what happens there. It stops at the last station rather than
+               * running off the end, because the process does.
+               */}
+              <div aria-hidden="true" className="relative w-11 flex-none lg:hidden">
+                {i < services.length - 1 && (
+                  <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5" />
+                )}
+                <span className="plate-sm relative flex h-11 w-11 items-center justify-center rounded-lg bg-brand-500/[0.12] text-paper/90">
+                  <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
+                </span>
+              </div>
+
               <span
                 aria-hidden="true"
                 /* Unfilled, so the spine shows through it rather than being
@@ -105,28 +130,34 @@ export default function Services({ lang }: { lang: Lang }) {
                 <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
                 <span className="ml-[3px] h-5 w-px bg-gradient-to-b from-paper/25 to-transparent" />
               </span>
-              {/*
-                The step drawn as well as numbered.
 
-                Four numerals over four paragraphs is a sequence a reader has
-                to take on trust: nothing about "02" says testing. The mark
-                says what happens at the station — the suppliers reached, the
-                lens over the work, the Nordic key, the van — so the route can
-                be read at a glance and the numeral goes back to doing what a
-                numeral is for, which is order.
-              */}
-              <span className="mb-4 flex h-11 w-11 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90 lg:mb-5">
-                <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
-              </span>
-              <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
-                {service.title[lang]}
-              </h3>
-              <p className="mt-2 text-sm leading-[1.6] text-paper/65">
-                {service.description[lang]}
-              </p>
+              <div className="min-w-0 flex-1 lg:flex-none">
+                {/*
+                  The step drawn as well as numbered.
+
+                  Four numerals over four paragraphs is a sequence a reader has
+                  to take on trust: nothing about "02" says testing. The mark
+                  says what happens at the station — the suppliers reached, the
+                  lens over the work, the Nordic key, the van — so the route can
+                  be read at a glance and the numeral goes back to doing what a
+                  numeral is for, which is order.
+
+                  Below lg the mark is the station on the rail, so it is not
+                  drawn twice.
+                */}
+                <span className="plate-sm mb-5 hidden h-11 w-11 items-center justify-center rounded-lg bg-brand-500/[0.10] text-paper/90 lg:flex">
+                  <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
+                </span>
+                <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
+                  {service.title[lang]}
+                </h3>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/65">
+                  {service.description[lang]}
+                </p>
+              </div>
             </li>
           ))}
         </ol>

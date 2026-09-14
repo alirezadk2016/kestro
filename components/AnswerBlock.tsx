@@ -3,6 +3,7 @@ import SourceList from "./SourceList";
 import FaqSchema, { type FaqEntry } from "./FaqSchema";
 import { sources, type SourceId } from "@/lib/sources";
 import { pageUpdated } from "./PageSchema";
+import { formatDate } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 
 /*
@@ -120,7 +121,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
             <p className="mt-6 text-xs text-paper/45 leading-[1.45]">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums">
-                {updated}
+                {formatDate(updated, lang)}
               </time>
             </p>
 

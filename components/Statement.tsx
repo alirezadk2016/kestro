@@ -93,11 +93,21 @@ export default function Statement({ lang }: { lang: Lang }) {
         </div>
 
         <p className="label mt-12 text-paper/55 sm:mt-16">{c.promisesLabel}</p>
-        <dl className="mt-5 grid grid-cols-1 gap-x-12 border-t border-paper/15 sm:grid-cols-3">
+        {/*
+         * Plates on a phone, columns from sm.
+         *
+         * These are three parallel promises, not a sequence, so a spine would
+         * be the wrong device — but stacked and separated by hairlines they
+         * read as rows of a table, which is what every flat list on this site
+         * was doing on a phone. Three things you can pick up read as three
+         * things. From sm the columns come back: at that width the row is
+         * already a row and a plate around each one is a box inside a box.
+         */}
+        <dl className="mt-5 grid grid-cols-1 gap-3 sm:mt-5 sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:border-t sm:border-paper/15">
           {promises.map((promise) => (
             <div
               key={promise.href}
-              className="flex flex-col border-b border-paper/10 py-5 sm:h-full sm:border-b-0 sm:py-7"
+              className="plate flex flex-col p-5 sm:h-full sm:bg-none sm:p-0 sm:py-7 sm:shadow-none"
             >
               {/* The mark of the thing being promised, not a bullet. Three
                   paragraphs under one label read as a footnote; the paper, the
