@@ -2,6 +2,8 @@ import crypto from "node:crypto";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
+import { SESSION_COOKIE_NAME } from "@/lib/admin-session";
+
 /**
  * Who is allowed into the panel.
  *
@@ -32,7 +34,9 @@ const SECRET = process.env.ADMIN_SESSION_SECRET || PASSWORD;
 
 export const adminConfigured = PASSWORD.length > 0;
 
-export const SESSION_COOKIE = "kestro_admin";
+/* Named in lib/admin-session.ts, which middleware can import and this file
+   cannot be imported by; re-exported so every call site keeps one import. */
+export const SESSION_COOKIE = SESSION_COOKIE_NAME;
 
 /**
  * A wrong password, carried back to the login screen.

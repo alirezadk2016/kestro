@@ -9,6 +9,7 @@ import {
 import { seeOther } from "@/lib/redirect";
 import { adminLockedOut, clearAdminFailures, noteAdminFailure } from "@/lib/db";
 import { clientIp } from "@/lib/visits";
+import { crossSitePost } from "@/lib/same-site";
 
 export const runtime = "nodejs";
 
@@ -19,6 +20,13 @@ export const runtime = "nodejs";
  * JavaScript has run and cannot be broken by a bundle that failed to load.
  */
 export async function POST(request: Request) {
+  /* A password typed into somebody else's page is not a login. This costs the
+     attacker nothing to be refused at, but it means the only thing that can
+     start a session is our own form. */
+  if (crossSitePost(request)) {
+    return new NextResponse("forbidden", { status: 403 });
+  }
+
   /*
    * How many guesses this address has left.
    *

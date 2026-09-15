@@ -14,7 +14,8 @@
     "build:team-photos": "node scripts/build-team-photos.mjs",
     "build:cards": "node scripts/build/cards3d/render3d.mjs public/cards/3d && node scripts/build/cards/render.mjs && node scripts/build/check-cards.mjs",
     "build:marks": "node scripts/build/marks3d/render.mjs",
-    "verify": "node scripts/verify/run.mjs"
+    "verify": "node scripts/verify/run.mjs",
+    "security": "node scripts/security/attack.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

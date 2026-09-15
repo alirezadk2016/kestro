@@ -3,10 +3,15 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, sessionValid } from "@/lib/admin-auth";
 import { setEnquiryStatus } from "@/lib/db";
 import { seeOther } from "@/lib/redirect";
+import { crossSitePost } from "@/lib/same-site";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  if (crossSitePost(request)) {
+    return new NextResponse("forbidden", { status: 403 });
+  }
+
   /* Checked here too, not only in the layout. The layout guards what is shown;
      this guards what is done, and an unauthenticated POST never reaches a
      layout. */

@@ -9,6 +9,7 @@ import {
 import { getEnquiry, recordReply, scrubSecrets } from "@/lib/db";
 import { company } from "@/lib/company";
 import { seeOther } from "@/lib/redirect";
+import { crossSitePost } from "@/lib/same-site";
 
 export const runtime = "nodejs";
 
@@ -37,13 +38,19 @@ function withReason(response: NextResponse, reason: string): NextResponse {
  * out, not for owning the conversation.
  */
 export async function POST(request: Request) {
+  if (crossSitePost(request)) {
+    return new NextResponse("forbidden", { status: 403 });
+  }
+
   if (!sessionValid(cookies().get(SESSION_COOKIE)?.value)) {
     return new NextResponse("forbidden", { status: 403 });
   }
 
   const form = await request.formData();
   const id = String(form.get("id") ?? "");
-  const body = String(form.get("body") ?? "").trim().slice(0, 10000);
+  const body = String(form.get("body") ?? "")
+    .trim()
+    .slice(0, 10000);
   if (!id || !body) {
     return seeOther(`/admin/beskeder/${id}`);
   }

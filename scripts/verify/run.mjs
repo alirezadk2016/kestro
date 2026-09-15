@@ -48,7 +48,19 @@ const [code] = await once(build, "exit");
 if (code !== 0) process.exit(code);
 
 console.log(`verify: serving on ${BASE}`);
-const server = spawn("npx", ["next", "start", "-p", PORT], { stdio: "ignore" });
+/*
+ * With a password, so the panel's gates can be attacked rather than assumed.
+ *
+ * Without ADMIN_PASSWORD set, lib/admin-auth.ts fails closed on everything and
+ * scripts/security/attack.mjs would report a wall of refusals that prove
+ * nothing — a panel with no password configured refuses a valid session too.
+ * The value is local to this process and never leaves it.
+ */
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "verify-only-password";
+const server = spawn("npx", ["next", "start", "-p", PORT], {
+  stdio: "ignore",
+  env: { ...process.env, ADMIN_PASSWORD, ADMIN_SESSION_SECRET: "" },
+});
 
 const stop = () => {
   if (!server.killed) server.kill("SIGTERM");
@@ -81,5 +93,20 @@ const checks = run("node", ["scripts/verify/checks.mjs"], {
 });
 const [checksCode] = await once(checks, "exit");
 
+/*
+ * And then try to get in.
+ *
+ * Last because it needs the same running build the checks need, and because a
+ * page that renders wrong is a page nobody can read — but a panel that opens
+ * without a password is every customer's name, company, address and message,
+ * and that is not a thing to find out about from a report. It runs even when
+ * the checks failed, so one command answers both questions.
+ */
+console.log("verify: security");
+const attack = run("node", ["scripts/security/attack.mjs", BASE], {
+  env: { ...process.env, ATTACK_PASSWORD: ADMIN_PASSWORD, ATTACK_SECRET: ADMIN_PASSWORD },
+});
+const [attackCode] = await once(attack, "exit");
+
 stop();
-process.exit(checksCode ?? 1);
+process.exit(checksCode || attackCode || 0);

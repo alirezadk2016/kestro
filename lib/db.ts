@@ -2,6 +2,8 @@ import { randomBytes, randomUUID } from "node:crypto";
 
 import { neon } from "@neondatabase/serverless";
 
+import { adminAuthed } from "@/lib/admin-auth";
+
 /**
  * The one place the site keeps anything.
  *
@@ -312,7 +314,38 @@ export async function saveEnquiry(
   }
 }
 
+/**
+ * The innermost gate: the read itself refuses to run.
+ *
+ * Middleware stops an unauthenticated request before the router picks a
+ * handler, and every page and endpoint under /admin checks the session again on
+ * the way in. Both of those are places a *caller* has to be — and the whole
+ * reason this file has a gate at all is that the original one was also a place
+ * a caller had to be, app/admin/layout.tsx, and the App Router turned out to
+ * have a way of not being there.
+ *
+ * So the last check sits on the data. A page added next year that forgets
+ * requireAdmin(), a route handler that reads an enquiry to do something useful
+ * with it, a debug endpoint that was only ever going to exist for an afternoon:
+ * none of them can read a name, an address or a message body without a session,
+ * because the query will not run.
+ *
+ * It throws rather than returning empty. An empty inbox is a plausible inbox,
+ * and a gate that answers plausibly is a gate whose failure nobody notices. The
+ * layers above return 404 long before this can be reached in normal use, so a
+ * 500 here means a real mistake and should look like one.
+ *
+ * Checked before the `if (!sql)` line in each function on purpose: without a
+ * database configured the answer must still be "no", or a local build with no
+ * DATABASE_URL would quietly pass a test this is supposed to fail.
+ */
+function adminOnly(what: string): void {
+  if (adminAuthed()) return;
+  throw new Error(`db: refused to read ${what} without an admin session`);
+}
+
 export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> {
+  adminOnly("enquiries");
   if (!sql) return [];
   try {
     await ensureSchema();
@@ -327,6 +360,7 @@ export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> 
 }
 
 export async function getEnquiry(id: string): Promise<Enquiry | null> {
+  adminOnly("an enquiry");
   if (!sql) return null;
   try {
     await ensureSchema();
@@ -390,6 +424,7 @@ export function scrubSecrets(text: string): string {
 }
 
 export async function countNew(): Promise<number> {
+  adminOnly("the unread count");
   if (!sql) return 0;
   try {
     await ensureSchema();
@@ -592,6 +627,7 @@ const EMPTY_LIVE: LiveStats = {
  * numbers on the page can be compared with each other.
  */
 export async function liveStats(): Promise<LiveStats> {
+  adminOnly("live visitor figures");
   if (!sql) return EMPTY_LIVE;
   try {
     await ensureSchema();
@@ -660,6 +696,7 @@ export async function liveStats(): Promise<LiveStats> {
 }
 
 export async function viewStats(): Promise<ViewStats> {
+  adminOnly("page-view figures");
   const empty: ViewStats = { total: 0, today: 0, last30: 0, daily: [], topPages: [] };
   if (!sql) return empty;
   try {

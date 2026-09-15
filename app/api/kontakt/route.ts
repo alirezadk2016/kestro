@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
-import { SITE_ORIGIN } from "@/lib/site";
+import { isSameSite } from "@/lib/same-site";
 import { noteMailFailure, saveEnquiry } from "@/lib/db";
 
 /**
@@ -108,63 +108,13 @@ function safeHeaderValue(value: string): string {
   return value.replace(/[\r\n]/g, " ");
 }
 
-/*
- * Is this our own form, or somebody else's page using a visitor's browser?
- *
- * Request.json() parses whatever it is given regardless of Content-Type, so a
- * third-party page could post a form with enctype="text/plain" whose body
- * happens to be valid JSON and have a visitor send a real enquiry without
- * knowing it. That is not an open relay — the recipient is pinned below and
- * cannot be chosen by the caller — but it is forged mail into the inbox the
- * business actually reads, attributed to real people's addresses.
- *
- * Three checks, in the order of how much they can be trusted:
- *
- *   1. Sec-Fetch-Site. Set by the browser itself and not settable from script,
- *      so where it exists it is the answer. Every browser released since 2020
- *      sends it on fetch(). "none" is a direct navigation, which cannot be a
- *      POST from our form.
- *   2. Content-Type. A cross-site form can only send form-encoded or plain
- *      text without tripping a CORS preflight, and our form sends JSON, so
- *      requiring JSON closes the enctype trick on anything older.
- *   3. Origin against the origin we are configured to be. Not against the
- *      Host header: a caller who sets Origin can set Host to match it, and the
- *      check passes itself. Measured — that combination returned 200 before
- *      this was pinned to SITE_ORIGIN. In development the host is localhost,
- *      so the loopback origins are accepted there and nowhere else.
- *
- * A same-origin submit from the site passes all three unchanged.
- */
-function isSameSite(request: Request): boolean {
-  const site = request.headers.get("sec-fetch-site");
-  if (site) return site === "same-origin";
-
-  const origin = request.headers.get("origin");
-  if (!origin) {
-    /* No Origin and no Sec-Fetch-Site: not a browser form post at all. */
-    return true;
-  }
-
-  if (origin === SITE_ORIGIN) return true;
-
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const { hostname } = new URL(origin);
-      return hostname === "localhost" || hostname === "127.0.0.1";
-    } catch {
-      return false;
-    }
-  }
-  return false;
-}
-
 export async function POST(request: Request) {
   if (!isSameSite(request)) {
     return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
   }
 
   /* Our own form always sends JSON. Anything else is a cross-site form post
-     dressed up as one — see isSameSite above. */
+     dressed up as one — see isSameSite in lib/same-site.ts. */
   if (!(request.headers.get("content-type") ?? "").toLowerCase().includes("application/json")) {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 415 });
   }

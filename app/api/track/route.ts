@@ -1,14 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { currentSalt, recordHit, touchVisit } from "@/lib/db";
-import {
-  campaignSource,
-  classifySource,
-  clientIp,
-  deviceOf,
-  isBot,
-  visitorId,
-} from "@/lib/visits";
+import { crossSitePost } from "@/lib/same-site";
+import { campaignSource, classifySource, clientIp, deviceOf, isBot, visitorId } from "@/lib/visits";
 
 export const runtime = "nodejs";
 
@@ -33,6 +27,18 @@ export const runtime = "nodejs";
 const NO_CONTENT = () => new NextResponse(null, { status: 204 });
 
 export async function POST(request: Request) {
+  /*
+   * Only this site's own pages count.
+   *
+   * components/PageViewTracker.tsx calls this with a relative URL, so a real
+   * page load arrives marked same-origin by the browser. Anything marked
+   * cross-site is a script on somebody else's page writing rows into our visits
+   * table — which costs us database compute on a plan that bills for it, and
+   * costs the numbers their meaning. It is answered 204 like everything else
+   * here: a counter that argues with a caller teaches the caller what to change.
+   */
+  if (crossSitePost(request)) return NO_CONTENT();
+
   try {
     const agent = request.headers.get("user-agent") ?? "";
 
