@@ -44,7 +44,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const service = getService(params.slug);
   if (!service) return {};
 
@@ -55,7 +58,10 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   };
 }
 
-export default function ServicePage({ params }: { params: { lang: Lang; slug: string } }) {
+export default async function ServicePage(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   const service = getService(params.slug);

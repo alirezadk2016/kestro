@@ -339,13 +339,13 @@ export async function saveEnquiry(
  * database configured the answer must still be "no", or a local build with no
  * DATABASE_URL would quietly pass a test this is supposed to fail.
  */
-function adminOnly(what: string): void {
-  if (adminAuthed()) return;
+async function adminOnly(what: string): Promise<void> {
+  if (await adminAuthed()) return;
   throw new Error(`db: refused to read ${what} without an admin session`);
 }
 
 export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> {
-  adminOnly("enquiries");
+  await adminOnly("enquiries");
   if (!sql) return [];
   try {
     await ensureSchema();
@@ -360,7 +360,7 @@ export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> 
 }
 
 export async function getEnquiry(id: string): Promise<Enquiry | null> {
-  adminOnly("an enquiry");
+  await adminOnly("an enquiry");
   if (!sql) return null;
   try {
     await ensureSchema();
@@ -424,7 +424,7 @@ export function scrubSecrets(text: string): string {
 }
 
 export async function countNew(): Promise<number> {
-  adminOnly("the unread count");
+  await adminOnly("the unread count");
   if (!sql) return 0;
   try {
     await ensureSchema();
@@ -627,7 +627,7 @@ const EMPTY_LIVE: LiveStats = {
  * numbers on the page can be compared with each other.
  */
 export async function liveStats(): Promise<LiveStats> {
-  adminOnly("live visitor figures");
+  await adminOnly("live visitor figures");
   if (!sql) return EMPTY_LIVE;
   try {
     await ensureSchema();
@@ -696,7 +696,7 @@ export async function liveStats(): Promise<LiveStats> {
 }
 
 export async function viewStats(): Promise<ViewStats> {
-  adminOnly("page-view figures");
+  await adminOnly("page-view figures");
   const empty: ViewStats = { total: 0, today: 0, last30: 0, daily: [], topPages: [] };
   if (!sql) return empty;
   try {

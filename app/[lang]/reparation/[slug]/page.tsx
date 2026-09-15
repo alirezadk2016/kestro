@@ -43,9 +43,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-type Params = { params: { lang: Lang; slug: string } };
+type Params = { params: Promise<{ lang: Lang; slug: string }> };
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const repair = getRepair(params.slug);
   if (!repair) return {};
   return {
@@ -55,7 +56,8 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function RepairPage({ params }: Params) {
+export default async function RepairPage(props: Params) {
+  const params = await props.params;
   const { lang, slug } = params;
   const repair = getRepair(slug);
   if (!repair) notFound();

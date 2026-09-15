@@ -76,7 +76,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const model = getModel(params.slug);
   if (!model) return {};
 
@@ -87,7 +90,8 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   };
 }
 
-export default function ModelPage({ params }: { params: { lang: Lang; slug: string } }) {
+export default async function ModelPage(props: { params: Promise<{ lang: Lang; slug: string }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   const model = getModel(params.slug);

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   /* Checked here too, not only in the layout. The layout guards what is shown;
      this guards what is done, and an unauthenticated POST never reaches a
      layout. */
-  if (!sessionValid(cookies().get(SESSION_COOKIE)?.value)) {
+  if (!sessionValid((await cookies()).get(SESSION_COOKIE)?.value)) {
     return new NextResponse("forbidden", { status: 403 });
   }
 

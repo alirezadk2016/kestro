@@ -46,15 +46,26 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   /*
-   * The gate, in the layout rather than in middleware.
+   * The wall, which is not the gate.
    *
-   * Middleware runs on the edge runtime, where node:crypto's timing-safe
-   * compare does not exist — the signature check would have had to be written
-   * a second time against a different crypto API, and two implementations of
-   * one security check is one more than is safe. A server component runs on
-   * Node and shares the exact code the login route uses.
+   * This used to say it was the gate, and gave a reason: middleware runs on the
+   * edge runtime, node:crypto's timing-safe compare does not exist there, and
+   * writing the signature check a second time against another crypto API is one
+   * implementation more than is safe to have.
+   *
+   * The reasoning was sound and the conclusion was wrong, because a layout does
+   * not run on every request — ask for the page segment alone and Next skips it.
+   * So the check is now in three places (see middleware.ts), the second
+   * implementation does exist, in lib/admin-session.ts against Web Crypto, and
+   * the thing that was actually worth worrying about — the two drifting apart —
+   * is handled by testing them against each other rather than by not writing
+   * the second one.
+   *
+   * What is left here is the wall: the login form in place of the children,
+   * which is what an admin with an expired session should see. It is a screen,
+   * not a control.
    */
-  const jar = cookies();
+  const jar = await cookies();
   const authed = sessionValid(jar.get(SESSION_COOKIE)?.value);
   const unread = authed ? await countNew() : 0;
   /* Set by the login route on a wrong password, and given a ten-second life so

@@ -30,7 +30,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminHome() {
   /* The layout's login wall is not the gate — a page can be rendered
      without it. See requireAdmin. */
-  requireAdmin();
+  await requireAdmin();
 
   if (!dbConfigured) return <NoDatabase />;
 

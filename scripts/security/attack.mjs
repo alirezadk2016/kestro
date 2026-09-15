@@ -427,7 +427,7 @@ async function main() {
       record(
         "L3",
         `${name} asks first`,
-        body.startsWith("adminOnly("),
+        body.startsWith("await adminOnly("),
         at < 0 ? "not found" : body.slice(0, body.indexOf("\n")).trim(),
       );
     }

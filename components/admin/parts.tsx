@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import Link from "next/link";
 
 import { EYEBROW, FIGURE, HAIRLINE } from "@/components/admin/tokens";
@@ -55,7 +57,7 @@ export function Figure({
   label: string;
   value: string;
   note?: string;
-  Icon?: (props: { className?: string }) => JSX.Element;
+  Icon?: (props: { className?: string }) => ReactElement;
   className?: string;
 }) {
   return (
@@ -90,7 +92,7 @@ export function Ranked({
 }: {
   title: string;
   rows: (Breakdown & { code?: string })[];
-  Icon?: (props: { className?: string }) => JSX.Element;
+  Icon?: (props: { className?: string }) => ReactElement;
   empty: string;
   withFlags?: boolean;
 }) {

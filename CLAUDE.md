@@ -77,6 +77,31 @@ write it right than to have an audit find it.
 
 ---
 
+## Security
+
+The admin panel is the only thing on this site worth attacking, and what is
+behind it is every enquiry: names, companies, addresses, phone numbers, message
+bodies.
+
+- **Three gates, and a change may not remove one.** `middleware.ts` before the
+  router chooses anything; `requireAdmin()` at the top of every page under
+  `/admin` and a session check at the top of every `/api/admin` handler;
+  `adminOnly()` as the **first statement** of every function in `lib/db.ts` that
+  reads an enquiry or a visitor figure. The third is the one that survives a
+  page somebody forgets to gate.
+- **A layout is not a boundary.** `RSC: 1` with a `Next-Router-State-Tree`
+  renders one segment and skips every layout above it. That was a live
+  unauthenticated read of the whole inbox. Never put a control in a layout.
+- **`npm run verify` attacks the build it just made.**
+  `scripts/security/attack.mjs`, 47 cases, and it fails the gate. Add a case
+  when you add a surface; never relax one to make it pass.
+- **A new POST endpoint gets `crossSitePost()`** from `lib/same-site.ts` unless
+  there is a reason it must accept a cross-origin post.
+- **`npm audit` is at zero and stays there.** `postcss` is pinned past Next's
+  own via `overrides` so it does not need a second major upgrade to be clean.
+
+---
+
 ## Design
 
 - **`.plate` is the panel.** Not `border border-white/10 bg-white/[0.04]`,

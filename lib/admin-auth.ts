@@ -115,9 +115,15 @@ export function sessionValid(cookie: string | undefined): boolean {
   return Number.isFinite(expires) && expires > Date.now();
 }
 
-/** Whether the request carries a session this server issued. */
-export function adminAuthed(): boolean {
-  return sessionValid(cookies().get(SESSION_COOKIE)?.value);
+/**
+ * Whether the request carries a session this server issued.
+ *
+ * Async because cookies() is: Next 15 made the request-scoped accessors return
+ * promises so a page can start rendering before the request is read. Nothing
+ * about the check changed — every caller was already an async function.
+ */
+export async function adminAuthed(): Promise<boolean> {
+  return sessionValid((await cookies()).get(SESSION_COOKIE)?.value);
 }
 
 /**
@@ -149,6 +155,6 @@ export function adminAuthed(): boolean {
  * may not see should not confirm that it exists, and the layout already shows
  * the wall on any request that actually renders it.
  */
-export function requireAdmin(): void {
-  if (!adminAuthed()) notFound();
+export async function requireAdmin(): Promise<void> {
+  if (!(await adminAuthed())) notFound();
 }

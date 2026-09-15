@@ -27,7 +27,8 @@ import PageSchema from "@/components/PageSchema";
  */
 export const dynamicParams = false;
 
-export default function Home({ params }: { params: { lang: Lang } }) {
+export default async function Home(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
 
   return (

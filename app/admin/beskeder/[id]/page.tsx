@@ -47,16 +47,18 @@ const OUTCOMES = {
   },
 } as const;
 
-export default async function EnquiryPage({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { fejl?: string; sendt?: string };
+export default async function EnquiryPage(props: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ fejl?: string; sendt?: string }>;
 }) {
   /* The layout's login wall is not the gate — a page can be rendered
-     without it. See requireAdmin. */
-  requireAdmin();
+     without it. See requireAdmin. First statement, before the request is even
+     unpacked: there is nothing this page does that is worth doing for a
+     visitor who may not read it. */
+  await requireAdmin();
+
+  const params = await props.params;
+  const searchParams = await props.searchParams;
 
   const enquiry = await getEnquiry(params.id);
   if (!enquiry) notFound();
@@ -76,7 +78,7 @@ export default async function EnquiryPage({
   const outcome = key ? OUTCOMES[key] : null;
   /* What the provider said, if it said anything. Set by the reply route and
      expiring on its own — see MAIL_ERROR_COOKIE. */
-  const reason = key === "send" ? cookies().get(MAIL_ERROR_COOKIE)?.value : undefined;
+  const reason = key === "send" ? (await cookies()).get(MAIL_ERROR_COOKIE)?.value : undefined;
 
   const facts = [
     { label: "E-mail", value: enquiry.email },

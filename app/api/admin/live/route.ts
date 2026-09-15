@@ -25,7 +25,7 @@ export const dynamic = "force-dynamic";
  * data, but it is who is on the site right now, which is nobody else's.
  */
 export async function GET() {
-  if (!sessionValid(cookies().get(SESSION_COOKIE)?.value)) {
+  if (!sessionValid((await cookies()).get(SESSION_COOKIE)?.value)) {
     return new NextResponse("forbidden", { status: 403 });
   }
 

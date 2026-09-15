@@ -113,7 +113,10 @@ const verification = {
     : {}),
 };
 
-export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const lang: Lang = isLang(params.lang) ? params.lang : "da";
 
   return {
@@ -125,15 +128,19 @@ export function generateMetadata({ params }: { params: { lang: string } }): Meta
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  /* A promise since Next 15: the segment is not read until it is awaited, so a
+     layout can start rendering before the request has been parsed. */
+  params: Promise<{ lang: string }>;
 }>) {
-  if (!isLang(params.lang)) notFound();
-  const lang: Lang = params.lang;
+  const { lang: segment } = await params;
+
+  if (!isLang(segment)) notFound();
+  const lang: Lang = segment;
 
   /*
    * Organization until there is a street address, LocalBusiness once there is.

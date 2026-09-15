@@ -26,10 +26,12 @@ const FILTERS = [
 const isStatus = (value: string): value is EnquiryStatus =>
   value === "new" || value === "read" || value === "replied" || value === "archived";
 
-export default async function InboxPage({ searchParams }: { searchParams: { status?: string } }) {
+export default async function InboxPage(props: { searchParams: Promise<{ status?: string }> }) {
   /* The layout's login wall is not the gate — a page can be rendered
      without it. See requireAdmin. */
-  requireAdmin();
+  await requireAdmin();
+
+  const searchParams = await props.searchParams;
 
   const requested = searchParams.status ?? "";
   const status = isStatus(requested) ? requested : undefined;
