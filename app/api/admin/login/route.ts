@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import {
   SESSION_COOKIE,
   FAILED_COOKIE,
@@ -6,6 +7,8 @@ import {
   passwordMatches,
 } from "@/lib/admin-auth";
 import { seeOther } from "@/lib/redirect";
+import { adminLockedOut, clearAdminFailures, noteAdminFailure } from "@/lib/db";
+import { clientIp } from "@/lib/visits";
 
 export const runtime = "nodejs";
 
@@ -16,6 +19,26 @@ export const runtime = "nodejs";
  * JavaScript has run and cannot be broken by a bundle that failed to load.
  */
 export async function POST(request: Request) {
+  /*
+   * How many guesses this address has left.
+   *
+   * There was no limit at all: one password, no lockout, no delay, so the
+   * panel could be worked through a wordlist as fast as the network allowed.
+   * Of everything in this codebase that is the likeliest way somebody actually
+   * gets in — it needs no bug, just patience.
+   *
+   * Checked BEFORE the password is compared, so a locked address learns
+   * nothing from the timing of the answer, and counted per address using the
+   * same trustworthy hop the contact form settled on.
+   */
+  const ip = clientIp(request.headers);
+  if (await adminLockedOut(ip)) {
+    return new NextResponse("too many attempts", {
+      status: 429,
+      headers: { "retry-after": "900" },
+    });
+  }
+
   const form = await request.formData();
   const password = String(form.get("password") ?? "");
 
@@ -40,6 +63,7 @@ export async function POST(request: Request) {
     process.env.NODE_ENV === "production";
 
   if (!passwordMatches(password)) {
+    await noteAdminFailure(ip);
     /* No hint about which part was wrong, and no reason to distinguish "wrong
        password" from "no password configured" to whoever is typing. The
        redirect used to carry ?fejl=1 that nothing read, so a wrong password
@@ -54,6 +78,10 @@ export async function POST(request: Request) {
     });
     return response;
   }
+
+  /* A correct password clears the slate: a person who mistyped four times and
+     then got it right should not be four from a lockout tomorrow. */
+  await clearAdminFailures(ip);
 
   const session = issueSession();
   const response = seeOther("/admin");

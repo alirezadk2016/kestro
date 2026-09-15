@@ -258,6 +258,25 @@ function ensureSchema(): Promise<void> {
      * hash the same browser to two visitors. Yesterday's row is deleted, which
      * is what makes yesterday's hashes permanently unlinkable.
      */
+    /*
+     * Failed logins, so the panel's one password cannot simply be guessed.
+     *
+     * In the database rather than in memory, and that is the whole point: a
+     * per-instance counter is what app/api/kontakt/route.ts has and it says so
+     * itself — "serverless gives no guarantee that two requests reach the same
+     * instance, so it stops a naive flood rather than a determined one". For a
+     * contact form that is an acceptable trade. For the only lock on the admin
+     * panel it is not: an attacker who opens ten connections gets ten
+     * independent counters and the limit stops existing.
+     */
+    await sql`
+      CREATE TABLE IF NOT EXISTS admin_attempts (
+        ip            TEXT PRIMARY KEY,
+        fails         INTEGER NOT NULL DEFAULT 0,
+        first_fail_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+        locked_until  TIMESTAMPTZ
+      )`;
+
     await sql`
       CREATE TABLE IF NOT EXISTS analytics_salt (
         day  DATE PRIMARY KEY,
@@ -673,5 +692,85 @@ export async function viewStats(): Promise<ViewStats> {
   } catch (error) {
     console.error("viewStats failed", error);
     return empty;
+  }
+}
+
+/*
+ * How hard the panel is to guess at.
+ *
+ * Eight wrong passwords from one address inside fifteen minutes locks that
+ * address out for fifteen. The numbers are chosen to be invisible to the one
+ * or two people who use this panel — nobody mistypes a password eight times —
+ * and to make an online guessing attack pointless: eight tries a quarter hour
+ * is under a thousand a day against a password that only has to be longer than
+ * a dictionary word.
+ *
+ * It is a lock on the door, not on the building. Somebody with a botnet has an
+ * address per attempt and this does nothing for that; what stops them is the
+ * password's own length. This stops the attack that actually gets run, which is
+ * one host working through a list.
+ */
+const LOCK_AFTER = 8;
+
+/**
+ * Whether this address is currently locked out.
+ *
+ * False when there is no database. The throttle fails OPEN on purpose: losing
+ * the database must not lock the owner out of their own panel, and the password
+ * is still required either way — an open throttle is a missing speed bump, a
+ * closed one is a missing panel.
+ */
+export async function adminLockedOut(ip: string): Promise<boolean> {
+  if (!sql || !ip) return false;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      SELECT locked_until > now() AS locked FROM admin_attempts WHERE ip = ${ip}`) as {
+      locked: boolean | null;
+    }[];
+    return rows[0]?.locked === true;
+  } catch (error) {
+    console.error("adminLockedOut failed", error);
+    return false;
+  }
+}
+
+/** Count a wrong password, and lock the address once there have been enough. */
+export async function noteAdminFailure(ip: string): Promise<void> {
+  if (!sql || !ip) return;
+  try {
+    await ensureSchema();
+    /* One statement: the window is reset by the same insert that counts into
+       it, so two attempts landing together cannot each decide the window had
+       expired and both start from one. */
+    /* The window is written out rather than interpolated: Neon's tagged
+       template parameterises every ${} as a VALUE, and an interval is syntax,
+       not a value. It is a constant in this file either way. */
+    await sql`
+      INSERT INTO admin_attempts (ip, fails, first_fail_at)
+      VALUES (${ip}, 1, now())
+      ON CONFLICT (ip) DO UPDATE SET
+        fails = CASE
+          WHEN admin_attempts.first_fail_at < now() - interval '15 minutes'
+          THEN 1 ELSE admin_attempts.fails + 1 END,
+        first_fail_at = CASE
+          WHEN admin_attempts.first_fail_at < now() - interval '15 minutes'
+          THEN now() ELSE admin_attempts.first_fail_at END,
+        locked_until = CASE
+          WHEN admin_attempts.fails + 1 >= ${LOCK_AFTER}
+          THEN now() + interval '15 minutes' ELSE admin_attempts.locked_until END`;
+  } catch (error) {
+    console.error("noteAdminFailure failed", error);
+  }
+}
+
+/** A correct password clears the slate for that address. */
+export async function clearAdminFailures(ip: string): Promise<void> {
+  if (!sql || !ip) return;
+  try {
+    await ensureSchema();
+    await sql`DELETE FROM admin_attempts WHERE ip = ${ip}`;
+  } catch (error) {
+    console.error("clearAdminFailures failed", error);
   }
 }
