@@ -33,9 +33,35 @@ export function visitorId(ip: string, agent: string, salt: string): string {
  * behind a host that sets only that one.
  */
 export function clientIp(headers: Headers): string {
-  const forwarded = headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
-  return headers.get("x-real-ip") ?? "";
+  /*
+   * Not the left-most x-forwarded-for.
+   *
+   * That entry is whatever the CLIENT sent; every proxy in the chain only
+   * appends to it. So a caller who rotates the header gets a different
+   * visitor hash on every request, and "visitors" becomes a number anybody
+   * can set. app/api/kontakt/route.ts worked this out and wrote it down —
+   * "eight requests with the header rotated all returned 200" — and fixed its
+   * own rate-limit key; this path kept the original and the same spoof.
+   *
+   * Vercel sets x-vercel-forwarded-for itself and overwrites anything that
+   * arrived under that name, so it is the one to trust. Failing that the
+   * right hop is the RIGHT-most entry: the one our own proxy appended.
+   */
+  const vercel = headers.get("x-vercel-forwarded-for")?.trim();
+  if (vercel) return vercel;
+
+  const real = headers.get("x-real-ip")?.trim();
+  if (real) return real;
+
+  const chain = headers.get("x-forwarded-for");
+  if (chain) {
+    const hops = chain
+      .split(",")
+      .map((hop) => hop.trim())
+      .filter(Boolean);
+    if (hops.length) return hops[hops.length - 1];
+  }
+  return "";
 }
 
 /*
@@ -108,7 +134,10 @@ export function classifySource(referrer: string | null, host: string): string {
 export function campaignSource(search: string): string | null {
   const utm = new URLSearchParams(search).get("utm_source");
   if (!utm) return null;
-  const clean = utm.replace(/[^0-9A-Za-zÀ-ÿ .-]/g, "").trim().slice(0, 40);
+  const clean = utm
+    .replace(/[^0-9A-Za-zÀ-ÿ .-]/g, "")
+    .trim()
+    .slice(0, 40);
   if (!clean) return null;
   return clean.charAt(0).toUpperCase() + clean.slice(1);
 }

@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 /**
  * Who is allowed into the panel.
@@ -107,4 +109,42 @@ export function sessionValid(cookie: string | undefined): boolean {
 
   const expires = Number(payload);
   return Number.isFinite(expires) && expires > Date.now();
+}
+
+/** Whether the request carries a session this server issued. */
+export function adminAuthed(): boolean {
+  return sessionValid(cookies().get(SESSION_COOKIE)?.value);
+}
+
+/**
+ * The gate, on the page rather than only on the layout around it.
+ *
+ * app/admin/layout.tsx renders a login wall instead of its children when there
+ * is no session, and for a normal browser request that is the whole story. It
+ * is NOT the whole story for the App Router.
+ *
+ * A layout does not re-render on every request. The client router can ask for
+ * one segment on its own by sending `RSC: 1` with a `Next-Router-State-Tree`
+ * that says which layouts it already has — and Next then renders only the
+ * page, skipping every layout above it. That is the mechanism behind
+ * client-side navigation and it is available to anyone with curl:
+ *
+ *   curl -H 'RSC: 1' -H 'Next-Router-State-Tree: <tree naming the layout>' \
+ *        https://…/admin/beskeder
+ *
+ * Measured against this codebase before the fix: 3203 bytes of the inbox
+ * page's own payload, no login wall in it, no session cookie sent. With a
+ * database attached that payload is every enquiry — names, companies, email
+ * addresses, phone numbers and message bodies — handed to an unauthenticated
+ * request.
+ *
+ * So the check goes where the data is read. Every page under /admin calls this
+ * first, and it is cheap: an HMAC over a short string.
+ *
+ * notFound() rather than a redirect or a rendered wall: a page that a visitor
+ * may not see should not confirm that it exists, and the layout already shows
+ * the wall on any request that actually renders it.
+ */
+export function requireAdmin(): void {
+  if (!adminAuthed()) notFound();
 }

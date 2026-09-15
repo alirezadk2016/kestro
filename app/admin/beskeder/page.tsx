@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { EnquiryRow, SectionHead } from "@/components/admin/parts";
 import { listEnquiries, dbConfigured, type EnquiryStatus } from "@/lib/db";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -25,11 +26,11 @@ const FILTERS = [
 const isStatus = (value: string): value is EnquiryStatus =>
   value === "new" || value === "read" || value === "replied" || value === "archived";
 
-export default async function InboxPage({
-  searchParams,
-}: {
-  searchParams: { status?: string };
-}) {
+export default async function InboxPage({ searchParams }: { searchParams: { status?: string } }) {
+  /* The layout's login wall is not the gate — a page can be rendered
+     without it. See requireAdmin. */
+  requireAdmin();
+
   const requested = searchParams.status ?? "";
   const status = isStatus(requested) ? requested : undefined;
   const enquiries = dbConfigured ? await listEnquiries(status) : [];

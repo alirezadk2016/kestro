@@ -23,10 +23,15 @@ import {
 } from "@/lib/db";
 import { CARD, EYEBROW } from "@/components/admin/tokens";
 import { countryName, decimal, duration } from "@/lib/format";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
+  /* The layout's login wall is not the gate — a page can be rendered
+     without it. See requireAdmin. */
+  requireAdmin();
+
   if (!dbConfigured) return <NoDatabase />;
 
   const [enquiries, stats, live] = await Promise.all([listEnquiries(), viewStats(), liveStats()]);
@@ -67,7 +72,9 @@ export default async function AdminHome() {
             fifth figure alone on a row beside an empty cell that reads as a
             missing card. The fifth spans the pair below lg so the grid is
             always full. */}
-        <dl className={`grid grid-cols-2 gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-5 ${CARD}`}>
+        <dl
+          className={`grid grid-cols-2 gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-5 ${CARD}`}
+        >
           <Figure label="Besøg i dag" value={decimal(live.visitsToday)} Icon={PulseIcon} />
           <Figure label="Besøg / 30 dage" value={decimal(live.visits30)} Icon={PulseIcon} />
           <Figure
@@ -219,9 +226,7 @@ function Chart({ daily }: { daily: { day: string; views: number }[] }) {
 
   return (
     <figure className={`mt-8 p-6 ${CARD}`}>
-      <figcaption className={EYEBROW}>
-        Sidevisninger pr. dag, seneste 30 dage
-      </figcaption>
+      <figcaption className={EYEBROW}>Sidevisninger pr. dag, seneste 30 dage</figcaption>
       <div className="mt-5 flex h-36 items-end gap-[3px] border-b border-white/12">
         {days.map((day) => (
           <div

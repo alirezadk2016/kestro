@@ -2,9 +2,16 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { AlertIcon, ArchiveIcon, ArrowLeftIcon, CheckIcon, SendIcon } from "@/components/admin/icons";
+import {
+  AlertIcon,
+  ArchiveIcon,
+  ArrowLeftIcon,
+  CheckIcon,
+  SendIcon,
+} from "@/components/admin/icons";
 import { MAIL_ERROR_COOKIE } from "@/lib/admin-auth";
 import { getEnquiry, setEnquiryStatus } from "@/lib/db";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +54,10 @@ export default async function EnquiryPage({
   params: { id: string };
   searchParams: { fejl?: string; sendt?: string };
 }) {
+  /* The layout's login wall is not the gate — a page can be rendered
+     without it. See requireAdmin. */
+  requireAdmin();
+
   const enquiry = await getEnquiry(params.id);
   if (!enquiry) notFound();
 
@@ -148,7 +159,9 @@ export default async function EnquiryPage({
           <div className="mt-3 whitespace-pre-wrap border border-white/[0.09] p-6 text-sm leading-7 text-paper/70">
             {enquiry.reply_body}
           </div>
-          <p className="mt-3 text-sm text-paper/45">Skriv nedenfor igen, hvis der skal følges op.</p>
+          <p className="mt-3 text-sm text-paper/45">
+            Skriv nedenfor igen, hvis der skal følges op.
+          </p>
         </section>
       ) : null}
 
