@@ -1,6 +1,6 @@
 # kestro.dk
 
-Danish/Norwegian B2B reseller of refurbished business IT. Next 14 App Router,
+Danish/Norwegian B2B reseller of refurbished business IT. Next 15 App Router,
 TypeScript strict, Tailwind, bilingual (`da` default, `en` under `/en`),
 deployed on Vercel.
 
@@ -93,8 +93,11 @@ bodies.
   renders one segment and skips every layout above it. That was a live
   unauthenticated read of the whole inbox. Never put a control in a layout.
 - **`npm run verify` attacks the build it just made.**
-  `scripts/security/attack.mjs`, 47 cases, and it fails the gate. Add a case
-  when you add a surface; never relax one to make it pass.
+  `scripts/security/attack.mjs` runs after the browser checks and fails the
+  gate with them. Add a case when you add a surface; never relax one to make it
+  pass. The count is not written down here on purpose — it only goes up, and a
+  number in a document is a thing that goes stale the first time somebody does
+  the right thing.
 - **A new POST endpoint gets `crossSitePost()`** from `lib/same-site.ts` unless
   there is a reason it must accept a cross-origin post.
 - **`npm audit` is at zero and stays there.** `postcss` is pinned past Next's
