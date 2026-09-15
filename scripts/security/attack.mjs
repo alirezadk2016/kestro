@@ -310,6 +310,36 @@ async function main() {
     record("CSRF", "traffic written from another origin", status === 204, String(status));
   }
 
+  {
+    const { status } = await ask("/api/kontakt", {
+      method: "POST",
+      headers: { "content-type": "application/json", "sec-fetch-site": "cross-site" },
+      body: JSON.stringify({ name: "x", email: "x@example.com", message: "x" }),
+    });
+    record("CSRF", "enquiry sent from another origin", status === 403, String(status));
+  }
+
+  /*
+   * The one endpoint on this site that a stranger is supposed to call.
+   *
+   * Meta posts here when somebody comments, and the reply this route can send
+   * goes out in public under a customer's post. So the signature is checked
+   * over the raw bytes before a character of the body is parsed, and with no
+   * IG_APP_SECRET set the route answers 503 rather than trusting anything.
+   * Either way the answer to an unsigned post is never 200 — that is the whole
+   * assertion, and it holds in both configurations.
+   */
+  {
+    const { status } = await ask("/api/instagram/webhook", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        entry: [{ changes: [{ field: "comments", value: { id: "1", text: "hi" } }] }],
+      }),
+    });
+    record("CSRF", "unsigned Instagram webhook", status !== 200, String(status));
+  }
+
   /* ---- The password itself ---------------------------------------------- */
 
   {
