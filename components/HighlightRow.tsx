@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import CraftMark, { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
+import ForgedPanel from "@/components/ForgedPanel";
 
 /*
  * Three panels: what you send us, what we do to a machine, and what a fleet
@@ -102,7 +103,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
       <Container>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Send us a spec */}
-          <div className="plate flex flex-col justify-between p-6 sm:p-8 lg:col-span-4">
+          <ForgedPanel className="lg:col-span-4" faceClassName="justify-between p-6 sm:p-8">
             <div>
               <span className="eyebrow text-brand-300">{c.askEyebrow}</span>
               <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
@@ -131,10 +132,10 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
                 strokeWidth={2}
               />
             </Link>
-          </div>
+          </ForgedPanel>
 
           {/* How a machine is prepared */}
-          <div className="plate p-6 sm:p-8 lg:col-span-5">
+          <ForgedPanel className="lg:col-span-5" faceClassName="p-6 sm:p-8">
             <span className="eyebrow text-brand-300">{c.refurbEyebrow}</span>
             <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.refurbTitle}
@@ -184,12 +185,13 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
                 strokeWidth={2}
               />
             </Link>
-          </div>
+          </ForgedPanel>
 
           {/* Fleet */}
-          <Link
+          <ForgedPanel
             href={localePath("/flaadeloesninger", lang)}
-            className="plate plate-lift plate-edge group flex min-h-[280px] flex-col justify-end overflow-hidden p-6 sm:p-8 lg:col-span-3"
+            className="lg:col-span-3"
+            faceClassName="plate-edge relative min-h-[280px] justify-end overflow-hidden p-6 sm:p-8"
           >
             <Image
               src="/cards/fleet-scene.webp"
@@ -233,7 +235,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
                 />
               </span>
             </div>
-          </Link>
+          </ForgedPanel>
         </div>
       </Container>
     </section>

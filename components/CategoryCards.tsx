@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import { localePath, type Lang } from "@/lib/i18n";
+import ForgedPanel from "@/components/ForgedPanel";
 
 /*
  * The four things a buyer is most often after, as picture cards.
@@ -91,11 +91,8 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
         <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {cards.map((card) => (
             <li key={card.href}>
-              <Link
-                href={localePath(card.href, lang)}
-                className="plate plate-lift group flex h-full flex-col overflow-hidden"
-              >
-                <div className="plate-well aspect-[16/9] overflow-hidden bg-ink-950/50">
+              <ForgedPanel href={localePath(card.href, lang)} faceClassName="p-0 overflow-hidden">
+                <div className="plate-well tile-z tile-z-near aspect-[16/9] overflow-hidden rounded-t-[7px] bg-ink-950/50">
                   <Image
                     src={card.image}
                     alt={card.alt[lang]}
@@ -106,7 +103,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                   />
                 </div>
 
-                <div className="flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
+                <div className="tile-z tile-z-far flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
                   <div className="min-w-0">
                     <h3 className="text-sm font-bold leading-snug text-paper sm:text-base">
                       {card.title[lang]}
@@ -121,7 +118,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />
                   </span>
                 </div>
-              </Link>
+              </ForgedPanel>
             </li>
           ))}
         </ul>

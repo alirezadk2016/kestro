@@ -14,6 +14,13 @@ import PointerLight from "@/components/PointerLight";
  * tracks the pointer. Without one it is a static panel and none of that
  * applies — a card that does not go anywhere should not lift when you point
  * at it, which is the entire vocabulary of "this is clickable".
+ *
+ * `className` goes on the OUTERMOST element, not on the frame. With an href
+ * the frame is wrapped by PointerLight, so a grid class landing on the frame
+ * is a class on a child of the grid item and does nothing — which is exactly
+ * what happened to the fleet card on the front page: lg:col-span-3 was
+ * swallowed, the card took one column of twelve, and its heading wrapped to
+ * one word a line. Layout belongs to whatever the parent grid can see.
  */
 export default function ForgedPanel({
   href,
@@ -32,22 +39,15 @@ export default function ForgedPanel({
     </span>
   );
 
+  const frame = "forge forge-rim relative flex h-full flex-col rounded-xl p-[5px] sm:p-[6px]";
+
   if (!href) {
-    return (
-      <div
-        className={`forge forge-rim relative flex h-full flex-col rounded-xl p-[5px] sm:p-[6px] ${className}`}
-      >
-        {face}
-      </div>
-    );
+    return <div className={`${frame} ${className}`}>{face}</div>;
   }
 
   return (
-    <PointerLight>
-      <Link
-        href={href}
-        className={`forge forge-rim tile tile-sheen group relative flex h-full flex-col rounded-xl p-[5px] sm:p-[6px] ${className}`}
-      >
+    <PointerLight className={className}>
+      <Link href={href} className={`${frame} tile tile-sheen group`}>
         {face}
       </Link>
     </PointerLight>

@@ -23,7 +23,13 @@ import { useCallback, useRef } from "react";
  *    card is lit properly with no JavaScript at all and this only ever makes
  *    it better.
  */
-export default function PointerLight({ children }: { children: React.ReactNode }) {
+export default function PointerLight({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   const move = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
@@ -43,7 +49,12 @@ export default function PointerLight({ children }: { children: React.ReactNode }
   }, []);
 
   return (
-    <div ref={ref} className="tilt h-full" onPointerMove={move} onPointerLeave={reset}>
+    <div
+      ref={ref}
+      className={`tilt h-full ${className}`}
+      onPointerMove={move}
+      onPointerLeave={reset}
+    >
       {children}
     </div>
   );

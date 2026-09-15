@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
-import CraftMark, { type CraftMarkName } from "./CraftMark";
+import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
+import ForgedPanel from "@/components/ForgedPanel";
+import MarkWell from "@/components/MarkWell";
 
 const situations = [
   {
@@ -111,14 +113,9 @@ export default function QualifySection({ lang }: { lang: Lang }) {
         <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {situations.map((item, i) => (
             <li key={item.href}>
-              <Link
-                href={localePath(item.href, lang)}
-                className="group relative flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.03] p-6 transition duration-200 hover:border-brand-400/40 hover:bg-white/[0.06] sm:p-7"
-              >
+              <ForgedPanel href={localePath(item.href, lang)} faceClassName="p-6 sm:p-7">
                 <div className="flex items-start justify-between gap-4">
-                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center plate-sm rounded-lg bg-brand-500/[0.10] text-paper/90 transition-colors group-hover:text-brand-200">
-                    <CraftMark name={item.mark} className="h-6 w-6" />
-                  </span>
+                  <MarkWell mark={item.mark} className="tile-z tile-z-near" />
                   {/* aria-hidden as well as lighter: the ordinal is a
                       decoration beside a heading that already says which card
                       this is, and at 30% white it measured 2.9:1. */}
@@ -140,7 +137,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                     strokeWidth={2}
                   />
                 </span>
-              </Link>
+              </ForgedPanel>
             </li>
           ))}
         </ol>
