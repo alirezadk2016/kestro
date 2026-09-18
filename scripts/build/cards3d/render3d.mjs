@@ -535,10 +535,30 @@ window.__render = async function (name) {
       const m = o.isMesh && o.material;
       if (!m || !m.isMeshStandardMaterial) return;
       if (m === GLASS || m.name === "Material.099" || m.name === "screen") return;
-      /* 18 cm per repeat. Tried at 1.3 cm, to stop the four-octave cloud
-         stretching one tile across a whole lid — and the noise canvas does not
-         tile seamlessly, so twenty-five repeats across a 32 cm lid turned into
-         a visible diamond grid on the fleet card. Worse than the cloud. */
+      /*
+       * 3.9 cm per repeat.
+       *
+       * It was 2.6 — and the unit here is the scene's, where 1 = 7 cm, so the
+       * four-octave cloud tiled once every 18 cm. A mini-pc lid is 18 cm
+       * square. It got exactly one tile stretched across the whole face, and a
+       * single soft gradient over a flat field does not read as a surface, it
+       * reads as a stain: that lid was the brightest, blotchiest thing in a
+       * card whose subject is the dark tower behind it.
+       *
+       * Tried at 1.3 cm first, which is wrong the other way. The lattice does
+       * wrap, so there are no seams — but twenty-five repeats of one cloud
+       * across a 32 cm lid is a recognisable pattern, and the fleet card came
+       * back with a diamond grid printed on it. A texture you can count the
+       * tiles of is wallpaper.
+       *
+       * And 3.9 cm, tried third, was worse than either: the mottling got
+       * stronger, which is what finally identified it. The blotching is not the
+       * roughness map's scale at all — it is the NORMAL map. Finer tiling packs
+       * more micro-facets into the same area, every facet catches the studio
+       * ceiling, and an upward-facing lid fills with bright speckle. The
+       * roughness tile goes back to 18 cm and normalScale below is what
+       * actually had to come down.
+       */
       boxUv(o.geometry, 2.6);
       wear(o.geometry);
       if (m.__weathered) return;
@@ -549,7 +569,18 @@ window.__render = async function (name) {
          1.0 of its nominal polish instead of being exactly one number. */
       m.roughness = Math.min(1, m.roughness * 1.18);
       m.normalMap = BUMP;
-      m.normalScale = new THREE.Vector2(0.12, 0.12);
+      /*
+       * 0.05, down from 0.12.
+       *
+       * This is the knob that was making the laptop lids and the mini's cover
+       * look mouldy. A normal map perturbs the surface normal, the perturbed
+       * normal reflects the environment, and the environment here is emissive
+       * panels — so on any face pointing upward the map turned into bright
+       * speckle rather than into texture. Chased through the roughness tile
+       * twice before measuring it here: at 0.12 the fleet lid mottles, at 0.05
+       * it reads as brushed.
+       */
+      m.normalScale = new THREE.Vector2(0.05, 0.05);
       m.vertexColors = true;
       m.color.multiplyScalar(WORN);
       m.needsUpdate = true;
