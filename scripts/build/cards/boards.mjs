@@ -92,19 +92,39 @@ export function artboardHtml(name, b, groundPath, objectPath, baseline = 0.62) {
      blurry mush competing with the object; at this opacity it is the grain of
      a room rather than a picture of one. */
   .ground{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;
-          filter:blur(${(40 * b.w) / 1200}px) saturate(.5) brightness(.44);opacity:.34}
+          filter:blur(${(40 * b.w) / 1200}px) saturate(.34) brightness(.44);opacity:.34}
   /* Something to stand on. Without a floor the object is in a void, and a
      reflection with nothing to reflect in reads as a smudge. */
   .floor{position:absolute;left:0;right:0;bottom:0;height:62%;background:
-    radial-gradient(72% 96% at 48% 18%, rgba(190,164,120,0.15) 0%, rgba(74,76,88,0.06) 38%, rgba(3,6,13,0) 74%),
-    linear-gradient(180deg, rgba(170,148,112,0) 0%, rgba(170,148,112,0.075) 26%, rgba(3,6,13,0) 82%)}
-  /* A studio stage: one warm pool behind the object, everything else falling
-     to black. This is the light the object is lit by, so it has to be visible
-     in the room as well as on the edges. */
+    radial-gradient(70% 92% at 44% 16%, rgba(112,139,170,0.10) 0%, rgba(60,70,88,0.05) 40%, rgba(0,4,10,0) 76%),
+    linear-gradient(180deg, rgba(90,104,126,0) 0%, rgba(90,104,126,0.05) 24%, rgba(0,4,10,0) 80%)}
+  /*
+   * The room's own light, and the reason these cards looked like cheap CGI.
+   *
+   * This was one tan radial — rgba(214,176,116,0.46) — sitting over the middle
+   * of the frame at 46% opacity, and it is the brown haze every one of these
+   * cards was swimming in. It got there honestly: check-cards.mjs measures
+   * "highlight r-b", red minus blue over everything brighter than 150, and
+   * wants it positive, because the hero's key falls warm on concrete. A tan
+   * wash across the whole board satisfies that number. It satisfies it without
+   * lighting anything — the metric went positive and the picture got worse,
+   * which is the failure mode of measuring a picture at all.
+   *
+   * What the brief actually specifies, measured off the hero plate: a warm
+   * tungsten key from camera LEFT (#4d473c on the concrete it lands on), a
+   * cool blue-hour fill from camera RIGHT (#708baa through the glazing), and
+   * near-black everywhere else (#00040a). There was no cool light anywhere in
+   * this file. The warm was doing the job of both, which is why nothing in
+   * these frames separated from anything else.
+   *
+   * So: the key is a tight pool at 27% across rather than a wash at 46%, the
+   * fill exists, and the falloff to black is steeper so an edge has something
+   * to be an edge against.
+   */
   .scrim{position:absolute;inset:0;background:
-    radial-gradient(46% 34% at 46% 38%, rgba(214,176,116,0.46) 0%, rgba(120,108,104,0.22) 38%, rgba(3,6,13,0) 72%),
-    linear-gradient(180deg, rgba(3,6,13,0) 52%, rgba(196,166,120,0.09) 70%, rgba(3,6,13,0) 100%),
-    radial-gradient(132% 106% at 50% 44%, rgba(3,6,13,0) 24%, rgba(3,6,13,0.88) 100%)}
+    radial-gradient(32% 28% at 28% 34%, rgba(214,176,116,0.34) 0%, rgba(150,124,92,0.13) 44%, rgba(0,4,10,0) 76%),
+    radial-gradient(44% 62% at 88% 44%, rgba(112,139,170,0.20) 0%, rgba(70,92,122,0.07) 46%, rgba(0,4,10,0) 78%),
+    radial-gradient(128% 104% at 46% 42%, rgba(0,4,10,0) 26%, rgba(0,4,10,0.84) 100%)}
   .ramp{position:absolute;inset:0;background:
     linear-gradient(180deg, rgba(3,6,13,0) 38%, rgba(3,6,13,0.66) 66%, rgba(3,6,13,0.95) 100%)}
   /* The subject, rendered rather than drawn. scripts/build/cards3d writes it

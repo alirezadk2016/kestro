@@ -76,6 +76,8 @@ function studio(panels) {
  * fiftieth of a stop and a couple of percent of white balance, which is less
  * than the drift between two frames on the same roll.
  */
+const LIFT = { "fleet-scene": 1.2 };
+
 function shotTrim(name) {
   let h = 2166136261;
   for (let i = 0; i < name.length; i++) {
@@ -84,7 +86,27 @@ function shotTrim(name) {
   }
   const r = (n) => (((h >>> (n * 8)) & 255) / 255 - 0.5) * 2;
   return {
-    exposure: 1 + r(0) * 0.035,
+    /*
+     * The jitter above is deliberate and tiny — no two shots in a set come off
+     * a real camera at exactly the same stop. LIFT is not that: it is one
+     * named shot printed brighter on purpose.
+     *
+     * fleet-scene is a long bench receding into a dark room, in a portrait
+     * frame where the bottom third is covered by a gradient and the heading.
+     * The subject is therefore small, far and dark, and check-cards measures
+     * it at the size it is actually rendered: 17.1 against a floor of 18, and
+     * the checker's own words for it are "subject too small or too dark".
+     *
+     * It passed before the room light was rebalanced, and it passed for the
+     * wrong reason: the tan wash that used to sit over every board put a large
+     * bright area in this frame, and a bright area raises the standard
+     * deviation whether or not it is on the subject. Taking the wash out took
+     * that contrast with it. Putting it back would be buying a number with a
+     * haze, which is how these cards got brown in the first place.
+     *
+     * So the light goes on the bench instead of on the air in front of it.
+     */
+    exposure: (LIFT[name] ?? 1) * (1 + r(0) * 0.035),
     balance: [1 + r(1) * 0.022, 1 + r(2) * 0.012, 1 - r(1) * 0.022],
   };
 }
@@ -513,6 +535,10 @@ window.__render = async function (name) {
       const m = o.isMesh && o.material;
       if (!m || !m.isMeshStandardMaterial) return;
       if (m === GLASS || m.name === "Material.099" || m.name === "screen") return;
+      /* 18 cm per repeat. Tried at 1.3 cm, to stop the four-octave cloud
+         stretching one tile across a whole lid — and the noise canvas does not
+         tile seamlessly, so twenty-five repeats across a 32 cm lid turned into
+         a visible diamond grid on the fleet card. Worse than the cloud. */
       boxUv(o.geometry, 2.6);
       wear(o.geometry);
       if (m.__weathered) return;
@@ -1071,7 +1097,9 @@ for (const name of Object.keys(BOARDS)) {
   const file = join(out, `${name}.png`);
   writeFileSync(file, data);
   writeFileSync(join(out, `${name}.json`), JSON.stringify({ baseline }));
-  console.log(`${name.padEnd(14)} ${(data.length / 1024).toFixed(0)} kB  baseline ${baseline.toFixed(3)}`);
+  console.log(
+    `${name.padEnd(14)} ${(data.length / 1024).toFixed(0)} kB  baseline ${baseline.toFixed(3)}`,
+  );
 }
 
 await browser.close();
