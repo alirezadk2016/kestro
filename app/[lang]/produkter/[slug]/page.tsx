@@ -13,6 +13,7 @@ import { getCategoryIcon } from "@/lib/category-icons";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
+import SpecChips from "@/components/SpecChips";
 import FactNote from "@/components/FactNote";
 
 /*
@@ -324,9 +325,11 @@ export default async function CategoryPage(props: {
                       <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 flex-1 text-sm leading-6 text-paper/65">
+                      <span className="mt-1.5 text-sm leading-6 text-paper/65">
                         {model.tagline[lang]}
                       </span>
+                      <SpecChips model={model} lang={lang} />
+                      <span className="flex-1" />
                       <span className="mt-3 border-t border-white/10 pt-3 text-sm font-semibold text-paper">
                         {c.priceLabel}
                       </span>

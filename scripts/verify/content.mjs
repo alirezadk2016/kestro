@@ -287,6 +287,59 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
   }
 }
 
+/* 4. A catalogue chip may not say anything the model's own specs do not.
+ *
+ * lib/models.ts carries a short form of each model's headline specifications
+ * for the cards — "8-32 GB DDR4" standing for "8-32 GB DDR4 i to sokler". They
+ * are written out by hand, because deriving them from the prose produced three
+ * chips in Danish and two in English on seven of the twelve computers, and a
+ * hand-written figure is a figure somebody can mistype.
+ *
+ * So every number on every chip has to appear somewhere in that model's own
+ * entry. It does not prove the chip says the right thing, but it does prove the
+ * chip is not saying a number nothing else on the site says — which is the
+ * failure that matters here, because a card claiming 32 GB on a machine that
+ * tops out at 16 is a specification a customer would order on.
+ */
+{
+  const source = readFileSync(join(root, "lib", "models.ts"), "utf8");
+  const flat = (text) => text.replace(/[\u2013\u2014]/g, "-");
+
+  /* Each model is one contiguous object, so the text from its slug to the next
+     one is that model and nothing else. */
+  const entries = new Map();
+  const slugs = [...source.matchAll(/^    slug: "([a-z0-9-]+)",$/gm)];
+  slugs.forEach((match, index) => {
+    const from = match.index;
+    const to = index + 1 < slugs.length ? slugs[index + 1].index : source.length;
+    entries.set(match[1], flat(source.slice(from, to)));
+  });
+
+  const chipBlock = source.match(/const CARD_CHIPS[^=]*= \{([\s\S]*?)\n\};/);
+  if (!chipBlock) {
+    fail("lib/models.ts: CARD_CHIPS not found — the catalogue cards have no specs to check");
+  } else {
+    const perSlug = [...chipBlock[1].matchAll(/"([a-z0-9-]+)": \[([\s\S]*?)\n  \],/g)];
+    if (perSlug.length === 0) fail("lib/models.ts: CARD_CHIPS parsed to nothing");
+    for (const [, slug, body] of perSlug) {
+      const entry = entries.get(slug);
+      if (!entry) {
+        fail(`lib/models.ts: CARD_CHIPS has "${slug}", which is not a model`);
+        continue;
+      }
+      for (const [, chip] of body.matchAll(/(?:da|en): "([^"]*)"/g)) {
+        for (const figure of flat(chip).match(/\d+(?:[.,]\d+)?/g) ?? []) {
+          if (!entry.includes(figure)) {
+            fail(
+              `lib/models.ts: ${slug} chip "${chip}" says ${figure}, which is nowhere in that model`,
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
 console.log(
   `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
     `${fromRoutes.size} english routes, ${failures.length} failures`,

@@ -6,6 +6,7 @@ import CtaSection from "@/components/CtaSection";
 import { models, modelGroups } from "@/lib/models";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import SpecChips from "@/components/SpecChips";
 
 const copy = {
   da: {
@@ -122,9 +123,13 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                         <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-[1.6] text-paper/65">
+                        <p className="mt-2 text-sm leading-[1.6] text-paper/65">
                           {model.tagline[lang]}
                         </p>
+                        <SpecChips model={model} lang={lang} />
+                        {/* Pushes the footer row down so every card in a row ends
+                            level, whether it got three chips, two or none. */}
+                        <span className="flex-1" />
                         <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">
                           <span className="text-sm font-semibold text-paper">{c.priceLabel}</span>
                           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">

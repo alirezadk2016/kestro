@@ -1,4 +1,4 @@
-import type { Localized } from "./i18n";
+import type { Lang, Localized } from "./i18n";
 
 /**
  * Machine models we are most often asked to source.
@@ -1879,4 +1879,113 @@ export function getModel(slug: string): Model | undefined {
 
 export function getModelsForCategory(categorySlug: string): Model[] {
   return models.filter((model) => model.category === categorySlug);
+}
+
+/*
+ * The three facts that belong on a catalogue card.
+ *
+ * The cards used to carry a brand, a format, a name and one line of prose, and
+ * nothing a buyer could compare. Eighteen of them in a grid, and the only way
+ * to find out whether a machine had 8 GB or 64 GB was to open it, read, go back
+ * and open the next one. Every Danish refurbisher with a shop puts the
+ * specification on the listing; this is a reference catalogue rather than a
+ * shop, but the reason a buyer is reading it is the same.
+ *
+ * Nothing new is asserted. Every chip below is the head of a sentence already
+ * in that model's `specs` — the ranges these machines are actually built in —
+ * and the model page still carries the whole sentence with its qualifications.
+ *
+ * They are written out rather than cut out of the value at render time, which
+ * is what this did first. The values are prose, and prose puts its
+ * qualification behind a dash here, a comma there, and a preposition somewhere
+ * else — so the rule grew a list of prepositions, and then the list was a
+ * Danish list. Measured: seven of the twelve computers came out with three
+ * chips in Danish and two in English, because "8–32 GB DDR4 i to sokler" cut
+ * where the rule expected and "8–32 GB DDR4 across two sockets" did not. A
+ * table cannot do that. It is also readable: every condensation sits beside the
+ * others, and a reader can check the lot against the specs above in one pass.
+ *
+ * A dock is chosen on what it connects, which is a sentence and not a figure,
+ * so dock cards get no row. An honest gap beats a chip that says nothing.
+ */
+const CARD_CHIPS: Record<string, Localized[]> = {
+  "lenovo-thinkpad-t480": [
+    { da: "Intel i5/i7 · 8. gen", en: "Intel i5/i7 · 8th gen" },
+    { da: "8 GB DDR4", en: "8 GB DDR4" },
+    { da: "256 GB M.2 SSD", en: "256 GB M.2 SSD" },
+  ],
+  "lenovo-thinkpad-t14": [
+    { da: "i5/i7 el. Ryzen PRO", en: "i5/i7 or Ryzen PRO" },
+    { da: "8–16 GB DDR4", en: "8–16 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "lenovo-thinkpad-x1-carbon": [
+    { da: "Intel i5/i7 · 8.–10. gen", en: "Intel i5/i7 · 8th–10th gen" },
+    { da: "8 eller 16 GB", en: "8 or 16 GB" },
+    { da: "256 GB–1 TB NVMe SSD", en: "256 GB–1 TB NVMe SSD" },
+  ],
+  "lenovo-thinkpad-l14": [
+    { da: "i5/i7 el. Ryzen PRO", en: "i5/i7 or Ryzen PRO" },
+    { da: "8–16 GB DDR4", en: "8–16 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "hp-elitebook-840": [
+    { da: "Intel i5/i7 · 8. gen", en: "Intel i5/i7 · 8th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "hp-probook-450": [
+    { da: "Intel i5/i7 · 10.–11. gen", en: "Intel i5/i7 · 10th–11th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "dell-latitude-5410": [
+    { da: "Intel i5/i7 · 10.–11. gen", en: "Intel i5/i7 · 10th–11th gen" },
+    { da: "8–64 GB DDR4", en: "8–64 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "dell-latitude-7490": [
+    { da: "Intel i5/i7 · 8. gen", en: "Intel i5/i7 · 8th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "hp-zbook-15": [
+    { da: "Intel i7 6-kerne el. Xeon", en: "Intel i7 6-core or Xeon" },
+    { da: "16–64 GB DDR4", en: "16–64 GB DDR4" },
+    { da: "512 GB–2 TB NVMe SSD", en: "512 GB–2 TB NVMe SSD" },
+  ],
+  "hp-elitedesk-800": [
+    { da: "Intel i5/i7 · 8. gen", en: "Intel i5/i7 · 8th gen" },
+    { da: "8–64 GB DDR4", en: "8–64 GB DDR4" },
+    { da: "256–512 GB SSD", en: "256–512 GB SSD" },
+  ],
+  "lenovo-thinkcentre-m720q": [
+    { da: "Intel i3/i5/i7 · 8.–9. gen", en: "Intel i3/i5/i7 · 8th–9th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
+    { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
+  ],
+  "dell-optiplex-5060": [
+    { da: "Intel i5/i7 · 8.–9. gen", en: "Intel i5/i7 · 8th–9th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
+    { da: "256–512 GB SSD", en: "256–512 GB SSD" },
+  ],
+  /* Screens: the panel and what it resolves to. The size is already on the card
+     in `format`, so repeating it here would spend a chip on nothing. */
+  "dell-ultrasharp-u2419h": [
+    { da: "IPS, mat", en: "IPS, matte" },
+    { da: "Full HD (1920×1080)", en: "Full HD (1920×1080)" },
+  ],
+  "hp-elitedisplay-e243": [
+    { da: "IPS, mat", en: "IPS, matte" },
+    { da: "Full HD (1920×1080)", en: "Full HD (1920×1080)" },
+  ],
+  "lenovo-thinkvision-t24i": [
+    { da: "IPS, mat", en: "IPS, matte" },
+    { da: "Full HD (1920×1080)", en: "Full HD (1920×1080)" },
+  ],
+};
+
+/** The short facts for this model's card, or none where none would help. */
+export function cardSpecs(model: Model, lang: Lang): string[] {
+  return (CARD_CHIPS[model.slug] ?? []).map((chip) => chip[lang]);
 }
