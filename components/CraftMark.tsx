@@ -109,26 +109,36 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
   ),
 
   /*
-   * Nordic ready: one keycap, and the key that is the whole claim.
+   * Nordic ready: the keys, drawn as keys.
    *
-   * A Danish layout is not a flag, it is three keys a supplier in southern
-   * Europe does not ship. Drawn as a single cap rather than a whole keyboard:
-   * a keyboard at 24px is a rectangle with lines in it, which is also what a
-   * document, a chassis and a memory module look like at 24px.
+   * This was the letter Ø, and before that a ringed Ø, and the comments those
+   * two passes left behind are a record of the same mistake being refined
+   * rather than fixed. A letterform is not a pictogram. In a row whose other
+   * four marks are a lens, a machine, two arrows and a van, one glyph in a
+   * tinted box is the only thing a reader has to *read* instead of recognise —
+   * and at 24px a stroked bowl with a stroke through it is the drawing of a
+   * prohibition sign whatever the slash overshoot does. Two passes were spent
+   * trying to stop it saying "no". The answer was that it should not have been
+   * a letter.
    *
-   * It read as a prohibition sign for two passes, which is the one misreading
-   * a mark on a trust strip cannot afford, and shrinking the glyph did not fix
-   * it: a stroked ring with a slash through it, sitting inside a stroked box,
-   * IS the drawing of a "no" sign — the box was half the problem. The cap is a
-   * wash with no outline now, so what carries a stroke is the letter, and the
-   * slash runs past the bowl at both ends the way it does in a real Ø and
-   * never does in ⊘.
+   * The claim is a Danish/Norwegian keyboard. So: three caps on a deck, the
+   * last one carrying the accent, because the difference between a Nordic
+   * layout and a southern-European one is the keys on the end of the row. It
+   * is a picture of the thing, it cannot be misread as a symbol, and it is the
+   * only mark in the set with repeated elements — which makes it findable in
+   * the strip without being loud.
    */
   nordic: (
     <>
-      <rect x="3" y="3" width="18" height="18" rx="3" className="fill-brand-400/14 stroke-none" />
-      <ellipse cx="12" cy="12" rx="4" ry="5.4" className="stroke-brand-300" />
-      <path d="M8 17.4l8-10.8" className="stroke-brand-300" />
+      <rect x="2" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/10" />
+      <rect x="2" y="7" width="6" height="6" rx="1.4" />
+      <rect x="9" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/10" />
+      <rect x="9" y="7" width="6" height="6" rx="1.4" />
+      <rect x="16" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/28" />
+      <rect x="16" y="7" width="6" height="6" rx="1.4" className="stroke-brand-300" />
+      {/* The deck the caps stand on. Without it three squares in a row are
+          three squares in a row. */}
+      <path d="M2 17.5h20" />
     </>
   ),
 

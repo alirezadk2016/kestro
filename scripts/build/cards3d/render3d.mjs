@@ -76,7 +76,21 @@ function studio(panels) {
  * fiftieth of a stop and a couple of percent of white balance, which is less
  * than the drift between two frames on the same roll.
  */
-const LIFT = { "fleet-scene": 1.2 };
+/*
+ * Named shots printed brighter, and why each one is on the list.
+ *
+ * fleet-scene is a long bench receding into a dark room in a portrait frame
+ * whose bottom third is covered by a heading; its subject is small, far and
+ * dark, and check-cards measured it under the contrast floor.
+ *
+ * The other three are here for a different reason: cat-laptops stopped being a
+ * render. It is now a crop of the hero photograph, and it comes in at mean
+ * luminance 60 against these renders' 27. In a two-by-two grid on a phone that
+ * is not a set — it is one photograph and three dark rectangles beside it. The
+ * photograph is the one nobody has ever objected to, so it is the reference
+ * and the renders come up to meet it rather than the other way round.
+ */
+const LIFT = { "fleet-scene": 1.2, "cat-desktops": 1.5, "cat-monitors": 1.45, "cat-fleet": 1.3 };
 
 function shotTrim(name) {
   let h = 2166136261;

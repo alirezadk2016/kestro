@@ -27,6 +27,29 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 
 try {
   for (const [name, b] of Object.entries(BOARDS)) {
+    /*
+     * A board that names a photo is a crop of the hero plate and nothing else:
+     * no 3D layer, no artboard, no reflection to flip. The scene is already
+     * lit, already ground, already reflected in its own desk.
+     */
+    if (b.photo) {
+      const p = b.photo;
+      const file = join(OUT, `${name}.webp`);
+      await sharp(PLATE)
+        .extract({
+          left: Math.round(p.fx * PW),
+          top: Math.round(p.fy * PH),
+          width: Math.round(p.fw * PW),
+          height: Math.round(p.fh * PH),
+        })
+        .resize(b.w, b.h, { fit: "cover", position: "centre" })
+        .webp({ quality: 90 })
+        .toFile(file);
+      const { size } = await stat(file);
+      console.log(`${name.padEnd(14)} ${b.w}x${b.h}  ${(size / 1024).toFixed(0)} kB  (hero crop)`);
+      continue;
+    }
+
     const c = b.ground;
     let cut = sharp(PLATE).extract({
       left: Math.round(c.fx * PW),
@@ -41,9 +64,7 @@ try {
     const objectPath = join(root3d, `${name}.png`);
     /* Written alongside the render: the line where the subject meets the
        floor, which is what the reflection is flipped about. */
-    const { baseline } = JSON.parse(
-      await readFile(join(root3d, `${name}.json`), "utf8"),
-    );
+    const { baseline } = JSON.parse(await readFile(join(root3d, `${name}.json`), "utf8"));
     const page = join(work, `${name}.html`);
     await writeFile(page, artboardHtml(name, b, groundPath, objectPath, baseline));
 

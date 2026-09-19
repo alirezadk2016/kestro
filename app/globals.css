@@ -170,8 +170,32 @@ body {
    * while the blur keeps the links readable once the page scrolls and real
    * content runs under it.
    */
+  /*
+   * The bar ended at 0.58 opacity and white text read straight through it.
+   *
+   * Measured on a 390px viewport, scrolling the front page: "FORTÆL OS, HVAD I
+   * SKAL BRUGE" and "Få en pris" were both legible THROUGH the header, and so
+   * was every section heading as it passed under. Not a glass effect — a
+   * transparency bug that made the bar look broken on every scroll position on
+   * the page.
+   *
+   * The same bug was found and fixed for .glass-panel directly below this,
+   * with its own note about six links sitting on the hero photograph. The
+   * panel got an opaque ground; the bar it hangs off kept the gradient that
+   * caused it.
+   *
+   * Two tries at keeping it translucent, 0.58 to 0.86 and then to 0.95, and
+   * both still ghosted: at 0.95 a blue link heading was still faintly legible
+   * along the bottom edge, which is where the gradient is weakest and where
+   * every heading passes. Five percent of white on this navy is visible.
+   *
+   * So the bar is opaque, and the fall from top to bottom is in the colour
+   * rather than in the alpha. It still reads as a bar with light on it; it
+   * simply stops being a window. The blur stays for the moment at scroll-top
+   * when the hero is directly behind it.
+   */
   .glass-nav {
-    background-image: linear-gradient(180deg, rgb(5 9 20 / 0.88) 0%, rgb(5 9 20 / 0.58) 100%);
+    background-image: linear-gradient(180deg, rgb(8 13 27) 0%, rgb(4 8 18) 100%);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
     border-bottom: 1px solid rgb(255 255 255 / 0.06);

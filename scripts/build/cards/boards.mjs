@@ -9,13 +9,31 @@
  * mirrored, so six cards do not read as one background used six times.
  */
 export const BOARDS = {
+  /*
+   * The laptop card is a photograph, not a render.
+   *
+   * Everything else here is a 3D subject composited onto a slice of the hero
+   * plate. This one is the hero plate — the laptop standing on the stone desk
+   * in the blue-hour room, cropped out of the same 2600x1071 image the front
+   * page opens with.
+   *
+   * It is the right call for the same reason the render was the wrong one. The
+   * scene already contains the exact subject this card needs, photographed
+   * under the light every other card is trying to imitate, with a real desk
+   * under it, a real window behind it and a real reflection in the stone. No
+   * procedural chassis assembled out of rounded boxes competes with that, and
+   * six passes spent grading and re-modelling one is six passes spent
+   * approximating a picture that was already in the repository.
+   *
+   * The crop is pulled in from the right so the book with "CIRCULAR IT /
+   * STRONGER BUSINESSES" on its cover falls outside the frame: a card is not
+   * the place for two cut-off words, and the brief's own rule is no text baked
+   * into the pixels.
+   */
   "cat-laptops": {
     w: 1200,
     h: 675,
-    fit: 0.82,
-    cx: 0.5,
-    cy: 0.44,
-    ground: { fx: 0.3, fy: 0.0, fw: 0.19, fh: 1.0 },
+    photo: { fx: 0.485, fy: 0.33, fw: 0.295, fh: 0.404 },
   },
   "cat-desktops": {
     w: 1200,
@@ -91,8 +109,23 @@ export function artboardHtml(name, b, groundPath, objectPath, baseline = 0.62) {
   /* The photograph stays, but only as texture. Read at full strength it was
      blurry mush competing with the object; at this opacity it is the grain of
      a room rather than a picture of one. */
+  /*
+   * The room, and how much of it to admit.
+   *
+   * This sat at 34% opacity and 44% brightness, which is a rumour of a room
+   * rather than a room — the object stood in a black void with a faint smudge
+   * behind it. That was defensible while all six cards were renders. It is not
+   * defensible now that cat-laptops is a photograph of the actual scene: side
+   * by side in a two-by-two grid on a phone, one card had a desk, a window and
+   * a city in it and the three next to it had nothing, and the set stopped
+   * reading as a set.
+   *
+   * At 52% and 68% the blur still keeps it behind the subject — it is a
+   * background, and the subject is what is sharp — but there is a room there,
+   * lit by the same light, and the four cards belong to each other again.
+   */
   .ground{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;
-          filter:blur(${(40 * b.w) / 1200}px) saturate(.34) brightness(.44);opacity:.34}
+          filter:blur(${(34 * b.w) / 1200}px) saturate(.42) brightness(.68);opacity:.52}
   /* Something to stand on. Without a floor the object is in a void, and a
      reflection with nothing to reflect in reads as a smudge. */
   .floor{position:absolute;left:0;right:0;bottom:0;height:62%;background:
@@ -124,7 +157,7 @@ export function artboardHtml(name, b, groundPath, objectPath, baseline = 0.62) {
   .scrim{position:absolute;inset:0;background:
     radial-gradient(32% 28% at 28% 34%, rgba(214,176,116,0.34) 0%, rgba(150,124,92,0.13) 44%, rgba(0,4,10,0) 76%),
     radial-gradient(44% 62% at 88% 44%, rgba(112,139,170,0.20) 0%, rgba(70,92,122,0.07) 46%, rgba(0,4,10,0) 78%),
-    radial-gradient(128% 104% at 46% 42%, rgba(0,4,10,0) 26%, rgba(0,4,10,0.84) 100%)}
+    radial-gradient(130% 106% at 46% 42%, rgba(0,4,10,0) 34%, rgba(0,4,10,0.72) 100%)}
   .ramp{position:absolute;inset:0;background:
     linear-gradient(180deg, rgba(3,6,13,0) 38%, rgba(3,6,13,0.66) 66%, rgba(3,6,13,0.95) 100%)}
   /* The subject, rendered rather than drawn. scripts/build/cards3d writes it
