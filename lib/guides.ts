@@ -273,7 +273,7 @@ export const guides: Guide[] = [
             en: "The second is about the individual machine: is it allowed to install Windows 11? Here the answer differs from machine to machine, decided by TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The requirements and how to check them are in our guide on Windows 11 on an older machine.",
           },
           {
-            da: "Konsekvensen er værd at holde fast i: “vores maskiner er kun tre år gamle” svarer ikke på det første spørgsmål, og “Windows 10 er udløbet” svarer ikke på det andet. I skal have begge svar, før I ved, hvad opgaven koster.",
+            da: "Konsekvensen er værd at holde fast i: »vores maskiner er kun tre år gamle« svarer ikke på det første spørgsmål, og »Windows 10 er udløbet« svarer ikke på det andet. I skal have begge svar, før I ved, hvad opgaven koster.",
             en: "The consequence is worth holding on to: “our machines are only three years old” does not answer the first question, and “Windows 10 has expired” does not answer the second. You need both answers before you know what the job costs.",
           },
         ],
@@ -305,7 +305,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Opgørelsen er det eneste, der gør resten af beslutningen billig. Uden den bliver svaret enten “vi skifter det hele”, som koster for meget, eller “vi venter”, som ikke er en beslutning. Gå listen igennem én maskine ad gangen.",
+            da: "Opgørelsen er det eneste, der gør resten af beslutningen billig. Uden den bliver svaret enten »vi skifter det hele«, som koster for meget, eller »vi venter«, som ikke er en beslutning. Gå listen igennem én maskine ad gangen.",
             en: "The inventory is the one thing that makes the rest of the decision cheap. Without it the answer is either “we replace everything”, which costs too much, or “we wait”, which is not a decision. Go through the list one machine at a time.",
           },
         ],
@@ -582,11 +582,11 @@ export const guides: Guide[] = [
         body: [
           {
             da: "Refurbished er et markedsføringsord, ikke en mærkning nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer per maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
-            en: "Refurbished is a marketing word, not a label anyone polices. There is no body that approves when a seller may use it, and there is no single set of steps everyone follows. A seller who spends three hours per machine and a seller who spends three minutes can write the same thing in the advert.",
+            en: "Refurbished is a marketing word, not a label anyone polices. There is no authority that approves when a seller may use it, and there is no single set of steps everyone follows. A seller who spends three hours per machine and a seller who spends three minutes can write the same thing in the advert.",
           },
           {
             da: "Det gør ikke ordet værdiløst. Det flytter bare, hvor man skal kigge: væk fra ordet og hen på beskrivelsen af, hvad der blev gjort. En sælger, der har lavet et reelt stykke arbejde, har som regel ikke noget imod at fortælle præcis hvilket – og en, der ikke har, svarer i almindeligheder.",
-            en: "That does not make the word worthless. It just moves where you have to look: away from the word and onto the description of what was done. A seller who has done real work usually has no objection to saying exactly what — and one who has not answers in generalities.",
+            en: "That does not make the word worthless. It just moves where you have to look: away from the word and onto the description of what was done. A seller who has done real work usually has no objection to saying exactly what — and one who has not will answer in generalities.",
           },
           {
             da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en konkret sælger følger dem, er noget man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
@@ -1607,7 +1607,7 @@ export const guides: Guide[] = [
         body: [
           {
             da: "På en gammeldags harddisk med plader virker overskrivning. På en SSD flytter controlleren data rundt, så en overskrivning ikke nødvendigvis rammer alle celler. Til SSD bruger man producentens Secure Erase, som findes i deres eget værktøj, eller man destruerer drevet fysisk.",
-            en: "On an old-fashioned platter hard disk, overwriting works. On an SSD the controller moves data around, so an overwrite does not necessarily reach every cell. For SSDs you use the manufacturer's Secure Erase, found in their own tool, or you destroy the drive physically.",
+            en: "On an old-fashioned platter hard disk, overwriting works. On an SSD the controller moves data around, so an overwrite does not necessarily reach every cell. For SSDs, you use the manufacturer's Secure Erase, found in their own tool, or you destroy the drive physically.",
           },
         ],
       },

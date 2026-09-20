@@ -392,6 +392,33 @@ for (const file of [
   }
 }
 
+/* 7. Danish does not quote with the American pair.
+ *
+ * Seven Danish strings were quoting with “…”. Danish sets a quotation with
+ * »…« — „…“ is the other form Dansk Sprognævn accepts, and “…” is neither;
+ * it is what an English keyboard autocorrects to. Found by LanguageTool,
+ * which reported them as unpaired brackets: its Danish rules know that a ”
+ * has no opener in Danish.
+ *
+ * Only the Danish side. The English strings sitting on the very next line
+ * keep “…”, because that is correct for English — which is why this cannot
+ * be a global search and replace and is checked per field instead.
+ */
+for (const file of [
+  ...walkProse(join(root, "lib")),
+  ...walkProse(join(root, "components")),
+  ...walkProse(join(root, "app")),
+]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, i) => {
+      const m = /^\s*da:\s*"(.*)",?$/.exec(line);
+      if (m && /[\u201c\u201d]/.test(m[1])) {
+        fail(`${file.slice(root.length)}:${i + 1}: Danish quotes with “ ” — use » «`);
+      }
+    });
+}
+
 /* 6. A meta description may not be the page's own summary.
  *
  * Two of the twelve repair entries had the two byte-identical. The meta

@@ -70,7 +70,7 @@ const sections: Section[] = [
       },
       {
         da: "De to værdier er nødvendige for at kunne huske, hvad I har svaret, og kræver derfor ikke samtykke. Statistik gør: siger I ja i banneret, sætter Google Analytics sine egne cookies (_ga og _ga_*) for at kunne skelne besøg fra hinanden. De udløber efter to år og indeholder et tilfældigt id, ikke et navn. Siger I nej – eller svarer I ikke – bliver der hverken sat cookies eller sendt data.",
-        en: "Those two values are necessary to remember what you answered, so they need no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random id, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
+        en: "Those two values are necessary to remember what you answered, so they need no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random ID, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
       },
     ],
   },

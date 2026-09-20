@@ -190,7 +190,7 @@ export const services: Service[] = [
     },
     summary: {
       da: "Det, der sker mellem at maskinen er købt, og at den står på et skrivebord.",
-      en: "What happens between a machine being bought and it standing on a desk.",
+      en: "What happens between buying a machine and it standing on a desk.",
     },
     intro: {
       da: "En brugt maskine er ikke klar, fordi den tænder. Den er klar, når nogen har trykket hver tast igennem, målt batteriet, kigget efter revner ved hængslerne og skiftet det, der er slidt. Det er det arbejde, der ligger mellem indkøb og levering.",
@@ -215,7 +215,7 @@ export const services: Service[] = [
             en: "Keyboard: every key pressed. One sticking key is enough.",
           },
           {
-            da: "Batteri: den faktiske kapacitet i procent af ny, ikke bare “OK”.",
+            da: "Batteri: den faktiske kapacitet i procent af ny, ikke bare »OK«.",
             en: "Battery: the actual capacity as a percentage of new, not just “OK”.",
           },
           {

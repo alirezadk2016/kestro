@@ -245,7 +245,7 @@ export const repairs: Repair[] = [
     },
     intro: {
       da: "En revne breder sig, og en skærm med en død stribe bliver ikke bedre af at vente. Den samme maskinmodel er ofte solgt med flere forskellige paneler, så det afgørende er ikke modellen alene – det er hvilket panel der sidder i netop din.",
-      en: "A crack spreads, and a screen with a dead line does not improve by waiting. The same model was often sold with several different panels, so the model alone is not what decides it — it is which panel is in yours.",
+      en: "A crack spreads, and a screen with a dead stripe does not improve by waiting. The same model was often sold with several different panels, so the model alone is not what decides it — it is which panel is in yours.",
     },
     does: [
       {
@@ -302,7 +302,7 @@ export const repairs: Repair[] = [
     needs: [
       {
         da: "Model og hvilket layout maskinen har nu.",
-        en: "The model, and which layout the machine has now.",
+        en: "The model and which layout the machine has now.",
       },
       {
         da: "Om der skal baggrundsbelysning i – det er ikke altid det samme tastatur.",
@@ -387,7 +387,7 @@ export const repairs: Repair[] = [
     needs: [
       {
         da: "Model, og om maskinen larmer hele tiden eller kun under belastning.",
-        en: "The model, and whether it is loud all the time or only under load.",
+        en: "The model and whether it is loud all the time or only under load.",
       },
     ],
   },
@@ -639,7 +639,7 @@ export const repairs: Repair[] = [
     needs: [
       {
         da: "Maskinen, og hvad den skal bruges til.",
-        en: "The machine, and what it is going to be used for.",
+        en: "The machine and what it is going to be used for.",
       },
     ],
   },

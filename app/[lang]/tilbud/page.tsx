@@ -193,7 +193,7 @@ const quoteFaqs = [
       en: "What if we do not know the specification yet?",
     },
     answer: {
-      da: "Så lad felterne stå som “ved ikke endnu”, og fortæl os i stedet, hvad maskinerne skal bruges til. Vi foreslår et niveau, I kan forholde jer til, frem for at bede jer gætte på hukommelse og processor.",
+      da: "Så lad felterne stå som »ved ikke endnu«, og fortæl os i stedet, hvad maskinerne skal bruges til. Vi foreslår et niveau, I kan forholde jer til, frem for at bede jer gætte på hukommelse og processor.",
       en: "Leave the fields at “not sure yet” and tell us what the machines are for instead. We propose a level you can react to rather than asking you to guess at memory and processor.",
     },
   },

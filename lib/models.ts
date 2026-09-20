@@ -445,7 +445,7 @@ export const models: Model[] = [
     },
     intro: {
       da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
-      en: "The X1 Carbon is the ThinkPad line cut down to just over a kilo without giving up the keyboard or the screen. It is for sales people, consultants and management — those who have the machine in a bag every week. In return it is less flexible than the T series, and that belongs in the decision.",
+      en: "The X1 Carbon is the ThinkPad line cut down to just over a kilo without giving up the keyboard or the screen. It is for sales people, consultants and management — those who have the machine in a bag every week. In return, it is less flexible than the T series, and that belongs in the decision.",
     },
     goodFor: [
       {

@@ -198,7 +198,7 @@ const scaleTiers = [
     },
   },
   {
-    range: { da: "Omkring 20-50 enheder", en: "Around 20-50 units" },
+    range: { da: "Omkring 20–50 enheder", en: "Around 20–50 units" },
     body: {
       da: "Her begynder ensartetheden at koste noget. Et parti på halvtreds ens maskiner med samme byggeår findes ikke altid, og så står valget mellem at vente, at betale mere, eller at acceptere to nært beslægtede modeller. Vi siger, hvad der reelt kan skaffes, før I binder jer. Samtidig bliver listen over serienumre og den gamle flåde en opgave i sig selv.",
       en: "This is where uniformity starts to cost something. A batch of fifty identical machines from the same build year is not always out there, and the choice becomes: wait, pay more, or accept two closely related models. We tell you what can actually be sourced before you commit. At the same time, the serial-number list and the old fleet turn into a job of their own.",

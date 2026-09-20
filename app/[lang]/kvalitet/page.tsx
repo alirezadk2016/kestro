@@ -137,7 +137,7 @@ const grades = [
 
 const testPoints = [
   {
-    da: "Batteriets faktiske kapacitet målt op mod ny – ikke bare “virker”",
+    da: "Batteriets faktiske kapacitet målt op mod ny – ikke bare »virker«",
     en: "The battery's actual capacity measured against new — not just “it works”",
   },
   {

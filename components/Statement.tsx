@@ -62,7 +62,7 @@ const promises = [
     mark: "tested" as CraftMarkName,
     term: { da: "Testet enhed for enhed", en: "Tested unit by unit" },
     body: {
-      da: "Hver tast trykkes igennem, og vi kan oplyse batteriets faktiske kapacitet i procent – ikke bare som “OK”.",
+      da: "Hver tast trykkes igennem, og vi kan oplyse batteriets faktiske kapacitet i procent – ikke bare som »OK«.",
       en: "Every key gets pressed through, and we can give the battery’s actual capacity as a percentage — not just as “OK”.",
     },
     link: { da: "Klargøring og test", en: "Preparation and testing" },
