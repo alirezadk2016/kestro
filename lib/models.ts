@@ -97,7 +97,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkPad T480 for business | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad T480 som brugt erhvervsbærbar: specifikationer, hvad den egner sig til, og hvad man skal være opmærksom på. Vi sourcer den til den enkelte ordre.",
+      da: "ThinkPad T480 som brugt erhvervsbærbar: specifikationer, hvad den egner sig til, og hvad man skal være opmærksom på. Vi skaffer den til den enkelte ordre.",
       en: "The ThinkPad T480 as a used business laptop: specifications, what it suits, and what to watch out for. We source it per order.",
     },
     intro: {
@@ -323,7 +323,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkPad T14 for business | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad T14 (Gen 1 og 2) som brugt erhvervsbærbar: specifikationer, forskellen på Intel og AMD, og hvad den egner sig til. Sourcet til jeres ordre.",
+      da: "ThinkPad T14 (Gen 1 og 2) som brugt erhvervsbærbar: specifikationer, forskellen på Intel og AMD, og hvad den egner sig til. Skaffes til jeres ordre.",
       en: "The ThinkPad T14 (Gen 1 and 2) as a used business laptop: specifications, the difference between Intel and AMD, and what it suits. Sourced for your order.",
     },
     intro: {
@@ -440,7 +440,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkPad X1 Carbon for business | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad X1 Carbon som brugt erhvervsbærbar: let kabinet, kraftig skærm og hvad man skal vide om loddet hukommelse. Sourcet til jeres ordre.",
+      da: "ThinkPad X1 Carbon som brugt erhvervsbærbar: let kabinet, kraftig skærm og hvad man skal vide om loddet hukommelse. Skaffes til jeres ordre.",
       en: "The ThinkPad X1 Carbon as a used business laptop: light chassis, strong screen, and what to know about soldered memory. Sourced for your order.",
     },
     intro: {
@@ -540,7 +540,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkPad L14 for business | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad L14 som brugt erhvervsbærbar: samme tastatur og porte som T-serien til en lavere pris. Sourcet til den enkelte ordre.",
+      da: "ThinkPad L14 som brugt erhvervsbærbar: samme tastatur og porte som T-serien til en lavere pris. Skaffes til den enkelte ordre.",
       en: "The ThinkPad L14 as a used business laptop: the same keyboard and ports as the T series at a lower price. Sourced per order.",
     },
     intro: {
@@ -637,7 +637,7 @@ export const models: Model[] = [
       en: "Used HP EliteBook 840 for business | Kestro",
     },
     metaDescription: {
-      da: "HP EliteBook 840 (G5 og G6) som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og hvad Sure View betyder. Sourcet til jeres ordre.",
+      da: "HP EliteBook 840 (G5 og G6) som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og hvad Sure View betyder. Skaffes til jeres ordre.",
       en: "The HP EliteBook 840 (G5 and G6) as a used business laptop: specifications, memory in two slots, and what Sure View means. Sourced for your order.",
     },
     intro: {
@@ -716,7 +716,7 @@ export const models: Model[] = [
         en: "Some models have Sure View, a built-in privacy filter. Good on a train, but it makes the screen darker in the office — choose deliberately.",
       },
       {
-        da: "Tastaturet har ikke trackpoint. Kommer medarbejderne fra ThinkPad, er det den største omvænning.",
+        da: "Tastaturet har ikke trackpoint. Kommer medarbejderne fra ThinkPad, er det den største omstilling.",
         en: "The keyboard has no TrackPoint. If your staff are coming from ThinkPads, that is the biggest adjustment.",
       },
     ],
@@ -737,7 +737,7 @@ export const models: Model[] = [
       en: "Used HP ProBook 450 for business | Kestro",
     },
     metaDescription: {
-      da: 'HP ProBook 450 som brugt erhvervsbærbar: 15,6" skærm, numerisk tastatur og plads til udvidelser. Sourcet til den enkelte ordre.',
+      da: 'HP ProBook 450 som brugt erhvervsbærbar: 15,6" skærm, numerisk tastatur og plads til udvidelser. Skaffes til den enkelte ordre.',
       en: 'The HP ProBook 450 as a used business laptop: 15.6" screen, number pad and room to expand. Sourced per order.',
     },
     intro: {
@@ -834,7 +834,7 @@ export const models: Model[] = [
       en: "Used Dell Latitude 5410 for business | Kestro",
     },
     metaDescription: {
-      da: "Dell Latitude 5410 og 5420 som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og fuldt portudvalg. Sourcet til jeres ordre.",
+      da: "Dell Latitude 5410 og 5420 som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og fuldt portudvalg. Skaffes til jeres ordre.",
       en: "The Dell Latitude 5410 and 5420 as used business laptops: specifications, memory in two slots and a full set of ports. Sourced for your order.",
     },
     intro: {
@@ -928,7 +928,7 @@ export const models: Model[] = [
       en: "Used Dell Latitude 7490 for business | Kestro",
     },
     metaDescription: {
-      da: "Dell Latitude 7490 som brugt erhvervsbærbar: let kabinet, lang batteritid og alle porte i behold. Sourcet til den enkelte ordre.",
+      da: "Dell Latitude 7490 som brugt erhvervsbærbar: let kabinet, lang batteritid og alle porte i behold. Skaffes til den enkelte ordre.",
       en: "The Dell Latitude 7490 as a used business laptop: light chassis, long battery life and every port still there. Sourced per order.",
     },
     intro: {
@@ -1022,7 +1022,7 @@ export const models: Model[] = [
       en: "Used HP ZBook 15 mobile workstation for business | Kestro",
     },
     metaDescription: {
-      da: "HP ZBook 15 som brugt mobil workstation: dedikeret Quadro-grafik, mange kerner og plads til flere diske. Sourcet til den enkelte ordre.",
+      da: "HP ZBook 15 som brugt mobil workstation: dedikeret Quadro-grafik, mange kerner og plads til flere diske. Skaffes til den enkelte ordre.",
       en: "The HP ZBook 15 as a used mobile workstation: dedicated Quadro graphics, plenty of cores and room for several drives. Sourced per order.",
     },
     intro: {
@@ -1116,7 +1116,7 @@ export const models: Model[] = [
       en: "Used HP EliteDesk 800 for business | Kestro",
     },
     metaDescription: {
-      da: "HP EliteDesk 800 som brugt stationær erhvervs-pc: desktop-processor, fire hukommelsessokler og plads til udvidelser. Sourcet til jeres ordre.",
+      da: "HP EliteDesk 800 som brugt stationær erhvervs-pc: desktop-processor, fire hukommelsessokler og plads til udvidelser. Skaffes til jeres ordre.",
       en: "The HP EliteDesk 800 as a used business desktop: a desktop processor, four memory slots and room to expand. Sourced for your order.",
     },
     intro: {
@@ -1213,7 +1213,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkCentre M720q Tiny mini PC | Kestro",
     },
     metaDescription: {
-      da: "ThinkCentre M720q Tiny som brugt mini-pc til erhverv: 1 liters kabinet, VESA-beslag og lavt strømforbrug. Sourcet til den enkelte ordre.",
+      da: "ThinkCentre M720q Tiny som brugt mini-pc til erhverv: 1 liters kabinet, VESA-beslag og lavt strømforbrug. Skaffes til den enkelte ordre.",
       en: "The ThinkCentre M720q Tiny as a used business mini PC: a 1-litre case, VESA mount and low power draw. Sourced per order.",
     },
     intro: {
@@ -1313,7 +1313,7 @@ export const models: Model[] = [
       en: "Used Dell OptiPlex 5060 for business | Kestro",
     },
     metaDescription: {
-      da: "Dell OptiPlex 5060 og 5070 som brugt stationær erhvervs-pc: fås som SFF og Micro med samme indmad. Sourcet til jeres ordre.",
+      da: "Dell OptiPlex 5060 og 5070 som brugt stationær erhvervs-pc: fås som SFF og Micro med samme indmad. Skaffes til jeres ordre.",
       en: "The Dell OptiPlex 5060 and 5070 as used business desktops: available as SFF and Micro with the same internals. Sourced for your order.",
     },
     intro: {
@@ -1412,7 +1412,7 @@ export const models: Model[] = [
       en: "Used Dell UltraSharp U2419H business monitor | Kestro",
     },
     metaDescription: {
-      da: 'Dell UltraSharp U2419H som brugt erhvervsskærm: 24" IPS, tynd ramme, højdejustering og USB-hub. Sourcet til den enkelte ordre.',
+      da: 'Dell UltraSharp U2419H som brugt erhvervsskærm: 24" IPS, tynd ramme, højdejustering og USB-hub. Skaffes til den enkelte ordre.',
       en: 'The Dell UltraSharp U2419H as a used business monitor: 24" IPS, thin bezel, height adjustment and a USB hub. Sourced per order.',
     },
     intro: {
@@ -1498,11 +1498,11 @@ export const models: Model[] = [
       en: "Used HP EliteDisplay E243 business monitor | Kestro",
     },
     metaDescription: {
-      da: 'HP EliteDisplay E243 som brugt erhvervsskærm: 24" IPS med højdejustering, USB-hub og flere indgange. Sourcet til jeres ordre.',
+      da: 'HP EliteDisplay E243 som brugt erhvervsskærm: 24" IPS med højdejustering, USB-hub og flere indgange. Skaffes til jeres ordre.',
       en: 'The HP EliteDisplay E243 as a used business monitor: 24" IPS with height adjustment, a USB hub and several inputs. Sourced for your order.',
     },
     intro: {
-      da: "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundting – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
+      da: "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundfunktioner – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
       en: "The EliteDisplay E series is HP's answer to UltraSharp, and it turns up in large numbers on the used market. It has the same basics — matte IPS panel, height adjustment and a USB hub — and usually sits slightly below Dell on price.",
     },
     goodFor: [
@@ -1578,7 +1578,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkVision T24i business monitor | Kestro",
     },
     metaDescription: {
-      da: 'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og fuld foddjustering. Sourcet til den enkelte ordre.',
+      da: 'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og fuld foddjustering. Skaffes til den enkelte ordre.',
       en: 'The Lenovo ThinkVision T24i as a used business monitor: 24" IPS, thin bezels and a fully adjustable stand. Sourced per order.',
     },
     intro: {
@@ -1655,7 +1655,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkPad Ultra Dock for business | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad Ultra Dock som brugt dockingstation: mekanisk dockstik, flere skærme og netværk i én forbindelse. Sourcet til jeres ordre.",
+      da: "ThinkPad Ultra Dock som brugt dockingstation: mekanisk dockstik, flere skærme og netværk i én forbindelse. Skaffes til jeres ordre.",
       en: "The ThinkPad Ultra Dock as a used docking station: a mechanical dock connector, multiple monitors and network in one connection. Sourced for your order.",
     },
     intro: {
@@ -1740,7 +1740,7 @@ export const models: Model[] = [
       en: "Used Dell WD19 docking station for business | Kestro",
     },
     metaDescription: {
-      da: "Dell WD19 som brugt USB-C dockingstation: flere skærme, netværk og strøm i ét kabel. Sourcet til den enkelte ordre.",
+      da: "Dell WD19 som brugt USB-C dockingstation: flere skærme, netværk og strøm i ét kabel. Skaffes til den enkelte ordre.",
       en: "The Dell WD19 as a used USB-C docking station: multiple monitors, network and power over one cable. Sourced per order.",
     },
     intro: {
@@ -1815,7 +1815,7 @@ export const models: Model[] = [
       en: "Used HP USB-C Dock G5 for business | Kestro",
     },
     metaDescription: {
-      da: "HP USB-C Dock G5 som brugt dockingstation: skærme, netværk og strøm gennem ét USB-C-kabel. Sourcet til jeres ordre.",
+      da: "HP USB-C Dock G5 som brugt dockingstation: skærme, netværk og strøm gennem ét USB-C-kabel. Skaffes til jeres ordre.",
       en: "The HP USB-C Dock G5 as a used docking station: monitors, network and power over a single USB-C cable. Sourced for your order.",
     },
     intro: {

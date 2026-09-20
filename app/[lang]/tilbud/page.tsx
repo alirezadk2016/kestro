@@ -200,8 +200,8 @@ const quoteFaqs = [
   {
     question: { da: "Er der et minimumsantal?", en: "Is there a minimum order?" },
     answer: {
-      da: "Nej. Vi tilpasser leverancen fra enkelte enheder til større indkøb til hele teams eller virksomheder.",
-      en: "No. We scale the delivery from single machines up to larger purchases for whole teams or companies.",
+      da: "Nej. Et tilbud kan lige så godt dække én maskine som en hel afdeling – skriv antallet i forespørgslen, så regner vi derfra.",
+      en: "No. A quote can cover one machine just as well as a whole department — put the number in the enquiry and we work from there.",
     },
   },
   {

@@ -400,8 +400,8 @@ export const repairs: Repair[] = [
       en: "A clean Windows install with drivers",
     },
     metaDescription: {
-      da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
-      en: "A clean Windows install with drivers and updates, so the machine starts up like new.",
+      da: "Windows sat op fra bunden med de rigtige drivere, så en langsom maskine starter rent igen. Hvad vi gør, og hvornår det kan betale sig.",
+      en: "Windows set up from scratch with the right drivers, so a slow machine boots clean again. What we do, and when it is worth doing.",
     },
     summary: {
       da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
@@ -443,8 +443,8 @@ export const repairs: Repair[] = [
     name: { da: "Software og licenser", en: "Software and licences" },
     metaTitle: { da: "Software og licenser på plads", en: "Software and licences in order" },
     metaDescription: {
-      da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
-      en: "We install the software you use and help get the licences in order, so the machines run legally from day one.",
+      da: "Programmerne og licenserne på plads, før maskinerne når frem til medarbejderne. Hvad vi sætter op, og hvad I selv skal levere.",
+      en: "Software and licences in place before the machines reach your staff. What we set up, and what you need to supply.",
     },
     summary: {
       da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",

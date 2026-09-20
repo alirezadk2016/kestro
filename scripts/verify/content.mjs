@@ -340,6 +340,77 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
   }
 }
 
+/* 5. Danish words that are not Danish words.
+ *
+ * Found by running the Danish text of the whole site through hunspell with the
+ * da_DK dictionary. Three of the 163 words it did not recognise were real
+ * errors rather than brand names or technical terms, and they are listed here
+ * with what they should be, because a word that was wrong once gets typed
+ * again.
+ *
+ * "Sourcet" is the fourth, and it was seventeen meta descriptions deep: an
+ * English verb given a Danish participle ending, on a site whose own
+ * navigation says "Hvad vi skaffer". The full clause "vi sourcer per ordre"
+ * survives elsewhere on purpose — that is Danish procurement register and a
+ * native copywriter's call, not a spelling mistake. A bare "Sourcet til jeres
+ * ordre." was neither language.
+ *
+ * Re-run the sweep that found these with:
+ *   hunspell -d da_DK -i UTF-8 -l <danish text>
+ * The -i matters: without it hunspell splits every word at æ, ø and å and the
+ * output is a list of fragments.
+ */
+const NOT_DANISH = [
+  ["omvænning", "omstilling"],
+  ["grundting", "grundfunktioner"],
+  ["wattal", "en anbefalet effekt"],
+  ["Sourcet til", "Skaffes til"],
+];
+/*
+ * walk() above returns .tsx only, and every one of these words was in a .ts —
+ * lib/models.ts and lib/guides.ts hold most of the site's prose. Written with
+ * that filter, this check passed while the word it was looking for sat in the
+ * file it never opened. Caught by putting "omvænning" back and watching the
+ * gate stay green.
+ */
+const walkProse = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return walkProse(full);
+    return /\.(ts|tsx)$/.test(full) ? [full] : [];
+  });
+for (const file of [
+  ...walkProse(join(root, "lib")),
+  ...walkProse(join(root, "components")),
+  ...walkProse(join(root, "app")),
+]) {
+  const body = readFileSync(file, "utf8");
+  for (const [wrong, right] of NOT_DANISH) {
+    if (body.includes(wrong)) {
+      fail(`${file.slice(root.length)}: "${wrong}" is not Danish — use "${right}"`);
+    }
+  }
+}
+
+/* 6. A meta description may not be the page's own summary.
+ *
+ * Two of the twelve repair entries had the two byte-identical. The meta
+ * description is what a search result shows and the summary is what the page
+ * opens with; when they are the same sentence, the snippet is spent repeating
+ * the first thing the reader will see anyway. */
+{
+  const body = readFileSync(join(root, "lib", "repairs.ts"), "utf8");
+  const metas = [...body.matchAll(/metaDescription:\s*\{\s*da:\s*"((?:[^"\\]|\\.)*)"/g)].map(
+    (m) => m[1],
+  );
+  const sums = [...body.matchAll(/summary:\s*\{\s*da:\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]);
+  for (const m of metas) {
+    if (sums.includes(m)) {
+      fail(`lib/repairs.ts: a metaDescription is identical to a summary — "${m.slice(0, 60)}…"`);
+    }
+  }
+}
+
 console.log(
   `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
     `${fromRoutes.size} english routes, ${failures.length} failures`,

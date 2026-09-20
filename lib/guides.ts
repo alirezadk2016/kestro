@@ -1306,7 +1306,7 @@ export const guides: Guide[] = [
             en: "The case decides how long a graphics card and how tall a cooler will fit. Measure, rather than hope.",
           },
           {
-            da: "Strømforsyningen skal kunne klare grafikkortet med luft over. Producenten oplyser et anbefalet wattal – følg det.",
+            da: "Strømforsyningen skal kunne klare grafikkortet med luft over. Producenten oplyser en anbefalet effekt – følg den.",
             en: "The power supply has to handle the graphics card with headroom. The manufacturer states a recommended wattage — follow it.",
           },
           {
@@ -1412,8 +1412,8 @@ export const guides: Guide[] = [
           en: "What should be done the first time the machine starts?",
         },
         answer: {
-          da: "Gå i BIOS først. Tjek at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Derefter installerer du Windows fra en USB-nøgle.",
-          en: "Go into the BIOS first. Check that the processor, all the memory and the drive are there, and turn on XMP or EXPO so the memory runs at the speed you paid for. Then install Windows from a USB stick.",
+          da: "BIOS før alt andet: se efter, at processor, hukommelse og disk bliver fundet, og slå XMP eller EXPO til. Først derefter Windows fra en USB-nøgle.",
+          en: "The BIOS before anything else: check that the processor, memory and drive are all detected, and switch XMP or EXPO on. Windows from a USB stick comes after that.",
         },
       },
     ],
