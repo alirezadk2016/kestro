@@ -112,10 +112,28 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                       {typeof card.brands === "string" ? card.brands : card.brands[lang]}
                     </p>
                   </div>
-                  {/* The whole card is the link; on a phone the badge is one
-                      more thing competing for 150 px of width. */}
-                  <span className="hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-white transition group-hover:bg-brand-500 sm:flex">
-                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                  {/*
+                    The whole card is the link; on a phone the badge is one
+                    more thing competing for 150 px of width.
+
+                    It was a solid brand-600 disc, and it was the only thing on
+                    a card of machined panels that had no material at all — a
+                    flat circle of primary blue, heavier on the eye than the
+                    heading beside it, and the one element that looked picked
+                    out of a component library rather than made for this site.
+
+                    .plate-sm is the control-size plate: the same lit top lip
+                    and inner ring every other control here has, at the size a
+                    control is. The blue moves off the disc and into the mark,
+                    so the badge stops shouting and the arrow is what is blue.
+                    Hovering the card lights the ring — plate-sm already does
+                    that — and walks the arrow a pixel to the right.
+                  */}
+                  <span className="plate-sm hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-brand-300 transition-colors duration-200 group-hover:text-paper sm:flex">
+                    <ArrowRight
+                      className="h-[14px] w-[14px] transition-transform duration-200 group-hover:translate-x-px"
+                      strokeWidth={1.75}
+                    />
                   </span>
                 </div>
               </ForgedPanel>

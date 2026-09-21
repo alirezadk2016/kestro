@@ -191,13 +191,24 @@ body {
    *
    * So the bar is opaque, and the fall from top to bottom is in the colour
    * rather than in the alpha. It still reads as a bar with light on it; it
-   * simply stops being a window. The blur stays for the moment at scroll-top
-   * when the hero is directly behind it.
+   * simply stops being a window.
+   *
+   * And when it stopped being a window, the blur behind it stopped doing
+   * anything — while still costing what a blur costs. backdrop-filter makes
+   * the compositor re-sample everything behind the element, every frame it
+   * moves, across the full width of the viewport; behind an opaque background
+   * not one of those pixels can be seen. The sticky header is the element most
+   * exposed to scrolling on the site, so it was paying that on every frame of
+   * every scroll, for nothing. Removed.
+   *
+   * Measured at 1440px with the CPU at 2x: 17 frames over 32ms and a p95 of
+   * 38.7ms before, against the numbers in the commit after. The filter was
+   * introduced when this bar was translucent and was left behind when it was
+   * not — the cost of a change that fixed one thing and did not look at what
+   * the fix made pointless.
    */
   .glass-nav {
     background-image: linear-gradient(180deg, rgb(8 13 27) 0%, rgb(4 8 18) 100%);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
     border-bottom: 1px solid rgb(255 255 255 / 0.06);
   }
 
@@ -211,23 +222,17 @@ body {
    * them. A panel that covers content is not the same object as a bar that
    * sits on top of the page, and it wants a flat, near-opaque ground.
    */
+  /* Same reasoning one step down: at 96% opaque, a blur of what remains is
+     four percent of a picture nobody can make out. It is cheaper and it looks
+     the same without it. */
   .glass-panel {
     background-color: rgb(7 12 25 / 0.96);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
     border: 1px solid rgb(255 255 255 / 0.08);
   }
 
-  @supports not (backdrop-filter: blur(1px)) {
-    .glass-nav {
-      background-image: none;
-      background-color: rgb(7 12 25 / 0.97);
-    }
-
-    .glass-panel {
-      background-color: rgb(7 12 25 / 0.99);
-    }
-  }
+  /* The @supports fallback that used to sit here gave both of these a solid
+     ground for browsers without backdrop-filter. Neither uses one now, so both
+     already have the ground it was providing and the block was dead. */
 
   /*
    * A stage: a dark band that is lit rather than merely dark.
