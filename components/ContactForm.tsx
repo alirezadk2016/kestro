@@ -518,6 +518,7 @@ export default function ContactForm({
             id="navn"
             name="navn"
             type="text"
+            autoComplete="name"
             required
             value={values.navn}
             onChange={handleChange}
@@ -539,6 +540,7 @@ export default function ContactForm({
             id="virksomhed"
             name="virksomhed"
             type="text"
+            autoComplete="organization"
             required={companyRequired}
             value={values.virksomhed}
             onChange={handleChange}
@@ -555,6 +557,7 @@ export default function ContactForm({
             id="email"
             name="email"
             type="email"
+            autoComplete="email"
             required
             value={values.email}
             onChange={handleChange}
@@ -571,6 +574,7 @@ export default function ContactForm({
             id="telefon"
             name="telefon"
             type="tel"
+            autoComplete="tel"
             value={values.telefon}
             onChange={handleChange}
             className={inputClasses}

@@ -42,6 +42,30 @@ body {
 }
 
 @layer base {
+  /*
+   * Where the page stops when something is scrolled to.
+   *
+   * The header is sticky and 81px tall, and nothing was reserving room for it.
+   * So every scroll the browser performs on the site's behalf put its target
+   * under the bar: an in-page anchor, a Tab that moves focus off-screen, and —
+   * worst — the skip link.
+   *
+   * Measured on the front page at 1440px: press Tab, press Enter on "Gå til
+   * indhold", and the main content lands with 81 of its first pixels behind
+   * the header. The one control that exists so a keyboard user can get past
+   * the navigation drops them behind the navigation.
+   *
+   * scroll-padding-top fixes all three at once, because all three are the same
+   * mechanism. 5.5rem is the 81px bar plus a little air; on a phone the bar is
+   * shorter and the extra shows as whitespace above the target, which is the
+   * harmless direction to be wrong in.
+   *
+   * WCAG 2.2 AA 2.4.11 Focus Not Obscured, and the fix its own note names.
+   */
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
   /* Headings take the display face everywhere, so a page written months from
      now inherits the type system instead of re-stating it. */
   h1,

@@ -60,6 +60,24 @@ export default function Header({ lang }: { lang: Lang }) {
   /** The same page in the other language. */
   const basePath = stripLocale(pathname);
 
+  /*
+   * Which navigation item is the page you are on.
+   *
+   * Nothing marked it. Measured across /flaadeloesninger, /reparation and
+   * /om-os: the link for the page you were standing on rendered at exactly
+   * the same colour, weight and decoration as the six beside it, and carried
+   * no aria-current — so neither a reader nor a screen reader was ever told
+   * where they were. On a seven-item bar over thirty-odd pages that is the
+   * cheapest orientation cue there is, and it was missing.
+   *
+   * Prefix matching, not equality, because a section has children: standing on
+   * /vejledninger/windows-10-support-slut should light "Viden", the same way
+   * standing on the index does. The comparison is against basePath so it works
+   * identically on /en.
+   */
+  const isCurrent = (href: string) =>
+    basePath === href || (href !== "/" && basePath.startsWith(href + "/"));
+
   function closeMobile() {
     setOpen(false);
     setMobileProductsOpen(false);
@@ -223,15 +241,25 @@ export default function Header({ lang }: { lang: Lang }) {
             )}
           </div>
 
-          {mainNav.map((link) => (
-            <Link
-              key={link.href}
-              href={localePath(link.href, lang)}
-              className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
-            >
-              {link.label[lang]}
-            </Link>
-          ))}
+          {mainNav.map((link) => {
+            const current = isCurrent(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={localePath(link.href, lang)}
+                /* aria-current is the half a screen reader hears; the rule
+                   below is the half everyone else sees. Both, not either. */
+                aria-current={current ? "page" : undefined}
+                className={`relative inline-flex min-h-[44px] items-center text-sm transition ${
+                  current
+                    ? "font-semibold text-paper after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-400"
+                    : "font-medium text-paper/75 hover:text-paper"
+                }`}
+              >
+                {link.label[lang]}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
