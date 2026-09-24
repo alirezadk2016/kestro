@@ -81,6 +81,31 @@ export const englishPath: Record<string, string> = {
   "/ydelser/opstart-af-arbejdspladser": "/services/workstation-setup",
   "/ydelser/overskudslager-og-returvarer": "/services/overstock-and-returns",
   "/ydelser/levering": "/services/delivery",
+
+  /*
+   * The twelve repair pages, which stage two missed.
+   *
+   * They are the only English addresses left carrying a Danish slug, and the
+   * worst of them read as noise twice over: /en/repairs/skaermskift and
+   * /en/repairs/klargoering-af-brugt-udstyr put a transliterated digraph in
+   * the middle of a string an English speaker is asked to click. Found by
+   * crawling the English tree for Danish letter patterns rather than by
+   * reading the map.
+   *
+   * windows-installation is the same word in both languages and keeps it.
+   */
+  "/reparation/batteriskift": "/repairs/battery-replacement",
+  "/reparation/ram-og-ssd-opgradering": "/repairs/memory-and-ssd-upgrade",
+  "/reparation/skaermskift": "/repairs/screen-replacement",
+  "/reparation/tastaturskift-og-nordisk-layout": "/repairs/keyboard-replacement-and-nordic-layout",
+  "/reparation/reservedele-og-komponentskift": "/repairs/spare-parts-and-components",
+  "/reparation/rens-og-koeling": "/repairs/cleaning-and-cooling",
+  "/reparation/windows-installation": "/repairs/windows-installation",
+  "/reparation/software-og-licenser": "/repairs/software-and-licences",
+  "/reparation/ny-opsaetning-og-dataflytning": "/repairs/setup-and-data-transfer",
+  "/reparation/fejlfinding": "/repairs/fault-diagnosis",
+  "/reparation/samling-af-pc": "/repairs/pc-building",
+  "/reparation/klargoering-af-brugt-udstyr": "/repairs/preparing-used-equipment",
 };
 
 /** The same map inverted, for turning an English address back into the path

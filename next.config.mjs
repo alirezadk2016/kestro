@@ -163,6 +163,18 @@ const englishRoutes = [
   ["/ydelser/opstart-af-arbejdspladser", "/services/workstation-setup"],
   ["/ydelser/overskudslager-og-returvarer", "/services/overstock-and-returns"],
   ["/ydelser/levering", "/services/delivery"],
+  ["/reparation/batteriskift", "/repairs/battery-replacement"],
+  ["/reparation/ram-og-ssd-opgradering", "/repairs/memory-and-ssd-upgrade"],
+  ["/reparation/skaermskift", "/repairs/screen-replacement"],
+  ["/reparation/tastaturskift-og-nordisk-layout", "/repairs/keyboard-replacement-and-nordic-layout"],
+  ["/reparation/reservedele-og-komponentskift", "/repairs/spare-parts-and-components"],
+  ["/reparation/rens-og-koeling", "/repairs/cleaning-and-cooling"],
+  ["/reparation/windows-installation", "/repairs/windows-installation"],
+  ["/reparation/software-og-licenser", "/repairs/software-and-licences"],
+  ["/reparation/ny-opsaetning-og-dataflytning", "/repairs/setup-and-data-transfer"],
+  ["/reparation/fejlfinding", "/repairs/fault-diagnosis"],
+  ["/reparation/samling-af-pc", "/repairs/pc-building"],
+  ["/reparation/klargoering-af-brugt-udstyr", "/repairs/preparing-used-equipment"],
 ];
 
 /* Deepest first.
@@ -265,7 +277,12 @@ const nextConfig = {
           source: `/en${en.slice(0, en.lastIndexOf("/"))}${da.slice(da.lastIndexOf("/"))}`,
           destination: `/en${en}`,
           statusCode: 301,
-        })),
+        }))
+        /* A slug that is already English — /reparation/windows-installation —
+           has the same half-translated address as its finished one, and a rule
+           whose source equals its destination is a redirect loop. The section
+           filter above cannot see this; only comparing the two strings can. */
+        .filter((rule) => rule.source !== rule.destination),
     ];
   },
 };
