@@ -208,7 +208,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                 w-fit so a contrast checker measures the label rather than the
                 full width of the block it sits in.
               */}
-              <p className="w-fit text-[clamp(0.66rem,0.62vw,0.78rem)] font-medium uppercase tracking-[0.3em] text-paper/55">
+              <p className="w-fit text-[clamp(0.75rem,0.62vw,0.78rem)] font-medium uppercase tracking-[0.3em] text-paper/55">
                 {c.eyebrow}
               </p>
 

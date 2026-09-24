@@ -35,7 +35,9 @@ const PAGES = [
   "/ydelser",
   "/ydelser/levering",
   "/produkter",
+  "/produkter/baerbare-computere",
   "/modeller",
+  "/modeller/lenovo-thinkpad-t480",
   "/maskinen",
   "/reparation",
   "/kontakt",
@@ -120,6 +122,65 @@ for (const path of PAGES) {
   if (found.unnamedControls)
     fail(path, `${found.unnamedControls} controls with no accessible name`);
   if (found.skipped) fail(path, `heading level skipped, ${found.skipped}`);
+
+  await page.close();
+}
+
+/* ------------------------------------------------------------------- sizes */
+
+/*
+ * Two numbers a phone decides, and neither is visible on a 27-inch screen.
+ *
+ * 12px is the floor for anything a person reads. The spec chips on the
+ * catalogue were set at 11px and there are 69 of them on /modeller alone; the
+ * hero's eyebrow was a clamp whose lower bound resolved to 10.6px at 390px.
+ * Both were legible to whoever wrote them on a desktop and neither was
+ * measured on the device most of this site is read on. Decoration is exempt:
+ * an aria-hidden mark is not text anybody reads.
+ *
+ * 44px is the floor for anything a person taps, and it is already written down
+ * in CLAUDE.md — this is what makes it true rather than aspirational. A link
+ * sitting inside a sentence is exempt, because WCAG 2.5.8 exempts it and
+ * because padding a word in the middle of a paragraph to 44px would push the
+ * lines around it apart.
+ */
+for (const path of PAGES) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+
+  const found = await page.evaluate(() => {
+    const visible = (el) => {
+      const style = getComputedStyle(el);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    const decorative = (el) => el.closest("[aria-hidden='true']") !== null;
+
+    const small = [];
+    for (const el of document.querySelectorAll("body *")) {
+      if (el.children.length || decorative(el) || !visible(el)) continue;
+      const text = (el.textContent ?? "").trim();
+      if (!text) continue;
+      const size = parseFloat(getComputedStyle(el).fontSize);
+      if (size < 12) small.push(`${Math.round(size * 10) / 10}px "${text.slice(0, 28)}"`);
+    }
+
+    /* Inline by layout, not by tag: a <a> the author set to block or flex is a
+       control with a box of its own, whatever it is made of. */
+    const short = [];
+    for (const el of document.querySelectorAll("a[href], button, summary")) {
+      if (decorative(el) || !visible(el)) continue;
+      if (getComputedStyle(el).display === "inline") continue;
+      const box = el.getBoundingClientRect();
+      if (box.width < 2 && box.height < 2) continue;
+      if (box.height < 44)
+        short.push(`${Math.round(box.height)}px "${(el.textContent ?? "").trim().slice(0, 28)}"`);
+    }
+
+    return { small: [...new Set(small)], short: [...new Set(short)] };
+  });
+
+  for (const one of found.small) fail(path, `text under 12px on a phone: ${one}`);
+  for (const one of found.short) fail(path, `tap target under 44px: ${one}`);
 
   await page.close();
 }
@@ -240,7 +301,14 @@ for (const [name, viewport] of [
       if (texts.length === 0) continue;
 
       const hide = await page.addStyleTag({
-        content: "*{color:transparent !important} svg{visibility:hidden !important}",
+        /* text-decoration-color as well as color. An underline drawn in an
+           explicit colour — decoration-brand-400/60 on the promise links —
+           survives `color: transparent`, and then the sampler reads the
+           element's own underline as the ground behind its own text and reports
+           2.62:1 against a link that is in fact sitting on navy. It is part of
+           the text, not behind it. */
+        content:
+          "*{color:transparent !important;text-decoration-color:transparent !important} svg{visibility:hidden !important}",
       });
       await page.waitForTimeout(250);
       const shot = await page.screenshot();

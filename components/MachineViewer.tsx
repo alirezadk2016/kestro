@@ -288,7 +288,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
               <button
                 type="button"
                 onClick={() => select(exteriorViews[0].id)}
-                className="pointer-events-auto inline-flex min-h-[40px] items-center gap-2 border border-paper/20 px-4 text-xs font-semibold text-paper/70 transition hover:border-paper/50 hover:text-paper"
+                className="pointer-events-auto inline-flex min-h-[44px] items-center gap-2 border border-paper/20 px-4 text-xs font-semibold text-paper/70 transition hover:border-paper/50 hover:text-paper"
               >
                 <RotateCcw className="h-3.5 w-3.5" strokeWidth={2} />
                 {c.reset}
@@ -310,7 +310,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
               type="button"
               onClick={() => select(item.id)}
               aria-pressed={item.id === active.id}
-              className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
+              className={`inline-flex min-h-[44px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
                 item.id === active.id
                   ? "border-brand-600 bg-brand-600 text-white"
                   : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"

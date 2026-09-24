@@ -132,7 +132,7 @@ export default function Statement({ lang }: { lang: Lang }) {
                 {promise.body[lang]}
                 <Link
                   href={localePath(promise.href, lang)}
-                  className="mt-2.5 block self-start text-sm font-semibold leading-6 text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-2.5"
+                  className="mt-1 inline-flex min-h-[44px] items-center self-start text-sm font-semibold leading-6 text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-1"
                 >
                   {promise.link[lang]}
                 </Link>

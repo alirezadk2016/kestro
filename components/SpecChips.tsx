@@ -25,7 +25,7 @@ export default function SpecChips({ model, lang }: { model: Model; lang: Lang })
       {chips.map((chip) => (
         <span
           key={chip}
-          className="plate-sm px-2 py-1 text-[11px] font-medium leading-none text-paper/70"
+          className="plate-sm px-2 py-1 text-xs font-medium leading-none text-paper/70"
         >
           {chip}
         </span>

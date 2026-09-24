@@ -288,7 +288,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
             type="button"
             onClick={() => setSelected(null)}
             aria-pressed={selected === null}
-            className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
+            className={`inline-flex min-h-[44px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
               selected === null
                 ? "border-brand-600 bg-brand-600 text-white"
                 : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
@@ -302,7 +302,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
               type="button"
               onClick={() => setSelected(part)}
               aria-pressed={selected?.id === part.id}
-              className={`inline-flex min-h-[40px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
+              className={`inline-flex min-h-[44px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
                 selected?.id === part.id
                   ? "border-brand-600 bg-brand-600 text-white"
                   : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
