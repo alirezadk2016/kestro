@@ -486,7 +486,23 @@ window.__render = async function (name) {
   }
 
   const grain = noiseCanvas(512, 4, 0.55);
-  const ROUGH = new THREE.CanvasTexture(grain);
+  /*
+   * The roughness map is drawn at a third of the bump map's amplitude, and it
+   * is the last of the three knobs that made a lid look mouldy.
+   *
+   * normalScale was the loud one and came down to 0.05, which stopped the
+   * bright speckle. What was left on the fleet card was slower and larger: two
+   * soft grey clouds across the top lid of the right-hand stack. Same cause,
+   * different map. A polish that swings between 0.7 and 1.0 of nominal is a
+   * mirror that swings with it, and what it is mirroring is a ceiling of
+   * emissive panels — so on an upward face the low octaves of this noise stop
+   * being polish and become weather.
+   *
+   * Same seed, so the two maps still agree facet for facet and the set stays
+   * re-runnable; only the contrast differs.
+   */
+  const polishGrain = noiseCanvas(512, 4, 0.34);
+  const ROUGH = new THREE.CanvasTexture(polishGrain);
   const BUMP = new THREE.CanvasTexture(toNormal(grain, 5));
   for (const t of [ROUGH, BUMP]) {
     t.wrapS = THREE.RepeatWrapping;
