@@ -62,8 +62,8 @@ export const repairs: Repair[] = [
     mark: "battery",
     name: { da: "Batteriskift", en: "Battery replacement" },
     metaTitle: {
-      da: "Batteriskift til bærbar – og hvordan du tjekker batteriets tilstand",
-      en: "Laptop battery replacement — and how to check your battery health",
+      da: "Batteriskift til bærbar – tjek batteriets tilstand",
+      en: "Laptop battery replacement and how to check battery health",
     },
     metaDescription: {
       da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et batteri er værd at skifte.",
@@ -232,8 +232,8 @@ export const repairs: Repair[] = [
       en: "Screen replacement for laptops, tablets and phones",
     },
     metaDescription: {
-      da: "Revnet eller defekt skærm. Hvad vi skifter, og hvad vi skal vide for at finde den rigtige skærm.",
-      en: "Cracked or faulty screens. What we replace, and what we need to know to find the right panel.",
+      da: "Revnet eller defekt skærm på bærbar, tablet og telefon. Samme model er solgt med flere paneler, så vi identificerer panelet i maskinen – ikke bare modellen.",
+      en: "Cracked or faulty screens on laptops, tablets and phones. One model ships with several panels, so we identify the panel in the machine, not just the model.",
     },
     summary: {
       da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
@@ -482,8 +482,8 @@ export const repairs: Repair[] = [
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
     metaTitle: { da: "Ny opsætning og flytning af data", en: "Fresh setup and moving your data" },
     metaDescription: {
-      da: "Frisk installation af styresystem, og filer og programmer flyttet med over på den nye maskine.",
-      en: "A fresh operating system install, with files and software moved across to the new machine.",
+      da: "Frisk installation af styresystem, og filer, profiler og programmer flyttet med over. Vi gennemgår listen med jer, før den gamle maskine bliver slettet.",
+      en: "A fresh operating system install, with files, profiles and software moved across. We go through the list with you before the old machine is wiped.",
     },
     summary: {
       da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
@@ -522,7 +522,7 @@ export const repairs: Repair[] = [
     name: { da: "Fejlfinding", en: "Troubleshooting" },
     metaTitle: {
       da: "Fejlfinding – maskinen starter ikke eller går ned",
-      en: "Troubleshooting — the machine will not start or keeps crashing",
+      en: "Troubleshooting: the machine will not start or crashes",
     },
     metaDescription: {
       da: "Maskinen starter ikke, går ned eller opfører sig underligt. Vi finder årsagen og fortæller, hvad det vil koste at rette.",
@@ -568,8 +568,8 @@ export const repairs: Repair[] = [
     name: { da: "Samling af pc", en: "PC assembly" },
     metaTitle: { da: "Samling og opgradering af pc", en: "PC assembly and upgrades" },
     metaDescription: {
-      da: "Vi samler en maskine efter jeres ønsker – enten helt fra bunden eller ved at opgradere den, I har.",
-      en: "We build a machine to your specification — from scratch, or by upgrading the one you have.",
+      da: "Vi bygger efter opgaven, ikke efter et datablad – fra bunden eller videre på den maskine, I har. Samlet, installeret og belastet, før den bliver leveret.",
+      en: "We build to the job rather than to a datasheet — from scratch, or on top of the machine you have. Assembled, installed and loaded before it is delivered.",
     },
     summary: {
       da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
@@ -610,8 +610,8 @@ export const repairs: Repair[] = [
     name: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
     metaTitle: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
     metaDescription: {
-      da: "Har I købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
-      en: "Bought a used machine? We check it over, set it up and get it ready to use.",
+      da: "Har I købt en brugt maskine? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget skal skiftes.",
+      en: "Bought a used machine? We go through it, state the battery's actual capacity in percent, set it up and say so if anything needs replacing.",
     },
     summary: {
       da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
