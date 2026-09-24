@@ -12,9 +12,27 @@ import FactNote from "@/components/FactNote";
 import { repairs, getRepair } from "@/lib/repairs";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 
-/* Same reason as the other slug routes: the language layout's guard must not
-   swallow an unknown slug before this page can answer with the site's 404. */
-export const dynamicParams = true;
+/*
+ * No dynamicParams override here, and that is the point.
+ *
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
+ */
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => repairs.map((r) => ({ lang, slug: r.slug })));

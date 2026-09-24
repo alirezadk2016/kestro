@@ -48,31 +48,38 @@ export function generateStaticParams() {
 }
 
 /*
- * Only "da" and "en" are languages — but that is now settled before the
- * router sees the request, not here.
+ * Only "da" and "en" are languages, and the router is told so.
  *
- * This used to be `dynamicParams = false`. The problem it solved was real:
- * anything with a dot in it that middleware left alone — /index.html,
- * /wp-login.php, /style.css, and every path a scanner tries all night —
- * matched this segment with lang="index.html", and while the layout calls
- * notFound() for that, the page beside it renders in parallel, reaches
- * copy[lang] first, throws, and the request comes back 500. Google treats a
- * 5xx as "the host is unwell" and slows the crawl of the whole site.
+ * Route segment config applies to the whole subtree, so this one line also
+ * refuses an unknown slug under /produkter, /ydelser and /vejledninger. That
+ * is deliberate, and it is what makes a wrong URL render at all.
  *
- * What it cost was invisible until someone typed a wrong URL. Route segment
- * config applies to the whole subtree, so refusing unknown params here
- * refused them for every dynamic segment below — /produkter/<typo> and
- * /en/<anything> were rejected at the routing layer, the notFound() guards in
- * those pages never ran, and no not-found boundary was ever reached. Every
- * 404 on the site was Next's built-in page: black on white, English only, no
- * header, no footer, no way back.
+ * Next answers an unmatched param by serving the prerendered /_not-found
+ * document — app/not-found.tsx, complete in the first byte. The alternative is
+ * to accept the param, reach a page, and let that page call notFound(); in
+ * Next 15.5.25 that path never emits the boundary as HTML. Measured on a
+ * three-file app built from nothing but a root layout, a not-found file and a
+ * page whose whole body is notFound():
  *
- * middleware.ts now decides what is a file and what is a path by extension
- * rather than by "has a dot", so a junk path gets the language prefix like
- * any other and this segment is never handed something that is not a
- * language. The isLang guard below stays as the second line of defence.
+ *   <div hidden><!--$?--><template id="B:0"></template></div>
+ *   <div hidden id="S:0"></div>
+ *
+ * An opened Suspense boundary and an empty completion for it. The marker text
+ * is in the streaming payload and nowhere in the document, so the page is
+ * correct once React boots and blank until then. Reproduced outside this
+ * repository, so it is the framework's behaviour and not ours to fix here —
+ * but it is ours to route around, and refusing the param one layer earlier
+ * does exactly that.
+ *
+ * It also fixes the 500 that the accept-everything version caused: a request
+ * for /index.html reached this segment with lang="index.html", and although
+ * this layout calls notFound() for it, the page beside it renders in parallel,
+ * reaches copy[lang] first and throws. Google reads a 5xx as "the host is
+ * unwell" and slows the crawl of the whole site.
+ *
+ * The isLang guard below stays as the second line of defence.
  */
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 const meta = {
   da: {

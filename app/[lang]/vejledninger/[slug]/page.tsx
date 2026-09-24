@@ -16,19 +16,26 @@ import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
 
 /*
- * Overrides the language layout's `dynamicParams = false` for this segment
- * only.
+ * No dynamicParams override here, and that is the point.
  *
- * That flag is there so a scanner asking for /wp-login.php is rejected before
- * anything renders, and it still is — it governs the [lang] segment's own
- * param. Inherited down here, though, it meant an unknown slug was rejected at
- * the routing layer too, so the notFound() below never ran and the visitor got
- * Next's built-in 404: black on white, English only, no header and no link
- * back. Letting the segment render lets it answer with the site's own 404.
- * The page does nothing before that guard, so an unknown slug still costs a
- * lookup and a redirect to the boundary.
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
  */
-export const dynamicParams = true;
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => guides.map((guide) => ({ lang, slug: guide.slug })));
