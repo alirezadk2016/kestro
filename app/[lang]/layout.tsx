@@ -57,9 +57,9 @@ export function generateStaticParams() {
  * Next answers an unmatched param by serving the prerendered /_not-found
  * document — app/not-found.tsx, complete in the first byte. The alternative is
  * to accept the param, reach a page, and let that page call notFound(); in
- * Next 15.5.25 that path never emits the boundary as HTML. Measured on a
- * three-file app built from nothing but a root layout, a not-found file and a
- * page whose whole body is notFound():
+ * Next 15.5.25 and 15.5.26 that path never emits the boundary as HTML.
+ * Measured on a three-file app built from nothing but a root layout, a
+ * not-found file and a page whose whole body is notFound():
  *
  *   <div hidden><!--$?--><template id="B:0"></template></div>
  *   <div hidden id="S:0"></div>

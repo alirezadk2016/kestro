@@ -16,7 +16,7 @@ import PageSchema from "@/components/PageSchema";
  * This segment used to set it to true so that an unknown slug reached the page
  * and the notFound() below could answer with the site's own 404 instead of
  * Next's built-in one. The premise was right and the mechanism does not work:
- * in Next 15.5.25 a notFound() thrown while rendering emits the boundary into
+ * in Next 15.5.25 and 15.5.26 a notFound() thrown while rendering emits the boundary into
  * the streaming payload and never into the HTML, so the reply was a blank
  * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
  * measurement and the three-file reproduction.

@@ -402,6 +402,60 @@ async function main() {
     record("headers", "panel is noindex", value.includes("noindex"), value || "missing");
   }
 
+  /* ---- The page every scanner sees ------------------------------------- */
+
+  /*
+   * A 404 is the one page an attacker is guaranteed to reach, and it is served
+   * to every path nobody routed — which means it is the page most likely to be
+   * handed attacker-controlled input and the page least likely to be looked at.
+   *
+   * Two of these are regressions this repository has actually had. A junk path
+   * with a dot in it used to come back 500, because it matched [lang] with
+   * lang="index.html" and the page reached copy[lang] before the layout's
+   * guard ran; Google reads a 5xx as "the host is unwell" and slows the crawl
+   * of the whole site. And /_not-found is Next's own internal name for the
+   * boundary — if it ever answers as a page at that address, the framework's
+   * routing table is visible from outside.
+   */
+  {
+    const MARK = "kestro-xss-probe";
+    for (const [name, path, expected] of [
+      ["stylesheet that does not exist", "/style.css", [404]],
+      ["index.html", "/index.html", [404]],
+      ["wp-config.php", "/wp-config.php", [404]],
+      ["the boundary's own address", "/_not-found", [404]],
+      ["an env file", "/.env", [404]],
+      ["a git directory", "/.git/config", [404]],
+    ]) {
+      const { status } = await ask(path);
+      record("404", name, expected.includes(status) && status < 500, String(status));
+    }
+
+    /* Nothing of the request is echoed into the reply. The panel renders no
+       request data today; this is the case that notices the day somebody adds
+       "you asked for X" to it. */
+    const payload = `/<img src=x onerror="${MARK}">`;
+    const { status, text } = await ask(encodeURI(payload));
+    const echoed = text.includes(MARK) || text.includes("onerror");
+    record(
+      "404",
+      "nothing of the URL comes back in the body",
+      !echoed && status === 404,
+      String(status),
+    );
+
+    /* And it stays out of the index whatever it is serving. */
+    const { headers, text: body } = await ask("/denne-side-findes-ikke");
+    const meta = /<meta name="robots" content="([^"]*)"/.exec(body)?.[1] ?? "";
+    const tag = headers.get("x-robots-tag") ?? "";
+    record(
+      "404",
+      "not indexable",
+      /noindex/.test(meta) || /noindex/.test(tag),
+      meta || tag || "missing",
+    );
+  }
+
   /* ---- Nothing about the deployment on the way out ---------------------- */
 
   {

@@ -126,6 +126,50 @@ for (const path of PAGES) {
   await page.close();
 }
 
+/* --------------------------------------------------------------------- 404 */
+
+/*
+ * The 404 has to be a page, not a status code with an empty document behind it.
+ *
+ * It was exactly that for the life of the site: 404 was correct, the <title>
+ * was the front page's, and <body> held one empty div. With JavaScript the
+ * panel appeared and nobody noticed. The cause was in the framework and the
+ * fix was to route around it — app/[lang]/layout.tsx carries the note — which
+ * means it is the kind of fix a later change can undo without anyone meaning
+ * to. So it is measured with scripts off, from the HTML the server sends.
+ */
+{
+  const page = await browser.newPage({
+    viewport: { width: 1280, height: 800 },
+    javaScriptEnabled: false,
+  });
+  for (const path of [
+    "/denne-side-findes-ikke-xyz",
+    "/da/xyz-nope",
+    "/en/xyz-nope",
+    "/style.css",
+  ]) {
+    const response = await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
+    const status = response ? response.status() : 0;
+    if (status !== 404) fail(path, `expected 404, got ${status}`);
+
+    const found = await page.evaluate(() => ({
+      h1: document.querySelector("h1")?.textContent?.trim() ?? "",
+      words: (document.body.innerText || "").trim().split(/\s+/).filter(Boolean).length,
+      title: document.title,
+      robots: document.querySelector('meta[name="robots"]')?.content ?? "",
+    }));
+
+    if (!found.h1) fail(path, "404 has no h1 without JavaScript");
+    if (found.words < 40) fail(path, `404 renders ${found.words} words without JavaScript`);
+    if (!/ikke fundet/i.test(found.title))
+      fail(path, `404 carries the wrong title: ${found.title}`);
+    if (!/noindex/.test(found.robots))
+      fail(path, `404 is indexable: ${found.robots || "no robots meta"}`);
+  }
+  await page.close();
+}
+
 /* ------------------------------------------------------------------- sizes */
 
 /*
