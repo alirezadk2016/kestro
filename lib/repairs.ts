@@ -483,11 +483,11 @@ export const repairs: Repair[] = [
     metaTitle: { da: "Ny opsætning og flytning af data", en: "Fresh setup and moving your data" },
     metaDescription: {
       da: "Frisk installation af styresystem, og filer, profiler og programmer flyttet med over. Vi gennemgår listen med jer, før den gamle maskine bliver slettet.",
-      en: "A fresh operating system install, with files, profiles and software moved across. We go through the list with you before the old machine is wiped.",
+      en: "A fresh installation of the operating system, with files, profiles and software moved across. We go through the list with you before the old machine is wiped.",
     },
     summary: {
       da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
-      en: "A fresh operating system install, with your files and software moved across.",
+      en: "A fresh installation of the operating system, with your files and software moved across.",
     },
     answer: {
       da: "Ved et maskinskift er det ikke maskinen der tager tid — det er de to dage bagefter, hvor man opdager hvad der ikke kom med over. Derfor gennemgår vi listen over filer, profiler og programmer før flytningen, og først derefter bliver den gamle maskine slettet.",

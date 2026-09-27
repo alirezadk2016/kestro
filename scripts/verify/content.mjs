@@ -409,11 +409,29 @@ for (const file of [
   ...walkProse(join(root, "components")),
   ...walkProse(join(root, "app")),
 ]) {
+  /* Two shapes of Danish string. A field — `da: "…"` on one line, which is
+     how lib/ writes its prose. And a copy block — `da: {` followed by keys
+     whose strings prettier has broken onto lines of their own, which is how
+     every page writes its copy. The first version only knew the field, so
+     five pages quoting »…« as “…” passed it: /kvalitet, /tilbud, /priser and
+     /tilbud-eksempel were found by LanguageTool, not by this. */
+  let block = null;
   readFileSync(file, "utf8")
     .split("\n")
     .forEach((line, i) => {
-      const m = /^\s*da:\s*"(.*)",?$/.exec(line);
-      if (m && /[\u201c\u201d]/.test(m[1])) {
+      const open = /^(\s*)(da|en):\s*\{\s*$/.exec(line);
+      if (open) {
+        block = { lang: open[2], indent: open[1].length };
+        return;
+      }
+      if (block && line.startsWith(" ".repeat(block.indent) + "}")) {
+        block = null;
+        return;
+      }
+      if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+      const field = /^\s*da:\s*"(.*)",?$/.exec(line);
+      const danish = field ? field[1] : block?.lang === "da" ? line : null;
+      if (danish && /[\u201c\u201d]/.test(danish)) {
         fail(`${file.slice(root.length)}:${i + 1}: Danish quotes with “ ” — use » «`);
       }
     });

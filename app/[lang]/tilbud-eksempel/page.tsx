@@ -126,7 +126,7 @@ const copy = {
     priceLink: "Hvad der afgør prisen",
     whyTitle: "Hvorfor alle felterne er der",
     whyBody:
-      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. “Grad B” uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
+      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
     relatedTitle: "Videre herfra",
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
@@ -173,8 +173,8 @@ const copy = {
         v: "The period goes here in months, together with who you contact if something breaks. It depends on the actual order, which is why we do not promise a fixed number in advance — but the number is here before you order.",
       },
       {
-        k: "Timeframe",
-        v: "A range, not a date. We source per order, so we give the timeframe once we know what can be found.",
+        k: "Time frame",
+        v: "A range, not a date. We source per order, so we give the time frame once we know what can be found.",
       },
       {
         k: "Documentation",

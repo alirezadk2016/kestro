@@ -81,7 +81,7 @@ const copy = {
     whyBody1:
       "Vi holder ikke lager. Der står ingen hylde med maskiner og mærkater på, og derfor findes der ikke en pris, vi kan skrive op på forhånd. Vi går ud i leverandørnetværket, når vi ved, hvad opgaven kræver – og prisen er den, vi kan skaffe det til, plus vores arbejde.",
     whyBody2:
-      "Vi kunne godt skrive “fra 1.995 kr.” og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
+      "Vi kunne godt skrive »fra 1.995 kr.« og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
     driversTitle: "Hvad der afgør jeres pris",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",

@@ -29,7 +29,7 @@ const copy = {
     metaDescription:
       "Fortæl os antal, specifikation og hvornår det skal stå klar. Vi vender tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
     title: "Få et tilbud",
-    lead: "Prisen afhænger af konfiguration, stand og antal, så den bliver regnet på jeres konkrete behov frem for på en liste. Udfyld det, I ved – resten kan stå som “ved ikke endnu”.",
+    lead: "Prisen afhænger af konfiguration, stand og antal, så den bliver regnet på jeres konkrete behov frem for på en liste. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
     nextTitle: "Hvad sker der, når I sender",
     nextSteps: [
@@ -43,7 +43,7 @@ const copy = {
     exampleLink: "Se eksemplet",
     needTitle: "Det, vi har brug for at vide",
     needLead:
-      "Ingen af felterne er obligatoriske, og “ved ikke endnu” er et brugbart svar. Men jo mere af det herunder, I kan sige noget om, jo mindre bliver det første svar en række spørgsmål tilbage.",
+      "Ingen af felterne er obligatoriske, og »ved ikke endnu« er et brugbart svar. Men jo mere af det herunder, I kan sige noget om, jo mindre bliver det første svar en række spørgsmål tilbage.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",

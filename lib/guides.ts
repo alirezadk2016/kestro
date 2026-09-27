@@ -479,8 +479,8 @@ export const guides: Guide[] = [
       en: "Refurbished or used: what is the difference?",
     },
     metaTitle: {
-      da: "Refurbished vs brugt: hvad er forskellen? | Kestro",
-      en: "Refurbished vs used: what is the difference? | Kestro",
+      da: "Refurbished vs. brugt: hvad er forskellen? | Kestro",
+      en: "Refurbished vs. used: what is the difference? | Kestro",
     },
     metaDescription: {
       da: "Brugt beskriver maskinens historie. Refurbished beskriver et arbejde, nogen har udført på den. Hvorfor de ikke er ens – og hvad en virksomhed bør spørge om.",
@@ -616,7 +616,7 @@ export const guides: Guide[] = [
           },
           {
             da: "Hvordan data er håndteret: en formatering, en installation ovenpå, eller en egentlig sletning af lagermediet. De tre er ikke det samme, og kun den sidste fjerner data.",
-            en: "How data was handled: a format, an install on top, or an actual erasure of the drive. The three are not the same, and only the last removes data.",
+            en: "How data was handled: a format, a reinstall on top, or an actual erasure of the drive. The three are not the same, and only the last removes data.",
           },
           {
             da: "Om der følger dokumentation med: en sletterapport, en liste over serienumre, en angivelse af batteriets målte tilstand. Dokumentation er det, der gør en påstand efterprøvelig.",

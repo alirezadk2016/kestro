@@ -89,7 +89,7 @@ export const models: Model[] = [
     group: "baerbare",
     category: "baerbare-computere",
     tagline: {
-      da: "Arbejdshesten i T-serien – robust, reparerbar og nem at opgradere.",
+      da: "Arbejdshesten i T-serien – robust, nem at reparere og nem at opgradere.",
       en: "The workhorse of the T series — sturdy, repairable and easy to upgrade.",
     },
     metaTitle: {
@@ -1578,7 +1578,7 @@ export const models: Model[] = [
       en: "Used Lenovo ThinkVision T24i business monitor | Kestro",
     },
     metaDescription: {
-      da: 'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og fuld foddjustering. Skaffes til den enkelte ordre.',
+      da: 'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og en fuldt justerbar fod. Skaffes til den enkelte ordre.',
       en: 'The Lenovo ThinkVision T24i as a used business monitor: 24" IPS, thin bezels and a fully adjustable stand. Sourced per order.',
     },
     intro: {

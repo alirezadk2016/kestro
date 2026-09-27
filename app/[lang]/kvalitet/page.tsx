@@ -16,7 +16,7 @@ const copy = {
       "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvad I bør have skriftligt om garanti, før I køber brugt IT-udstyr.",
     title: "Stand, test og hvad I bør spørge om",
     description:
-      "“Brugt” siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
+      "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
     gradingTitle: "Graderingen: A, B og C",
     gradingBody:
       "Graden beskriver, hvordan maskinen ser ud – ikke hvordan den virker. Alt udstyr skal bestå den samme funktionstest, uanset grad. Nogle leverandører kalder det guld, sølv og bronze, men det dækker over det samme.",
@@ -25,7 +25,7 @@ const copy = {
       "Der findes ingen fælles standard for, hvad et bogstav betyder. To leverandører kan kalde den samme maskine grad A og grad B. Bed derfor altid om en beskrivelse af standen i ord – ikke bare et bogstav.",
     testTitle: "Hvad en funktionstest skal dække",
     testBody:
-      "Det er her, forskellen mellem en billig og en dyr leverandør ligger. En maskine, der “starter op”, er ikke testet. Det her er, hvad vi kræver, før udstyret sendes videre til jer:",
+      "Det er her, forskellen mellem en billig og en dyr leverandør ligger. En maskine, der »starter op«, er ikke testet. Det her er, hvad vi kræver, før udstyret sendes videre til jer:",
     testNote:
       "Batteriet er det punkt, der oftest bliver sprunget over. Et batteri på 60 % af sin oprindelige kapacitet virker fint i en test og bliver et problem tre måneder senere. Spørg til tallet.",
     dataTitle: "Data på brugt udstyr",
