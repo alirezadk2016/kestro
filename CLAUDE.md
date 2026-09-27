@@ -117,20 +117,35 @@ bodies.
 - **A list of steps gets a spine; a list of parallel things gets plates.**
   Rows separated by a hairline read as a table, and that is the single most
   common way a section here has looked unfinished.
+- **Every mark sits in `<MarkTile>`.** One container, three sizes (sm 36,
+  md 44, lg 56). There were seven hand-rolled wrappers once and the set read
+  as collected rather than drawn. New marks follow the language in
+  `components/CraftMark.tsx`: 1.5 stroke, round caps, one `km-body` surface,
+  one brand-300 accent on the part that carries the meaning.
 - **Design for the phone.** Every graphic idea must exist at 390px. The
   process section had a spine on desktop and `hidden lg:flex`, so the whole
   argument of the section was invisible to most readers.
 
 ## Card artwork
 
-`npm run build:cards` renders `public/cards/*.webp`: three.js draws the
-subjects off the hero's own laptop model and studio
-(`scripts/build/cards3d/`), then the artboards composite them over a crop of
-`public/hero/scene.webp` (`scripts/build/cards/`).
+`npm run build:cards` makes `public/cards/*.webp`. Two pipelines, one set:
+
+- **cat-laptops** is a crop of `public/hero/scene.webp` (`scripts/build/cards/`).
+- **cat-desktops, cat-monitors, cat-fleet, exploded, fleet-scene** are
+  path-traced with Blender's Cycles in the hero photograph's own room — stone desk, the hero's blue-hour
+  view in the window, warm key from the left (`scripts/build/cards-cycles/`).
+  Needs the `bpy` wheel in `/opt/bpyenv` (install line at the top of its
+  `render.mjs`); a full render is about seven minutes a card on four cores.
+  They were rasterised by three.js until the row sat under the hero with one
+  photograph and three renders, and the renders lost: not because of the
+  models, but because a rasteriser gives no bounced light, no reflection of
+  the window and no lens. That pipeline is gone; git history has it.
+
 `scripts/build/check-cards.mjs` measures ratio, exposure, highlight warmth and
 local contrast against `design/art-direction/cards-brief.md`. Read the brief
-before changing them — it records what each number means and which one is
-deliberately left failing, and why.
+before changing them. View a Cycles render as 8-bit (the webp), never the
+16-bit PNG: the image viewer here posterises 16-bit and it looks like denoiser
+blotching when it is not.
 
 ## Git
 

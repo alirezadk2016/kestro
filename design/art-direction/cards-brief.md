@@ -1,5 +1,20 @@
 # Kestro — artwork brief: category cards, exploded view, fleet room
 
+> **2026-09-27 — pipeline replaced.** Everything below about
+> `scripts/build/cards3d/` and `lib/card-subjects.mjs` is history: that
+> rasteriser is gone. Five of the six images are now path-traced with Cycles
+> by `scripts/build/cards-cycles/` in the hero photograph's own room — the
+> stone desk, the hero's blue-hour view in the window at a lens's distance,
+> a warm area key from camera left and a dim office ceiling — and the sixth
+> is still the hero crop. The brief's light, lens and grade are unchanged;
+> what changed is that a path tracer delivers them by construction instead of
+> by grading. Three lessons from the new renderer are written into
+> `scene.py` where they apply: a metal only shows its colour when there is
+> something bright to reflect (hence the ceiling panel over the fleet), a lamp
+> placed low behind the subject reappears as a white smear in polished stone
+> (the fleet card has no rim lamp for that reason), and a defocused photograph
+> needs pre-blurring or the denoiser paints it.
+
 Six images. One set, one light, one grade. Written to be re-runnable: if a
 render has to be redone in six months it must come back matching, so the style
 block below is copied verbatim into every prompt and only the SUBJECT line

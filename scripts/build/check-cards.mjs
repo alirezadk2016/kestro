@@ -14,6 +14,9 @@ import sharp from "sharp";
  * these are judgements with a defensible band, not build errors.
  */
 const HERO_MEAN = 39; // measured off public/hero/scene.webp
+/* A directory other than public/cards, so a test render can be measured
+   before it replaces anything. */
+const DIR = process.argv[2] ?? "public/cards";
 
 const ASSETS = [
   { file: "cat-laptops.webp", ratio: 16 / 9, renders: [290, 163] },
@@ -27,7 +30,7 @@ const ASSETS = [
 const problems = [];
 
 for (const asset of ASSETS) {
-  const path = `public/cards/${asset.file}`;
+  const path = `${DIR}/${asset.file}`;
   const meta = await sharp(path).metadata();
   const ratio = meta.width / meta.height;
 
