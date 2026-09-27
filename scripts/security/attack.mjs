@@ -34,6 +34,11 @@ const ORIGIN = process.argv[2] ?? "http://127.0.0.1:4310";
 const PASSWORD = process.env.ATTACK_PASSWORD ?? "test-password";
 const SECRET = process.env.ATTACK_SECRET || PASSWORD;
 
+/* The production name. lib/admin-session.ts prefixes it with __Host- when
+   NODE_ENV is production, and this battery only ever runs against a
+   production build. */
+const COOKIE = "__Host-kestro_admin";
+
 const results = [];
 const record = (layer, name, passed, detail) => results.push({ layer, name, passed, detail });
 
@@ -165,37 +170,37 @@ async function main() {
     "L1",
     "expired session",
     "/admin/beskeder",
-    { cookie: `kestro_admin=${EXPIRED}` },
+    { cookie: `${COOKIE}=${EXPIRED}` },
     [404],
   );
   await shutOut(
     "L1",
     "session signed with another secret",
     "/admin/beskeder",
-    { cookie: `kestro_admin=${FORGED}` },
+    { cookie: `${COOKIE}=${FORGED}` },
     [404],
   );
   await shutOut(
     "L1",
     "expiry pushed out, signature kept",
     "/admin/beskeder",
-    { cookie: `kestro_admin=${TAMPERED}` },
+    { cookie: `${COOKIE}=${TAMPERED}` },
     [404],
   );
   await shutOut(
     "L1",
     "signature removed",
     "/admin/beskeder",
-    { cookie: "kestro_admin=9999999999999" },
+    { cookie: `${COOKIE}=9999999999999` },
     [404],
   );
-  await shutOut("L1", "empty session", "/admin/beskeder", { cookie: "kestro_admin=" }, [404]);
+  await shutOut("L1", "empty session", "/admin/beskeder", { cookie: `${COOKIE}=` }, [404]);
   /* Not base64url at all: the decoder must refuse rather than throw. */
   await shutOut(
     "L1",
     "unparseable signature",
     "/admin/beskeder",
-    { cookie: "kestro_admin=9999999999999.!!!!" },
+    { cookie: `${COOKIE}=9999999999999.!!!!` },
     [404],
   );
 
@@ -290,13 +295,13 @@ async function main() {
         origin: "https://evil.example",
       },
       body,
-      cookie: `kestro_admin=${VALID}`,
+      cookie: `${COOKIE}=${VALID}`,
     });
     const gave = headers.get("set-cookie") ?? "";
     record(
       "CSRF",
       `${name} from another origin`,
-      status === 403 && !gave.includes("kestro_admin="),
+      status === 403 && !gave.includes(`${COOKIE}=`),
       `${status}${gave ? " set-cookie" : ""}`,
     );
   }
@@ -355,23 +360,87 @@ async function main() {
     record(
       "L2",
       "wrong password issues no session",
-      (status === 303 || status === 429) && !/kestro_admin=[^;]/.test(gave),
+      (status === 303 || status === 429) && !new RegExp(`${COOKIE}=[^;]`).test(gave),
       String(status),
     );
+  }
+
+  /* ---- The cookie's name is part of the lock ------------------------------ */
+
+  /* A valid signature under the old, unprefixed name. The browser would never
+     send this for a __Host- cookie it had been given — it is what a sibling
+     subdomain or a plain-http hop could plant — so the panel must not read it
+     however good the signature is. */
+  await shutOut("L1", "valid session under the unprefixed name", "/admin/beskeder", {
+    cookie: `kestro_admin=${VALID}`,
+  }, [404]);
+
+  /* ---- Guessing, with no database to count the guesses -------------------- */
+
+  /*
+   * The test server has no DATABASE_URL, which is exactly the deployment in
+   * which the Postgres lockout does nothing. lib/login-guard.ts is the floor
+   * under it: five wrong answers from one address lock it in memory, and every
+   * wrong answer costs 400 ms whatever else is true.
+   */
+  {
+    const tries = [];
+    for (let i = 0; i < 6; i++) {
+      const t0 = Date.now();
+      const { status } = await ask("/api/admin/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "sec-fetch-site": "same-origin",
+        },
+        body: `password=wordlist-${i}`,
+      });
+      tries.push({ status, ms: Date.now() - t0 });
+    }
+    const slowed = tries.filter((t) => t.status === 303).every((t) => t.ms >= 350);
+    record(
+      "L2",
+      "a wrong password costs time",
+      slowed,
+      tries.map((t) => `${t.status}/${t.ms}ms`).slice(0, 2).join(" "),
+    );
+    record(
+      "L2",
+      "a wordlist is locked out without a database",
+      tries.at(-1).status === 429,
+      tries.map((t) => t.status).join(" "),
+    );
+  }
+
+  /* ---- The enquiry form's mail headers ------------------------------------ */
+
+  /* An address that is really two: pressing Reply in the inbox would have
+     answered whoever the sender chose as well. */
+  {
+    const { status } = await ask("/api/kontakt", {
+      method: "POST",
+      headers: { "content-type": "application/json", "sec-fetch-site": "same-origin" },
+      body: JSON.stringify({
+        name: "Test",
+        email: 'a@b.dk>, "x" <someone@else.dk',
+        message: "reply-to injection",
+      }),
+    });
+    record("mail", "an address that is two addresses is refused", status === 422, String(status));
   }
 
   /* ---- And the legitimate way in, which must still work ----------------- */
 
   {
-    const { status, text } = await ask("/admin/beskeder", { cookie: `kestro_admin=${VALID}` });
+    const { status, text } = await ask("/admin/beskeder", { cookie: `${COOKIE}=${VALID}` });
     record("open", "a real session reaches the inbox", status === 200, `${status} ${text.length}b`);
   }
   {
-    const { status } = await ask("/api/admin/live", { cookie: `kestro_admin=${VALID}` });
+    const { status } = await ask("/api/admin/live", { cookie: `${COOKIE}=${VALID}` });
     record("open", "a real session reads the live figures", status === 200, String(status));
   }
   {
-    const { status, text } = await ask("/admin", { cookie: `kestro_admin=${VALID}` });
+    const { status, text } = await ask("/admin", { cookie: `${COOKIE}=${VALID}` });
     record(
       "open",
       "a real session reaches the dashboard",

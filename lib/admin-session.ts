@@ -24,7 +24,24 @@
  * one place: a gate looking for the wrong cookie name is a gate that is not
  * there, and it would look exactly like one that is.
  */
-export const SESSION_COOKIE_NAME = "kestro_admin";
+export const SESSION_COOKIE_NAME =
+  process.env.NODE_ENV === "production" ? "__Host-kestro_admin" : "kestro_admin";
+
+/*
+ * `__Host-` in production, which is a promise the browser enforces rather than
+ * one this code makes: a cookie with that prefix is only accepted if it was set
+ * over HTTPS, with Secure, with Path=/ and with no Domain. So nothing on a
+ * sibling subdomain, and nothing on a plain-http hop, can plant a session
+ * cookie under this name for the panel to read — the attack is called cookie
+ * tossing, and without the prefix the only thing standing in its way was that
+ * the signature would not verify. Now the browser refuses it before it is
+ * sent.
+ *
+ * Not in development, because `next dev` is served over http and a browser
+ * drops a __Host- cookie that cannot be Secure; the login would appear to
+ * succeed and then never stick. NODE_ENV is inlined at build time, so the
+ * edge middleware and the Node routes always agree on which name it is.
+ */
 
 /**
  * base64url, back to bytes.

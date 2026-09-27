@@ -10,6 +10,7 @@ import { seeOther } from "@/lib/redirect";
 import { adminLockedOut, clearAdminFailures, noteAdminFailure } from "@/lib/db";
 import { clientIp } from "@/lib/visits";
 import { crossSitePost } from "@/lib/same-site";
+import { clearInMemory, lockedInMemory, noteFailureInMemory } from "@/lib/login-guard";
 
 export const runtime = "nodejs";
 
@@ -40,7 +41,7 @@ export async function POST(request: Request) {
    * same trustworthy hop the contact form settled on.
    */
   const ip = clientIp(request.headers);
-  if (await adminLockedOut(ip)) {
+  if (lockedInMemory(ip) || (await adminLockedOut(ip))) {
     return new NextResponse("too many attempts", {
       status: 429,
       headers: { "retry-after": "900" },
@@ -72,6 +73,7 @@ export async function POST(request: Request) {
 
   if (!passwordMatches(password)) {
     await noteAdminFailure(ip);
+    await noteFailureInMemory(ip);
     /* No hint about which part was wrong, and no reason to distinguish "wrong
        password" from "no password configured" to whoever is typing. The
        redirect used to carry ?fejl=1 that nothing read, so a wrong password
@@ -90,6 +92,7 @@ export async function POST(request: Request) {
   /* A correct password clears the slate: a person who mistyped four times and
      then got it right should not be four from a lockout tomorrow. */
   await clearAdminFailures(ip);
+  clearInMemory(ip);
 
   const session = issueSession();
   const response = seeOther("/admin");

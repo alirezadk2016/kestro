@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
 import { classify, pickReply, replyLang } from "@/lib/instagram";
+import { oneLine } from "@/lib/mail-safe";
 
 /**
  * Instagram comments, answered where it is safe to and forwarded where it is not.
@@ -258,7 +259,7 @@ async function forward(item: {
       body: JSON.stringify({
         from,
         to: [process.env.CONTACT_TO ?? company.email],
-        subject: `${label} på Instagram — @${item.username}`,
+        subject: oneLine(`${label} på Instagram — @${item.username}`),
         text: lines.join("\n"),
       }),
       signal: AbortSignal.timeout(8000),

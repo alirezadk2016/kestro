@@ -46,7 +46,14 @@ export async function POST(request: Request) {
        the number honest enough to reason about. */
     if (isBot(agent)) return NO_CONTENT();
 
-    const body = (await request.json()) as {
+    /* A page view is a path, a referrer and a query string: well under a
+       kilobyte. Without a cap the JSON parser would read whatever it was sent
+       before any of the checks below ran, so an anonymous caller could make
+       every request as expensive as the platform's own body limit. */
+    if (Number(request.headers.get("content-length") ?? "0") > 4096) return NO_CONTENT();
+    const raw = await request.text();
+    if (raw.length > 4096) return NO_CONTENT();
+    const body = JSON.parse(raw) as {
       path?: unknown;
       referrer?: unknown;
       search?: unknown;

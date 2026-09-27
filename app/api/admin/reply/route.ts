@@ -10,6 +10,7 @@ import { getEnquiry, recordReply, scrubSecrets } from "@/lib/db";
 import { company } from "@/lib/company";
 import { seeOther } from "@/lib/redirect";
 import { crossSitePost } from "@/lib/same-site";
+import { looksLikeEmail, oneLine } from "@/lib/mail-safe";
 
 export const runtime = "nodejs";
 
@@ -57,6 +58,11 @@ export async function POST(request: Request) {
 
   const enquiry = await getEnquiry(id);
   if (!enquiry) return new NextResponse("not found", { status: 404 });
+  /* Checked again on the way out: a row stored before the intake rule was
+     tightened could hold "a@b.dk, c@d.dk", and `to` would send to both. */
+  if (!looksLikeEmail(enquiry.email)) {
+    return withReason(seeOther(`/admin/beskeder/${id}?fejl=send`), "Afsenderens adresse er ikke gyldig.");
+  }
 
   const apiKey = process.env.RESEND_API_KEY;
   /* Same fallback as the contact form: the test sender is public and identical
@@ -88,7 +94,7 @@ export async function POST(request: Request) {
         from,
         to: [enquiry.email],
         reply_to: process.env.CONTACT_TO ?? company.email,
-        subject: `Sv: ${enquiry.subject || "Din henvendelse til Kestro"}`,
+        subject: oneLine(`Sv: ${enquiry.subject || "Din henvendelse til Kestro"}`),
         text,
       }),
       signal: AbortSignal.timeout(10000),

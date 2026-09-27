@@ -15,6 +15,15 @@ export async function POST(request: Request) {
 
   const response = seeOther("/admin");
   /* Expire rather than delete, so a browser that ignores one honours the other. */
-  response.cookies.set(SESSION_COOKIE, "", { path: "/", maxAge: 0 });
+  /* Secure as well: a browser ignores a Set-Cookie for a __Host- name that
+     lacks it, and a logout that fails to clear the cookie looks exactly like
+     one that worked. */
+  response.cookies.set(SESSION_COOKIE, "", {
+    path: "/",
+    maxAge: 0,
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   return response;
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
 import { isSameSite } from "@/lib/same-site";
 import { noteMailFailure, saveEnquiry } from "@/lib/db";
+import { displayName, looksLikeEmail, oneLine } from "@/lib/mail-safe";
 
 /**
  * The contact form's actual destination.
@@ -98,15 +99,6 @@ function clean(value: unknown, max: number): string {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
-/** Deliberately loose. Rejecting valid addresses costs more than a bounce. */
-function looksLikeEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-/** Header injection: a newline in the reply-to would let a sender add headers. */
-function safeHeaderValue(value: string): string {
-  return value.replace(/[\r\n]/g, " ");
-}
 
 export async function POST(request: Request) {
   if (!isSameSite(request)) {
@@ -165,13 +157,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, configured: true });
   }
 
-  const name = clean(payload.name, LIMITS.name);
-  const organisation = clean(payload.company, LIMITS.company);
+  const name = oneLine(clean(payload.name, LIMITS.name));
+  const organisation = oneLine(clean(payload.company, LIMITS.company));
   const email = clean(payload.email, LIMITS.email);
-  const phone = clean(payload.phone, LIMITS.phone);
+  const phone = oneLine(clean(payload.phone, LIMITS.phone));
   const message = clean(payload.message, LIMITS.message);
-  const subject = clean(payload.subject, 160) || "Henvendelse via kestro.dk";
-  const page = clean(payload.page, 200);
+  const subject = oneLine(clean(payload.subject, 160)) || "Henvendelse via kestro.dk";
+  const page = oneLine(clean(payload.page, 200));
 
   if (!name || !message || !looksLikeEmail(email)) {
     return NextResponse.json({ ok: false, error: "invalid" }, { status: 422 });
@@ -244,8 +236,8 @@ export async function POST(request: Request) {
           from,
           to: [process.env.CONTACT_TO ?? company.email],
           /* So hitting reply in the inbox answers the customer, not ourselves. */
-          reply_to: safeHeaderValue(`${name} <${email}>`),
-          subject: safeHeaderValue(
+          reply_to: oneLine(`${displayName(name)} <${email}>`),
+          subject: oneLine(
             organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
           ),
           text: lines.join("\n"),
