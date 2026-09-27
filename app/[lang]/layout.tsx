@@ -13,6 +13,7 @@ import Analytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ConsentBanner from "@/components/ConsentBanner";
+import { CraftMarkDefs } from "@/components/CraftMark";
 import LanguageHint, { languageHintScript } from "@/components/LanguageHint";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
@@ -236,6 +237,8 @@ export default async function RootLayout({
   return (
     <html lang={htmlLang[lang]}>
       <body className={`${jakarta.variable} bg-brand-950 font-sans text-paper antialiased`}>
+        {/* The gradients every mark fills from, once per document. */}
+        <CraftMarkDefs />
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script

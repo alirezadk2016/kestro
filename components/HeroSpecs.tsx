@@ -1,6 +1,6 @@
 import Link from "next/link";
+import MarkTile from "@/components/MarkTile";
 import SpecFigure, { SpecFigureDefs, type SpecKind } from "./SpecFigure";
-import { SpecMark } from "./CraftMark";
 import LiveBatteryValue from "./LiveBatteryValue";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -244,9 +244,11 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                 <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand-200 shadow-[0_0_10px_2px_rgba(147,174,251,0.7)]" />
               </span>
 
-              <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-brand-400/25 bg-brand-500/10 text-brand-300 transition-colors [.spec-row:hover_&]:border-brand-300/60 [.spec-row:hover_&]:bg-brand-500/20">
-                <SpecMark name={row.kind} className="h-5 w-5" />
-              </span>
+              <MarkTile
+                spec={row.kind}
+                size="sm"
+                className="transition-[filter] duration-200 [.spec-row:hover_&]:brightness-125"
+              />
               <div className="relative min-w-0">
                 <dt className="text-sm font-semibold leading-snug text-paper transition-colors [.spec-row:hover_&]:text-brand-100">
                   <Link

@@ -53,7 +53,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
             one gradient and a shadow and makes it the same object as the ones
             turning at the top of the page.
           */}
-          <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-ink-950/40">
+          <div className="plate-well relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink-950/40">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"
@@ -91,7 +91,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               {highlights.map((highlight) => (
                 <li
                   key={highlight.da}
-                  className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/75"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
                 >
                   {highlight[lang]}
                 </li>

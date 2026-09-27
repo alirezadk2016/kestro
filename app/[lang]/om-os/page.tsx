@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import Container from "@/components/Container";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import { type CraftMarkName } from "@/components/CraftMark";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import WhyUs from "@/components/WhyUs";
@@ -110,9 +111,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
                 {/* Square plate and a hairline, the same as the feature row:
                     the mark inside is an orthographic drawing, and a rounded
                     pill around a technical drawing fights it. */}
-                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-white/10 bg-brand-500/[0.07] text-brand-300">
-                  <CraftMark name={section.mark} className="h-7 w-7" />
-                </span>
+                <MarkTile name={section.mark} size="md" />
                 <div>
                   <h2 className="text-xl font-semibold text-paper">{section.title[lang]}</h2>
                   <p className="mt-3 text-base leading-[1.75] text-paper/65">

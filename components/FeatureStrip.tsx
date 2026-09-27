@@ -1,5 +1,6 @@
 import Container from "./Container";
-import CraftMark, { type CraftMarkName } from "./CraftMark";
+import MarkTile from "@/components/MarkTile";
+import { type CraftMarkName } from "./CraftMark";
 import type { Lang } from "@/lib/i18n";
 
 /*
@@ -55,15 +56,13 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
       <Container>
         <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-7 sm:grid-cols-3 sm:gap-y-6 sm:py-8 lg:grid-cols-5 lg:gap-x-7 2xl:pr-44">
           {features.map((feature) => (
-            <li key={feature.title.da} className="flex items-start gap-3">
-              {/* The mark stands on the bar, not in a box.
-                  It was in a bordered square plate, and five plates in a row
-                  under a photograph read as five buttons — a second row of
-                  chrome directly under the two real ones in the hero. The
-                  drawing is the mark; the bar it sits on is the frame. */}
-              <span className="flex-shrink-0 pt-0.5 text-paper/85">
-                <CraftMark name={feature.mark} className="h-6 w-6" />
-              </span>
+            <li key={feature.title.da} className="flex items-center gap-3.5">
+              {/* In the site's one mark tile. Bare on the bar, the five marks
+                  were line drawings floating on a strip of navy — the row a
+                  buyer sees first, reading as a system icon font. The tile is
+                  lit from the top left and has no hard border, so five of
+                  them read as a set of facts rather than as five buttons. */}
+              <MarkTile name={feature.mark} size="md" />
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold leading-5 text-paper">
                   {feature.title[lang]}

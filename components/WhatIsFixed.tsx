@@ -1,4 +1,4 @@
-import CraftMark from "./CraftMark";
+import MarkTile from "@/components/MarkTile";
 import type { Lang } from "@/lib/i18n";
 
 /*
@@ -98,7 +98,7 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {c.columns.map((column) => (
           <div key={column.heading} className="plate p-5">
-            <CraftMark name={column.mark} className="h-7 w-7 text-brand-300" />
+            <MarkTile name={column.mark} size="md" />
             <h3 className="mt-3 text-sm font-semibold text-paper">{column.heading}</h3>
             <ul className="mt-3 space-y-2">
               {column.points.map((point) => (

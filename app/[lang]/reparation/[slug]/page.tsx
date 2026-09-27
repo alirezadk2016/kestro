@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
-import CraftMark from "@/components/CraftMark";
 import PageSchema from "@/components/PageSchema";
 import ServiceTile from "@/components/ServiceTile";
 import FactNote from "@/components/FactNote";
@@ -106,9 +106,7 @@ export default async function RepairPage(props: Params) {
           </nav>
 
           <div className="mt-6 flex items-start gap-5">
-            <span className="plate-sm flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-lg bg-brand-500/[0.12] text-brand-300">
-              <CraftMark name={repair.mark} className="h-7 w-7" />
-            </span>
+            <MarkTile name={repair.mark} size="lg" />
             <div className="min-w-0">
               <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
                 {repair.name[lang]}

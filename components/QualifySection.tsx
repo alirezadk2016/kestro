@@ -4,7 +4,7 @@ import Container from "./Container";
 import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 import ForgedPanel from "@/components/ForgedPanel";
-import MarkWell from "@/components/MarkWell";
+import MarkTile from "@/components/MarkTile";
 
 const situations = [
   {
@@ -115,7 +115,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
             <li key={item.href}>
               <ForgedPanel href={localePath(item.href, lang)} faceClassName="p-6 sm:p-7">
                 <div className="flex items-start justify-between gap-4">
-                  <MarkWell mark={item.mark} className="tile-z tile-z-near" />
+                  <MarkTile name={item.mark} size="lg" className="tile-z tile-z-near" />
                   {/* aria-hidden as well as lighter: the ordinal is a
                       decoration beside a heading that already says which card
                       this is, and at 30% white it measured 2.9:1. */}

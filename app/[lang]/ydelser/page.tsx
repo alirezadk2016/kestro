@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import { type CraftMarkName } from "@/components/CraftMark";
 import ServiceTile from "@/components/ServiceTile";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
@@ -222,9 +223,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
                   href={localePath(`/ydelser/${step.slug}`, lang)}
                   className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
                 >
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300 shadow-sm">
-                    <CraftMark name={step.mark} className="h-6 w-6" />
-                  </span>
+                  <MarkTile name={step.mark} size="md" />
                   <div>
                     <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
                       {step.title[lang]}

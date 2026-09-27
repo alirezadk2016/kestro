@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import { type CraftMarkName } from "@/components/CraftMark";
 import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
@@ -159,9 +160,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             <div className="mt-8 space-y-8">
               {steps.map((step) => (
                 <div key={step.title.da} className="flex gap-5">
-                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300">
-                    <CraftMark name={step.mark} className="h-6 w-6" />
-                  </span>
+                  <MarkTile name={step.mark} size="md" />
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>
                     <p className="mt-1.5 text-base leading-[1.75] text-paper/65">

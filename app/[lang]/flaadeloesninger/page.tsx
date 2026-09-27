@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/Container";
-import CraftMark, { type CraftMarkName } from "@/components/CraftMark";
+import { type CraftMarkName } from "@/components/CraftMark";
 import ForgedPanel from "@/components/ForgedPanel";
-import MarkWell from "@/components/MarkWell";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedLinks from "@/components/RelatedLinks";
 import TeamAvatar from "@/components/TeamAvatar";
@@ -486,7 +486,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {capabilities.map((item) => (
               <ForgedPanel key={item.title.da} faceClassName="p-5 sm:p-8">
-                <MarkWell mark={item.mark} />
+                <MarkTile name={item.mark} size="lg" />
                 <h3 className="mt-4 text-base font-semibold text-paper">{item.title[lang]}</h3>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/65">{item.description[lang]}</p>
               </ForgedPanel>
@@ -614,7 +614,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"
         />
         <Container className="relative flex flex-col items-center gap-5 text-center">
-          <CraftMark name="sustainable" className="h-8 w-8 text-brand-400" />
+          <MarkTile name="sustainable" size="lg" />
           <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {c.ctaTitle}
           </h2>

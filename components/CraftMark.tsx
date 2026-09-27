@@ -1,64 +1,42 @@
 /*
  * The small marks, drawn rather than picked.
  *
- * The five facts under the hero used to be lucide glyphs: a shield, a
- * briefcase, a leaf, a lorry. They are competent icons and they are on several
- * hundred thousand other sites, which is the problem — the row a buyer sees
- * first said "this is a website" rather than "this is Kestro". That reasoning
- * still holds and these are still drawn here.
+ * The five facts under the hero used to be lucide glyphs, then a set drawn
+ * here on a 24-unit grid with 2-unit strokes, square caps and mitred joins —
+ * crisp at 1x and, placed in a row on a dark bar, a technical drawing: every
+ * line the same weight, every corner a right angle, an accent that fell on
+ * whichever part of each glyph happened to be easiest to colour. It read as
+ * a system icon font, which is what "not designed" looks like on a page that
+ * is otherwise trying to feel like a product brochure.
  *
- * ## The grid, which is why the set looked soft
+ * ## The language
  *
- * These were composed on a 32-unit grid with a 1.9 stroke and rendered at
- * 24px, which puts the stroke at **1.425 device pixels**. A 1.425px line
- * cannot sit on a pixel: every edge in the set was drawn as two grey
- * half-pixels, so twenty marks that are individually fine read as blurred and
- * tentative on any screen that is not retina. No amount of redrawing fixes
- * that, and it is the first thing to get right.
+ * - **1.5-unit strokes, round caps, round joins.** Lighter and softer; on the
+ *   screens this site is read on (retina phones, most laptops) a 1.5px line is
+ *   three device pixels and lands clean. Round terminals are what separate a
+ *   drawn mark from a diagram.
+ * - **A body, not a wash.** The one surface that is the subject — the seal,
+ *   the keycap, the briefcase, the cube's side — is filled with `km-body`, a
+ *   brand gradient from 34% at the top left to 6% at the bottom right. That is
+ *   the light the tiles are lit from, so the mark sits in the same light as
+ *   its plate.
+ * - **One accent, always on the meaning.** The tick on the seal, the Nordic
+ *   cross on the keycap, the leaf inside the loop, the arriving box on the
+ *   shelf. Brand-300 as a stroke, or `km-accent` as a fill. If a reader sees
+ *   only the blue part, they should still get the fact.
+ * - **Metaphors a buyer already reads.** A seal for "tested", a briefcase for
+ *   "business grade", a circular loop with a leaf for "sustainable". The
+ *   previous set tried to be original — three squares for Nordic, two
+ *   arrows for sustainable — and original at 24px means ambiguous.
  *
- * So: a **24-unit grid with a 2-unit stroke, rendered at 24px**. One unit is
- * one pixel, the stroke is exactly two, and geometry sits on integers so both
- * edges of every line land on a pixel boundary. The instances that render at
- * 20 and 28 scale proportionally, which is what an icon set is supposed to do;
- * the 24px ones — the process strip, the feature row, the service tiles — are
- * exact.
+ * Every mark lives in a 3–21 live area and is drawn to read in a MarkTile,
+ * the one container every mark on the site sits in. `km-body` and `km-accent`
+ * are defined once, in <CraftMarkDefs/> in the language layout; each fill
+ * names a flat colour after the url() as SVG's own fallback, so a mark drawn
+ * somewhere the defs are not still has a body.
  *
- * `strokeLinecap` is `butt`, not `square`. Square caps extend a line by half
- * its width PAST the endpoint, so with a 2-unit stroke every terminal
- * overshot by a full unit: the magnifier's handle ran a pixel long, the
- * network's connectors ran into their boxes, and the set picked up a blunt,
- * approximate quality that is exactly what "amateur" looks like. The machined
- * character comes from the joins and the geometry, which are still miter and
- * still square.
- *
- * ## The rules a mark has to pass
- *
- * Each is built silhouette-first: identifiable from its outline alone, no more
- * than four interior strokes, and no two marks in the set sharing a dominant
- * shape. A circle (tested), a keycap (nordic), a trapezoid (business), a loop
- * (sustainable), a van (delivery), a stack (batch) — tell them apart squinting.
- *
- *   - **One optical weight.** Every mark works inside a live area of 2–22 and
- *     its dominant shape spans at least 14 of those units. `nordic` used to be
- *     a filled tile running the full 32 units edge to edge, which in a row of
- *     line drawings was a solid block — not a heavier icon, a different
- *     species. Nothing bleeds to the edge now.
- *   - **One accent, and it is small.** `sustainable` was drawn entirely in
- *     brand-300: every stroke an accent is the same as no accent, and in a
- *     four-mark row it was the one that glowed. The accent marks the part that
- *     carries the meaning — the tick, the Ø, the returning arrow, the top unit
- *     of the lot — and everything else is the same weight.
- *   - **One wash**, brand-400 at 8–12%, on the single surface that is the
- *     subject, so a mark has a body without needing a shadow.
- *
- * The registration ticks are gone. They were the family resemblance and they
- * were designed for a size nothing on this site uses: a 3-unit tick at 25%
- * opacity is a sub-pixel grey speck that costs a fifth of the box and reads as
- * dirt. The silhouette does that job now, at the size the marks are read at.
- *
- * `node scripts/design/marks-sheet.mjs` renders the whole set at 20, 24 and
- * 28px beside a 6x blow-up of each. Look at the 24px row, not the blow-up:
- * every failure this set has had was invisible at 6x and obvious at 1x.
+ * `node scripts/design/marks-sheet.mjs` renders the set at the sizes the site
+ * uses. Look at 24px, not the blow-up.
  *
  * Every mark is aria-hidden: the fact is written in words immediately beside
  * it, and a screen reader gaining "drawing of a van" would be noise.
@@ -76,8 +54,6 @@ export type CraftMarkName =
   | "network"
   | "no-stock"
   | "who"
-  /* The service marks. Added when the repair, fleet and services pages were
-     brought into this language — see the note above the set below. */
   | "screen"
   | "repair"
   | "parts"
@@ -89,436 +65,344 @@ export type CraftMarkName =
   | "battery"
   | "keyboard";
 
+const BODY = "url(#km-body) rgb(102 144 249 / 0.16)";
+const ACCENT = "url(#km-accent) #93AEFB";
+
+/** A twelve-lobed seal: the shape a certificate carries. */
+function seal(cx: number, cy: number, r: number, amp: number) {
+  const pts: string[] = [];
+  for (let i = 0; i < 96; i++) {
+    const t = (2 * Math.PI * i) / 96;
+    const rr = r + amp * Math.cos(12 * t);
+    pts.push(`${(cx + rr * Math.sin(t)).toFixed(2)} ${(cy - rr * Math.cos(t)).toFixed(2)}`);
+  }
+  return `M${pts.join("L")}Z`;
+}
+
+const SEAL_24 = seal(12, 12, 8.4, 0.72);
+const SEAL_20 = seal(10, 10, 6.9, 0.6);
+
+/** One fan blade, rotated three times about the hub. */
+const BLADE = "M12 10.1c.4-2.7 2.1-4.4 4.7-4.6-.3 2.5-2 4.1-4.7 4.6z";
+
 const marks: Record<CraftMarkName, React.ReactNode> = {
-  /*
-   * Function-tested: a lens over the work, and the result of looking.
-   *
-   * The only circle-dominant mark in the set, which is what makes it findable
-   * in a row. The handle used to run from the rim to the far corner of the
-   * box — a diagonal half again as long as the lens is wide, which unbalanced
-   * the whole mark and, with the old square caps, ended in a blunt stub. It is
-   * proportionate now and stops short of the corner.
-   */
+  /* A seal with the tick on it. The magnifier it replaces said "inspect";
+     a seal says "passed", which is the claim. */
   tested: (
     <>
-      <circle cx="10" cy="10" r="6.5" className="fill-brand-400/10" />
-      <circle cx="10" cy="10" r="6.5" />
-      <path d="M15 15l5.5 5.5" />
-      <path d="M7 10.5l2.5 2.5L14 7.5" className="stroke-brand-300" />
+      <path d={SEAL_24} fill={BODY} />
+      <path d={SEAL_24} />
+      <path d="M8.6 12.3l2.3 2.3 4.6-5" className="stroke-brand-300" strokeWidth="1.75" />
     </>
   ),
 
-  /*
-   * Nordic ready: the keys, drawn as keys.
-   *
-   * This was the letter Ø, and before that a ringed Ø, and the comments those
-   * two passes left behind are a record of the same mistake being refined
-   * rather than fixed. A letterform is not a pictogram. In a row whose other
-   * four marks are a lens, a machine, two arrows and a van, one glyph in a
-   * tinted box is the only thing a reader has to *read* instead of recognise —
-   * and at 24px a stroked bowl with a stroke through it is the drawing of a
-   * prohibition sign whatever the slash overshoot does. Two passes were spent
-   * trying to stop it saying "no". The answer was that it should not have been
-   * a letter.
-   *
-   * The claim is a Danish/Norwegian keyboard. So: three caps on a deck, the
-   * last one carrying the accent, because the difference between a Nordic
-   * layout and a southern-European one is the keys on the end of the row. It
-   * is a picture of the thing, it cannot be misread as a symbol, and it is the
-   * only mark in the set with repeated elements — which makes it findable in
-   * the strip without being loud.
-   */
+  /* A keycap — the lip below the top face is what makes it a key and not a
+     tile — carrying a Nordic flag. Keyboard and region in one shape. The
+     first attempt put the cross straight on the key's face and it read as a
+     window; the flag needs its own field to be a flag. No letter on it: an Ø
+     on a key was read as a prohibition sign. */
   nordic: (
     <>
-      <rect x="2" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/10" />
-      <rect x="2" y="7" width="6" height="6" rx="1.4" />
-      <rect x="9" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/10" />
-      <rect x="9" y="7" width="6" height="6" rx="1.4" />
-      <rect x="16" y="7" width="6" height="6" rx="1.4" className="fill-brand-400/28" />
-      <rect x="16" y="7" width="6" height="6" rx="1.4" className="stroke-brand-300" />
-      {/* The deck the caps stand on. Without it three squares in a row are
-          three squares in a row. */}
-      <path d="M2 17.5h20" />
+      <rect x="3" y="3.5" width="18" height="17" rx="3.5" fill={BODY} />
+      <rect x="3" y="3.5" width="18" height="17" rx="3.5" />
+      <path d="M3.6 16.2h16.8" />
+      <rect x="6.5" y="6.5" width="11" height="7" rx=".9" fill={ACCENT} stroke="none" />
+      <path d="M10.3 6.5v7M6.5 10h11" stroke="#0B1426" strokeWidth="1.5" strokeLinecap="butt" />
     </>
   ),
 
-  /*
-   * Business grade, not consumer models: the machine itself, in the posture
-   * it is bought in. The trapezoid deck is the silhouette — nothing else in
-   * the set has a sloped edge.
-   */
+  /* The briefcase: "business" in every visual language there is. The clasp
+     is the accent, because the clasp is the part that says "closed, carried,
+     for work". */
   business: (
     <>
-      <rect x="5" y="3" width="14" height="10" className="fill-brand-400/10" />
-      <rect x="5" y="3" width="14" height="10" />
-      <path d="M8 6h6" className="stroke-brand-300" />
-      <path d="M5 13h14l3 5H2z" />
+      <rect x="3" y="7.5" width="18" height="12.5" rx="2.5" fill={BODY} />
+      <rect x="3" y="7.5" width="18" height="12.5" rx="2.5" />
+      <path d="M9 7.5V6a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0115 6v1.5" />
+      <path d="M3 12.5h7.5M13.5 12.5H21" />
+      <rect x="10.5" y="11" width="3" height="3.2" rx=".8" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
 
-  /*
-   * Sustainable choice: a machine that goes back round into service.
-   *
-   * Two runs and two heads. It used to be drawn entirely in the accent colour,
-   * which in a row of four made it the one that glowed — every stroke an
-   * accent is the same as no accent. The returning head carries it now and the
-   * rest is the set's own weight.
-   */
+  /* The loop that returns, and what it keeps growing. */
   sustainable: (
     <>
-      <path d="M4 9h13" />
-      <path d="M14 6l3 3-3 3" />
-      <path d="M20 15H7" />
-      <path d="M10 12l-3 3 3 3" className="stroke-brand-300" />
+      <path d="M19.4 9.2A8 8 0 005.3 7.6" />
+      <path d="M5 3.8v4h4" />
+      <path d="M4.6 14.8a8 8 0 0014.1 1.6" />
+      <path d="M19 20.2v-4h-4" />
+      <path d="M8.3 15.7c0-4.2 3-7.4 7.4-7.4 0 4.2-3 7.4-7.4 7.4z" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M8.3 15.7l3.4-3.4" stroke="#0B1426" strokeWidth="1.2" />
     </>
   ),
 
-  /* Delivery across the Nordics: the thing that actually arrives. One wheel
-     used to be filled and the other outlined, for no reason a reader could
-     recover; the accent is on the load now, which is the part that is theirs. */
+  /* A van, drawn as one outline with its wheels cut out of the sill. The
+     accent is the load: the part that is the customer's. */
   delivery: (
     <>
-      <rect x="3" y="7" width="10" height="8" className="fill-brand-400/10" />
-      <rect x="3" y="7" width="10" height="8" />
-      <path d="M13 9h4l4 4v2h-8z" />
-      <path d="M6 10.5h4" className="stroke-brand-300" />
-      <circle cx="7" cy="17.5" r="2" />
-      <circle cx="17" cy="17.5" r="2" />
+      <path
+        d="M2.5 16V8A1.5 1.5 0 014 6.5h8A1.5 1.5 0 0113.5 8v1.5h3.3a1.5 1.5 0 011.2.6l2.2 2.9a1.5 1.5 0 01.3.9V16"
+        fill={BODY}
+      />
+      <path d="M2.5 16V8A1.5 1.5 0 014 6.5h8A1.5 1.5 0 0113.5 8v1.5h3.3a1.5 1.5 0 011.2.6l2.2 2.9a1.5 1.5 0 01.3.9V16h-1.4M15.1 16H8.9M5.1 16H2.5" />
+      <path d="M13.5 9.5V16" />
+      <circle cx="7" cy="16.5" r="1.9" />
+      <circle cx="17" cy="16.5" r="1.9" />
+      <rect x="5.5" y="9" width="5" height="3.5" rx=".8" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
 
-  /*
-   * What we set: one value, placed on a scale.
-   *
-   * Two rails with a stop on each was the idea and it did not survive the
-   * size: four elements in a 20-unit box, and at 24px the handles sat on the
-   * rails as an indistinct smear. One rail, one stop and a scale under it says
-   * the same thing — a value chosen and fixed, which is what memory, disk,
-   * keyboard and language are on a sourced machine — and it is the only mark
-   * in the set with a scale, so it is findable in a row.
-   */
+  /* Two sliders, one set. */
   adjust: (
     <>
-      <path d="M3 9h18" />
-      <rect x="13" y="6" width="5" height="6" className="fill-brand-300/25 stroke-brand-300" />
-      <path d="M4 16v3M8 16v3M12 16v3M16 16v3M20 16v3" />
+      <path d="M3.5 8h9.5M17.5 8h3M3.5 16h3M11 16h9.5" />
+      <circle cx="15.2" cy="8" r="2.3" fill={ACCENT} className="stroke-brand-300" />
+      <circle cx="8.8" cy="16" r="2.3" fill={BODY} />
     </>
   ),
 
-  /*
-   * What the batch decides: a lot, stacked. Three units of decreasing width
-   * so the shape reads as a pile from across the room, with the top one — the
-   * one being decided — carrying the accent.
-   */
+  /* Layers: the lot, with the one on top picked out. */
   batch: (
     <>
-      <rect x="3" y="16" width="18" height="5" />
-      <rect x="5" y="10.5" width="14" height="5" />
-      <rect x="7" y="5" width="10" height="5" className="fill-brand-300/25 stroke-brand-300" />
+      <path d="M12 3.5l8.5 4.3-8.5 4.3-8.5-4.3z" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M3.5 12.1l8.5 4.3 8.5-4.3" />
+      <path d="M3.5 16.2l8.5 4.3 8.5-4.3" />
     </>
   ),
 
-  /*
-   * In writing before you order: a sheet with a folded corner, and the line
-   * that makes it binding. The fold is the silhouette — it is the only
-   * non-rectangular corner in the set.
-   */
+  /* The page, its fold, and the tick that makes it an answer. */
   written: (
     <>
-      <path d="M5 3h9l5 5v13H5z" className="fill-brand-400/8" />
-      <path d="M5 3h9l5 5v13H5z" />
-      <path d="M14 3v5h5" />
-      <path d="M8 12h8M8 16h8" />
-      <path d="M8 19h5" className="stroke-brand-300" />
+      <path d="M6.5 3h7L19 8.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15A1.5 1.5 0 016.5 3z" fill={BODY} />
+      <path d="M6.5 3h7L19 8.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15A1.5 1.5 0 016.5 3z" />
+      <path d="M13.5 3v4a1.5 1.5 0 001.5 1.5h4" />
+      <path d="M8.5 12h7M8.5 15h4" />
+      <path d="M11.8 18.1l1.4 1.3 2.8-3" className="stroke-brand-300" />
     </>
   ),
 
-  /*
-   * A sourcing partner, not a web shop: one buyer reaching several suppliers.
-   *
-   * Three suppliers used to hang off the node, at 4.5 units each — under five
-   * pixels, which is a grey speck, and the mark was the least legible in the
-   * set. Two at six units read; the claim is "a network", and two nodes and a
-   * branch is a network.
-   */
+  /* Suppliers: one node reaching two. The reached one is the accent. */
   network: (
     <>
-      <rect x="2" y="9" width="6" height="6" className="fill-brand-400/12" />
-      <rect x="2" y="9" width="6" height="6" />
-      <path d="M8 12h4M12 6v12M12 6h3M12 18h3" />
-      <rect x="15" y="3" width="6" height="6" className="stroke-brand-300" />
-      <rect x="15" y="15" width="6" height="6" className="stroke-brand-300" />
+      <path d="M8.2 10.9l7.6-3.8M8.2 13.1l7.6 3.8" />
+      <circle cx="6" cy="12" r="2.6" fill={BODY} />
+      <circle cx="6" cy="12" r="2.6" />
+      <circle cx="18" cy="6" r="2.6" fill={ACCENT} className="stroke-brand-300" />
+      <circle cx="18" cy="18" r="2.6" />
     </>
   ),
 
-  /*
-   * The advantage of holding no stock: the shelf is drawn and it is empty,
-   * with the one unit that exists standing outside it — sourced for the order
-   * rather than waiting to be sold.
-   *
-   * The shelves were dashed at 55% opacity, which at 24px is nothing at all —
-   * the mark was a vertical bar and a square. Solid and short: the emptiness
-   * is carried by the gap between the shelf and the unit, not by a faint line.
-   */
+  /* No stock: an empty shelf with the one box that was sourced for you. */
   "no-stock": (
     <>
-      <path d="M3 3v18" />
-      <path d="M3 6.5h6M3 12h6M3 17.5h6" />
-      <rect x="14.5" y="8.5" width="7" height="7" className="fill-brand-300/25 stroke-brand-300" />
+      <rect x="3.5" y="3.5" width="17" height="17" rx="2.2" />
+      <path d="M3.5 12.5h17" />
+      <rect x="6.5" y="6.5" width="5.5" height="6" rx="1" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M15 17h2.5" />
     </>
   ),
 
-  /*
-   * Who we help: one company, drawn as a building.
-   *
-   * It was three buildings at three heights on a baseline, which is a bar
-   * chart — and every attempt to argue it out of being one failed, because a
-   * door at 24px is two pixels and a chart column with a two-pixel notch is
-   * still a chart column. Worse, the accent used to sit on the tallest, which
-   * is exactly how a chart highlights a value.
-   *
-   * The range the copy claims — ten machines to a whole fleet — is a sentence,
-   * and it is written immediately beside this mark. The mark's job is to say
-   * "a company", and the only thing that reads as a building at this size is
-   * a grid of windows with a door under it. It is also the only tall rectangle
-   * in the set with a grid inside, so it survives a row.
-   */
+  /* A small office building and its door. */
   who: (
     <>
-      <rect x="5" y="3" width="14" height="18" className="fill-brand-400/10" />
-      <rect x="5" y="3" width="14" height="18" />
-      <path d="M8 7h3M13 7h3M8 11h3M13 11h3" />
-      <path d="M10 21v-5h4v5" className="stroke-brand-300" />
+      <path d="M5 21V5.5A1.5 1.5 0 016.5 4h7A1.5 1.5 0 0115 5.5V21" fill={BODY} />
+      <path d="M5 21V5.5A1.5 1.5 0 016.5 4h7A1.5 1.5 0 0115 5.5V21M15 10h3.5a1.5 1.5 0 011.5 1.5V21M3 21h18" />
+      <path d="M8 8h1M11 8h1M8 11.5h1M11 11.5h1" />
+      <path d="M9 21v-4.5h2V21" className="stroke-brand-300" />
     </>
   ),
 
-  /*
-   * The service marks.
-   *
-   * /reparation, /ydelser, /flaadeloesninger and /saelg-til-os listed their
-   * services with lucide glyphs in the same plates these marks sit in — so
-   * the site ran two icon languages at once, one with round caps and one with
-   * square, and a visitor moving from the front page to Repairs crossed from
-   * one product into another. The split that remains is the one worth having:
-   * lucide for interface affordances (the arrow on a link, the chevron on a
-   * menu, the tick in a list), these for anything that names a subject.
-   *
-   * Same rules as above — silhouette first, four interior strokes, one accent.
-   * The gear is the only circle with teeth, the spanner the only diagonal, the
-   * heatsink the only run of fins, so they survive a row of twelve.
-   */
-
-  /* A screen on a pedestal. The laptop mark is the trapezoid; this is the one
-     with a foot, which is what tells the two apart at 24px. */
   screen: (
     <>
-      <rect x="3" y="4" width="18" height="12" className="fill-brand-400/10" />
-      <rect x="3" y="4" width="18" height="12" />
-      <path d="M12 16v4" />
-      <path d="M8 20h8" className="stroke-brand-300" />
+      <rect x="3" y="4" width="18" height="12" rx="1.8" fill={BODY} />
+      <rect x="3" y="4" width="18" height="12" rx="1.8" />
+      <path d="M12 16v3.5" />
+      <path d="M8.5 20h7" className="stroke-brand-300" />
     </>
   ),
 
-  /* A spanner. The only diagonal silhouette in the set. */
   repair: (
     <>
       <path
-        d="M15.4 3.4a4.9 4.9 0 00-6.3 6.3L3 15.8l2.6 2.6 6.1-6.1a4.9 4.9 0 006.3-6.3l-2.7 2.7-2.3-2.3z"
-        className="fill-brand-400/10"
+        d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a5.6 5.6 0 01-7.4 7.4l-6.3 6.3a2 2 0 01-2.8-2.8l6.3-6.3a5.6 5.6 0 017.4-7.4z"
+        fill={BODY}
       />
-      <path d="M15.4 3.4a4.9 4.9 0 00-6.3 6.3L3 15.8l2.6 2.6 6.1-6.1a4.9 4.9 0 006.3-6.3l-2.7 2.7-2.3-2.3z" />
-      <path d="M5 16.2l1.5 1.5" className="stroke-brand-300" />
+      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a5.6 5.6 0 01-7.4 7.4l-6.3 6.3a2 2 0 01-2.8-2.8l6.3-6.3a5.6 5.6 0 017.4-7.4z" />
+      <circle cx="5.9" cy="18.1" r=".6" className="fill-brand-300 stroke-brand-300" />
     </>
   ),
 
-  /* A gear: the only toothed circle. */
+  /* A processor: the component every machine is built around. */
   parts: (
     <>
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19" />
-      <circle cx="12" cy="12" r="6" className="fill-brand-400/10" />
-      <circle cx="12" cy="12" r="6" />
-      <circle cx="12" cy="12" r="2.2" className="stroke-brand-300" />
+      <rect x="6" y="6" width="12" height="12" rx="2" fill={BODY} />
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+      <rect x="9.5" y="9.5" width="5" height="5" rx="1" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3" />
     </>
   ),
 
-  /* A heatsink with the air moving over it: a run of fins under two passes.
-     The only comb shape in the set. The air is the accent, because cooling is
-     the air rather than the metal. */
+  /* A fan in its frame. */
   cooling: (
     <>
-      <path d="M3 5c2.2 2.2 4.5-2.2 6.8 0s4.5-2.2 6.8 0" className="stroke-brand-300" />
-      <path
-        d="M3 9.5c2.2 2.2 4.5-2.2 6.8 0s4.5-2.2 6.8 0"
-        className="stroke-brand-300 opacity-55"
-      />
-      <rect x="3" y="14" width="18" height="7" className="fill-brand-400/10" />
-      <path d="M7 14v7M11 14v7M15 14v7M19 14v7" />
+      <circle cx="12" cy="12" r="8.5" fill={BODY} />
+      <circle cx="12" cy="12" r="8.5" />
+      <path d={BLADE} fill={ACCENT} className="stroke-brand-300" />
+      <path d={BLADE} fill={ACCENT} className="stroke-brand-300" transform="rotate(120 12 12)" />
+      <path d={BLADE} fill={ACCENT} className="stroke-brand-300" transform="rotate(240 12 12)" />
+      <circle cx="12" cy="12" r="1.6" />
     </>
   ),
 
-  /* A system being written onto the machine: the arrow down into a drive. */
   install: (
     <>
-      <path d="M12 3v9M8 9l4 4 4-4" className="stroke-brand-300" />
-      <rect x="3" y="16" width="18" height="5" className="fill-brand-400/10" />
-      <rect x="3" y="16" width="18" height="5" />
-      <path d="M6 18.5h2.5" />
+      <path d="M4 14.5v3.5A2 2 0 006 20h12a2 2 0 002-2v-3.5" fill={BODY} />
+      <path d="M4 14.5v3.5A2 2 0 006 20h12a2 2 0 002-2v-3.5" />
+      <path d="M12 3.5v10M8 9.5l4 4 4-4" className="stroke-brand-300" />
     </>
   ),
 
-  /* A processor: the only square with legs on all four sides. */
+  /* A cube: the machine, put together. */
   assembly: (
     <>
-      <rect x="6" y="6" width="12" height="12" className="fill-brand-400/10" />
-      <rect x="6" y="6" width="12" height="12" />
-      <rect x="10" y="10" width="4" height="4" className="stroke-brand-300" />
-      <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
+      <path d="M4.5 7.7L12 12v8.5l-7.5-4.2z" fill={BODY} />
+      <path d="M12 3.5l7.5 4.2L12 12 4.5 7.7z" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M4.5 7.7v8.6l7.5 4.2 7.5-4.2V7.7M12 12v8.5" />
     </>
   ),
 
-  /* A calendar: the lead time, which is the thing a fleet buyer asks for. */
   schedule: (
     <>
-      <rect x="3" y="5" width="18" height="16" className="fill-brand-400/8" />
-      <rect x="3" y="5" width="18" height="16" />
-      <path d="M3 10h18" />
-      <path d="M8 2v4M16 2v4" />
-      <rect x="7" y="13" width="4" height="4" className="fill-brand-300/30 stroke-brand-300" />
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2" fill={BODY} />
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+      <path d="M3.5 9.5h17M8 3v4M16 3v4" />
+      <rect x="7" y="12.5" width="3.5" height="3.5" rx=".8" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
 
-  /* A memory module, at the 24-grid size. The spec panel has its own. */
   memory: (
     <>
-      <rect x="3" y="7" width="18" height="9" className="fill-brand-400/12" />
-      <rect x="3" y="7" width="18" height="9" />
-      <path d="M6 16v3M10 16v3M14 16v3M18 16v3" />
-      <rect x="6" y="9.5" width="7" height="4" className="fill-brand-300/30 stroke-brand-300" />
+      <rect x="2.5" y="7" width="19" height="9" rx="1.2" fill={BODY} />
+      <rect x="2.5" y="7" width="19" height="9" rx="1.2" />
+      <path d="M5.5 16v2.5M8.5 16v2.5M15.5 16v2.5M18.5 16v2.5" />
+      <rect x="10.25" y="9.5" width="3.5" height="4" rx=".6" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M5.5 11.5h2M16.5 11.5h2" />
     </>
   ),
 
-  /* A cell with a measured level. */
   battery: (
     <>
-      <rect x="3" y="8" width="16" height="9" rx="1.5" />
-      <path d="M21 11v3" className="stroke-[3]" />
-      <rect x="5.5" y="10.5" width="7" height="4" className="fill-brand-300/35 stroke-brand-300" />
+      <rect x="2.5" y="7.5" width="16.5" height="9" rx="2" />
+      <path d="M21.5 10.5v3" />
+      <rect x="5" y="10" width="7" height="4" rx=".8" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
 
-  /* A keyboard in plan, with the Nordic key picked out. The single keycap is
-     the "nordic" mark; this is the whole board, for a row that is about the
-     hardware rather than about the layout. */
   keyboard: (
     <>
-      <rect x="3" y="6" width="18" height="12" rx="1.5" className="fill-brand-400/8" />
-      <rect x="3" y="6" width="18" height="12" rx="1.5" />
-      <path d="M6 10h2M11 10h2M16 10h2M6 14h7" />
-      <rect x="15" y="12.5" width="4" height="3" className="fill-brand-300/30 stroke-brand-300" />
+      <rect x="2.5" y="6" width="19" height="12" rx="2" fill={BODY} />
+      <rect x="2.5" y="6" width="19" height="12" rx="2" />
+      <path d="M6 9.5h.5M9.5 9.5h.5M13.5 9.5h.5M17.5 9.5h.5M6 12.5h.5M9.5 12.5h.5M13.5 12.5h.5M17.5 12.5h.5" strokeWidth="2" />
+      <path d="M8 15.3h8" className="stroke-brand-300" />
     </>
   ),
 };
 
-/*
- * The same hand, at the size a list row allows.
- *
- * The hero's spec panel indexes six lines with a mark each, at 20px. They
- * cannot be the marks above shrunk — those are composed on a 24-unit grid for
- * 24px, and scaling that to 20 puts the stroke at 1.67 device pixels, which is
- * the same off-grid blur the whole set was redrawn to escape. So this is a
- * second, coarser set on a **20-unit grid with a 2-unit stroke**, drawn to the
- * same conventions: square joins, butt caps, one accent, a wash on the subject.
- *
- * The two collisions this set used to have are the reason it was redrawn. The
- * SSD and the battery were both a rounded body with a filled block inside, and
- * the keyboard was a third; in a vertical list of six, three rows carried what
- * looked like the same picture. The SSD leads with its key notch, the battery
- * with a terminal nub and a level, and the keyboard with a grid of caps.
- */
 export type SpecMarkName = "ram" | "ssd" | "keyboard" | "battery" | "tested" | "warranty";
 
+/* The same language on a 20-unit grid, for the spec rows beside the hero. */
 const specMarks: Record<SpecMarkName, React.ReactNode> = {
-  /* A memory module: body, contact teeth, one package on it. */
   ram: (
     <>
-      <rect x="2" y="5" width="16" height="8" className="fill-brand-400/12" />
-      <rect x="2" y="5" width="16" height="8" />
-      <path d="M5 13v2M8 13v2M11 13v2M14 13v2" />
-      <rect x="4" y="7" width="6" height="4" className="fill-brand-300/30 stroke-brand-300" />
+      <rect x="2" y="5.5" width="16" height="8" rx="1" fill={BODY} />
+      <rect x="2" y="5.5" width="16" height="8" rx="1" />
+      <path d="M4.5 13.5v2M7.5 13.5v2M12.5 13.5v2M15.5 13.5v2" />
+      <rect x="8.2" y="7.7" width="3.6" height="3.6" rx=".6" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
-  /* An M.2 stick: the key notch at the contact end, the mounting hole at the
-     other. Long and thin, so it cannot be mistaken for the cell below it. */
+  /* A drive: long, thin, with its connector end. */
   ssd: (
     <>
-      <rect x="2" y="7" width="14" height="6" className="fill-brand-400/12" />
-      <rect x="2" y="7" width="14" height="6" />
-      <path d="M5 7v6" />
-      <rect x="7.5" y="8.5" width="5" height="3" className="fill-brand-300/30 stroke-brand-300" />
-      <circle cx="18" cy="10" r="1.2" />
+      <rect x="2" y="6.5" width="16" height="7" rx="1.4" fill={BODY} />
+      <rect x="2" y="6.5" width="16" height="7" rx="1.4" />
+      <path d="M5 8.8v2.4" />
+      <rect x="8" y="8.3" width="6" height="3.4" rx=".6" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
-  /* A keyboard in plan: a grid of caps, not two lines. The Nordic key is the
-     one picked out, which is the only thing this row claims. */
   keyboard: (
     <>
-      <rect x="2" y="5" width="16" height="10" rx="1.5" className="fill-brand-400/8" />
-      <rect x="2" y="5" width="16" height="10" rx="1.5" />
-      <path d="M5 8h2M9 8h2M13 8h2M5 12h5" />
-      <rect
-        x="12.5"
-        y="10.5"
-        width="3.5"
-        height="2.5"
-        className="fill-brand-300/30 stroke-brand-300"
-      />
+      <rect x="2" y="5" width="16" height="10" rx="1.8" fill={BODY} />
+      <rect x="2" y="5" width="16" height="10" rx="1.8" />
+      <path d="M5 8h.5M8 8h.5M11.5 8h.5M14.5 8h.5" strokeWidth="1.8" />
+      <path d="M6.5 11.8h7" className="stroke-brand-300" />
     </>
   ),
-  /* A cell with its terminal and a measured level — the panel states a
-     measured percentage, so the mark shows a level rather than a full cell. */
   battery: (
     <>
-      <rect x="2" y="6" width="14" height="8" rx="1.5" />
-      <path d="M17.5 8.5v3" className="stroke-[3]" />
-      <rect x="4" y="8" width="6" height="4" className="fill-brand-300/35 stroke-brand-300" />
+      <rect x="2" y="6" width="14" height="8" rx="1.8" />
+      <path d="M18 8.5v3" />
+      <rect x="4.2" y="8.2" width="6" height="3.6" rx=".7" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
-  /* The lens and the result, matching the mark of the same name above. */
   tested: (
     <>
-      <circle cx="8.5" cy="8.5" r="5.5" className="fill-brand-400/12" />
-      <circle cx="8.5" cy="8.5" r="5.5" />
-      <path d="M12.5 12.5l4 4" />
-      <path d="M6 9l2 2 3.5-4" className="stroke-brand-300" />
+      <path d={SEAL_20} fill={BODY} />
+      <path d={SEAL_20} />
+      <path d="M7.2 10.2l1.9 1.9 3.8-4.1" className="stroke-brand-300" strokeWidth="1.7" />
     </>
   ),
-  /* The sheet and the seal that makes it binding. The circle is what tells it
-     apart from the keyboard and the module in the same column. */
+  /* The page and the seal that makes it binding. */
   warranty: (
     <>
-      <path d="M3 2h8l4 4v12H3z" className="fill-brand-400/8" />
-      <path d="M3 2h8l4 4v12H3z" />
-      <path d="M11 2v4h4" />
-      <path d="M6 10h6M6 13h4" />
-      <circle cx="12" cy="14.5" r="2.4" className="fill-brand-300/35 stroke-brand-300" />
+      <path d="M4.5 2.5h6.5L15 6.5v10a1.3 1.3 0 01-1.3 1.3H4.5a1.3 1.3 0 01-1.3-1.3v-12.7a1.3 1.3 0 011.3-1.3z" fill={BODY} />
+      <path d="M4.5 2.5h6.5L15 6.5v10a1.3 1.3 0 01-1.3 1.3H4.5a1.3 1.3 0 01-1.3-1.3v-12.7a1.3 1.3 0 011.3-1.3z" />
+      <path d="M6 8.5h5M6 11.3h3" />
+      <circle cx="12.6" cy="14.6" r="2.3" fill={ACCENT} className="stroke-brand-300" />
     </>
   ),
+};
+
+const svgProps = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+  focusable: false,
 };
 
 export function SpecMark({ name, className = "" }: { name: SpecMarkName; className?: string }) {
   return (
+    <svg viewBox="0 0 20 20" {...svgProps} className={className}>
+      {specMarks[name]}
+    </svg>
+  );
+}
+
+/**
+ * The two gradients every mark fills from. Rendered once, in the language
+ * layout, as a zero-size SVG — url(#km-body) resolves document-wide.
+ */
+export function CraftMarkDefs() {
+  return (
     <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="butt"
-      strokeLinejoin="miter"
+      width="0"
+      height="0"
       aria-hidden="true"
       focusable="false"
-      className={className}
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
     >
-      {specMarks[name]}
+      <defs>
+        <linearGradient id="km-body" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#93AEFB" stopOpacity="0.36" />
+          <stop offset="1" stopColor="#1E40FF" stopOpacity="0.05" />
+        </linearGradient>
+        <linearGradient id="km-accent" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#BECFFD" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#6690F9" stopOpacity="0.55" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }
@@ -531,17 +415,7 @@ export default function CraftMark({
   className?: string;
 }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="butt"
-      strokeLinejoin="miter"
-      aria-hidden="true"
-      focusable="false"
-      className={className}
-    >
+    <svg viewBox="0 0 24 24" {...svgProps} className={className}>
       {marks[name]}
     </svg>
   );

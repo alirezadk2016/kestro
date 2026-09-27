@@ -1,6 +1,7 @@
 import Link from "next/link";
+import MarkTile from "@/components/MarkTile";
 import Container from "./Container";
-import CraftMark, { type CraftMarkName } from "./CraftMark";
+import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 /*
@@ -120,12 +121,7 @@ export default function Statement({ lang }: { lang: Lang }) {
                   there is invalid markup — which is what a screen reader
                   trips over and what Lighthouse flagged. */}
               <dt className="font-display text-base font-bold leading-snug tracking-tight text-paper">
-                <span
-                  aria-hidden="true"
-                  className="plate-sm mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.10] text-paper/90"
-                >
-                  <CraftMark name={promise.mark} className="h-5 w-5" />
-                </span>
+                <MarkTile name={promise.mark} size="md" className="mb-4 flex" />
                 {promise.term[lang]}
               </dt>
               <dd className="mt-2 flex flex-1 flex-col text-sm leading-6 text-paper/65">

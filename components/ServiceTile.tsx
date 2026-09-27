@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { type CraftMarkName } from "@/components/CraftMark";
 import ForgedPanel from "@/components/ForgedPanel";
-import MarkWell from "@/components/MarkWell";
+import MarkTile from "@/components/MarkTile";
 
 /*
  * A card that goes somewhere, and looks like it.
@@ -12,7 +12,7 @@ import MarkWell from "@/components/MarkWell";
  * question, and the tile is where it gets asked, so the tile is where the
  * answer has to be one click away.
  *
- * The material is ForgedPanel and the mark is MarkWell; both carry their own
+ * The material is ForgedPanel and the mark is MarkTile; both carry their own
  * reasoning. What matters here is that the whole card is one link — not a card
  * with a link in the corner, which is forty pixels of target on a phone where
  * there could be two hundred.
@@ -45,7 +45,7 @@ export default function ServiceTile({
 
   return (
     <ForgedPanel href={href}>
-      <MarkWell mark={mark} className="tile-z tile-z-near" />
+      <MarkTile name={mark} size="lg" className="tile-z tile-z-near" />
 
       <Heading className="tile-z tile-z-far mt-4 text-sm font-semibold text-paper group-hover:text-brand-200 sm:text-base">
         {title}

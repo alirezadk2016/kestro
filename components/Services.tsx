@@ -1,7 +1,8 @@
 import Link from "next/link";
+import MarkTile from "@/components/MarkTile";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
-import CraftMark, { type CraftMarkName } from "./CraftMark";
+import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const services = [
@@ -127,9 +128,7 @@ export default function Services({ lang }: { lang: Lang }) {
                 {i < services.length - 1 && (
                   <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5" />
                 )}
-                <span className="plate-sm relative flex h-11 w-11 items-center justify-center rounded-lg bg-brand-500/[0.12] text-paper/90">
-                  <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
-                </span>
+                <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="md" className="relative" />
               </div>
 
               <span
@@ -163,9 +162,7 @@ export default function Services({ lang }: { lang: Lang }) {
                   Below lg the mark is the station on the rail, so it is not
                   drawn twice.
                 */}
-                <span className="plate-sm mb-5 hidden h-11 w-11 items-center justify-center rounded-lg bg-brand-500/[0.10] text-paper/90 lg:flex">
-                  <CraftMark name={STEP_MARKS[i] ?? "adjust"} className="h-6 w-6" />
-                </span>
+                <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="md" className="mb-5 !hidden lg:!inline-flex" />
                 <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
                   {String(i + 1).padStart(2, "0")}
                 </span>

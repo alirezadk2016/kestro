@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buttonClass } from "./Button";
 import { ArrowRight, FileText } from "lucide-react";
 import Container from "./Container";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -68,7 +69,7 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
 
             <Link
               href={localePath("/tilbud-eksempel", lang)}
-              className="group mt-6 inline-flex min-h-[48px] items-center gap-2 border border-white/20 px-6 text-sm font-semibold text-paper transition hover:border-white/45"
+              className={`${buttonClass("secondary")} mt-6`}
             >
               <FileText className="h-4 w-4 text-brand-300" strokeWidth={1.75} />
               {c.cta}
