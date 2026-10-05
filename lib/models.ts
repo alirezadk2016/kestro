@@ -187,8 +187,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -508,8 +508,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -605,8 +605,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -705,8 +705,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -802,8 +802,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -896,8 +896,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -990,8 +990,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -1084,8 +1084,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -1181,8 +1181,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -1281,8 +1281,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],
@@ -1380,8 +1380,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 10 eller 11 installeret med drivere",
-          en: "Windows 10 or 11 installed with drivers",
+          da: "Windows 11 installeret med drivere",
+          en: "Windows 11 installed with drivers",
         },
       },
     ],

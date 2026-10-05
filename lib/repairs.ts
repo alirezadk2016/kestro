@@ -566,7 +566,7 @@ export const repairs: Repair[] = [
     slug: "samling-af-pc",
     mark: "assembly",
     name: { da: "Samling af pc", en: "PC assembly" },
-    metaTitle: { da: "Samling og opgradering af pc", en: "PC assembly and upgrades" },
+    metaTitle: { da: "Samling og opgradering af pc", en: "PC assembly and upgrades, built to the job" },
     metaDescription: {
       da: "Vi bygger efter opgaven, ikke efter et datablad – fra bunden eller videre på den maskine, I har. Samlet, installeret og belastet, før den bliver leveret.",
       en: "We build to the job rather than to a datasheet — from scratch, or on top of the machine you have. Assembled, installed and loaded before it is delivered.",
