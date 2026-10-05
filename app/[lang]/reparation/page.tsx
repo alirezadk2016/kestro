@@ -198,10 +198,20 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.howTitle}
               </h2>
-              <ol className="mt-6 space-y-4 text-base leading-7 text-paper/65">
+              {/* A sequence, so a spine: the numbers sit on a rail that runs
+                  from the first step to the last. As a plain "1. 2. 3." list
+                  it read as body copy that happened to be numbered. */}
+              <ol className="relative mt-6 space-y-6">
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-3 left-[15px] top-3 w-px bg-gradient-to-b from-brand-400/60 via-paper/15 to-paper/5"
+                />
                 {[c.step1, c.step2, c.step3, c.step4].map((step, i) => (
-                  <li key={step}>
-                    <span className="font-semibold text-paper">{i + 1}.</span> {step}
+                  <li key={step} className="relative flex gap-4">
+                    <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-950 font-display text-xs font-bold tabular-nums text-brand-300">
+                      {i + 1}
+                    </span>
+                    <span className="pt-1 text-base leading-7 text-paper/70">{step}</span>
                   </li>
                 ))}
               </ol>

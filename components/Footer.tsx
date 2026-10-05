@@ -159,7 +159,7 @@ export default function Footer({ lang }: { lang: Lang }) {
 
           <Link
             href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[48px] items-center gap-2 self-start border border-paper/25 px-6 text-sm font-semibold text-paper transition hover:border-paper/60 sm:self-auto"
+            className="inline-flex min-h-[48px] items-center gap-2 self-start rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper transition hover:border-white/35 hover:bg-white/[0.08] sm:self-auto"
           >
             {ui.talkToAdviser[lang]}
             <ArrowRight className="h-4 w-4" strokeWidth={2} />

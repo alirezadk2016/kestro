@@ -95,7 +95,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             <div className="space-y-6 lg:col-span-2">
               <ContactFlipCard lang={lang} />
 
-              <div className="border border-white/10 bg-white/5 p-6 sm:p-8">
+              <div className="plate p-6 sm:p-8">
                 <h2 className="text-base font-semibold text-paper">{c.emailTitle}</h2>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/65">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />

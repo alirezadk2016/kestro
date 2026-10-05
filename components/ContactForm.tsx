@@ -398,7 +398,7 @@ export default function ContactForm({
           </button>
           <a
             href={mailHref}
-            className="inline-flex min-h-[44px] items-center border border-white/15 px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
           >
             {c.openMail}
           </a>

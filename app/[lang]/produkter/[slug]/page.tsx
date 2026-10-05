@@ -9,7 +9,9 @@ import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
-import { getCategoryIcon } from "@/lib/category-icons";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
+import CraftMark from "@/components/CraftMark";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
@@ -114,7 +116,6 @@ export default async function CategoryPage(props: {
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
   const categoryModels = getModelsForCategory(category.slug);
-  const Icon = getCategoryIcon(category.slug);
 
   /*
    * The category as a collection, not just a page with a breadcrumb.
@@ -199,9 +200,7 @@ export default async function CategoryPage(props: {
             </nav>
 
             <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-              <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
-              </span>
+              <MarkTile name={getCategoryMark(category.slug)} size="lg" />
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {category.name[lang]}
@@ -231,7 +230,7 @@ export default async function CategoryPage(props: {
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/80"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
                 >
                   {brand}
                 </li>
@@ -378,7 +377,7 @@ export default async function CategoryPage(props: {
               ))}
             </dl>
 
-            <div className="mt-10 border border-white/10 bg-white/5 p-6">
+            <div className="plate mt-10 p-6">
               <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
               <p className="mt-2 text-base leading-[1.75] text-paper/65">
                 {category.specNote[lang]}
@@ -394,14 +393,13 @@ export default async function CategoryPage(props: {
             <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
-                const OtherIcon = getCategoryIcon(other.slug);
                 return (
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 px-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
                     >
-                      <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
+                      <CraftMark name={getCategoryMark(other.slug)} className="h-5 w-5" />
                       {other.name[lang]}
                     </Link>
                   </li>

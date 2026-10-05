@@ -83,7 +83,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             updated="/modeller"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
             <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noShopBody1}</p>
             <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noShopBody2}</p>

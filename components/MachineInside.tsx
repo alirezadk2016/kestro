@@ -197,7 +197,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
   return (
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-7">
-        <div className="overflow-hidden border border-white/10 bg-brand-950">
+        <div className="plate overflow-hidden bg-brand-950">
           <svg
             viewBox={box.join(" ")}
             role="img"
@@ -288,7 +288,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
             type="button"
             onClick={() => setSelected(null)}
             aria-pressed={selected === null}
-            className={`inline-flex min-h-[44px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
+            className={`inline-flex min-h-[44px] items-center rounded-full border px-4 text-xs font-semibold tracking-tight transition ${
               selected === null
                 ? "border-brand-600 bg-brand-600 text-white"
                 : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
@@ -302,7 +302,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
               type="button"
               onClick={() => setSelected(part)}
               aria-pressed={selected?.id === part.id}
-              className={`inline-flex min-h-[44px] items-center border px-4 text-xs font-semibold tracking-tight transition ${
+              className={`inline-flex min-h-[44px] items-center rounded-full border px-4 text-xs font-semibold tracking-tight transition ${
                 selected?.id === part.id
                   ? "border-brand-600 bg-brand-600 text-white"
                   : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"

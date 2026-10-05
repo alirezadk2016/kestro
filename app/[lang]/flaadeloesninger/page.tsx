@@ -432,7 +432,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             className="mb-8"
           />
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center border border-paper/25 bg-white/5 px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
+            <span className="plate-sm inline-flex items-center rounded-full px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
               {c.badge}
             </span>
             <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">

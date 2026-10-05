@@ -138,9 +138,12 @@ export default async function RepairPage(props: Params) {
             <ul className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
               {repair.bands.map((band) => (
                 <li key={band.range} className="plate flex items-baseline gap-4 p-4 sm:p-5">
-                  {/* Fixed width and no wrapping: "90–100%" broke after the
-                      dash and read as two numbers stacked. */}
-                  <span className="w-[5.5rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
+                  {/* No wrapping: "90–100%" broke after the dash and read as
+                      two numbers stacked. A minimum width rather than a fixed
+                      one: "Under 70%" is wider than 5.5rem at text-xl, and a
+                      fixed box let it run into the sentence beside it —
+                      "Under 70%Skift det." on the live page. */}
+                  <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
                     {band.range}
                   </span>
                   <span className="text-sm leading-[1.6] text-paper/70">{band.reading[lang]}</span>

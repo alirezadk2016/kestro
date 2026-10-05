@@ -10,7 +10,8 @@ import WhatIsFixed from "@/components/WhatIsFixed";
 import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
-import { getCategoryIcon } from "@/lib/category-icons";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
 import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
@@ -105,7 +106,6 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   if (!model) notFound();
 
   const category = getCategory(model.category);
-  const Icon = getCategoryIcon(model.category);
   /* Peers are the models in the same category, not the same group: the ZBook
      is the only "workstations" model, so relating by group left it with no
      siblings pointing at it — two incoming links on the whole site. */
@@ -197,9 +197,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-7">
                 <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-                  <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                    <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
-                  </span>
+                  <MarkTile name={getCategoryMark(model.category)} size="lg" />
                   <div>
                     <span className="text-sm font-semibold uppercase tracking-wider text-paper/70">
                       {model.brand} · {model.format[lang]}
@@ -215,7 +213,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
                 <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
 
-                <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-[1.6] text-ink-300">
+                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-ink-300">
                   {c.notStock}
                 </p>
 
@@ -268,7 +266,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
           <div className="max-w-6xl">
-            <div className="overflow-hidden border border-white/10">
+            <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
                 <p className="mt-1 text-sm leading-[1.6] text-paper/65">{c.configBody}</p>
@@ -348,7 +346,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               </>
             )}
 
-            <div className="mt-12 border border-white/10 bg-white/5 p-6 sm:p-8">
+            <div className="plate mt-12 p-6 sm:p-8">
               <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>

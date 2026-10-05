@@ -426,7 +426,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                     <li key={link.href}>
                       <Link
                         href={localePath(link.href, lang)}
-                        className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
                       >
                         {link.label[lang]}
                         <span aria-hidden="true">&rarr;</span>

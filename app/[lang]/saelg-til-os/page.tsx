@@ -185,7 +185,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
                 {accepted.map((item) => (
                   <li
                     key={item.da}
-                    className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/80"
+                    className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
                   >
                     {item[lang]}
                   </li>

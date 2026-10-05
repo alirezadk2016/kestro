@@ -63,7 +63,17 @@ export type CraftMarkName =
   | "schedule"
   | "memory"
   | "battery"
-  | "keyboard";
+  | "keyboard"
+  /* The product categories. The catalogue pages drew these with lucide
+     glyphs in a hand-rolled square long after the rest of the site had
+     moved to this set — the last place the old icons survived. */
+  | "laptop"
+  | "desktop"
+  | "mini-pc"
+  | "tablet"
+  | "phone"
+  | "dock"
+  | "watch";
 
 const BODY = "url(#km-body) rgb(102 144 249 / 0.16)";
 const ACCENT = "url(#km-accent) #93AEFB";
@@ -304,6 +314,74 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="2.5" y="6" width="19" height="12" rx="2" />
       <path d="M6 9.5h.5M9.5 9.5h.5M13.5 9.5h.5M17.5 9.5h.5M6 12.5h.5M9.5 12.5h.5M13.5 12.5h.5M17.5 12.5h.5" strokeWidth="2" />
       <path d="M8 15.3h8" className="stroke-brand-300" />
+    </>
+  ),
+
+  laptop: (
+    <>
+      <rect x="4.5" y="4.5" width="15" height="10.5" rx="1.6" fill={BODY} />
+      <rect x="4.5" y="4.5" width="15" height="10.5" rx="1.6" />
+      <path d="M2.5 17.5h19l-.9 1.9a1.2 1.2 0 01-1.1.7h-15a1.2 1.2 0 01-1.1-.7z" />
+      <path d="M10.5 17.5h3" className="stroke-brand-300" />
+    </>
+  ),
+
+  /* A tower from the front: the power ring is the accent, because it is the
+     one thing on the front of every business desktop. */
+  desktop: (
+    <>
+      <rect x="7" y="2.5" width="10" height="19" rx="2" fill={BODY} />
+      <rect x="7" y="2.5" width="10" height="19" rx="2" />
+      <circle cx="12" cy="6.5" r="1.4" fill={ACCENT} className="stroke-brand-300" />
+      <path d="M10 11h4M10 13.5h4M10 16h4" />
+    </>
+  ),
+
+  /* The one-litre box: low, wide, ports on the front. */
+  "mini-pc": (
+    <>
+      <rect x="3" y="8.5" width="18" height="7.5" rx="2" fill={BODY} />
+      <rect x="3" y="8.5" width="18" height="7.5" rx="2" />
+      <path d="M6 12.25h3M6 16v2M18 16v2" />
+      <circle cx="16.5" cy="12.25" r="1.2" fill={ACCENT} className="stroke-brand-300" />
+    </>
+  ),
+
+  tablet: (
+    <>
+      <rect x="5" y="2.5" width="14" height="19" rx="2.5" fill={BODY} />
+      <rect x="5" y="2.5" width="14" height="19" rx="2.5" />
+      <path d="M11 18.5h2" className="stroke-brand-300" />
+    </>
+  ),
+
+  phone: (
+    <>
+      <rect x="7" y="2.5" width="10" height="19" rx="2.5" fill={BODY} />
+      <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+      <path d="M10.75 5.5h2.5" />
+      <path d="M10.75 18.5h2.5" className="stroke-brand-300" />
+    </>
+  ),
+
+  /* A dock and its one cable: the plug is the accent, because one cable is
+     the whole point of a dock. */
+  dock: (
+    <>
+      <rect x="3.5" y="11" width="17" height="7.5" rx="2" fill={BODY} />
+      <rect x="3.5" y="11" width="17" height="7.5" rx="2" />
+      <path d="M7 14.75h2M11 14.75h2" />
+      <path d="M16 11V8a2 2 0 012-2h1" />
+      <rect x="18.5" y="4.5" width="3" height="3" rx=".7" fill={ACCENT} className="stroke-brand-300" />
+    </>
+  ),
+
+  watch: (
+    <>
+      <path d="M9 6.5V3.5h6v3M9 17.5v3h6v-3" />
+      <rect x="6.5" y="6.5" width="11" height="11" rx="3" fill={BODY} />
+      <rect x="6.5" y="6.5" width="11" height="11" rx="3" />
+      <path d="M12 9.5V12l1.8 1.2" className="stroke-brand-300" />
     </>
   ),
 };

@@ -5,7 +5,8 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
-import { getCategoryIcon } from "@/lib/category-icons";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 
@@ -88,7 +89,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             updated="/produkter"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
             <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noPrices1}</p>
             <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noPrices2}</p>
@@ -100,16 +101,13 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
             {categories.map((category) => {
-              const Icon = getCategoryIcon(category.slug);
               return (
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col plate p-4 sm:p-6"
+                  className="group flex flex-col plate plate-lift p-4 sm:p-6"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                  </span>
+                  <MarkTile name={getCategoryMark(category.slug)} size="md" />
                   <h3 className="mt-3 text-sm font-semibold text-paper group-hover:text-paper sm:mt-4 sm:text-base">
                     {category.name[lang]}
                   </h3>
