@@ -1,7 +1,7 @@
 import Link from "next/link";
 import TeamAvatar from "./TeamAvatar";
 import { teamMember } from "@/lib/company";
-import { localePath, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, type Lang } from "@/lib/i18n";
 
 /*
  * Who wrote it, and why they would know.
@@ -50,7 +50,7 @@ export default function AuthorByline({
       </p>
       <p className="label ml-auto text-paper/55">
         <time dateTime={updated}>
-          {c.updated} {updated}
+          {c.updated} {formatDate(updated, lang)}
         </time>
         <span aria-hidden="true"> · </span>
         {readingMinutes} {c.reading}

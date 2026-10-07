@@ -3,7 +3,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company, postalAddress } from "@/lib/company";
-import { localePath, metaFor, type Lang, type Localized } from "@/lib/i18n";
+import { localePath, metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
 import { legalUpdated } from "@/lib/legal";
 import PageSchema from "@/components/PageSchema";
 
@@ -352,7 +352,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
             </p>
 
             <p className="mt-4 text-sm text-paper/55 leading-[1.6]">
-              {c.updated}: {UPDATED}
+              {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </div>
         </Container>

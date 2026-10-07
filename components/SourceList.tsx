@@ -1,5 +1,5 @@
 import { sourceList, type SourceId } from "@/lib/sources";
-import type { Lang } from "@/lib/i18n";
+import { formatDate, type Lang } from "@/lib/i18n";
 
 /*
  * The references under a page that states a fact it did not establish itself.
@@ -49,7 +49,7 @@ export default function SourceList({
               <p className="mt-0.5 text-paper/55">
                 {source.publisher}
                 {source.published ? `, ${source.published}` : ""} · {read}{" "}
-                <time dateTime={source.accessed}>{source.accessed}</time>
+                <time dateTime={source.accessed}>{formatDate(source.accessed, lang)}</time>
               </p>
               <p className="mt-1.5 text-paper/70">{source.claim[lang]}</p>
             </div>

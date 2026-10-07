@@ -108,6 +108,9 @@ for (const path of PAGES) {
       unnamedControls: [...document.querySelectorAll("a[href], button")].filter((el) => !named(el))
         .length,
       skipped,
+      /* What a reader sees, not the markup: <time datetime>, JSON-LD and
+         attributes are machine-facing and are meant to carry ISO. */
+      isoDate: document.body.innerText.match(/\b20\d\d-[01]\d-[0-3]\d\b/)?.[0] ?? "",
     };
   });
 
@@ -122,6 +125,9 @@ for (const path of PAGES) {
   if (found.unnamedControls)
     fail(path, `${found.unnamedControls} controls with no accessible name`);
   if (found.skipped) fail(path, `heading level skipped, ${found.skipped}`);
+  /* It shipped on the legal pages, the guide bylines and the source lists
+     before this line existed. formatDate(iso, lang) is the fix. */
+  if (found.isoDate) fail(path, `raw ISO date in visible text: ${found.isoDate}`);
 
   await page.close();
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
-import { metaFor, type Lang, type Localized } from "@/lib/i18n";
+import { metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
 import { legalUpdated } from "@/lib/legal";
 import PageSchema from "@/components/PageSchema";
 
@@ -261,7 +261,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
             ))}
 
             <p className="border-t border-white/10 pt-8 text-sm text-paper/55 leading-[1.6]">
-              {c.updated}: {UPDATED}
+              {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </div>
         </Container>
