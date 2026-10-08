@@ -12,10 +12,12 @@ import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
-import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
-import PageSchema from "@/components/PageSchema";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
+import Faq from "@/components/Faq";
+import { modelFaqs, modelLead, modelSources } from "@/lib/model-copy";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -147,7 +149,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
   return (
     <>
-      <PageSchema lang={lang} route="/modeller/[slug]" />
+      <PageSchema lang={lang} route="/modeller/[slug]" sources={modelSources(model)} />
 
       <script
         type="application/ld+json"
@@ -205,13 +207,24 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                       {model.name}
                     </h1>
+                    {/* The tagline, then the answer: what the machine is, with
+                        the figures from its own spec table. */}
                     <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
-                      {model.tagline[lang]}
+                      {model.tagline[lang]} {modelLead(model, lang)}
                     </p>
                   </div>
                 </div>
 
                 <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
+                <p className="label mt-6 text-paper/55">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time
+                    dateTime={pageUpdated("/modeller/[slug]")}
+                    className="tabular-nums text-paper/80"
+                  >
+                    {formatDate(pageUpdated("/modeller/[slug]"), lang)}
+                  </time>
+                </p>
 
                 <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-ink-300">
                   {c.notStock}
@@ -397,9 +410,17 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         </section>
       )}
 
+      <Faq
+        lang={lang}
+        items={modelFaqs(model)}
+        title={{ da: `Spørgsmål om ${model.name}`, en: `Questions about the ${model.name}` }}
+      />
+
       <CtaSection lang={lang} />
 
-      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
+      {/* Windows sources only where the page is about a computer: a monitor
+          does not run Windows 11 and has no business citing its requirements. */}
+      <FactNote lang={lang} ids={modelSources(model)} />
     </>
   );
 }
