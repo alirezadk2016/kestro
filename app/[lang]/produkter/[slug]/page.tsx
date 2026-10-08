@@ -12,9 +12,11 @@ import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
 import CraftMark from "@/components/CraftMark";
-import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
-import PageSchema from "@/components/PageSchema";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
 import SpecChips from "@/components/SpecChips";
 import FactNote from "@/components/FactNote";
 
@@ -156,7 +158,7 @@ export default async function CategoryPage(props: {
 
   return (
     <>
-      <PageSchema lang={lang} route="/produkter/[slug]" />
+      <PageSchema lang={lang} route="/produkter/[slug]" sources={categorySources(category)} />
 
       <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-10 sm:py-20">
         {/* Brand glow for depth — no product photography, since we source per order */}
@@ -206,12 +208,21 @@ export default async function CategoryPage(props: {
                   {category.name[lang]}
                 </h1>
                 <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
-                  {category.tagline[lang]}
+                  {categoryLead(category, lang)}
                 </p>
               </div>
             </div>
 
             <p className="mt-8 text-base leading-[1.75] text-ink-300">{category.intro[lang]}</p>
+            <p className="label mt-6 text-paper/55">
+              {lang === "da" ? "Opdateret" : "Updated"}{" "}
+              <time
+                dateTime={pageUpdated("/produkter/[slug]")}
+                className="tabular-nums text-paper/80"
+              >
+                {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+              </time>
+            </p>
           </div>
         </Container>
       </section>
@@ -414,9 +425,19 @@ export default async function CategoryPage(props: {
         <RelatedLinks lang={lang} links={category.guides} />
       )}
 
+      <Faq
+        lang={lang}
+        items={categoryFaqs(category)}
+        title={{
+          da: `Spørgsmål om ${category.name.da.toLowerCase()}`,
+          en: `Questions about ${category.name.en.toLowerCase()}`,
+        }}
+      />
+
       <CtaSection lang={lang} />
 
-      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
+      {/* Windows sources only on the categories that run it. */}
+      <FactNote lang={lang} ids={categorySources(category)} />
     </>
   );
 }

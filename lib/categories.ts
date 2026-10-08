@@ -361,8 +361,8 @@ export const categories: Category[] = [
     },
     brands: [
       "Apple iPhone",
-      "Samsung Galaxy S-serien",
-      "Samsung Galaxy A-serien",
+      "Samsung Galaxy S",
+      "Samsung Galaxy A",
       "Google Pixel",
       "Sony Xperia",
       "Nokia",
@@ -426,7 +426,7 @@ export const categories: Category[] = [
     },
     brands: [
       "Lenovo ThinkPad Dock",
-      "Dell WD-serien",
+      "Dell WD",
       "HP Thunderbolt Dock",
       "Dell Universal Dock",
       "HP USB-C Dock",
