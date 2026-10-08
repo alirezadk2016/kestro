@@ -10,6 +10,8 @@ import { guides, clusters } from "@/lib/guides";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
+import { sources, type SourceId } from "@/lib/sources";
 
 /*
  * Viden — the hub.
@@ -201,7 +203,10 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               <span className="tabular-nums text-paper/80">{groups.length}</span> {c.statClusters}
             </span>
             <span className="whitespace-nowrap">
-              {c.statUpdated} <span className="tabular-nums text-paper/80">{updatedLabel}</span>
+              {c.statUpdated}{" "}
+              <time dateTime={lastUpdated} className="tabular-nums text-paper/80">
+                {updatedLabel}
+              </time>
             </span>
           </p>
 
@@ -468,6 +473,10 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
       </section>
 
       <CtaSection lang={lang} />
+
+      {/* Every source the guides cite, in one place. Each guide lists its own
+          under it; this is the same registry seen from the index. */}
+      <FactNote lang={lang} ids={Object.keys(sources) as SourceId[]} />
     </>
   );
 }

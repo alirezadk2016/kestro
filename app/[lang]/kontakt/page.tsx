@@ -21,7 +21,7 @@ const copy = {
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
-    description: `Skriv via formularen herunder eller direkte til ${company.email}. I får svar inden for én arbejdsdag fra den, der skriver tilbuddet. Vi leverer i Danmark og Norge, og der er intet minimumsantal.`,
+    description: `Skriv via formularen herunder eller direkte til ${company.email}. I får svar inden for 1 arbejdsdag fra den, der skriver tilbuddet. Vi leverer i Danmark og Norge, og der er intet minimumsantal.`,
     emailTitle: "Foretrækker du email?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
     companyTitle: "Virksomhedsoplysninger",
@@ -41,7 +41,8 @@ const copy = {
     brief3: "Krav til processor, hukommelse (RAM) og lagerplads, hvis I har dem.",
     brief4: "Tastaturlayout – dansk eller norsk – og hvilket land der skal leveres til.",
     brief5: "Hvornår udstyret skal stå klar.",
-    brief6: "Skal I også af med gammelt udstyr: hvor mange enheder, og om I skal bruge dokumentation for datasletning.",
+    brief6:
+      "Skal I også af med gammelt udstyr: hvor mange enheder, og om I skal bruge dokumentation for datasletning.",
     faqTitle: "Spørgsmål, før I skriver",
   },
   en: {
@@ -49,7 +50,7 @@ const copy = {
     metaDescription:
       "Write to us about a purchase, a fleet, or equipment you need to move on. We reply within one working day, and we do not chase you in between.",
     title: "Contact us",
-    description: `Write through the form below or directly to ${company.email}. You get a reply within one working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
+    description: `Write through the form below or directly to ${company.email}. You get a reply within 1 working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
     companyTitle: "Company details",
@@ -69,7 +70,8 @@ const copy = {
     brief3: "Requirements for processor, memory (RAM) and storage, if you have them.",
     brief4: "Keyboard layout — Danish or Norwegian — and which country it is going to.",
     brief5: "When the equipment needs to be ready.",
-    brief6: "If you also have old equipment to move on: how many devices, and whether you need documentation of data erasure.",
+    brief6:
+      "If you also have old equipment to move on: how many devices, and whether you need documentation of data erasure.",
     faqTitle: "Questions before you write",
   },
 } satisfies Record<Lang, Record<string, string>>;

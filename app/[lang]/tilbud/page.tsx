@@ -5,8 +5,8 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
-import { localePath, metaFor, type Lang } from "@/lib/i18n";
-import PageSchema from "@/components/PageSchema";
+import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
 
 /*
  * The quote, as its own page.
@@ -29,9 +29,10 @@ const copy = {
     metaDescription:
       "Fortæl os antal, specifikation og hvornår det skal stå klar. Vi vender tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
     title: "Få et tilbud",
-    lead: "Prisen afhænger af konfiguration, stand og antal, så den bliver regnet på jeres konkrete behov frem for på en liste. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
+    /* Answer first: what a quote is, what it costs, and when it comes back. */
+    lead: "Et tilbud fra Kestro er gratis og uforpligtende: I fortæller antal, specifikation og hvornår det skal stå klar, og I får svar inden for 1 arbejdsdag med pris per enhed, stand og leveringstid. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
-    nextTitle: "Hvad sker der, når I sender",
+    nextTitle: "Hvad sker der, når I sender?",
     nextSteps: [
       "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
       "Vi finder maskinerne i leverandørnetværket og sender et tilbud med pris per enhed, stand, antal og leveringstid.",
@@ -41,7 +42,7 @@ const copy = {
     exampleBody:
       "Eksemplet viser et tilbud på enhedsniveau – model, specifikation, kosmetisk stand, batteri, tastaturlayout og styresystem – så I ved, hvad der kommer retur, inden I udfylder noget.",
     exampleLink: "Se eksemplet",
-    needTitle: "Det, vi har brug for at vide",
+    needTitle: "Hvad har vi brug for at vide?",
     needLead:
       "Ingen af felterne er obligatoriske, og »ved ikke endnu« er et brugbart svar. Men jo mere af det herunder, I kan sige noget om, jo mindre bliver det første svar en række spørgsmål tilbage.",
     needItems: [
@@ -101,9 +102,9 @@ const copy = {
     metaDescription:
       "Tell us the quantity, the specification and when it has to be ready, and we come back with price per unit, condition and lead time. No obligation.",
     title: "Get a quote",
-    lead: "The price depends on configuration, condition and quantity, so it is worked out against what you actually need rather than read off a list. Fill in what you know — the rest can stay at “not sure yet”.",
+    lead: "A quote from Kestro is free and commits you to nothing: you tell us the quantity, the specification and when it has to be ready, and you get a reply within 1 working day with price per unit, condition and lead time. Fill in what you know — the rest can stay at “not sure yet”.",
     formTitle: "Your request",
-    nextTitle: "What happens when you send it",
+    nextTitle: "What happens when you send it?",
     nextSteps: [
       "We read the request and ask if anything is missing.",
       "We find the machines in our supplier network and send a quote with price per unit, condition, quantity and lead time.",
@@ -113,7 +114,7 @@ const copy = {
     exampleBody:
       "The example is written per unit — model, specification, cosmetic condition, battery, keyboard layout and operating system — so you know what comes back before you fill anything in.",
     exampleLink: "See the example",
-    needTitle: "What we need to know",
+    needTitle: "What do we need to know?",
     needLead:
       "None of the fields are required, and “not sure yet” is a usable answer. But the more of the below you can say something about, the less the first reply has to be a list of questions back.",
     needItems: [
@@ -267,6 +268,12 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
               {c.lead}
+            </p>
+            <p className="label mt-6 text-paper/55">
+              {lang === "da" ? "Opdateret" : "Updated"}{" "}
+              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/80">
+                {formatDate(pageUpdated("/tilbud"), lang)}
+              </time>
             </p>
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">

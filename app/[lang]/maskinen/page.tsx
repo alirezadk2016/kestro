@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
-import FaqSchema from "@/components/FaqSchema";
+import Faq from "@/components/Faq";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import MachineViewer from "@/components/MachineViewer";
@@ -20,10 +20,10 @@ const copy = {
     description:
       "Drej den rundt, og tryk på en del. Udvendigt er det den maskine, vi skaffer; indvendigt er det en principskitse over, hvor tingene sidder – og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",
     outsideEyebrow: "Udvendigt",
-    outsideTitle: "Det I kan se",
+    outsideTitle: "Hvad kan I se udefra?",
     outsideBody: "Vælg en del, så drejer maskinen hen til den. Eller tag fat i den og drej selv.",
     insideEyebrow: "Indvendigt",
-    insideTitle: "Det I ikke kan se",
+    insideTitle: "Hvad sidder der indeni?",
     insideBody:
       "Modellen ovenfor er en ydre skal – den har ingen inderside. Så det her er tegnet: hvor delene sidder i en typisk 14-tommer erhvervsbærbar, hvad de laver, og hvad der kan skiftes.",
     guidesPre: "Vil I selv i gang?",
@@ -39,11 +39,11 @@ const copy = {
     description:
       "Turn it round, and tap a part. Outside is the machine we source; inside is a schematic of where things sit — and what can be changed if you want another couple of years out of the equipment.",
     outsideEyebrow: "Outside",
-    outsideTitle: "What you can see",
+    outsideTitle: "What can you see from outside?",
     outsideBody:
       "Pick a part and the machine turns to it. Or take hold of it and turn it yourself.",
     insideEyebrow: "Inside",
-    insideTitle: "What you cannot see",
+    insideTitle: "What sits inside?",
     insideBody:
       "The model above is an outer shell — it has no inside. So this part is drawn: where the components sit in a typical 14-inch business laptop, what they do, and what can be changed.",
     guidesPre: "Want to do it yourselves?",
@@ -73,20 +73,8 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
     <>
       <PageSchema lang={lang} route="/maskinen" name={c.title} description={c.description} />
 
-      {/* Every part is a question and an answer, so the page is eligible for
-          the FAQ rich result — but the parts are laid out as cards rather than
-          an accordion, so the markup comes from the same array directly rather
-          than through <Faq>. */}
-      <FaqSchema
-        lang={lang}
-        items={interiorParts.map((part) => ({
-          question: part.name,
-          answer: {
-            da: `${part.what.da} ${part.upgrade.da}`,
-            en: `${part.what.en} ${part.upgrade.en}`,
-          },
-        }))}
-      />
+      {/* The FAQ markup comes from the visible <Faq> near the bottom, built
+          from the same interiorParts array the drawing uses. */}
 
       <section className="py-10 sm:py-20">
         <Container>
@@ -144,6 +132,28 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
           </p>
         </Container>
       </section>
+
+      {/* Each part as the question somebody types, answered with what it does
+          and whether it can be swapped. These used to exist only as FAQ
+          markup whose "questions" were bare part names that appeared nowhere
+          on the page as questions — markup that does not match the page. */}
+      <Faq
+        lang={lang}
+        title={{ da: "Hvad gør delene?", en: "What do the parts do?" }}
+        items={interiorParts.map((part) => {
+          const it = ["wifi", "battery", "cmos", "board"].includes(part.id) ? "det" : "den";
+          return {
+            question: {
+              da: `${part.name.da} – hvad gør ${it}, og kan ${it} skiftes?`,
+              en: `${part.name.en}: what does it do, and can it be replaced?`,
+            },
+            answer: {
+              da: `${part.what.da} ${part.upgrade.da}`,
+              en: `${part.what.en} ${part.upgrade.en}`,
+            },
+          };
+        })}
+      />
 
       <CtaSection lang={lang} />
 

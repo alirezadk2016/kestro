@@ -46,7 +46,7 @@ const copy = {
       "Kestros salgs- og leveringsbetingelser: tilbud, betaling netto 14 dage, levering, stand, reklamation og ansvar. Kun salg til virksomheder.",
     title: "Handelsbetingelser",
     description:
-      "Vilkårene for handel med Kestro. De gælder for alle tilbud og ordrer, medmindre vi har aftalt andet skriftligt. Vi sælger kun til virksomheder.",
+      "Handelsbetingelserne er de 14 punkter herunder, og de gælder for alle tilbud og ordrer hos Kestro, medmindre vi har aftalt andet skriftligt. Vi sælger kun til virksomheder.",
     updated: "Senest opdateret",
     privacyLead: "Hvordan vi behandler personoplysninger står i",
     privacyLink: "privatlivspolitikken",
@@ -58,7 +58,7 @@ const copy = {
       "Kestro's terms of sale and delivery: quotes, payment 14 days net, delivery, condition, defects and liability. Business customers only.",
     title: "Terms of sale",
     description:
-      "The terms on which Kestro trades. They apply to every quote and order unless we have agreed otherwise in writing. We sell to businesses only.",
+      "The terms of sale are the 14 sections below, and they apply to every quote and order with Kestro unless we have agreed otherwise in writing. We sell to businesses only.",
     updated: "Last updated",
     privacyLead: "How we handle personal data is set out in the",
     privacyLink: "privacy policy",

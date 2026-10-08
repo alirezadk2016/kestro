@@ -26,7 +26,7 @@ const copy = {
       "Sådan behandler Kestro personoplysninger: kontaktformularerne, cookiefri besøgstal og den statistik fra Google, der kun kører, hvis I siger ja.",
     title: "Privatlivspolitik",
     description:
-      "Hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet der følger jer videre.",
+      "Privatlivspolitikken for kestro.dk er de 12 punkter herunder: hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet der følger jer videre.",
     updated: "Senest opdateret",
   },
   en: {
@@ -35,7 +35,7 @@ const copy = {
       "How Kestro handles personal data: the contact forms, what we store locally, cookieless visit counts, and statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
-      "What data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",
+      "The privacy policy for kestro.dk is the 12 sections below: what data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",
     updated: "Last updated",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -44,7 +44,7 @@ type Section = { heading: Localized; body: Localized[] };
 
 const sections: Section[] = [
   {
-    heading: { da: "Dataansvarlig", en: "Data controller" },
+    heading: { da: "Hvem er dataansvarlig?", en: "Who is the data controller?" },
     body: [
       {
         da: `${company.name}, ${company.locationShort.da}. E-mail: ${company.email}.`,
@@ -62,7 +62,7 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Cookies", en: "Cookies" },
+    heading: { da: "Sætter siden cookies?", en: "Does the site set cookies?" },
     body: [
       {
         da: "Vi sætter ingen cookies af os selv. To små værdier gemmes lokalt i jeres browser: jeres svar på spørgsmålet om statistik, og om I har lukket beskeden om den engelske udgave. De sendes aldrig til os, og de bruges ikke til andet end at huske de to valg.",
@@ -75,7 +75,10 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Kontaktformularerne", en: "The contact forms" },
+    heading: {
+      da: "Hvad sker der med det, I sender i formularerne?",
+      en: "What happens to what you send through the forms?",
+    },
     body: [
       {
         da: "Når I sender en formular, går indholdet til vores egen server på kestro.dk, som sender det videre til os som en e-mail. Vi modtager altså først oplysninger, når I trykker send – men det er siden, der sender dem, ikke jeres eget mailprogram.",
@@ -184,7 +187,7 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Hvor længe vi gemmer", en: "How long we keep it" },
+    heading: { da: "Hvor længe gemmer vi oplysningerne?", en: "How long do we keep it?" },
     body: [
       {
         da: "Vi gemmer korrespondance, så længe det er nødvendigt for dialogen eller kundeforholdet. Bilag, der er omfattet af bogføringsloven, gemmes i fem år fra udgangen af det regnskabsår, de vedrører.",
@@ -193,7 +196,7 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Jeres rettigheder", en: "Your rights" },
+    heading: { da: "Hvilke rettigheder har I?", en: "What are your rights?" },
     body: [
       {
         da: "I har ret til indsigt i de oplysninger, vi behandler om jer, og ret til at få urigtige oplysninger rettet. I kan bede om sletning, om begrænsning af behandlingen, gøre indsigelse mod behandlingen og bede om dataportabilitet.",

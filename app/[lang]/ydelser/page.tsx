@@ -10,6 +10,9 @@ import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
+import { services as serviceList } from "@/lib/services";
+import { repairs } from "@/lib/repairs";
 
 const copy = {
   da: {
@@ -18,8 +21,8 @@ const copy = {
       "Indkøb af renoveret IT, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
-    description:
-      "Kestro er indkøbspartner på brugt erhvervs-IT. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.",
+    /* Answer first, with the two counts the page actually lists. */
+    description: `Kestro er indkøbspartner på brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     eyebrow: "Processen",
     processTitle: "Sådan foregår en leverance",
     processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
@@ -34,8 +37,7 @@ const copy = {
       "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
     stepLink: "Read more",
     title: "What we help with",
-    description:
-      "Kestro is a sourcing partner for used business IT. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.",
+    description: `Kestro is a sourcing partner for used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,
     eyebrow: "The process",
     processTitle: "How a delivery works",
     processSub:
@@ -261,6 +263,10 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
       <Faq lang={lang} />
 
       <CtaSection lang={lang} />
+
+      {/* The quality section says the machines are reset before they go on;
+          this is what the levels of "reset" actually are. */}
+      <FactNote lang={lang} ids={["nistSanitization"]} />
     </>
   );
 }

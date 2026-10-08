@@ -18,12 +18,13 @@ const copy = {
     metaDescription:
       "Vi køber brugte erhvervsmaskiner, henter dem og sletter lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
     title: "Sælg jeres brugte IT-udstyr",
+    /* Answer first: yes, what, and what happens to the data. */
     description:
-      "Skal I udskifte medarbejdernes computere eller rydde op efter en flytning? Vi køber brugt erhvervsudstyr og giver det et nyt liv.",
-    howTitle: "Sådan foregår det",
-    buyTitle: "Hvad vi køber",
+      "Ja, vi køber brugte erhvervscomputere, telefoner og tablets fra virksomheder i Danmark og Norge. Vi henter dem, sletter lagermedierne og giver dem et nyt liv – og I får en vurdering, før I beslutter jer.",
+    howTitle: "Hvordan foregår et salg?",
+    buyTitle: "Hvad køber I?",
     buyNote: "Er I i tvivl, om jeres udstyr er relevant? Spørg os – vi kigger gerne på det.",
-    dataTitle: "Datasikkerhed",
+    dataTitle: "Hvad sker der med vores data?",
     dataBody:
       "Enhederne får slettet lagermedierne, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – f.eks. i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
     fleetTitle: "Skal hele flåden skiftes ud på én gang?",
@@ -44,11 +45,11 @@ const copy = {
       "Replacing your company IT? Kestro buys used business computers, phones and tablets — with documented data erasure and collection in Denmark and Norway.",
     title: "Sell us your used IT equipment",
     description:
-      "Replacing your staff computers, or clearing out after a move? We buy used business equipment and give it a second life.",
-    howTitle: "How it works",
-    buyTitle: "What we buy",
+      "Yes, we buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",
+    howTitle: "How does a sale work?",
+    buyTitle: "What do you buy?",
     buyNote: "Not sure whether your equipment is relevant? Ask us — we are happy to look at it.",
-    dataTitle: "Data security",
+    dataTitle: "What happens to our data?",
     dataBody:
       "Machines have their storage media erased before they are prepared for resale. If you have specific requirements for erasure documentation — for your GDPR procedures, for instance — say so when you contact us and we agree how it is handled.",
     fleetTitle: "Replacing the whole fleet at once?",

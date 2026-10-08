@@ -9,6 +9,9 @@ import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import { models } from "@/lib/models";
 
 const copy = {
   da: {
@@ -16,9 +19,9 @@ const copy = {
     metaDescription:
       "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
     title: "Hvad vi skaffer",
-    description:
-      "Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.",
-    noPricesTitle: "Derfor finder I ingen priser eller lagerstatus her",
+    /* Answer first, with the counts the page and /modeller actually show. */
+    description: `Kestro er indkøbspartner, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
+    noPricesTitle: "Hvorfor er der ingen priser eller lagerstatus her?",
     noPrices1:
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at I ikke betaler for et lager, andre skal have afsat.",
     noPrices2:
@@ -35,9 +38,8 @@ const copy = {
     metaDescription:
       "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
     title: "What we source",
-    description:
-      "Kestro is a sourcing partner, not a web shop. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.",
-    noPricesTitle: "Why there are no prices or stock levels here",
+    description: `Kestro is a sourcing partner, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
+    noPricesTitle: "Why are there no prices or stock levels here?",
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
@@ -142,7 +144,37 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
 
       <QualifySection lang={lang} />
 
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om udvalget", en: "Questions about the range" }}
+        items={[
+          {
+            question: { da: "Har I udstyret på lager?", en: "Do you have the equipment in stock?" },
+            answer: { da: copy.da.noPrices1, en: copy.en.noPrices1 },
+          },
+          {
+            question: {
+              da: "Kan I skaffe noget, der ikke står her?",
+              en: "Can you source something that is not listed here?",
+            },
+            answer: { da: copy.da.noPrices2, en: copy.en.noPrices2 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
+              en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+            },
+          },
+        ]}
+      />
+
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

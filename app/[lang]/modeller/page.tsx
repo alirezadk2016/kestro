@@ -6,6 +6,8 @@ import CtaSection from "@/components/CtaSection";
 import { models, modelGroups } from "@/lib/models";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
 import SpecChips from "@/components/SpecChips";
 
 const copy = {
@@ -14,9 +16,9 @@ const copy = {
     metaDescription:
       "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Ingen lager, ingen listepriser – vi sourcer per ordre.",
     title: "Modeller vi ofte skaffer",
-    description:
-      "En oversigt over de maskiner, vi kender godt og oftest bliver bedt om at finde. Brug den til at blive klogere på, hvad der findes – og til at pege på noget konkret, når I skriver til os.",
-    noShopTitle: "Det her er ikke en webshop",
+    /* Answer first, with the counts the page actually shows. */
+    description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
+    noShopTitle: "Er det her en webshop?",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
@@ -31,9 +33,8 @@ const copy = {
     metaDescription:
       "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
     title: "Models we often source",
-    description:
-      "An overview of the machines we know well and are most often asked to find. Use it to get a feel for what exists — and to point at something concrete when you write to us.",
-    noShopTitle: "This is not a web shop",
+    description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
+    noShopTitle: "Is this a web shop?",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
@@ -147,7 +148,37 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
         </Container>
       </section>
 
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om modellerne", en: "Questions about the models" }}
+        items={[
+          {
+            question: {
+              da: "Kan I skaffe en model, der ikke står på listen?",
+              en: "Can you source a model that is not on the list?",
+            },
+            answer: { da: copy.da.noShopBody2, en: copy.en.noShopBody2 },
+          },
+          {
+            question: { da: "Har I modellerne på lager?", en: "Do you have the models in stock?" },
+            answer: { da: copy.da.noShopBody1, en: copy.en.noShopBody1 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
+              en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+            },
+          },
+        ]}
+      />
+
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

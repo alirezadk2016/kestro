@@ -77,12 +77,12 @@ const copy = {
     title: "Hvad koster det?",
     description:
       "Det ærlige svar er, at det afhænger – og her står præcis hvad det afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
-    whyTitle: "Hvorfor der ikke er en prisliste",
+    whyTitle: "Hvorfor er der ikke en prisliste?",
     whyBody1:
       "Vi holder ikke lager. Der står ingen hylde med maskiner og mærkater på, og derfor findes der ikke en pris, vi kan skrive op på forhånd. Vi går ud i leverandørnetværket, når vi ved, hvad opgaven kræver – og prisen er den, vi kan skaffe det til, plus vores arbejde.",
     whyBody2:
       "Vi kunne godt skrive »fra 1.995 kr.« og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
-    driversTitle: "Hvad der afgør jeres pris",
+    driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
     quoteLead:
@@ -98,7 +98,7 @@ const copy = {
     freeTitle: "Koster et tilbud noget?",
     freeBody:
       "Nej. Der er ingen pris på at spørge, og ingen forpligtelse, når I har fået svaret. Passer der ikke noget til opgaven, siger vi det – det er en kortere samtale end at sælge jer noget, der ikke løser problemet.",
-    fastTitle: "Sådan får I et realistisk tal hurtigt",
+    fastTitle: "Hvordan får I et realistisk tal hurtigt?",
     fastLead: "Jo mere af det her I skriver med det samme, jo færre runder frem og tilbage:",
     fastPoints: [
       "Hvor mange maskiner, og om de skal være ens.",
@@ -121,12 +121,12 @@ const copy = {
     title: "What does it cost?",
     description:
       "The honest answer is that it depends — and this page says exactly what it depends on. No price list, but no surprises either: the price is in writing before you order.",
-    whyTitle: "Why there is no price list",
+    whyTitle: "Why is there no price list?",
     whyBody1:
       "We hold no stock. There is no shelf of machines with labels on them, so there is no price we can write up in advance. We go out into the supplier network once we know what the job needs — and the price is what we can source it for, plus our work.",
     whyBody2:
       "We could write “from DKK 1,995” and let you discover the rest along the way. We do not. A figure we cannot document for your actual order is not information, it is bait, and you find out when the quote arrives anyway.",
-    driversTitle: "What decides your price",
+    driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
     quoteLead:
@@ -142,7 +142,7 @@ const copy = {
     freeTitle: "Does a quote cost anything?",
     freeBody:
       "No. There is no charge for asking and no obligation once you have the answer. If nothing suits the job we will say so — that is a shorter conversation than selling you something that does not solve the problem.",
-    fastTitle: "How to get a realistic figure quickly",
+    fastTitle: "How do you get a realistic figure quickly?",
     fastLead: "The more of this you write straight away, the fewer rounds back and forth:",
     fastPoints: [
       "How many machines, and whether they need to be identical.",

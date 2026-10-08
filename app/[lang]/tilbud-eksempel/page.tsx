@@ -7,6 +7,7 @@ import CtaSection from "@/components/CtaSection";
 import { company } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
 
 /*
  * What a quote from us actually looks like.
@@ -73,8 +74,9 @@ const copy = {
     metaDescription:
       "Et eksempel på et tilbud på brugt erhvervs-IT: model, stand, målt batterikapacitet, tastatur, garanti og tidsramme – felt for felt.",
     title: "Sådan ser et tilbud ud",
+    /* Answer first: what a quote is made of, then why the example exists. */
     description:
-      "Vi skriver mange steder, at pris, stand, batteritilstand og garantivilkår står skriftligt, før I bestiller. Her er dokumentet, det står i. Det er et eksempel – ikke et tilbud – men felterne er de samme, og de bliver alle sammen udfyldt.",
+      "Et tilbud fra Kestro er et dokument i 5 dele – maskinen per enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
     docLabel: "Eksempel",
     docTitle: "Tilbud",
     metaRows: [
@@ -124,7 +126,7 @@ const copy = {
     priceNote:
       "Det er det eneste felt, vi ikke kan vise jer på forhånd. Vi har ikke lager, så prisen er den, vi kan skaffe udstyret til – og et opdigtet eksempeltal ville bare være et tal, I regner forkert med.",
     priceLink: "Hvad der afgør prisen",
-    whyTitle: "Hvorfor alle felterne er der",
+    whyTitle: "Hvorfor er alle felterne der?",
     whyBody:
       "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
     relatedTitle: "Videre herfra",
@@ -140,7 +142,7 @@ const copy = {
       "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",
     description:
-      "We say in a lot of places that price, condition, battery health and warranty terms are in writing before you order. This is the document they are written in. It is an example, not an offer — but the fields are the same, and every one of them gets filled in.",
+      "A quote from Kestro is a document in 5 parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",
     docLabel: "Example",
     docTitle: "Quote",
     metaRows: [
@@ -190,7 +192,7 @@ const copy = {
     priceNote:
       "That is the one field we cannot show you in advance. We hold no stock, so the price is what we can source the equipment for — and an invented example figure would just be a number you budget wrongly against.",
     priceLink: "What decides the price",
-    whyTitle: "Why every field is there",
+    whyTitle: "Why is every field there?",
     whyBody:
       "Each field above exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can be at 60 % three months later. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
     relatedTitle: "Where to go next",
@@ -387,6 +389,39 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
           </div>
         </Container>
       </section>
+
+      {/* The questions the example answers, from the example itself. */}
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om tilbuddet", en: "Questions about the quote" }}
+        items={[
+          {
+            question: { da: "Hvor længe gælder et tilbud?", en: "How long is a quote valid?" },
+            answer: {
+              da: `I eksemplet ${copy.da.metaRows.find((row) => row.k === "Gyldigt til")?.v.toLowerCase()} – gyldigheden står altid i selve tilbuddet.`,
+              en: `In the example, ${copy.en.metaRows.find((row) => row.k === "Valid until")?.v.toLowerCase()} — the validity is always stated in the quote itself.`,
+            },
+          },
+          {
+            question: { da: "Hvad er med i prisen?", en: "What does the price include?" },
+            answer: { da: copy.da.included.join(" "), en: copy.en.included.join(" ") },
+          },
+          {
+            question: { da: "Hvad er ikke med i prisen?", en: "What does the price not include?" },
+            answer: {
+              da: `Medmindre det aftales: ${copy.da.excluded.join(" ")}`,
+              en: `Unless agreed: ${copy.en.excluded.join(" ")}`,
+            },
+          },
+          {
+            question: {
+              da: "Hvorfor står der ingen pris i eksemplet?",
+              en: "Why is there no price in the example?",
+            },
+            answer: { da: copy.da.priceNote, en: copy.en.priceNote },
+          },
+        ]}
+      />
 
       <CtaSection lang={lang} />
     </>

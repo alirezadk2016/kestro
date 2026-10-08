@@ -1274,7 +1274,7 @@ export const guides: Guide[] = [
     },
     audience: { da: "Private og gaming", en: "Individuals and gaming" },
     readingMinutes: 6,
-    updated: "2026-08-23",
+    updated: "2026-10-08",
     tldr: {
       da: "Rækkefølgen gør arbejdet nemt: bundkort, CPU, køler og RAM samles uden for kabinettet, og først derefter skrues det hele i. De fejl, der koster tid, er næsten altid strøm, der ikke er sat i, eller RAM, der ikke sidder helt fast.",
       en: "The order makes the work easy: motherboard, CPU, cooler and memory go together outside the case, and only then does the whole thing get screwed in. The mistakes that cost time are almost always power that is not plugged in, or memory that is not fully seated.",
@@ -1359,8 +1359,8 @@ export const guides: Guide[] = [
         heading: { da: "Første start", en: "First boot" },
         body: [
           {
-            da: "Gå i BIOS først. Tjek at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Derefter installerer du Windows fra en USB-nøgle.",
-            en: "Go into the BIOS first. Check that the processor, all the memory and the drive are there, and switch on XMP or EXPO so the memory runs at the speed you paid for. Then install Windows from a USB stick.",
+            da: "Gå i BIOS først. Tjek at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Slå også TPM (fTPM på AMD, PTT på Intel) og Secure Boot til: ifølge Microsoft kræver Windows 11 begge dele, og på nogle bundkort står de slået fra fra fabrikken. Derefter installerer du Windows fra en USB-nøgle.",
+            en: "Go into the BIOS first. Check that the processor, all the memory and the drive are there, and switch on XMP or EXPO so the memory runs at the speed you paid for. Switch on TPM (fTPM on AMD, PTT on Intel) and Secure Boot as well: according to Microsoft, Windows 11 requires both, and on some motherboards they are off from the factory. Then install Windows from a USB stick.",
           },
         ],
       },
@@ -1375,6 +1375,7 @@ export const guides: Guide[] = [
         label: { da: "Brugte stationære computere", en: "Used desktop computers" },
       },
     ],
+    sources: [guideSource("windows11Requirements")],
     faqs: [
       {
         question: {
