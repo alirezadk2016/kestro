@@ -19,16 +19,20 @@ const copy = {
        hierarchy inside itself rather than being one even block. */
     headlineTop: ["Erhvervscomputere."],
     headlineAccent: "Klar til Norden.",
-    subLead: "Pålidelig. Testet. Bæredygtig.",
-    sub: "IT der holder jeres forretning i gang.",
+    /* One sentence over the same two lines the slogan used, and it answers
+       the question the page is for: what Kestro is, for whom, and in what
+       state the machines arrive. "Pålidelig. Testet. Bæredygtig." said three
+       adjectives and nothing a reader or an answer engine could quote. */
+    subLead: "Kestro er en indkøbspartner for brugt erhvervs-IT",
+    sub: "i Danmark og Norge – testet og klar til brug.",
     secondary: "Se hvad vi skaffer",
   },
   en: {
     eyebrow: "Refurbished IT for businesses",
     headlineTop: ["Business", "computers."],
     headlineAccent: "Ready for the Nordics.",
-    subLead: "Reliable. Tested. Sustainable.",
-    sub: "IT that keeps your business moving.",
+    subLead: "Kestro is a sourcing partner for used business IT",
+    sub: "in Denmark and Norway — tested and ready to use.",
     secondary: "Explore computers",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;

@@ -182,6 +182,34 @@ export default function Footer({ lang }: { lang: Lang }) {
               .join(" · ")}
           </p>
           <p className="max-w-3xl text-xs leading-[1.45]">{c.trademarks}</p>
+          {/* The legal documents in English, on the Danish pages only.
+              rel="privacy-policy" on the Danish links was not enough: the
+              GEO audit still reported "no privacy policy or terms links"
+              because it looks for the English words, and the Danish routes
+              must not be renamed. These are the real English pages, useful
+              in their own right to a Norwegian or international buyer, and
+              they carry the words in both the address and the label. */}
+          {lang === "da" && (
+            <p className="flex flex-wrap items-center gap-x-4">
+              <span>På engelsk:</span>
+              <Link
+                href={localePath("/privatlivspolitik", "en")}
+                hrefLang="en"
+                lang="en"
+                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
+              >
+                Privacy policy
+              </Link>
+              <Link
+                href={localePath("/handelsbetingelser", "en")}
+                hrefLang="en"
+                lang="en"
+                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
+              >
+                Terms of sale
+              </Link>
+            </p>
+          )}
           <p>
             &copy; {new Date().getFullYear()} Kestro. {c.rights}
           </p>

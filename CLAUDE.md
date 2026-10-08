@@ -56,6 +56,9 @@ write it right than to have an audit find it.
   and `rel="terms-of-service"` in `lib/nav.ts`. The Danish URLs contain
   neither English word, and auditors look for them. Do not "fix" this by
   renaming the routes: that breaks canonicals, hreflang and the sitemap.
+  The rel alone did not satisfy the AITDK audit, so the Danish footer also
+  links the real English versions ("På engelsk: Privacy policy · Terms of
+  sale" in `components/Footer.tsx`). Keep that line.
 - **Preserve canonical, hreflang, sitemap and the internal link structure.**
   A new route goes into `app/sitemap.ts` in the same change that creates it.
 - `lib/routes.ts` and `next.config.mjs` must agree on every English path —

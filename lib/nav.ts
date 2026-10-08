@@ -59,6 +59,10 @@ export const serviceNav: NavLink[] = [
  * string match. `rel="privacy-policy"` and `rel="terms-of-service"` are
  * registered HTML link relations and say the same thing to a machine in a
  * way that does not depend on what language the site is written in.
+ *
+ * They were not enough for that audit, which matches the words only, so the
+ * Danish footer also links the English versions of both pages — see the
+ * "På engelsk" line in components/Footer.tsx.
  */
 export const companyNav: NavLink[] = [
   { href: "/", label: { da: "Forside", en: "Home" } },
