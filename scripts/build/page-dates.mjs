@@ -129,6 +129,7 @@ const routes = {
   "/vejledninger/[slug]": "vejledninger/[slug]/page.tsx",
   "/saelg-til-os": "saelg-til-os/page.tsx",
   "/reparation": "reparation/page.tsx",
+  "/reparation/[slug]": "reparation/[slug]/page.tsx",
   "/ydelser": "ydelser/page.tsx",
   "/ydelser/[slug]": "ydelser/[slug]/page.tsx",
   "/tilbud": "tilbud/page.tsx",

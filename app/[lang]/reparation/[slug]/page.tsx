@@ -6,11 +6,13 @@ import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
 import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
-import PageSchema from "@/components/PageSchema";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import { repairFaqs, repairFaqTitle, repairSources } from "@/lib/repair-answers";
 import ServiceTile from "@/components/ServiceTile";
 import FactNote from "@/components/FactNote";
 import { repairs, getRepair } from "@/lib/repairs";
-import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -48,6 +50,7 @@ const copy = {
     more: "Andre reparationer",
     read: "Læs mere",
     back: "Alle reparationer",
+    updated: "Opdateret",
   },
   en: {
     breadcrumb: "Repairs",
@@ -58,6 +61,7 @@ const copy = {
     more: "Other repairs",
     read: "Read more",
     back: "All repairs",
+    updated: "Updated",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -81,6 +85,8 @@ export default async function RepairPage(props: Params) {
   if (!repair) notFound();
   const c = copy[lang];
   const others = repairs.filter((r) => r.slug !== slug).slice(0, 4);
+  const sources = repairSources(repair);
+  const updated = pageUpdated("/reparation/[slug]");
 
   const trail: Crumb[] = [
     { name: c.breadcrumb, href: "/reparation" },
@@ -92,9 +98,10 @@ export default async function RepairPage(props: Params) {
       <BreadcrumbSchema lang={lang} trail={trail} />
       <PageSchema
         lang={lang}
-        route="/reparation"
+        route="/reparation/[slug]"
         name={repair.name[lang]}
         description={repair.metaDescription[lang]}
+        sources={sources}
       />
 
       <section className="py-10 sm:py-20">
@@ -124,6 +131,12 @@ export default async function RepairPage(props: Params) {
           </p>
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/65">
             {repair.intro[lang]}
+          </p>
+          <p className="label mt-6 text-paper/55">
+            {c.updated}{" "}
+            <time dateTime={updated} className="tabular-nums text-paper/80">
+              {formatDate(updated, lang)}
+            </time>
           </p>
         </Container>
       </section>
@@ -251,7 +264,13 @@ export default async function RepairPage(props: Params) {
           publisher and links the primary document — so a reader can check it
           and a model summarising the page has something quotable instead of
           an assertion to repeat. */}
-      {repair.sources && repair.sources.length > 0 && <FactNote lang={lang} ids={repair.sources} />}
+      <Faq
+        lang={lang}
+        items={repairFaqs(repair)}
+        title={{ da: repairFaqTitle(repair, "da"), en: repairFaqTitle(repair, "en") }}
+      />
+
+      {sources.length > 0 && <FactNote lang={lang} ids={sources} />}
 
       <CtaSection lang={lang} />
     </>

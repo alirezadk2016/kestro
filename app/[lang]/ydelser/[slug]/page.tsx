@@ -6,9 +6,12 @@ import Container from "@/components/Container";
 import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
-import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
-import PageSchema from "@/components/PageSchema";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import { serviceAnswers } from "@/lib/service-answers";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -41,12 +44,16 @@ const copy = {
     breadcrumb: "Ydelser",
     next: "Videre herfra",
     more: "Andre ydelser",
+    updated: "Opdateret",
+    faq: "Spørgsmål om",
     cta: "Få et tilbud",
   },
   en: {
     breadcrumb: "Services",
     next: "Where to go next",
     more: "Other services",
+    updated: "Updated",
+    faq: "Questions about",
     cta: "Get a quote",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -75,6 +82,8 @@ export default async function ServicePage(props: {
   if (!service) notFound();
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const answers = serviceAnswers[service.slug];
+  const updated = pageUpdated("/ydelser/[slug]");
 
   /* Service schema, so the page can be understood as one thing we do rather
      than as an article about it. */
@@ -98,7 +107,7 @@ export default async function ServicePage(props: {
 
   return (
     <>
-      <PageSchema lang={lang} route="/ydelser/[slug]" />
+      <PageSchema lang={lang} route="/ydelser/[slug]" sources={answers?.sources} />
 
       <BreadcrumbSchema lang={lang} trail={trail} />
       <script
@@ -123,8 +132,16 @@ export default async function ServicePage(props: {
             <h1 className="mt-4 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {service.name[lang]}
             </h1>
+            {/* The answer first. The card one-liner is `summary`; the page opens
+                with what the service is, with the figure in it. */}
             <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
-              {service.summary[lang]}
+              {(answers?.lead ?? service.summary)[lang]}
+            </p>
+            <p className="label mt-6 text-paper/55">
+              {c.updated}{" "}
+              <time dateTime={updated} className="tabular-nums text-paper/80">
+                {formatDate(updated, lang)}
+              </time>
             </p>
           </div>
         </Container>
@@ -215,7 +232,20 @@ export default async function ServicePage(props: {
         </section>
       )}
 
+      {answers && (
+        <Faq
+          lang={lang}
+          items={answers.faqs}
+          title={{
+            da: `${copy.da.faq} ${service.name.da.toLowerCase()}`,
+            en: `${copy.en.faq} ${service.name.en.toLowerCase()}`,
+          }}
+        />
+      )}
+
       <CtaSection lang={lang} />
+
+      {answers && <FactNote lang={lang} ids={answers.sources} />}
     </>
   );
 }
