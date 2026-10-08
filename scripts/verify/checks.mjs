@@ -176,6 +176,72 @@ for (const path of PAGES) {
   await page.close();
 }
 
+/* ----------------------------------------------------------------- sitemap */
+
+/*
+ * The sitemap and robots.txt as a crawler meets them, from the build.
+ *
+ * Search Console reported the sitemap as "Couldn't fetch" in October 2026,
+ * and nothing here had ever looked at it: the gate measured pages, not the
+ * file that tells Google which pages exist. The production file turned out to
+ * be sound, but that was established by hand, after the fact. This makes it
+ * a measurement. Every <loc> must answer 200 with no redirect and carry
+ * itself as canonical — a sitemap that lists a redirect or a page pointing
+ * its canonical elsewhere is one Google learns to stop trusting — and every
+ * hreflang alternate must itself be listed, or the pairing is one-sided.
+ */
+{
+  const robots = await fetch(`${BASE}/robots.txt`, { redirect: "manual" });
+  const robotsText = robots.status === 200 ? await robots.text() : "";
+  if (robots.status !== 200) fail("/robots.txt", `HTTP ${robots.status}`);
+  const declared = robotsText.match(/^Sitemap:\s*(\S+)/im)?.[1] ?? "";
+  if (!declared.endsWith("/sitemap.xml")) fail("/robots.txt", "no Sitemap line for /sitemap.xml");
+  if (/^Disallow:\s*\/\s*$/im.test(robotsText)) fail("/robots.txt", "Disallow: / blocks the site");
+  const origin = declared.replace(/\/sitemap\.xml$/, "");
+
+  const response = await fetch(`${BASE}/sitemap.xml`, { redirect: "manual" });
+  const xml = response.status === 200 ? await response.text() : "";
+  if (response.status !== 200) fail("/sitemap.xml", `HTTP ${response.status}`);
+  if (!/xml/.test(response.headers.get("content-type") ?? ""))
+    fail("/sitemap.xml", `content-type ${response.headers.get("content-type")}`);
+  if (!xml.startsWith("<?xml") || !xml.includes("http://www.sitemaps.org/schemas/sitemap/0.9"))
+    fail("/sitemap.xml", "not a sitemap urlset");
+
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const opened = (xml.match(/<url>/g) ?? []).length;
+  if (!locs.length) fail("/sitemap.xml", "no <loc> entries");
+  if (opened !== locs.length || opened !== (xml.match(/<\/url>/g) ?? []).length)
+    fail("/sitemap.xml", "unbalanced <url> entries");
+  if (locs.length > 50000 || xml.length > 50 * 1024 * 1024)
+    fail("/sitemap.xml", "over the 50,000 URL / 50 MB limit");
+
+  const listed = new Set(locs);
+  if (listed.size !== locs.length)
+    fail("/sitemap.xml", `${locs.length - listed.size} duplicate <loc>`);
+  for (const href of new Set(
+    [...xml.matchAll(/hreflang="[^"]+" href="([^"]+)"/g)].map((m) => m[1]),
+  ))
+    if (!listed.has(href)) fail("/sitemap.xml", `hreflang alternate not listed: ${href}`);
+
+  for (const loc of locs) {
+    if (!loc.startsWith(origin)) {
+      fail("/sitemap.xml", `<loc> on another host than robots.txt declares: ${loc}`);
+      continue;
+    }
+    const path = loc.slice(origin.length) || "/";
+    const page = await fetch(BASE + path, { redirect: "manual" });
+    if (page.status !== 200) {
+      fail(
+        `sitemap ${path}`,
+        `HTTP ${page.status}${page.headers.get("location") ? ` to ${page.headers.get("location")}` : ""}`,
+      );
+      continue;
+    }
+    const canonical = (await page.text()).match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? "";
+    if (canonical !== loc) fail(`sitemap ${path}`, `canonical is ${canonical || "missing"}`);
+  }
+}
+
 /* ------------------------------------------------------------------- sizes */
 
 /*
