@@ -49,12 +49,9 @@ const features = [
 
 export default function FeatureStrip({ lang }: { lang: Lang }) {
   return (
-    /* relative, because the closing strapline is placed against its right
-       edge the way the reference sets it — inside the bar, past the last
-       item, with a rule between. */
     <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
       <Container>
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-7 sm:grid-cols-3 sm:gap-y-6 sm:py-8 lg:grid-cols-5 lg:gap-x-7 2xl:pr-44">
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-7 sm:grid-cols-3 sm:gap-y-6 sm:py-8 lg:grid-cols-5 lg:gap-x-7">
           {features.map((feature) => (
             <li key={feature.title.da} className="flex items-center gap-3.5">
               {/* In the site's one mark tile. Bare on the bar, the five marks
@@ -67,25 +64,12 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
                 <p className="text-[13px] font-semibold leading-5 text-paper">
                   {feature.title[lang]}
                 </p>
-                <p className="mt-0.5 text-xs leading-[1.35] text-paper/55">{feature.sub[lang]}</p>
+                <p className="mt-0.5 text-xs leading-[1.35] text-paper/70">{feature.sub[lang]}</p>
               </div>
             </li>
           ))}
         </ul>
       </Container>
-      {/* The closing mark. English in both languages, like the rest of the
-          editorial set: it is a strapline, not a sentence to translate. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-6 hidden items-center gap-5 2xl:flex"
-      >
-        <span className="h-12 w-px bg-white/10" />
-        <p className="text-[11px] font-medium uppercase leading-[1.9] tracking-[0.3em] text-paper/55">
-          Good IT
-          <br />
-          Goes further
-        </p>
-      </div>
     </div>
   );
 }

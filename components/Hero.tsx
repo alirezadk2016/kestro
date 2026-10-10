@@ -1,4 +1,4 @@
-import { ArrowDown, LayoutGrid } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import Button from "./Button";
 import FeatureStrip from "./FeatureStrip";
@@ -13,25 +13,29 @@ import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    eyebrow: "Renoveret erhvervs-IT",
     /* Two lines, two weights of attention: what it is, then who it is for.
        The second line carries the brand colour, so the headline has a
-       hierarchy inside itself rather than being one even block. */
-    headlineTop: ["Erhvervscomputere."],
+       hierarchy inside itself rather than being one even block.
+
+       "Refurbished" is in the headline because it is the word the page is
+       about and the word a buyer types; "Erhvervscomputere." alone said
+       what but not which kind, and the h1 is the one line every reader and
+       every crawler takes. */
+    headlineTop: ["Refurbished", "erhvervscomputere."],
     headlineAccent: "Klar til Norden.",
     /* One sentence over the same two lines the slogan used, and it answers
        the question the page is for: what Kestro is, for whom, and in what
-       state the machines arrive. "Pålidelig. Testet. Bæredygtig." said three
-       adjectives and nothing a reader or an answer engine could quote. */
-    subLead: "Kestro er en indkøbspartner for brugt erhvervs-IT",
+       state the machines arrive. "Leverandør", not "indkøbspartner": the
+       buyer's contract is with Kestro, and the first sentence on the site is
+       where that has to be unambiguous. */
+    subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
     sub: "i Danmark og Norge – testet og klar til brug.",
     secondary: "Se hvad vi skaffer",
   },
   en: {
-    eyebrow: "Refurbished IT for businesses",
-    headlineTop: ["Business", "computers."],
+    headlineTop: ["Refurbished", "business computers."],
     headlineAccent: "Ready for the Nordics.",
-    subLead: "Kestro is a sourcing partner for used business IT",
+    subLead: "Kestro is a supplier of used business IT to companies",
     sub: "in Denmark and Norway — tested and ready to use.",
     secondary: "Explore computers",
   },
@@ -147,47 +151,14 @@ export default function Hero({ lang }: { lang: Lang }) {
       />
 
       {/*
-       * The editorial marks: two stanzas set into the room and a scroll cue at
-       * the right edge, placed where the reference sets them — the percentages
-       * are that artwork's own coordinates divided by its 1942x719 frame, so
-       * the type lands on the same pillar and the same pane it was drawn on.
-       *
-       * They are HTML, not painted into the plate, which is the only reason
-       * they stay sharp at any zoom and can be translated later. Deliberately
-       * quiet — paper/30 to paper/45, wide tracking, small — so they read as
-       * marks on the architecture rather than as copy competing with the
-       * headline. Hidden below lg, where there is no room for them in frame.
+       * No words in the room. There were two English stanzas ("People /
+       * Technology / A cleaner tomorrow", "IT today / A brighter tomorrow")
+       * and a "Scroll" cue set into the photograph as HTML, and a book on
+       * the desk with "Circular IT / Stronger businesses" on its spine. On a
+       * Danish page they were the first text a crawler met after the
+       * navigation and they said nothing a buyer could use, so the stanzas
+       * are gone and the book's spine was cleaned out of the plate.
        */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 hidden lg:block">
-        <p className="absolute left-[51.3%] top-[17.2%] text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/55">
-          People
-          <br />
-          Technology
-          <br />
-          A cleaner
-          <br />
-          Tomorrow
-        </p>
-
-        <div className="absolute left-[86.5%] top-[17.3%]">
-          <p className="text-[11px] font-medium uppercase leading-[1.95] tracking-[0.34em] text-paper/55">
-            It today
-            <br />
-            A brighter
-            <br />
-            Tomorrow
-          </p>
-          <span className="mt-3 block h-px w-8 bg-paper/25" />
-        </div>
-
-        <div className="absolute left-[95.3%] top-[75.4%] flex flex-col items-center gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.34em] text-paper/55">
-            Scroll
-          </span>
-          <span className="h-10 w-px bg-gradient-to-b from-paper/30 to-transparent" />
-          <ArrowDown aria-hidden="true" className="h-3.5 w-3.5 text-paper/55" strokeWidth={1.5} />
-        </div>
-      </div>
 
       <div /* Centred, but not in the middle. The reference sets the block
                   high in the frame — 87px of air above the eyebrow against 259
@@ -202,41 +173,32 @@ export default function Hero({ lang }: { lang: Lang }) {
         <Container>
           <div className="max-w-2xl lg:max-w-[54%]">
             <div className="rise">
-              {/*
-                A line of tracked capitals, not a chip.
-                
-                It was a bordered pill in brand blue, which put a second
-                button-shaped object directly above the two real buttons. The
-                reference sets it as a quiet label — the same weight as the
-                marks out in the room — and that is what an eyebrow is for.
-                w-fit so a contrast checker measures the label rather than the
-                full width of the block it sits in.
-              */}
-              <p className="w-fit text-[clamp(0.75rem,0.62vw,0.78rem)] font-medium uppercase tracking-[0.3em] text-paper/55">
-                {c.eyebrow}
-              </p>
-
               {/* Sized for the longest word it has to hold rather than for
                   the English: "Erhvervscomputere." is one 18-character word
                   that cannot break, and at too large a cap it runs straight
                   out of this column and into the machine beside it. */}
-              <h1 className="mt-6 font-display text-[clamp(1.85rem,2.63vw,3.25rem)] font-extrabold leading-[1.02] tracking-display">
+              <h1 className="font-display text-[clamp(1.85rem,2.63vw,3.25rem)] font-extrabold leading-[1.02] tracking-display">
                 {/* w-fit, not just block. A block span fills the column, and
                     the contrast check samples the whole box it is given — so
                     the blue line was being measured against the lit stone 150px
                     past its last glyph and failing at 1.57:1, while the ground
                     the letters actually sit on is the near-black wall. Shrink
                     the box to the words and the reading is the real one. */}
+                {/* The trailing spaces are for everything that reads the text
+                    rather than the layout: without them the h1's textContent
+                    was "Businesscomputers.Ready for the Nordics." — which is
+                    what a crawler, a screen reader's text mode and an audit
+                    all quoted back. */}
                 {c.headlineTop.map((line) => (
                   <span key={line} className="block w-fit text-paper">
-                    {line}
+                    {line}{" "}
                   </span>
                 ))}
                 <span className="block w-fit text-brand-500">{c.headlineAccent}</span>
               </h1>
 
               <p className="mt-5 max-w-xl text-[clamp(0.95rem,0.98vw,1.2rem)] leading-[1.72]">
-                <span className="block text-paper">{c.subLead}</span>
+                <span className="block text-paper">{c.subLead} </span>
                 <span className="block text-paper/70">{c.sub}</span>
               </p>
             </div>
@@ -254,7 +216,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                 href={localePath("/produkter", lang)}
                 intent="secondary"
                 size="lg"
-                icon={<LayoutGrid className="h-4 w-4 text-paper/50" strokeWidth={2} />}
+                icon={<LayoutGrid className="h-4 w-4 text-paper/65" strokeWidth={2} />}
               >
                 {c.secondary}
               </Button>
