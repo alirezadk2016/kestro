@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import Container from "./Container";
 import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -42,6 +42,14 @@ const situations = [
       da: "Fra ti maskiner til hele flåden. Samme konfiguration hele vejen rundt, de specifikationer opgaven kræver, og mulighed for at bytte det gamle ind.",
       en: "From ten machines to the whole fleet. The same configuration throughout, the specifications the work actually needs, and the option to trade the old kit in.",
     },
+    /* The same three things as the answer, set as the list they are, for
+       the large panel where a sentence would leave half of it empty. */
+    lead: { da: "Fra ti maskiner til hele flåden.", en: "From ten machines to the whole fleet." },
+    points: [
+      { da: "Samme konfiguration på hver maskine", en: "The same configuration on every machine" },
+      { da: "De specifikationer opgaven kræver", en: "The specifications the work actually needs" },
+      { da: "Mulighed for at bytte det gamle ind", en: "The option to trade the old kit in" },
+    ],
     mark: "batch" as CraftMarkName,
     href: "/flaadeloesninger",
     linkLabel: { da: "Se flådeløsninger", en: "See fleet solutions" },
@@ -63,7 +71,6 @@ const situations = [
 
 const copy = {
   da: {
-    eyebrow: "Hvor står I?",
     title: "Genkender I én af disse?",
     sub: "Vi er specialister i at koble virksomheder sammen med de rigtige leverandører – dem der leverer professionel kvalitet til en fornuftig pris. I slipper for at lede, forhandle og vurdere. Det er vores arbejde.",
     footPre: "Passer jeres situation ikke helt ind i én af kasserne?",
@@ -71,7 +78,6 @@ const copy = {
     footPost: "– de fleste henvendelser starter med et spørgsmål, ikke en bestilling.",
   },
   en: {
-    eyebrow: "Where are you?",
     title: "Recognise any of these?",
     sub: "What we are good at is connecting companies with the right suppliers — the ones that deliver professional quality at a sensible price. You avoid the searching, the negotiating and the judging. That is our job.",
     footPre: "Does your situation not quite fit one of the boxes?",
@@ -82,13 +88,15 @@ const copy = {
 
 export default function QualifySection({ lang }: { lang: Lang }) {
   const c = copy[lang];
+  /* Buying for a team is the core of the business, so it leads. */
+  const featured = situations.find((item) => item.href === "/flaadeloesninger") ?? situations[0];
+  const rest = situations.filter((item) => item !== featured);
 
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20" data-reveal>
+    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-28">
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
           <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.sub}</p>
@@ -110,27 +118,55 @@ export default function QualifySection({ lang }: { lang: Lang }) {
          * that both answer to hover give the row something to be pressed,
          * which a rule between two paragraphs never does.
          */}
-        <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {situations.map((item, i) => (
-            <li key={item.href}>
-              <ForgedPanel href={localePath(item.href, lang)} faceClassName="p-6 sm:p-7">
-                <div className="flex items-start justify-between gap-4">
+        {/*
+         * One door large, three beside it.
+         *
+         * Four equal cards in a 2x2 with a mark on top and an ordinal in the
+         * corner was the icon-tile grid every generated page ships, and the
+         * ordinals numbered things that are not a sequence. The four are
+         * parallel doors into the business, but they are not equal: buying
+         * for a team is the core of what Kestro does, so that one is the
+         * large panel and the other three sit beside it as compact rows with
+         * the mark inline.
+         */}
+        <ul className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-12">
+          {[featured].map((item) => (
+            <li key={item.href} className="lg:col-span-5">
+              <ForgedPanel
+                href={localePath(item.href, lang)}
+                faceClassName="h-full justify-between p-7 sm:p-9"
+              >
+                <div>
                   <MarkTile name={item.mark} size="lg" className="tile-z tile-z-near" />
-                  {/* aria-hidden as well as lighter: the ordinal is a
-                      decoration beside a heading that already says which card
-                      this is, and at 30% white it measured 2.9:1. */}
-                  <span aria-hidden="true" className="font-mono text-xs tabular-nums text-paper/55">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  <h3 className="mt-8 text-balance font-display text-2xl font-extrabold leading-tight tracking-display text-paper transition-colors group-hover:text-brand-100 sm:text-3xl">
+                    {item.question[lang]}
+                  </h3>
+                  {item.points ? (
+                    <>
+                      <p className="mt-4 text-base leading-[1.75] text-paper/70">
+                        {item.lead?.[lang]}
+                      </p>
+                      <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
+                        {item.points.map((point) => (
+                          <li
+                            key={point.da}
+                            className="flex items-start gap-3 text-base leading-[1.6] text-paper/85"
+                          >
+                            <Check
+                              aria-hidden="true"
+                              className="mt-1 h-4 w-4 flex-none text-brand-300"
+                              strokeWidth={2.25}
+                            />
+                            {point[lang]}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : (
+                    <p className="mt-4 text-base leading-[1.75] text-paper/70">{item.answer[lang]}</p>
+                  )}
                 </div>
-
-                <h3 className="mt-5 font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-100 sm:text-xl">
-                  {item.question[lang]}
-                </h3>
-                <p className="mt-3 flex-1 text-sm leading-[1.75] text-paper/65 sm:text-base sm:leading-[1.75]">
-                  {item.answer[lang]}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                   {item.linkLabel[lang]}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -140,7 +176,39 @@ export default function QualifySection({ lang }: { lang: Lang }) {
               </ForgedPanel>
             </li>
           ))}
-        </ol>
+          <li className="lg:col-span-7">
+            <ul className="grid h-full grid-cols-1 gap-4">
+              {rest.map((item) => (
+                <li key={item.href}>
+                  <ForgedPanel href={localePath(item.href, lang)} faceClassName="h-full p-5 sm:p-6">
+                    <div className="flex items-start gap-4 sm:gap-5">
+                      <MarkTile
+                        name={item.mark}
+                        size="md"
+                        className="tile-z tile-z-near flex-none"
+                      />
+                      <div className="min-w-0">
+                        <h3 className="font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-100 sm:text-lg">
+                          {item.question[lang]}
+                        </h3>
+                        <p className="mt-1.5 text-sm leading-[1.7] text-paper/65">
+                          {item.answer[lang]}
+                        </p>
+                        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                          {item.linkLabel[lang]}
+                          <ArrowRight
+                            className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                            strokeWidth={2}
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </ForgedPanel>
+                </li>
+              ))}
+            </ul>
+          </li>
+        </ul>
 
         <p className="mt-10 max-w-2xl text-sm leading-[1.6] text-paper/65">
           {c.footPre}{" "}

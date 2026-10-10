@@ -245,7 +245,7 @@ export default async function RepairPage(props: Params) {
               />
             </Link>
           </div>
-          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             {others.map((other) => (
               <li key={other.slug}>
                 <ServiceTile

@@ -43,21 +43,25 @@ export default function ServiceTile({
 }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
 
+  /* The mark beside the heading, not stacked above it: a tile with an icon
+     square on top, a heading, two lines and a prompt is the icon-tile card
+     every generated page ships. Inline, the mark reads as the heading's
+     glyph and the card reads as an entry in a list of services. */
   return (
     <ForgedPanel href={href}>
-      <MarkTile name={mark} size="lg" className="tile-z tile-z-near" />
-
-      <Heading className="tile-z tile-z-far mt-4 text-sm font-semibold text-paper group-hover:text-brand-200 sm:text-base">
-        {title}
-      </Heading>
-      <p className="tile-z tile-z-far mt-2 flex-1 text-xs leading-[1.6] text-paper/65 sm:text-sm">
-        {summary}
-      </p>
-
-      <span className="tile-prompt mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300">
-        {prompt}
-        <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
-      </span>
+      <div className="flex items-start gap-4">
+        <MarkTile name={mark} size="md" className="tile-z tile-z-near flex-none" />
+        <div className="tile-z tile-z-far flex min-w-0 flex-1 flex-col">
+          <Heading className="text-base font-semibold leading-snug text-paper group-hover:text-brand-200">
+            {title}
+          </Heading>
+          <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{summary}</p>
+          <span className="tile-prompt mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300">
+            {prompt}
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
+          </span>
+        </div>
+      </div>
     </ForgedPanel>
   );
 }

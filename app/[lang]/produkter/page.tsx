@@ -97,29 +97,33 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noPrices2}</p>
           </div>
 
-          <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+          <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.categories}
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {categories.map((category) => {
               return (
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col plate plate-lift p-4 sm:p-6"
+                  className="group flex items-start gap-4 plate plate-lift p-5 sm:p-6"
                 >
-                  <MarkTile name={getCategoryMark(category.slug)} size="md" />
-                  <h3 className="mt-3 text-sm font-semibold text-paper group-hover:text-paper sm:mt-4 sm:text-base">
-                    {category.name[lang]}
-                  </h3>
-                  <p className="mt-1.5 flex-1 text-xs leading-[1.6] text-paper/65 sm:mt-2 sm:text-sm sm:leading-[1.6]">
-                    {category.tagline[lang]}
-                  </p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300 sm:mt-4 sm:text-sm">
-                    {c.seeCategory}
-                    <span aria-hidden="true">&rarr;</span>
-                  </span>
+                  {/* Mark inline with the heading rather than stacked above
+                      it — the stacked icon tile is the template card. */}
+                  <MarkTile name={getCategoryMark(category.slug)} size="md" className="flex-none" />
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <h3 className="text-base font-semibold leading-snug text-paper">
+                      {category.name[lang]}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">
+                      {category.tagline[lang]}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
+                      {c.seeCategory}
+                      <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
                 </Link>
               );
             })}

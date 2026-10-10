@@ -517,6 +517,17 @@ body {
     transform: translateY(0) translateZ(20px);
   }
 
+  /* A phone has no hover, so a prompt that waits for one never arrives and
+     the card keeps an empty line where it would be. On touch it is there
+     from the start: one column of cards, one prompt each, and the only sign
+     on a small screen that the whole card is a link. */
+  @media (hover: none) {
+    .tile-prompt {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   /* A specular sweep across the face, so the tile reads as a surface catching
      a light rather than as a rectangle changing colour. */
   .tile-sheen::before {

@@ -22,14 +22,12 @@ import { localePath, type Lang } from "@/lib/i18n";
  */
 const copy = {
   da: {
-    label: "Vores rolle",
     lead: "Vi holder ikke lager.",
     body: "Det er ikke en mangel – det er hele pointen. En leverandør med et fyldt lager sælger jer det, der står på hylden. Vi køber først, når I ved, hvad I skal bruge, og går efter de specifikationer, opgaven faktisk kræver.",
     kicker: "Derfor kan vi sige nej til en handel, der ikke er god for jer.",
     promisesLabel: "Det kan I holde os op på",
   },
   en: {
-    label: "Our role",
     lead: "We hold no stock.",
     body: "That is not a shortcoming — it is the whole point. A supplier with a full warehouse sells you what is on the shelf. We buy only once you know what you need, and go after the specifications the job actually requires.",
     kicker: "Which is why we can turn down a deal that is not good for you.",
@@ -74,68 +72,60 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-10 sm:py-20" data-reveal>
+    <section className="stage py-12 sm:py-24">
       <Container>
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-brand-400" />
-            <span className="eyebrow text-brand-300">{c.label}</span>
+        {/*
+         * The statement on the left, the promises it buys on the right.
+         *
+         * It was a label, a display line set as a <p>, and then the three
+         * promises as three equal columns with a mark above each heading:
+         * Hallmark's three-column feature grid and icon-tile card in one row.
+         * Now the line is the section's <h2>, and the promises are stacked
+         * plates beside it with the mark inline, so the argument and its
+         * proof read as one composition rather than a header and a grid.
+         */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-6">
+            <h2 className="text-balance font-display t-display font-extrabold tracking-display text-paper">
+              {c.lead}
+            </h2>
+            <p className="mt-6 text-base leading-[1.65] text-paper/70 sm:text-lg sm:leading-[1.65]">
+              {c.body}
+            </p>
+            <p className="mt-6 text-base leading-[1.75] text-paper/90">{c.kicker}</p>
           </div>
 
-          <p className="mt-6 text-balance font-display t-display font-extrabold tracking-display text-paper">
-            {c.lead}
-          </p>
-          <p className="mt-6 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
-            {c.body}
-          </p>
-          <p className="mt-6 text-base leading-[1.75] sm:leading-[1.75] text-paper/90">
-            {c.kicker}
-          </p>
+          <div className="lg:col-span-6 lg:pt-3">
+            <h3 className="label text-paper/55">{c.promisesLabel}</h3>
+            <dl className="mt-4 space-y-3">
+              {promises.map((promise) => (
+                <div key={promise.href} className="plate flex gap-4 p-5 sm:p-6">
+                  {/* The mark lives inside the <dt>: a <div> in a <dl> may
+                      contain only <dt> and <dd>. */}
+                  <dt className="flex-none">
+                    <MarkTile name={promise.mark} size="md" />
+                    <span className="sr-only">{promise.term[lang]}</span>
+                  </dt>
+                  <dd className="min-w-0">
+                    <p
+                      aria-hidden="true"
+                      className="font-display text-base font-bold leading-snug tracking-tight text-paper"
+                    >
+                      {promise.term[lang]}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-6 text-paper/65">{promise.body[lang]}</p>
+                    <Link
+                      href={localePath(promise.href, lang)}
+                      className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
+                    >
+                      {promise.link[lang]}
+                    </Link>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
-
-        <p className="label mt-12 text-paper/55 sm:mt-16">{c.promisesLabel}</p>
-        {/*
-         * Plates on a phone, columns from sm.
-         *
-         * These are three parallel promises, not a sequence, so a spine would
-         * be the wrong device — but stacked and separated by hairlines they
-         * read as rows of a table, which is what every flat list on this site
-         * was doing on a phone. Three things you can pick up read as three
-         * things. From sm the columns come back: at that width the row is
-         * already a row and a plate around each one is a box inside a box.
-         */}
-        <dl className="mt-5 grid grid-cols-1 gap-3 sm:mt-5 sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:border-t sm:border-paper/15">
-          {promises.map((promise) => (
-            <div
-              key={promise.href}
-              className="plate flex flex-col p-5 sm:h-full sm:bg-none sm:p-0 sm:py-7 sm:shadow-none"
-            >
-              {/* The mark of the thing being promised, not a bullet. Three
-                  paragraphs under one label read as a footnote; the paper, the
-                  key and the lens say which promise is which before the words
-                  do, and they are the same three marks these claims carry
-                  everywhere else on the site.
-
-                  It lives inside the <dt>, not beside it. A <div> inside a
-                  <dl> may contain only <dt> and <dd>, and a loose <span>
-                  there is invalid markup — which is what a screen reader
-                  trips over and what Lighthouse flagged. */}
-              <dt className="font-display text-base font-bold leading-snug tracking-tight text-paper">
-                <MarkTile name={promise.mark} size="md" className="mb-4 flex" />
-                {promise.term[lang]}
-              </dt>
-              <dd className="mt-2 flex flex-1 flex-col text-sm leading-6 text-paper/65">
-                {promise.body[lang]}
-                <Link
-                  href={localePath(promise.href, lang)}
-                  className="mt-1 inline-flex min-h-[44px] items-center self-start text-sm font-semibold leading-6 text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper sm:mt-auto sm:pt-1"
-                >
-                  {promise.link[lang]}
-                </Link>
-              </dd>
-            </div>
-          ))}
-        </dl>
       </Container>
     </section>
   );
