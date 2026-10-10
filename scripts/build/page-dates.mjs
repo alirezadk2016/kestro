@@ -36,13 +36,57 @@ import { join, dirname } from "node:path";
 const ROOT = process.cwd();
 const APP = join(ROOT, "app", "[lang]");
 
-/** `git log` for one file, ISO date, newest or oldest commit. */
+/*
+ * Commits that changed how a page looks and not what it says.
+ *
+ * A date a reader sees as "Opdateret" has to mean the content changed. A pass
+ * that moved padding, swapped a grid for a stack or raised a text colour on
+ * every page is a real commit touching every page file, and counted as an
+ * edit it stamped the whole site with the same day — which a reviewer read,
+ * correctly, as a date generated rather than earned.
+ *
+ * Two ways to say "not a content change":
+ *
+ *   - a `Page-Dates: skip` trailer on the commit, for every commit from now
+ *     on that is presentation only;
+ *   - the commit's hash in scripts/build/page-dates-skip.txt, for commits
+ *     already pushed, whose messages cannot be amended.
+ *
+ * Both are judgement calls made by whoever commits, and the rule is the one
+ * the date has to keep: if a reader of the page would see different words,
+ * different facts or a different answer, it is not a skip.
+ */
+const SKIP_FILE = join(ROOT, "scripts", "build", "page-dates-skip.txt");
+const skipList = existsSync(SKIP_FILE)
+  ? readFileSync(SKIP_FILE, "utf8")
+      .split("\n")
+      .map((line) => line.replace(/#.*/, "").trim())
+      .filter(Boolean)
+  : [];
+const skipped = (hash, trailer) =>
+  /\bskip\b/i.test(trailer) || skipList.some((prefix) => hash.startsWith(prefix));
+
+/** `git log` for one file, ISO date, newest content commit or first commit. */
 function commitDate(file, which) {
-  const args = ["log", which === "first" ? "--diff-filter=A" : "-1", "--format=%cI", "--", file];
-  if (which === "first") args.splice(1, 0, "--reverse");
-  const out = execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).trim();
-  const line = which === "first" ? out.split("\n")[0] : out;
-  return line ? line.slice(0, 10) : null;
+  if (which === "first") {
+    const out = execFileSync(
+      "git",
+      ["log", "--reverse", "--diff-filter=A", "--format=%cI", "--", file],
+      { cwd: ROOT, encoding: "utf8" },
+    ).trim();
+    const line = out.split("\n")[0];
+    return line ? line.slice(0, 10) : null;
+  }
+  const out = execFileSync(
+    "git",
+    ["log", "--format=%H%x09%cI%x09%(trailers:key=Page-Dates,valueonly,separator=%x2C)", "--", file],
+    { cwd: ROOT, encoding: "utf8" },
+  ).trim();
+  for (const line of out.split("\n")) {
+    const [hash, date, trailer = ""] = line.split("\t");
+    if (hash && date && !skipped(hash, trailer)) return date.slice(0, 10);
+  }
+  return null;
 }
 
 /** Resolve an import specifier to a file in this repo, or null for a package. */

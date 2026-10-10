@@ -49,6 +49,11 @@ write it right than to have an audit find it.
 
 ### Machine readability
 
+- **A visible "Opdateret" date means the words changed.** It comes from git
+  (`scripts/build/page-dates.mjs`). A commit that only changes how pages look
+  carries a `Page-Dates: skip` trailer, so a styling pass does not stamp the
+  whole site with today; pushed commits go in
+  `scripts/build/page-dates-skip.txt`.
 - **Dates a person reads, never the ISO string.** `formatDate(iso, lang)` in
   `lib/i18n.ts`. A raw `2026-09-02` on a customer-facing page is a tell, and
   it shipped twice before this line existed.
@@ -66,9 +71,12 @@ write it right than to have an audit find it.
 
 ### Accessibility, because it is scored with SEO
 
-- **Text colour: nothing below `text-paper/55`.** White at 40% on the site's
-  navy is 3.81:1 and at 30% it is 2.9:1, both under the 4.5 body text needs.
-  The content gate fails the build on anything fainter. `aria-hidden`
+- **Text colour: nothing below `text-paper/65`.** White at 40% on the site's
+  navy is 3.81:1 and at 30% it is 2.9:1, both under the 4.5 body text needs;
+  /55 passed AA but a review on a phone called the small grey text under the
+  cards hard to read, so the floor went up. The content gate fails the build
+  on anything fainter. On the light sections, text is `text-ink-600` or
+  darker — ink-500 on `#F3F4F6` is 4.4:1. `aria-hidden`
   decoration is exempt — a "/" between two crumbs is not text anybody reads,
   and forcing it up makes a separator louder than the words it separates.
 - **Every tap target is at least 44px.** Bare text links in navigation need
@@ -110,6 +118,11 @@ bodies.
 
 ## Design
 
+- **Two light sections on the front page, on purpose.** The answer block and
+  the written-quote section sit on `bg-paper-dim` (the brand board's
+  #F3F4F6); everything else is navy. That is the page's rhythm — eight navy
+  bands in a row read as one. A panel on a light section is `.sheet`, never
+  `.plate`.
 - **`.plate` is the panel.** Not `border border-white/10 bg-white/[0.04]`,
   which is a rectangle lit by nothing. `.plate-lift` is the clickable version,
   `.plate-sm` the control-size one, `.plate-well` the recess a picture sits
