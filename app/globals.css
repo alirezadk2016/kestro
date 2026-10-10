@@ -761,6 +761,32 @@ body {
    * Replaces `border border-white/10 bg-white/[0.04]` — take both off when
    * you add it, or the ring doubles and the falloff is buried.
    */
+  /*
+   * The sheet: the panel on a light section.
+   *
+   * .plate is lit from inside for a navy ground and reads as nothing on the
+   * brand board's light neutral (#F3F4F6). Two sections on the front page sit
+   * on that light ground, so the page has a rhythm instead of eight bands of
+   * navy, and this is their panel: white paper with a hairline and a soft
+   * contact shadow, the same 12px radius as every plate and tile.
+   */
+  .sheet {
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow:
+      0 0 0 1px rgb(11 20 38 / 0.08),
+      0 1px 2px 0 rgb(11 20 38 / 0.06),
+      0 10px 24px -14px rgb(11 20 38 / 0.22);
+    transition: box-shadow 200ms ease;
+  }
+
+  .sheet:hover {
+    box-shadow:
+      0 0 0 1px rgb(30 64 255 / 0.22),
+      0 1px 2px 0 rgb(11 20 38 / 0.06),
+      0 12px 28px -14px rgb(11 20 38 / 0.28);
+  }
+
   .plate {
     /* 12px, the radius of every ForgedPanel and the mark tiles. The plate
        was square while the cards around it were rounded, and next to each

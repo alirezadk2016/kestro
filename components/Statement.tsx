@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import MarkTile from "@/components/MarkTile";
 import Container from "./Container";
 import { type CraftMarkName } from "./CraftMark";
@@ -26,33 +27,38 @@ const copy = {
     body: "Det er ikke en mangel – det er hele pointen. En leverandør med et fyldt lager sælger jer det, der står på hylden. Vi køber først, når I ved, hvad I skal bruge, og går efter de specifikationer, opgaven faktisk kræver.",
     kicker: "Derfor kan vi sige nej til en handel, der ikke er god for jer.",
     promisesLabel: "Det kan I holde os op på",
+    explodedAlt: "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade",
   },
   en: {
     lead: "We hold no stock.",
     body: "That is not a shortcoming — it is the whole point. A supplier with a full warehouse sells you what is on the shelf. We buy only once you know what you need, and go after the specifications the job actually requires.",
     kicker: "Which is why we can turn down a deal that is not good for you.",
     promisesLabel: "Hold us to these",
+    explodedAlt: "A laptop separated into layers: screen, keyboard, mainboard and base plate",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
 const promises = [
   {
-    href: "/ydelser/levering",
+    href: "/handelsbetingelser",
     mark: "written" as CraftMarkName,
-    term: { da: "Skriftligt, før I bestiller", en: "In writing, before you order" },
+    term: { da: "I køber hos Kestro", en: "You buy from Kestro" },
     body: {
-      da: "Pris, stand, batteritilstand og garantivilkår per enhed – på skrift, mens I stadig kan sige nej.",
-      en: "Price, condition, battery health and warranty terms per unit — on paper, while you can still say no.",
+      da: "Vi skaffer maskinerne hos leverandører i vores netværk, men tilbud, faktura og reklamation går gennem os. Én modpart, ét sæt betingelser.",
+      en: "We source the machines from suppliers in our network, but the quote, the invoice and any complaint go through us. One counterparty, one set of terms.",
     },
-    link: { da: "Hvad der følger med leverancen", en: "What comes with the delivery" },
+    link: { da: "Handelsbetingelserne", en: "Terms of sale" },
   },
   {
     href: "/ydelser/nordisk-tilpasning",
     mark: "nordic" as CraftMarkName,
-    term: { da: "Nordisk tastatur, fysisk skiftet", en: "Nordic keyboard, physically swapped" },
+    term: { da: "Dansk eller norsk tastatur", en: "Danish or Norwegian keyboard" },
+    /* The result first, the origin second. "The machines arrive with a
+       Spanish or Italian layout" as the opening line read as a warning; it
+       is the reason the swap exists, not the thing a buyer gets. */
     body: {
-      da: "Maskinerne kommer med spansk eller italiensk layout. Tastaturet bliver skiftet – det er ikke en indstilling i Windows.",
-      en: "The machines arrive with a Spanish or Italian layout. The keyboard gets changed — it is not a Windows setting.",
+      da: "Æ, ø og å trykt på tasterne. Mange maskiner kommer fra Sydeuropa med spansk eller italiensk tastatur, og det skifter vi fysisk før levering – det er ikke en indstilling i Windows.",
+      en: "Æ, ø and å printed on the keys. Many machines come from southern Europe with a Spanish or Italian keyboard, and we physically swap it before delivery — it is not a Windows setting.",
     },
     link: { da: "Nordisk tilpasning", en: "Nordic preparation" },
   },
@@ -93,29 +99,44 @@ export default function Statement({ lang }: { lang: Lang }) {
               {c.body}
             </p>
             <p className="mt-6 text-base leading-[1.75] text-paper/90">{c.kicker}</p>
+
+            {/* The machine opened up, beside the promise that it is tested
+                unit by unit. The left column ended a third of the way down
+                the plates beside it; this is what fills it, and it is the
+                one picture on the page that shows a machine is gone through
+                rather than wiped and resold. */}
+            <div className="plate-well relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl">
+              <Image
+                src="/cards/exploded.webp"
+                alt={c.explodedAlt}
+                fill
+                sizes="(min-width: 1024px) 560px, 92vw"
+                className="object-cover object-[50%_42%]"
+              />
+            </div>
           </div>
 
           <div className="lg:col-span-6 lg:pt-3">
-            <h3 className="label text-paper/55">{c.promisesLabel}</h3>
+            <h3 className="label text-paper/70">{c.promisesLabel}</h3>
+            {/* Each title is written once. The title used to be an sr-only
+                copy in the <dt> and an aria-hidden copy in the <dd>, which a
+                screen reader handled but a crawler and every text extractor
+                read twice: "I køber hos Kestro I køber hos Kestro". Now the
+                <dt> carries the mark and the title together, and the <dd>
+                is indented under the title so the mark still hangs in the
+                margin. */}
             <dl className="mt-4 space-y-3">
               {promises.map((promise) => (
-                <div key={promise.href} className="plate flex gap-4 p-5 sm:p-6">
-                  {/* The mark lives inside the <dt>: a <div> in a <dl> may
-                      contain only <dt> and <dd>. */}
-                  <dt className="flex-none">
-                    <MarkTile name={promise.mark} size="md" />
-                    <span className="sr-only">{promise.term[lang]}</span>
+                <div key={promise.href} className="plate p-5 sm:p-6">
+                  <dt className="flex items-center gap-4 font-display text-base font-bold leading-snug tracking-tight text-paper">
+                    <MarkTile name={promise.mark} size="md" className="flex-none" />
+                    {promise.term[lang]}
                   </dt>
-                  <dd className="min-w-0">
-                    <p
-                      aria-hidden="true"
-                      className="font-display text-base font-bold leading-snug tracking-tight text-paper"
-                    >
-                      {promise.term[lang]}
-                    </p>
-                    <p className="mt-1.5 text-sm leading-6 text-paper/65">{promise.body[lang]}</p>
+                  <dd className="mt-2 sm:pl-[60px]">
+                    <p className="text-sm leading-6 text-paper/75">{promise.body[lang]}</p>
                     <Link
                       href={localePath(promise.href, lang)}
+                      rel={promise.href === "/handelsbetingelser" ? "terms-of-service" : undefined}
                       className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
                     >
                       {promise.link[lang]}

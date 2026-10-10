@@ -55,8 +55,8 @@ const sections = [
       en: "We are a sourcing partner, not a web shop",
     },
     description: {
-      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer.",
-      en: "Kestro does not sit on a warehouse for you to pick from. We work as a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you.",
+      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
+      en: "Kestro does not sit on a warehouse for you to pick from. We work as a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you. You buy from Kestro: the quote, the invoice and any complaint go through us, not through the supplier.",
     },
   },
   {
@@ -143,7 +143,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
                 <MarkTile name={section.mark} size="md" />
                 <div>
                   <h2 className="text-xl font-semibold text-paper">{section.title[lang]}</h2>
-                  <p className="mt-3 text-base leading-[1.75] text-paper/65">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {section.description[lang]}
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
             <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
               &ldquo;{c.quote}&rdquo;
             </blockquote>
-            <figcaption className="mt-6 text-sm text-paper/65">
+            <figcaption className="mt-6 text-sm text-paper/75">
               <span className="font-semibold text-paper">{salesContact.name}</span>
               {" – "}
               {salesContact.role[lang]}, Kestro

@@ -19,11 +19,13 @@ const highlights = [
 
 const copy = {
   da: {
-    body: "Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en erhvervsmodel, der kan repareres og opgraderes, med nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
+    title: "Sådan ser en typisk maskine ud",
+    body: "Når vi skaffer bærbare til en virksomhed, er det typisk en erhvervsmodel som denne: den kan repareres og opgraderes, får nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
     link: "Se specifikationer og flere billeder",
   },
   en: {
-    body: "This is what a typical machine looks like when we source laptops for a company: a business model that can be repaired and upgraded, with a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
+    title: "What a typical machine looks like",
+    body: "When we source laptops for a company, it is typically a business model like this one: it can be repaired and upgraded, and gets a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
     link: "See specifications and more photos",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -33,7 +35,10 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const model = getModel("lenovo-thinkpad-t480");
   if (!model?.images) return null;
 
-  const image = model.images[0];
+  /* The closed lid, not the open machine. The open one's screen shows a
+     Windows 10 start menu, and the page says the machines ship with
+     Windows 11 — the photograph argued with the paragraph beside it. */
+  const image = model.images.find((img) => img.src === "/thinkpad-t480-2.jpg") ?? model.images[0];
 
   return (
     <section className="stage py-10 sm:py-16">
@@ -69,20 +74,25 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               }}
             />
             <Image
-              src="/thinkpad-t480-6-cutout.webp"
+              src="/thinkpad-t480-2-cutout.webp"
               alt={image.alt[lang]}
               width={1179}
-              height={1115}
+              height={1120}
               className="absolute inset-0 h-full w-full object-contain p-6 sm:p-10"
               sizes="(max-width: 1024px) 92vw, 560px"
             />
           </div>
 
           <div>
+            {/* The heading says what the section is; the model is the example
+                in it. With the model name as the h2, the front page's outline
+                had a product name standing level with "Hvad er refurbished
+                erhvervs-IT?" — a laptop as one of the page's topics. */}
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {model.name}
+              {c.title}
             </h2>
-            <p className="mt-4 text-base leading-[1.65] text-paper/65 sm:text-lg">{c.body}</p>
+            <p className="mt-2 font-display text-lg font-bold text-brand-300">{model.name}</p>
+            <p className="mt-4 text-base leading-[1.65] text-paper/75 sm:text-lg">{c.body}</p>
 
             <ul className="mt-6 flex flex-wrap gap-2">
               {highlights.map((highlight) => (

@@ -67,8 +67,8 @@ const cards = [
 ];
 
 const copy = {
-  da: { eyebrow: "Hvad vi skaffer", title: "Vælg en kategori" },
-  en: { eyebrow: "What we source", title: "Pick a category" },
+  da: { title: "Refurbished computere og skærme, vi skaffer" },
+  en: { title: "Refurbished computers and screens we source" },
 } satisfies Record<Lang, Record<string, string>>;
 
 export default function CategoryCards({ lang }: { lang: Lang }) {
@@ -77,18 +77,20 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
   return (
     <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-16">
       <Container>
-        {/* The row's heading, set as the eyebrow it looks like. It has to be a
-            real h2: the cards below are h3s, and without it the page steps
-            from the hero's h1 straight to level 3. */}
-        <div className="flex items-baseline gap-4">
-          <h2 className="eyebrow text-brand-300">{c.eyebrow}</h2>
-          <span aria-hidden="true" className="h-px flex-1 bg-white/10" />
-        </div>
+        {/* A heading that reads as one. It was an h2 set as a tracked-caps
+            label ("HVAD VI SKAFFER") with a rule beside it — a heading in the
+            outline and a caption on the screen, and an audit counting the
+            page's h2s found a row of labels among them. Now it is set on the
+            type scale like every other section heading, and it says what the
+            cards are in the words a buyer searches with. */}
+        <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          {c.title}
+        </h2>
 
         {/* Two up on a phone. Six full-bleed cards stacked was most of a
             metre of scrolling for what is a menu — as a compact grid the
             whole range is one screen, which is what a menu is for. */}
-        <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {cards.map((card) => (
             <li key={card.href}>
               <ForgedPanel href={localePath(card.href, lang)} faceClassName="p-0 overflow-hidden">
@@ -108,7 +110,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                     <h3 className="text-sm font-bold leading-snug text-paper sm:text-base">
                       {card.title[lang]}
                     </h3>
-                    <p className="mt-0.5 text-xs text-paper/55 leading-[1.45]">
+                    <p className="mt-0.5 text-xs text-paper/65 leading-[1.45]">
                       {typeof card.brands === "string" ? card.brands : card.brands[lang]}
                     </p>
                   </div>

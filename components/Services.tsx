@@ -23,8 +23,8 @@ const services = [
   {
     title: { da: "Nordisk tilpasning", en: "Nordic preparation" },
     description: {
-      da: "Dansk/nordisk tastaturlayout, sprogopsætning og mærkning – klar til brug fra dag ét.",
-      en: "Danish or Norwegian keyboard layout, language setup and labelling — ready to use from day one.",
+      da: "Dansk eller norsk tastatur, fysisk skiftet, og Windows sat op på dansk eller norsk – klar til brug fra dag ét.",
+      en: "A Danish or Norwegian keyboard, physically swapped, and Windows set up in Danish or Norwegian — ready to use from day one.",
     },
   },
   {
@@ -170,7 +170,7 @@ export default function Services({ lang }: { lang: Lang }) {
                 <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
                   {service.title[lang]}
                 </h3>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/65">
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">
                   {service.description[lang]}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function Services({ lang }: { lang: Lang }) {
 
         <Link
           href={localePath("/ydelser", lang)}
-          className="group mt-12 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+          className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
         >
           {c.link}
           <ArrowRight

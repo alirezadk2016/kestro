@@ -1,268 +1,239 @@
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import Container from "./Container";
-import MarkTile from "./MarkTile";
-import SourceList from "./SourceList";
 import FaqSchema, { type FaqEntry } from "./FaqSchema";
-import { type CraftMarkName } from "./CraftMark";
-import { sources, type SourceId } from "@/lib/sources";
 import { pageUpdated } from "./PageSchema";
-import { formatDate } from "@/lib/i18n";
+import { sources } from "@/lib/sources";
+import { formatDate, localePath } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 
 /*
- * The direct answer, first.
+ * The direct answer, first — and the questions a buyer asks next.
  *
  * Everything above this on the front page is a sales argument: a headline, a
  * promise, a photograph of a machine. This is the paragraph that says, in one
  * breath, what the company sells and to whom — the shape a reader skims and
- * an answer engine quotes.
+ * an answer engine quotes — followed by the eight things a procurement buyer
+ * asks before writing: who they are actually buying from, the warranty, why
+ * there are no prices, the keyboard, Windows, the minimum, delivery and the
+ * old kit.
  *
- * It was set as text on flat navy: a column of prose that stopped halfway
- * down, beside three figures with a hairline each and a source list that
- * printed the same three facts a second time. Nothing on it was drawn. Now:
+ * It used to carry a three-step "from used to ready" spine and an evidence
+ * panel (the e-waste tonnage, the Windows 10 date, the EU repair directive).
+ * The spine was the first of three tellings of the process on this page, at
+ * three different lengths, and the evidence was reading material rather than
+ * a buyer's question. The process is told once now, in Services; the evidence
+ * lives on /vejledninger, where every one of those sources is already cited.
+ * The one fact a buyer here needs from it — that Windows 10 is out of support
+ * — is in the Windows answer below, with its source.
  *
- *   - the definition is drawn as what it describes, three steps on a spine;
- *   - the two follow-up questions are plates, because they are parallel;
- *   - the evidence is one panel: the e-waste figure as a stat with a meter
- *     for the share that is recycled, the two dates as a timeline, and the
- *     sources as links only, since the panel has already stated each claim.
+ * Light ground on purpose. Every section on the page was navy, so after two
+ * screens they ran together; this and the written-quote section are the two
+ * bands on the brand board's light neutral, which is what gives the page a
+ * rhythm. Text here is ink-600 or darker: ink-500 on #F3F4F6 is 4.4:1.
  *
- * Every figure is an entry in lib/sources.ts, quoted as its source states it
- * and linked to that source. They are not Kestro's numbers and are not
- * presented as if they were.
+ * Every answer is something the site already states in full elsewhere —
+ * the terms of sale, the service pages — and none carries a number that is
+ * not in those documents.
  */
-
-const STEPS: { mark: CraftMarkName; label: { da: string; en: string } }[] = [
-  { mark: "tested", label: { da: "Testet", en: "Tested" } },
-  { mark: "repair", label: { da: "Istandsat", en: "Repaired" } },
-  { mark: "install", label: { da: "Sat op igen", en: "Set up again" } },
-];
-
-/* The share of 2022's e-waste documented as collected and recycled, from the
-   ITU/UNITAR monitor. One ratio against a whole: a meter, not a pie. */
-const RECYCLED = 22.3;
-
-const DATES: {
-  id: SourceId;
-  iso: string;
-  title: { da: string; en: string };
-  note: { da: string; en: string };
-}[] = [
-  {
-    id: "windows10Eol",
-    iso: "2025-10-14",
-    title: { da: "Windows 10-supporten sluttede", en: "Windows 10 support ended" },
-    note: {
-      da: "Microsoft leverer ikke længere sikkerhedsrettelser til den.",
-      en: "Microsoft no longer ships security fixes for it.",
-    },
-  },
-  {
-    id: "repairDirective",
-    iso: "2026-07-31",
-    title: {
-      da: "EU's reparationsdirektiv gælder",
-      en: "The EU repair directive applies",
-    },
-    note: {
-      da: "Producenter må ikke spærre for brugte og kompatible reservedele.",
-      en: "Manufacturers may not block second-hand or compatible spare parts.",
-    },
-  },
-];
 
 const copy = {
   da: {
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
-      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro skaffer den slags maskiner til virksomheder i Danmark og Norge: I fortæller, hvad I skal bruge, og vi finder maskinerne og sender en pris på skrift.",
-    stepsLabel: "Vejen fra brugt til klar",
-    factsTitle: "Tre tal, der ligger bag",
-    ewasteUnit: "mio. ton",
-    ewasteCaption: "elektronikaffald på verdensplan i 2022",
-    recycled: "dokumenteret indsamlet og genanvendt",
-    meterLabel: `${String(RECYCLED).replace(".", ",")} % af verdens elektronikaffald i 2022 blev dokumenteret indsamlet og genanvendt`,
-    percent: (n: number) => `${String(n).replace(".", ",")} %`,
+      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro sælger den slags maskiner til virksomheder i Danmark og Norge: I fortæller, hvad I skal bruge, og vi finder maskinerne og sender en pris på skrift.",
+    who: "Kort sagt: I køber hos Kestro. Vi skaffer maskinerne hos leverandører i vores netværk, men tilbud, faktura og reklamation går gennem os.",
+    terms: "Handelsbetingelserne",
     updated: "Opdateret",
-    faqTitle: "To spørgsmål mere",
+    faqTitle: "Det spørger virksomheder også om",
   },
   en: {
     question: "What is refurbished business IT?",
     answer:
-      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro sources that equipment for companies in Denmark and Norway: you tell us what you need, we find the machines and send a written price.",
-    stepsLabel: "From used to ready",
-    factsTitle: "Three figures behind it",
-    ewasteUnit: "million tonnes",
-    ewasteCaption: "of e-waste worldwide in 2022",
-    recycled: "documented as collected and recycled",
-    meterLabel: `${RECYCLED}% of the world's e-waste in 2022 was documented as collected and recycled`,
-    percent: (n: number) => `${n}%`,
+      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro sells that equipment to companies in Denmark and Norway: you tell us what you need, we find the machines and send a written price.",
+    who: "In short: you buy from Kestro. We source the machines from suppliers in our network, but the quote, the invoice and any complaint go through us.",
+    terms: "Terms of sale",
     updated: "Updated",
-    faqTitle: "Two more questions",
+    faqTitle: "What companies also ask",
   },
 };
+
+const win10 = sources.windows10Eol;
 
 const faqs: FaqEntry[] = [
   {
     question: { da: "Hvad er refurbished erhvervs-IT?", en: "What is refurbished business IT?" },
+    answer: { da: copy.da.answer, en: copy.en.answer },
+  },
+  {
+    question: {
+      da: "Hvem køber vi af – Kestro eller en leverandør?",
+      en: "Who are we buying from — Kestro or a supplier?",
+    },
     answer: {
-      da: copy.da.answer,
-      en: copy.en.answer,
+      da: "Af Kestro. Vi skaffer maskinerne hos leverandører i vores netværk, men tilbuddet, ordrebekræftelsen og fakturaen kommer fra Kestro, og det er os, I henvender jer til, hvis noget er galt. Vores handelsbetingelser gælder for alle tilbud og ordrer.",
+      en: "From Kestro. We source the machines from suppliers in our network, but the quote, the order confirmation and the invoice come from Kestro, and we are who you contact if something is wrong. Our terms of sale apply to every quote and order.",
+    },
+  },
+  {
+    question: { da: "Hvor lang er garantien?", en: "How long is the warranty?" },
+    answer: {
+      da: "Reklamationsperioden står i tilbuddet for hver leverance, fordi den afhænger af udstyrets alder og stand – så I kender den, før I bestiller. Er der ikke aftalt en periode, gælder købelovens regler. Ved en berettiget reklamation reparerer eller omleverer vi, eller I får et forholdsmæssigt afslag.",
+      en: "The complaint period is written into the quote for each delivery, because it depends on the age and condition of the equipment — so you know it before you order. Where no period is agreed, the Danish Sale of Goods Act applies. For a justified complaint we repair or replace, or you get a proportionate price reduction.",
+    },
+  },
+  {
+    question: {
+      da: "Hvorfor står der ingen priser på siden?",
+      en: "Why are there no prices on the site?",
+    },
+    answer: {
+      da: "Fordi vi ikke holder lager. Maskinerne skaffes til den enkelte ordre, så prisen afhænger af model, stand og antal på det tidspunkt. I får pris per enhed og samlet i et skriftligt tilbud, som gælder i 14 dage.",
+      en: "Because we hold no stock. The machines are sourced for each order, so the price depends on the model, condition and quantity at the time. You get a price per unit and in total in a written quote, valid for 14 days.",
+    },
+  },
+  {
+    question: { da: "Hvilket tastatur har maskinerne?", en: "What keyboard do the machines have?" },
+    answer: {
+      da: "Dansk eller norsk. Mange af maskinerne kommer fra Sydeuropa med spansk eller italiensk tastatur, og det skifter vi fysisk før levering, så æ, ø og å er trykt på tasterne – det er ikke bare en indstilling i Windows.",
+      en: "Danish or Norwegian. Many of the machines come from southern Europe with a Spanish or Italian keyboard, and we physically swap it before delivery, so æ, ø and å are printed on the keys — it is not just a Windows setting.",
+    },
+  },
+  {
+    question: { da: "Kører maskinerne Windows 11?", en: "Do the machines run Windows 11?" },
+    answer: {
+      da: `Computerne på vores modelsider leveres med Windows 11 installeret. Det betyder noget, fordi Microsoft stoppede sikkerhedsopdateringerne til Windows 10 den ${formatDate("2025-10-14", "da")}.`,
+      en: `The computers on our model pages are delivered with Windows 11 installed. That matters because Microsoft stopped security updates for Windows 10 on ${formatDate("2025-10-14", "en")}.`,
+    },
+  },
+  {
+    question: { da: "Er der et minimumsantal?", en: "Is there a minimum order?" },
+    answer: {
+      da: "Nej. Vi leverer alt fra enkelte maskiner til indkøb til hele teams og virksomheder.",
+      en: "No. We deliver anything from single machines to purchases for whole teams and companies.",
     },
   },
   {
     question: { da: "Hvor leverer I til?", en: "Where do you deliver?" },
     answer: {
-      da: "Vi leverer i Norden — i dag til Danmark og Norge.",
-      en: "We deliver across the Nordics — today to Denmark and Norway.",
+      da: "Til virksomheder i Danmark og Norge.",
+      en: "To companies in Denmark and Norway.",
     },
   },
   {
-    question: { da: "Følger der garanti med?", en: "Is there a warranty?" },
+    question: {
+      da: "Køber I også vores gamle udstyr?",
+      en: "Do you also buy our old equipment?",
+    },
     answer: {
-      da: "Ja. Garantiperioden står skriftligt i det tilbud, I får, før I bestiller.",
-      en: "Yes. The warranty period is written into the quote you get, before you order.",
+      da: "Ja. Vi køber brugte erhvervsmaskiner og henter dem. Er der data på enhederne, sletter vi lagermedierne, før de får et nyt liv, og I får en vurdering, før I beslutter jer.",
+      en: "Yes. We buy used business machines and collect them. If there is data on the units, we erase the storage media before they get a second life, and you get a valuation before you decide.",
     },
   },
 ];
 
+/* Where an answer has a page that documents it in full, it links there. */
+const more: Record<number, { href: string; label: { da: string; en: string } }> = {
+  1: { href: "/handelsbetingelser", label: { da: "Handelsbetingelserne", en: "Terms of sale" } },
+  2: { href: "/handelsbetingelser", label: { da: "Punkt 8 om reklamation", en: "Clause 8 on complaints" } },
+  3: { href: "/priser", label: { da: "Sådan bliver prisen til", en: "How the price is set" } },
+  4: { href: "/ydelser/nordisk-tilpasning", label: { da: "Nordisk tilpasning", en: "Nordic preparation" } },
+  8: { href: "/saelg-til-os", label: { da: "Sælg jeres udstyr", en: "Sell your equipment" } },
+};
+
 export default function AnswerBlock({ lang }: { lang: Lang }) {
   const c = copy[lang];
   const updated = pageUpdated("/");
-  const ids: SourceId[] = ["ewasteMonitor", ...DATES.map((d) => d.id)];
 
   return (
-    <section className="lit border-b border-white/10 bg-brand-950 py-12 sm:py-24">
+    <section className="border-b border-ink-200 bg-paper-dim py-14 text-ink-900 sm:py-24">
       <FaqSchema lang={lang} items={faqs} />
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start lg:gap-14">
-          <div className="lg:col-span-6">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
             {/* The question as the heading and the answer as the first
                 paragraph under it. In that order, on purpose. */}
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
               {c.question}
             </h2>
-            <p className="mt-5 text-base leading-[1.75] text-paper/80 sm:text-lg sm:leading-[1.7]">
+            <p className="mt-5 text-base leading-[1.75] text-ink-700 sm:text-lg sm:leading-[1.7]">
               {c.answer}
             </p>
 
-            {/* The definition, drawn: the three things that make used
-                equipment refurbished, in the order they happen. A sequence,
-                so a spine — the line runs through the tiles' centres. */}
-            <div className="mt-10">
-              <p className="label text-paper/55">{c.stepsLabel}</p>
-              <ol className="relative mt-5 grid grid-cols-3 gap-3">
-                <span
-                  aria-hidden="true"
-                  className="absolute left-[16.67%] right-[16.67%] top-[22px] h-px bg-gradient-to-r from-brand-400/70 via-brand-300/40 to-brand-400/70"
-                />
-                {STEPS.map((step, i) => (
-                  <li key={step.mark} className="relative flex flex-col items-center text-center">
-                    <MarkTile name={step.mark} size="md" className="bg-brand-950" />
-                    <span className="mt-3 font-display text-xs font-bold tabular-nums text-brand-300">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-1 text-sm font-semibold text-paper">
-                      {step.label[lang]}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+            {/* Who the buyer's contract is with. The site says "we source",
+                "we hold no stock" and "we test" in different places, and a
+                reader put those together as "a middleman — so whose warranty
+                is it?". This is the sentence that answers it, before the
+                question is even asked. */}
+            <p className="mt-6 border-l-2 border-brand-600 pl-4 text-base font-semibold leading-[1.65] text-ink-900">
+              {c.who}{" "}
+              <Link
+                href={localePath("/handelsbetingelser", lang)}
+                rel="terms-of-service"
+                className="font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
+              >
+                {c.terms}
+              </Link>
+            </p>
 
-            <p className="label mt-8 text-paper/55">
+            <p className="mt-6 text-sm text-ink-600">
               {c.updated}{" "}
-              <time dateTime={updated} className="tabular-nums text-paper/80">
+              <time dateTime={updated} className="tabular-nums text-ink-800">
                 {formatDate(updated, lang)}
               </time>
             </p>
-
-            {/* The first question is the heading above; its answer is the
-                paragraph under it. The other two are parallel, so plates. */}
-            <p className="label mt-10 text-brand-300">{c.faqTitle}</p>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {faqs.slice(1).map((faq) => (
-                <div key={faq.question.da} className="plate p-5">
-                  <h3 className="text-base font-semibold text-paper">{faq.question[lang]}</h3>
-                  <p className="mt-2 text-sm leading-6 text-paper/70">{faq.answer[lang]}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* The evidence, as one panel. */}
-          <div className="plate plate-edge p-6 sm:p-8 lg:col-span-6">
-            <h3 className="label text-brand-300">{c.factsTitle}</h3>
-
-            {/* The stat: a hero figure, then the meter for the share of it
-                that was recycled. Fill in the accent, track a deeper step of
-                the same ramp, the value labelled in text rather than left to
-                the bar. Proportional figures at this size — tabular digits
-                look loose in a standalone number. */}
-            <div className="mt-6">
-              <p className="flex items-baseline gap-2 font-display font-extrabold tracking-display text-paper">
-                <span className="text-5xl sm:text-6xl">62</span>
-                <span className="text-xl sm:text-2xl">{c.ewasteUnit}</span>
-              </p>
-              <p className="mt-1 text-sm leading-[1.6] text-paper/70">{c.ewasteCaption}</p>
-
-              <div
-                role="img"
-                aria-label={c.meterLabel}
-                className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-brand-900"
-              >
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-300"
-                  style={{ width: `${RECYCLED}%` }}
-                />
-              </div>
-              <p className="mt-3 text-sm leading-[1.6] text-paper/70">
-                <span className="font-semibold text-paper">{c.percent(RECYCLED)}</span> {c.recycled}
-                <span className="text-paper/55"> — {sources.ewasteMonitor.publisher}</span>
-              </p>
+          <div className="lg:col-span-7">
+            <p className="text-sm font-semibold text-ink-600">{c.faqTitle}</p>
+            {/* Native <details>: no JavaScript, and keyboard and screen-reader
+                behaviour for free. The question is an h3 inside the summary,
+                so it is a heading in the outline and not only a control. */}
+            <div className="mt-4 space-y-2.5">
+              {faqs.slice(1).map((faq, i) => {
+                const link = more[i + 1];
+                const isWindows = faq.question.da.startsWith("Kører");
+                return (
+                  <details key={faq.question.da} className="sheet group px-5 sm:px-6">
+                    <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-3.5 [&::-webkit-details-marker]:hidden">
+                      <h3 className="text-base font-semibold leading-snug text-ink-900 group-open:text-brand-700 group-hover:text-brand-700">
+                        {faq.question[lang]}
+                      </h3>
+                      <ChevronDown
+                        className="h-5 w-5 flex-none text-ink-600 transition-transform duration-200 group-open:rotate-180"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+                    </summary>
+                    <div className="pb-5 pr-2 sm:pr-9">
+                      <p className="text-base leading-[1.7] text-ink-700">{faq.answer[lang]}</p>
+                      {isWindows && (
+                        <p className="mt-2 text-sm text-ink-600">
+                          {lang === "da" ? "Kilde: " : "Source: "}
+                          <a
+                            href={win10.url}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
+                          >
+                            {win10.publisher}
+                          </a>
+                        </p>
+                      )}
+                      {link && (
+                        <Link
+                          href={localePath(link.href, lang)}
+                          rel={link.href === "/handelsbetingelser" ? "terms-of-service" : undefined}
+                          className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
+                        >
+                          {link.label[lang]}
+                        </Link>
+                      )}
+                    </div>
+                  </details>
+                );
+              })}
             </div>
-
-            {/* Two dates in order: a timeline, so a spine. */}
-            {/* One segment per gap, from the bottom of a dot to the top of
-                the next: a single line behind the list started above the
-                first dot and ran on past the last. The dot is 15px at 6px
-                down, and the gap is space-y-6, so a segment starts at 21px
-                and is the item's height plus 9px long. */}
-            <ol className="mt-8 space-y-6 border-t border-white/10 pt-8">
-              {DATES.map((date, i) => (
-                <li key={date.id} className="relative flex gap-5">
-                  {i < DATES.length - 1 && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute left-[7px] top-[21px] h-[calc(100%+9px)] w-px bg-gradient-to-b from-brand-400/70 to-brand-400/30"
-                    />
-                  )}
-                  <span
-                    aria-hidden="true"
-                    className="relative mt-1.5 h-[15px] w-[15px] flex-none rounded-full border-2 border-brand-300 bg-brand-950"
-                  />
-                  <div className="min-w-0">
-                    <time
-                      dateTime={date.iso}
-                      className="font-display text-xl font-extrabold tracking-display text-paper sm:text-2xl"
-                    >
-                      {formatDate(date.iso, lang)}
-                    </time>
-                    <p className="mt-1 text-sm font-semibold text-paper">{date.title[lang]}</p>
-                    <p className="mt-0.5 text-sm leading-[1.6] text-paper/70">
-                      {date.note[lang]}
-                      <span className="text-paper/55"> — {sources[date.id].publisher}</span>
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <SourceList
-              lang={lang}
-              ids={ids}
-              compact
-              className="mt-8 border-t border-white/10 pt-6"
-            />
           </div>
         </div>
       </Container>

@@ -72,14 +72,14 @@ const situations = [
 const copy = {
   da: {
     title: "Genkender I én af disse?",
-    sub: "Vi er specialister i at koble virksomheder sammen med de rigtige leverandører – dem der leverer professionel kvalitet til en fornuftig pris. I slipper for at lede, forhandle og vurdere. Det er vores arbejde.",
+    sub: "De fleste henvendelser starter i én af de fire situationer herunder. I beskriver, hvad I står med – vi skaffer maskinerne, klargør dem og sender en pris. I slipper for at lede, forhandle og vurdere.",
     footPre: "Passer jeres situation ikke helt ind i én af kasserne?",
     footLink: "Skriv til os",
     footPost: "– de fleste henvendelser starter med et spørgsmål, ikke en bestilling.",
   },
   en: {
     title: "Recognise any of these?",
-    sub: "What we are good at is connecting companies with the right suppliers — the ones that deliver professional quality at a sensible price. You avoid the searching, the negotiating and the judging. That is our job.",
+    sub: "Most enquiries start in one of the four situations below. You describe where you are — we source the machines, prepare them and send a price. You avoid the searching, the negotiating and the judging.",
     footPre: "Does your situation not quite fit one of the boxes?",
     footLink: "Write to us",
     footPost: "— most enquiries start with a question, not an order.",
@@ -99,7 +99,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         {/*
@@ -191,7 +191,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                         <h3 className="font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-100 sm:text-lg">
                           {item.question[lang]}
                         </h3>
-                        <p className="mt-1.5 text-sm leading-[1.7] text-paper/65">
+                        <p className="mt-1.5 text-sm leading-[1.7] text-paper/75">
                           {item.answer[lang]}
                         </p>
                         <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
@@ -210,7 +210,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           </li>
         </ul>
 
-        <p className="mt-10 max-w-2xl text-sm leading-[1.6] text-paper/65">
+        <p className="mt-10 max-w-2xl text-sm leading-[1.6] text-paper/75">
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
