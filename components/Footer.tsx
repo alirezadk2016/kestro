@@ -15,6 +15,7 @@ const copy = {
     company: "Virksomhed",
     delivers: "Leverer i",
     follow: "Følg Kestro",
+    pages: "Sider",
     rights: "Alle rettigheder forbeholdes.",
     cvrLabel: "CVR",
     trademarks:
@@ -27,6 +28,7 @@ const copy = {
     company: "Company",
     delivers: "Delivers in",
     follow: "Follow Kestro",
+    pages: "Pages",
     rights: "All rights reserved.",
     cvrLabel: "CVR",
     trademarks:
@@ -73,27 +75,109 @@ function SocialGlyph({ name }: { name: string }) {
   );
 }
 
+/*
+ * Mast-headed, not a sitemap.
+ *
+ * This was the footer every generated site ships: a blurb in one column, two
+ * columns of stacked links (one eleven deep) and a copyright line — Hallmark's
+ * "AI footer", and on the front page a tall column of links beside a half-empty
+ * row. Every link is still here, because the internal linking depends on them,
+ * but they now run as two wrapped rows under a wordmark that closes the page,
+ * and the legal details sit on one band at the bottom.
+ *
+ * The page above already ends on a large call to action (CtaSection), so the
+ * footer does not repeat one: the wordmark and a line about the company are
+ * the close, with the adviser link and the address beside them.
+ */
 export default function Footer({ lang }: { lang: Lang }) {
   const c = copy[lang];
+  const groups = [
+    { label: c.services, links: serviceNav },
+    { label: c.company, links: companyNav },
+  ];
 
   return (
-    <footer className="lit bg-brand-950 text-ink-300">
-      <Container className="py-12 sm:py-24">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-9 sm:grid-cols-2 md:grid-cols-4">
-          <div className="col-span-2">
+    <footer className="lit border-t border-white/10 bg-brand-950 text-ink-300">
+      <Container className="pb-10 pt-14 sm:pt-20">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <div className="max-w-xl">
             <Link
               href={localePath("/", lang)}
-              className="flex min-h-[44px] items-center gap-2.5 font-display text-lg font-extrabold tracking-tight text-paper"
+              className="inline-flex min-h-[44px] items-center gap-3 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl"
             >
-              <Logo className="h-7 w-auto" idPrefix="footer" />
+              <Logo className="h-9 w-auto sm:h-10" idPrefix="footer" />
               Kestro
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-[1.6] text-ink-400">{c.blurb}</p>
+            <p className="mt-4 text-base leading-[1.65] text-ink-400">{c.blurb}</p>
+          </div>
+
+          <div className="flex flex-col items-start gap-2 lg:items-end">
+            <Link
+              href={localePath("/kontakt", lang)}
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
+            >
+              {ui.talkToAdviser[lang]}
+              <ArrowRight className="h-4 w-4" strokeWidth={2} />
+            </Link>
+            <a
+              href={`mailto:${company.email}`}
+              className="inline-flex min-h-[44px] items-center text-sm text-ink-400 transition hover:text-paper"
+            >
+              {company.email}
+            </a>
+            <p className="text-sm leading-[1.6] text-ink-400">
+              {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
+            </p>
+          </div>
+        </div>
+
+        {/* Each group's label sits above its links, never beside them: a
+            label-left, links-right row is the hanging-header pattern. */}
+        <nav
+          aria-label={c.pages}
+          className="mt-12 grid grid-cols-1 gap-8 border-t border-white/10 pt-8 lg:grid-cols-[2fr_1fr] lg:gap-14"
+        >
+          {groups.map((group) => (
+            <div key={group.label}>
+              <h3 className="label text-brand-300">{group.label}</h3>
+              <ul className="mt-2 flex flex-wrap gap-x-6">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={localePath(link.href, lang)}
+                      rel={link.rel}
+                      className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm text-ink-400 transition hover:text-paper"
+                    >
+                      {link.label[lang]}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        {/* The legal band. A B2B buyer looks for the entity, the address and
+            the CVR before ordering, and e-handelsloven §7 requires them; each
+            part appears when there is a real value for it. */}
+        <div className="mt-10 space-y-3 border-t border-white/10 pt-6 text-sm text-ink-400">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs leading-[1.45]">
+              {[
+                company.legalForm ? `${company.name} ${company.legalForm}` : company.name,
+                postalAddress(lang),
+                company.cvr ? `${c.cvrLabel} ${company.cvr}` : null,
+                company.phoneDisplay,
+              ]
+                .filter(Boolean)
+                .join(" · ")}{" "}
+              · &copy; {new Date().getFullYear()} Kestro. {c.rights}
+            </p>
 
             {/* rel="me" alongside noopener: it is what marks these as the same
                 entity's own profiles rather than pages we merely link to, and
                 it says the same thing the Organization schema's sameAs says. */}
-            <ul className="mt-6 flex items-center gap-2">
+            <ul className="flex items-center gap-2">
               {company.social.map((profile) => (
                 <li key={profile.href}>
                   <a
@@ -109,78 +193,6 @@ export default function Footer({ lang }: { lang: Lang }) {
               ))}
             </ul>
           </div>
-
-          <div>
-            <h3 className="eyebrow text-brand-300">{c.services}</h3>
-            <ul className="mt-4 space-y-0.5">
-              {serviceNav.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={localePath(link.href, lang)}
-                    className="-my-1 block py-3 text-sm text-ink-400 transition hover:text-paper"
-                  >
-                    {link.label[lang]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="eyebrow text-brand-300">{c.company}</h3>
-            <ul className="mt-4 space-y-0.5">
-              {companyNav.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={localePath(link.href, lang)}
-                    rel={link.rel}
-                    className="-my-1 block py-3 text-sm text-ink-400 transition hover:text-paper"
-                  >
-                    {link.label[lang]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-6 border-t border-ink-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-ink-400 leading-[1.6]">
-              {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
-            </p>
-            <a
-              href={`mailto:${company.email}`}
-              className="mt-1 inline-flex min-h-[44px] items-center text-sm text-ink-400 transition hover:text-paper"
-            >
-              {company.email}
-            </a>
-          </div>
-
-          <Link
-            href={localePath("/kontakt", lang)}
-            className="inline-flex min-h-[48px] items-center gap-2 self-start rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper transition hover:border-white/35 hover:bg-white/[0.08] sm:self-auto"
-          >
-            {ui.talkToAdviser[lang]}
-            <ArrowRight className="h-4 w-4" strokeWidth={2} />
-          </Link>
-        </div>
-
-        {/* The legal line. A B2B buyer looks for the entity, the address and
-            the CVR before ordering, and e-handelsloven §7 requires them; each
-            part appears when there is a real value for it. */}
-        <div className="mt-12 space-y-3 border-t border-white/10 pt-6 text-sm text-ink-400">
-          <p className="text-xs leading-[1.45]">
-            {[
-              company.legalForm ? `${company.name} ${company.legalForm}` : company.name,
-              postalAddress(lang),
-              company.cvr ? `${c.cvrLabel} ${company.cvr}` : null,
-              company.phoneDisplay,
-              company.email,
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
           <p className="max-w-3xl text-xs leading-[1.45]">{c.trademarks}</p>
           {/* The legal documents in English, on the Danish pages only.
               rel="privacy-policy" on the Danish links was not enough: the
@@ -189,31 +201,30 @@ export default function Footer({ lang }: { lang: Lang }) {
               must not be renamed. These are the real English pages, useful
               in their own right to a Norwegian or international buyer, and
               they carry the words in both the address and the label. */}
-          {lang === "da" && (
-            <p className="flex flex-wrap items-center gap-x-4">
-              <span>På engelsk:</span>
-              <Link
-                href={localePath("/privatlivspolitik", "en")}
-                hrefLang="en"
-                lang="en"
-                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
-              >
-                Privacy policy
-              </Link>
-              <Link
-                href={localePath("/handelsbetingelser", "en")}
-                hrefLang="en"
-                lang="en"
-                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
-              >
-                Terms of sale
-              </Link>
-            </p>
-          )}
-          <p>
-            &copy; {new Date().getFullYear()} Kestro. {c.rights}
-          </p>
-          <ConsentReset lang={lang} />
+          <div className="flex flex-wrap items-center gap-x-6">
+            {lang === "da" && (
+              <p className="flex flex-wrap items-center gap-x-4">
+                <span>På engelsk:</span>
+                <Link
+                  href={localePath("/privatlivspolitik", "en")}
+                  hrefLang="en"
+                  lang="en"
+                  className="inline-flex min-h-[44px] items-center transition hover:text-paper"
+                >
+                  Privacy policy
+                </Link>
+                <Link
+                  href={localePath("/handelsbetingelser", "en")}
+                  hrefLang="en"
+                  lang="en"
+                  className="inline-flex min-h-[44px] items-center transition hover:text-paper"
+                >
+                  Terms of sale
+                </Link>
+              </p>
+            )}
+            <ConsentReset lang={lang} />
+          </div>
         </div>
       </Container>
     </footer>
