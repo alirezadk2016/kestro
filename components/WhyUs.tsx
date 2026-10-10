@@ -34,12 +34,10 @@ const benefits = [
 
 const copy = {
   da: {
-    eyebrow: "Hvorfor Kestro",
     title: "Hvorfor virksomheder vælger Kestro",
     sub: "Vi køber brugt erhvervshardware i Sydeuropa, klargør det til nordisk brug og leverer det til virksomheder i Danmark og Norge.",
   },
   en: {
-    eyebrow: "Why Kestro",
     title: "Why companies choose Kestro",
     sub: "We buy used business hardware in southern Europe, prepare it for Nordic use and deliver it to companies in Denmark and Norway.",
   },
@@ -52,8 +50,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
     <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
           <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.sub}</p>

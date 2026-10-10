@@ -111,34 +111,6 @@ body {
 
 @layer components {
   /*
-   * A section arriving.
-   *
-   * Only hidden once components/Reveal.tsx has stamped the root — otherwise a
-   * failed script would leave the page blank, and content that needs
-   * JavaScript to become visible is content that can vanish.
-   *
-   * The easing is a long tail rather than a symmetrical ease: it covers most
-   * of the distance early and settles slowly, which is what a camera move
-   * does and what a linear or ease-in-out transition never does.
-   */
-  @media (prefers-reduced-motion: no-preference) {
-    html[data-reveal-ready] [data-reveal] {
-      opacity: 0;
-      transform: translate3d(0, 22px, 0);
-      transition:
-        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
-    }
-
-    html[data-reveal-ready] [data-reveal].is-revealed {
-      opacity: 1;
-      transform: none;
-      will-change: auto;
-    }
-  }
-
-  /*
    * Glass.
    *
    * The header and the mobile menu sit over the page rather than beside it, so

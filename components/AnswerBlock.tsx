@@ -72,7 +72,6 @@ const DATES: {
 
 const copy = {
   da: {
-    eyebrow: "Kort fortalt",
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
       "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro skaffer den slags maskiner til virksomheder i Danmark og Norge: I fortæller, hvad I skal bruge, og vi finder maskinerne og sender en pris på skrift.",
@@ -87,7 +86,6 @@ const copy = {
     faqTitle: "To spørgsmål mere",
   },
   en: {
-    eyebrow: "The short version",
     question: "What is refurbished business IT?",
     answer:
       "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro sources that equipment for companies in Denmark and Norway: you tell us what you need, we find the machines and send a written price.",
@@ -133,16 +131,14 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
   const ids: SourceId[] = ["ewasteMonitor", ...DATES.map((d) => d.id)];
 
   return (
-    <section className="lit border-b border-white/10 bg-brand-950 py-12 sm:py-24" data-reveal>
+    <section className="lit border-b border-white/10 bg-brand-950 py-12 sm:py-24">
       <FaqSchema lang={lang} items={faqs} />
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start lg:gap-14">
           <div className="lg:col-span-6">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-
             {/* The question as the heading and the answer as the first
                 paragraph under it. In that order, on purpose. */}
-            <h2 className="mt-4 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.question}
             </h2>
             <p className="mt-5 text-base leading-[1.75] text-paper/80 sm:text-lg sm:leading-[1.7]">

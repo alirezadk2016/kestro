@@ -63,32 +63,26 @@ const asks: { mark: CraftMarkName; label: { da: string; en: string } }[] = [
 
 const copy = {
   da: {
-    askEyebrow: "Fortæl os, hvad I skal bruge",
     askTitle: "Få en pris\npå jeres opsætning",
     askBody:
       "Antal, specifikation og tidsramme — så finder vi maskinerne og vender tilbage med en pris, I kan regne på.",
     askLink: "Send en forespørgsel",
-    refurbEyebrow: "Sådan klargør vi",
     refurbTitle: "Ikke bare rengjort.\nGennemgået.",
     refurbLink: "Se hele processen",
     refurbAlt: "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade",
-    fleetEyebrow: "Flådeløsninger",
     fleetTitle: "Én leverandør.\nHele jeres IT.",
     fleetBody: "Fra 10 enheder til hele flåden, samme opsætning hele vejen rundt.",
     fleetLink: "Se flådeløsninger",
     fleetAlt: "Et lokale med ens klargjorte bærbare computere stillet op på borde",
   },
   en: {
-    askEyebrow: "Tell us what you need",
     askTitle: "Get a price\nfor your setup",
     askBody:
       "Quantity, specification and timing — we find the machines and come back with a price you can work with.",
     askLink: "Send an enquiry",
-    refurbEyebrow: "How we prepare them",
     refurbTitle: "Not just cleaned.\nGone through.",
     refurbLink: "See the whole process",
     refurbAlt: "A laptop separated into layers: screen, keyboard, mainboard and base plate",
-    fleetEyebrow: "Fleet solutions",
     fleetTitle: "One supplier.\nAll your IT.",
     fleetBody: "From 10 devices to the whole fleet, the same configuration throughout.",
     fleetLink: "See fleet solutions",
@@ -100,14 +94,13 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-white/10 bg-ink-900 py-10 sm:py-20" data-reveal>
+    <section className="border-b border-white/10 bg-ink-900 py-12 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Send us a spec */}
           <ForgedPanel className="lg:col-span-4" faceClassName="justify-between p-6 sm:p-8">
             <div>
-              <span className="eyebrow text-brand-300">{c.askEyebrow}</span>
-              <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+              <h2 className="whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
                 {c.askTitle}
               </h2>
               <p className="mt-4 text-sm leading-[1.6] text-paper/65">{c.askBody}</p>
@@ -135,8 +128,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
 
           {/* How a machine is prepared */}
           <ForgedPanel className="lg:col-span-5" faceClassName="p-6 sm:p-8">
-            <span className="eyebrow text-brand-300">{c.refurbEyebrow}</span>
-            <h2 className="mt-4 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+            <h2 className="whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.refurbTitle}
             </h2>
 
@@ -221,8 +213,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               }}
             />
             <div className="relative">
-              <span className="eyebrow text-brand-300">{c.fleetEyebrow}</span>
-              <h2 className="mt-3 whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper">
+              <h2 className="whitespace-pre-line font-display text-2xl font-extrabold leading-tight tracking-display text-paper">
                 {c.fleetTitle}
               </h2>
               <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.fleetBody}</p>

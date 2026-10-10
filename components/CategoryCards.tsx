@@ -75,7 +75,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-20" data-reveal>
+    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-16">
       <Container>
         {/* The row's heading, set as the eyebrow it looks like. It has to be a
             real h2: the cards below are h3s, and without it the page steps

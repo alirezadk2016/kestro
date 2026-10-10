@@ -25,20 +25,16 @@ const copy = {
       "Skal alle medarbejdere have en computer – eller skal hele flåden skiftes ud? Vi leverer renoverede erhvervsmaskiner i større antal, med den opsætning I vælger, og tager gerne jeres gamle udstyr i bytte.",
     sendEnquiry: "Send en forespørgsel",
     talkTo: "Tal med",
-    eyebrow: "Til flådeindkøb",
     capabilitiesTitle: "Det, større indkøb kræver",
-    scaleEyebrow: "Omfang",
     scaleTitle: "Ti, halvtreds og to hundrede maskiner er tre forskellige opgaver",
     scaleLead:
       "Antallet ændrer ikke bare prisen – det ændrer, hvordan indkøbet skal gribes an. Vi holder ikke lager, men skaffer maskinerne per ordre i vores leverandørnetværk, og det er dér, forskellen mellem ti og to hundrede enheder viser sig først.",
     scaleClose:
       "Prisen per enhed følger ikke antallet alene. Den afhænger af model, stand, specifikation og hvad der er tilgængeligt, når I spørger.",
     scaleCloseLink: "Hvad der afgør prisen",
-    rolloutEyebrow: "Forløbet",
     rolloutTitle: "Sådan forløber en flådeleverance, uge for uge",
     rolloutLead:
       "Rækkefølgen herunder er den samme hver gang. Hvor lang tid hvert trin tager, er den ikke: det afhænger af antal, specifikation og hvad leverandørnetværket har, når I spørger. Ugerne er derfor vejledende og ikke et tilsagn – men de siger, hvad der skal ske hvornår, og hvornår vi har brug for noget fra jer.",
-    tradeEyebrow: "Bytteordning",
     tradeTitle: "Ud med det gamle, ind med det nye – i én aftale",
     tradeBody:
       "Når en virksomhed skifter flåde, står den typisk med to opgaver: at skaffe det nye og at komme af med det gamle. Vi kan håndtere begge dele. Værdien af jeres brugte udstyr kan modregnes i det nye indkøb, så I får én samlet aftale i stedet for to forløb.",
@@ -62,20 +58,16 @@ const copy = {
       "Does every employee need a computer — or does the whole fleet need replacing? We deliver refurbished business machines in volume, with the configuration you choose, and we are happy to take your old equipment in part exchange.",
     sendEnquiry: "Send an enquiry",
     talkTo: "Talk to",
-    eyebrow: "For fleet purchases",
     capabilitiesTitle: "What a larger purchase actually needs",
-    scaleEyebrow: "Scale",
     scaleTitle: "Ten, fifty and two hundred machines are three different jobs",
     scaleLead:
       "Quantity does not just change the price — it changes how the purchase has to be run. We hold no stock; we source per order through our supplier network, and that is where the difference between ten and two hundred units shows up first.",
     scaleClose:
       "Price per unit does not follow quantity alone. It depends on model, condition, specification and what is available when you ask.",
     scaleCloseLink: "What decides the price",
-    rolloutEyebrow: "The process",
     rolloutTitle: "How a fleet delivery runs, week by week",
     rolloutLead:
       "The order below is the same every time. How long each step takes is not: it depends on quantity, specification and what the supplier network has when you ask. The weeks are indicative rather than a commitment — but they say what happens when, and when we need something from you.",
-    tradeEyebrow: "Trade-in",
     tradeTitle: "Old out, new in — in one agreement",
     tradeBody:
       "When a company changes its fleet, it usually faces two jobs: getting the new machines and getting rid of the old ones. We can handle both. The value of your used equipment can be offset against the new purchase, so you get one agreement instead of two processes.",
@@ -473,8 +465,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="py-10 sm:py-20">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.capabilitiesTitle}
             </h2>
           </div>
@@ -498,8 +489,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-2xl">
-            <span className="eyebrow text-brand-300">{c.scaleEyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.scaleTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.scaleLead}</p>
@@ -530,8 +520,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.rolloutEyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.rolloutTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.rolloutLead}</p>
@@ -567,8 +556,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.tradeEyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.tradeTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.tradeBody}</p>

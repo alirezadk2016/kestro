@@ -41,7 +41,7 @@ export default function CtaSection({
   const team = enquiryContacts(lang);
 
   return (
-    <section className="stage py-10 sm:py-20" data-reveal>
+    <section className="stage py-14 sm:py-28">
       <Container>
         <div className="max-w-3xl">
           <span className="h-px w-8 bg-brand-400" />

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
 import PageViewTracker from "@/components/PageViewTracker";
 import Analytics from "@/components/Analytics";
 /* Aliased: the project already has a component called Analytics, and it is
@@ -267,7 +266,6 @@ export default async function RootLayout({
           {children}
         </main>
         <Footer lang={lang} />
-        <Reveal />
         {/* Our own count, so the numbers also exist in our own panel and
             survive a change of host or plan. Sends a path, nothing else. */}
         <PageViewTracker />

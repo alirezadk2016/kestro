@@ -38,13 +38,11 @@ const services = [
 
 const copy = {
   da: {
-    eyebrow: "Processen",
     title: "Fra brugt til klar til brug",
     sub: "Fra maskinen står i Sydeuropa, til den er sat op på et skrivebord i Danmark eller Norge.",
     link: "Se hele processen",
   },
   en: {
-    eyebrow: "The process",
     title: "From used to ready to use",
     sub: "From the machine sitting in southern Europe to it being set up on a desk in Denmark or Norway.",
     link: "See the whole process",
@@ -60,11 +58,10 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-10 sm:py-20" data-reveal>
+    <section className="stage py-12 sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
           <p className="mt-5 text-base leading-[1.75] text-paper/70">{c.sub}</p>
@@ -162,7 +159,11 @@ export default function Services({ lang }: { lang: Lang }) {
                   Below lg the mark is the station on the rail, so it is not
                   drawn twice.
                 */}
-                <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="md" className="mb-5 !hidden lg:!inline-flex" />
+                <MarkTile
+                  name={STEP_MARKS[i] ?? "adjust"}
+                  size="md"
+                  className="mb-5 !hidden lg:!inline-flex"
+                />
                 <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
                   {String(i + 1).padStart(2, "0")}
                 </span>

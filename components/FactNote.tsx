@@ -27,12 +27,11 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
   const c = copy[lang];
 
   return (
-    <section className="border-t border-white/10 bg-brand-950 py-10 sm:py-20" data-reveal>
+    <section className="border-t border-white/10 bg-brand-950 py-10 sm:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-4 font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+            <h2 className="font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.title}
             </h2>
             <ul className="mt-6 space-y-3">

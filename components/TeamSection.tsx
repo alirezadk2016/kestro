@@ -6,14 +6,12 @@ import type { Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    eyebrow: "Kontaktpersoner",
     title: "Hvem I taler med",
     sub: "Hos os taler I med et menneske – ikke et sagsnummer.",
     write: "Skriv til os",
     at: "hos",
   },
   en: {
-    eyebrow: "Who to contact",
     title: "Who you will be talking to",
     sub: "With us you talk to a person, not a case number.",
     write: "Write to us",
@@ -28,8 +26,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
     <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
           <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.sub}</p>

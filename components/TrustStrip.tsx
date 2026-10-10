@@ -23,7 +23,6 @@ import { localePath, type Lang } from "@/lib/i18n";
  */
 const copy = {
   da: {
-    eyebrow: "Før I bestiller",
     title: "Alt står skriftligt, mens I stadig kan sige nej",
     sub: "Pris per enhed og samlet, den præcise specifikation, stand og batteritilstand per maskine, garantivilkår og hvem I kontakter, hvis noget går i stykker. Det er ikke et løfte om et tilbud — det er, hvad der står i det.",
     cta: "Se et rigtigt tilbud",
@@ -35,7 +34,6 @@ const copy = {
     ],
   },
   en: {
-    eyebrow: "Before you order",
     title: "It is all in writing while you can still say no",
     sub: "Price per unit and in total, the exact specification, condition and battery health per machine, warranty terms and who to contact if something breaks. This is not a promise about a quote — it is what the quote says.",
     cta: "See a real quote",
@@ -48,7 +46,7 @@ const copy = {
   },
 } satisfies Record<
   Lang,
-  { eyebrow: string; title: string; sub: string; cta: string; points: string[] }
+  { title: string; sub: string; cta: string; points: string[] }
 >;
 
 export default function TrustStrip({ lang }: { lang: Lang }) {
@@ -59,8 +57,7 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="lg:col-span-6">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-4 text-balance font-display text-2xl font-extrabold tracking-display text-paper sm:text-3xl">
+            <h2 className="text-balance font-display text-2xl font-extrabold tracking-display text-paper sm:text-3xl">
               {c.title}
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-[1.75] text-paper/65 sm:text-base">

@@ -23,7 +23,6 @@ const copy = {
     title: "Det hjælper vi med",
     /* Answer first, with the two counts the page actually lists. */
     description: `Kestro er indkøbspartner på brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
-    eyebrow: "Processen",
     processTitle: "Sådan foregår en leverance",
     processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
     qualityTitle: "Kvalitetssikring",
@@ -38,7 +37,6 @@ const copy = {
     stepLink: "Read more",
     title: "What we help with",
     description: `Kestro is a sourcing partner for used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,
-    eyebrow: "The process",
     processTitle: "How a delivery works",
     processSub:
       "From used equipment in southern Europe to tested, Nordic-ready machines at your desks.",
@@ -212,8 +210,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.processTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.processSub}</p>

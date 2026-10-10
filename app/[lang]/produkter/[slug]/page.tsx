@@ -55,7 +55,6 @@ const copy = {
       "Vi sourcer per ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
-    exampleEyebrow: "Eksempel på en maskine",
     imageNote:
       "Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
@@ -76,7 +75,6 @@ const copy = {
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
-    exampleEyebrow: "An example machine",
     imageNote:
       "The photos show the model type. We do not hold stock — condition, specifications and quantity are agreed per order.",
     seeAllSpecs: "{model} specifications",
@@ -254,8 +252,7 @@ export default async function CategoryPage(props: {
                 the window empty. */}
             <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
               <div className="lg:col-span-6">
-                <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
-                <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {exampleModel.name}
                 </h2>
                 <p className="mt-3 text-base leading-[1.75] text-paper/65">

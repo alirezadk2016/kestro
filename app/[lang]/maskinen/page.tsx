@@ -19,10 +19,8 @@ const copy = {
     title: "Maskinen, del for del",
     description:
       "Drej den rundt, og tryk på en del. Udvendigt er det den maskine, vi skaffer; indvendigt er det en principskitse over, hvor tingene sidder – og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",
-    outsideEyebrow: "Udvendigt",
     outsideTitle: "Hvad kan I se udefra?",
     outsideBody: "Vælg en del, så drejer maskinen hen til den. Eller tag fat i den og drej selv.",
-    insideEyebrow: "Indvendigt",
     insideTitle: "Hvad sidder der indeni?",
     insideBody:
       "Modellen ovenfor er en ydre skal – den har ingen inderside. Så det her er tegnet: hvor delene sidder i en typisk 14-tommer erhvervsbærbar, hvad de laver, og hvad der kan skiftes.",
@@ -38,11 +36,9 @@ const copy = {
     title: "The machine, part by part",
     description:
       "Turn it round, and tap a part. Outside is the machine we source; inside is a schematic of where things sit — and what can be changed if you want another couple of years out of the equipment.",
-    outsideEyebrow: "Outside",
     outsideTitle: "What can you see from outside?",
     outsideBody:
       "Pick a part and the machine turns to it. Or take hold of it and turn it yourself.",
-    insideEyebrow: "Inside",
     insideTitle: "What sits inside?",
     insideBody:
       "The model above is an outer shell — it has no inside. So this part is drawn: where the components sit in a typical 14-inch business laptop, what they do, and what can be changed.",
@@ -93,8 +89,7 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.outsideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.outsideTitle}
             </h2>
             <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.outsideBody}</p>
@@ -109,8 +104,7 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.insideEyebrow}</span>
-            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.insideTitle}
             </h2>
             <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.insideBody}</p>

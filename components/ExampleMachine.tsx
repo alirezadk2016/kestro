@@ -19,12 +19,10 @@ const highlights = [
 
 const copy = {
   da: {
-    eyebrow: "Et konkret eksempel",
     body: "Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en erhvervsmodel, der kan repareres og opgraderes, med nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
     link: "Se specifikationer og flere billeder",
   },
   en: {
-    eyebrow: "One concrete example",
     body: "This is what a typical machine looks like when we source laptops for a company: a business model that can be repaired and upgraded, with a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
     link: "See specifications and more photos",
   },
@@ -38,9 +36,9 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const image = model.images[0];
 
   return (
-    <section className="stage py-10 sm:py-20">
+    <section className="stage py-10 sm:py-16">
       <Container>
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16" data-reveal>
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           {/*
             The machine on a dark ground with a light behind it, rather than
             centred on a white card.
@@ -81,8 +79,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
           </div>
 
           <div>
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-5 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {model.name}
             </h2>
             <p className="mt-4 text-base leading-[1.65] text-paper/65 sm:text-lg">{c.body}</p>
