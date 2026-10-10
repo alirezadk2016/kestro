@@ -18,10 +18,13 @@ export default function SourceList({
   lang,
   ids,
   className = "",
+  compact = false,
 }: {
   lang: Lang;
   ids: readonly SourceId[];
   className?: string;
+  /** Title, publisher and date only — for a panel that has already stated each claim. */
+  compact?: boolean;
 }) {
   if (!ids.length) return null;
   const items = sourceList(ids);
@@ -51,7 +54,7 @@ export default function SourceList({
                 {source.published ? `, ${source.published}` : ""} · {read}{" "}
                 <time dateTime={source.accessed}>{formatDate(source.accessed, lang)}</time>
               </p>
-              <p className="mt-1.5 text-paper/70">{source.claim[lang]}</p>
+              {!compact && <p className="mt-1.5 text-paper/70">{source.claim[lang]}</p>}
             </div>
           </li>
         ))}
