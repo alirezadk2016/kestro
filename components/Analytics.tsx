@@ -68,8 +68,12 @@ export default function Analytics() {
       }
       /* The primary action: the quote page and the fleet enquiry, in both
          languages. The label says which of the CTAs was clicked; it is our own
-         copy, never anything the visitor typed. */
-      if (/^\/(en\/)?tilbud(\?|$)/.test(href)) {
+         copy, never anything the visitor typed.
+         Both addresses, because the English tree has its own: /tilbud in
+         Danish, /en/get-a-quote in English. Matching only the Danish spelling
+         would have quietly stopped counting the site's one conversion on every
+         English page. */
+      if (/^(\/tilbud|\/en\/get-a-quote)(\?|$)/.test(href)) {
         track(events.quoteCta, {
           link_location: pathname,
           link_text: (link.textContent ?? "").trim().slice(0, 60),

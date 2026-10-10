@@ -1,24 +1,14 @@
 import type { Metadata } from "next";
-import {
-  BatteryCharging,
-  MemoryStick,
-  MonitorSmartphone,
-  Wrench,
-  Cog,
-  Fan,
-  HardDriveDownload,
-  Cpu,
-  Sparkles,
-  Keyboard,
-  MonitorCog,
-  BadgeCheck,
-} from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
-import { metaFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import ServiceTile from "@/components/ServiceTile";
+import { repairs } from "@/lib/repairs";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -30,6 +20,7 @@ const copy = {
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
       "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det ét enkelt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
+    read: "Læs mere",
     whatWeDo: "Hvad vi laver",
     howTitle: "Sådan foregår det",
     step1: "Du beskriver problemet i formularen – gerne med model og hvad der sker.",
@@ -51,6 +42,7 @@ const copy = {
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:
       "Most machines get replaced long before they are worn out. Often it is a single battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
+    read: "Read more",
     whatWeDo: "What we do",
     howTitle: "How it works",
     step1: "You describe the problem in the form — ideally with the model and what happens.",
@@ -73,7 +65,10 @@ const formCopy = {
   },
 };
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -81,105 +76,6 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
     ...metaFor("/reparation", params.lang),
   };
 }
-
-const services = [
-  {
-    icon: MemoryStick,
-    title: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
-    description: {
-      da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
-      en: "More memory and faster storage is often the cheapest route to a noticeably quicker machine.",
-    },
-  },
-  {
-    icon: BatteryCharging,
-    title: { da: "Batteriskift", en: "Battery replacement" },
-    description: {
-      da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
-      en: "Laptop no longer lasting a working day? The battery is one of the cheapest parts to change — we quote the price before we start.",
-    },
-  },
-  {
-    icon: MonitorSmartphone,
-    title: { da: "Skærmskift", en: "Screen replacement" },
-    description: {
-      da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
-      en: "Cracked or faulty screens on laptops, tablets and phones.",
-    },
-  },
-  {
-    icon: Keyboard,
-    title: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
-    description: {
-      da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk/nordisk layout, så æ, ø og å sidder, hvor de skal.",
-      en: "Faulty keyboards replaced — and imported machines can get a Danish or Norwegian layout, so æ, ø and å sit where they should.",
-    },
-  },
-  {
-    icon: Cog,
-    title: { da: "Reservedele og komponentskift", en: "Spare parts and components" },
-    description: {
-      da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
-      en: "Fans, hinges, charging ports, speakers, cables and other worn parts replaced so the machine keeps going.",
-    },
-  },
-  {
-    icon: Fan,
-    title: { da: "Rens og køling", en: "Cleaning and cooling" },
-    description: {
-      da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
-      en: "Dust and old thermal paste make a machine hot and loud. A clean can bring back quiet and stability.",
-    },
-  },
-  {
-    icon: MonitorCog,
-    title: { da: "Windows-installation", en: "Windows installation" },
-    description: {
-      da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
-      en: "A clean Windows install with drivers and updates, so the machine starts up like new.",
-    },
-  },
-  {
-    icon: BadgeCheck,
-    title: { da: "Software og licenser", en: "Software and licences" },
-    description: {
-      da: "Vi installerer de programmer, I bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
-      en: "We install the programs you use and help get the licences in place, so the machines run legally from day one.",
-    },
-  },
-  {
-    icon: HardDriveDownload,
-    title: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
-    description: {
-      da: "Frisk installation af styresystem, og dine filer og programmer flyttet med over.",
-      en: "A fresh operating system install, with your files and programs carried across.",
-    },
-  },
-  {
-    icon: Wrench,
-    title: { da: "Fejlfinding", en: "Troubleshooting" },
-    description: {
-      da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
-      en: "The machine will not start, crashes or behaves oddly — we find the cause and tell you what it costs to fix.",
-    },
-  },
-  {
-    icon: Cpu,
-    title: { da: "Samling af pc", en: "PC assembly" },
-    description: {
-      da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
-      en: "We build a machine to your spec — either from scratch or by upgrading the one you have.",
-    },
-  },
-  {
-    icon: Sparkles,
-    title: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
-    description: {
-      da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
-      en: "Bought a used machine? We check it over, set it up and make it ready to use.",
-    },
-  },
-];
 
 const repairFaqs = [
   {
@@ -245,11 +141,14 @@ const repairFaqs = [
   },
 ];
 
-export default function ReparationPage({ params }: { params: { lang: Lang } }) {
+export default async function ReparationPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -258,36 +157,35 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/reparation"
             crumb={lang === "da" ? "Reparation" : "Repairs"}
+
+            updated="/reparation"
           />
 
           <div className="mt-12 max-w-3xl">
-            <p className="text-base leading-7 text-paper/65">{c.intro}</p>
+            <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
           </div>
         </Container>
       </section>
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <h2 className="text-center text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.whatWeDo}
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-4">
-            {services.map((service) => (
-              <div
-                key={service.title.da}
-                className="border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                  <service.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                </span>
-                <h3 className="mt-3 text-sm font-semibold text-paper sm:mt-4 sm:text-base">
-                  {service.title[lang]}
-                </h3>
-                <p className="mt-1.5 text-xs leading-5 text-paper/65 sm:mt-2 sm:text-sm sm:leading-6">
-                  {service.description[lang]}
-                </p>
-              </div>
+          {/* One column on a phone. At 390px two columns give a 170px card, and
+              the summaries were wrapping to six lines inside it — which is also
+              why there was no room for an icon big enough to read. */}
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {repairs.map((repair) => (
+              <ServiceTile
+                key={repair.slug}
+                href={localePath(`/reparation/${repair.slug}`, lang)}
+                mark={repair.mark}
+                title={repair.name[lang]}
+                summary={repair.summary[lang]}
+                prompt={c.read}
+              />
             ))}
           </div>
         </Container>
@@ -300,10 +198,20 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.howTitle}
               </h2>
-              <ol className="mt-6 space-y-4 text-base leading-7 text-paper/65">
+              {/* A sequence, so a spine: the numbers sit on a rail that runs
+                  from the first step to the last. As a plain "1. 2. 3." list
+                  it read as body copy that happened to be numbered. */}
+              <ol className="relative mt-6 space-y-6">
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-3 left-[15px] top-3 w-px bg-gradient-to-b from-brand-400/60 via-paper/15 to-paper/5"
+                />
                 {[c.step1, c.step2, c.step3, c.step4].map((step, i) => (
-                  <li key={step}>
-                    <span className="font-semibold text-paper">{i + 1}.</span> {step}
+                  <li key={step} className="relative flex gap-4">
+                    <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-950 font-display text-xs font-bold tabular-nums text-brand-300">
+                      {i + 1}
+                    </span>
+                    <span className="pt-1 text-base leading-7 text-paper/70">{step}</span>
                   </li>
                 ))}
               </ol>
@@ -313,7 +221,7 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.pricesTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-paper/65">{c.pricesBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.pricesBody}</p>
             </div>
           </div>
         </Container>
@@ -325,9 +233,9 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
 
-            <div className="mt-8 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
                 lang={lang}
                 subjectPrefix={formCopy.subjectPrefix}
@@ -342,6 +250,8 @@ export default function ReparationPage({ params }: { params: { lang: Lang } }) {
       <Faq lang={lang} items={repairFaqs} />
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["repairDirective"]} />
     </>
   );
 }

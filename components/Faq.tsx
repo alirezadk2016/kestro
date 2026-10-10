@@ -1,5 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import Container from "./Container";
+import FaqSchema from "./FaqSchema";
+import { company } from "@/lib/company";
 import type { Lang, Localized } from "@/lib/i18n";
 
 export type FaqItem = { question: Localized; answer: Localized };
@@ -13,8 +15,11 @@ const defaultFaqs: FaqItem[] = [
   {
     question: { da: "Hvordan bestiller vi hos Kestro?", en: "How do we order from Kestro?" },
     answer: {
-      da: "I kontakter os via formularen eller på info@kestro.dk og fortæller om jeres behov – antal enheder, specifikationer og tidsramme. Derefter finder vi de enheder, der matcher, og aftaler pris og levering direkte med jer.",
-      en: "Contact us through the form or at info@kestro.dk and tell us what you need — number of devices, specifications and timing. We then find the machines that match and agree price and delivery directly with you.",
+      /* The address is interpolated rather than typed out: this answer is also
+         published as FAQPage structured data, so a stale address here would be
+         a wrong address in the search result as well as on the page. */
+      da: `I kontakter os via formularen eller på ${company.email} og fortæller om jeres behov – antal enheder, specifikationer og tidsramme. Derefter finder vi de enheder, der matcher, og aftaler pris og levering direkte med jer.`,
+      en: `Contact us through the form or at ${company.email} and tell us what you need — number of devices, specifications and timing. We then find the machines that match and agree price and delivery directly with you.`,
     },
   },
   {
@@ -61,29 +66,58 @@ export default function Faq({
 }) {
   return (
     <section className="bg-brand-950 py-10 sm:py-20">
+      {/* From the same array rendered below, so the questions Google reads are
+          by construction the questions on the page. */}
+      <FaqSchema lang={lang} items={items} />
       <Container>
         {/* Left-aligned like every other section heading on the site. It was
             the one centred block, which is what made it read as bolted on. */}
         <div className="max-w-2xl">
-          <h2 className="text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {title[lang]}
           </h2>
         </div>
 
         {/* Native <details> keeps this a server component: no JS, keyboard and
             screen-reader behaviour come for free. */}
-        <div className="mt-10 max-w-3xl divide-y divide-white/10 border-y border-white/10 sm:mt-12">
+        {/*
+         * Plates, not a divided list.
+         *
+         * A stack of rows separated by hairlines reads as a table, and these
+         * are not rows of one thing — each is a question somebody actually
+         * asked. Given its own ground, a question is a thing you open; ruled
+         * off from its neighbours it is a line in a register. Same <details>
+         * underneath, so keyboard and screen-reader behaviour still come for
+         * free and the component stays server-rendered.
+         */}
+        <div className="mt-10 max-w-3xl space-y-3 sm:mt-12">
           {items.map((faq) => (
-            <details key={faq.question.da} className="group">
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-semibold text-paper transition-colors hover:text-paper [&::-webkit-details-marker]:hidden">
-                {faq.question[lang]}
+            <details key={faq.question.da} className="plate group px-5 open:pb-1 sm:px-6">
+              {/*
+               * The question is a heading.
+               *
+               * It was bare text inside the <summary>, which is a control —
+               * so a page with five questions on it had five question-style
+               * headings as far as a reader was concerned and none at all as
+               * far as a parser was concerned. An AI-SEO audit reported "no
+               * question-style headings" on pages whose whole lower half is
+               * questions, and it was reading the document correctly.
+               *
+               * A heading inside a summary is valid and is what a
+               * well-formed FAQ does: the disclosure stays a disclosure, and
+               * the question joins the outline under the section's own h2.
+               */}
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 transition-colors [&::-webkit-details-marker]:hidden">
+                <h3 className="text-base font-semibold text-paper transition-colors group-open:text-brand-200 group-hover:text-brand-200">
+                  {faq.question[lang]}
+                </h3>
                 <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-paper/45 transition-transform duration-200 group-open:rotate-180"
+                  className="h-5 w-5 flex-shrink-0 text-paper/65 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden="true"
                 />
               </summary>
-              <p className="pb-5 pr-9 text-base leading-7 text-paper/65">{faq.answer[lang]}</p>
+              <p className="pb-5 pr-9 text-base leading-[1.75] text-paper/75">{faq.answer[lang]}</p>
             </details>
           ))}
         </div>

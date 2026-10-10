@@ -320,7 +320,7 @@ export const interiorParts: InteriorPart[] = [
       en: "The part that wears most over time. A battery loses capacity whether the machine is used or sits in a cupboard.",
     },
     upgrade: {
-      da: "Vi oplyser den faktiske kapacitet i procent af ny, ikke bare “batteri OK”. Skal maskinerne bruges ude af huset, kan der sættes nye i, før de leveres.",
+      da: "Vi oplyser den faktiske kapacitet i procent af ny, ikke bare »batteri OK«. Skal maskinerne bruges ude af huset, kan der sættes nye i, før de leveres.",
       en: "We report the actual capacity as a percentage of new, not just “battery OK”. If the machines are going out of the office, new ones can be fitted before delivery.",
     },
     swappable: "yes",

@@ -35,7 +35,9 @@ const PAGES = [
   "/ydelser",
   "/ydelser/levering",
   "/produkter",
+  "/produkter/baerbare-computere",
   "/modeller",
+  "/modeller/lenovo-thinkpad-t480",
   "/maskinen",
   "/reparation",
   "/kontakt",
@@ -106,6 +108,9 @@ for (const path of PAGES) {
       unnamedControls: [...document.querySelectorAll("a[href], button")].filter((el) => !named(el))
         .length,
       skipped,
+      /* What a reader sees, not the markup: <time datetime>, JSON-LD and
+         attributes are machine-facing and are meant to carry ISO. */
+      isoDate: document.body.innerText.match(/\b20\d\d-[01]\d-[0-3]\d\b/)?.[0] ?? "",
     };
   });
 
@@ -120,6 +125,178 @@ for (const path of PAGES) {
   if (found.unnamedControls)
     fail(path, `${found.unnamedControls} controls with no accessible name`);
   if (found.skipped) fail(path, `heading level skipped, ${found.skipped}`);
+  /* It shipped on the legal pages, the guide bylines and the source lists
+     before this line existed. formatDate(iso, lang) is the fix. */
+  if (found.isoDate) fail(path, `raw ISO date in visible text: ${found.isoDate}`);
+
+  await page.close();
+}
+
+/* --------------------------------------------------------------------- 404 */
+
+/*
+ * The 404 has to be a page, not a status code with an empty document behind it.
+ *
+ * It was exactly that for the life of the site: 404 was correct, the <title>
+ * was the front page's, and <body> held one empty div. With JavaScript the
+ * panel appeared and nobody noticed. The cause was in the framework and the
+ * fix was to route around it — app/[lang]/layout.tsx carries the note — which
+ * means it is the kind of fix a later change can undo without anyone meaning
+ * to. So it is measured with scripts off, from the HTML the server sends.
+ */
+{
+  const page = await browser.newPage({
+    viewport: { width: 1280, height: 800 },
+    javaScriptEnabled: false,
+  });
+  for (const path of [
+    "/denne-side-findes-ikke-xyz",
+    "/da/xyz-nope",
+    "/en/xyz-nope",
+    "/style.css",
+  ]) {
+    const response = await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
+    const status = response ? response.status() : 0;
+    if (status !== 404) fail(path, `expected 404, got ${status}`);
+
+    const found = await page.evaluate(() => ({
+      h1: document.querySelector("h1")?.textContent?.trim() ?? "",
+      words: (document.body.innerText || "").trim().split(/\s+/).filter(Boolean).length,
+      title: document.title,
+      robots: document.querySelector('meta[name="robots"]')?.content ?? "",
+    }));
+
+    if (!found.h1) fail(path, "404 has no h1 without JavaScript");
+    if (found.words < 40) fail(path, `404 renders ${found.words} words without JavaScript`);
+    if (!/ikke fundet/i.test(found.title))
+      fail(path, `404 carries the wrong title: ${found.title}`);
+    if (!/noindex/.test(found.robots))
+      fail(path, `404 is indexable: ${found.robots || "no robots meta"}`);
+  }
+  await page.close();
+}
+
+/* ----------------------------------------------------------------- sitemap */
+
+/*
+ * The sitemap and robots.txt as a crawler meets them, from the build.
+ *
+ * Search Console reported the sitemap as "Couldn't fetch" in October 2026,
+ * and nothing here had ever looked at it: the gate measured pages, not the
+ * file that tells Google which pages exist. The production file turned out to
+ * be sound, but that was established by hand, after the fact. This makes it
+ * a measurement. Every <loc> must answer 200 with no redirect and carry
+ * itself as canonical — a sitemap that lists a redirect or a page pointing
+ * its canonical elsewhere is one Google learns to stop trusting — and every
+ * hreflang alternate must itself be listed, or the pairing is one-sided.
+ */
+{
+  const robots = await fetch(`${BASE}/robots.txt`, { redirect: "manual" });
+  const robotsText = robots.status === 200 ? await robots.text() : "";
+  if (robots.status !== 200) fail("/robots.txt", `HTTP ${robots.status}`);
+  const declared = robotsText.match(/^Sitemap:\s*(\S+)/im)?.[1] ?? "";
+  if (!declared.endsWith("/sitemap.xml")) fail("/robots.txt", "no Sitemap line for /sitemap.xml");
+  if (/^Disallow:\s*\/\s*$/im.test(robotsText)) fail("/robots.txt", "Disallow: / blocks the site");
+  const origin = declared.replace(/\/sitemap\.xml$/, "");
+
+  const response = await fetch(`${BASE}/sitemap.xml`, { redirect: "manual" });
+  const xml = response.status === 200 ? await response.text() : "";
+  if (response.status !== 200) fail("/sitemap.xml", `HTTP ${response.status}`);
+  if (!/xml/.test(response.headers.get("content-type") ?? ""))
+    fail("/sitemap.xml", `content-type ${response.headers.get("content-type")}`);
+  if (!xml.startsWith("<?xml") || !xml.includes("http://www.sitemaps.org/schemas/sitemap/0.9"))
+    fail("/sitemap.xml", "not a sitemap urlset");
+
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const opened = (xml.match(/<url>/g) ?? []).length;
+  if (!locs.length) fail("/sitemap.xml", "no <loc> entries");
+  if (opened !== locs.length || opened !== (xml.match(/<\/url>/g) ?? []).length)
+    fail("/sitemap.xml", "unbalanced <url> entries");
+  if (locs.length > 50000 || xml.length > 50 * 1024 * 1024)
+    fail("/sitemap.xml", "over the 50,000 URL / 50 MB limit");
+
+  const listed = new Set(locs);
+  if (listed.size !== locs.length)
+    fail("/sitemap.xml", `${locs.length - listed.size} duplicate <loc>`);
+  for (const href of new Set(
+    [...xml.matchAll(/hreflang="[^"]+" href="([^"]+)"/g)].map((m) => m[1]),
+  ))
+    if (!listed.has(href)) fail("/sitemap.xml", `hreflang alternate not listed: ${href}`);
+
+  for (const loc of locs) {
+    if (!loc.startsWith(origin)) {
+      fail("/sitemap.xml", `<loc> on another host than robots.txt declares: ${loc}`);
+      continue;
+    }
+    const path = loc.slice(origin.length) || "/";
+    const page = await fetch(BASE + path, { redirect: "manual" });
+    if (page.status !== 200) {
+      fail(
+        `sitemap ${path}`,
+        `HTTP ${page.status}${page.headers.get("location") ? ` to ${page.headers.get("location")}` : ""}`,
+      );
+      continue;
+    }
+    const canonical = (await page.text()).match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? "";
+    if (canonical !== loc) fail(`sitemap ${path}`, `canonical is ${canonical || "missing"}`);
+  }
+}
+
+/* ------------------------------------------------------------------- sizes */
+
+/*
+ * Two numbers a phone decides, and neither is visible on a 27-inch screen.
+ *
+ * 12px is the floor for anything a person reads. The spec chips on the
+ * catalogue were set at 11px and there are 69 of them on /modeller alone; the
+ * hero's eyebrow was a clamp whose lower bound resolved to 10.6px at 390px.
+ * Both were legible to whoever wrote them on a desktop and neither was
+ * measured on the device most of this site is read on. Decoration is exempt:
+ * an aria-hidden mark is not text anybody reads.
+ *
+ * 44px is the floor for anything a person taps, and it is already written down
+ * in CLAUDE.md — this is what makes it true rather than aspirational. A link
+ * sitting inside a sentence is exempt, because WCAG 2.5.8 exempts it and
+ * because padding a word in the middle of a paragraph to 44px would push the
+ * lines around it apart.
+ */
+for (const path of PAGES) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+
+  const found = await page.evaluate(() => {
+    const visible = (el) => {
+      const style = getComputedStyle(el);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    const decorative = (el) => el.closest("[aria-hidden='true']") !== null;
+
+    const small = [];
+    for (const el of document.querySelectorAll("body *")) {
+      if (el.children.length || decorative(el) || !visible(el)) continue;
+      const text = (el.textContent ?? "").trim();
+      if (!text) continue;
+      const size = parseFloat(getComputedStyle(el).fontSize);
+      if (size < 12) small.push(`${Math.round(size * 10) / 10}px "${text.slice(0, 28)}"`);
+    }
+
+    /* Inline by layout, not by tag: a <a> the author set to block or flex is a
+       control with a box of its own, whatever it is made of. */
+    const short = [];
+    for (const el of document.querySelectorAll("a[href], button, summary")) {
+      if (decorative(el) || !visible(el)) continue;
+      if (getComputedStyle(el).display === "inline") continue;
+      const box = el.getBoundingClientRect();
+      if (box.width < 2 && box.height < 2) continue;
+      if (box.height < 44)
+        short.push(`${Math.round(box.height)}px "${(el.textContent ?? "").trim().slice(0, 28)}"`);
+    }
+
+    return { small: [...new Set(small)], short: [...new Set(short)] };
+  });
+
+  for (const one of found.small) fail(path, `text under 12px on a phone: ${one}`);
+  for (const one of found.short) fail(path, `tap target under 44px: ${one}`);
 
   await page.close();
 }
@@ -137,7 +314,10 @@ for (const [name, viewport] of [
   ["desktop", { width: 1440, height: 900 }],
   ["phone", { width: 390, height: 844 }],
 ]) {
-  for (const path of ["/", "/en", "/ydelser/levering", "/kontakt"]) {
+  /* /vejledninger joins the list because the Viden hub now sets type over a
+     drawing, and a drawing behind text is exactly what a computed style cannot
+     see and this check can. */
+  for (const path of ["/", "/en", "/ydelser/levering", "/kontakt", "/vejledninger"]) {
     const page = await browser.newPage({ viewport });
     await page.goto(BASE + path, { waitUntil: "networkidle" });
 
@@ -237,7 +417,14 @@ for (const [name, viewport] of [
       if (texts.length === 0) continue;
 
       const hide = await page.addStyleTag({
-        content: "*{color:transparent !important} svg{visibility:hidden !important}",
+        /* text-decoration-color as well as color. An underline drawn in an
+           explicit colour — decoration-brand-400/60 on the promise links —
+           survives `color: transparent`, and then the sampler reads the
+           element's own underline as the ground behind its own text and reports
+           2.62:1 against a link that is in fact sitting on navy. It is part of
+           the text, not behind it. */
+        content:
+          "*{color:transparent !important;text-decoration-color:transparent !important} svg{visibility:hidden !important}",
       });
       await page.waitForTimeout(250);
       const shot = await page.screenshot();
@@ -391,7 +578,10 @@ for (const [name, viewport] of [
 
   await readThrough("direct load of /");
 
-  for (const label of ["Reparation", "Om os", "Vejledninger"]) {
+  /* Labels, not hrefs, because what is being checked is that a visitor can
+     click the thing they can see. "Viden" was "Vejledninger" until the section
+     was renamed — the URL did not move, only the word on the link. */
+  for (const label of ["Reparation", "Om os", "Viden"]) {
     await page.click(`header nav a:has-text("${label}")`);
     await page.waitForTimeout(1100);
     await readThrough(`after clicking ${label}`);

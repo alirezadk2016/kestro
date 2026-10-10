@@ -60,8 +60,8 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     >
       <Container className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold text-paper">{c.title}</p>
-          <p className="mt-1 text-sm leading-6 text-paper/65">
+          <p className="text-sm font-semibold text-paper leading-[1.6]">{c.title}</p>
+          <p className="mt-1 text-sm leading-[1.6] text-paper/75">
             {c.body}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}
@@ -77,7 +77,7 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-500"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
           >
             {c.accept}
           </button>

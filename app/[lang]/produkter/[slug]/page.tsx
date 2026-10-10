@@ -9,8 +9,38 @@ import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
-import { getCategoryIcon } from "@/lib/category-icons";
-import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
+import CraftMark from "@/components/CraftMark";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
+import SpecChips from "@/components/SpecChips";
+import FactNote from "@/components/FactNote";
+
+/*
+ * No dynamicParams override here, and that is the point.
+ *
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 and 15.5.26 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
+ */
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => categories.map((category) => ({ lang, slug: category.slug })));
@@ -25,10 +55,9 @@ const copy = {
       "Vi sourcer per ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
-    exampleEyebrow: "Eksempel på en maskine",
     imageNote:
       "Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal aftales for den enkelte ordre.",
-    seeAllSpecsPre: "Se alle specifikationer på",
+    seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi ofte skaffer",
     modelsBody:
       "Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver bedt om at finde – klik ind for specifikationer og hvad de egner sig til.",
@@ -46,10 +75,9 @@ const copy = {
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
-    exampleEyebrow: "An example machine",
     imageNote:
       "The photos show the model type. We do not hold stock — condition, specifications and quantity are agreed per order.",
-    seeAllSpecsPre: "See all specifications for the",
+    seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we often source",
     modelsBody:
       "We do not hold them in stock. The list shows the models we know well and are most often asked to find — click through for specifications and what they suit.",
@@ -62,7 +90,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const category = getCategory(params.slug);
   if (!category) return {};
 
@@ -73,7 +104,10 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   };
 }
 
-export default function CategoryPage({ params }: { params: { lang: Lang; slug: string } }) {
+export default async function CategoryPage(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   const category = getCategory(params.slug);
@@ -82,21 +116,52 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
   const categoryModels = getModelsForCategory(category.slug);
-  const Icon = getCategoryIcon(category.slug);
+
+  /*
+   * The category as a collection, not just a page with a breadcrumb.
+   *
+   * Model pages already publish Product. What was missing was anything saying
+   * which products this page collects, so the commercial tree read as a set of
+   * unconnected product pages under some prose. ItemList is what ties them
+   * together, and the positions come from the same list the page renders below,
+   * so the markup cannot name a model the page does not show.
+   *
+   * Only where there is a list to describe. Two categories carry no popular
+   * models — we hold no stock and source per order, so a category without a
+   * models block is not broken — and an empty ItemList would be markup
+   * describing nothing.
+   */
+  const collectionJsonLd = categoryModels.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}#collection`,
+        name: category.name[lang],
+        description: category.metaDescription[lang],
+        url: `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}`,
+        isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+        about: { "@id": `${SITE_ORIGIN}/#organization` },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: categoryModels.length,
+          itemListElement: categoryModels.map((model, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: model.name,
+            url: `${SITE_ORIGIN}${localePath(`/modeller/${model.slug}`, lang)}`,
+          })),
+        },
+      }
+    : null;
 
   return (
     <>
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
-        {/* Brand glow for depth — no product photography, since we source per order */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"
-        />
+      <PageSchema lang={lang} route="/produkter/[slug]" sources={categorySources(category)} />
 
+      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          generic glow every generated page has. */}
+      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
           <div className="max-w-3xl">
             <BreadcrumbSchema
@@ -106,6 +171,14 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 { name: category.name[lang], href: `/produkter/${category.slug}` },
               ]}
             />
+            {collectionJsonLd && (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+                }}
+              />
+            )}
             <nav aria-label={c.breadcrumbLabel} className="text-sm text-ink-400">
               <Link
                 href={localePath("/produkter", lang)}
@@ -120,18 +193,27 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
             </nav>
 
             <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-              <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
-              </span>
+              <MarkTile name={getCategoryMark(category.slug)} size="lg" />
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {category.name[lang]}
                 </h1>
-                <p className="mt-2 text-base text-ink-300 sm:text-lg">{category.tagline[lang]}</p>
+                <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                  {categoryLead(category, lang)}
+                </p>
               </div>
             </div>
 
-            <p className="mt-8 text-base leading-7 text-ink-300">{category.intro[lang]}</p>
+            <p className="mt-8 text-base leading-[1.75] text-ink-300">{category.intro[lang]}</p>
+            <p className="label mt-6 text-paper/65">
+              {lang === "da" ? "Opdateret" : "Updated"}{" "}
+              <time
+                dateTime={pageUpdated("/produkter/[slug]")}
+                className="tabular-nums text-paper/80"
+              >
+                {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+              </time>
+            </p>
           </div>
         </Container>
       </section>
@@ -142,7 +224,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">
               {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
             </p>
 
@@ -150,14 +232,14 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/80"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
                 >
                   {brand}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-6 max-w-2xl text-sm leading-6 text-paper/55">{c.brandsNote}</p>
+            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -170,19 +252,27 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                 the window empty. */}
             <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
               <div className="lg:col-span-6">
-                <span className="eyebrow text-brand-300">{c.exampleEyebrow}</span>
-                <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {exampleModel.name}
                 </h2>
-                <p className="mt-3 text-base leading-7 text-paper/65">{exampleModel.intro[lang]}</p>
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">
+                  {exampleModel.intro[lang]}
+                </p>
 
-                <p className="mt-5 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
 
                 <Link
                   href={localePath(`/modeller/${exampleModel.slug}`, lang)}
                   className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
                 >
-                  {c.seeAllSpecsPre} {exampleModel.name} <span aria-hidden="true">&rarr;</span>
+                  {/* The model without its brand: with "Lenovo" in it the label
+                      ran to two lines at 375px, and the brand is in the heading
+                      directly above. */}
+                  {c.seeAllSpecs.replace(
+                    "{model}",
+                    exampleModel.name.replace(`${exampleModel.brand} `, ""),
+                  )}{" "}
+                  <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
 
@@ -233,25 +323,27 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-7 text-paper/65">{c.modelsBody}</p>
-              <p className="mt-1.5 text-sm leading-6 text-paper/55">{c.priceNote}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
                   <li key={model.slug}>
                     <Link
                       href={localePath(`/modeller/${model.slug}`, lang)}
-                      className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35"
+                      className="plate plate-lift group flex h-full flex-col p-5"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                         {model.format[lang]}
                       </span>
                       <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 flex-1 text-sm leading-6 text-paper/65">
+                      <span className="mt-1.5 text-sm leading-6 text-paper/75">
                         {model.tagline[lang]}
                       </span>
+                      <SpecChips model={model} lang={lang} />
+                      <span className="flex-1" />
                       <span className="mt-3 border-t border-white/10 pt-3 text-sm font-semibold text-paper">
                         {c.priceLabel}
                       </span>
@@ -285,7 +377,7 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
                   <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
                   <div>
                     <dt className="text-base font-semibold text-paper">{useCase.title[lang]}</dt>
-                    <dd className="mt-1 text-base leading-7 text-paper/65">
+                    <dd className="mt-1 text-base leading-7 text-paper/75">
                       {useCase.description[lang]}
                     </dd>
                   </div>
@@ -293,9 +385,11 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
               ))}
             </dl>
 
-            <div className="mt-10 border border-white/10 bg-white/5 p-6">
+            <div className="plate mt-10 p-6">
               <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
-              <p className="mt-2 text-base leading-7 text-paper/65">{category.specNote[lang]}</p>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">
+                {category.specNote[lang]}
+              </p>
             </div>
           </div>
         </Container>
@@ -307,14 +401,13 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
             <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
-                const OtherIcon = getCategoryIcon(other.slug);
                 return (
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
                     >
-                      <OtherIcon className="h-4 w-4 text-ink-400" strokeWidth={1.75} />
+                      <CraftMark name={getCategoryMark(other.slug)} className="h-5 w-5" />
                       {other.name[lang]}
                     </Link>
                   </li>
@@ -329,7 +422,19 @@ export default function CategoryPage({ params }: { params: { lang: Lang; slug: s
         <RelatedLinks lang={lang} links={category.guides} />
       )}
 
+      <Faq
+        lang={lang}
+        items={categoryFaqs(category)}
+        title={{
+          da: `Spørgsmål om ${category.name.da.toLowerCase()}`,
+          en: `Questions about ${category.name.en.toLowerCase()}`,
+        }}
+      />
+
       <CtaSection lang={lang} />
+
+      {/* Windows sources only on the categories that run it. */}
+      <FactNote lang={lang} ids={categorySources(category)} />
     </>
   );
 }

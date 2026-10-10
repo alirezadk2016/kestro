@@ -1,0 +1,475 @@
+/*
+ * The content gates, checked before anything is built.
+ *
+ * Every rule here is one that used to be a promise in a document: a unique
+ * primary keyword, a commercial page that exists, an author who is a real
+ * person in lib/company.ts, a source that is a real URL. A promise in a
+ * document is kept until the day somebody is in a hurry; a check that fails
+ * the build is kept every day.
+ *
+ * Static data only — no browser, no server, so it runs in about a second and
+ * can gate the build rather than the deploy. The rendered-page checks stay in
+ * checks.mjs where they belong.
+ *
+ * Exits non-zero on any failure.
+ */
+import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
+
+const failures = [];
+const fail = (message) => failures.push(message);
+
+/* The data is TypeScript, so it is read as text rather than imported. That is
+   deliberate: a check that needed a build step to run would not be able to
+   gate the build. */
+const guidesSrc = read("lib/guides.ts");
+const companySrc = read("lib/company.ts");
+
+/* The split below eats the newline before a block's first field, so the anchor
+   has to allow the start of the string as well — without that, every article
+   was skipped and the whole gate passed by doing nothing. */
+const field = (block, name) => block.match(new RegExp(`(?:^|\\n)    ${name}: "([^"]*)"`))?.[1];
+
+const blocks = guidesSrc
+  .split(/\n  \{\n/)
+  .slice(1)
+  .filter((block) => block.includes("    slug: "));
+
+if (blocks.length === 0) fail("no articles found — has the shape of lib/guides.ts changed?");
+
+const CLUSTERS = [
+  "memory-storage",
+  "lifecycle",
+  "workplace-hardware",
+  "buying-condition",
+  "uden-klynge",
+];
+const TYPES = ["grundviden", "beslutning", "erhvervs-it", "praktisk"];
+const INTENTS = [
+  "informational",
+  "informational-commercial",
+  "commercial-education",
+  "high-commercial",
+];
+
+const teamIds = [...companySrc.matchAll(/\n    id: "([^"]+)"/g)].map((m) => m[1]);
+const seenSlugs = new Set();
+const seenKeywords = new Map();
+
+/* Every internal href an article points at has to resolve to a real route.
+   Routes are read off the filesystem rather than listed here, so a page that
+   is renamed cannot leave a check passing against a name nobody uses. */
+const routeExists = (href) => {
+  const clean = href.split("#")[0].split("?")[0].replace(/\/$/, "");
+  if (clean === "" || clean === "/") return true;
+  const segments = clean.slice(1).split("/");
+  if (existsSync(new URL(`../../app/[lang]/${segments.join("/")}/page.tsx`, import.meta.url)))
+    return true;
+  /* A dynamic segment: /produkter/x is served by /produkter/[slug]. */
+  const parent = segments.slice(0, -1).join("/");
+  const last = segments.at(-1);
+  if (
+    parent &&
+    existsSync(new URL(`../../app/[lang]/${parent}/[slug]/page.tsx`, import.meta.url))
+  ) {
+    const source = {
+      produkter: "categories",
+      modeller: "models",
+      ydelser: "services",
+      vejledninger: "guides",
+    }[parent];
+    if (!source) return true;
+    const file = {
+      categories: "lib/categories.ts",
+      models: "lib/models.ts",
+      services: "lib/services.ts",
+      guides: "lib/guides.ts",
+    }[source];
+    return read(file).includes(`slug: "${last}"`);
+  }
+  return false;
+};
+
+for (const block of blocks) {
+  const slug = field(block, "slug");
+  if (!slug) continue;
+  const at = `[${slug}]`;
+
+  if (!/^[a-z0-9-]+$/.test(slug)) fail(`${at} slug is not lowercase-and-hyphens`);
+  if (slug.length > 45) fail(`${at} slug is ${slug.length} characters, over the 45 limit`);
+  if (seenSlugs.has(slug)) fail(`${at} duplicate slug`);
+  seenSlugs.add(slug);
+
+  const cluster = field(block, "cluster");
+  if (!CLUSTERS.includes(cluster)) fail(`${at} cluster "${cluster}" is not one of the five`);
+
+  const type = field(block, "type");
+  if (!TYPES.includes(type)) fail(`${at} type "${type}" is not valid`);
+
+  const intent = field(block, "intent");
+  if (!INTENTS.includes(intent)) fail(`${at} intent "${intent}" is not valid`);
+
+  const author = field(block, "author");
+  if (!teamIds.includes(author)) fail(`${at} author "${author}" is not a person in lib/company.ts`);
+
+  /* An empty primary keyword is allowed — it says "deliberately none", which
+     step 3 decided for one guide. Two articles claiming the same one is not. */
+  const keyword = field(block, "primaryKeyword");
+  if (keyword === undefined) fail(`${at} has no primaryKeyword field`);
+  else if (keyword !== "") {
+    if (seenKeywords.has(keyword))
+      fail(
+        `${at} claims the primary keyword "${keyword}", already owned by [${seenKeywords.get(keyword)}]`,
+      );
+    seenKeywords.set(keyword, slug);
+  }
+
+  if (!block.includes("\n    tldr: {")) fail(`${at} has no tldr`);
+
+  /* Word count on the Danish tldr: the answer, not a teaser and not an essay. */
+  const tldrDa = block.match(/\n    tldr: \{\n      da:\s*\n?\s*"((?:[^"\\]|\\.)*)"/)?.[1];
+  if (tldrDa) {
+    const words = tldrDa.split(/\s+/).filter(Boolean).length;
+    if (words < 25 || words > 90) fail(`${at} Danish tldr is ${words} words, outside 25-90`);
+  }
+
+  const related = block.match(/\n    related: \[([\s\S]*?)\n    \],/)?.[1] ?? "";
+  const hrefs = [...related.matchAll(/href: "([^"]+)"/g)].map((m) => m[1]);
+  if (hrefs.length === 0) fail(`${at} has no related links`);
+  for (const href of hrefs) if (!routeExists(href)) fail(`${at} related href ${href} has no route`);
+
+  const sources = block.match(/\n    sources: \[([\s\S]*?)\n    \],/)?.[1] ?? "";
+  for (const url of [...sources.matchAll(/"(https?:\/\/[^"]+)"/g)].map((m) => m[1])) {
+    if (!url.startsWith("https://")) fail(`${at} source ${url} is not https`);
+  }
+}
+
+/*
+ * The English addresses are written twice, and they have to agree.
+ *
+ * lib/routes.ts is what localePath renders, so it decides what every link,
+ * canonical, hreflang entry and sitemap <loc> says. next.config.mjs is what
+ * rewrites that address onto the Danish route folder and 301s the old one.
+ * Nothing at runtime notices when they disagree — the site simply links to an
+ * address that answers 404, on every page at once, in the half of the site we
+ * look at least. So they are compared here instead of trusted.
+ */
+const routesTs = read("lib/routes.ts");
+const configMjs = read("next.config.mjs");
+
+const pairsIn = (source, start) => {
+  const body = source.slice(source.indexOf(start));
+  const end = body.indexOf(body.trimStart().startsWith("export const") ? "};" : "];");
+  return new Map(
+    /* Whole paths, not just the leading segment, and digits are part of a slug.
+       The pattern used to be /"(\/[a-z-]+)"…/ — one segment, no digits — so
+       when the map grew entries like
+         "/vejledninger/windows-10-support-slutter": "/knowledge/windows-10-end-of-support"
+       every one of them was skipped in both files at once. The two counts
+       still matched, so this check went on reporting no failures while
+       checking nothing about half the map. A guard that cannot see the rows it
+       is guarding is worse than no guard: it is a guard you believe. */
+    [
+      ...body
+        .slice(0, end)
+        .matchAll(/"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)":?\s*,?\s*"(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*)"/g),
+    ].map((m) => [m[1], m[2]]),
+  );
+};
+
+const fromRoutes = pairsIn(routesTs, "export const englishPath");
+const fromConfig = pairsIn(configMjs, "const englishRoutes");
+
+if (fromRoutes.size === 0) fail("lib/routes.ts: could not read englishPath");
+if (fromConfig.size === 0) fail("next.config.mjs: could not read englishRoutes");
+if (fromRoutes.size !== fromConfig.size)
+  fail(`englishPath has ${fromRoutes.size} routes, englishRoutes has ${fromConfig.size}`);
+
+for (const [da, en] of fromRoutes) {
+  if (!fromConfig.has(da)) fail(`${da} -> ${en} is in lib/routes.ts but not in next.config.mjs`);
+  else if (fromConfig.get(da) !== en)
+    fail(`${da} maps to ${en} in lib/routes.ts but ${fromConfig.get(da)} in next.config.mjs`);
+}
+for (const da of fromConfig.keys()) {
+  if (!fromRoutes.has(da)) fail(`${da} is in next.config.mjs but not in lib/routes.ts`);
+}
+
+/*
+ * Text colours that do not survive the site's own ground.
+ *
+ * Measured against brand-950 (#0B1426), which is what almost every dark
+ * surface here is: white at 40% lands at 3.81:1, under the 4.5 that normal
+ * body text needs, at 30% it is 2.9:1, and at 45% it lands at 4.51 — close
+ * enough to the line that any lighter band underneath breaks it. Everything
+ * below 55 is barred: the first pass of this guard covered only the two
+ * alphas that had been found, and Lighthouse came straight back with a /30.
+ *
+ * The browser contrast check in checks.mjs should have caught this and did
+ * not: it only samples elements lying fully inside the current viewport, and
+ * the attributions on the source list are short inline spans that its scroll
+ * steps went past. Lighthouse found them instead. The pixel check stays,
+ * because it catches things a class name cannot — this is the cheap
+ * deterministic guard underneath it, so a value known to fail cannot come
+ * back by being typed again.
+ *
+ * The admin screens are excluded: they are an internal surface with their own
+ * grounds and are not part of the public audit.
+ */
+/*
+ * The floor is 65 now, not 55. White at 55% on brand-950 computes to about
+ * 6.1:1, comfortably AA on flat navy, but the lit sections and the plates'
+ * lighter faces eat into that margin, and a review on a phone called the
+ * small grey text under every card hard to read — the case a single 4.5
+ * figure measured on the darkest ground does not describe. /65 is about
+ * 8:1 on the same ground.
+ * The regex also missed /50 entirely (it listed 10–45 by hand), and a /50
+ * helper line under the quote form's quantity choice shipped through it.
+ * Everything from /05 to /60 is barred.
+ */
+const FAINT = /\btext-paper\/(?:0?5|[1-5][05]|60)\b/;
+const walk = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return entry.name === "admin" ? [] : walk(full);
+    return full.endsWith(".tsx") ? [full] : [];
+  });
+const root = fileURLToPath(new URL("../..", import.meta.url));
+for (const file of [...walk(join(root, "components")), ...walk(join(root, "app"))]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, i) => {
+      /* aria-hidden text is decoration — a "/" between two crumbs, a rule,
+         an arrow. WCAG contrast does not apply to it and axe skips it, and
+         forcing it up makes a separator louder than the words it separates.
+         Anything a reader actually reads has no aria-hidden on it. */
+      if (FAINT.test(line) && !/aria-hidden/.test(line)) {
+        const where = `${file.slice(root.length)}:${i + 1}`;
+        fail(
+          `${where}: faint text-paper alpha — the floor is /65 (small grey text under /65 reads poorly on a phone); use /65 or above`,
+        );
+      }
+    });
+}
+
+/*
+ * The SEO rules that a regex can hold.
+ *
+ * CLAUDE.md carries the whole list, but a rule only written down is a rule
+ * that survives until somebody is in a hurry. These three each shipped as a
+ * real defect once and were found by an outside audit rather than by us, so
+ * they fail the build now instead.
+ */
+
+/* 1. An FAQ question is a heading.
+ *
+ * It was bare text inside a <summary>, which is a control — so four pages
+ * whose lower half is questions had no question-style headings at all in the
+ * document outline, and an audit reporting exactly that was reading them
+ * correctly. */
+const faq = read("components/Faq.tsx");
+if (!/<summary[\s\S]{0,400}?<h3/.test(faq)) {
+  fail("components/Faq.tsx: the question must be an <h3> inside the <summary>");
+}
+
+/* 2. The legal links carry their registered relations.
+ *
+ * Both pages are in the footer of every page and an auditor still reported
+ * them missing: it looks for the English words, and /privatlivspolitik and
+ * /handelsbetingelser contain neither. Renaming the routes to satisfy a
+ * string match would break canonicals, hreflang and the sitemap. */
+const nav = read("lib/nav.ts");
+for (const rel of ["privacy-policy", "terms-of-service"]) {
+  if (!nav.includes(`rel: "${rel}"`)) fail(`lib/nav.ts: the legal link is missing rel="${rel}"`);
+}
+
+/* 3. A date a person reads, never the ISO string.
+ *
+ * pageUpdated() returns 2026-09-02. Printed straight into a page it is the
+ * data rather than a date, and it shipped that way twice — once in
+ * PageHeader and once in AnswerBlock, on the same site in the same language
+ * four scroll positions apart. */
+for (const file of [...walk(join(root, "components")), ...walk(join(root, "app"))]) {
+  const body = readFileSync(file, "utf8");
+  if (/\{\s*pageUpdated\([^)]*\)\s*\}/.test(body) && !body.includes("formatDate")) {
+    fail(`${file.slice(root.length)}: renders pageUpdated() raw — wrap it in formatDate()`);
+  }
+}
+
+/* 4. A catalogue chip may not say anything the model's own specs do not.
+ *
+ * lib/models.ts carries a short form of each model's headline specifications
+ * for the cards — "8-32 GB DDR4" standing for "8-32 GB DDR4 i to sokler". They
+ * are written out by hand, because deriving them from the prose produced three
+ * chips in Danish and two in English on seven of the twelve computers, and a
+ * hand-written figure is a figure somebody can mistype.
+ *
+ * So every number on every chip has to appear somewhere in that model's own
+ * entry. It does not prove the chip says the right thing, but it does prove the
+ * chip is not saying a number nothing else on the site says — which is the
+ * failure that matters here, because a card claiming 32 GB on a machine that
+ * tops out at 16 is a specification a customer would order on.
+ */
+{
+  const source = readFileSync(join(root, "lib", "models.ts"), "utf8");
+  const flat = (text) => text.replace(/[\u2013\u2014]/g, "-");
+
+  /* Each model is one contiguous object, so the text from its slug to the next
+     one is that model and nothing else. */
+  const entries = new Map();
+  const slugs = [...source.matchAll(/^    slug: "([a-z0-9-]+)",$/gm)];
+  slugs.forEach((match, index) => {
+    const from = match.index;
+    const to = index + 1 < slugs.length ? slugs[index + 1].index : source.length;
+    entries.set(match[1], flat(source.slice(from, to)));
+  });
+
+  const chipBlock = source.match(/const CARD_CHIPS[^=]*= \{([\s\S]*?)\n\};/);
+  if (!chipBlock) {
+    fail("lib/models.ts: CARD_CHIPS not found — the catalogue cards have no specs to check");
+  } else {
+    const perSlug = [...chipBlock[1].matchAll(/"([a-z0-9-]+)": \[([\s\S]*?)\n  \],/g)];
+    if (perSlug.length === 0) fail("lib/models.ts: CARD_CHIPS parsed to nothing");
+    for (const [, slug, body] of perSlug) {
+      const entry = entries.get(slug);
+      if (!entry) {
+        fail(`lib/models.ts: CARD_CHIPS has "${slug}", which is not a model`);
+        continue;
+      }
+      for (const [, chip] of body.matchAll(/(?:da|en): "([^"]*)"/g)) {
+        for (const figure of flat(chip).match(/\d+(?:[.,]\d+)?/g) ?? []) {
+          if (!entry.includes(figure)) {
+            fail(
+              `lib/models.ts: ${slug} chip "${chip}" says ${figure}, which is nowhere in that model`,
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 5. Danish words that are not Danish words.
+ *
+ * Found by running the Danish text of the whole site through hunspell with the
+ * da_DK dictionary. Three of the 163 words it did not recognise were real
+ * errors rather than brand names or technical terms, and they are listed here
+ * with what they should be, because a word that was wrong once gets typed
+ * again.
+ *
+ * "Sourcet" is the fourth, and it was seventeen meta descriptions deep: an
+ * English verb given a Danish participle ending, on a site whose own
+ * navigation says "Hvad vi skaffer". The full clause "vi sourcer per ordre"
+ * survives elsewhere on purpose — that is Danish procurement register and a
+ * native copywriter's call, not a spelling mistake. A bare "Sourcet til jeres
+ * ordre." was neither language.
+ *
+ * Re-run the sweep that found these with:
+ *   hunspell -d da_DK -i UTF-8 -l <danish text>
+ * The -i matters: without it hunspell splits every word at æ, ø and å and the
+ * output is a list of fragments.
+ */
+const NOT_DANISH = [
+  ["omvænning", "omstilling"],
+  ["grundting", "grundfunktioner"],
+  ["wattal", "en anbefalet effekt"],
+  ["Sourcet til", "Skaffes til"],
+];
+/*
+ * walk() above returns .tsx only, and every one of these words was in a .ts —
+ * lib/models.ts and lib/guides.ts hold most of the site's prose. Written with
+ * that filter, this check passed while the word it was looking for sat in the
+ * file it never opened. Caught by putting "omvænning" back and watching the
+ * gate stay green.
+ */
+const walkProse = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return walkProse(full);
+    return /\.(ts|tsx)$/.test(full) ? [full] : [];
+  });
+for (const file of [
+  ...walkProse(join(root, "lib")),
+  ...walkProse(join(root, "components")),
+  ...walkProse(join(root, "app")),
+]) {
+  const body = readFileSync(file, "utf8");
+  for (const [wrong, right] of NOT_DANISH) {
+    if (body.includes(wrong)) {
+      fail(`${file.slice(root.length)}: "${wrong}" is not Danish — use "${right}"`);
+    }
+  }
+}
+
+/* 7. Danish does not quote with the American pair.
+ *
+ * Seven Danish strings were quoting with “…”. Danish sets a quotation with
+ * »…« — „…“ is the other form Dansk Sprognævn accepts, and “…” is neither;
+ * it is what an English keyboard autocorrects to. Found by LanguageTool,
+ * which reported them as unpaired brackets: its Danish rules know that a ”
+ * has no opener in Danish.
+ *
+ * Only the Danish side. The English strings sitting on the very next line
+ * keep “…”, because that is correct for English — which is why this cannot
+ * be a global search and replace and is checked per field instead.
+ */
+for (const file of [
+  ...walkProse(join(root, "lib")),
+  ...walkProse(join(root, "components")),
+  ...walkProse(join(root, "app")),
+]) {
+  /* Two shapes of Danish string. A field — `da: "…"` on one line, which is
+     how lib/ writes its prose. And a copy block — `da: {` followed by keys
+     whose strings prettier has broken onto lines of their own, which is how
+     every page writes its copy. The first version only knew the field, so
+     five pages quoting »…« as “…” passed it: /kvalitet, /tilbud, /priser and
+     /tilbud-eksempel were found by LanguageTool, not by this. */
+  let block = null;
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, i) => {
+      const open = /^(\s*)(da|en):\s*\{\s*$/.exec(line);
+      if (open) {
+        block = { lang: open[2], indent: open[1].length };
+        return;
+      }
+      if (block && line.startsWith(" ".repeat(block.indent) + "}")) {
+        block = null;
+        return;
+      }
+      if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+      const field = /^\s*da:\s*"(.*)",?$/.exec(line);
+      const danish = field ? field[1] : block?.lang === "da" ? line : null;
+      if (danish && /[\u201c\u201d]/.test(danish)) {
+        fail(`${file.slice(root.length)}:${i + 1}: Danish quotes with “ ” — use » «`);
+      }
+    });
+}
+
+/* 6. A meta description may not be the page's own summary.
+ *
+ * Two of the twelve repair entries had the two byte-identical. The meta
+ * description is what a search result shows and the summary is what the page
+ * opens with; when they are the same sentence, the snippet is spent repeating
+ * the first thing the reader will see anyway. */
+{
+  const body = readFileSync(join(root, "lib", "repairs.ts"), "utf8");
+  const metas = [...body.matchAll(/metaDescription:\s*\{\s*da:\s*"((?:[^"\\]|\\.)*)"/g)].map(
+    (m) => m[1],
+  );
+  const sums = [...body.matchAll(/summary:\s*\{\s*da:\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]);
+  for (const m of metas) {
+    if (sums.includes(m)) {
+      fail(`lib/repairs.ts: a metaDescription is identical to a summary — "${m.slice(0, 60)}…"`);
+    }
+  }
+}
+
+console.log(
+  `content: ${blocks.length} articles, ${seenKeywords.size} primary keywords, ` +
+    `${fromRoutes.size} english routes, ${failures.length} failures`,
+);
+for (const message of failures) console.error("  " + message);
+process.exit(failures.length === 0 ? 0 : 1);

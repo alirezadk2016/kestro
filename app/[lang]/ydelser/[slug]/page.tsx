@@ -6,9 +6,34 @@ import Container from "@/components/Container";
 import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
-import { company } from "@/lib/company";
-import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import { serviceAnswers } from "@/lib/service-answers";
+
+/*
+ * No dynamicParams override here, and that is the point.
+ *
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 and 15.5.26 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
+ */
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => services.map((service) => ({ lang, slug: service.slug })));
@@ -19,17 +44,24 @@ const copy = {
     breadcrumb: "Ydelser",
     next: "Videre herfra",
     more: "Andre ydelser",
+    updated: "Opdateret",
+    faq: "Spørgsmål om",
     cta: "Få et tilbud",
   },
   en: {
     breadcrumb: "Services",
     next: "Where to go next",
     more: "Other services",
+    updated: "Updated",
+    faq: "Questions about",
     cta: "Get a quote",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const service = getService(params.slug);
   if (!service) return {};
 
@@ -40,13 +72,18 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   };
 }
 
-export default function ServicePage({ params }: { params: { lang: Lang; slug: string } }) {
+export default async function ServicePage(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   const service = getService(params.slug);
   if (!service) notFound();
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const answers = serviceAnswers[service.slug];
+  const updated = pageUpdated("/ydelser/[slug]");
 
   /* Service schema, so the page can be understood as one thing we do rather
      than as an article about it. */
@@ -56,7 +93,9 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
     name: service.name[lang],
     description: service.metaDescription[lang],
     inLanguage: htmlLang[lang],
-    provider: { "@type": "Organization", name: company.name, url: SITE_ORIGIN },
+    /* By reference to the site-wide Organization node, not a second bare
+       copy of it — same reason as the Article's publisher. */
+    provider: { "@id": `${SITE_ORIGIN}/#organization` },
     areaServed: ["DK", "NO"],
     url: `${SITE_ORIGIN}${localePath(`/ydelser/${service.slug}`, lang)}`,
   };
@@ -68,6 +107,8 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
 
   return (
     <>
+      <PageSchema lang={lang} route="/ydelser/[slug]" sources={answers?.sources} />
+
       <BreadcrumbSchema lang={lang} trail={trail} />
       <script
         type="application/ld+json"
@@ -79,7 +120,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <nav aria-label={c.breadcrumb} className="text-sm text-paper/55">
+            <nav aria-label={c.breadcrumb} className="text-sm text-paper/65">
               <Link
                 href={localePath("/ydelser", lang)}
                 className="inline-flex min-h-[44px] items-center transition hover:text-paper"
@@ -88,11 +129,19 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
               </Link>
             </nav>
 
-            <h1 className="mt-4 text-balance font-display text-[clamp(1.875rem,4.5vw,3.25rem)] font-extrabold leading-[1.05] tracking-display text-paper">
+            <h1 className="mt-4 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {service.name[lang]}
             </h1>
-            <p className="mt-5 text-base leading-7 sm:text-lg sm:leading-8 text-paper/70">
-              {service.summary[lang]}
+            {/* The answer first. The card one-liner is `summary`; the page opens
+                with what the service is, with the figure in it. */}
+            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
+              {(answers?.lead ?? service.summary)[lang]}
+            </p>
+            <p className="label mt-6 text-paper/65">
+              {c.updated}{" "}
+              <time dateTime={updated} className="tabular-nums text-paper/80">
+                {formatDate(updated, lang)}
+              </time>
             </p>
           </div>
         </Container>
@@ -101,7 +150,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-7 sm:text-lg sm:leading-8 text-paper/80">
+            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/80">
               {service.intro[lang]}
             </p>
 
@@ -114,7 +163,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
                   >
                     {paragraph[lang]}
                   </p>
@@ -123,7 +172,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                 {section.list && (
                   <ul className="mt-6 space-y-3.5">
                     {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                         <Check
                           className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                           strokeWidth={2.5}
@@ -143,7 +192,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                   <li key={link.href}>
                     <Link
                       href={localePath(link.href, lang)}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
                     >
                       {link.label[lang]}
                       <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -171,7 +220,7 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
                       <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {other.name[lang]}
                       </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-paper/65">
+                      <span className="mt-1.5 block text-sm leading-6 text-paper/75">
                         {other.summary[lang]}
                       </span>
                     </Link>
@@ -183,7 +232,20 @@ export default function ServicePage({ params }: { params: { lang: Lang; slug: st
         </section>
       )}
 
+      {answers && (
+        <Faq
+          lang={lang}
+          items={answers.faqs}
+          title={{
+            da: `${copy.da.faq} ${service.name.da.toLowerCase()}`,
+            en: `${copy.en.faq} ${service.name.en.toLowerCase()}`,
+          }}
+        />
+      )}
+
       <CtaSection lang={lang} />
+
+      {answers && <FactNote lang={lang} ids={answers.sources} />}
     </>
   );
 }

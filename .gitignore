@@ -37,3 +37,9 @@ next-env.d.ts
 
 # team photos (originals; generated webps in public/team/ are committed)
 /assets/team/
+
+# Higgsfield companion skills, installed per-container by `npx skills add`.
+# Tooling for whoever is working in the repo, not part of the site.
+.agents/
+.claude/skills/higgsfield-*
+skills-lock.json

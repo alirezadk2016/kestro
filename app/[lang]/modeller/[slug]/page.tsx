@@ -10,9 +10,36 @@ import WhatIsFixed from "@/components/WhatIsFixed";
 import CtaSection from "@/components/CtaSection";
 import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
-import { getCategoryIcon } from "@/lib/category-icons";
-import { localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
+import Faq from "@/components/Faq";
+import { modelFaqs, modelLead, modelSources } from "@/lib/model-copy";
+
+/*
+ * No dynamicParams override here, and that is the point.
+ *
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 and 15.5.26 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
+ */
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return langs.flatMap((lang) => models.map((model) => ({ lang, slug: model.slug })));
@@ -59,7 +86,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang; slug: string } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang; slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const model = getModel(params.slug);
   if (!model) return {};
 
@@ -70,14 +100,14 @@ export function generateMetadata({ params }: { params: { lang: Lang; slug: strin
   };
 }
 
-export default function ModelPage({ params }: { params: { lang: Lang; slug: string } }) {
+export default async function ModelPage(props: { params: Promise<{ lang: Lang; slug: string }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   const model = getModel(params.slug);
   if (!model) notFound();
 
   const category = getCategory(model.category);
-  const Icon = getCategoryIcon(model.category);
   /* Peers are the models in the same category, not the same group: the ZBook
      is the only "workstations" model, so relating by group left it with no
      siblings pointing at it — two incoming links on the whole site. */
@@ -119,22 +149,18 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
 
   return (
     <>
+      <PageSchema lang={lang} route="/modeller/[slug]" sources={modelSources(model)} />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-16 lg:py-20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"
-        />
-
+      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          generic glow every generated page has. */}
+      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
           {/* One shell width for the whole page, so every section starts at the
               same left edge. Inside it the machine and what we say about it sit
@@ -167,9 +193,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
             <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-7">
                 <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-                  <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
-                    <Icon className="h-8 w-8 text-paper/70" strokeWidth={1.5} />
-                  </span>
+                  <MarkTile name={getCategoryMark(model.category)} size="lg" />
                   <div>
                     <span className="text-sm font-semibold uppercase tracking-wider text-paper/70">
                       {model.brand} · {model.format[lang]}
@@ -177,13 +201,26 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                       {model.name}
                     </h1>
-                    <p className="mt-2 text-base text-ink-300 sm:text-lg">{model.tagline[lang]}</p>
+                    {/* The tagline, then the answer: what the machine is, with
+                        the figures from its own spec table. */}
+                    <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                      {model.tagline[lang]} {modelLead(model, lang)}
+                    </p>
                   </div>
                 </div>
 
-                <p className="mt-8 text-base leading-7 text-ink-300">{model.intro[lang]}</p>
+                <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
+                <p className="label mt-6 text-paper/65">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time
+                    dateTime={pageUpdated("/modeller/[slug]")}
+                    className="tabular-nums text-paper/80"
+                  >
+                    {formatDate(pageUpdated("/modeller/[slug]"), lang)}
+                  </time>
+                </p>
 
-                <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-ink-300">
+                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-ink-300">
                   {c.notStock}
                 </p>
 
@@ -225,7 +262,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     ))}
                   </div>
 
-                  <p className="pt-1 text-sm leading-6 text-paper/55">{c.imageNote}</p>
+                  <p className="pt-1 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
                 </div>
               )}
             </div>
@@ -236,10 +273,10 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
           <div className="max-w-6xl">
-            <div className="overflow-hidden border border-white/10">
+            <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
-                <p className="mt-1 text-sm leading-6 text-paper/65">{c.configBody}</p>
+                <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
               </div>
 
               <dl className="lg:grid lg:grid-cols-2">
@@ -249,7 +286,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                     className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
                   >
                     <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-paper/65 sm:col-span-2 sm:mt-0">
+                    <dd className="mt-1 text-sm leading-6 text-paper/75 sm:col-span-2 sm:mt-0">
                       {spec.value[lang]}
                     </dd>
                   </div>
@@ -266,7 +303,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 </h2>
                 <ul className="mt-5 space-y-3">
                   {model.goodFor.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                       <Check
                         className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300"
                         strokeWidth={2}
@@ -277,7 +314,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                 </ul>
               </div>
 
-              <div className="border-l-2 border-white/30 bg-white/5 p-5 sm:p-6">
+              <div className="plate p-5 sm:p-6">
                 <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
                   <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
                   {c.watchOut}
@@ -307,7 +344,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                         />
                         {reason.title[lang]}
                       </dt>
-                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/65">
+                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/75">
                         {reason.description[lang]}
                       </dd>
                     </div>
@@ -316,21 +353,21 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
               </>
             )}
 
-            <div className="mt-12 border border-white/10 bg-white/5 p-6 sm:p-8">
+            <div className="plate mt-12 p-6 sm:p-8">
               <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.ctaBody}</p>
+              <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-5"
               >
                 {c.ctaButton}
               </Link>
             </div>
 
             {category && (
-              <p className="mt-8 text-sm leading-6 text-paper/55">
+              <p className="mt-8 text-sm leading-[1.6] text-paper/65">
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}
@@ -355,7 +392,7 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="inline-flex min-h-[44px] items-center border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-paper/80 transition hover:border-brand-400 hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
                     >
                       {other.name}
                     </Link>
@@ -367,7 +404,17 @@ export default function ModelPage({ params }: { params: { lang: Lang; slug: stri
         </section>
       )}
 
+      <Faq
+        lang={lang}
+        items={modelFaqs(model)}
+        title={{ da: `Spørgsmål om ${model.name}`, en: `Questions about the ${model.name}` }}
+      />
+
       <CtaSection lang={lang} />
+
+      {/* Windows sources only where the page is about a computer: a monitor
+          does not run Windows 11 and has no business citing its requirements. */}
+      <FactNote lang={lang} ids={modelSources(model)} />
     </>
   );
 }

@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import Breadcrumbs from "./Breadcrumbs";
 import type { Lang } from "@/lib/i18n";
+import { formatDate } from "@/lib/i18n";
+import { pageUpdated, type Route } from "./PageSchema";
 
 /*
  * The top of a top-level page.
@@ -16,6 +18,7 @@ export default function PageHeader({
   lang,
   href,
   crumb,
+  updated,
 }: {
   title: string;
   description: ReactNode;
@@ -24,18 +27,39 @@ export default function PageHeader({
   href?: string;
   /** A shorter label for the trail, when the heading is a sentence. */
   crumb?: string;
+  /**
+   * The page's own route key, which turns on the visible "last updated" line.
+   *
+   * Machine-readable and human-readable from the same value: the <time> here
+   * and the dateModified in the page's schema both come from
+   * lib/page-dates.json, which is written from git rather than from a build
+   * timestamp. Left off where a date means nothing to a reader — a contact
+   * form does not have an edition.
+   */
+  updated?: Route;
 }) {
   return (
     <div className="max-w-3xl">
       {lang && href && (
         <Breadcrumbs lang={lang} trail={[{ name: crumb ?? title, href }]} className="mb-5" />
       )}
-      <h1 className="text-balance font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.03] tracking-display text-paper">
+      <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
         {title}
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-7 text-paper/65 sm:text-lg sm:leading-8">
+      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
         {description}
       </p>
+      {updated && (
+        /* The same meta line as the guides index: label case, one weight up on
+           the value. It printed the raw ISO date at 12px roman, which is the
+           data rather than a date. */
+        <p className="label mt-6 text-paper/65">
+          {lang === "en" ? "Updated" : "Opdateret"}{" "}
+          <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/80">
+            {formatDate(pageUpdated(updated), lang ?? "da")}
+          </time>
+        </p>
+      )}
     </div>
   );
 }

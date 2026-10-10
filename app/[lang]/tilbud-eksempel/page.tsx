@@ -4,9 +4,10 @@ import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { company } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
 
 /*
  * What a quote from us actually looks like.
@@ -73,8 +74,9 @@ const copy = {
     metaDescription:
       "Et eksempel på et tilbud på brugt erhvervs-IT: model, stand, målt batterikapacitet, tastatur, garanti og tidsramme – felt for felt.",
     title: "Sådan ser et tilbud ud",
+    /* Answer first: what a quote is made of, then why the example exists. */
     description:
-      "Vi skriver mange steder, at pris, stand, batteritilstand og garantivilkår står skriftligt, før I bestiller. Her er dokumentet, det står i. Det er et eksempel – ikke et tilbud – men felterne er de samme, og de bliver alle sammen udfyldt.",
+      "Et tilbud fra Kestro er et dokument i 5 dele – maskinen per enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
     docLabel: "Eksempel",
     docTitle: "Tilbud",
     metaRows: [
@@ -124,14 +126,14 @@ const copy = {
     priceNote:
       "Det er det eneste felt, vi ikke kan vise jer på forhånd. Vi har ikke lager, så prisen er den, vi kan skaffe udstyret til – og et opdigtet eksempeltal ville bare være et tal, I regner forkert med.",
     priceLink: "Hvad der afgør prisen",
-    whyTitle: "Hvorfor alle felterne er der",
+    whyTitle: "Hvorfor er alle felterne der?",
     whyBody:
-      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. “Grad B” uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
+      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
     relatedTitle: "Videre herfra",
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
       { href: "/priser", label: "Hvad koster det?" },
-      { href: "/tilbud", label: "Send jeres krav – få et rigtigt tilbud" },
+      { href: "/tilbud", label: "Få et rigtigt tilbud" },
     ],
   },
   en: {
@@ -140,7 +142,7 @@ const copy = {
       "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",
     description:
-      "We say in a lot of places that price, condition, battery health and warranty terms are in writing before you order. This is the document they are written in. It is an example, not an offer — but the fields are the same, and every one of them gets filled in.",
+      "A quote from Kestro is a document in 5 parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",
     docLabel: "Example",
     docTitle: "Quote",
     metaRows: [
@@ -173,8 +175,8 @@ const copy = {
         v: "The period goes here in months, together with who you contact if something breaks. It depends on the actual order, which is why we do not promise a fixed number in advance — but the number is here before you order.",
       },
       {
-        k: "Timeframe",
-        v: "A range, not a date. We source per order, so we give the timeframe once we know what can be found.",
+        k: "Time frame",
+        v: "A range, not a date. We source per order, so we give the time frame once we know what can be found.",
       },
       {
         k: "Documentation",
@@ -190,7 +192,7 @@ const copy = {
     priceNote:
       "That is the one field we cannot show you in advance. We hold no stock, so the price is what we can source the equipment for — and an invented example figure would just be a number you budget wrongly against.",
     priceLink: "What decides the price",
-    whyTitle: "Why every field is there",
+    whyTitle: "Why is every field there?",
     whyBody:
       "Each field above exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can be at 60 % three months later. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
     relatedTitle: "Where to go next",
@@ -199,13 +201,16 @@ const copy = {
       { href: "/priser", label: "What does it cost?" },
       {
         href: "/tilbud",
-        label: "Send your requirements — get a real quote",
+        label: "Get a real quote",
       },
     ],
   },
 };
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -214,20 +219,29 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function SampleQuotePage({ params }: { params: { lang: Lang } }) {
+export default async function SampleQuotePage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
 
   return (
     <>
-      <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/tilbud-eksempel" }]} />
-      <PageHeader
-        title={c.title}
-        description={c.description}
-        lang={lang}
-        href="/tilbud-eksempel"
-        crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
-      />
+      <PageSchema lang={lang} route="/tilbud-eksempel" name={c.title} description={c.description} />
+
+      {/* In the shared Container like every other page's header. Without it
+          the breadcrumb and the h1 started at x=0 while the rest of the site
+          sat on the container inset. */}
+      <Container>
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/tilbud-eksempel"
+          crumb={lang === "da" ? "Sådan ser et tilbud ud" : "A sample quote"}
+
+          updated="/tilbud-eksempel"
+        />
+      </Container>
 
       <section className="lit bg-brand-950 py-10 sm:py-20">
         <Container>
@@ -254,14 +268,14 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               {c.metaRows.map((row) => (
                 <div key={row.k} className="flex justify-between gap-4 py-1.5 text-sm">
-                  <dt className="text-ink-500">{row.k}</dt>
+                  <dt className="text-ink-600">{row.k}</dt>
                   <dd className="text-right font-medium text-ink-900">{row.v}</dd>
                 </div>
               ))}
             </dl>
 
             <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.specTitle}</h3>
+              <h3 className="label text-ink-600">{c.specTitle}</h3>
               <dl className="mt-4">
                 {lines.map((line) => (
                   <div
@@ -277,7 +291,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
 
             <div className="grid grid-cols-1 gap-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               <div>
-                <h3 className="label text-ink-500">{c.includedTitle}</h3>
+                <h3 className="label text-ink-600">{c.includedTitle}</h3>
                 <ul className="mt-4 space-y-2">
                   {c.included.map((item) => (
                     <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-700">
@@ -291,10 +305,10 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                 </ul>
               </div>
               <div>
-                <h3 className="label text-ink-500">{c.excludedTitle}</h3>
+                <h3 className="label text-ink-600">{c.excludedTitle}</h3>
                 <ul className="mt-4 space-y-2">
                   {c.excluded.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-500">
+                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-600">
                       <span
                         aria-hidden="true"
                         className="mt-2.5 h-px w-3 flex-shrink-0 bg-ink-300"
@@ -307,7 +321,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             </div>
 
             <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.termsTitle}</h3>
+              <h3 className="label text-ink-600">{c.termsTitle}</h3>
               <dl className="mt-4 space-y-4">
                 {c.terms.map((term) => (
                   <div key={term.k}>
@@ -321,7 +335,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             </div>
 
             <div className="bg-paper-dim p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.priceTitle}</h3>
+              <h3 className="label text-ink-600">{c.priceTitle}</h3>
               <dl className="mt-4">
                 {c.priceRows.map((row, i) => (
                   <div
@@ -337,12 +351,12 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                   </div>
                 ))}
               </dl>
-              <p className="mt-4 border-l-2 border-brand-600 pl-4 text-sm leading-6 text-ink-600">
+              <p className="mt-4 rounded-lg bg-ink-50 p-4 text-sm leading-[1.6] text-ink-600">
                 {c.priceNote}
               </p>
               <Link
                 href={localePath("/priser", lang)}
-                className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
+                className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
               >
                 {c.priceLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -354,7 +368,9 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+              {c.whyBody}
+            </p>
 
             <p className="eyebrow mt-10 text-brand-700">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
@@ -362,7 +378,7 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -373,6 +389,39 @@ export default function SampleQuotePage({ params }: { params: { lang: Lang } }) 
           </div>
         </Container>
       </section>
+
+      {/* The questions the example answers, from the example itself. */}
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om tilbuddet", en: "Questions about the quote" }}
+        items={[
+          {
+            question: { da: "Hvor længe gælder et tilbud?", en: "How long is a quote valid?" },
+            answer: {
+              da: `I eksemplet ${copy.da.metaRows.find((row) => row.k === "Gyldigt til")?.v.toLowerCase()} – gyldigheden står altid i selve tilbuddet.`,
+              en: `In the example, ${copy.en.metaRows.find((row) => row.k === "Valid until")?.v.toLowerCase()} — the validity is always stated in the quote itself.`,
+            },
+          },
+          {
+            question: { da: "Hvad er med i prisen?", en: "What does the price include?" },
+            answer: { da: copy.da.included.join(" "), en: copy.en.included.join(" ") },
+          },
+          {
+            question: { da: "Hvad er ikke med i prisen?", en: "What does the price not include?" },
+            answer: {
+              da: `Medmindre det aftales: ${copy.da.excluded.join(" ")}`,
+              en: `Unless agreed: ${copy.en.excluded.join(" ")}`,
+            },
+          },
+          {
+            question: {
+              da: "Hvorfor står der ingen pris i eksemplet?",
+              en: "Why is there no price in the example?",
+            },
+            answer: { da: copy.da.priceNote, en: copy.en.priceNote },
+          },
+        ]}
+      />
 
       <CtaSection lang={lang} />
     </>

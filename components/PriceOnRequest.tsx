@@ -52,14 +52,14 @@ export default function PriceOnRequest({
   const href = equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud";
 
   return (
-    <div className={`border border-white/10 bg-white/[0.04] p-6 sm:p-7 ${className}`}>
+    <div className={`plate p-6 sm:p-7 ${className}`}>
       <p className="label text-brand-300">{c.label}</p>
       <p className="mt-2 font-display text-2xl font-extrabold tracking-display text-paper">
         {c.heading}
       </p>
-      <p className="mt-3 text-sm leading-6 text-paper/65">{c.body}</p>
+      <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>
 
-      <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-6 text-paper/75">
+      <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">
         <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={1.75} />
         {c.volume}
       </p>
@@ -67,7 +67,7 @@ export default function PriceOnRequest({
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Link
           href={localePath(href, lang)}
-          className="group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-500"
+          className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
         >
           {c.cta}
           <ArrowRight

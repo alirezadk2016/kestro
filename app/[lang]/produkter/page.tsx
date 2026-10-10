@@ -5,8 +5,13 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
-import { getCategoryIcon } from "@/lib/category-icons";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import { models } from "@/lib/models";
 
 const copy = {
   da: {
@@ -14,9 +19,9 @@ const copy = {
     metaDescription:
       "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
     title: "Hvad vi skaffer",
-    description:
-      "Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.",
-    noPricesTitle: "Derfor finder I ingen priser eller lagerstatus her",
+    /* Answer first, with the counts the page and /modeller actually show. */
+    description: `Kestro er indkøbspartner, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
+    noPricesTitle: "Hvorfor er der ingen priser eller lagerstatus her?",
     noPrices1:
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at I ikke betaler for et lager, andre skal have afsat.",
     noPrices2:
@@ -33,9 +38,8 @@ const copy = {
     metaDescription:
       "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
     title: "What we source",
-    description:
-      "Kestro is a sourcing partner, not a web shop. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.",
-    noPricesTitle: "Why there are no prices or stock levels here",
+    description: `Kestro is a sourcing partner, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
+    noPricesTitle: "Why are there no prices or stock levels here?",
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
@@ -49,7 +53,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -58,11 +65,20 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
+export default async function ProdukterPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/produkter"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -71,55 +87,58 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/produkter"
             crumb={lang === "da" ? "Hvad vi skaffer" : "What we source"}
+
+            updated="/produkter"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noPrices2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noPrices1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noPrices2}</p>
           </div>
 
-          <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+          <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.categories}
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {categories.map((category) => {
-              const Icon = getCategoryIcon(category.slug);
               return (
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
+                  className="group flex items-start gap-4 plate plate-lift p-5 sm:p-6"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                  </span>
-                  <h3 className="mt-3 text-sm font-semibold text-paper group-hover:text-paper sm:mt-4 sm:text-base">
-                    {category.name[lang]}
-                  </h3>
-                  <p className="mt-1.5 flex-1 text-xs leading-5 text-paper/65 sm:mt-2 sm:text-sm sm:leading-6">
-                    {category.tagline[lang]}
-                  </p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300 sm:mt-4 sm:text-sm">
-                    {c.seeCategory}
-                    <span aria-hidden="true">&rarr;</span>
-                  </span>
+                  {/* Mark inline with the heading rather than stacked above
+                      it — the stacked icon tile is the template card. */}
+                  <MarkTile name={getCategoryMark(category.slug)} size="md" className="flex-none" />
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <h3 className="text-base font-semibold leading-snug text-paper">
+                      {category.name[lang]}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">
+                      {category.tagline[lang]}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
+                      {c.seeCategory}
+                      <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
                 </Link>
               );
             })}
           </div>
 
-          <div className="mx-auto mt-14 max-w-3xl border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm sm:p-8">
+          <div className="mx-auto mt-14 max-w-3xl plate p-6 text-center sm:p-8">
             <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.modelsTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-paper/65">
+            <p className="mx-auto mt-3 max-w-xl text-base leading-[1.75] text-paper/75">
               {c.modelsBody}
             </p>
             <Link
               href={localePath("/modeller", lang)}
-              className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-6"
             >
               {c.modelsButton}
             </Link>
@@ -129,7 +148,37 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
 
       <QualifySection lang={lang} />
 
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om udvalget", en: "Questions about the range" }}
+        items={[
+          {
+            question: { da: "Har I udstyret på lager?", en: "Do you have the equipment in stock?" },
+            answer: { da: copy.da.noPrices1, en: copy.en.noPrices1 },
+          },
+          {
+            question: {
+              da: "Kan I skaffe noget, der ikke står her?",
+              en: "Can you source something that is not listed here?",
+            },
+            answer: { da: copy.da.noPrices2, en: copy.en.noPrices2 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
+              en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+            },
+          },
+        ]}
+      />
+
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

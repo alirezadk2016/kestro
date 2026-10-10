@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ChevronDown, Phone } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import { categories } from "@/lib/categories";
@@ -15,6 +15,8 @@ export default function Header({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const burger = useRef<HTMLButtonElement>(null);
+  const productsTrigger = useRef<HTMLButtonElement>(null);
 
   /*
    * Hold the page still while the drawer is open.
@@ -32,10 +34,49 @@ export default function Header({ lang }: { lang: Lang }) {
       document.body.style.overflow = previous;
     };
   }, [open]);
+  /*
+   * Escape closes the drawer.
+   *
+   * It is what anyone who uses a keyboard reaches for first, and without it
+   * the only way out of an open menu was to find the button again — which, on
+   * a panel that covers the screen, means tabbing past every link in it.
+   * Focus goes back to the control that opened it, so the next Tab carries on
+   * from where it was rather than from the top of the document.
+   */
+  useEffect(() => {
+    if (!open) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      setMobileProductsOpen(false);
+      burger.current?.focus();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const pathname = usePathname() ?? "/";
 
   /** The same page in the other language. */
   const basePath = stripLocale(pathname);
+
+  /*
+   * Which navigation item is the page you are on.
+   *
+   * Nothing marked it. Measured across /flaadeloesninger, /reparation and
+   * /om-os: the link for the page you were standing on rendered at exactly
+   * the same colour, weight and decoration as the six beside it, and carried
+   * no aria-current — so neither a reader nor a screen reader was ever told
+   * where they were. On a seven-item bar over thirty-odd pages that is the
+   * cheapest orientation cue there is, and it was missing.
+   *
+   * Prefix matching, not equality, because a section has children: standing on
+   * /vejledninger/windows-10-support-slut should light "Viden", the same way
+   * standing on the index does. The comparison is against basePath so it works
+   * identically on /en.
+   */
+  const isCurrent = (href: string) =>
+    basePath === href || (href !== "/" && basePath.startsWith(href + "/"));
 
   function closeMobile() {
     setOpen(false);
@@ -92,23 +133,69 @@ export default function Header({ lang }: { lang: Lang }) {
           aria-label={ui.mainNav[lang]}
           className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7"
         >
+          {/*
+            A link and a disclosure, not a link pretending to be one.
+ 
+            This was a single <Link> carrying aria-expanded, with the panel
+            opening on mouseenter. Two things were wrong with that. The panel
+            was unreachable from a keyboard — Tab put focus on the link and
+            Enter navigated to the hub, so the nine pages inside were not in
+            the tab order of any page on the site, which is WCAG 2.1.1 at
+            Level A. And aria-expanded on a link tells a screen reader the
+            control expands something when what it actually does is leave the
+            page.
+ 
+            So the label stays a link to the hub and the chevron becomes a
+            button that owns the panel. Pointer behaviour is unchanged; focus
+            moving anywhere inside the wrapper opens it, focus leaving the
+            wrapper closes it, and Escape closes it and puts focus back on the
+            button. onFocus and onBlur are React's focusin/focusout, so they
+            catch focus arriving in the panel's children too.
+          */}
           <div
             className="relative"
             onMouseEnter={() => setProductsOpen(true)}
             onMouseLeave={() => setProductsOpen(false)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setProductsOpen(false);
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape" || !productsOpen) return;
+              setProductsOpen(false);
+              productsTrigger.current?.focus();
+            }}
           >
-            <Link
-              href={localePath(productsNav.hub.href, lang)}
-              className="flex items-center gap-1 text-sm font-medium text-paper/75 transition hover:text-paper"
-              aria-expanded={productsOpen}
-            >
-              {productsNav.hub.label[lang]}
-              <ChevronDown className="h-4 w-4" strokeWidth={2} />
-            </Link>
+            <div className="flex items-center gap-1">
+              <Link
+                href={localePath(productsNav.hub.href, lang)}
+                className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
+              >
+                {productsNav.hub.label[lang]}
+              </Link>
+              <button
+                ref={productsTrigger}
+                type="button"
+                onClick={() => setProductsOpen((v) => !v)}
+                aria-expanded={productsOpen}
+                aria-controls="header-products"
+                aria-label={ui.showProducts[lang]}
+                className="inline-flex h-6 w-5 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+              >
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`}
+                  strokeWidth={2}
+                />
+              </button>
+            </div>
 
             {productsOpen && (
-              <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3">
-                <div className="glass-nav rounded-xl p-2 shadow-xl shadow-black/40">
+              <div
+                id="header-products"
+                className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
+              >
+                <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
@@ -154,24 +241,38 @@ export default function Header({ lang }: { lang: Lang }) {
             )}
           </div>
 
-          {mainNav.map((link) => (
-            <Link
-              key={link.href}
-              href={localePath(link.href, lang)}
-              className="text-sm font-medium text-paper/75 transition hover:text-paper"
-            >
-              {link.label[lang]}
-            </Link>
-          ))}
+          {mainNav.map((link) => {
+            const current = isCurrent(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={localePath(link.href, lang)}
+                /* aria-current is the half a screen reader hears; the rule
+                   below is the half everyone else sees. Both, not either. */
+                aria-current={current ? "page" : undefined}
+                className={`relative inline-flex min-h-[44px] items-center text-sm transition ${
+                  current
+                    ? "font-semibold text-paper after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-400"
+                    : "font-medium text-paper/75 hover:text-paper"
+                }`}
+              >
+                {link.label[lang]}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link
             href={localePath("/tilbud", lang)}
-            className="hidden min-h-[44px] items-center whitespace-nowrap bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 xl:inline-flex"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
           >
             {ui.bookCall[lang]}
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              strokeWidth={2}
+            />
           </Link>
         </div>
 
@@ -192,6 +293,7 @@ export default function Header({ lang }: { lang: Lang }) {
           )}
 
           <button
+            ref={burger}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
@@ -334,11 +436,14 @@ function LanguageSwitcher({
   onNavigate?: () => void;
 }) {
   return (
-    <div
-      className="flex w-fit items-center border border-white/15"
-      role="group"
-      aria-label={ui.language[lang]}
-    >
+    /* Two words and a rule, not a segmented control.
+       It was a bordered pair with the current language filled in brand blue,
+       which put a third button-shaped object in a bar that already has one
+       real button — and a filled chip reads as "press me" when the thing it
+       marks is simply where you already are. The reference underlines the
+       current language and leaves the other quiet, which is what a state
+       marker should look like. */
+    <div className="flex w-fit items-center gap-4" role="group" aria-label={ui.language[lang]}>
       {langs.map((code) => (
         <Link
           key={code}
@@ -346,8 +451,10 @@ function LanguageSwitcher({
           onClick={onNavigate}
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
-          className={`inline-flex min-h-[38px] items-center px-3 text-xs font-semibold uppercase tracking-wider transition ${
-            code === lang ? "bg-brand-600 text-paper" : "text-paper/70 hover:text-paper"
+          className={`inline-flex min-h-[44px] items-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
+            code === lang
+              ? "border-b-2 border-paper pt-0.5 text-paper"
+              : "border-b-2 border-transparent pt-0.5 text-paper/65 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

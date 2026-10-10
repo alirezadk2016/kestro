@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
-const CONTACT_EMAIL = "info@kestro.dk";
+/* From lib/company.ts, so the fallback address in the "we could not send"
+   panel can never drift from the one the route delivers to. */
+const CONTACT_EMAIL = company.email;
 
 /*
  * The form posts to /api/kontakt, which sends the message and answers.
@@ -181,6 +183,33 @@ export default function ContactForm({
     messagePlaceholder?.[lang] ?? (quote ? c.quoteMessagePlaceholder : c.defaultPlaceholder);
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
+
+  /*
+   * Where submitting lands you.
+   *
+   * Pressing send replaces the whole form with an outcome panel. React does
+   * not move focus when it does that, so the button you just pressed stops
+   * existing and focus falls to <body> — a keyboard user is put back at the
+   * top of the document, and a screen reader says nothing at all. Whether the
+   * message was sent or failed is then the one thing on the page you cannot
+   * find out without going looking.
+   *
+   * So the panel is focused when it appears, and it carries a live role:
+   * alert when the send did not happen, status when it did.
+   *
+   * Focusing scrolls, and the header is sticky, so the panel landed with its
+   * top edge at the top of the viewport and its heading behind the header —
+   * "Tak for jeres henvendelse" half hidden, on the one screen that has to be
+   * unambiguous. Measured: the header is 65px on a 390px viewport and 81px
+   * from lg. scroll-mt-24 is 96px, so the heading clears it in both.
+   */
+  const outcomeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "sent" || status === "error" || status === "unavailable") {
+      outcomeRef.current?.focus();
+    }
+  }, [status]);
   const emptyValues = {
     navn: "",
     virksomhed: "",
@@ -211,12 +240,17 @@ export default function ContactForm({
   useEffect(() => {
     if (!quote) return;
     const params = new URLSearchParams(window.location.search);
-    const model = params.get("model")?.slice(0, 120) ?? "";
+    const model = params.get("model")?.trim().slice(0, 120) ?? "";
     const band = params.get("antal") ?? "";
-    if (!model && !band) return;
+    /* "When" arrives from the front page's first step (TrustStrip), along
+       with the band and the model. Text only, capped, and bound as a value —
+       React escapes it, so a query string cannot become markup. */
+    const when = params.get("hvornaar")?.trim().slice(0, 120) ?? "";
+    if (!model && !band && !when) return;
     setValues((prev) => ({
       ...prev,
       udstyr: prev.udstyr || model,
+      hvornaar: prev.hvornaar || when,
       antal: quantities.includes(band as (typeof quantities)[number]) ? band : prev.antal,
     }));
   }, [quote]);
@@ -321,8 +355,17 @@ export default function ContactForm({
     }
   }
 
+  /*
+   * min-h-11 is 44px, which is the floor for something you tap.
+   *
+   * The padding alone gave 42, and two pixels does not sound like a bug until
+   * it is a phone, a thumb and the field that turns a visitor into an enquiry.
+   * The text stays at 16px so iOS does not zoom the page when the field takes
+   * focus — a smaller size there is the other classic way a mobile form loses
+   * people.
+   */
   const inputClasses =
-    "w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -331,11 +374,20 @@ export default function ContactForm({
     )}&body=${encodeURIComponent(body)}`;
 
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="alert"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.unavailableBody}</p>
 
         <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
           {body}
@@ -345,20 +397,20 @@ export default function ContactForm({
           <button
             type="button"
             onClick={copyMessage}
-            className="inline-flex min-h-[44px] items-center bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
           >
             {copied ? c.copied : c.copyMessage}
           </button>
           <a
             href={mailHref}
-            className="inline-flex min-h-[44px] items-center border border-white/15 px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
           >
             {c.openMail}
           </a>
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-6 text-paper/55">
+          <p className="mt-5 text-sm leading-[1.6] text-paper/65">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
@@ -373,7 +425,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/55 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/65 underline decoration-paper/30 underline-offset-4 hover:text-paper"
         >
           {c.back}
         </button>
@@ -383,11 +435,20 @@ export default function ContactForm({
 
   if (status === "sent") {
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="status"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">
           {quote ? c.quoteThanksBody : c.thanksBody}
         </p>
 
@@ -449,7 +510,7 @@ export default function ContactForm({
               </label>
             ))}
           </div>
-          <p className="mt-2 text-xs leading-5 text-paper/50">{c.quantityHelp}</p>
+          <p className="mt-2 text-xs leading-[1.45] text-paper/65">{c.quantityHelp}</p>
         </fieldset>
       )}
 
@@ -462,6 +523,7 @@ export default function ContactForm({
             id="navn"
             name="navn"
             type="text"
+            autoComplete="name"
             required
             value={values.navn}
             onChange={handleChange}
@@ -476,13 +538,14 @@ export default function ContactForm({
             {companyRequired ? (
               <span className="text-brand-400">*</span>
             ) : (
-              <span className="text-paper/45">{c.optional}</span>
+              <span className="text-paper/65">{c.optional}</span>
             )}
           </label>
           <input
             id="virksomhed"
             name="virksomhed"
             type="text"
+            autoComplete="organization"
             required={companyRequired}
             value={values.virksomhed}
             onChange={handleChange}
@@ -499,6 +562,7 @@ export default function ContactForm({
             id="email"
             name="email"
             type="email"
+            autoComplete="email"
             required
             value={values.email}
             onChange={handleChange}
@@ -515,6 +579,7 @@ export default function ContactForm({
             id="telefon"
             name="telefon"
             type="tel"
+            autoComplete="tel"
             value={values.telefon}
             onChange={handleChange}
             className={inputClasses}
@@ -615,7 +680,7 @@ export default function ContactForm({
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
           {quote ? c.quoteMessage : c.message}{" "}
           {quote ? (
-            <span className="text-paper/45">{c.optional}</span>
+            <span className="text-paper/65">{c.optional}</span>
           ) : (
             <span className="text-brand-400">*</span>
           )}
@@ -651,12 +716,12 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 disabled:opacity-60"
+          className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 disabled:opacity-60"
         >
           {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>
 
-        <p className="mt-3 text-xs leading-5 text-paper/50">
+        <p className="mt-3 text-xs leading-[1.45] text-paper/65">
           {c.privacy}{" "}
           <Link
             href={localePath("/privatlivspolitik", lang)}

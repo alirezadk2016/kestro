@@ -6,14 +6,12 @@ import type { Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
-    eyebrow: "Kontaktpersoner",
     title: "Hvem I taler med",
     sub: "Hos os taler I med et menneske – ikke et sagsnummer.",
     write: "Skriv til os",
     at: "hos",
   },
   en: {
-    eyebrow: "Who to contact",
     title: "Who you will be talking to",
     sub: "With us you talk to a person, not a case number.",
     write: "Write to us",
@@ -28,11 +26,10 @@ export default function TeamSection({ lang }: { lang: Lang }) {
     <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-4 text-base leading-7 text-paper/65">{c.sub}</p>
+          <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         <div
@@ -45,9 +42,11 @@ export default function TeamSection({ lang }: { lang: Lang }) {
           }`}
         >
           {team.map((member) => (
+            /* id is the anchor target: an article byline links to the real bio. */
             <div
               key={member.name}
-              className="group relative flex flex-col gap-6 overflow-hidden border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06] sm:flex-row sm:items-start sm:p-8 sm:text-left"
+              id={member.id}
+              className="plate plate-lift group relative flex flex-col gap-6 overflow-hidden p-6 text-center sm:flex-row sm:items-start sm:p-8 sm:text-left"
             >
               <span
                 aria-hidden="true"
@@ -65,10 +64,10 @@ export default function TeamSection({ lang }: { lang: Lang }) {
 
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-paper">{member.name}</h3>
-                <p className="mt-1.5 inline-flex items-center rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-300 ring-1 ring-inset ring-brand-400/30">
+                <p className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08] px-6 mt-1.5 leading-[1.6]">
                   {member.role[lang]}
                 </p>
-                <p className="mt-4 text-sm leading-6 text-paper/65">{member.bio[lang]}</p>
+                <p className="mt-4 text-sm leading-[1.6] text-paper/75">{member.bio[lang]}</p>
 
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   {/* A direct line only when there is one. Without it, writing
@@ -76,7 +75,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                   {member.phoneHref && (
                     <a
                       href={`tel:${member.phoneHref}`}
-                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+                      className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                     >
                       <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                       {member.phoneDisplay}
@@ -86,12 +85,12 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     href={`mailto:${member.email ?? company.email}`}
                     className={
                       member.phoneHref
-                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 transition hover:border-white/35 hover:bg-white/5"
-                        : "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+                        ? "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-paper/80 hover:bg-white/5"
+                        : "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                     }
                   >
                     <Mail
-                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-paper/50" : ""}`}
+                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-paper/65" : ""}`}
                       strokeWidth={2}
                     />
                     {c.write}

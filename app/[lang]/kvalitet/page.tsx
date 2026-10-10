@@ -6,6 +6,8 @@ import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -14,29 +16,29 @@ const copy = {
       "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvad I bør have skriftligt om garanti, før I køber brugt IT-udstyr.",
     title: "Stand, test og hvad I bør spørge om",
     description:
-      "“Brugt” siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
-    gradingTitle: "Graderingen: A, B og C",
+      "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
+    gradingTitle: "Hvad betyder A, B og C?",
     gradingBody:
       "Graden beskriver, hvordan maskinen ser ud – ikke hvordan den virker. Alt udstyr skal bestå den samme funktionstest, uanset grad. Nogle leverandører kalder det guld, sølv og bronze, men det dækker over det samme.",
     suits: "Passer til:",
     warning:
       "Der findes ingen fælles standard for, hvad et bogstav betyder. To leverandører kan kalde den samme maskine grad A og grad B. Bed derfor altid om en beskrivelse af standen i ord – ikke bare et bogstav.",
-    testTitle: "Hvad en funktionstest skal dække",
+    testTitle: "Hvad skal en funktionstest dække?",
     testBody:
-      "Det er her, forskellen mellem en billig og en dyr leverandør ligger. En maskine, der “starter op”, er ikke testet. Det her er, hvad vi kræver, før udstyret sendes videre til jer:",
+      "Det er her, forskellen mellem en billig og en dyr leverandør ligger. En maskine, der »starter op«, er ikke testet. Det her er, hvad vi kræver, før udstyret sendes videre til jer:",
     testNote:
       "Batteriet er det punkt, der oftest bliver sprunget over. Et batteri på 60 % af sin oprindelige kapacitet virker fint i en test og bliver et problem tre måneder senere. Spørg til tallet.",
-    dataTitle: "Data på brugt udstyr",
+    dataTitle: "Hvad med data på brugt udstyr?",
     dataBody1:
       "Både når I køber og når I sælger, er data det punkt, der kan koste dyrt. En formateret disk er ikke en slettet disk. Data skal overskrives efter en anerkendt metode, eller disken skal destrueres fysisk, og der skal følge dokumentation med per enhed – ikke per leverance.",
     dataBody2:
       "Sælger I jeres gamle maskiner, så bed om en sletterapport med serienummer for hver enkelt enhed. Det er det dokument, I skal kunne vise frem, hvis nogen spørger, hvor persondata fra de gamle computere blev af.",
-    warrantyTitle: "Garanti",
+    warrantyTitle: "Hvilken garanti følger med?",
     warrantyBody1:
       "Garantien på brugt erhvervsudstyr afhænger af, hvem der står bag den enkelte leverance, og hvor gammelt udstyret er. Nogle maskiner har stadig producentens egen garanti; andre dækkes af leverandøren. Derfor lover vi ikke et fast antal måneder på forhånd.",
     warrantyBody2:
       "Til gengæld står garantiperioden skriftligt i tilbuddet, sammen med hvem I skal kontakte, hvis noget går i stykker. Får I et tilbud – fra os eller fra andre – hvor det ikke fremgår, så spørg, inden I skriver under.",
-    disclosureTitle: "Det får I oplyst, før I bestiller",
+    disclosureTitle: "Hvad får I oplyst, før I bestiller?",
     disclosureBody:
       "Vi sourcer per ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
     notIncludedTitle: "Det følger typisk ikke med som standard",
@@ -51,28 +53,28 @@ const copy = {
     title: "Condition, testing and what to ask about",
     description:
       "“Used” says nothing about quality on its own. Here is the grading the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",
-    gradingTitle: "The grading: A, B and C",
+    gradingTitle: "What do A, B and C mean?",
     gradingBody:
       "The grade describes how the machine looks — not how it works. All equipment has to pass the same function test, whatever the grade. Some suppliers call it gold, silver and bronze, but it means the same thing.",
     suits: "Suits:",
     warning:
       "There is no shared standard for what a letter means. Two suppliers can call the same machine grade A and grade B. So always ask for the condition described in words — not just a letter.",
-    testTitle: "What a function test has to cover",
+    testTitle: "What does a function test have to cover?",
     testBody:
       "This is where a cheap supplier and a good one differ. A machine that “boots up” has not been tested. This is what we require before equipment is passed on to you:",
     testNote:
       "The battery is the point that gets skipped most often. A battery at 60% of its original capacity works fine in a test and becomes a problem three months later. Ask for the number.",
-    dataTitle: "Data on used equipment",
+    dataTitle: "What about data on used equipment?",
     dataBody1:
       "Both when you buy and when you sell, data is the thing that can get expensive. A formatted disk is not an erased disk. Data has to be overwritten by a recognised method, or the disk destroyed physically, and documentation has to follow per device — not per delivery.",
     dataBody2:
       "If you are selling your old machines, ask for an erasure report with a serial number for each individual device. That is the document you need to be able to produce if anyone asks where the personal data from the old computers went.",
-    warrantyTitle: "Warranty",
+    warrantyTitle: "What warranty is included?",
     warrantyBody1:
       "The warranty on used business equipment depends on who stands behind the individual delivery and how old the equipment is. Some machines still carry the manufacturer's own warranty; others are covered by the supplier. That is why we do not promise a fixed number of months up front.",
     warrantyBody2:
       "What we do is put the warranty period in writing in the quote, along with who to contact if something breaks. If you get a quote — from us or anyone else — where that is missing, ask before you sign.",
-    disclosureTitle: "What you are told before you order",
+    disclosureTitle: "What are you told before you order?",
     disclosureBody:
       "We source per order, so we know the specific equipment before you say yes. Everything below is in the quote:",
     notIncludedTitle: "What is usually not included as standard",
@@ -82,7 +84,10 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -132,7 +137,7 @@ const grades = [
 
 const testPoints = [
   {
-    da: "Batteriets faktiske kapacitet målt op mod ny – ikke bare “virker”",
+    da: "Batteriets faktiske kapacitet målt op mod ny – ikke bare »virker«",
     en: "The battery's actual capacity measured against new — not just “it works”",
   },
   {
@@ -196,11 +201,14 @@ const disclosure = [
   },
 ];
 
-export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
+export default async function KvalitetPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema lang={lang} route="/kvalitet" name={c.title} description={c.description} />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -209,30 +217,29 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/kvalitet"
             crumb={lang === "da" ? "Stand og kvalitet" : "Condition and quality"}
+
+            updated="/kvalitet"
           />
 
           <div className="mt-12 max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.gradingTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.gradingBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.gradingBody}</p>
 
             <div className="mt-8 space-y-4">
               {grades.map((grade) => (
-                <div
-                  key={grade.grade.da}
-                  className="border border-white/10 bg-white/[0.04] p-5 sm:p-6"
-                >
+                <div key={grade.grade.da} className="plate p-5 sm:p-6">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <h3 className="text-lg font-bold text-paper">{grade.grade[lang]}</h3>
                     <span className="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-300">
                       {grade.label[lang]}
                     </span>
                   </div>
-                  <p className="mt-3 text-base leading-7 text-paper/65">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {grade.description[lang]}
                   </p>
-                  <p className="mt-3 text-sm leading-6 text-paper/55">
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/65">
                     <span className="font-semibold text-paper/80">{c.suits}</span>{" "}
                     {grade.suits[lang]}
                   </p>
@@ -240,9 +247,9 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
               ))}
             </div>
 
-            <div className="mt-6 flex gap-3 border-l-2 border-white/30 bg-white/5 p-5">
+            <div className="plate mt-6 flex gap-3 p-5">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
-              <p className="text-sm leading-6 text-paper/80">{c.warning}</p>
+              <p className="text-sm leading-[1.6] text-paper/80">{c.warning}</p>
             </div>
           </div>
         </Container>
@@ -254,18 +261,18 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.testTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.testBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.testBody}</p>
 
             <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {testPoints.map((point) => (
-                <li key={point.da} className="flex gap-3 text-sm leading-6 text-paper/65">
+                <li key={point.da} className="flex gap-3 text-sm leading-6 text-paper/75">
                   <Check className="mt-1 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={2.5} />
                   {point[lang]}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-8 max-w-2xl text-sm leading-6 text-paper/65">{c.testNote}</p>
+            <p className="mt-8 max-w-2xl text-sm leading-[1.6] text-paper/75">{c.testNote}</p>
           </div>
         </Container>
       </section>
@@ -276,14 +283,14 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.dataTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody1}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody2}</p>
 
             <h2 className="mt-12 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.warrantyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.warrantyBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.warrantyBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody1}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody2}</p>
           </div>
         </Container>
       </section>
@@ -294,23 +301,23 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.disclosureTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.disclosureBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.disclosureBody}</p>
 
             <ul className="mt-8 space-y-3">
               {disclosure.map((item) => (
-                <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                   <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
                   {item[lang]}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-10 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-10 plate p-6 sm:p-8">
               <h3 className="text-base font-semibold text-paper">{c.notIncludedTitle}</h3>
-              <p className="mt-2 text-base leading-7 text-paper/65">{c.notIncludedBody}</p>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
-                className="mt-5 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-5"
               >
                 {c.cta}
               </Link>
@@ -337,14 +344,16 @@ export default function KvalitetPage({ params }: { params: { lang: Lang } }) {
           {
             href: "/vejledninger/windows-11-paa-aeldre-maskine",
             label: {
-              da: "Kommer maskinen med over til Windows 11?",
-              en: "Will the machine make the jump to Windows 11?",
+              da: "Windows 11 på ældre maskiner",
+              en: "Windows 11 on older machines",
             },
           },
         ]}
       />
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["dkWarranty", "repairDirective"]} />
     </>
   );
 }

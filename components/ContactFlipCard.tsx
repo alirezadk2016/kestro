@@ -9,7 +9,7 @@ import type { Lang } from "@/lib/i18n";
 const copy = {
   da: {
     choose: "Vælg hvem I vil i kontakt med",
-    nordic: "Danmark & Norden",
+    nordic: "Norden",
     international: "International",
     callDirect: "Ring direkte til",
     writeDirect: "Skriv direkte til",
@@ -20,7 +20,7 @@ const copy = {
   },
   en: {
     choose: "Choose who you want to reach",
-    nordic: "Denmark & Nordics",
+    nordic: "Nordics",
     international: "International",
     callDirect: "Call",
     writeDirect: "Write directly to",
@@ -54,14 +54,14 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
       <div
         role="tablist"
         aria-label={c.choose}
-        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/65 sm:w-auto"
+        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/75 sm:w-auto"
       >
         <button
           type="button"
           role="tab"
           aria-selected={!showIntl}
           onClick={() => setShowIntl(false)}
-          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
+          className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             !showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
@@ -73,7 +73,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           role="tab"
           aria-selected={showIntl}
           onClick={() => setShowIntl(true)}
-          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
+          className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
@@ -122,18 +122,20 @@ function Face({
           <h2 className="text-base font-semibold">
             {member.phoneHref ? c.callDirect : c.writeDirect} {member.name}
           </h2>
-          <p className="text-sm text-ink-400">{member.role[lang]}</p>
+          <p className="text-sm text-ink-400 leading-[1.6]">{member.role[lang]}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-6 text-ink-300">{member.phoneHref ? c.busy : c.lands}</p>
+      <p className="mt-4 text-sm leading-[1.6] text-ink-300">
+        {member.phoneHref ? c.busy : c.lands}
+      </p>
 
       <div className="mt-auto pt-4">
         {(member.phoneHref || company.phoneHref) && (
           <a
             href={`tel:${member.phoneHref || company.phoneHref}`}
             tabIndex={hidden ? -1 : undefined}
-            className="mt-4 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-ink-900 transition hover:bg-paper-dim sm:w-auto"
+            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-4 w-full sm:w-auto"
           >
             <Phone className="h-5 w-5" strokeWidth={2} />
             {member.phoneDisplay || company.phoneDisplay}
@@ -141,7 +143,7 @@ function Face({
         )}
 
         {member.phoneHref && company.phoneDisplay && (
-          <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400">
+          <p className="mt-4 border-t border-white/10 pt-4 text-xs text-ink-400 leading-[1.45]">
             {c.mainNumber}: {company.phoneDisplay}
           </p>
         )}

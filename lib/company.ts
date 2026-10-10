@@ -7,7 +7,7 @@ import teamPhotos from "./team-photos.json";
  */
 export const company = {
   name: "Kestro",
-  email: "info@kestro.dk",
+  email: "kontakt@kestro.dk",
   /*
    * Empty until there is a number to publish. Nothing renders a phone that is
    * not here — the header's call button, the contact card, the footer's legal
@@ -50,6 +50,23 @@ export const company = {
   postcode: "" as string,
   /** When there is a place to meet. Empty means "by appointment" only. */
   openingHours: { da: "", en: "" } as Localized,
+  /*
+   * The profiles that are demonstrably Kestro's, and the reason they are here
+   * rather than hard-coded into the footer: they also go into the Organization
+   * schema as sameAs, which is how a search engine ties this site to those
+   * accounts as one entity rather than three unrelated pages. One list, read
+   * by both.
+   *
+   * Both are the canonical profile addresses, with no tracking parameters on
+   * them. LinkedIn hands out share links carrying a ?lipi=... session token;
+   * that token belongs to whoever copied the link, and publishing it would put
+   * one person's tracking id on every page of the site as well as making the
+   * sameAs value point at a URL that is not the profile's own.
+   */
+  social: [
+    { name: "Instagram", href: "https://www.instagram.com/kestro.dk/" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/kestro-dk" },
+  ],
 } as const;
 
 /** Whether there is enough to publish a legal-details block at all. */
@@ -155,6 +172,15 @@ export const team: TeamMember[] = people.map((person) => {
 });
 
 const byId = (id: string): TeamMember => team.find((member) => member.id === id) ?? team[0];
+
+/**
+ * A named person, by id.
+ *
+ * Exported so an article can carry an author id instead of a name typed into
+ * content: the byline, the photograph and the Person schema then all come from
+ * the one place the role is actually maintained.
+ */
+export const teamMember = byId;
 
 /**
  * Who a buyer is put in front of, by market.

@@ -36,7 +36,7 @@ export default function OpengraphImage() {
           maxWidth: 900,
         }}
       >
-        Renoveret IT-hardware til virksomheder
+        Refurbished erhvervscomputere til virksomheder
       </div>
 
       <div

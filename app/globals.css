@@ -12,13 +12,89 @@ body {
   background: var(--background);
 }
 
+/*
+ * The metric-matched stand-in for Plus Jakarta Sans, used until it arrives.
+ *
+ * The override values are next/font's own, computed for Plus Jakarta Sans
+ * against Arial's metrics. What is different here is the src: Next writes
+ * `local("Arial")` and nothing else, and Chromium matches local() on the exact
+ * family name rather than through fontconfig aliases — so on Android, and on
+ * most Linux, that face simply fails and the browser falls back to system-ui
+ * with no overrides at all. The swap then changes every line box on the page.
+ *
+ * The chain below is ordered by how closely each face matches Arial's metrics,
+ * which is what the overrides are tuned to: Arial itself, then the two
+ * Helvetica names macOS answers to, then Liberation Sans, which is
+ * metric-compatible with Arial by design and is what desktop Linux ships, and
+ * finally Roboto so Android has something rather than nothing. A src list is
+ * tried in order and the first face that loads wins, so a device only ever
+ * reaches the entries it actually needs.
+ */
+@font-face {
+  font-family: "Jakarta Fallback";
+  src:
+    local("Arial"), local("Helvetica Neue"), local("Helvetica"), local("Liberation Sans"),
+    local("Roboto");
+  ascent-override: 98.88%;
+  descent-override: 21.15%;
+  line-gap-override: 0%;
+  size-adjust: 104.98%;
+}
+
 @layer base {
+  /*
+   * Line breaks a person would choose.
+   *
+   * 117 headings had no text-balance and no paragraph had text-pretty, so a
+   * two-line heading broke wherever the measure ran out — often one word on
+   * the second line — and paragraphs ended on a single orphaned word. Set
+   * once here rather than as a class to remember on each element; the
+   * .text-balance utility still works and now simply agrees.
+   */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  /*
+   * Where the page stops when something is scrolled to.
+   *
+   * The header is sticky and 81px tall, and nothing was reserving room for it.
+   * So every scroll the browser performs on the site's behalf put its target
+   * under the bar: an in-page anchor, a Tab that moves focus off-screen, and —
+   * worst — the skip link.
+   *
+   * Measured on the front page at 1440px: press Tab, press Enter on "Gå til
+   * indhold", and the main content lands with 81 of its first pixels behind
+   * the header. The one control that exists so a keyboard user can get past
+   * the navigation drops them behind the navigation.
+   *
+   * scroll-padding-top fixes all three at once, because all three are the same
+   * mechanism. 5.5rem is the 81px bar plus a little air; on a phone the bar is
+   * shorter and the extra shows as whitespace above the target, which is the
+   * harmless direction to be wrong in.
+   *
+   * WCAG 2.2 AA 2.4.11 Focus Not Obscured, and the fix its own note names.
+   */
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
   /* Headings take the display face everywhere, so a page written months from
      now inherits the type system instead of re-stating it. */
   h1,
   h2,
   h3 {
-    font-family: var(--font-sans), system-ui, sans-serif;
+    font-family: var(--font-sans), "Jakarta Fallback", system-ui, sans-serif;
     letter-spacing: -0.025em;
   }
 }
@@ -34,34 +110,6 @@ body {
 }
 
 @layer components {
-  /*
-   * A section arriving.
-   *
-   * Only hidden once components/Reveal.tsx has stamped the root — otherwise a
-   * failed script would leave the page blank, and content that needs
-   * JavaScript to become visible is content that can vanish.
-   *
-   * The easing is a long tail rather than a symmetrical ease: it covers most
-   * of the distance early and settles slowly, which is what a camera move
-   * does and what a linear or ease-in-out transition never does.
-   */
-  @media (prefers-reduced-motion: no-preference) {
-    html[data-reveal-ready] [data-reveal] {
-      opacity: 0;
-      transform: translate3d(0, 22px, 0);
-      transition:
-        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
-    }
-
-    html[data-reveal-ready] [data-reveal].is-revealed {
-      opacity: 1;
-      transform: none;
-      will-change: auto;
-    }
-  }
-
   /*
    * Glass.
    *
@@ -130,18 +178,80 @@ body {
    * AA. The base is the page's own background colour, so at the top of a page
    * the header reads as part of the field rather than as a bar laid on it.
    */
+  /*
+   * The bar over the picture.
+   *
+   * It was a flat rgb(11 20 38 / 0.82). Over the hero photograph — whose top
+   * band is near-black — that fill is *lighter* than what it covers, so the
+   * bar drew itself as a pale slab with a hard edge across a dark ceiling.
+   * A darker tint and a gradient that thins downward let the ceiling and the
+   * window mullions carry on up behind it, which is what the artwork shows,
+   * while the blur keeps the links readable once the page scrolls and real
+   * content runs under it.
+   */
+  /*
+   * The bar ended at 0.58 opacity and white text read straight through it.
+   *
+   * Measured on a 390px viewport, scrolling the front page: "FORTÆL OS, HVAD I
+   * SKAL BRUGE" and "Få en pris" were both legible THROUGH the header, and so
+   * was every section heading as it passed under. Not a glass effect — a
+   * transparency bug that made the bar look broken on every scroll position on
+   * the page.
+   *
+   * The same bug was found and fixed for .glass-panel directly below this,
+   * with its own note about six links sitting on the hero photograph. The
+   * panel got an opaque ground; the bar it hangs off kept the gradient that
+   * caused it.
+   *
+   * Two tries at keeping it translucent, 0.58 to 0.86 and then to 0.95, and
+   * both still ghosted: at 0.95 a blue link heading was still faintly legible
+   * along the bottom edge, which is where the gradient is weakest and where
+   * every heading passes. Five percent of white on this navy is visible.
+   *
+   * So the bar is opaque, and the fall from top to bottom is in the colour
+   * rather than in the alpha. It still reads as a bar with light on it; it
+   * simply stops being a window.
+   *
+   * And when it stopped being a window, the blur behind it stopped doing
+   * anything — while still costing what a blur costs. backdrop-filter makes
+   * the compositor re-sample everything behind the element, every frame it
+   * moves, across the full width of the viewport; behind an opaque background
+   * not one of those pixels can be seen. The sticky header is the element most
+   * exposed to scrolling on the site, so it was paying that on every frame of
+   * every scroll, for nothing. Removed.
+   *
+   * Measured at 1440px with the CPU at 2x: 17 frames over 32ms and a p95 of
+   * 38.7ms before, against the numbers in the commit after. The filter was
+   * introduced when this bar was translucent and was left behind when it was
+   * not — the cost of a change that fixed one thing and did not look at what
+   * the fix made pointless.
+   */
   .glass-nav {
-    background-color: rgb(11 20 38 / 0.82);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    background-image: linear-gradient(180deg, rgb(8 13 27) 0%, rgb(4 8 18) 100%);
+    border-bottom: 1px solid rgb(255 255 255 / 0.06);
   }
 
-  @supports not (backdrop-filter: blur(1px)) {
-    .glass-nav {
-      background-color: rgb(11 20 38 / 0.97);
-    }
+  /*
+   * The floating panel the products menu opens into.
+   *
+   * It used to share .glass-nav, which is wrong now that .glass-nav is a
+   * gradient: that gradient is measured for an 81px bar, and stretched down a
+   * 478px panel it reached 58% opacity by the bottom — six of the twelve
+   * links were sitting on the hero photograph with almost nothing behind
+   * them. A panel that covers content is not the same object as a bar that
+   * sits on top of the page, and it wants a flat, near-opaque ground.
+   */
+  /* Same reasoning one step down: at 96% opaque, a blur of what remains is
+     four percent of a picture nobody can make out. It is cheaper and it looks
+     the same without it. */
+  .glass-panel {
+    background-color: rgb(7 12 25 / 0.96);
+    border: 1px solid rgb(255 255 255 / 0.08);
   }
+
+  /* The @supports fallback that used to sit here gave both of these a solid
+     ground for browsers without backdrop-filter. Neither uses one now, so both
+     already have the ground it was providing and the block was dead. */
 
   /*
    * A stage: a dark band that is lit rather than merely dark.
@@ -260,6 +370,49 @@ body {
   }
 
   /*
+   * The display scale.
+   *
+   * There were eight of these, all doing the same two jobs. A page title was
+   * 68px on the guides index, 56px on four other pages and 52px in a
+   * pull-quote, while the front page's own headline sits at 38 — so every
+   * interior page shouted louder than the hero, which is the measurable half
+   * of "the site looks zoomed in". The vw coefficients disagreed as badly:
+   * 6vw against 2.63vw for the same kind of heading, so the relationship
+   * between two headings changed at every window width, and there was no
+   * width at which the page was the one it was designed at.
+   *
+   * Four steps now, with coefficients in proportion, so the scale holds
+   * across the whole range instead of at one screen size:
+   *
+   *   t-display  34 → 52   the one big moment on a page
+   *   t-h1       30 → 44   a page title
+   *   t-h2       24 → 34   a section
+   *   t-h3       17 → 21   a block inside one
+   *
+   * They carry size and leading only. Weight, tracking and colour stay at the
+   * call site, because those do change with the surface.
+   */
+  .t-display {
+    font-size: clamp(2.125rem, 3.6vw, 3.25rem);
+    line-height: 1.05;
+  }
+
+  .t-h1 {
+    font-size: clamp(1.875rem, 3.05vw, 2.75rem);
+    line-height: 1.06;
+  }
+
+  .t-h2 {
+    font-size: clamp(1.5rem, 2.35vw, 2.125rem);
+    line-height: 1.12;
+  }
+
+  .t-h3 {
+    font-size: clamp(1.0625rem, 1.45vw, 1.3125rem);
+    line-height: 1.35;
+  }
+
+  /*
    * Two small-caps labels, not the five near-identical ones that had grown
    * across the pages. An eyebrow sits above a heading; a label names a value
    * in a data row. Both were 10–11 px, which is under-sized on a phone, so
@@ -272,9 +425,558 @@ body {
     @apply text-xs font-semibold uppercase tracking-[0.16em];
   }
 
+  /*
+   * 0.7rem is 11.2px, and on a phone that is below what anybody reads
+   * comfortably — measured across the site, seven paragraphs, four headings
+   * and three definition terms were being set at it. The letterspacing makes
+   * it worse: tracked-out small caps need more height, not less. It steps up
+   * to 12px on small screens and keeps the tighter size where the viewport is
+   * wide enough for the label to read as a label.
+   */
   .label {
     @apply font-medium uppercase tracking-[0.12em];
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+  }
+
+  @screen sm {
+    .label {
+      font-size: 0.7rem;
+    }
+  }
+
+  /*
+   * A tile with depth.
+   *
+   * The card grids were flat rectangles that did nothing when you pointed at
+   * them, which is also how they told you they were not clickable — and they
+   * were not, which was the bigger problem.
+   *
+   * The depth is real rather than drawn: the grid cell carries the
+   * perspective, the tile rotates about its own bottom edge, and the icon
+   * sits on its own plane 34px in front of the face, so it separates from the
+   * card the way an object separates from a wall. Nothing here follows the
+   * mouse — a tilt that tracks the cursor is a demo, and by the fourth card
+   * on a page it is noise.
+   */
+  .tilt {
+    perspective: 900px;
+  }
+
+  .tile {
+    transform-style: preserve-3d;
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-image 420ms ease;
+  }
+
+  .tilt:hover .tile,
+  .tile:focus-visible {
+    transform: translateY(-6px) rotateX(7deg) scale(1.012);
+    transform-origin: center bottom;
+  }
+
+  /* The icon, the heading and the prompt each sit at their own depth, so the
+     card opens up rather than simply growing. */
+  .tile-z {
+    transform: translateZ(0);
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 240ms ease;
+  }
+
+  .tilt:hover .tile-z-far,
+  .tile:focus-visible .tile-z-far {
+    transform: translateZ(14px);
+  }
+
+  .tilt:hover .tile-z-near,
+  .tile:focus-visible .tile-z-near {
+    transform: translateZ(34px);
+    box-shadow:
+      0 14px 22px -10px rgb(2 5 12 / 0.9),
+      inset 0 1px 0 0 rgb(255 247 233 / 0.22),
+      inset 0 0 0 1px rgb(96 128 255 / 0.32);
+  }
+
+  /* The line that says the card goes somewhere. It is not there at rest,
+     because at rest twelve of them would be twelve repetitions of the same
+     four words. */
+  .tile-prompt {
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 300ms ease,
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tilt:hover .tile-prompt,
+  .tile:focus-visible .tile-prompt {
+    opacity: 1;
+    transform: translateY(0) translateZ(20px);
+  }
+
+  /* A phone has no hover, so a prompt that waits for one never arrives and
+     the card keeps an empty line where it would be. On touch it is there
+     from the start: one column of cards, one prompt each, and the only sign
+     on a small screen that the whole card is a link. */
+  @media (hover: none) {
+    .tile-prompt {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* A specular sweep across the face, so the tile reads as a surface catching
+     a light rather than as a rectangle changing colour. */
+  .tile-sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      104deg,
+      transparent 34%,
+      rgb(255 250 238 / 0.09) 48%,
+      transparent 62%
+    );
+    transition: opacity 420ms ease;
+  }
+
+  .tilt:hover .tile-sheen::before,
+  .tile-sheen:focus-visible::before {
+    opacity: 1;
+  }
+
+  /*
+   * The forged tile: a panel with a machined edge rather than a rectangle with
+   * a hairline.
+   *
+   * .plate lights one lip and rings the shape, which is right for a panel that
+   * is mostly type. A card whose subject is an object wants an edge you could
+   * run a thumbnail along, and that is three things at once: a lit chamfer at
+   * the top, a dark undercut at the bottom, and a second inner pair a pixel in
+   * — the double line is what separates a machined edge from a drawn one, and
+   * it is the whole difference at 1x.
+   */
+  .forge {
+    /*
+     * A lit frame around a sunk panel, which is the move the whole thing turns
+     * on. A gradient BORDER — painted in border-box, with the padding-box fill
+     * over it — gives an edge that is bright where the light is and dark where
+     * it is not, all the way round, in one declaration. A single-value border
+     * cannot: an edge that is the same brightness facing the light and facing
+     * away from it happens in no photograph, and it is the exact tell that made
+     * the first version read as a rectangle with a hairline.
+     *
+     * Then the content area is pushed IN — a long soft inset shadow from the
+     * top — so the frame stands proud of what it holds. Frame against recess
+     * is the depth; the bevel only sells it.
+     */
+    border: 1px solid transparent;
+    background-image:
+      linear-gradient(177deg, rgb(255 255 255 / 0.055) 0%, rgb(255 255 255 / 0.012) 100%)
+        padding-box,
+      linear-gradient(
+          152deg,
+          rgb(255 247 233 / 0.34) 0%,
+          rgb(255 255 255 / 0.1) 26%,
+          rgb(255 255 255 / 0.03) 52%,
+          rgb(0 0 0 / 0.5) 100%
+        )
+        border-box;
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.1),
+      inset 0 10px 26px -16px rgb(0 0 0 / 0.95),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.5),
+      0 2px 4px -2px rgb(2 5 12 / 0.7),
+      0 28px 52px -28px rgb(2 5 12 / 0.92);
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-image 420ms ease;
+  }
+
+  .tilt:hover .forge,
+  .forge:focus-visible {
+    background-image:
+      linear-gradient(177deg, rgb(255 255 255 / 0.075) 0%, rgb(255 255 255 / 0.02) 100%) padding-box,
+      linear-gradient(
+          152deg,
+          rgb(255 247 233 / 0.46) 0%,
+          rgb(120 152 255 / 0.4) 30%,
+          rgb(255 255 255 / 0.05) 58%,
+          rgb(0 0 0 / 0.5) 100%
+        )
+        border-box;
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.14),
+      inset 0 10px 26px -16px rgb(0 0 0 / 0.9),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.5),
+      0 2px 4px -2px rgb(2 5 12 / 0.7),
+      0 34px 60px -30px rgb(2 5 12 / 0.95);
+  }
+
+  /*
+   * The face: the panel the frame holds.
+   *
+   * Shadows alone could not do this. A bevel drawn in inset shadow is a few
+   * pixels of gradient at the edge of one box, and next to a reference whose
+   * cards have a visible bezel around a darker inset it read as a rectangle
+   * with a nice border — which is what it was. A frame needs two surfaces at
+   * two depths, so there are two elements: .forge is the frame and this is the
+   * face, set in from it and lit the other way up, dark at the top lip and
+   * catching light along the bottom, the way anything sunk is.
+   */
+  .forge-face {
+    background-image: linear-gradient(
+      178deg,
+      rgb(2 5 12 / 0.55) 0%,
+      rgb(2 5 12 / 0.28) 34%,
+      rgb(255 255 255 / 0.018) 100%
+    );
+    box-shadow:
+      inset 0 2px 6px -2px rgb(0 0 0 / 0.85),
+      inset 0 0 0 1px rgb(0 0 0 / 0.4),
+      inset 0 -1px 0 0 rgb(255 247 233 / 0.09);
+    transition:
+      background-image 420ms ease,
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tilt:hover .forge-face {
+    box-shadow:
+      inset 0 2px 6px -2px rgb(0 0 0 / 0.8),
+      inset 0 0 0 1px rgb(96 128 255 / 0.22),
+      inset 0 -1px 0 0 rgb(255 247 233 / 0.12);
+  }
+
+  /*
+   * The edge light along the top, and the pool under the pointer.
+   *
+   * The reference for this runs a different neon down every card. One hue, at
+   * two strengths, does the same work here and does not turn a grid into a
+   * paint chart — the accent is already what this site uses to mean "this goes
+   * somewhere", and twelve of it in twelve colours would mean nothing.
+   *
+   * The pool tracks the pointer because that is what makes a flat panel read
+   * as a surface: a highlight that stays put is printed on, one that moves is
+   * reflected. --px/--py come from components/PointerLight.tsx, and both
+   * default to the top centre so the card is lit correctly before any script
+   * runs and on any device that never sends a pointer.
+   */
+  .forge-rim {
+    position: relative;
+  }
+
+  .forge-rim::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(
+          220px circle at var(--px, 50%) var(--py, 0%),
+          rgb(150 182 255 / 0.14),
+          transparent 68%
+        )
+        border-box,
+      linear-gradient(90deg, transparent 6%, rgb(96 128 255 / 0.5) 50%, transparent 94%) top / 100%
+        1px no-repeat;
+    opacity: 0.45;
+    transition: opacity 420ms ease;
+  }
+
+  .tilt:hover .forge-rim::before,
+  .forge-rim:focus-visible::before,
+  .forge-rim:focus-within::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .forge,
+    .forge-face,
+    .forge-rim::before {
+      transition-duration: 1ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile,
+    .tile-z,
+    .tile-prompt,
+    .tile-sheen::before {
+      transition-duration: 1ms;
+    }
+
+    .tilt:hover .tile,
+    .tile:focus-visible {
+      transform: none;
+    }
+
+    .tilt:hover .tile-z-far,
+    .tilt:hover .tile-z-near,
+    .tile:focus-visible .tile-z-far,
+    .tile:focus-visible .tile-z-near {
+      transform: none;
+    }
+
+    .tilt:hover .tile-prompt,
+    .tile:focus-visible .tile-prompt {
+      transform: none;
+    }
+  }
+
+  /*
+   * The panel edge.
+   *
+   * Every card and panel on the site was `border border-white/10` over a flat
+   * 4% white fill: one hairline of the same value on all four sides, over a
+   * surface with no falloff across it. That is a rectangle, not an object.
+   * Nothing in the room it sits in is lit that way — the hero's key light
+   * comes from the left and above, off warm concrete, which is why the card
+   * artwork is drawn with a lit top face and a shadow side.
+   *
+   * A panel gets the same treatment. Four things, in this order:
+   *
+   *   The surface falls off. A gradient from 6.5% to 2.2% white, so the top of
+   *   the panel is nearer the light than the bottom.
+   *
+   *   The top edge catches the light, and it catches it warm — rgb(255 247
+   *   233), the same cream as the lit edges in the artwork, not white.
+   *
+   *   The underside gets no light at all: a black inset line along the
+   *   bottom, which is what makes the top edge read as a raised lip rather
+   *   than as a stripe.
+   *
+   *   The panel sits on the page rather than being printed on it: a tight
+   *   contact shadow, then a wide ambient one at -20px spread so it stays
+   *   under the panel instead of haloing it.
+   *
+   * Replaces `border border-white/10 bg-white/[0.04]` — take both off when
+   * you add it, or the ring doubles and the falloff is buried.
+   */
+  /*
+   * The sheet: the panel on a light section.
+   *
+   * .plate is lit from inside for a navy ground and reads as nothing on the
+   * brand board's light neutral (#F3F4F6). Two sections on the front page sit
+   * on that light ground, so the page has a rhythm instead of eight bands of
+   * navy, and this is their panel: white paper with a hairline and a soft
+   * contact shadow, the same 12px radius as every plate and tile.
+   */
+  .sheet {
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow:
+      0 0 0 1px rgb(11 20 38 / 0.08),
+      0 1px 2px 0 rgb(11 20 38 / 0.06),
+      0 10px 24px -14px rgb(11 20 38 / 0.22);
+    transition: box-shadow 200ms ease;
+  }
+
+  .sheet:hover {
+    box-shadow:
+      0 0 0 1px rgb(30 64 255 / 0.22),
+      0 1px 2px 0 rgb(11 20 38 / 0.06),
+      0 12px 28px -14px rgb(11 20 38 / 0.28);
+  }
+
+  .plate {
+    /* 12px, the radius of every ForgedPanel and the mark tiles. The plate
+       was square while the cards around it were rounded, and next to each
+       other the square ones read as the older half of the site. */
+    border-radius: 0.75rem;
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.065) 0%,
+      rgb(255 255 255 / 0.036) 42%,
+      rgb(255 255 255 / 0.022) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.16),
+      inset 0 0 0 1px rgb(255 255 255 / 0.075),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.45),
+      0 1px 2px -1px rgb(2 5 12 / 0.6),
+      0 18px 34px -20px rgb(2 5 12 / 0.85);
+  }
+
+  /*
+   * The same edge at control size. A chip or a small button wants the lit lip
+   * and the ring, but not a panel's 34px ambient shadow — at that size it
+   * reads as a smudge under the element rather than as depth.
+   */
+  /*
+   * Every utility glyph at one weight.
+   *
+   * The arrows, chevrons, ticks and the phone came from lucide with five
+   * different strokeWidth props across the site — 1.5, 1.75, 1.9, 2, and the
+   * library default — so an arrow in one button was visibly heavier than the
+   * arrow in the next, and all of them heavier than the CraftMark set beside
+   * them. CSS outranks the presentation attribute lucide writes, so this
+   * settles it in one place, at the marks' own weight plus a quarter for the
+   * smaller sizes these are drawn at.
+   */
+  svg.lucide {
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /*
+   * The tile every mark sits in — one of them, everywhere.
+   *
+   * There were seven: plate-sm with a blue wash, a hairline square, a bare
+   * white/10 rounded square, a brand border, and no tile at all under the
+   * hero. Seven containers for one icon set is what makes a set look
+   * collected rather than drawn, however good the drawings are.
+   *
+   * This is the control plate with two things added: a key light from the top
+   * left in brand blue, which is where every mark's own gradient is lit from,
+   * so tile and mark agree about the light; and a soft brand glow under it,
+   * tucked to the tile's footprint, so it sits on the surface rather than
+   * being printed into it. The radius is the plate's own 12px.
+   */
+  .mark-tile {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    color: rgb(255 255 255 / 0.92);
+    background-image:
+      radial-gradient(120% 120% at 18% 0%, rgb(102 144 249 / 0.24) 0%, rgb(102 144 249 / 0) 58%),
+      linear-gradient(180deg, rgb(255 255 255 / 0.075) 0%, rgb(255 255 255 / 0.02) 100%);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.16),
+      inset 0 0 0 1px rgb(255 255 255 / 0.09),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.45),
+      0 10px 22px -12px rgb(30 64 255 / 0.55),
+      0 2px 4px -2px rgb(2 5 12 / 0.7);
+  }
+
+  .plate-sm {
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.07) 0%,
+      rgb(255 255 255 / 0.03) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.14),
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.4),
+      0 1px 2px -1px rgb(2 5 12 / 0.55);
+    transition:
+      box-shadow 200ms ease,
+      background-image 200ms ease;
+  }
+
+  .plate-sm:hover,
+  .plate-sm:focus-visible {
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.1) 0%,
+      rgb(255 255 255 / 0.045) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.22),
+      inset 0 0 0 1px rgb(96 128 255 / 0.38),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.4),
+      0 1px 3px -1px rgb(2 5 12 / 0.6);
+  }
+
+  /*
+   * A plate you can click. It lifts, the light on its top edge gets stronger
+   * because it has moved closer to it, and the hairline turns to brand blue
+   * with a glow that stays tucked under the panel.
+   *
+   * The lift is 2px. At 4 it reads as a tooltip detaching from the page; at 1
+   * nobody sees it. The shadow has to grow with the lift or the card rises
+   * without leaving anything behind, which is the single most common way this
+   * effect looks cheap.
+   */
+  .plate-lift {
+    transition:
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-image 300ms ease;
+  }
+
+  .plate-lift:hover,
+  .plate-lift:focus-visible,
+  .plate-lift:focus-within {
+    transform: translateY(-2px);
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.085) 0%,
+      rgb(255 255 255 / 0.05) 42%,
+      rgb(255 255 255 / 0.03) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.28),
+      inset 0 0 0 1px rgb(96 128 255 / 0.34),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.45),
+      0 2px 4px -2px rgb(2 5 12 / 0.65),
+      0 26px 46px -22px rgb(2 5 12 / 0.95);
+    /* No coloured halo: on a dark surface elevation reads from the lighter
+       face and the deeper shadow, and a blue glow around a lifted card is
+       the generated-UI tell, not depth. */
+  }
+
+  /*
+   * The edge, as an overlay.
+   *
+   * A panel whose content covers its background — a photograph laid in with
+   * `fill`, an image at `h-full w-full` — paints straight over an inset
+   * box-shadow, so the plate's ring and its top highlight vanish under the
+   * picture. These two put the same edge on a pseudo-element above the
+   * content instead. Use them together with .plate, which still supplies the
+   * shadow the panel casts on the page.
+   */
+  .plate-edge {
+    position: relative;
+  }
+
+  .plate-edge::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 247 233 / 0.18),
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      inset 0 -1px 0 0 rgb(0 0 0 / 0.45);
+  }
+
+  /*
+   * The well a picture sits in. The inverse of the plate: dark along the top
+   * where the frame overhangs it, and a warm lip along the bottom where the
+   * caption surface below catches the light. It is what stops an image from
+   * looking stuck onto the front of the card.
+   */
+  .plate-well {
+    position: relative;
+    box-shadow: 0 1px 0 0 rgb(255 247 233 / 0.1);
+  }
+
+  .plate-well::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow:
+      inset 0 1px 0 0 rgb(0 0 0 / 0.55),
+      inset 0 0 0 1px rgb(255 255 255 / 0.05);
   }
 }
 
@@ -364,6 +1066,225 @@ body {
   .rise,
   .settle,
   .swap-in {
+    animation: none;
+  }
+}
+
+/*
+ * The English-language offer, hidden until the pre-paint script says otherwise.
+ *
+ * Default hidden rather than default shown: if scripting is off the bar simply
+ * never appears, which is the same outcome as before and better than showing
+ * every Danish reader an English offer they did not need.
+ */
+.lang-hint {
+  display: none;
+}
+
+html[data-lang-hint="on"] .lang-hint {
+  display: block;
+}
+
+/*
+ * The component figure that opens off a line in the hero spec list.
+ *
+ * All of it is CSS: the row carries .spec-row, the figure is inside it, and
+ * :hover / :focus-within on the row is what opens it. No state, no listener,
+ * no hydration — which is why it can sit on the homepage at all.
+ *
+ * The tilt is a real perspective transform rather than a skew, so the board
+ * has a near edge and a far one and the browser composites it on the GPU. It
+ * starts further back and rotated a few degrees more, so opening reads as the
+ * part turning towards you rather than fading in.
+ *
+ * Two ways in, because a phone has no pointer. Above 1024px the figure opens
+ * beside the machine when the line is hovered or focused. Below that it opens
+ * as a popover over the panel while the line is held down — press and it is
+ * there, lift and the tap follows the link, which is what a tap always did.
+ * All of the positioning lives here rather than in utilities, because the
+ * open state animates `transform` and a translate utility on the same element
+ * would be fighting it.
+ */
+.spec-figure {
+  position: absolute;
+  left: 50%;
+  /* Above the line rather than over it: on a phone the thing opening it is a
+     finger, and a finger sitting in the middle of the drawing is most of the
+     drawing. */
+  bottom: calc(100% + 0.5rem);
+  z-index: 20;
+  width: min(94vw, 28rem);
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.65));
+  transition:
+    opacity 0.34s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Held down. The long-press callout is suppressed so the browser's own menu
+   does not land on top of the drawing the press just opened, and the tap
+   highlight with it, so the ring is the only thing that answers the finger. */
+@media (max-width: 1023px) {
+  .spec-row:active .spec-figure {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .spec-row:active .spec-ring {
+    opacity: 1;
+  }
+}
+
+.spec-row {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.spec-row a {
+  -webkit-touch-callout: none;
+}
+
+.spec-svg {
+  transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 22deg) scale(0.94);
+  transform-origin: 55% 55%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The part lifts further than its traces, which is what makes the drawing read
+   as layered rather than flat. */
+.spec-part {
+  transform: translate3d(0, 6px, 0);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.spec-trace {
+  stroke-dashoffset: 280;
+}
+
+/* The ring around the pointed-at line, and the lead running out of it to the
+   figure. Both are drawn at rest and revealed, so nothing is laid out twice
+   and the row cannot shift when it lights up. */
+.spec-ring,
+.spec-lead {
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.spec-row:hover .spec-ring,
+.spec-row:focus-within .spec-ring {
+  opacity: 1;
+}
+
+/* The footer line under the list, swapped by whichever row is pointed at.
+   :has() is what makes it possible without state: the panel matches on the
+   row inside it, and the matching line fades up in place. Where :has() is not
+   supported the resting line simply stays, which is the correct fallback. */
+.spec-stat {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.spec-stat-rest {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  /* Beside the machine instead of over the list, at the far end of the lead.
+     The width is what keeps it there: anchored to the right, every rem added
+     grows leftwards, and the gap between the headline column and the panel is
+     what it has to fit in. At 30rem it reached into the headline. */
+  .spec-figure {
+    left: auto;
+    right: 100%;
+    bottom: auto;
+    top: 50%;
+    margin-right: 1.5rem;
+    width: 22rem;
+    transform: translate(0, calc(-50% + 10px));
+  }
+
+  .spec-row:hover .spec-figure,
+  .spec-row:focus-within .spec-figure {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  .spec-row:hover .spec-lead,
+  .spec-row:focus-within .spec-lead {
+    opacity: 1;
+  }
+
+  .spec-panel:has(.spec-row:hover) .spec-stat-rest,
+  .spec-panel:has(.spec-row:focus-within) .spec-stat-rest {
+    opacity: 0;
+  }
+
+  .spec-panel:has([data-kind="ram"]:hover) [data-stat="ram"],
+  .spec-panel:has([data-kind="ram"]:focus-within) [data-stat="ram"],
+  .spec-panel:has([data-kind="ssd"]:hover) [data-stat="ssd"],
+  .spec-panel:has([data-kind="ssd"]:focus-within) [data-stat="ssd"],
+  .spec-panel:has([data-kind="keyboard"]:hover) [data-stat="keyboard"],
+  .spec-panel:has([data-kind="keyboard"]:focus-within) [data-stat="keyboard"],
+  .spec-panel:has([data-kind="battery"]:hover) [data-stat="battery"],
+  .spec-panel:has([data-kind="battery"]:focus-within) [data-stat="battery"],
+  .spec-panel:has([data-kind="tested"]:hover) [data-stat="tested"],
+  .spec-panel:has([data-kind="tested"]:focus-within) [data-stat="tested"],
+  .spec-panel:has([data-kind="warranty"]:hover) [data-stat="warranty"],
+  .spec-panel:has([data-kind="warranty"]:focus-within) [data-stat="warranty"] {
+    opacity: 1;
+  }
+
+  .spec-row:hover .spec-svg,
+  .spec-row:focus-within .spec-svg {
+    transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 13deg) scale(1);
+  }
+
+  .spec-row:hover .spec-part,
+  .spec-row:focus-within .spec-part {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  /* Signal running out along the traces. Decorative, and the first thing
+     removed when less motion is asked for. */
+  .spec-row:hover .spec-trace,
+  .spec-row:focus-within .spec-trace {
+    animation: spec-run 2.4s linear infinite;
+  }
+}
+
+/* The gap it has to fit in grows with the container, so the drawing may. */
+@media (min-width: 1280px) {
+  .spec-figure {
+    width: 25rem;
+  }
+}
+
+@keyframes spec-run {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spec-figure,
+  .spec-svg,
+  .spec-part,
+  .spec-ring,
+  .spec-lead,
+  .spec-stat {
+    transition: none;
+  }
+
+  .spec-svg {
+    transform: perspective(1400px) rotate3d(1, -2.2, 0.15, 13deg);
+  }
+
+  .spec-part {
+    transform: none;
+  }
+
+  .spec-row:hover .spec-trace,
+  .spec-row:focus-within .spec-trace {
     animation: none;
   }
 }

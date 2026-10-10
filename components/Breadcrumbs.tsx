@@ -31,7 +31,7 @@ export default function Breadcrumbs({
       <BreadcrumbSchema lang={lang} trail={trail} />
       <nav
         aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
-        className={`text-sm text-paper/55 ${className}`}
+        className={`text-sm text-paper/65 ${className}`}
       >
         <ol className="flex flex-wrap items-center gap-x-2">
           {crumbs.map((crumb, i) => {
@@ -45,7 +45,7 @@ export default function Breadcrumbs({
                 ) : (
                   <Link
                     href={localePath(crumb.href, lang)}
-                    className="inline-flex min-h-[32px] items-center transition hover:text-paper"
+                    className="inline-flex min-h-[44px] items-center transition hover:text-paper"
                   >
                     {crumb.name}
                   </Link>

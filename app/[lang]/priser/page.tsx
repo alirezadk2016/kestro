@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
+import FaqSchema from "@/components/FaqSchema";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
-import { localePath, metaFor, htmlLang, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 /*
  * What it costs, without a price list.
@@ -75,12 +77,12 @@ const copy = {
     title: "Hvad koster det?",
     description:
       "Det ærlige svar er, at det afhænger – og her står præcis hvad det afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
-    whyTitle: "Hvorfor der ikke er en prisliste",
+    whyTitle: "Hvorfor er der ikke en prisliste?",
     whyBody1:
       "Vi holder ikke lager. Der står ingen hylde med maskiner og mærkater på, og derfor findes der ikke en pris, vi kan skrive op på forhånd. Vi går ud i leverandørnetværket, når vi ved, hvad opgaven kræver – og prisen er den, vi kan skaffe det til, plus vores arbejde.",
     whyBody2:
-      "Vi kunne godt skrive “fra 1.995 kr.” og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
-    driversTitle: "Hvad der afgør jeres pris",
+      "Vi kunne godt skrive »fra 1.995 kr.« og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
+    driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
     quoteLead:
@@ -96,7 +98,7 @@ const copy = {
     freeTitle: "Koster et tilbud noget?",
     freeBody:
       "Nej. Der er ingen pris på at spørge, og ingen forpligtelse, når I har fået svaret. Passer der ikke noget til opgaven, siger vi det – det er en kortere samtale end at sælge jer noget, der ikke løser problemet.",
-    fastTitle: "Sådan får I et realistisk tal hurtigt",
+    fastTitle: "Hvordan får I et realistisk tal hurtigt?",
     fastLead: "Jo mere af det her I skriver med det samme, jo færre runder frem og tilbage:",
     fastPoints: [
       "Hvor mange maskiner, og om de skal være ens.",
@@ -119,12 +121,12 @@ const copy = {
     title: "What does it cost?",
     description:
       "The honest answer is that it depends — and this page says exactly what it depends on. No price list, but no surprises either: the price is in writing before you order.",
-    whyTitle: "Why there is no price list",
+    whyTitle: "Why is there no price list?",
     whyBody1:
       "We hold no stock. There is no shelf of machines with labels on them, so there is no price we can write up in advance. We go out into the supplier network once we know what the job needs — and the price is what we can source it for, plus our work.",
     whyBody2:
       "We could write “from DKK 1,995” and let you discover the rest along the way. We do not. A figure we cannot document for your actual order is not information, it is bait, and you find out when the quote arrives anyway.",
-    driversTitle: "What decides your price",
+    driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
     quoteLead:
@@ -140,7 +142,7 @@ const copy = {
     freeTitle: "Does a quote cost anything?",
     freeBody:
       "No. There is no charge for asking and no obligation once you have the answer. If nothing suits the job we will say so — that is a shorter conversation than selling you something that does not solve the problem.",
-    fastTitle: "How to get a realistic figure quickly",
+    fastTitle: "How do you get a realistic figure quickly?",
     fastLead: "The more of this you write straight away, the fewer rounds back and forth:",
     fastPoints: [
       "How many machines, and whether they need to be identical.",
@@ -158,7 +160,10 @@ const copy = {
   },
 };
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -167,42 +172,53 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function PricingPage({ params }: { params: { lang: Lang } }) {
+export default async function PricingPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
 
   /* The two questions a buyer types into a search box before they trust a
      supplier enough to write to them. Marked up so the answers can appear
      under the result rather than only on the page. */
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: htmlLang[lang],
-    mainEntity: [
-      { q: c.whyTitle, a: `${c.whyBody1} ${c.whyBody2}` },
-      { q: c.freeTitle, a: c.freeBody },
-    ].map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
 
   return (
     <>
-      <BreadcrumbSchema lang={lang} trail={[{ name: c.title, href: "/priser" }]} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      <PageSchema lang={lang} route="/priser" name={c.title} description={c.description} />
+
+      {/* The two questions this page answers in full. Built from the copy
+          object rather than the language-resolved `c`, so both languages come
+          from one place, the way FaqSchema expects. */}
+      <FaqSchema
+        lang={lang}
+        items={[
+          {
+            question: { da: copy.da.whyTitle, en: copy.en.whyTitle },
+            answer: {
+              da: `${copy.da.whyBody1} ${copy.da.whyBody2}`,
+              en: `${copy.en.whyBody1} ${copy.en.whyBody2}`,
+            },
+          },
+          {
+            question: { da: copy.da.freeTitle, en: copy.en.freeTitle },
+            answer: { da: copy.da.freeBody, en: copy.en.freeBody },
+          },
+        ]}
       />
 
-      <PageHeader
-        title={c.title}
-        description={c.description}
-        lang={lang}
-        href="/priser"
-        crumb={lang === "da" ? "Priser" : "Pricing"}
-      />
+      {/* In the shared Container like every other page's header. Without it
+          the breadcrumb and the h1 started at x=0 while the rest of the site
+          sat on the container inset. */}
+      <Container>
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/priser"
+          crumb={lang === "da" ? "Priser" : "Pricing"}
+
+          updated="/priser"
+        />
+      </Container>
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
@@ -210,40 +226,63 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody1}</p>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.whyBody2}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+              {c.whyBody1}
+            </p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+              {c.whyBody2}
+            </p>
 
             <div className="mt-12 border-t border-white/15 pt-8">
               <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                 {c.driversTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.driversLead}</p>
+              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+                {c.driversLead}
+              </p>
             </div>
           </div>
 
-          <ol className="mt-8 grid grid-cols-1 gap-x-12 border-t border-white/15 md:grid-cols-2">
+          {/*
+           * A spine below md, two columns from md.
+           *
+           * Six numbered rows separated by hairlines read as a table, and
+           * these are not rows — they are the six things that move a price,
+           * in order. One line down through all six with the numeral as the
+           * station says so. From md the grid splits in two and a spine
+           * through a two-column grid would be drawing a route that does not
+           * exist, so it stops there and the numerals go back to being
+           * numerals.
+           */}
+          <ol className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2 md:border-t md:border-white/15">
             {drivers.map((driver, i) => (
-              <li key={driver.heading.da} className="border-b border-white/10 py-6">
-                <div className="flex gap-5">
-                  <span className="pt-1 font-display text-sm font-semibold tabular-nums text-paper/55">
+              <li
+                key={driver.heading.da}
+                className="relative flex gap-5 pb-8 last:pb-0 md:border-b md:border-white/10 md:py-6 md:last:pb-6"
+              >
+                <div aria-hidden="true" className="relative w-10 flex-none">
+                  {i < drivers.length - 1 && (
+                    <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/45 via-paper/12 to-paper/5 md:hidden" />
+                  )}
+                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/65 md:shadow-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base font-bold tracking-tight text-paper">
-                      {driver.heading[lang]}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7 text-paper/65">{driver.body[lang]}</p>
-                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-base font-bold tracking-tight text-paper">
+                    {driver.heading[lang]}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.6] text-paper/75">{driver.body[lang]}</p>
                 </div>
               </li>
             ))}
           </ol>
 
-          <div className="mt-12 max-w-3xl border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-12 max-w-3xl p-6 sm:p-8">
             <h2 className="font-display text-lg font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.quoteLead}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
             <ul className="mt-5 space-y-3">
               {c.quotePoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-7 text-paper/80">
@@ -261,17 +300,21 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.freeTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.freeBody}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+              {c.freeBody}
+            </p>
           </div>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.fastTitle}
             </h2>
-            <p className="mt-4 text-base leading-7 sm:leading-8 text-paper/65">{c.fastLead}</p>
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+              {c.fastLead}
+            </p>
             <ul className="mt-5 space-y-2.5">
               {c.fastPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/65">
+                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
                   <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
                   {point}
                 </li>
@@ -286,7 +329,7 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-5 text-sm font-semibold text-paper/80 transition hover:border-white/25 hover:text-paper"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -299,6 +342,8 @@ export default function PricingPage({ params }: { params: { lang: Lang } }) {
       </section>
 
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["dkWarranty"]} />
     </>
   );
 }

@@ -5,6 +5,10 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { models, modelGroups } from "@/lib/models";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import SpecChips from "@/components/SpecChips";
 
 const copy = {
   da: {
@@ -12,14 +16,14 @@ const copy = {
     metaDescription:
       "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Ingen lager, ingen listepriser – vi sourcer per ordre.",
     title: "Modeller vi ofte skaffer",
-    description:
-      "En oversigt over de maskiner, vi kender godt og oftest bliver bedt om at finde. Brug den til at blive klogere på, hvad der findes – og til at pege på noget konkret, når I skriver til os.",
-    noShopTitle: "Det her er ikke en webshop",
+    /* Answer first, with the counts the page actually shows. */
+    description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
+    noShopTitle: "Er det her en webshop?",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
       "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
-    qualityLink: "Sådan vurderer vi stand og kvalitet",
+    qualityLink: "Sådan vurderer vi stand",
     seeSpecs: "Se specifikationer",
     priceLabel: "Få et tilbud",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -29,21 +33,23 @@ const copy = {
     metaDescription:
       "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
     title: "Models we often source",
-    description:
-      "An overview of the machines we know well and are most often asked to find. Use it to get a feel for what exists — and to point at something concrete when you write to us.",
-    noShopTitle: "This is not a web shop",
+    description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
+    noShopTitle: "Is this a web shop?",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
       "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
-    qualityLink: "How we assess condition and quality",
+    qualityLink: "How we assess condition",
     seeSpecs: "See specifications",
     priceLabel: "Get a quote",
     priceNote: "The price depends on configuration, condition and quantity.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -52,11 +58,20 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function ModellerPage({ params }: { params: { lang: Lang } }) {
+export default async function ModellerPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/modeller"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -65,12 +80,14 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/modeller"
             crumb={lang === "da" ? "Modeller" : "Models"}
+
+            updated="/modeller"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noShopBody2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noShopBody1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noShopBody2}</p>
             <Link
               href={localePath("/kvalitet", lang)}
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
@@ -89,27 +106,31 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
                 <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 max-w-3xl text-base leading-7 text-paper/65">
+                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
                   {group.description[lang]}
                 </p>
-                <p className="mt-1 max-w-3xl text-sm leading-6 text-paper/55">{c.priceNote}</p>
+                <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
                     <li key={model.slug}>
                       <Link
                         href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
+                        className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
                       >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                           {model.brand} · {model.format[lang]}
                         </span>
                         <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
+                        <p className="mt-2 text-sm leading-[1.6] text-paper/75">
                           {model.tagline[lang]}
                         </p>
+                        <SpecChips model={model} lang={lang} />
+                        {/* Pushes the footer row down so every card in a row ends
+                            level, whether it got three chips, two or none. */}
+                        <span className="flex-1" />
                         <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">
                           <span className="text-sm font-semibold text-paper">{c.priceLabel}</span>
                           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
@@ -127,7 +148,37 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om modellerne", en: "Questions about the models" }}
+        items={[
+          {
+            question: {
+              da: "Kan I skaffe en model, der ikke står på listen?",
+              en: "Can you source a model that is not on the list?",
+            },
+            answer: { da: copy.da.noShopBody2, en: copy.en.noShopBody2 },
+          },
+          {
+            question: { da: "Har I modellerne på lager?", en: "Do you have the models in stock?" },
+            answer: { da: copy.da.noShopBody1, en: copy.en.noShopBody1 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
+              en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+            },
+          },
+        ]}
+      />
+
       <CtaSection lang={lang} />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
     </>
   );
 }

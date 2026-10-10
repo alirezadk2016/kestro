@@ -9,8 +9,15 @@ import { NextResponse } from "next/server";
  * produced a preview deployment nobody was looking at.
  *
  * Vercel injects the commit and branch of the running deployment into the
- * environment, so one request answers it exactly. No secrets: a commit SHA and
- * a branch name are already public in the repository.
+ * environment, so one request answers it exactly.
+ *
+ * The commit MESSAGE used to be in here too, on the reasoning that it is
+ * "already public in the repository". It is not: this repository is private,
+ * so the message was readable by anyone who called this address and by nobody
+ * else — and a commit message is where the next thing being built, the name of
+ * a service being integrated, or the bug just fixed tends to be written down.
+ * The SHA answers "is the fix deployed?" on its own; the message only ever
+ * answered "what else are they working on".
  */
 export const dynamic = "force-dynamic";
 
@@ -19,7 +26,6 @@ export function GET() {
     {
       commit: process.env.VERCEL_GIT_COMMIT_SHA ?? "unknown",
       branch: process.env.VERCEL_GIT_COMMIT_REF ?? "unknown",
-      message: process.env.VERCEL_GIT_COMMIT_MESSAGE ?? "unknown",
       environment: process.env.VERCEL_ENV ?? "local",
       builtAt: process.env.VERCEL_DEPLOYMENT_ID ? undefined : "local build",
     },

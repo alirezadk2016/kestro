@@ -4,20 +4,43 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
+import PageViewTracker from "@/components/PageViewTracker";
 import Analytics from "@/components/Analytics";
+/* Aliased: the project already has a component called Analytics, and it is
+   the Google one. Two different collectors with one name in one file is a
+   mistake waiting to be made. */
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ConsentBanner from "@/components/ConsentBanner";
-import LanguageHint from "@/components/LanguageHint";
+import { CraftMarkDefs } from "@/components/CraftMark";
+import LanguageHint, { languageHintScript } from "@/components/LanguageHint";
 import { company } from "@/lib/company";
 import { langs, htmlLang, isLang, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
-/* One family for the whole site. The wordmark is set in it too, so a heading
-   next to the logo is the same letterforms rather than a near-miss. */
+/*
+ * One family for the whole site. The wordmark is set in it too, so a heading
+ * next to the logo is the same letterforms rather than a near-miss.
+ *
+ * adjustFontFallback is off on purpose, and the fallback face is written by
+ * hand in globals.css instead. Next's own version is `src: local("Arial")`,
+ * and Chromium resolves local() by exact family name rather than through
+ * fontconfig aliases — so on Android and most Linux, where nothing is
+ * literally called Arial, that face never loads. Text then renders in
+ * system-ui with none of the metric overrides, and when Plus Jakarta Sans
+ * finally swaps in, every line box changes height at once.
+ *
+ * Measured on a 390px viewport at Slow 4G and 4x CPU: CLS 0.259 on every page
+ * for a browser whose language is not Scandinavian, which is where the
+ * language bar at the top of the document turns a 16px height change into a
+ * shift of the whole page. Google's "poor" band starts at 0.25. With a
+ * fallback face that resolves, the same measurement is 0.000.
+ */
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+  adjustFontFallback: false,
 });
 
 export function generateStaticParams() {
@@ -25,17 +48,36 @@ export function generateStaticParams() {
 }
 
 /*
- * Only "da" and "en" are languages.
+ * Only "da" and "en" are languages, and the router is told so.
  *
- * Without this, anything with a dot in it that middleware leaves alone —
- * /index.html, /wp-login.php, /style.css, and every path a scanner tries all
- * night — matched this segment with lang="index.html". The layout calls
- * notFound() for that, but the page beside it renders in parallel and reaches
- * copy[lang] first, throws, and the request comes back 500 instead of 404.
+ * Route segment config applies to the whole subtree, so this one line also
+ * refuses an unknown slug under /produkter, /ydelser and /vejledninger. That
+ * is deliberate, and it is what makes a wrong URL render at all.
  *
- * Google treats a 5xx as "the host is unwell" and slows the crawl of the whole
- * site; a 404 costs nothing. Rejecting the param at the routing layer fixes it
- * for every page at once rather than one guard per file.
+ * Next answers an unmatched param by serving the prerendered /_not-found
+ * document — app/not-found.tsx, complete in the first byte. The alternative is
+ * to accept the param, reach a page, and let that page call notFound(); in
+ * Next 15.5.25 and 15.5.26 that path never emits the boundary as HTML.
+ * Measured on a three-file app built from nothing but a root layout, a
+ * not-found file and a page whose whole body is notFound():
+ *
+ *   <div hidden><!--$?--><template id="B:0"></template></div>
+ *   <div hidden id="S:0"></div>
+ *
+ * An opened Suspense boundary and an empty completion for it. The marker text
+ * is in the streaming payload and nowhere in the document, so the page is
+ * correct once React boots and blank until then. Reproduced outside this
+ * repository, so it is the framework's behaviour and not ours to fix here —
+ * but it is ours to route around, and refusing the param one layer earlier
+ * does exactly that.
+ *
+ * It also fixes the 500 that the accept-everything version caused: a request
+ * for /index.html reached this segment with lang="index.html", and although
+ * this layout calls notFound() for it, the page beside it renders in parallel,
+ * reaches copy[lang] first and throws. Google reads a 5xx as "the host is
+ * unwell" and slows the crawl of the whole site.
+ *
+ * The isLang guard below stays as the second line of defence.
  */
 export const dynamicParams = false;
 
@@ -52,34 +94,97 @@ const meta = {
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 
-export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
+/*
+ * The Search Console and Bing ownership tags, if there are any.
+ *
+ * Without a verified property nobody can see a single search impression: the
+ * site can rank and be clicked and the only record of it is in Google's, not
+ * ours. Verification is one meta tag, but the token is issued per property and
+ * is not something that can be written here in advance — so it is read from
+ * the environment and the tag simply does not render until it is set.
+ *
+ * That means verifying is a variable in Vercel and a redeploy, with no code
+ * change and no commit. DNS verification stays the better option where the
+ * domain's records are reachable; this is the fallback that always works.
+ *
+ * Not a secret: the token is a public claim of ownership, visible in the page
+ * source of every verified site on the web. It is an environment variable
+ * because it differs per deployment, not because it needs hiding.
+ */
+const verification = {
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : {}),
+  ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+    ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+    : {}),
+};
+
+export async function generateMetadata(props: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const lang: Lang = isLang(params.lang) ? params.lang : "da";
 
   return {
     metadataBase: new URL(SITE_ORIGIN),
     title: meta[lang].title,
     description: meta[lang].description,
+    ...(Object.keys(verification).length > 0 ? { verification } : {}),
     ...metaFor("/", lang),
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  /* A promise since Next 15: the segment is not read until it is awaited, so a
+     layout can start rendering before the request has been parsed. */
+  params: Promise<{ lang: string }>;
 }>) {
-  if (!isLang(params.lang)) notFound();
-  const lang: Lang = params.lang;
+  const { lang: segment } = await params;
 
+  if (!isLang(segment)) notFound();
+  const lang: Lang = segment;
+
+  /*
+   * Organization until there is a street address, LocalBusiness once there is.
+   *
+   * LocalBusiness is the type Google reads for the map pack, and for a company
+   * that sources and prepares machines in one city that listing is worth more
+   * than most links pointing at the site. But the type is a claim: it says
+   * this is a business a customer can come to, and asserting it while
+   * company.street is empty would be claiming a place that the markup cannot
+   * name. So the type follows the data rather than leading it — fill in
+   * street and postcode in lib/company.ts and the schema upgrades itself,
+   * along with the PostalAddress, telephone, taxID and DK-prefixed vatID that
+   * are already wired to those fields.
+   */
   const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": company.street ? "LocalBusiness" : "Organization",
     "@id": `${SITE_ORIGIN}/#organization`,
     name: company.name,
     url: SITE_ORIGIN,
     description: meta[lang].description,
+    /* The mark at 512×512, from app/logo/route.tsx. Google reads `logo` for
+       the knowledge panel and states a 112px minimum, so neither the 32px
+       favicon nor the 1200×630 social card could stand in for it — one is too
+       small and the other is not a logo. Written as an ImageObject with its
+       dimensions so the size does not have to be fetched to be known. */
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_ORIGIN}/logo`,
+      width: 512,
+      height: 512,
+      caption: company.name,
+    },
+    /* The same file again as the organisation's general image. Distinct
+       property, same asset: `logo` is the mark, `image` is what may be shown
+       beside the entity. */
+    image: `${SITE_ORIGIN}/logo`,
     email: company.email,
     ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
     /* Street and CVR are added to the schema the moment they exist in
@@ -94,6 +199,10 @@ export default function RootLayout({
     },
     ...(company.cvr ? { vatID: `DK${company.cvr.replace(/\D/g, "")}`, taxID: company.cvr } : {}),
     areaServed: ["DK", "NO"],
+    /* The profiles that are this same organisation elsewhere. sameAs is how a
+       search engine resolves three separate pages to one entity instead of
+       guessing, and it reads from the same list the footer links from. */
+    sameAs: company.social.map((profile) => profile.href),
     contactPoint: {
       "@type": "ContactPoint",
       ...(company.phoneDisplay ? { telephone: company.phoneDisplay } : {}),
@@ -127,6 +236,8 @@ export default function RootLayout({
   return (
     <html lang={htmlLang[lang]}>
       <body className={`${jakarta.variable} bg-brand-950 font-sans text-paper antialiased`}>
+        {/* The gradients every mark fills from, once per document. */}
+        <CraftMarkDefs />
         <script
           type="application/ld+json"
           // Escape the angle bracket so a value can never close the script
@@ -142,15 +253,70 @@ export default function RootLayout({
             __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
-        {lang === "da" && <LanguageHint />}
+        {lang === "da" && (
+          <>
+            {/* Before the bar below is parsed, so the first paint is already
+                right and nothing shifts once React boots. */}
+            <script dangerouslySetInnerHTML={{ __html: languageHintScript }} />
+            <LanguageHint />
+          </>
+        )}
         <Header lang={lang} />
         <main id="indhold" tabIndex={-1} className="focus:outline-none">
           {children}
         </main>
         <Footer lang={lang} />
-        <Reveal />
+        {/* Our own count, so the numbers also exist in our own panel and
+            survive a change of host or plan. Sends a path, nothing else. */}
+        <PageViewTracker />
         <ConsentBanner lang={lang} />
         <Analytics />
+        {/*
+         * Vercel's own two, beside Google's.
+         *
+         * The dashboard read zero visitors for the life of the site, and it
+         * was right to: switching Web Analytics on in Vercel only opens the
+         * endpoint. Nothing reports to it until the page ships the client that
+         * pings it, and the project had never installed one. Zero meant
+         * "nothing was ever sent", not "nobody came".
+         *
+         * These are deliberately not behind the consent banner, and Google's
+         * tag deliberately still is. The difference is what each one does:
+         * gtag sets identifiers and belongs to an advertising business, so it
+         * is asked for. Vercel's collector sets no cookie, writes nothing to
+         * the browser, and builds no cross-site profile — it counts a page
+         * view and derives a country. That is the same footing as the server
+         * log every host already keeps.
+         *
+         * It also fixes the hole that made the numbers useless: the tag only
+         * ever counted visitors who pressed "Accepter statistik". Everyone who
+         * declined or ignored the banner was invisible, and there is no way to
+         * know how large that group is from inside it. This one counts
+         * everybody, which is what makes a trend worth reading.
+         *
+         * Speed Insights is the one that matters for search: every Core Web
+         * Vital measured so far has been a lab number from a throttled
+         * headless browser here. This is field data from real devices, which
+         * is the kind Google actually ranks on.
+         *
+         * Both are declared in the privacy policy. If this should sit behind
+         * the banner after all, it is one condition here and nothing else.
+         *
+         * Only on Vercel, and that is not a detail. Both clients load from
+         * /_vercel/…, which Vercel's edge serves and Next does not — so
+         * everywhere else the browser gets a 404, refuses the HTML as a
+         * script, and logs two errors on every page. The verify suite checks
+         * the console on every route and caught exactly that. Teaching the
+         * check to ignore it would have blunted a guard that has already
+         * caught a real bug in this project; mounting them only where they
+         * resolve costs nothing and leaves the console clean everywhere.
+         */}
+        {process.env.VERCEL && (
+          <>
+            <VercelAnalytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );

@@ -1,0 +1,281 @@
+import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowRight, Check } from "lucide-react";
+import Container from "@/components/Container";
+import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
+import CtaSection from "@/components/CtaSection";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import { repairFaqs, repairFaqTitle, repairSources } from "@/lib/repair-answers";
+import ServiceTile from "@/components/ServiceTile";
+import FactNote from "@/components/FactNote";
+import { repairs, getRepair } from "@/lib/repairs";
+import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+
+/*
+ * No dynamicParams override here, and that is the point.
+ *
+ * This segment used to set it to true so that an unknown slug reached the page
+ * and the notFound() below could answer with the site's own 404 instead of
+ * Next's built-in one. The premise was right and the mechanism does not work:
+ * in Next 15.5.25 and 15.5.26 a notFound() thrown while rendering emits the boundary into
+ * the streaming payload and never into the HTML, so the reply was a blank
+ * document with a 404 on it. See the note in app/[lang]/layout.tsx for the
+ * measurement and the three-file reproduction.
+ *
+ * Inheriting `dynamicParams = false` from that layout instead means an unknown
+ * slug is refused by the router, which serves the prerendered app/not-found.tsx
+ * — the same panel, complete in the first byte. generateStaticParams below
+ * enumerates every real slug, so nothing that exists is refused.
+ *
+ * The notFound() calls in this file stay as the guard for a slug that is
+ * enumerated but whose data has gone missing.
+ */
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return langs.flatMap((lang) => repairs.map((r) => ({ lang, slug: r.slug })));
+}
+
+const copy = {
+  da: {
+    breadcrumb: "Reparation",
+    does: "Hvad gør vi?",
+    needs: "Hvad skal vi bruge fra jer?",
+    bands: "Hvor lav må batteriprocenten være?",
+    howTo: "Hvordan tjekker jeg selv mit batteri?",
+    more: "Andre reparationer",
+    read: "Læs mere",
+    back: "Alle reparationer",
+    updated: "Opdateret",
+  },
+  en: {
+    breadcrumb: "Repairs",
+    does: "What do we do?",
+    needs: "What do we need from you?",
+    bands: "How low can the battery percentage go?",
+    howTo: "How do I check my battery myself?",
+    more: "Other repairs",
+    read: "Read more",
+    back: "All repairs",
+    updated: "Updated",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+type Params = { params: Promise<{ lang: Lang; slug: string }> };
+
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
+  const repair = getRepair(params.slug);
+  if (!repair) return {};
+  return {
+    title: repair.metaTitle[params.lang],
+    description: repair.metaDescription[params.lang],
+    ...metaFor(`/reparation/${repair.slug}`, params.lang),
+  };
+}
+
+export default async function RepairPage(props: Params) {
+  const params = await props.params;
+  const { lang, slug } = params;
+  const repair = getRepair(slug);
+  if (!repair) notFound();
+  const c = copy[lang];
+  const others = repairs.filter((r) => r.slug !== slug).slice(0, 4);
+  const sources = repairSources(repair);
+  const updated = pageUpdated("/reparation/[slug]");
+
+  const trail: Crumb[] = [
+    { name: c.breadcrumb, href: "/reparation" },
+    { name: repair.name[lang], href: `/reparation/${slug}` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbSchema lang={lang} trail={trail} />
+      <PageSchema
+        lang={lang}
+        route="/reparation/[slug]"
+        name={repair.name[lang]}
+        description={repair.metaDescription[lang]}
+        sources={sources}
+      />
+
+      <section className="py-10 sm:py-20">
+        <Container>
+          <nav className="label text-paper/65">
+            <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/70">
+              {c.breadcrumb}
+            </Link>
+          </nav>
+
+          <div className="mt-6 flex items-start gap-5">
+            <MarkTile name={repair.mark} size="lg" />
+            <div className="min-w-0">
+              <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
+                {repair.name[lang]}
+              </h1>
+            </div>
+          </div>
+
+          {/* The answer first, then the context.
+           *
+           * Both paragraphs were already written; they were in the wrong
+           * order. A reader skimming and a model quoting both take the first
+           * one, and the first one used to be the throat-clearing. */}
+          <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
+            {repair.answer[lang]}
+          </p>
+          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
+            {repair.intro[lang]}
+          </p>
+          <p className="label mt-6 text-paper/65">
+            {c.updated}{" "}
+            <time dateTime={updated} className="tabular-nums text-paper/80">
+              {formatDate(updated, lang)}
+            </time>
+          </p>
+        </Container>
+      </section>
+
+      {/* The battery page is the one with a number on it, so it is the one
+          that owes the reader a way to read that number and a way to find it
+          without asking anybody. */}
+      {repair.bands && (
+        <section className="bg-ink-900 py-10 sm:py-20">
+          <Container>
+            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.bands}</h2>
+            <ul className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+              {repair.bands.map((band) => (
+                <li key={band.range} className="plate flex items-baseline gap-4 p-4 sm:p-5">
+                  {/* No wrapping: "90–100%" broke after the dash and read as
+                      two numbers stacked. A minimum width rather than a fixed
+                      one: "Under 70%" is wider than 5.5rem at text-xl, and a
+                      fixed box let it run into the sentence beside it —
+                      "Under 70%Skift det." on the live page. */}
+                  <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
+                    {band.range}
+                  </span>
+                  <span className="text-sm leading-[1.6] text-paper/70">{band.reading[lang]}</span>
+                </li>
+              ))}
+            </ul>
+            {repair.bandsNote && (
+              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">
+                {repair.bandsNote[lang]}
+              </p>
+            )}
+          </Container>
+        </section>
+      )}
+
+      {repair.howTo && (
+        <section className="py-10 sm:py-20">
+          <Container>
+            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.howTo}</h2>
+            <div className="mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 sm:gap-6">
+              {repair.howTo.map((block) => (
+                <div key={block.heading.da} className="plate p-5 sm:p-6">
+                  <h3 className="font-display text-lg font-bold tracking-tight text-paper">
+                    {block.heading[lang]}
+                  </h3>
+                  <ol className="mt-4 space-y-3">
+                    {block.steps.map((step, i) => (
+                      <li key={step.da} className="flex gap-3 text-sm leading-[1.6] text-paper/70">
+                        <span className="font-display text-xs font-bold tabular-nums text-brand-300">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="min-w-0">{step[lang]}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      <section className="border-t border-white/10 py-10 sm:py-20">
+        <Container>
+          <div className="grid max-w-4xl gap-10 sm:grid-cols-2 sm:gap-14">
+            {(
+              [
+                [c.does, repair.does],
+                [c.needs, repair.needs],
+              ] as const
+            ).map(([heading, items]) => (
+              <div key={heading}>
+                <h2 className="t-h3 font-display font-bold tracking-tight text-paper">{heading}</h2>
+                <ul className="mt-5 space-y-3">
+                  {items.map((item) => (
+                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/70">
+                      <Check
+                        className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-400"
+                        strokeWidth={2}
+                      />
+                      <span className="min-w-0">{item[lang]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-ink-900 py-10 sm:py-20">
+        <Container>
+          {/* Wraps as a whole rather than breaking the link: at 375px the
+              heading and "Alle reparationer" did not fit one row, and the
+              link went to two lines beside it. */}
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.more}</h2>
+            <Link
+              href={localePath("/reparation", lang)}
+              className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"
+            >
+              {c.back}
+              <ArrowRight
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                strokeWidth={2}
+              />
+            </Link>
+          </div>
+          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            {others.map((other) => (
+              <li key={other.slug}>
+                <ServiceTile
+                  href={localePath(`/reparation/${other.slug}`, lang)}
+                  mark={other.mark}
+                  title={other.name[lang]}
+                  summary={other.summary[lang]}
+                  prompt={c.read}
+                />
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* FactNote rather than SourceList: on a short page the same two
+          sources listed once and quoted once is the same citation printed
+          twice. This one states the fact in the source's own words, names the
+          publisher and links the primary document — so a reader can check it
+          and a model summarising the page has something quotable instead of
+          an assertion to repeat. */}
+      <Faq
+        lang={lang}
+        items={repairFaqs(repair)}
+        title={{ da: repairFaqTitle(repair, "da"), en: repairFaqTitle(repair, "en") }}
+      />
+
+      {sources.length > 0 && <FactNote lang={lang} ids={sources} />}
+
+      <CtaSection lang={lang} />
+    </>
+  );
+}
