@@ -454,7 +454,7 @@ function LanguageSwitcher({
           className={`inline-flex min-h-[44px] items-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
             code === lang
               ? "border-b-2 border-paper pt-0.5 text-paper"
-              : "border-b-2 border-transparent pt-0.5 text-paper/55 hover:text-paper"
+              : "border-b-2 border-transparent pt-0.5 text-paper/65 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>

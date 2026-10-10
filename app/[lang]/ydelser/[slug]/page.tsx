@@ -120,7 +120,7 @@ export default async function ServicePage(props: {
       <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <nav aria-label={c.breadcrumb} className="text-sm text-paper/55">
+            <nav aria-label={c.breadcrumb} className="text-sm text-paper/65">
               <Link
                 href={localePath("/ydelser", lang)}
                 className="inline-flex min-h-[44px] items-center transition hover:text-paper"
@@ -137,7 +137,7 @@ export default async function ServicePage(props: {
             <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
               {(answers?.lead ?? service.summary)[lang]}
             </p>
-            <p className="label mt-6 text-paper/55">
+            <p className="label mt-6 text-paper/65">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums text-paper/80">
                 {formatDate(updated, lang)}
@@ -163,7 +163,7 @@ export default async function ServicePage(props: {
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
                   >
                     {paragraph[lang]}
                   </p>
@@ -172,7 +172,7 @@ export default async function ServicePage(props: {
                 {section.list && (
                   <ul className="mt-6 space-y-3.5">
                     {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                         <Check
                           className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                           strokeWidth={2.5}
@@ -220,7 +220,7 @@ export default async function ServicePage(props: {
                       <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {other.name[lang]}
                       </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-paper/65">
+                      <span className="mt-1.5 block text-sm leading-6 text-paper/75">
                         {other.summary[lang]}
                       </span>
                     </Link>

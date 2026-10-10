@@ -92,7 +92,7 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.outsideTitle}
             </h2>
-            <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.outsideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.outsideBody}</p>
           </div>
 
           <div className="mt-12">
@@ -107,14 +107,14 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.insideTitle}
             </h2>
-            <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.insideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.insideBody}</p>
           </div>
 
           <div className="mt-12">
             <MachineInside lang={lang} />
           </div>
 
-          <p className="mt-12 max-w-2xl text-sm leading-[1.6] text-paper/55">
+          <p className="mt-12 max-w-2xl text-sm leading-[1.6] text-paper/65">
             {c.guidesPre}{" "}
             <Link
               href={localePath("/vejledninger", lang)}

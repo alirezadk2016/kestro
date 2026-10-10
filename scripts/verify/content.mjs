@@ -218,7 +218,18 @@ for (const da of fromConfig.keys()) {
  * The admin screens are excluded: they are an internal surface with their own
  * grounds and are not part of the public audit.
  */
-const FAINT = /\btext-paper\/(?:[123]0|[12]5|35|40|45)\b/;
+/*
+ * The floor is 65 now, not 55. White at 55% on brand-950 computes to about
+ * 6.1:1, comfortably AA on flat navy, but the lit sections and the plates'
+ * lighter faces eat into that margin, and a review on a phone called the
+ * small grey text under every card hard to read — the case a single 4.5
+ * figure measured on the darkest ground does not describe. /65 is about
+ * 8:1 on the same ground.
+ * The regex also missed /50 entirely (it listed 10–45 by hand), and a /50
+ * helper line under the quote form's quantity choice shipped through it.
+ * Everything from /05 to /60 is barred.
+ */
+const FAINT = /\btext-paper\/(?:0?5|[1-5][05]|60)\b/;
 const walk = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = join(dir, entry.name);
@@ -237,7 +248,7 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
       if (FAINT.test(line) && !/aria-hidden/.test(line)) {
         const where = `${file.slice(root.length)}:${i + 1}`;
         fail(
-          `${where}: faint text-paper alpha — /45 is 4.51:1 on brand-950 and below that fails; use /55`,
+          `${where}: faint text-paper alpha — the floor is /65 (small grey text under /65 reads poorly on a phone); use /65 or above`,
         );
       }
     });

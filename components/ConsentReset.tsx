@@ -14,7 +14,7 @@ export default function ConsentReset({ lang }: { lang: Lang }) {
     <button
       type="button"
       onClick={clearConsent}
-      className="inline-flex min-h-[44px] items-center text-left text-sm text-paper/60 transition hover:text-paper"
+      className="inline-flex min-h-[44px] items-center text-left text-sm text-paper/70 transition hover:text-paper"
     >
       {label[lang]}
     </button>

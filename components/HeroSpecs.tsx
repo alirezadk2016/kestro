@@ -258,7 +258,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                     {row.live ? <LiveBatteryValue label={row.live} /> : row.value}
                   </Link>
                 </dt>
-                <dd className="mt-0.5 text-xs leading-5 text-paper/55">{row.note}</dd>
+                <dd className="mt-0.5 text-xs leading-5 text-paper/65">{row.note}</dd>
               </div>
 
               {/* Placed entirely from globals.css: beside the machine on a

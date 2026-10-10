@@ -268,14 +268,14 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               {c.metaRows.map((row) => (
                 <div key={row.k} className="flex justify-between gap-4 py-1.5 text-sm">
-                  <dt className="text-ink-500">{row.k}</dt>
+                  <dt className="text-ink-600">{row.k}</dt>
                   <dd className="text-right font-medium text-ink-900">{row.v}</dd>
                 </div>
               ))}
             </dl>
 
             <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.specTitle}</h3>
+              <h3 className="label text-ink-600">{c.specTitle}</h3>
               <dl className="mt-4">
                 {lines.map((line) => (
                   <div
@@ -291,7 +291,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
 
             <div className="grid grid-cols-1 gap-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
               <div>
-                <h3 className="label text-ink-500">{c.includedTitle}</h3>
+                <h3 className="label text-ink-600">{c.includedTitle}</h3>
                 <ul className="mt-4 space-y-2">
                   {c.included.map((item) => (
                     <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-700">
@@ -305,10 +305,10 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                 </ul>
               </div>
               <div>
-                <h3 className="label text-ink-500">{c.excludedTitle}</h3>
+                <h3 className="label text-ink-600">{c.excludedTitle}</h3>
                 <ul className="mt-4 space-y-2">
                   {c.excluded.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-500">
+                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-600">
                       <span
                         aria-hidden="true"
                         className="mt-2.5 h-px w-3 flex-shrink-0 bg-ink-300"
@@ -321,7 +321,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             </div>
 
             <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.termsTitle}</h3>
+              <h3 className="label text-ink-600">{c.termsTitle}</h3>
               <dl className="mt-4 space-y-4">
                 {c.terms.map((term) => (
                   <div key={term.k}>
@@ -335,7 +335,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             </div>
 
             <div className="bg-paper-dim p-6 sm:p-8">
-              <h3 className="label text-ink-500">{c.priceTitle}</h3>
+              <h3 className="label text-ink-600">{c.priceTitle}</h3>
               <dl className="mt-4">
                 {c.priceRows.map((row, i) => (
                   <div
@@ -368,7 +368,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.whyBody}
             </p>
 

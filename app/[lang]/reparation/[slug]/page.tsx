@@ -106,7 +106,7 @@ export default async function RepairPage(props: Params) {
 
       <section className="py-10 sm:py-20">
         <Container>
-          <nav className="label text-paper/55">
+          <nav className="label text-paper/65">
             <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/70">
               {c.breadcrumb}
             </Link>
@@ -129,10 +129,10 @@ export default async function RepairPage(props: Params) {
           <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
             {repair.answer[lang]}
           </p>
-          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/65">
+          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
             {repair.intro[lang]}
           </p>
-          <p className="label mt-6 text-paper/55">
+          <p className="label mt-6 text-paper/65">
             {c.updated}{" "}
             <time dateTime={updated} className="tabular-nums text-paper/80">
               {formatDate(updated, lang)}
@@ -164,7 +164,7 @@ export default async function RepairPage(props: Params) {
               ))}
             </ul>
             {repair.bandsNote && (
-              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/50">
+              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">
                 {repair.bandsNote[lang]}
               </p>
             )}

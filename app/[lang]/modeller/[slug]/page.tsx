@@ -210,7 +210,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </div>
 
                 <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
-                <p className="label mt-6 text-paper/55">
+                <p className="label mt-6 text-paper/65">
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
                   <time
                     dateTime={pageUpdated("/modeller/[slug]")}
@@ -262,7 +262,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     ))}
                   </div>
 
-                  <p className="pt-1 text-sm leading-[1.6] text-paper/55">{c.imageNote}</p>
+                  <p className="pt-1 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
                 </div>
               )}
             </div>
@@ -276,7 +276,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
-                <p className="mt-1 text-sm leading-[1.6] text-paper/65">{c.configBody}</p>
+                <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
               </div>
 
               <dl className="lg:grid lg:grid-cols-2">
@@ -286,7 +286,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
                   >
                     <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-paper/65 sm:col-span-2 sm:mt-0">
+                    <dd className="mt-1 text-sm leading-6 text-paper/75 sm:col-span-2 sm:mt-0">
                       {spec.value[lang]}
                     </dd>
                   </div>
@@ -303,7 +303,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </h2>
                 <ul className="mt-5 space-y-3">
                   {model.goodFor.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/65">
+                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                       <Check
                         className="mt-1.5 h-5 w-5 flex-shrink-0 text-brand-300"
                         strokeWidth={2}
@@ -344,7 +344,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                         />
                         {reason.title[lang]}
                       </dt>
-                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/65">
+                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/75">
                         {reason.description[lang]}
                       </dd>
                     </div>
@@ -357,7 +357,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               <h2 className="text-lg font-semibold text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
-              <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/65">{c.ctaBody}</p>
+              <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-5"
@@ -367,7 +367,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             </div>
 
             {category && (
-              <p className="mt-8 text-sm leading-[1.6] text-paper/55">
+              <p className="mt-8 text-sm leading-[1.6] text-paper/65">
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}

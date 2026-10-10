@@ -213,7 +213,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.processTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.processSub}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
 
             <div className="mt-10 space-y-10">
               {steps.map((step) => (
@@ -227,7 +227,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
                     <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
                       {step.title[lang]}
                     </h3>
-                    <p className="mt-2 text-base leading-[1.75] text-paper/65">
+                    <p className="mt-2 text-base leading-[1.75] text-paper/75">
                       {step.description[lang]}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
@@ -244,7 +244,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
 
             <div className="mt-12 plate p-6 sm:p-8">
               <h3 className="text-lg font-semibold text-paper">{c.qualityTitle}</h3>
-              <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.qualityBody}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.qualityBody}</p>
               <Link
                 href={localePath("/kvalitet", lang)}
                 className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"

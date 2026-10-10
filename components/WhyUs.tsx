@@ -53,7 +53,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/65">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         {/* Parallel claims, not a sequence: plates on a phone, columns from
@@ -67,7 +67,7 @@ export default function WhyUs({ lang }: { lang: Lang }) {
               <dt className="font-display text-base font-bold tracking-tight text-paper sm:text-lg">
                 {benefit.title[lang]}
               </dt>
-              <dd className="mt-2 text-sm leading-6 text-paper/65 sm:text-base sm:leading-7">
+              <dd className="mt-2 text-sm leading-6 text-paper/75 sm:text-base sm:leading-7">
                 {benefit.description[lang]}
               </dd>
             </div>

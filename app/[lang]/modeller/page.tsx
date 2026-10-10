@@ -86,8 +86,8 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
 
           <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noShopBody2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noShopBody1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noShopBody2}</p>
             <Link
               href={localePath("/kvalitet", lang)}
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
@@ -106,10 +106,10 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                 <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/65">
+                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
                   {group.description[lang]}
                 </p>
-                <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/55">{c.priceNote}</p>
+                <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
                 <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
@@ -118,13 +118,13 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                         href={localePath(`/modeller/${model.slug}`, lang)}
                         className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
                       >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                           {model.brand} · {model.format[lang]}
                         </span>
                         <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 text-sm leading-[1.6] text-paper/65">
+                        <p className="mt-2 text-sm leading-[1.6] text-paper/75">
                           {model.tagline[lang]}
                         </p>
                         <SpecChips model={model} lang={lang} />

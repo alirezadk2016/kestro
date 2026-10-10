@@ -55,7 +55,7 @@ export default function ServiceTile({
           <Heading className="text-base font-semibold leading-snug text-paper group-hover:text-brand-200">
             {title}
           </Heading>
-          <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{summary}</p>
+          <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">{summary}</p>
           <span className="tile-prompt mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300">
             {prompt}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />

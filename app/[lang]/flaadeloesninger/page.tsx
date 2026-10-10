@@ -479,7 +479,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               <ForgedPanel key={item.title.da} faceClassName="p-5 sm:p-8">
                 <MarkTile name={item.mark} size="lg" />
                 <h3 className="mt-4 text-base font-semibold text-paper">{item.title[lang]}</h3>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{item.description[lang]}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{item.description[lang]}</p>
               </ForgedPanel>
             ))}
           </div>
@@ -492,20 +492,20 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.scaleTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.scaleLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.scaleLead}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
             {scaleTiers.map((tier) => (
               <div key={tier.range.da} className="plate p-5 sm:p-8">
                 <h3 className="text-base font-semibold text-paper">{tier.range[lang]}</h3>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{tier.body[lang]}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{tier.body[lang]}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-8 max-w-2xl">
-            <p className="text-base leading-[1.75] text-paper/65">{c.scaleClose}</p>
+            <p className="text-base leading-[1.75] text-paper/75">{c.scaleClose}</p>
             <Link
               href={localePath("/priser", lang)}
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
@@ -523,7 +523,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.rolloutTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.rolloutLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.rolloutLead}</p>
 
             <ol className="mt-10 space-y-6">
               {rolloutPhases.map((phase, i) => (
@@ -533,7 +533,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{phase.when[lang]}</h3>
-                    <p className="mt-1 text-base leading-[1.75] text-paper/65">
+                    <p className="mt-1 text-base leading-[1.75] text-paper/75">
                       {phase.body[lang]}
                     </p>
                     {phase.link && (
@@ -559,7 +559,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.tradeTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.tradeBody}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.tradeBody}</p>
 
             <ol className="mt-10 space-y-6">
               {tradeInSteps.map((step, i) => (
@@ -569,7 +569,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                   </span>
                   <div>
                     <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>
-                    <p className="mt-1 text-base leading-[1.75] text-paper/65">
+                    <p className="mt-1 text-base leading-[1.75] text-paper/75">
                       {step.description[lang]}
                     </p>
                   </div>

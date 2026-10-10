@@ -112,12 +112,12 @@ export default function Faq({
                   {faq.question[lang]}
                 </h3>
                 <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-paper/55 transition-transform duration-200 group-open:rotate-180"
+                  className="h-5 w-5 flex-shrink-0 text-paper/65 transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden="true"
                 />
               </summary>
-              <p className="pb-5 pr-9 text-base leading-[1.75] text-paper/65">{faq.answer[lang]}</p>
+              <p className="pb-5 pr-9 text-base leading-[1.75] text-paper/75">{faq.answer[lang]}</p>
             </details>
           ))}
         </div>

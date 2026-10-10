@@ -38,7 +38,7 @@ export default function AuthorByline({
   return (
     <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-white/10 pt-6">
       <TeamAvatar member={author} lang={lang} size={40} className="h-10 w-10 flex-shrink-0" />
-      <p className="text-sm leading-[1.6] text-paper/60">
+      <p className="text-sm leading-[1.6] text-paper/70">
         <span className="sr-only">{c.by} </span>
         <Link
           href={`${localePath("/om-os", lang)}#${author.id}`}
@@ -46,9 +46,9 @@ export default function AuthorByline({
         >
           {author.name}
         </Link>
-        <span className="text-paper/55"> · {author.role[lang]}</span>
+        <span className="text-paper/65"> · {author.role[lang]}</span>
       </p>
-      <p className="label ml-auto text-paper/55">
+      <p className="label ml-auto text-paper/65">
         <time dateTime={updated}>
           {c.updated} {formatDate(updated, lang)}
         </time>

@@ -119,7 +119,7 @@ export default function LanguageHint() {
         <button
           type="button"
           onClick={dismiss}
-          className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/55 transition hover:text-paper"
+          className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/65 transition hover:text-paper"
         >
           Dismiss
         </button>

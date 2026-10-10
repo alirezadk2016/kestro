@@ -287,7 +287,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 {clause.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] text-paper/65 sm:leading-[1.75]"
+                    className="mt-4 text-base leading-[1.75] text-paper/75 sm:leading-[1.75]"
                   >
                     {paragraph[lang]}
                   </p>
@@ -303,9 +303,9 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
               <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.detailsTitle}
               </h2>
-              <dl className="mt-4 space-y-2 text-base leading-7 text-paper/65 sm:leading-8">
+              <dl className="mt-4 space-y-2 text-base leading-7 text-paper/75 sm:leading-8">
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/55">{lang === "da" ? "Navn" : "Name"}</dt>
+                  <dt className="text-paper/65">{lang === "da" ? "Navn" : "Name"}</dt>
                   <dd>
                     {company.name}
                     {company.legalForm ? ` ${company.legalForm}` : ""}
@@ -313,18 +313,18 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 </div>
                 {address && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/55">{lang === "da" ? "Adresse" : "Address"}</dt>
+                    <dt className="text-paper/65">{lang === "da" ? "Adresse" : "Address"}</dt>
                     <dd>{address}</dd>
                   </div>
                 )}
                 {company.cvr && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/55">CVR</dt>
+                    <dt className="text-paper/65">CVR</dt>
                     <dd>{company.cvr}</dd>
                   </div>
                 )}
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/55">{lang === "da" ? "E-mail" : "Email"}</dt>
+                  <dt className="text-paper/65">{lang === "da" ? "E-mail" : "Email"}</dt>
                   <dd>
                     <a href={`mailto:${company.email}`} className="underline underline-offset-4">
                       {company.email}
@@ -333,14 +333,14 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 </div>
                 {company.phoneDisplay && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/55">{lang === "da" ? "Telefon" : "Phone"}</dt>
+                    <dt className="text-paper/65">{lang === "da" ? "Telefon" : "Phone"}</dt>
                     <dd>{company.phoneDisplay}</dd>
                   </div>
                 )}
               </dl>
             </div>
 
-            <p className="border-t border-white/10 pt-8 text-sm leading-[1.6] text-paper/55">
+            <p className="border-t border-white/10 pt-8 text-sm leading-[1.6] text-paper/65">
               {c.privacyLead}{" "}
               <Link
                 href={localePath("/privatlivspolitik", lang)}
@@ -351,7 +351,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
               .
             </p>
 
-            <p className="mt-4 text-sm text-paper/55 leading-[1.6]">
+            <p className="mt-4 text-sm text-paper/65 leading-[1.6]">
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </div>

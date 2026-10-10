@@ -226,10 +226,10 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.whyBody1}
             </p>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.whyBody2}
             </p>
 
@@ -237,7 +237,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
               <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
                 {c.driversTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
                 {c.driversLead}
               </p>
             </div>
@@ -264,7 +264,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                   {i < drivers.length - 1 && (
                     <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/45 via-paper/12 to-paper/5 md:hidden" />
                   )}
-                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/55 md:shadow-none">
+                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/65 md:shadow-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -272,7 +272,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                   <h3 className="font-display text-base font-bold tracking-tight text-paper">
                     {driver.heading[lang]}
                   </h3>
-                  <p className="mt-2 text-sm leading-[1.6] text-paper/65">{driver.body[lang]}</p>
+                  <p className="mt-2 text-sm leading-[1.6] text-paper/75">{driver.body[lang]}</p>
                 </div>
               </li>
             ))}
@@ -282,7 +282,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             <h2 className="font-display text-lg font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.quoteLead}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
             <ul className="mt-5 space-y-3">
               {c.quotePoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-7 text-paper/80">
@@ -300,7 +300,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.freeTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.freeBody}
             </p>
           </div>
@@ -309,12 +309,12 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.fastTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.fastLead}
             </p>
             <ul className="mt-5 space-y-2.5">
               {c.fastPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/65">
+                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
                   <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
                   {point}
                 </li>

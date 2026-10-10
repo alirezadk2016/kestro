@@ -193,7 +193,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
 
               <div className="plate p-6 sm:p-8">
                 <h2 className="text-base font-semibold text-paper">{c.emailTitle}</h2>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/65">{c.emailBody}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />
               </div>
 
@@ -201,25 +201,25 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                 <h2 className="text-base font-semibold text-paper">{c.companyTitle}</h2>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/55">{c.fieldCompany}</dt>
+                    <dt className="text-paper/65">{c.fieldCompany}</dt>
                     <dd className="font-medium text-paper">{company.name}</dd>
                   </div>
                   {company.phoneDisplay && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/55">{c.fieldPhone}</dt>
+                      <dt className="text-paper/65">{c.fieldPhone}</dt>
                       <dd className="font-medium text-paper">{company.phoneDisplay}</dd>
                     </div>
                   )}
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/55">{c.fieldEmail}</dt>
+                    <dt className="text-paper/65">{c.fieldEmail}</dt>
                     <dd className="font-medium text-paper">{company.email}</dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/55">{c.fieldAddress}</dt>
+                    <dt className="text-paper/65">{c.fieldAddress}</dt>
                     <dd className="text-right font-medium text-paper">{postalAddress(lang)}</dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/55">{c.fieldServes}</dt>
+                    <dt className="text-paper/65">{c.fieldServes}</dt>
                     <dd className="font-medium text-paper">{company.serves[lang]}</dd>
                   </div>
                   {/* Shown when there is one. "Tilføjes snarest" against a CVR
@@ -227,7 +227,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                       company that does not exist yet. */}
                   {company.cvr && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/55">{c.fieldCvr}</dt>
+                      <dt className="text-paper/65">{c.fieldCvr}</dt>
                       <dd className="font-medium text-paper">
                         {company.cvr}
                         {company.legalForm ? ` · ${company.legalForm}` : ""}
@@ -236,7 +236,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                   )}
                   {company.openingHours[lang] && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/55">{c.fieldHours}</dt>
+                      <dt className="text-paper/65">{c.fieldHours}</dt>
                       <dd className="text-right font-medium text-paper">
                         {company.openingHours[lang]}
                       </dd>
@@ -255,7 +255,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.briefTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.briefBody}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.briefBody}</p>
           </div>
           {/* Parallel items, so plates rather than hairline rows. */}
           <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">

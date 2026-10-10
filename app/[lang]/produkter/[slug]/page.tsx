@@ -205,7 +205,7 @@ export default async function CategoryPage(props: {
             </div>
 
             <p className="mt-8 text-base leading-[1.75] text-ink-300">{category.intro[lang]}</p>
-            <p className="label mt-6 text-paper/55">
+            <p className="label mt-6 text-paper/65">
               {lang === "da" ? "Opdateret" : "Updated"}{" "}
               <time
                 dateTime={pageUpdated("/produkter/[slug]")}
@@ -224,7 +224,7 @@ export default async function CategoryPage(props: {
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">
               {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
             </p>
 
@@ -239,7 +239,7 @@ export default async function CategoryPage(props: {
               ))}
             </ul>
 
-            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/55">{c.brandsNote}</p>
+            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -255,11 +255,11 @@ export default async function CategoryPage(props: {
                 <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {exampleModel.name}
                 </h2>
-                <p className="mt-3 text-base leading-[1.75] text-paper/65">
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">
                   {exampleModel.intro[lang]}
                 </p>
 
-                <p className="mt-5 text-sm leading-[1.6] text-paper/55">{c.imageNote}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
 
                 <Link
                   href={localePath(`/modeller/${exampleModel.slug}`, lang)}
@@ -323,8 +323,8 @@ export default async function CategoryPage(props: {
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.modelsBody}</p>
-              <p className="mt-1.5 text-sm leading-[1.6] text-paper/55">{c.priceNote}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
               <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 {categoryModels.map((model) => (
@@ -333,13 +333,13 @@ export default async function CategoryPage(props: {
                       href={localePath(`/modeller/${model.slug}`, lang)}
                       className="plate plate-lift group flex h-full flex-col p-5"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                         {model.format[lang]}
                       </span>
                       <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 text-sm leading-6 text-paper/65">
+                      <span className="mt-1.5 text-sm leading-6 text-paper/75">
                         {model.tagline[lang]}
                       </span>
                       <SpecChips model={model} lang={lang} />
@@ -377,7 +377,7 @@ export default async function CategoryPage(props: {
                   <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
                   <div>
                     <dt className="text-base font-semibold text-paper">{useCase.title[lang]}</dt>
-                    <dd className="mt-1 text-base leading-7 text-paper/65">
+                    <dd className="mt-1 text-base leading-7 text-paper/75">
                       {useCase.description[lang]}
                     </dd>
                   </div>
@@ -387,7 +387,7 @@ export default async function CategoryPage(props: {
 
             <div className="plate mt-10 p-6">
               <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
-              <p className="mt-2 text-base leading-[1.75] text-paper/65">
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">
                 {category.specNote[lang]}
               </p>
             </div>

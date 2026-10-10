@@ -38,7 +38,7 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
               {sourceList(ids).map((source) => (
                 <li key={source.id} className="plate p-4 sm:p-5">
                   <p className="text-sm leading-[1.6] text-paper/75">{source.claim[lang]}</p>
-                  <p className="mt-1 text-xs text-paper/55 leading-[1.45]">
+                  <p className="mt-1 text-xs text-paper/65 leading-[1.45]">
                     {source.publisher}
                     {source.published ? `, ${source.published}` : ""}
                   </p>

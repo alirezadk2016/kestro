@@ -102,7 +102,7 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
             <h3 className="mt-3 text-sm font-semibold text-paper">{column.heading}</h3>
             <ul className="mt-3 space-y-2">
               {column.points.map((point) => (
-                <li key={point} className="flex gap-2 text-sm leading-6 text-paper/65">
+                <li key={point} className="flex gap-2 text-sm leading-6 text-paper/75">
                   <span
                     aria-hidden="true"
                     className="mt-2.5 h-px w-3 flex-shrink-0 bg-brand-400/70"

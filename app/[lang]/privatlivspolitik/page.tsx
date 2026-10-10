@@ -255,7 +255,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/65"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
                   >
                     {paragraph[lang]}
                   </p>
@@ -263,7 +263,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
               </div>
             ))}
 
-            <p className="border-t border-white/10 pt-8 text-sm text-paper/55 leading-[1.6]">
+            <p className="border-t border-white/10 pt-8 text-sm text-paper/65 leading-[1.6]">
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </div>

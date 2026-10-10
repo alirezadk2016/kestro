@@ -43,7 +43,7 @@ export default function NotFoundPanel() {
           <p className="mt-7 font-display text-xl font-bold tracking-display text-paper/85">
             This page could not be found
           </p>
-          <p className="mt-3 text-base leading-[1.75] text-paper/60">
+          <p className="mt-3 text-base leading-[1.75] text-paper/70">
             The page does not exist or has moved. Try one of the links below, or write to us and we
             will point you to it.
           </p>
@@ -68,7 +68,7 @@ export default function NotFoundPanel() {
               <li key={way.href}>
                 <Link
                   href={way.href}
-                  className="inline-flex min-h-[32px] items-center text-sm font-medium text-paper/60 transition hover:text-paper"
+                  className="inline-flex min-h-[32px] items-center text-sm font-medium text-paper/70 transition hover:text-paper"
                 >
                   {way.da}
                   <span aria-hidden="true" className="px-1.5 text-paper/55">

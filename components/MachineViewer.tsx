@@ -284,7 +284,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
 
           {live && (
             <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-4">
-              <span className="label text-paper/60">{c.hint}</span>
+              <span className="label text-paper/70">{c.hint}</span>
               <button
                 type="button"
                 onClick={() => select(exteriorViews[0].id)}
@@ -297,7 +297,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           )}
         </div>
 
-        {failed && <p className="mt-4 text-sm leading-[1.6] text-paper/50">{c.fallback}</p>}
+        {failed && <p className="mt-4 text-sm leading-[1.6] text-paper/65">{c.fallback}</p>}
       </div>
 
       <div className="lg:col-span-5">
@@ -313,7 +313,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
               className={`inline-flex min-h-[44px] items-center rounded-full border px-4 text-xs font-semibold tracking-tight transition ${
                 item.id === active.id
                   ? "border-brand-600 bg-brand-600 text-white"
-                  : "border-white/15 text-paper/65 hover:border-white/35 hover:text-paper"
+                  : "border-white/15 text-paper/75 hover:border-white/35 hover:text-paper"
               }`}
             >
               {item.name[lang]}
@@ -325,12 +325,12 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
           <h3 className="font-display text-xl font-bold tracking-tight text-paper">
             {active.name[lang]}
           </h3>
-          <p className="mt-3 text-base leading-[1.75] text-paper/65">{active.summary[lang]}</p>
+          <p className="mt-3 text-base leading-[1.75] text-paper/75">{active.summary[lang]}</p>
 
           <p className="label mt-8 text-brand-300">{c.checks}</p>
           <ul className="mt-4 space-y-3">
             {active.checks.map((check) => (
-              <li key={check.da} className="flex gap-3 text-sm leading-7 text-paper/65">
+              <li key={check.da} className="flex gap-3 text-sm leading-7 text-paper/75">
                 <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
                 {check[lang]}
               </li>

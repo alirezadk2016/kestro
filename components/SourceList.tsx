@@ -33,11 +33,14 @@ export default function SourceList({
 
   return (
     <div className={className}>
-      <h2 className="label text-brand-300">{heading}</h2>
+      {/* An h3: the list sits under the section's own h2 (FactNote's), and
+          as an h2 it put a tracked-caps "KILDER" level with the page's real
+          section headings. */}
+      <h3 className="label text-brand-300">{heading}</h3>
       <ol className="mt-4 space-y-4">
         {items.map((source, index) => (
           <li key={source.id} className="flex gap-3 text-sm leading-6">
-            <span className="font-mono text-xs leading-6 text-paper/55 tabular-nums">
+            <span className="font-mono text-xs leading-6 text-paper/65 tabular-nums">
               {String(index + 1).padStart(2, "0")}
             </span>
             <div className="min-w-0">
@@ -49,7 +52,7 @@ export default function SourceList({
               >
                 <cite className="not-italic">{source.title[lang]}</cite>
               </a>
-              <p className="mt-0.5 text-paper/55">
+              <p className="mt-0.5 text-paper/65">
                 {source.publisher}
                 {source.published ? `, ${source.published}` : ""} · {read}{" "}
                 <time dateTime={source.accessed}>{formatDate(source.accessed, lang)}</time>

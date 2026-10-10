@@ -195,7 +195,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
            * their own: whichever item wraps leaves a "·" hanging at the end
            * of the line above it. Space separates these perfectly well, and
            * space cannot orphan. */}
-          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/55 sm:mt-8">
+          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
             <span className="whitespace-nowrap">
               <span className="tabular-nums text-paper/80">{guides.length}</span> {c.statGuides}
             </span>
@@ -225,7 +225,9 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           its section carries, which is also what an article links back to. */}
       <section className="border-b border-white/10 py-10 sm:py-20">
         <Container>
-          <h2 className="eyebrow text-paper/55">{c.indexTitle}</h2>
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            {c.indexTitle}
+          </h2>
           <nav aria-label={c.jump}>
             {/* Four cards, not four cells.
              *
@@ -266,7 +268,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
                         {cluster.name[lang]}
                       </h3>
-                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/55 sm:block">
+                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/65 sm:block">
                         {cluster.description[lang]}
                       </p>
                       {/* On its own rule at the foot of the card, so four cards
@@ -275,7 +277,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                           than running the full width at one value — a hairline
                           that stops dead is the loudest thing on a quiet
                           card. */}
-                      <p className="label relative mt-2 text-paper/55 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
+                      <p className="label relative mt-2 text-paper/65 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
                         {articles.length} {articles.length === 1 ? c.article : c.articles}
                       </p>
                     </div>
@@ -323,7 +325,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                   "01 / EMNER" on every section — the label of the index above,
                   repeated four times, saying the same thing about four
                   different topics. A chapter marker says something. */}
-              <p className="eyebrow text-paper/55">
+              <p className="eyebrow text-paper/65">
                 <span className="tabular-nums text-brand-300">
                   {String(groupIndex + 1).padStart(2, "0")}
                 </span>
@@ -335,7 +337,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               <h2 className="mt-3 font-display t-h2 font-bold tracking-tight text-paper">
                 {cluster.name[lang]}
               </h2>
-              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/60">
+              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/70">
                 {cluster.description[lang]}
               </p>
             </header>
@@ -413,7 +415,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                           run to the column edge while the summary stopped two
                           thirds of the way, which left a ragged right side and
                           a void before the minutes. */}
-                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/65">
+                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/75">
                           {guide.summary[lang]}
                         </p>
                       </div>
@@ -422,12 +424,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         case as everything else, not "7 MIN." letterspaced like
                         a category tag. */}
                       <span className="flex flex-none items-center gap-3.5 sm:w-24 sm:justify-end">
-                        <span className="whitespace-nowrap text-sm tabular-nums text-paper/50">
+                        <span className="whitespace-nowrap text-sm tabular-nums text-paper/65">
                           {guide.readingMinutes} {c.readingSuffix}
                         </span>
                         <ArrowRight
                           aria-hidden="true"
-                          className="h-4 w-4 flex-none text-paper/55 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-300"
+                          className="h-4 w-4 flex-none text-paper/65 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-300"
                           strokeWidth={2}
                         />
                       </span>
@@ -460,7 +462,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.adviceTitle}
               </h2>
-              <p className="mt-3 text-[0.9375rem] leading-7 text-paper/65">{c.adviceBody}</p>
+              <p className="mt-3 text-[0.9375rem] leading-7 text-paper/75">{c.adviceBody}</p>
             </div>
             <Link
               href={localePath("/kontakt", lang)}

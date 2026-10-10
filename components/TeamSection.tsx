@@ -29,7 +29,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.sub}</p>
+          <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         <div
@@ -67,7 +67,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                 <p className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08] px-6 mt-1.5 leading-[1.6]">
                   {member.role[lang]}
                 </p>
-                <p className="mt-4 text-sm leading-[1.6] text-paper/65">{member.bio[lang]}</p>
+                <p className="mt-4 text-sm leading-[1.6] text-paper/75">{member.bio[lang]}</p>
 
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                   {/* A direct line only when there is one. Without it, writing
@@ -90,7 +90,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                     }
                   >
                     <Mail
-                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-paper/50" : ""}`}
+                      className={`h-4 w-4 flex-shrink-0 ${member.phoneHref ? "text-paper/65" : ""}`}
                       strokeWidth={2}
                     />
                     {c.write}

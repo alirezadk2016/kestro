@@ -54,7 +54,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
       <div
         role="tablist"
         aria-label={c.choose}
-        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/65 sm:w-auto"
+        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/75 sm:w-auto"
       >
         <button
           type="button"

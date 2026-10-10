@@ -93,8 +93,8 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
 
           <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
             <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
-            <p className="mt-2 text-base leading-[1.75] text-paper/65">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.noPrices2}</p>
+            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noPrices1}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noPrices2}</p>
           </div>
 
           <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
@@ -116,7 +116,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                     <h3 className="text-base font-semibold leading-snug text-paper">
                       {category.name[lang]}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">
+                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">
                       {category.tagline[lang]}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
@@ -133,7 +133,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
               {c.modelsTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-[1.75] text-paper/65">
+            <p className="mx-auto mt-3 max-w-xl text-base leading-[1.75] text-paper/75">
               {c.modelsBody}
             </p>
             <Link

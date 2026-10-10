@@ -162,7 +162,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
           />
 
           <div className="mt-12 max-w-3xl">
-            <p className="text-base leading-[1.75] text-paper/65">{c.intro}</p>
+            <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
           </div>
         </Container>
       </section>
@@ -221,7 +221,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                 {c.pricesTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/65">{c.pricesBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.pricesBody}</p>
             </div>
           </div>
         </Container>
@@ -233,7 +233,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
             <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.formBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
 
             <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
