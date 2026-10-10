@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 10
+    "files": 9
   },
   "/flaadeloesninger": {
     "published": "2026-08-23",
@@ -51,7 +51,7 @@
   },
   "/privatlivspolitik": {
     "published": "2026-08-23",
-    "modified": "2026-10-10",
+    "modified": "2026-10-08",
     "files": 3
   },
   "/produkter": {
@@ -81,7 +81,7 @@
   },
   "/tilbud": {
     "published": "2026-08-30",
-    "modified": "2026-10-10",
+    "modified": "2026-10-08",
     "files": 3
   },
   "/tilbud-eksempel": {
@@ -96,7 +96,7 @@
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-10",
+    "modified": "2026-10-08",
     "files": 6
   },
   "/ydelser": {
