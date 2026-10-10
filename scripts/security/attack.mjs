@@ -525,6 +525,31 @@ async function main() {
     );
   }
 
+  /* ---- The quote form's prefill ------------------------------------------ */
+
+  /*
+   * The front page's first step (components/TrustStrip.tsx) is a GET to the
+   * quote page with antal, model and hvornaar in the query string, and
+   * ContactForm copies them into its fields. That makes the query string an
+   * input the page acts on — so this proves the server never puts any of it
+   * into the HTML (the page is prerendered and must stay so), in either
+   * language, and that a hostile value does not turn the page into an error.
+   * The client side binds the text as an input value, which React escapes.
+   */
+  {
+    const MARK = "kestro-prefill-probe";
+    const query = new URLSearchParams({
+      antal: `"><svg onload="${MARK}">`,
+      model: `<img src=x onerror="${MARK}">`,
+      hvornaar: `</textarea><script>${MARK}</script>`,
+    }).toString();
+    for (const path of ["/tilbud", "/en/get-a-quote"]) {
+      const { status, text } = await ask(`${path}?${query}`);
+      const echoed = text.includes(MARK) || text.includes("onerror=") || text.includes("onload=");
+      record("prefill", `${path} does not reflect the query`, status === 200 && !echoed, String(status));
+    }
+  }
+
   /* ---- Nothing about the deployment on the way out ---------------------- */
 
   {

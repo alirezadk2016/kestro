@@ -240,12 +240,17 @@ export default function ContactForm({
   useEffect(() => {
     if (!quote) return;
     const params = new URLSearchParams(window.location.search);
-    const model = params.get("model")?.slice(0, 120) ?? "";
+    const model = params.get("model")?.trim().slice(0, 120) ?? "";
     const band = params.get("antal") ?? "";
-    if (!model && !band) return;
+    /* "When" arrives from the front page's first step (TrustStrip), along
+       with the band and the model. Text only, capped, and bound as a value —
+       React escapes it, so a query string cannot become markup. */
+    const when = params.get("hvornaar")?.trim().slice(0, 120) ?? "";
+    if (!model && !band && !when) return;
     setValues((prev) => ({
       ...prev,
       udstyr: prev.udstyr || model,
+      hvornaar: prev.hvornaar || when,
       antal: quantities.includes(band as (typeof quantities)[number]) ? band : prev.antal,
     }));
   }, [quote]);
@@ -360,7 +365,7 @@ export default function ContactForm({
    * people.
    */
   const inputClasses =
-    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/55 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -382,7 +387,7 @@ export default function ContactForm({
         >
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-[1.75] text-paper/65">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.unavailableBody}</p>
 
         <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
           {body}
@@ -405,7 +410,7 @@ export default function ContactForm({
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-[1.6] text-paper/55">
+          <p className="mt-5 text-sm leading-[1.6] text-paper/65">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
@@ -420,7 +425,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/55 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/65 underline decoration-paper/30 underline-offset-4 hover:text-paper"
         >
           {c.back}
         </button>
@@ -443,7 +448,7 @@ export default function ContactForm({
         >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-[1.75] text-paper/65">
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">
           {quote ? c.quoteThanksBody : c.thanksBody}
         </p>
 
@@ -505,7 +510,7 @@ export default function ContactForm({
               </label>
             ))}
           </div>
-          <p className="mt-2 text-xs leading-[1.45] text-paper/50">{c.quantityHelp}</p>
+          <p className="mt-2 text-xs leading-[1.45] text-paper/65">{c.quantityHelp}</p>
         </fieldset>
       )}
 
@@ -533,7 +538,7 @@ export default function ContactForm({
             {companyRequired ? (
               <span className="text-brand-400">*</span>
             ) : (
-              <span className="text-paper/55">{c.optional}</span>
+              <span className="text-paper/65">{c.optional}</span>
             )}
           </label>
           <input
@@ -675,7 +680,7 @@ export default function ContactForm({
         <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
           {quote ? c.quoteMessage : c.message}{" "}
           {quote ? (
-            <span className="text-paper/55">{c.optional}</span>
+            <span className="text-paper/65">{c.optional}</span>
           ) : (
             <span className="text-brand-400">*</span>
           )}
@@ -716,7 +721,7 @@ export default function ContactForm({
           {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>
 
-        <p className="mt-3 text-xs leading-[1.45] text-paper/50">
+        <p className="mt-3 text-xs leading-[1.45] text-paper/65">
           {c.privacy}{" "}
           <Link
             href={localePath("/privatlivspolitik", lang)}
