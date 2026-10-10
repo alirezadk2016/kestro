@@ -275,7 +275,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
 
             {/* The answer, before the scroll. Someone who reads only this
                 should still have got what they came for. */}
-            <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+            <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
               {guide.tldr[lang]}
             </p>
 
@@ -376,7 +376,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               </div>
             ))}
 
-            <div className="mt-6 border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+            <div className="plate mt-6 p-6 sm:p-8">
               <h2 className="font-display text-lg font-bold tracking-tight text-paper">
                 {c.closingTitle}
               </h2>

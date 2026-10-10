@@ -99,7 +99,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                     width={card.width}
                     height={card.height}
                     sizes="(min-width: 1024px) 24vw, (min-width: 640px) 46vw, 46vw"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    className="h-full w-full object-cover"
                   />
                 </div>
 

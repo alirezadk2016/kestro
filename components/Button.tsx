@@ -35,7 +35,7 @@ type Intent = "primary" | "secondary" | "quiet";
 type Size = "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950";
+  "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950";
 
 const intents: Record<Intent, string> = {
   primary: "rounded-lg bg-brand-600 text-white hover:bg-brand-500",

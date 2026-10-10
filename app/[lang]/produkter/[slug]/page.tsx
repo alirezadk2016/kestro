@@ -58,7 +58,7 @@ const copy = {
     exampleEyebrow: "Eksempel på en maskine",
     imageNote:
       "Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal aftales for den enkelte ordre.",
-    seeAllSpecsPre: "Se alle specifikationer på",
+    seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi ofte skaffer",
     modelsBody:
       "Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver bedt om at finde – klik ind for specifikationer og hvad de egner sig til.",
@@ -79,7 +79,7 @@ const copy = {
     exampleEyebrow: "An example machine",
     imageNote:
       "The photos show the model type. We do not hold stock — condition, specifications and quantity are agreed per order.",
-    seeAllSpecsPre: "See all specifications for the",
+    seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we often source",
     modelsBody:
       "We do not hold them in stock. The list shows the models we know well and are most often asked to find — click through for specifications and what they suit.",
@@ -160,17 +160,10 @@ export default async function CategoryPage(props: {
     <>
       <PageSchema lang={lang} route="/produkter/[slug]" sources={categorySources(category)} />
 
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-10 sm:py-20">
-        {/* Brand glow for depth — no product photography, since we source per order */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"
-        />
-
+      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          generic glow every generated page has. */}
+      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
           <div className="max-w-3xl">
             <BreadcrumbSchema
@@ -275,7 +268,14 @@ export default async function CategoryPage(props: {
                   href={localePath(`/modeller/${exampleModel.slug}`, lang)}
                   className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
                 >
-                  {c.seeAllSpecsPre} {exampleModel.name} <span aria-hidden="true">&rarr;</span>
+                  {/* The model without its brand: with "Lenovo" in it the label
+                      ran to two lines at 375px, and the brand is in the heading
+                      directly above. */}
+                  {c.seeAllSpecs.replace(
+                    "{model}",
+                    exampleModel.name.replace(`${exampleModel.brand} `, ""),
+                  )}{" "}
+                  <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
 

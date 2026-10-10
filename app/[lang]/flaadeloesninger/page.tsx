@@ -608,11 +608,9 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
         />
       </div>
 
-      <section className="relative overflow-hidden bg-brand-950 py-10 sm:py-20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-950/20 blur-3xl"
-        />
+      {/* Lit by the site's own wash rather than a blurred orb, which was
+          bg-brand-950 on bg-brand-950 and drew nothing. */}
+      <section className="lit overflow-hidden bg-brand-950 py-10 sm:py-20">
         <Container className="relative flex flex-col items-center gap-5 text-center">
           <MarkTile name="sustainable" size="lg" />
           <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">

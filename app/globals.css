@@ -43,6 +43,29 @@ body {
 
 @layer base {
   /*
+   * Line breaks a person would choose.
+   *
+   * 117 headings had no text-balance and no paragraph had text-pretty, so a
+   * two-line heading broke wherever the measure ran out — often one word on
+   * the second line — and paragraphs ended on a single orphaned word. Set
+   * once here rather than as a class to remember on each element; the
+   * .text-balance utility still works and now simply agrees.
+   */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  /*
    * Where the page stops when something is scrolled to.
    *
    * The header is sticky and 81px tall, and nothing was reserving room for it.
@@ -692,7 +715,6 @@ body {
     opacity: 1;
   }
 
-
   @media (prefers-reduced-motion: reduce) {
     .forge,
     .forge-face,
@@ -892,8 +914,10 @@ body {
       inset 0 0 0 1px rgb(96 128 255 / 0.34),
       inset 0 -1px 0 0 rgb(0 0 0 / 0.45),
       0 2px 4px -2px rgb(2 5 12 / 0.65),
-      0 26px 46px -22px rgb(2 5 12 / 0.95),
-      0 0 34px -16px rgb(46 92 255 / 0.5);
+      0 26px 46px -22px rgb(2 5 12 / 0.95);
+    /* No coloured halo: on a dark surface elevation reads from the lighter
+       face and the deeper shadow, and a blue glow around a lifted card is
+       the generated-UI tell, not depth. */
   }
 
   /*

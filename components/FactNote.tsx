@@ -35,9 +35,9 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
             <h2 className="mt-4 font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
               {c.title}
             </h2>
-            <ul className="mt-6 space-y-5">
+            <ul className="mt-6 space-y-3">
               {sourceList(ids).map((source) => (
-                <li key={source.id} className="border-l-2 border-brand-500/40 pl-4">
+                <li key={source.id} className="plate p-4 sm:p-5">
                   <p className="text-sm leading-[1.6] text-paper/75">{source.claim[lang]}</p>
                   <p className="mt-1 text-xs text-paper/55 leading-[1.45]">
                     {source.publisher}
@@ -49,7 +49,7 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
           </div>
 
           <div className="lg:col-span-5">
-            <SourceList lang={lang} ids={ids} />
+            <SourceList lang={lang} ids={ids} compact />
           </div>
         </div>
       </Container>

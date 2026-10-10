@@ -9,7 +9,7 @@ import type { Lang } from "@/lib/i18n";
 const copy = {
   da: {
     choose: "Vælg hvem I vil i kontakt med",
-    nordic: "Danmark & Norden",
+    nordic: "Norden",
     international: "International",
     callDirect: "Ring direkte til",
     writeDirect: "Skriv direkte til",
@@ -20,7 +20,7 @@ const copy = {
   },
   en: {
     choose: "Choose who you want to reach",
-    nordic: "Denmark & Nordics",
+    nordic: "Nordics",
     international: "International",
     callDirect: "Call",
     writeDirect: "Write directly to",
@@ -61,7 +61,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           role="tab"
           aria-selected={!showIntl}
           onClick={() => setShowIntl(false)}
-          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
+          className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             !showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
@@ -73,7 +73,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           role="tab"
           aria-selected={showIntl}
           onClick={() => setShowIntl(true)}
-          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 transition sm:flex-none ${
+          className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >

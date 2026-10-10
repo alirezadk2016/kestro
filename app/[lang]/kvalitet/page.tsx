@@ -247,7 +247,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
               ))}
             </div>
 
-            <div className="mt-6 flex gap-3 border-l-2 border-white/30 bg-white/5 p-5">
+            <div className="plate mt-6 flex gap-3 p-5">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
               <p className="text-sm leading-[1.6] text-paper/80">{c.warning}</p>
             </div>
@@ -344,8 +344,8 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
           {
             href: "/vejledninger/windows-11-paa-aeldre-maskine",
             label: {
-              da: "Kommer maskinen med over til Windows 11?",
-              en: "Will the machine make the jump to Windows 11?",
+              da: "Windows 11 på ældre maskiner",
+              en: "Windows 11 on older machines",
             },
           },
         ]}

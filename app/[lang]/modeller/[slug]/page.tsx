@@ -157,16 +157,10 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <section className="relative overflow-hidden bg-brand-950 py-12 text-white sm:py-10 sm:py-20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-950/25 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"
-        />
-
+      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          generic glow every generated page has. */}
+      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
           {/* One shell width for the whole page, so every section starts at the
               same left edge. Inside it the machine and what we say about it sit
@@ -320,7 +314,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </ul>
               </div>
 
-              <div className="border-l-2 border-white/30 bg-white/5 p-5 sm:p-6">
+              <div className="plate p-5 sm:p-6">
                 <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
                   <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
                   {c.watchOut}

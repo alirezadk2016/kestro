@@ -29,7 +29,7 @@ const copy = {
     qualityTitle: "Kvalitetssikring",
     qualityBody:
       "Enhederne funktionstestes og nulstilles, før de sendes videre. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
-    qualityLink: "Se hvordan vi vurderer stand og kvalitet",
+    qualityLink: "Sådan vurderer vi stand",
   },
   en: {
     metaTitle: "Services: sourcing, fleets, upgrades and buy-back | Kestro",
@@ -45,7 +45,7 @@ const copy = {
     qualityTitle: "Quality assurance",
     qualityBody:
       "The machines are function-tested and reset before they are passed on. We state condition, battery health, configuration and warranty terms in writing before you order — and we do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier behind the individual delivery.",
-    qualityLink: "See how we assess condition and quality",
+    qualityLink: "How we assess condition",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

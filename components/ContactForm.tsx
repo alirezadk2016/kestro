@@ -374,7 +374,7 @@ export default function ContactForm({
         role="alert"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="scroll-mt-24 border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
       >
         <h3
           id="kontakt-udfald"
@@ -435,7 +435,7 @@ export default function ContactForm({
         role="status"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="scroll-mt-24 border-l-2 border-brand-400 bg-white/5 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
       >
         <h3
           id="kontakt-udfald"

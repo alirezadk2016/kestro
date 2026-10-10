@@ -427,7 +427,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         </span>
                         <ArrowRight
                           aria-hidden="true"
-                          className="h-4 w-4 flex-none text-paper/55 transition-all group-hover:translate-x-1 group-hover:text-brand-300"
+                          className="h-4 w-4 flex-none text-paper/55 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-300"
                           strokeWidth={2}
                         />
                       </span>
@@ -455,7 +455,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           {/* The same measure as the topics above it. Left at full width it
               was a band a third wider than everything it followed, with the
               button stranded at the far end of the extra third. */}
-          <div className="flex max-w-5xl flex-col gap-6 border-l-2 border-brand-400 bg-white/[0.035] p-6 sm:p-8 lg:flex-row lg:items-center lg:gap-12">
+          <div className="plate flex max-w-5xl flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:gap-12">
             <div className="max-w-2xl">
               <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.adviceTitle}

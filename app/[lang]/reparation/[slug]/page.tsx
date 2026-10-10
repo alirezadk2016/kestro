@@ -126,7 +126,7 @@ export default async function RepairPage(props: Params) {
            * Both paragraphs were already written; they were in the wrong
            * order. A reader skimming and a model quoting both take the first
            * one, and the first one used to be the throat-clearing. */}
-          <p className="mt-8 max-w-2xl border-l-2 border-brand-400 pl-5 text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
+          <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
             {repair.answer[lang]}
           </p>
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/65">
@@ -229,11 +229,14 @@ export default async function RepairPage(props: Params) {
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="flex items-baseline justify-between gap-6">
+          {/* Wraps as a whole rather than breaking the link: at 375px the
+              heading and "Alle reparationer" did not fit one row, and the
+              link went to two lines beside it. */}
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
             <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.more}</h2>
             <Link
               href={localePath("/reparation", lang)}
-              className="group inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+              className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.back}
               <ArrowRight

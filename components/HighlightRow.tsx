@@ -197,7 +197,7 @@ export default function HighlightRow({ lang }: { lang: Lang }) {
               alt={c.fleetAlt}
               fill
               sizes="(min-width: 1024px) 24vw, 92vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              className="object-cover"
             />
             {/* The picture is a backdrop for the words, so it gets a ramp dark
                 enough to read on rather than a flat tint — but only where the

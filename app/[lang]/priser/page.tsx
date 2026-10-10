@@ -278,7 +278,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             ))}
           </ol>
 
-          <div className="mt-12 max-w-3xl border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
+          <div className="plate mt-12 max-w-3xl p-6 sm:p-8">
             <h2 className="font-display text-lg font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>

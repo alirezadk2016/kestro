@@ -133,7 +133,7 @@ const copy = {
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
       { href: "/priser", label: "Hvad koster det?" },
-      { href: "/tilbud", label: "Send jeres krav – få et rigtigt tilbud" },
+      { href: "/tilbud", label: "Få et rigtigt tilbud" },
     ],
   },
   en: {
@@ -201,7 +201,7 @@ const copy = {
       { href: "/priser", label: "What does it cost?" },
       {
         href: "/tilbud",
-        label: "Send your requirements — get a real quote",
+        label: "Get a real quote",
       },
     ],
   },
@@ -351,7 +351,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                   </div>
                 ))}
               </dl>
-              <p className="mt-4 border-l-2 border-brand-600 pl-4 text-sm leading-[1.6] text-ink-600">
+              <p className="mt-4 rounded-lg bg-ink-50 p-4 text-sm leading-[1.6] text-ink-600">
                 {c.priceNote}
               </p>
               <Link

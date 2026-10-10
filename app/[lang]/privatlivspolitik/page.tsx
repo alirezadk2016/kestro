@@ -115,8 +115,8 @@ const sections: Section[] = [
         en: "If you accept statistics in the banner, we load Google Analytics 4 and measure which pages get read, how you arrived, and whether a form was sent. We never send your name, email, phone number or the content of a message to Google.",
       },
       {
-        da: 'Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket "Cookies og statistik" nederst på siden; derefter indlæses Google ikke igen.',
-        en: 'The legal basis is your consent — GDPR article 6(1)(a) and the Danish cookie order § 3. You can withdraw it at any time through the "Cookies and statistics" link at the bottom of the page; after that, Google is not loaded again.',
+        da: "Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket »Cookies og statistik« nederst på siden; derefter indlæses Google ikke igen.",
+        en: "The legal basis is your consent — GDPR article 6(1)(a) and the Danish cookie order § 3. You can withdraw it at any time through the “Cookies and statistics” link at the bottom of the page; after that, Google is not loaded again.",
       },
       {
         da: "Google LLC behandler oplysningerne som databehandler og er amerikansk. Overførslen sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og EU-US Data Privacy Framework. Vi har slået deling til Googles annonceprodukter fra.",

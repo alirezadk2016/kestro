@@ -88,7 +88,7 @@ export default function Statement({ lang }: { lang: Lang }) {
           <p className="mt-6 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
             {c.body}
           </p>
-          <p className="mt-6 border-l-2 border-brand-400 pl-5 text-base leading-[1.75] sm:leading-[1.75] text-paper/90">
+          <p className="mt-6 text-base leading-[1.75] sm:leading-[1.75] text-paper/90">
             {c.kicker}
           </p>
         </div>

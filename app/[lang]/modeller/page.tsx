@@ -23,7 +23,7 @@ const copy = {
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
       "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
-    qualityLink: "Sådan vurderer vi stand og kvalitet",
+    qualityLink: "Sådan vurderer vi stand",
     seeSpecs: "Se specifikationer",
     priceLabel: "Få et tilbud",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -39,7 +39,7 @@ const copy = {
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
       "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
-    qualityLink: "How we assess condition and quality",
+    qualityLink: "How we assess condition",
     seeSpecs: "See specifications",
     priceLabel: "Get a quote",
     priceNote: "The price depends on configuration, condition and quantity.",

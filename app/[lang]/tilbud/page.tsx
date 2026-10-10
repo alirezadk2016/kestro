@@ -289,7 +289,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
               </div>
 
               <div className="space-y-8">
-                <div className="border-l-2 border-brand-400 bg-white/5 p-6">
+                <div className="plate p-6">
                   <h2 className="font-display text-base font-bold tracking-tight text-paper">
                     {c.nextTitle}
                   </h2>

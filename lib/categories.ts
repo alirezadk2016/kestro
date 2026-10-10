@@ -92,8 +92,8 @@ export const categories: Category[] = [
       {
         href: "/vejledninger/windows-11-paa-aeldre-maskine",
         label: {
-          da: "Kommer maskinen med over til Windows 11?",
-          en: "Will the machine make the jump to Windows 11?",
+          da: "Windows 11 på ældre maskiner",
+          en: "Windows 11 on older machines",
         },
       },
       {
