@@ -57,14 +57,26 @@ const APP = join(ROOT, "app", "[lang]");
  * different facts or a different answer, it is not a skip.
  */
 const SKIP_FILE = join(ROOT, "scripts", "build", "page-dates-skip.txt");
+/* "<hash>" skips the commit for every file; "<hash> <path> <path>…" skips it
+   only for those files, for a commit that reworded some pages and only
+   restyled others. */
 const skipList = existsSync(SKIP_FILE)
   ? readFileSync(SKIP_FILE, "utf8")
       .split("\n")
       .map((line) => line.replace(/#.*/, "").trim())
       .filter(Boolean)
+      .map((line) => {
+        const [prefix, ...paths] = line.split(/\s+/);
+        return { prefix, paths };
+      })
   : [];
-const skipped = (hash, trailer) =>
-  /\bskip\b/i.test(trailer) || skipList.some((prefix) => hash.startsWith(prefix));
+const skipped = (hash, trailer, file) => {
+  if (/\bskip\b/i.test(trailer)) return true;
+  const rel = file.slice(ROOT.length + 1);
+  return skipList.some(
+    ({ prefix, paths }) => hash.startsWith(prefix) && (paths.length === 0 || paths.includes(rel)),
+  );
+};
 
 /** `git log` for one file, ISO date, newest content commit or first commit. */
 function commitDate(file, which) {
@@ -84,7 +96,7 @@ function commitDate(file, which) {
   ).trim();
   for (const line of out.split("\n")) {
     const [hash, date, trailer = ""] = line.split("\t");
-    if (hash && date && !skipped(hash, trailer)) return date.slice(0, 10);
+    if (hash && date && !skipped(hash, trailer, file)) return date.slice(0, 10);
   }
   return null;
 }

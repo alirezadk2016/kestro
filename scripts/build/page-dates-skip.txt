@@ -3,11 +3,17 @@
 # scripts/build/page-dates.mjs ignores these when it works out a route's
 # dateModified, so a styling pass does not stamp every page with "Opdateret
 # <today>". One hash (or unique prefix) per line; the text after # is the
-# reason. New commits use a `Page-Dates: skip` trailer instead — this file is
-# for commits already pushed, whose messages cannot be changed.
+# reason. A hash followed by paths skips that commit for those files only,
+# for a commit that reworded some pages and restyled others. New commits use
+# a `Page-Dates: skip` trailer instead — this file is for commits already
+# pushed, whose messages cannot be changed.
 #
 # The test: if a reader would see different words, facts or answers on the
 # page, the commit is a content change and does not belong here.
 
 fd235b9  # card grids recomposed: marks inline, one large door, prompt on touch
 4949872  # decorative eyebrows, scroll reveals and uniform section padding removed
+# the polish pass reworded headings on /kvalitet, the category and model
+# pages and some link labels; on these files it changed only classes,
+# comments or quote marks
+fdeee3b app/[lang]/tilbud/page.tsx app/[lang]/priser/page.tsx app/[lang]/vejledninger/page.tsx app/[lang]/vejledninger/[slug]/page.tsx app/[lang]/privatlivspolitik/page.tsx app/[lang]/flaadeloesninger/page.tsx app/[lang]/reparation/[slug]/page.tsx components/ContactForm.tsx
