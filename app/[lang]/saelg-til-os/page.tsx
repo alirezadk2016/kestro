@@ -275,7 +275,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
         ]}
       />
 
-      <FactNote lang={lang} ids={["nistSanitization", "ewasteMonitor"]} />
+      <FactNote lang={lang} ids={["nistSanitization"]} />
 
       <CtaSection lang={lang} />
     </>

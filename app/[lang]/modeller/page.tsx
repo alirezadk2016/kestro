@@ -18,15 +18,13 @@ const copy = {
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
     description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
-    noShopTitle: "Er det her en webshop?",
+    noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    noStockLink: "Sådan bliver prisen til",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
       "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
-    qualityLink: "Sådan vurderer vi stand",
     seeSpecs: "Se specifikationer",
-    priceLabel: "Få et tilbud",
-    priceNote: "Prisen afhænger af konfiguration, stand og antal.",
   },
   en: {
     metaTitle: "Models we often source for business | Kestro",
@@ -34,15 +32,13 @@ const copy = {
       "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
     title: "Models we often source",
     description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
-    noShopTitle: "Is this a web shop?",
+    noStockLine: "No prices or stock levels here, because we source the machines for each order.",
+    noStockLink: "How the price is set",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
       "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
-    qualityLink: "How we assess condition",
     seeSpecs: "See specifications",
-    priceLabel: "Get a quote",
-    priceNote: "The price depends on configuration, condition and quantity.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -84,18 +80,19 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             updated="/modeller"
           />
 
-          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noShopBody2}</p>
+          {/* One line, where there was a panel. The panel's two paragraphs
+              were also the answers to two of the questions at the foot of
+              this page, so they were on it twice; the full reasoning lives
+              on /priser and in those answers. */}
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
+            {c.noStockLine}{" "}
             <Link
-              href={localePath("/kvalitet", lang)}
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+              href={localePath("/priser", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
             >
-              {c.qualityLink}
-              <span aria-hidden="true">&rarr;</span>
+              {c.noStockLink}
             </Link>
-          </div>
+          </p>
 
           {modelGroups.map((group) => {
             const groupModels = models.filter((model) => model.group === group.id);
@@ -109,7 +106,6 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                 <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
                   {group.description[lang]}
                 </p>
-                <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
                 {/* A shelf to swipe on a phone (.rail), the grid from md. */}
                 <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
@@ -132,12 +128,12 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                         {/* Pushes the footer row down so every card in a row ends
                             level, whether it got three chips, two or none. */}
                         <span className="flex-1" />
-                        <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">
-                          <span className="text-sm font-semibold text-paper">{c.priceLabel}</span>
-                          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
-                            {c.seeSpecs}
-                            <span aria-hidden="true">&rarr;</span>
-                          </span>
+                        {/* The card's one action, which is what tapping it does. It
+                            also said "Få et tilbud" in white beside it: not a
+                            link, on every card, five groups down the page. */}
+                        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
+                          {c.seeSpecs}
+                          <span aria-hidden="true">&rarr;</span>
                         </span>
                       </Link>
                     </li>

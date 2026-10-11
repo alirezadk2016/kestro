@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { buttonClass } from "@/components/Button";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
@@ -11,8 +10,6 @@ import { guides, clusters } from "@/lib/guides";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
-import FactNote from "@/components/FactNote";
-import { sources, type SourceId } from "@/lib/sources";
 
 /*
  * Viden — the hub.
@@ -47,10 +44,6 @@ const copy = {
     article: "vejledning",
     readingSuffix: "min.",
     read: "Læs vejledningen",
-    adviceTitle: "Gratis rådgivning",
-    adviceBody:
-      "Står du med et konkret spørgsmål, som ingen af vejledningerne svarer på, så skriv til os. Vi svarer på spørgsmål om reparation, opgradering og køb af brugt udstyr uden at sende en regning – også hvis svaret er, at du ikke skal købe noget af os.",
-    adviceCta: "Stil et spørgsmål",
     crumb: "Viden",
   },
   en: {
@@ -70,10 +63,6 @@ const copy = {
     article: "guide",
     readingSuffix: "min",
     read: "Read the guide",
-    adviceTitle: "Free advice",
-    adviceBody:
-      "If you have a specific question none of the guides answers, write to us. We answer questions about repairs, upgrades and buying used equipment without sending an invoice — including when the answer is that you should not buy anything from us.",
-    adviceCta: "Ask a question",
     crumb: "Knowledge",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -456,41 +445,10 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
         </section>
       ))}
 
-      {/*
-       * The question the guides did not answer.
-       *
-       * It used to be a narrow card floating in a wide empty section directly
-       * above the site's own closing call to action — two invitations in a row,
-       * the first of them visually the weaker, which made both count for less.
-       * As a band it is plainly a footnote to the reading above rather than a
-       * competing offer, and the section below can do the selling.
-       */}
-      <section className="py-10 sm:py-14">
-        <Container>
-          {/* The same measure as the topics above it. Left at full width it
-              was a band a third wider than everything it followed, with the
-              button stranded at the far end of the extra third. */}
-          <div className="plate flex max-w-5xl flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:gap-12">
-            <div className="max-w-2xl">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
-                {c.adviceTitle}
-              </h2>
-              <p className="mt-3 text-[0.9375rem] leading-7 text-paper/75">{c.adviceBody}</p>
-            </div>
-            <Link
-              href={localePath("/kontakt", lang)}
-              className={`${buttonClass("primary")} flex-none self-start lg:ml-auto lg:self-auto`}
-            >
-              {c.adviceCta}
-            </Link>
-          </div>
-        </Container>
-      </section>
-
-      {/* Every source the guides cite, in one place. Each guide lists its own
-          under it; this is the same registry seen from the index. */}
-      <FactNote lang={lang} ids={Object.keys(sources) as SourceId[]} />
-
+      {/* The guides end straight on the closing band. A "free advice" panel
+          used to sit above it, saying "write to us" one screen before the band
+          said it again, and the six sources every guide already cites were
+          listed here a second time; each guide keeps its own. */}
       <CtaSection lang={lang} />
     </>
   );

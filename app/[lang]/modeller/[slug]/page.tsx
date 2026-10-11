@@ -18,7 +18,6 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import Faq from "@/components/Faq";
 import { modelFaqs, modelLead, modelSources } from "@/lib/model-copy";
-import { buttonClass } from "@/components/Button";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -49,8 +48,6 @@ export function generateStaticParams() {
 const copy = {
   da: {
     breadcrumb: "Modeller",
-    notStock:
-      "Vi har den ikke på lager. Vi sourcer den til den enkelte ordre – fortæl os antal og hvad maskinerne skal bruges til, så vender vi tilbage med pris og leveringstid.",
     imageNote:
       "Billederne viser modeltypen. Stand, specifikationer og antal aftales for den enkelte ordre.",
     configTitle: "Typisk konfiguration",
@@ -59,17 +56,11 @@ const copy = {
     goodFor: "God til",
     watchOut: "Vær opmærksom på",
     whyTitle: "Derfor peger vi ofte på denne model",
-    ctaTitlePre: "Skal I bruge",
-    ctaBody:
-      "Fortæl os antal, hvad maskinerne skal bruges til, og hvornår I skal bruge dem. Så finder vi dem i vores leverandørnetværk og vender tilbage med et konkret bud – også hvis en anden model passer bedre til opgaven.",
-    ctaButton: "Spørg om denne model",
     seeAlsoPre: "Se også alt, hvad vi skaffer inden for",
     related: "Andre modeller i samme klasse",
   },
   en: {
     breadcrumb: "Models",
-    notStock:
-      "We do not hold it in stock. We source it per order — tell us the quantity and what the machines are for, and we come back with price and lead time.",
     imageNote:
       "The photos show the model type. Condition, specifications and quantity are agreed per order.",
     configTitle: "Typical configuration",
@@ -78,10 +69,6 @@ const copy = {
     goodFor: "Good for",
     watchOut: "Worth knowing",
     whyTitle: "Why we often point at this model",
-    ctaTitlePre: "Do you need the",
-    ctaBody:
-      "Tell us the quantity, what the machines are for, and when you need them. We then find them in our supplier network and come back with a concrete proposal — including if another model suits the job better.",
-    ctaButton: "Ask about this model",
     seeAlsoPre: "See everything else we source within",
     related: "Other models in the same class",
   },
@@ -252,13 +239,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   </time>
                 </p>
 
-                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-paper/75">
-                  {c.notStock}
-                </p>
-
                 {/* The page describes the machine in detail and then used to say
                 nothing about price, which leaves a buyer guessing whether this
-                is a shop that forgot its prices. */}
+                is a shop that forgot its prices. One box answers price and
+                stock together: a "not in stock" plate stood above it saying
+                half the same thing, and an "Ask about this model" panel further
+                down said the rest again. */}
                 <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
               </div>
             </div>
@@ -350,19 +336,6 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </dl>
               </>
             )}
-
-            <div className="plate mt-12 p-6 sm:p-8">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
-                {c.ctaTitlePre} {model.name}?
-              </h2>
-              <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
-              <Link
-                href={localePath("/kontakt", lang)}
-                className={`${buttonClass("primary")} mt-5`}
-              >
-                {c.ctaButton}
-              </Link>
-            </div>
 
             {category && (
               <p className="mt-8 text-sm leading-[1.6] text-paper/65">

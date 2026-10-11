@@ -22,7 +22,7 @@ const copy = {
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
     /* Answer first, with the two counts the page actually lists. */
-    description: `Kestro er indkøbspartner på brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
+    description: `Kestro er leverandør af brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     processTitle: "Sådan foregår en leverance",
     processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
     qualityTitle: "Kvalitetssikring",
@@ -36,7 +36,7 @@ const copy = {
       "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
     stepLink: "Read more",
     title: "What we help with",
-    description: `Kestro is a sourcing partner for used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,
+    description: `Kestro is a supplier of used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,
     processTitle: "How a delivery works",
     processSub:
       "From used equipment in southern Europe to tested, Nordic-ready machines at your desks.",
@@ -128,8 +128,8 @@ const steps = [
     slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi arbejder som indkøbspartner og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
-      en: "We work as a sourcing partner and find used business laptops and desktops through suppliers in southern Europe — without tying up capital in stock of our own. That means we can shape the sourcing around the individual order instead of being limited by whatever happens to be on a shelf.",
+      da: "Vi leverer på bestilling og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
+      en: "We supply to order and find used business laptops and desktops through suppliers in southern Europe — without tying up capital in stock of our own. That means we can shape the sourcing around the individual order instead of being limited by whatever happens to be on a shelf.",
     },
   },
   {

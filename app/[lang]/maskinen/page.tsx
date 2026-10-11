@@ -9,7 +9,6 @@ import MachineInside from "@/components/MachineInside";
 import { interiorParts } from "@/lib/machine-parts";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
-import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
@@ -148,8 +147,6 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
           };
         })}
       />
-
-      <FactNote lang={lang} ids={["repairDirective", "windows11Requirements"]} />
 
       <CtaSection lang={lang} />
     </>

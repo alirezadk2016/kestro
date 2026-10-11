@@ -3,7 +3,6 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
@@ -21,8 +20,9 @@ const copy = {
       "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
     title: "Hvad vi skaffer",
     /* Answer first, with the counts the page and /modeller actually show. */
-    description: `Kestro er indkøbspartner, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
-    noPricesTitle: "Hvorfor er der ingen priser eller lagerstatus her?",
+    description: `Kestro er leverandør, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
+    noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    noStockLink: "Sådan bliver prisen til",
     noPrices1:
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at I ikke betaler for et lager, andre skal have afsat.",
     noPrices2:
@@ -39,8 +39,9 @@ const copy = {
     metaDescription:
       "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
     title: "What we source",
-    description: `Kestro is a sourcing partner, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
-    noPricesTitle: "Why are there no prices or stock levels here?",
+    description: `Kestro is a supplier, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
+    noStockLine: "No prices or stock levels here, because we source the machines for each order.",
+    noStockLink: "How the price is set",
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
@@ -92,11 +93,19 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             updated="/produkter"
           />
 
-          <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.noPricesTitle}</h2>
-            <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noPrices2}</p>
-          </div>
+          {/* One line, where there was a panel. The panel's two paragraphs
+              were also the answers to two of the questions at the foot of
+              this page, so they were on it twice; the full reasoning lives
+              on /priser and in those answers. */}
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
+            {c.noStockLine}{" "}
+            <Link
+              href={localePath("/priser", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
+            >
+              {c.noStockLink}
+            </Link>
+          </p>
 
           <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.categories}
@@ -150,7 +159,9 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
         </Container>
       </section>
 
-      <QualifySection lang={lang} />
+      {/* "Genkender I én af disse?" lives on the front page only. It stood here
+          as well, the same four situations at the same 1,670px, so anyone who
+          came from the front page met it twice in two clicks. */}
 
       <Faq
         lang={lang}

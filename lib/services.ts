@@ -50,8 +50,8 @@ export const services: Service[] = [
       en: "We find the right IT equipment for you — and buy only once you know what you need.",
     },
     intro: {
-      da: "Kestro holder ikke lager. Vi arbejder som indkøbspartner og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en konkret ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
-      en: "Kestro holds no stock. We work as a sourcing partner and find used business laptops and desktops through suppliers in southern Europe once there is an actual order. That sounds like a shortcoming; it is the whole point. We are not tied to whatever we happened to buy in.",
+      da: "Kestro holder ikke lager. Som jeres indkøbspartner finder vi brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en konkret ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
+      en: "Kestro holds no stock. As your sourcing partner we find used business laptops and desktops through suppliers in southern Europe once there is an actual order. That sounds like a shortcoming; it is the whole point. We are not tied to whatever we happened to buy in.",
     },
     sections: [
       {
@@ -367,8 +367,8 @@ export const services: Service[] = [
         heading: { da: "Hvad vi gør ved det", en: "What we do with it" },
         body: [
           {
-            da: "Vi er indkøbspartner begge veje. Samme netværk, vi bruger til at finde maskiner til nordiske virksomheder, kan bruges til at finde køberne til jeres. I får en vurdering, før I beslutter jer, og I er ikke bundet af at have bedt om den.",
-            en: "We are a sourcing partner in both directions. The same network we use to find machines for Nordic companies can be used to find the buyers for yours. You get a valuation before you decide, and asking for one commits you to nothing.",
+            da: "Vi handler begge veje. Samme netværk, vi bruger til at finde maskiner til nordiske virksomheder, kan bruges til at finde køberne til jeres. I får en vurdering, før I beslutter jer, og I er ikke bundet af at have bedt om den.",
+            en: "We trade in both directions. The same network we use to find machines for Nordic companies can be used to find the buyers for yours. You get a valuation before you decide, and asking for one commits you to nothing.",
           },
           {
             da: "Er der data på enhederne, slettes lagermedierne, før de klargøres til videresalg. Skal I bruge dokumentation for sletningen, aftaler vi det på forhånd.",

@@ -19,7 +19,7 @@ const copy = {
     title: "Om Kestro",
     /* Answer first: what Kestro is, where, and for whom. */
     description:
-      "Kestro er en indkøbspartner i Aarhus, der skaffer brugt erhvervshardware fra leverandører i Sydeuropa til virksomheder i 2 lande, Danmark og Norge – en testet maskine til opgaven frem for en ny til listepris.",
+      "Kestro er en leverandør af brugt erhvervshardware i Aarhus. Vi finder maskinerne i et netværk af leverandører i Sydeuropa og leverer dem til virksomheder i 2 lande, Danmark og Norge – en testet maskine til opgaven frem for en ny til listepris.",
     quote:
       "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
@@ -29,7 +29,7 @@ const copy = {
       "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
     title: "About Kestro",
     description:
-      "Kestro is a sourcing partner in Aarhus that finds used business hardware through suppliers in southern Europe for companies in 2 countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",
+      "Kestro is a supplier of used business hardware in Aarhus. We find the machines through a network of suppliers in southern Europe and deliver them to companies in 2 countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",
     quote:
       "Most people write to us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
   },
@@ -51,12 +51,12 @@ const sections = [
   {
     mark: "network" as CraftMarkName,
     title: {
-      da: "Vi er indkøbspartner – ikke webshop",
-      en: "We are a sourcing partner, not a web shop",
+      da: "Vi er leverandør – ikke webshop",
+      en: "We are a supplier, not a web shop",
     },
     description: {
-      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi arbejder som indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
-      en: "Kestro does not sit on a warehouse for you to pick from. We work as a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you. You buy from Kestro: the quote, the invoice and any complaint go through us, not through the supplier.",
+      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
+      en: "Kestro does not sit on a warehouse for you to pick from. We supply to order: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you. You buy from Kestro: the quote, the invoice and any complaint go through us, not through the supplier.",
     },
   },
   {
@@ -94,8 +94,8 @@ const aboutFaqs = (contact: { name: string; role: { da: string; en: string } }):
   {
     question: { da: "Er Kestro en webshop?", en: "Is Kestro a web shop?" },
     answer: {
-      da: "Nej. Vi har ikke et lager, I vælger fra. Vi er indkøbspartner: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa, tester og klargør det, før det leveres.",
-      en: "No. We have no warehouse for you to pick from. We are a sourcing partner: you tell us what you need, and we find it in our supplier network in southern Europe, test and prepare it before it is delivered.",
+      da: "Nej. Vi har ikke et lager, I vælger fra. Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa, tester og klargør det, før det leveres.",
+      en: "No. We have no warehouse for you to pick from. We supply to order: you tell us what you need, and we find it in our supplier network in southern Europe, test and prepare it before it is delivered.",
     },
   },
   {
@@ -179,7 +179,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
       />
 
       {/* TeamSection introduces them a screen above; twice is noise. */}
-      <CtaSection lang={lang} people={false} />
+      <CtaSection lang={lang} />
     </>
   );
 }

@@ -13,7 +13,6 @@ import Faq from "@/components/Faq";
 import { primaryContact } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
-import FactNote from "@/components/FactNote";
 import { buttonClass } from "@/components/Button";
 
 const copy = {
@@ -652,8 +651,6 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           },
         ]}
       />
-
-      <FactNote lang={lang} ids={["ewasteMonitor", "windows10Eol"]} />
 
       {/* Lit by the site's own wash rather than a blurred orb, which was
           bg-brand-950 on bg-brand-950 and drew nothing. */}

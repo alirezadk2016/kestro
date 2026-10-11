@@ -68,7 +68,7 @@ const cards = [
 
 const copy = {
   da: { title: "Refurbished computere og skærme, vi skaffer" },
-  en: { title: "Refurbished computers and screens we source" },
+  en: { title: "Refurbished computers and monitors we source" },
 } satisfies Record<Lang, Record<string, string>>;
 
 export default function CategoryCards({ lang }: { lang: Lang }) {

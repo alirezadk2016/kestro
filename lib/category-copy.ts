@@ -53,7 +53,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
     items.push({
       question: {
         da: `Hvilke modeller af ${name.da} har I beskrevet?`,
-        en: `Which ${name.en} models have you described?`,
+        en: `Which models of ${name.en} have you described?`,
       },
       answer: {
         da: `${known.length === 1 ? "Én" : known.length} i detaljer: ${list(known, "og")}. Hver har sin egen side med typisk konfiguration, hvad den er god til, og hvad man skal være opmærksom på.`,
