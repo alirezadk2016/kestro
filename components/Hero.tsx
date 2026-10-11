@@ -110,7 +110,7 @@ export default function Hero({ lang }: { lang: Lang }) {
      * measures at every width from 768 up; verify's overflow pass is what
      * catches it if that ever stops being true.
      */
-    <section className="grain relative flex w-full flex-col overflow-hidden bg-brand-950 md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
+    <section className="grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
       {/*
        * The scene.
        *
@@ -161,15 +161,6 @@ export default function Hero({ lang }: { lang: Lang }) {
         fetchPriority="high"
       />
 
-      {/* The header's own colour carried down into the hero on a phone. The
-          bar ends on rgb(4 8 18) and the hero starts on brand-950, so the two
-          met on a visible step; this lets the bar dissolve into the page. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-48 md:hidden"
-        style={{ background: "linear-gradient(180deg, rgb(4,8,18) 0%, rgba(4,8,18,0) 100%)" }}
-      />
-
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
@@ -204,6 +195,49 @@ export default function Hero({ lang }: { lang: Lang }) {
        * are gone and the book's spine was cleaned out of the plate.
        */}
 
+      {/*
+        The phone's first screen: the room behind everything, the words on
+        glass at the bottom.
+
+        It used to be words first and the picture after them as a band, and
+        on an iPhone the band started under the buttons, so the first screen
+        was navy with type on it and a strip of room at the foot. Now the
+        room fills the screen from under the bar down, and the headline, the
+        sentence, the three facts and both actions sit together in one glass
+        panel at the bottom, under the thumb.
+
+        A 2.7:1 photograph still cannot fill a 0.6 screen without losing the
+        machine, so it is not stretched to: the phone's own cut (1000x971
+        from x 1000, y 100 of the cleaned plate; the whole lit K and the
+        whole machine in its top two thirds) stands sharp at the top at its
+        own ratio, and the same file, blurred and enlarged, fills whatever
+        height the phone has below it. One download, any screen. The dark
+        stone of the desk is what the glass sits on.
+
+        From md up the wrapper is display: contents, so the wide layout is
+        exactly what it was.
+      */}
+      <div className="relative flex min-h-[100svh] flex-col justify-end md:contents">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 md:hidden">
+          <div
+            className="absolute inset-0 scale-110 bg-cover bg-top opacity-60 blur-2xl"
+            style={{ backgroundImage: "url(/hero/scene-mobile.webp)" }}
+          />
+          <div
+            className="absolute inset-x-0 top-0 aspect-[1000/971] bg-cover bg-top"
+            style={{
+              backgroundImage: "url(/hero/scene-mobile.webp)",
+              WebkitMaskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
+              maskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
+            }}
+          />
+          {/* Enough shade under the glass bar for the logo, no more. */}
+          <div
+            className="absolute inset-x-0 top-0 h-28"
+            style={{ background: "linear-gradient(180deg, rgba(4,8,18,0.5) 0%, rgba(4,8,18,0) 100%)" }}
+          />
+        </div>
+
       <div /* Centred, but not in the middle. The reference sets the block
                   high in the frame — 87px of air above the eyebrow against 259
                   below the buttons — because the machine and the waterfront
@@ -212,10 +246,10 @@ export default function Hero({ lang }: { lang: Lang }) {
                   back until 2xl: below that the frame has no spare height to
                   give, and asking for it only makes the box taller than the
                   photograph's own ratio, which is paid for in cropped sides. */
-        className="relative z-10 flex flex-1 items-center pb-2 pt-6 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
+        className="relative z-10 flex items-center pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-24 md:flex-1 md:pb-14 md:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
       >
         <Container>
-          <div className="max-w-2xl lg:max-w-[54%]">
+          <div className="hero-glass max-w-2xl lg:max-w-[54%]">
             <div className="rise">
               {/* Sized for the longest word it has to hold rather than for
                   the English: "Erhvervscomputere." is one 18-character word
@@ -265,11 +299,11 @@ export default function Hero({ lang }: { lang: Lang }) {
                   narrower than 390 — the iPhone mini, the SE and most Android
                   phones at 360. Text with a dot between holds one line down
                   to 320. */}
-              <ul className="mt-4 flex flex-wrap items-center gap-y-1 text-[13px] font-medium leading-5 text-paper/75 max-[359px]:text-xs md:hidden">
+              <ul className="mt-4 flex flex-wrap items-center gap-y-1 text-[13px] font-medium leading-5 text-paper/75 max-[399px]:text-xs md:hidden">
                 {c.proof.map((fact, i) => (
                   <li key={fact} className="flex items-center">
                     {i > 0 && (
-                      <span aria-hidden="true" className="mx-2 h-1 w-1 rounded-full bg-brand-300" />
+                      <span aria-hidden="true" className="mx-1.5 h-1 w-1 rounded-full bg-brand-300 min-[400px]:mx-2" />
                     )}
                     {fact}
                   </li>
@@ -303,49 +337,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         </Container>
       </div>
 
-      {/*
-        The phone's version of the room, as a band rather than a backdrop.
-
-        The scene was hidden below md, which meant the screen most B2B traffic
-        arrives on — the most important screen there is — was flat navy with
-        type on it while the desktop got the room.
-
-        Laying the same photograph behind the copy does not fix it and cannot:
-        the hero stacks on a phone, so the band is 390 by about 900, a ratio of
-        0.43, and no crop of a 2.7:1 photograph fills that without enlarging it
-        until only a vertical sliver of the middle survives. Tried, measured,
-        and it is exactly what happened — the room vanished and the machine
-        slid down behind the trust strip.
-
-        So the picture gets a frame of its own at a ratio it can hold, after
-        the words and before the facts, which is the shape of every mobile hero
-        that works. The file is the phone's own cut, 16:9 from the cleaned
-        plate (1060x596 from x 1040, y 290): the lit K, the whole machine and
-        the water. It was 4:3, which put the front of the laptop at 690px —
-        below the 659px an iPhone 15 shows in Safari before anything scrolls,
-        so the first screen held half a machine. At 16:9 the machine is larger
-        in the frame and ends above the fold. 39kB against the desktop's 85.
-        The top edge fades into the copy above and the bottom into the facts
-        below, so it starts and ends without a line.
-      */}
-      <div
-        aria-hidden="true"
-        className="relative z-10 aspect-[16/9] w-full bg-cover bg-center bg-no-repeat md:hidden"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(11,20,38,0) 86%, rgba(8,13,27,0.85) 100%), url(/hero/scene-mobile.webp)",
-          /* The top edge dissolves into the hero's own ground rather than
-             into a painted navy. The section carries grain and a vignette
-             that a flat colour stop cannot match, so a gradient ending on
-             brand-950 drew a clean band against a textured one: a seam
-             under the buttons on every phone. A mask lets whatever is behind
-             the picture show through instead. */
-          WebkitMaskImage:
-            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 16%, #000 26%)",
-          maskImage:
-            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 16%, #000 26%)",
-        }}
-      />
+      </div>
 
       <FeatureStrip lang={lang} />
     </section>

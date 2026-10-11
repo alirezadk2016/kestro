@@ -90,7 +90,7 @@ export default function Header({ lang }: { lang: Lang }) {
   }
 
   return (
-    <header className="glass-nav sticky top-0 z-50">
+    <header className={`glass-nav sticky top-0 z-50 ${basePath === "/" ? "header-home" : ""}`}>
       {/*
         The first thing a keyboard reaches on every page.
 

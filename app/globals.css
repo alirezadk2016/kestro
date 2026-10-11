@@ -279,6 +279,43 @@ body {
     }
   }
 
+  /*
+   * The bar on the front page of a phone is glass, because the room runs up
+   * behind it. Clear over the picture at the top, closing to near-opaque over
+   * the first 160px of scroll where scroll-driven animation exists; where it
+   * does not, it holds at a tint that keeps the logo above 8:1 over the
+   * lightest section on the page.
+   */
+  @media (max-width: 767px) {
+    .glass-nav.header-home {
+      background-image: none;
+      background-color: rgb(6 10 22 / 0.8);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      backdrop-filter: blur(16px) saturate(150%);
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .glass-nav.header-home {
+        animation-name: nav-edge, nav-glass;
+        animation-timing-function: linear, linear;
+        animation-fill-mode: both, both;
+        animation-timeline: scroll(root), scroll(root);
+        animation-range:
+          0 48px,
+          0 160px;
+      }
+    }
+  }
+
+  @keyframes nav-glass {
+    from {
+      background-color: rgb(6 10 22 / 0.18);
+    }
+    to {
+      background-color: rgb(6 10 22 / 0.88);
+    }
+  }
+
   /* The bar's quote button on the front page, below lg: hidden while the
      hero's own button is on screen, in over the next 80px of scroll after
      it has gone. visibility, not only opacity, so a hidden button cannot be
@@ -288,7 +325,9 @@ body {
       .header-cta-home {
         animation: header-cta-in linear both;
         animation-timeline: scroll(root);
-        animation-range: 360px 440px;
+        /* The hero is one screen tall on a phone and its button sits at the
+           foot of it, so the bar's button follows the screen's height. */
+        animation-range: calc(100svh - 170px) calc(100svh - 110px);
       }
     }
   }
@@ -504,16 +543,50 @@ body {
    * headline in a 358px column. From md the words sit beside the photograph,
    * and the old desktop sizing applies.
    */
+  /* On a phone the headline sits inside the hero's glass panel, 40px
+     narrower than the page, and "erhvervscomputere." is one 18-character word
+     that cannot break: 8.2vw holds it inside the panel from 360 to 430. */
   .hero-title {
-    font-size: clamp(1.75rem, 9.2vw, 2.4rem);
+    font-size: clamp(1.65rem, 8.2vw, 2.2rem);
   }
 
   /* The English accent line, "Ready for the Nordics.", is 22 characters to
-     the Danish 16, and at 9.2vw it broke onto a fourth line. 7.9vw keeps the
-     English headline to three lines, 31px at 390. */
+     the Danish 16, and at the Danish size it breaks onto a fourth line. */
   @media (max-width: 767px) {
     :lang(en) .hero-title {
-      font-size: clamp(1.6rem, 7.9vw, 2.2rem);
+      font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+  }
+
+  /*
+   * The front page's words on a phone, on glass over the room.
+   *
+   * Dark enough that the type is measured against the panel rather than
+   * against whatever the picture does behind it (verify samples it), clear
+   * enough that the stone and the light of the room read through. The radius
+   * is the button's 8px plus the 20px of padding around it, so the corners
+   * run parallel. From md the panel is not drawn; the wide hero has its own
+   * scrim.
+   */
+  @media (max-width: 767px) {
+    .hero-glass {
+      border-radius: 28px;
+      padding: 1.375rem 1.25rem 0.5rem;
+      background-color: rgb(8 13 27 / 0.6);
+      /* A sheen across the top-left, as light from the window would lie on
+         a pane: what makes a dark panel read as glass rather than a tint. */
+      background-image: linear-gradient(
+        160deg,
+        rgb(255 255 255 / 0.09) 0%,
+        rgb(255 255 255 / 0.025) 38%,
+        rgb(255 255 255 / 0) 70%
+      );
+      border: 1px solid rgb(255 255 255 / 0.12);
+      box-shadow:
+        inset 0 1px 0 0 rgb(255 255 255 / 0.08),
+        0 24px 60px -24px rgb(0 0 0 / 0.7);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+      backdrop-filter: blur(22px) saturate(150%);
     }
   }
 
