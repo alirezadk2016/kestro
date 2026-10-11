@@ -7,7 +7,7 @@
   "/flaadeloesninger": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 8
+    "files": 10
   },
   "/handelsbetingelser": {
     "published": "2026-09-02",
@@ -22,7 +22,7 @@
   "/kvalitet": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 4
+    "files": 5
   },
   "/maskinen": {
     "published": "2026-08-24",
@@ -37,7 +37,7 @@
   "/modeller/[slug]": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 10
+    "files": 11
   },
   "/om-os": {
     "published": "2026-08-23",
@@ -57,17 +57,17 @@
   "/produkter": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 9
+    "files": 10
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 11
+    "files": 12
   },
   "/reparation": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 7
+    "files": 9
   },
   "/reparation/[slug]": {
     "published": "2026-09-14",
@@ -77,7 +77,7 @@
   "/saelg-til-os": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 7
+    "files": 8
   },
   "/tilbud": {
     "published": "2026-08-30",
@@ -92,12 +92,12 @@
   "/vejledninger": {
     "published": "2026-08-23",
     "modified": "2026-10-10",
-    "files": 5
+    "files": 6
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-08",
-    "files": 6
+    "modified": "2026-10-10",
+    "files": 7
   },
   "/ydelser": {
     "published": "2026-08-23",
