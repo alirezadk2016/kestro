@@ -93,13 +93,20 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
 
   return (
     <div className={className}>
-      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.title}</h2>
+      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+        {c.title}
+      </h2>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {c.columns.map((column) => (
           <div key={column.heading} className="plate p-5">
-            <MarkTile name={column.mark} size="md" />
-            <h3 className="mt-3 text-sm font-semibold text-paper">{column.heading}</h3>
+            {/* Mark and heading on one line, like the site's other cards. */}
+            <div className="flex items-center gap-3">
+              <MarkTile name={column.mark} size="sm" className="flex-none" />
+              <h3 className="font-display t-h3 font-bold tracking-tight text-paper">
+                {column.heading}
+              </h3>
+            </div>
             <ul className="mt-3 space-y-2">
               {column.points.map((point) => (
                 <li key={point} className="flex gap-2 text-sm leading-6 text-paper/75">

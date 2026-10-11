@@ -19,7 +19,15 @@ const copy = {
   en: { title: "On this page" },
 } satisfies Record<Lang, { title: string }>;
 
-export default function ArticleToc({ items, lang }: { items: TocItem[]; lang: Lang }) {
+export default function ArticleToc({
+  items,
+  lang,
+  className = "mt-10",
+}: {
+  items: TocItem[];
+  lang: Lang;
+  className?: string;
+}) {
   if (items.length < 3) return null;
 
   const list = (
@@ -41,7 +49,7 @@ export default function ArticleToc({ items, lang }: { items: TocItem[]; lang: La
   );
 
   return (
-    <nav aria-label={copy[lang].title} className="mt-10 border-l border-white/15 pl-5">
+    <nav aria-label={copy[lang].title} className={`border-l border-white/15 pl-5 ${className}`}>
       {/* Open on a wide screen, foldable on a narrow one — same markup, so the
           links are in the DOM for a crawler in both cases. */}
       <details open className="group [&[open]>summary_svg]:rotate-180 sm:[&>summary]:hidden">

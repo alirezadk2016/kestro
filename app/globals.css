@@ -76,15 +76,19 @@ body {
    * page body, instead of a max-width on each of fifty containers. Text in
    * cards and panels is narrower than this already and is unaffected.
    *
-   * Paragraphs only: an li or a dd is as often a layout box (a grid cell, a
-   * card) as a line of text, and capping a grid cell would shrink the card
-   * inside its track.
+   * Paragraphs, and the items of a list that is a list of text. An li in a
+   * grid or a flex row is a layout box (a card, a chip), and capping it would
+   * shrink the card inside its track, so those lists are left alone.
    */
   main p {
     /* In em, not ch: a ch is the width of "0", which in Plus Jakarta Sans is
        0.73em, so 70ch came out at 922px and capped nothing. Measured on the
        site's own text an average character is 0.49em, so 34em is about 69
        characters a line at any size. */
+    max-width: 34em;
+  }
+
+  main :is(ul, ol):not([class*="grid"]):not([class*="flex"]) > li {
     max-width: 34em;
   }
 

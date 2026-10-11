@@ -285,157 +285,177 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               readingMinutes={guide.readingMinutes}
               lang={lang}
             />
-
-            <ArticleToc items={toc} lang={lang} />
           </div>
         </Container>
       </section>
 
       <section className="py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
-              {guide.intro[lang]}
-            </p>
+          {/*
+           * The article and its contents side by side from lg.
+           *
+           * The contents list sat in the hero, and the article below it was a
+           * 768px column with the right half of a wide screen empty for the
+           * whole length of the page. Now the list stands in that half and
+           * stays in view while the article scrolls, which is what a contents
+           * list is for on a page this long. It is one element: first in the
+           * markup, so a phone gets it at the top of the article, and moved
+           * to the right column by order on a wide screen.
+           */}
+          <div className="lg:grid lg:grid-cols-12 lg:gap-14">
+            <aside className="lg:order-2 lg:col-span-4">
+              <div className="mb-10 lg:sticky lg:top-28 lg:mb-0">
+                <ArticleToc items={toc} lang={lang} className="" />
+              </div>
+            </aside>
+            <div className="max-w-3xl lg:order-1 lg:col-span-8">
+              <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
+                {guide.intro[lang]}
+              </p>
 
-            {guide.sections.map((section) => (
-              <div
-                key={section.heading.da}
-                id={sectionId(section.heading.da)}
-                className="scroll-mt-24 border-t border-white/10 py-8 first:mt-10"
-              >
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {section.heading[lang]}
-                </h2>
+              {guide.sections.map((section) => (
+                <div
+                  key={section.heading.da}
+                  id={sectionId(section.heading.da)}
+                  className="scroll-mt-24 border-t border-white/10 py-8 first:mt-10"
+                >
+                  <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                    {section.heading[lang]}
+                  </h2>
 
-                {section.body.map((paragraph) => (
-                  <p
-                    key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
-                  >
-                    {paragraph[lang]}
-                  </p>
-                ))}
+                  {section.body.map((paragraph) => (
+                    <p
+                      key={paragraph.da}
+                      className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
+                    >
+                      {paragraph[lang]}
+                    </p>
+                  ))}
 
-                {section.table && (
-                  /* A real table, in a container that scrolls on its own so a
+                  {section.table && (
+                    /* A real table, in a container that scrolls on its own so a
                      narrow screen never makes the page scroll sideways. */
-                  <div className="mt-6 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-                    <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
-                      <caption className="sr-only">{section.table.caption[lang]}</caption>
-                      <thead>
-                        <tr className="border-b border-white/20">
-                          {section.table.head.map((cell) => (
-                            <th
-                              key={cell.da}
-                              scope="col"
-                              className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
-                            >
-                              {cell[lang]}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {section.table.rows.map((row) => (
-                          <tr key={row[0].da} className="border-b border-white/10 align-top">
-                            <th
-                              scope="row"
-                              className="py-4 pr-5 font-semibold leading-6 text-paper/85"
-                            >
-                              {row[0][lang]}
-                            </th>
-                            {row.slice(1).map((cell) => (
-                              <td
+                    <div className="mt-6 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+                      <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
+                        <caption className="sr-only">{section.table.caption[lang]}</caption>
+                        <thead>
+                          <tr className="border-b border-white/20">
+                            {section.table.head.map((cell) => (
+                              <th
                                 key={cell.da}
-                                className="py-4 pr-5 leading-6 text-paper/75 last:pr-0"
+                                scope="col"
+                                className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
                               >
                                 {cell[lang]}
-                              </td>
+                              </th>
                             ))}
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                        </thead>
+                        <tbody>
+                          {section.table.rows.map((row) => (
+                            <tr key={row[0].da} className="border-b border-white/10 align-top">
+                              <th
+                                scope="row"
+                                className="py-4 pr-5 font-semibold leading-6 text-paper/85"
+                              >
+                                {row[0][lang]}
+                              </th>
+                              {row.slice(1).map((cell) => (
+                                <td
+                                  key={cell.da}
+                                  className="py-4 pr-5 leading-6 text-paper/75 last:pr-0"
+                                >
+                                  {cell[lang]}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
 
-                {section.list && (
-                  <ul className="mt-6 space-y-3.5">
-                    {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
-                        <Check
-                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
-                          strokeWidth={2.5}
-                        />
-                        {item[lang]}
+                  {section.list && (
+                    <ul className="mt-6 space-y-3.5">
+                      {section.list.map((item) => (
+                        <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
+                          <Check
+                            className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
+                            strokeWidth={2.5}
+                          />
+                          {item[lang]}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+
+              <div className="plate mt-6 p-6 sm:p-8">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                  {c.closingTitle}
+                </h2>
+                <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+                  {guide.closing[lang]}
+                </p>
+                <Link
+                  href={localePath("/kontakt", lang)}
+                  className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-6"
+                >
+                  {c.contact}
+                </Link>
+              </div>
+
+              {/* Where the claims can be checked. An outbound link to the body
+                that actually decides a date is not leaked authority; it is the
+                difference between a page that asserts and a page that cites. */}
+              {guide.sources && guide.sources.length > 0 && (
+                <div className="mt-10 border-t border-white/15 pt-8">
+                  <p className="eyebrow text-brand-300">{c.sources}</p>
+                  <ul className="mt-4 space-y-2">
+                    {guide.sources.map((source) => (
+                      <li key={source.href.da}>
+                        <a
+                          href={source.href[lang]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+                        >
+                          {source.label[lang]}
+                          <ExternalLink
+                            className="h-3.5 w-3.5"
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                        </a>
                       </li>
                     ))}
                   </ul>
-                )}
-              </div>
-            ))}
+                </div>
+              )}
 
-            <div className="plate mt-6 p-6 sm:p-8">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
-                {c.closingTitle}
-              </h2>
-              <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-                {guide.closing[lang]}
-              </p>
-              <Link
-                href={localePath("/kontakt", lang)}
-                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-6"
-              >
-                {c.contact}
-              </Link>
-            </div>
-
-            {/* Where the claims can be checked. An outbound link to the body
-                that actually decides a date is not leaked authority; it is the
-                difference between a page that asserts and a page that cites. */}
-            {guide.sources && guide.sources.length > 0 && (
-              <div className="mt-10 border-t border-white/15 pt-8">
-                <p className="eyebrow text-brand-300">{c.sources}</p>
-                <ul className="mt-4 space-y-2">
-                  {guide.sources.map((source) => (
-                    <li key={source.href.da}>
-                      <a
-                        href={source.href[lang]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
-                      >
-                        {source.label[lang]}
-                        <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* The page that resolves what the guide raised. A guide that
+              {/* The page that resolves what the guide raised. A guide that
                 answers a question and then stops leaves the reader to find the
                 commercial page on their own. */}
-            {guide.related.length > 0 && (
-              <div className="mt-10 border-t border-white/15 pt-8">
-                <p className="eyebrow text-brand-300">{c.next}</p>
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {guide.related.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={localePath(link.href, lang)}
-                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
-                      >
-                        {link.label[lang]}
-                        <span aria-hidden="true">&rarr;</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              {guide.related.length > 0 && (
+                <div className="mt-10 border-t border-white/15 pt-8">
+                  <p className="eyebrow text-brand-300">{c.next}</p>
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {guide.related.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={localePath(link.href, lang)}
+                          className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                        >
+                          {link.label[lang]}
+                          <span aria-hidden="true">&rarr;</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </Container>
       </section>

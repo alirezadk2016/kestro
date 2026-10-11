@@ -480,10 +480,21 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               when you point at it is saying it is clickable. */}
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {capabilities.map((item) => (
-              <ForgedPanel key={item.title.da} faceClassName="p-5 sm:p-8">
-                <MarkTile name={item.mark} size="lg" />
-                <h3 className="mt-4 text-base font-semibold text-paper">{item.title[lang]}</h3>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{item.description[lang]}</p>
+              /* Mark beside the heading, as on every other card on the site:
+                 a large tile stacked on top of each of six panels was the
+                 icon-tile grid in its plainest form. */
+              <ForgedPanel key={item.title.da} faceClassName="p-5 sm:p-7">
+                <div className="flex items-start gap-4">
+                  <MarkTile name={item.mark} size="md" className="flex-none" />
+                  <div className="min-w-0">
+                    <h3 className="font-display t-h3 font-bold tracking-tight text-paper">
+                      {item.title[lang]}
+                    </h3>
+                    <p className="mt-2 text-sm leading-[1.65] text-paper/75">
+                      {item.description[lang]}
+                    </p>
+                  </div>
+                </div>
               </ForgedPanel>
             ))}
           </div>

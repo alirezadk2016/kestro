@@ -56,15 +56,14 @@ export default function WhyUs({ lang }: { lang: Lang }) {
           <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
-        {/* Parallel claims, not a sequence: plates on a phone, columns from
-            sm where the row is already a row. */}
-        <dl className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-0 sm:border-t sm:border-paper/15">
+        {/* Parallel claims, not a sequence, so plates at every width. From
+            sm up these were hairline rows with the plate stripped off, which
+            read as a table — the one place on the page where four reasons
+            looked like four lines of a specification. */}
+        <dl className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {benefits.map((benefit) => (
-            <div
-              key={benefit.title.da}
-              className="plate p-5 sm:border-b sm:border-paper/10 sm:bg-none sm:p-0 sm:py-6 sm:shadow-none"
-            >
-              <dt className="font-display text-base font-bold tracking-tight text-paper sm:text-lg">
+            <div key={benefit.title.da} className="plate p-5 sm:p-6">
+              <dt className="font-display t-h3 font-bold tracking-tight text-paper">
                 {benefit.title[lang]}
               </dt>
               <dd className="mt-2 text-sm leading-6 text-paper/75 sm:text-base sm:leading-7">
