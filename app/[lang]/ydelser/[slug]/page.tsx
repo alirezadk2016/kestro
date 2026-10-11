@@ -117,7 +117,11 @@ export default async function ServicePage(props: {
         }}
       />
 
-      <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
+      {/* Header and body are the same navy with no edge between them, so
+          the date and the first paragraph of the body were 96px apart on a
+          phone, which read as the page ending. The header now closes short
+          and the body opens without its own top padding. */}
+      <section className="lit bg-brand-950 pb-8 pt-14 text-paper sm:pb-12 sm:pt-20">
         <Container>
           <div className="max-w-3xl">
             <Breadcrumbs lang={lang} trail={trail} />
@@ -127,7 +131,7 @@ export default async function ServicePage(props: {
             </h1>
             {/* The answer first. The card one-liner is `summary`; the page opens
                 with what the service is, with the figure in it. */}
-            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
+            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {(answers?.lead ?? service.summary)[lang]}
             </p>
             <p className="label mt-6 text-paper/65">
@@ -140,10 +144,12 @@ export default async function ServicePage(props: {
         </Container>
       </section>
 
-      <section className="lit lit-paper py-10 sm:py-20">
+      <section className="lit lit-paper pb-10 sm:pb-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
+            {/* The answer above is the brighter line; this is the context
+                after it, as on the model pages. */}
+            <p className="text-base leading-[1.75] text-paper/75 sm:text-lg sm:leading-[1.75]">
               {service.intro[lang]}
             </p>
 

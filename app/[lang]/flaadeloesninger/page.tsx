@@ -435,7 +435,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
                 {c.title}
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
+              <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
                 {c.intro}
               </p>
 
@@ -627,6 +627,29 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
         />
       </div>
 
+      {/* Onward links and sources before the closing band, as on every other
+          page: the last thing above the footer is the request, not a list of
+          citations after it. */}
+      <RelatedLinks
+        lang={lang}
+        links={[
+          {
+            href: "/ydelser/opstart-af-arbejdspladser",
+            label: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
+          },
+          {
+            href: "/ydelser/levering",
+            label: { da: "Levering til virksomheden", en: "Delivery to the company" },
+          },
+          {
+            href: "/kvalitet",
+            label: { da: "Stand, test og garanti", en: "Condition, testing and warranty" },
+          },
+        ]}
+      />
+
+      <FactNote lang={lang} ids={["ewasteMonitor", "windows10Eol"]} />
+
       {/* Lit by the site's own wash rather than a blurred orb, which was
           bg-brand-950 on bg-brand-950 and drew nothing. */}
       <section className="lit overflow-hidden bg-brand-950 py-10 sm:py-20">
@@ -664,26 +687,6 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           </div>
         </Container>
       </section>
-
-      <RelatedLinks
-        lang={lang}
-        links={[
-          {
-            href: "/ydelser/opstart-af-arbejdspladser",
-            label: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
-          },
-          {
-            href: "/ydelser/levering",
-            label: { da: "Levering til virksomheden", en: "Delivery to the company" },
-          },
-          {
-            href: "/kvalitet",
-            label: { da: "Stand, test og garanti", en: "Condition, testing and warranty" },
-          },
-        ]}
-      />
-
-      <FactNote lang={lang} ids={["ewasteMonitor", "windows10Eol"]} />
     </>
   );
 }

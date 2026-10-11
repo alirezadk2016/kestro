@@ -266,7 +266,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {c.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
+            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {c.lead}
             </p>
             <p className="label mt-6 text-paper/65">

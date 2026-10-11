@@ -46,7 +46,7 @@ export default function PageHeader({
       <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
         {title}
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
+      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
         {description}
       </p>
       {updated && (

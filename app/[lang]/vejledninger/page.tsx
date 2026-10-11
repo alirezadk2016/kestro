@@ -176,7 +176,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
             {c.title}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
+          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
             {c.description}
           </p>
 
