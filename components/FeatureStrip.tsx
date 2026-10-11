@@ -47,13 +47,23 @@ const features = [
   sub: Record<Lang, string>;
 }[];
 
+const ONLY_WIDE = new Set<CraftMarkName>(["tested", "nordic", "delivery"]);
+
 export default function FeatureStrip({ lang }: { lang: Lang }) {
   return (
     <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
       <Container>
         <ul className="grid grid-cols-1 gap-x-6 gap-y-5 py-7 sm:grid-cols-3 sm:gap-y-6 sm:py-8 lg:grid-cols-5 lg:gap-x-7">
           {features.map((feature) => (
-            <li key={feature.title.da} className="flex items-center gap-3.5">
+            /* On a phone the hero's proof row already states tested, Nordic
+               and delivery above the fold, so here those three are left to
+               the wide screens and the strip carries the other two. */
+            <li
+              key={feature.title.da}
+              className={`flex items-center gap-3.5 ${
+                ONLY_WIDE.has(feature.mark) ? "max-md:hidden" : ""
+              }`}
+            >
               {/* In the site's one mark tile. Bare on the bar, the five marks
                   were line drawings floating on a strip of navy — the row a
                   buyer sees first, reading as a system icon font. The tile is

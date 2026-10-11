@@ -259,6 +259,36 @@ body {
   }
 
   /*
+   * No edge on the bar until the page moves.
+   *
+   * On a phone the front page's hero carries the bar's own colour down into
+   * itself, so at the top of the page the hairline under the bar was the only
+   * seam left on the first screen. The line is there to separate the bar from
+   * content scrolling under it; before anything scrolls, there is nothing to
+   * separate. Where scroll-driven animation is supported (Safari 26, Chrome)
+   * the edge fades in over the first 48px of scroll; elsewhere it simply
+   * stays, as before.
+   */
+  @media (max-width: 767px) {
+    @supports (animation-timeline: scroll()) {
+      .glass-nav {
+        animation: nav-edge linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 48px;
+      }
+    }
+  }
+
+  @keyframes nav-edge {
+    from {
+      border-bottom-color: transparent;
+    }
+    to {
+      border-bottom-color: rgb(255 255 255 / 0.06);
+    }
+  }
+
+  /*
    * The floating panel the products menu opens into.
    *
    * It used to share .glass-nav, which is wrong now that .glass-nav is a
@@ -437,6 +467,26 @@ body {
   .t-h3 {
     font-size: clamp(1.0625rem, 1.45vw, 1.3125rem);
     line-height: 1.35;
+  }
+
+  /*
+   * The front page's h1, the one heading sized to its own longest word.
+   *
+   * "erhvervscomputere." is 18 characters that cannot break, about 9.5em
+   * wide. On a phone the column is the viewport less two 16px gutters, so
+   * 9.2vw is the size at which that word fills it without overflowing — 36px
+   * at 390, 29px at 320 — where the old floor of 1.85rem left a 30px
+   * headline in a 358px column. From md the words sit beside the photograph,
+   * and the old desktop sizing applies.
+   */
+  .hero-title {
+    font-size: clamp(1.75rem, 9.2vw, 2.4rem);
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: clamp(1.85rem, 2.63vw, 3.25rem);
+    }
   }
 
   /*

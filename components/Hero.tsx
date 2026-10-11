@@ -31,6 +31,7 @@ const copy = {
     subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
     sub: "i Danmark og Norge – testet og klar til brug.",
     secondary: "Se hvad vi skaffer",
+    proof: ["Testet", "Nordisk tastatur", "Levering i DK & NO"],
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
@@ -38,8 +39,26 @@ const copy = {
     subLead: "Kestro is a supplier of used business IT to companies",
     sub: "in Denmark and Norway — tested and ready to use.",
     secondary: "Explore computers",
+    proof: ["Tested", "Nordic keyboard", "Delivery to DK & NO"],
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
+
+/* "erhvervs-IT" as one unbreakable unit. A browser may break a line after a
+   hyphen, and Safari did exactly that on an iPhone; a nowrap span keeps the
+   word in the text as written, which a non-breaking hyphen character would
+   not. */
+function keepTerm(text: string) {
+  const term = "erhvervs-IT";
+  const i = text.indexOf(term);
+  if (i < 0) return text;
+  return (
+    <>
+      {text.slice(0, i)}
+      <span className="whitespace-nowrap">{term}</span>
+      {text.slice(i + term.length)}
+    </>
+  );
+}
 
 export default function Hero({ lang }: { lang: Lang }) {
   const c = copy[lang];
@@ -126,6 +145,15 @@ export default function Hero({ lang }: { lang: Lang }) {
         fetchPriority="high"
       />
 
+      {/* The header's own colour carried down into the hero on a phone. The
+          bar ends on rgb(4 8 18) and the hero starts on brand-950, so the two
+          met on a visible step; this lets the bar dissolve into the page. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 md:hidden"
+        style={{ background: "linear-gradient(180deg, rgb(4,8,18) 0%, rgba(4,8,18,0) 100%)" }}
+      />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
@@ -168,7 +196,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                   back until 2xl: below that the frame has no spare height to
                   give, and asking for it only makes the box taller than the
                   photograph's own ratio, which is paid for in cropped sides. */
-        className="relative z-10 flex flex-1 items-center pb-12 pt-12 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
+        className="relative z-10 flex flex-1 items-center pb-5 pt-6 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
       >
         <Container>
           <div className="max-w-2xl lg:max-w-[54%]">
@@ -177,7 +205,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                   the English: "Erhvervscomputere." is one 18-character word
                   that cannot break, and at too large a cap it runs straight
                   out of this column and into the machine beside it. */}
-              <h1 className="font-display text-[clamp(1.85rem,2.63vw,3.25rem)] font-extrabold leading-[1.02] tracking-display">
+              <h1 className="hero-title font-display font-extrabold leading-[1.02] tracking-display">
                 {/* w-fit, not just block. A block span fills the column, and
                     the contrast check samples the whole box it is given — so
                     the blue line was being measured against the lit stone 150px
@@ -197,13 +225,46 @@ export default function Hero({ lang }: { lang: Lang }) {
                 <span className="block w-fit text-brand-500">{c.headlineAccent}</span>
               </h1>
 
-              <p className="mt-5 max-w-xl text-[clamp(0.95rem,0.98vw,1.2rem)] leading-[1.72]">
-                <span className="block text-paper">{c.subLead} </span>
-                <span className="block text-paper/75">{c.sub}</span>
+              {/* One sentence on a phone, two lines from md. As two block
+                  spans on a phone it broke into a long line, a short line and
+                  a dimmer third — "…erhvervs-" / "IT til virksomheder" / "i
+                  Danmark…" on an iPhone, which read as three fragments in two
+                  colours. Inline below md it flows as the sentence it is, in
+                  one colour; "erhvervs-IT" is kept whole, because a line that
+                  ends on "erhvervs-" splits the one term a buyer searches. */}
+              <p className="mt-4 max-w-xl text-base leading-[1.6] text-paper/85 max-md:text-balance md:mt-5 md:text-[clamp(0.95rem,0.98vw,1.2rem)] md:leading-[1.72]">
+                <span className="md:block md:text-paper">{keepTerm(c.subLead)} </span>
+                <span className="md:block md:text-paper/75">{c.sub}</span>
               </p>
+
+              {/* Three facts on the first screen of a phone. On a wide screen
+                  they are in the strip under the photograph, in view with the
+                  headline; on a phone that strip starts below the fold, so the
+                  first screen had a promise and a button and nothing a buyer
+                  could check. They are the strip's own first, second and last
+                  facts, and the strip hides those three on a phone so they are
+                  not said twice. */}
+              {/* Dots, not check icons: three icons and their gaps made the row
+                  344px wide, so it broke onto a second line on every phone
+                  narrower than 390 — the iPhone mini, the SE and most Android
+                  phones at 360. Text with a dot between holds one line down
+                  to 320. */}
+              <ul className="mt-4 flex flex-wrap items-center gap-y-1 text-[13px] font-medium leading-5 text-paper/75 max-[359px]:text-xs md:hidden">
+                {c.proof.map((fact, i) => (
+                  <li key={fact} className="flex items-center">
+                    {i > 0 && (
+                      <span aria-hidden="true" className="mx-2 h-1 w-1 rounded-full bg-brand-300" />
+                    )}
+                    {fact}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="rise rise-1 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+            {/* One primary action. On a phone the second one is a quiet link
+                under it rather than a second full-width box of the same
+                height, which made two equal bars compete for the thumb. */}
+            <div className="rise rise-1 mt-6 flex flex-col gap-1 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
               {/*
                 The same words as the header's button and the closing one,
                 from lib/nav.ts. There is one primary action on this site and
@@ -217,6 +278,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                 intent="secondary"
                 size="lg"
                 icon={<LayoutGrid className="h-4 w-4 text-paper/65" strokeWidth={2} />}
+                className="max-sm:min-h-[44px] max-sm:border-transparent max-sm:bg-transparent max-sm:text-paper/85"
               >
                 {c.secondary}
               </Button>
@@ -241,18 +303,19 @@ export default function Hero({ lang }: { lang: Lang }) {
 
         So the picture gets a frame of its own at a ratio it can hold, after
         the words and before the facts, which is the shape of every mobile hero
-        that works. The file is the phone's own cut: a square taken at 56%
-        across the plate, chosen by rendering four candidates and looking, which
-        holds the lit K, the machine and the water. 33kB against the desktop's
-        85. The top edge fades into the copy above rather than starting on a
-        line.
+        that works. The file is the phone's own cut, 4:3 from the cleaned
+        plate (1040x780 from x 1040, y 210): the whole lit K, the whole machine
+        and the water. The square it replaced cut the laptop off at the right
+        edge. 37kB against the desktop's 85. The top edge fades into the copy
+        above and the bottom into the facts below, so it starts and ends
+        without a line.
       */}
       <div
         aria-hidden="true"
         className="relative z-10 aspect-[4/3] w-full bg-cover bg-center bg-no-repeat md:hidden"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgb(11,20,38) 0%, rgba(11,20,38,0.6) 12%, rgba(11,20,38,0) 32%), url(/hero/scene-mobile.webp)",
+            "linear-gradient(180deg, rgb(11,20,38) 0%, rgba(11,20,38,0.5) 7%, rgba(11,20,38,0) 17%, rgba(11,20,38,0) 82%, rgba(8,13,27,0.85) 100%), url(/hero/scene-mobile.webp)",
         }}
       />
 
