@@ -43,6 +43,22 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
 
+/* The full stop at the end of a headline line, tucked back against its word.
+   Plus Jakarta Sans gives "." a wide left bearing, and at 36px with the
+   headline's negative tracking the dot stood 7px off the "e" while every
+   other pair sat 1px apart: on a phone it read "erhvervscomputere ." and
+   "Norden .", which looks like a typing error in the one line everybody
+   reads. The text is unchanged; only the dot's box moves. */
+function tuckStop(text: string) {
+  if (!text.endsWith(".")) return text;
+  return (
+    <>
+      {text.slice(0, -1)}
+      <span className="-ml-[0.1em]">.</span>
+    </>
+  );
+}
+
 /* "erhvervs-IT" as one unbreakable unit. A browser may break a line after a
    hyphen, and Safari did exactly that on an iPhone; a nowrap span keeps the
    word in the text as written, which a non-breaking hyphen character would
@@ -196,7 +212,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                   back until 2xl: below that the frame has no spare height to
                   give, and asking for it only makes the box taller than the
                   photograph's own ratio, which is paid for in cropped sides. */
-        className="relative z-10 flex flex-1 items-center pb-5 pt-6 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
+        className="relative z-10 flex flex-1 items-center pb-2 pt-6 sm:pb-14 sm:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
       >
         <Container>
           <div className="max-w-2xl lg:max-w-[54%]">
@@ -219,10 +235,10 @@ export default function Hero({ lang }: { lang: Lang }) {
                     all quoted back. */}
                 {c.headlineTop.map((line) => (
                   <span key={line} className="block w-fit text-paper">
-                    {line}{" "}
+                    {tuckStop(line)}{" "}
                   </span>
                 ))}
-                <span className="block w-fit text-brand-500">{c.headlineAccent}</span>
+                <span className="block w-fit text-brand-500">{tuckStop(c.headlineAccent)}</span>
               </h1>
 
               {/* One sentence on a phone, two lines from md. As two block
@@ -303,19 +319,31 @@ export default function Hero({ lang }: { lang: Lang }) {
 
         So the picture gets a frame of its own at a ratio it can hold, after
         the words and before the facts, which is the shape of every mobile hero
-        that works. The file is the phone's own cut, 4:3 from the cleaned
-        plate (1040x780 from x 1040, y 210): the whole lit K, the whole machine
-        and the water. The square it replaced cut the laptop off at the right
-        edge. 37kB against the desktop's 85. The top edge fades into the copy
-        above and the bottom into the facts below, so it starts and ends
-        without a line.
+        that works. The file is the phone's own cut, 16:9 from the cleaned
+        plate (1060x596 from x 1040, y 290): the lit K, the whole machine and
+        the water. It was 4:3, which put the front of the laptop at 690px —
+        below the 659px an iPhone 15 shows in Safari before anything scrolls,
+        so the first screen held half a machine. At 16:9 the machine is larger
+        in the frame and ends above the fold. 39kB against the desktop's 85.
+        The top edge fades into the copy above and the bottom into the facts
+        below, so it starts and ends without a line.
       */}
       <div
         aria-hidden="true"
-        className="relative z-10 aspect-[4/3] w-full bg-cover bg-center bg-no-repeat md:hidden"
+        className="relative z-10 aspect-[16/9] w-full bg-cover bg-center bg-no-repeat md:hidden"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgb(11,20,38) 0%, rgba(11,20,38,0.5) 7%, rgba(11,20,38,0) 17%, rgba(11,20,38,0) 82%, rgba(8,13,27,0.85) 100%), url(/hero/scene-mobile.webp)",
+            "linear-gradient(180deg, rgba(11,20,38,0) 86%, rgba(8,13,27,0.85) 100%), url(/hero/scene-mobile.webp)",
+          /* The top edge dissolves into the hero's own ground rather than
+             into a painted navy. The section carries grain and a vignette
+             that a flat colour stop cannot match, so a gradient ending on
+             brand-950 drew a clean band against a textured one: a seam
+             under the buttons on every phone. A mask lets whatever is behind
+             the picture show through instead. */
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 16%, #000 26%)",
+          maskImage:
+            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 16%, #000 26%)",
         }}
       />
 

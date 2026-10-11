@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import Container from "./Container";
 import { getModel } from "@/lib/models";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -94,12 +94,17 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
             <p className="mt-2 font-display text-lg font-bold text-brand-300">{model.name}</p>
             <p className="mt-4 text-base leading-[1.65] text-paper/75 sm:text-lg">{c.body}</p>
 
-            <ul className="mt-6 flex flex-wrap gap-2">
+            {/* A checklist, not pills: a rounded plate-sm pill is the site's
+                onward-link shape, and on a phone four of them under a
+                picture read as four buttons that did nothing. */}
+            <ul className="mt-6 space-y-2.5">
               {highlights.map((highlight) => (
-                <li
-                  key={highlight.da}
-                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
-                >
+                <li key={highlight.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
+                  />
                   {highlight[lang]}
                 </li>
               ))}
