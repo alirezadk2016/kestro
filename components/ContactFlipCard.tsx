@@ -119,7 +119,7 @@ function Face({
       <div className="flex items-center gap-4">
         <TeamAvatar member={member} lang={lang} size={64} className="h-16 w-16" />
         <div>
-          <h2 className="text-base font-semibold">
+          <h2 className="font-display t-h3 font-bold tracking-tight">
             {member.phoneHref ? c.callDirect : c.writeDirect} {member.name}
           </h2>
           <p className="text-sm text-ink-400 leading-[1.6]">{member.role[lang]}</p>

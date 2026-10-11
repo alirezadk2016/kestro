@@ -156,7 +156,7 @@ export default async function ServicePage(props: {
 
             {service.sections.map((section) => (
               <div key={section.heading.da} className="mt-12 border-t border-white/15 pt-8">
-                <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {section.heading[lang]}
                 </h2>
 
@@ -209,7 +209,7 @@ export default async function ServicePage(props: {
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">{c.more}</h2>
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
               <ul className="mt-8 border-t border-white/15">
                 {others.map((other) => (
                   <li key={other.slug} className="border-b border-white/10">
@@ -243,9 +243,9 @@ export default async function ServicePage(props: {
         />
       )}
 
-      <CtaSection lang={lang} />
-
       {answers && <FactNote lang={lang} ids={answers.sources} />}
+
+      <CtaSection lang={lang} />
     </>
   );
 }

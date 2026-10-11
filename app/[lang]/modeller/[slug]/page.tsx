@@ -275,7 +275,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           <div className="max-w-6xl">
             <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
-                <h2 className="text-base font-semibold text-paper">{c.configTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.configTitle}</h2>
                 <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
               </div>
 
@@ -298,7 +298,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {c.goodFor}
                 </h2>
                 <ul className="mt-5 space-y-3">
@@ -315,7 +315,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               </div>
 
               <div className="plate p-5 sm:p-6">
-                <h2 className="flex items-center gap-2 text-base font-semibold text-paper">
+                <h2 className="flex items-center gap-2 font-display t-h3 font-bold tracking-tight text-paper">
                   <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
                   {c.watchOut}
                 </h2>
@@ -331,7 +331,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
             {model.why && (
               <>
-                <h2 className="mt-12 text-xl font-bold tracking-tight text-paper sm:text-2xl">
+                <h2 className="mt-12 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {c.whyTitle}
                 </h2>
                 <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -354,7 +354,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             )}
 
             <div className="plate mt-12 p-6 sm:p-8">
-              <h2 className="text-lg font-semibold text-paper">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                 {c.ctaTitlePre} {model.name}?
               </h2>
               <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
@@ -386,7 +386,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="max-w-6xl">
-              <h2 className="text-xl font-bold tracking-tight text-paper">{c.related}</h2>
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
                   <li key={other.slug}>
@@ -410,11 +410,11 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         title={{ da: `Spørgsmål om ${model.name}`, en: `Questions about the ${model.name}` }}
       />
 
-      <CtaSection lang={lang} />
-
       {/* Windows sources only where the page is about a computer: a monitor
           does not run Windows 11 and has no business citing its requirements. */}
       <FactNote lang={lang} ids={modelSources(model)} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

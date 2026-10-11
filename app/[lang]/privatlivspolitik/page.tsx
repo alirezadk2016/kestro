@@ -249,7 +249,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
           <div className="mt-14 max-w-3xl">
             {sections.map((section) => (
               <div key={section.heading.da} className="border-t border-white/10 py-8">
-                <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {section.heading[lang]}
                 </h2>
                 {section.body.map((paragraph) => (

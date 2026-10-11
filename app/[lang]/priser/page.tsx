@@ -223,7 +223,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.whyTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
@@ -234,7 +234,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             </p>
 
             <div className="mt-12 border-t border-white/15 pt-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.driversTitle}
               </h2>
               <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
@@ -279,7 +279,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           </ol>
 
           <div className="plate mt-12 max-w-3xl p-6 sm:p-8">
-            <h2 className="font-display text-lg font-bold tracking-tight text-paper">
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
               {c.quoteTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
@@ -297,7 +297,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           </div>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.freeTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
@@ -306,7 +306,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           </div>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.fastTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
@@ -341,9 +341,9 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
         </Container>
       </section>
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["dkWarranty"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

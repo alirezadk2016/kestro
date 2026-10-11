@@ -411,7 +411,11 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
     <>
       <PageSchema lang={lang} route="/flaadeloesninger" />
 
-      <section className="bg-brand-950 py-14 text-white sm:py-10 sm:py-20">
+      {/* Left-aligned on the type scale like every other page header. This
+          was the one page with a centred hero, a pill badge and its own
+          h1 sizes (3xl/4xl/5xl), so it read as a landing page bolted onto
+          the site rather than a page of it. */}
+      <section className="bg-brand-950 py-12 text-white sm:py-16">
         <Container>
           <Breadcrumbs
             lang={lang}
@@ -423,16 +427,16 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             ]}
             className="mb-8"
           />
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="plate-sm inline-flex items-center rounded-full px-4 py-1.5 text-xs font-medium text-ink-200 sm:text-sm">
-              {c.badge}
-            </span>
-            <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+          <div className="max-w-3xl">
+            <p className="label text-brand-300">{c.badge}</p>
+            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {c.title}
             </h1>
-            <p className="mt-4 text-base leading-[1.65] text-ink-300 sm:text-lg">{c.intro}</p>
+            <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
+              {c.intro}
+            </p>
 
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Link
                 href={localePath(QUOTE_HREF, lang)}
                 className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
@@ -451,7 +455,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               )}
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-3 text-sm text-ink-400">
+            <div className="mt-8 flex items-center gap-3 text-sm text-paper/75">
               <TeamAvatar member={salesContact} lang={lang} size={40} className="h-10 w-10" />
               <span>
                 {c.talkTo} <span className="font-semibold text-white">{salesContact.name}</span>,{" "}
@@ -464,8 +468,8 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
 
       <section className="py-10 sm:py-20">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+          <div className="max-w-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.capabilitiesTitle}
             </h2>
           </div>
@@ -489,7 +493,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-2xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.scaleTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.scaleLead}</p>
@@ -520,7 +524,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.rolloutTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.rolloutLead}</p>
@@ -556,7 +560,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.tradeTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.tradeBody}</p>
@@ -599,12 +603,14 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       {/* Lit by the site's own wash rather than a blurred orb, which was
           bg-brand-950 on bg-brand-950 and drew nothing. */}
       <section className="lit overflow-hidden bg-brand-950 py-10 sm:py-20">
-        <Container className="relative flex flex-col items-center gap-5 text-center">
-          <MarkTile name="sustainable" size="lg" />
-          <h2 className="max-w-2xl text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        {/* Left-aligned like the closing band on every other page, and
+            without the centred icon tile on top — that one tile was the
+            only centred mark-over-heading left on the site. */}
+        <Container className="relative flex flex-col items-start gap-5">
+          <h2 className="max-w-2xl text-balance font-display t-display font-extrabold tracking-display text-paper">
             {c.ctaTitle}
           </h2>
-          <p className="max-w-xl text-base leading-[1.75] text-ink-400">{c.ctaBody}</p>
+          <p className="max-w-xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             {/* Only when there is a number. Without the guard this rendered a
                 filled blue pill with a phone icon, no label and href="tel:" —

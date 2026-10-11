@@ -334,7 +334,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                 </span>
                 <span className="tabular-nums">{String(groups.length).padStart(2, "0")}</span>
               </p>
-              <h2 className="mt-3 font-display t-h2 font-bold tracking-tight text-paper">
+              <h2 className="mt-3 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {cluster.name[lang]}
               </h2>
               <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/70">
@@ -459,7 +459,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               button stranded at the far end of the extra third. */}
           <div className="plate flex max-w-5xl flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:gap-12">
             <div className="max-w-2xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                 {c.adviceTitle}
               </h2>
               <p className="mt-3 text-[0.9375rem] leading-7 text-paper/75">{c.adviceBody}</p>
@@ -474,11 +474,11 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
         </Container>
       </section>
 
-      <CtaSection lang={lang} />
-
       {/* Every source the guides cite, in one place. Each guide lists its own
           under it; this is the same registry seen from the index. */}
       <FactNote lang={lang} ids={Object.keys(sources) as SourceId[]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

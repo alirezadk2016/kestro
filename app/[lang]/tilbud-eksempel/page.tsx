@@ -365,7 +365,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
           </article>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.whyTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">

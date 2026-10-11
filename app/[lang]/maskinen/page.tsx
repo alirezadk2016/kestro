@@ -149,9 +149,9 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
         })}
       />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["repairDirective", "windows11Requirements"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

@@ -53,7 +53,9 @@ write it right than to have an audit find it.
   (`scripts/build/page-dates.mjs`). A commit that only changes how pages look
   carries a `Page-Dates: skip` trailer, so a styling pass does not stamp the
   whole site with today; pushed commits go in
-  `scripts/build/page-dates-skip.txt`.
+  `scripts/build/page-dates-skip.txt`. Content means what the page says —
+  its text, facts and answers — not its interface: a heading restyled, a
+  section moved, a "write to us" link or a button label is not an update.
 - **Dates a person reads, never the ISO string.** `formatDate(iso, lang)` in
   `lib/i18n.ts`. A raw `2026-09-02` on a customer-facing page is a tell, and
   it shipped twice before this line existed.

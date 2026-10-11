@@ -93,7 +93,7 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
 
   return (
     <div className={className}>
-      <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">{c.title}</h2>
+      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.title}</h2>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {c.columns.map((column) => (

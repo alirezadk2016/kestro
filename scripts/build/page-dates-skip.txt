@@ -8,8 +8,10 @@
 # a `Page-Dates: skip` trailer instead — this file is for commits already
 # pushed, whose messages cannot be changed.
 #
-# The test: if a reader would see different words, facts or answers on the
-# page, the commit is a content change and does not belong here.
+# The test: if a reader would see different words, facts or answers in the
+# page's content, the commit is a content change and does not belong here.
+# Interface is not content: a restyled heading, a moved section, a "write to
+# us" link or a button label does not make a page newer.
 
 fd235b9  # card grids recomposed: marks inline, one large door, prompt on touch
 4949872  # decorative eyebrows, scroll reveals and uniform section padding removed

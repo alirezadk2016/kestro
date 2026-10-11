@@ -147,7 +147,7 @@ export default async function RepairPage(props: Params) {
       {repair.bands && (
         <section className="bg-ink-900 py-10 sm:py-20">
           <Container>
-            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.bands}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.bands}</h2>
             <ul className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
               {repair.bands.map((band) => (
                 <li key={band.range} className="plate flex items-baseline gap-4 p-4 sm:p-5">
@@ -175,7 +175,7 @@ export default async function RepairPage(props: Params) {
       {repair.howTo && (
         <section className="py-10 sm:py-20">
           <Container>
-            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.howTo}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.howTo}</h2>
             <div className="mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 sm:gap-6">
               {repair.howTo.map((block) => (
                 <div key={block.heading.da} className="plate p-5 sm:p-6">
@@ -209,7 +209,7 @@ export default async function RepairPage(props: Params) {
               ] as const
             ).map(([heading, items]) => (
               <div key={heading}>
-                <h2 className="t-h3 font-display font-bold tracking-tight text-paper">{heading}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{heading}</h2>
                 <ul className="mt-5 space-y-3">
                   {items.map((item) => (
                     <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/70">
@@ -233,7 +233,7 @@ export default async function RepairPage(props: Params) {
               heading and "Alle reparationer" did not fit one row, and the
               link went to two lines beside it. */}
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <h2 className="t-h2 font-display font-bold tracking-tight text-paper">{c.more}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.more}</h2>
             <Link
               href={localePath("/reparation", lang)}
               className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"

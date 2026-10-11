@@ -278,7 +278,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display text-lg font-bold tracking-tight text-paper">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {c.formTitle}
                 </h2>
                 <div className="mt-6">
@@ -290,7 +290,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
 
               <div className="space-y-8">
                 <div className="plate p-6">
-                  <h2 className="font-display text-base font-bold tracking-tight text-paper">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.nextTitle}
                   </h2>
                   <ol className="mt-4 space-y-3">
@@ -312,7 +312,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                   yet is the document they would get back. It was one link in a
                   list of four; here it is the thing you cannot miss. */}
                 <div className="border border-brand-400/40 bg-brand-600/10 p-6">
-                  <h2 className="font-display text-base font-bold tracking-tight text-paper">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.exampleTitle}
                   </h2>
                   <p className="mt-3 text-sm leading-[1.6] text-paper/70">{c.exampleBody}</p>
@@ -326,7 +326,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                 </div>
 
                 <div className="border-t border-white/10 pt-6">
-                  <h2 className="font-display text-base font-bold tracking-tight text-paper">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.trustTitle}
                   </h2>
                   <ul className="mt-4 space-y-2.5">
@@ -345,7 +345,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                 </div>
 
                 <div className="border-t border-white/10 pt-6">
-                  <h2 className="font-display text-base font-bold tracking-tight text-paper">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.otherTitle}
                   </h2>
                   <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.otherBody}</p>
@@ -366,7 +366,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.needTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.needLead}</p>
@@ -397,7 +397,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.processTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.processLead}</p>

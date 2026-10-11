@@ -31,7 +31,7 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <h2 className="font-display text-2xl font-extrabold leading-tight tracking-display text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.title}
             </h2>
             <ul className="mt-6 space-y-3">

@@ -154,7 +154,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           />
 
           <div className="mt-16 max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.howTitle}
             </h2>
 
@@ -179,7 +179,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
         <Container>
           <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.buyTitle}
               </h2>
               <ul className="mt-6 flex flex-wrap gap-2">
@@ -196,7 +196,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.dataTitle}
               </h2>
               <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody}</p>
@@ -204,7 +204,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           </div>
 
           <div className="mt-12 max-w-5xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
-            <h2 className="text-lg font-semibold text-paper">{c.fleetTitle}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.fleetTitle}</h2>
             <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
@@ -220,13 +220,13 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.overstockTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody1}</p>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody2}</p>
 
-            <h2 className="mt-14 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.formTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
@@ -256,9 +256,9 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
         ]}
       />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["nistSanitization", "ewasteMonitor"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

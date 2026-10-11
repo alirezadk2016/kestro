@@ -304,7 +304,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 id={sectionId(section.heading.da)}
                 className="scroll-mt-24 border-t border-white/10 py-8 first:mt-10"
               >
-                <h2 className="font-display text-xl font-bold tracking-tight text-paper sm:text-2xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {section.heading[lang]}
                 </h2>
 
@@ -377,7 +377,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
             ))}
 
             <div className="plate mt-6 p-6 sm:p-8">
-              <h2 className="font-display text-lg font-bold tracking-tight text-paper">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                 {c.closingTitle}
               </h2>
               <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
@@ -477,7 +477,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">{c.more}</h2>
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
               <ul className="mt-8 border-t border-white/15">
                 {others.map((other) => (
                   <li key={other.slug} className="border-b border-white/10">

@@ -195,7 +195,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
         <Container>
           <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.howTitle}
               </h2>
               {/* A sequence, so a spine: the numbers sit on a rail that runs
@@ -218,7 +218,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.pricesTitle}
               </h2>
               <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.pricesBody}</p>
@@ -230,7 +230,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.formTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
@@ -249,9 +249,9 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
       <Faq lang={lang} items={repairFaqs} />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["repairDirective"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

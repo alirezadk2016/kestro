@@ -281,7 +281,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
           <div className="mt-14 max-w-3xl">
             {clauses.map((clause) => (
               <div key={clause.heading.da} className="border-t border-white/10 py-8">
-                <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {clause.heading[lang]}
                 </h2>
                 {clause.body.map((paragraph) => (
@@ -300,7 +300,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 last place to print a placeholder where a registration number
                 belongs. */}
             <div className="border-t border-white/10 py-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                 {c.detailsTitle}
               </h2>
               <dl className="mt-4 space-y-2 text-base leading-7 text-paper/75 sm:leading-8">

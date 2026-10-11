@@ -142,7 +142,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
                     pill around a technical drawing fights it. */}
                 <MarkTile name={section.mark} size="md" />
                 <div>
-                  <h2 className="text-xl font-semibold text-paper">{section.title[lang]}</h2>
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{section.title[lang]}</h2>
                   <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {section.description[lang]}
                   </p>

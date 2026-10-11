@@ -221,7 +221,7 @@ export default async function CategoryPage(props: {
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.brandsTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">
@@ -252,7 +252,7 @@ export default async function CategoryPage(props: {
                 the window empty. */}
             <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
               <div className="lg:col-span-6">
-                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {exampleModel.name}
                 </h2>
                 <p className="mt-3 text-base leading-[1.75] text-paper/75">
@@ -320,7 +320,7 @@ export default async function CategoryPage(props: {
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.modelsTitle}
               </h2>
               <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
@@ -367,7 +367,7 @@ export default async function CategoryPage(props: {
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.useCases}
             </h2>
 
@@ -398,7 +398,7 @@ export default async function CategoryPage(props: {
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-xl font-bold tracking-tight text-paper">{c.other}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
                 return (
@@ -431,10 +431,10 @@ export default async function CategoryPage(props: {
         }}
       />
 
-      <CtaSection lang={lang} />
-
       {/* Windows sources only on the categories that run it. */}
       <FactNote lang={lang} ids={categorySources(category)} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

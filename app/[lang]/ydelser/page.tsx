@@ -210,7 +210,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.processTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
@@ -259,11 +259,11 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
 
       <Faq lang={lang} />
 
-      <CtaSection lang={lang} />
-
       {/* The quality section says the machines are reset before they go on;
           this is what the levels of "reset" actually are. */}
       <FactNote lang={lang} ids={["nistSanitization"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

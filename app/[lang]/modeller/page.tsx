@@ -85,7 +85,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
           />
 
           <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.noShopTitle}</h2>
             <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noShopBody1}</p>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noShopBody2}</p>
             <Link
@@ -103,7 +103,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
 
             return (
               <div key={group.id} className="mt-14">
-                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {group.name[lang]}
                 </h2>
                 <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
@@ -176,9 +176,9 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
         ]}
       />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

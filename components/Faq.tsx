@@ -1,8 +1,9 @@
+import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import Container from "./Container";
 import FaqSchema from "./FaqSchema";
 import { company } from "@/lib/company";
-import type { Lang, Localized } from "@/lib/i18n";
+import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
 export type FaqItem = { question: Localized; answer: Localized };
 
@@ -59,67 +60,84 @@ export default function Faq({
   lang,
   items = defaultFaqs,
   title = defaultTitle,
+  contactLink = true,
 }: {
   lang: Lang;
   items?: FaqItem[];
   title?: Localized;
+  /** The "not here? write to us" line under the heading. Off on /kontakt,
+      which is where it would send the reader. */
+  contactLink?: boolean;
 }) {
   return (
-    <section className="bg-brand-950 py-10 sm:py-20">
+    /*
+     * Answers live on paper.
+     *
+     * The front page sets its questions on the brand board's light neutral,
+     * and every other page set them as dark plates on navy — the same
+     * component doing two different things, and the reason an interior page
+     * was eight navy bands in a row. Now every FAQ on the site is the same
+     * light section: the heading on the left with a way out, the questions
+     * on the right as sheets. A reader learns once what the paper band
+     * means, and each long page gets the one change of ground it needed.
+     *
+     * Text here is ink-600 or darker; ink-500 on #F3F4F6 is 4.4:1.
+     */
+    <section className="border-y border-ink-200 bg-paper-dim py-14 text-ink-900 sm:py-20">
       {/* From the same array rendered below, so the questions Google reads are
           by construction the questions on the page. */}
       <FaqSchema lang={lang} items={items} />
       <Container>
-        {/* Left-aligned like every other section heading on the site. It was
-            the one centred block, which is what made it read as bolted on. */}
-        <div className="max-w-2xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-            {title[lang]}
-          </h2>
-        </div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              {title[lang]}
+            </h2>
+            {contactLink && (
+              <p className="mt-4 text-base leading-[1.65] text-ink-700">
+                {lang === "da" ? "Står jeres spørgsmål ikke her? " : "Is your question not here? "}
+                <Link
+                  href={localePath("/kontakt", lang)}
+                  className="font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
+                >
+                  {lang === "da" ? "Skriv til os" : "Write to us"}
+                </Link>
+              </p>
+            )}
+          </div>
 
-        {/* Native <details> keeps this a server component: no JS, keyboard and
-            screen-reader behaviour come for free. */}
-        {/*
-         * Plates, not a divided list.
-         *
-         * A stack of rows separated by hairlines reads as a table, and these
-         * are not rows of one thing — each is a question somebody actually
-         * asked. Given its own ground, a question is a thing you open; ruled
-         * off from its neighbours it is a line in a register. Same <details>
-         * underneath, so keyboard and screen-reader behaviour still come for
-         * free and the component stays server-rendered.
-         */}
-        <div className="mt-10 max-w-3xl space-y-3 sm:mt-12">
-          {items.map((faq) => (
-            <details key={faq.question.da} className="plate group px-5 open:pb-1 sm:px-6">
-              {/*
-               * The question is a heading.
-               *
-               * It was bare text inside the <summary>, which is a control —
-               * so a page with five questions on it had five question-style
-               * headings as far as a reader was concerned and none at all as
-               * far as a parser was concerned. An AI-SEO audit reported "no
-               * question-style headings" on pages whose whole lower half is
-               * questions, and it was reading the document correctly.
-               *
-               * A heading inside a summary is valid and is what a
-               * well-formed FAQ does: the disclosure stays a disclosure, and
-               * the question joins the outline under the section's own h2.
-               */}
-              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4 transition-colors [&::-webkit-details-marker]:hidden">
-                <h3 className="text-base font-semibold text-paper transition-colors group-open:text-brand-200 group-hover:text-brand-200">
-                  {faq.question[lang]}
-                </h3>
-                <ChevronDown
-                  className="h-5 w-5 flex-shrink-0 text-paper/65 transition-transform duration-200 group-open:rotate-180"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
-              </summary>
-              <p className="pb-5 pr-9 text-base leading-[1.75] text-paper/75">{faq.answer[lang]}</p>
-            </details>
-          ))}
+          {/* Native <details> keeps this a server component: no JS, keyboard
+              and screen-reader behaviour come for free. */}
+          <div className="space-y-2.5 lg:col-span-8">
+            {items.map((faq) => (
+              <details key={faq.question.da} className="sheet group px-5 sm:px-6">
+                {/*
+                 * The question is a heading.
+                 *
+                 * It was bare text inside the <summary>, which is a control —
+                 * so a page with five questions on it had five question-style
+                 * headings as far as a reader was concerned and none at all as
+                 * far as a parser was concerned. A heading inside a summary is
+                 * valid and is what a well-formed FAQ does: the disclosure
+                 * stays a disclosure, and the question joins the outline under
+                 * the section's own h2.
+                 */}
+                <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-3.5 [&::-webkit-details-marker]:hidden">
+                  <h3 className="text-base font-semibold leading-snug text-ink-900 group-open:text-brand-700 group-hover:text-brand-700">
+                    {faq.question[lang]}
+                  </h3>
+                  <ChevronDown
+                    className="h-5 w-5 flex-none text-ink-600 transition-transform duration-200 group-open:rotate-180"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </summary>
+                <p className="pb-5 pr-2 text-base leading-[1.7] text-ink-700 sm:pr-9">
+                  {faq.answer[lang]}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </Container>
     </section>

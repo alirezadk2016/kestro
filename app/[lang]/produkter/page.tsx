@@ -92,7 +92,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
           />
 
           <div className="plate mt-10 max-w-3xl p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.noPricesTitle}</h2>
             <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.noPrices1}</p>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.noPrices2}</p>
           </div>
@@ -129,16 +129,19 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             })}
           </div>
 
-          <div className="mx-auto mt-14 max-w-3xl plate p-6 text-center sm:p-8">
-            <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
-              {c.modelsTitle}
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-[1.75] text-paper/75">
-              {c.modelsBody}
-            </p>
+          {/* Left-aligned with the grid above it, heading and button on one
+              line on a wide screen. It was the one centred panel on the page,
+              floating in the middle of a left-aligned column. */}
+          <div className="plate mt-14 flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+            <div className="max-w-2xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.modelsTitle}
+              </h2>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+            </div>
             <Link
               href={localePath("/modeller", lang)}
-              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-6"
+              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 flex-none self-start lg:self-center"
             >
               {c.modelsButton}
             </Link>
@@ -176,9 +179,9 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
         ]}
       />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

@@ -192,13 +192,13 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
               <ContactFlipCard lang={lang} />
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="text-base font-semibold text-paper">{c.emailTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.emailTitle}</h2>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/75">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />
               </div>
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="text-base font-semibold text-paper">{c.companyTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.companyTitle}</h2>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">
                     <dt className="text-paper/65">{c.fieldCompany}</dt>
@@ -269,7 +269,12 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
         </Container>
       </section>
 
-      <Faq lang={lang} items={contactFaqs} title={{ da: copy.da.faqTitle, en: copy.en.faqTitle }} />
+      <Faq
+        lang={lang}
+        items={contactFaqs}
+        title={{ da: copy.da.faqTitle, en: copy.en.faqTitle }}
+        contactLink={false}
+      />
 
       {/* Each answer above points somewhere that says it at length. */}
       <RelatedLinks

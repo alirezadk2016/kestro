@@ -222,7 +222,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
           />
 
           <div className="mt-12 max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.gradingTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.gradingBody}</p>
@@ -258,7 +258,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.testTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.testBody}</p>
@@ -280,13 +280,13 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.dataTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody1}</p>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody2}</p>
 
-            <h2 className="mt-12 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="mt-12 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.warrantyTitle}
             </h2>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody1}</p>
@@ -298,7 +298,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.disclosureTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.disclosureBody}</p>
@@ -351,9 +351,9 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
         ]}
       />
 
-      <CtaSection lang={lang} />
-
       <FactNote lang={lang} ids={["dkWarranty", "repairDirective"]} />
+
+      <CtaSection lang={lang} />
     </>
   );
 }

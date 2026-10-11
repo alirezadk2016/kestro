@@ -28,22 +28,22 @@ export default function NotFoundPanel() {
     <section className="flex min-h-[70vh] items-center py-10 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-sm font-semibold tracking-[0.3em] text-brand-300 leading-[1.6]">
+          <p className="mx-auto font-mono text-sm font-semibold tracking-[0.3em] text-brand-300 leading-[1.6]">
             404
           </p>
 
           <h1 className="mt-5 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl">
             Siden blev ikke fundet
           </h1>
-          <p className="mt-4 text-base leading-[1.75] text-paper/70">
+          <p className="mx-auto mt-4 text-base leading-[1.75] text-paper/70">
             Siden findes ikke, eller den er flyttet. Prøv et af links herunder, eller skriv til os —
             så finder vi det, I leder efter.
           </p>
 
-          <p className="mt-7 font-display text-xl font-bold tracking-display text-paper/85">
+          <p className="mx-auto mt-7 font-display text-xl font-bold tracking-display text-paper/85">
             This page could not be found
           </p>
-          <p className="mt-3 text-base leading-[1.75] text-paper/70">
+          <p className="mx-auto mt-3 text-base leading-[1.75] text-paper/70">
             The page does not exist or has moved. Try one of the links below, or write to us and we
             will point you to it.
           </p>
