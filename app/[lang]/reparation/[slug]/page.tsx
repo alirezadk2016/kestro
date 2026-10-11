@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
-import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
@@ -95,7 +96,6 @@ export default async function RepairPage(props: Params) {
 
   return (
     <>
-      <BreadcrumbSchema lang={lang} trail={trail} />
       <PageSchema
         lang={lang}
         route="/reparation/[slug]"
@@ -106,11 +106,10 @@ export default async function RepairPage(props: Params) {
 
       <section className="py-10 sm:py-20">
         <Container>
-          <nav className="label text-paper/65">
-            <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/75">
-              {c.breadcrumb}
-            </Link>
-          </nav>
+          {/* The shared trail, like every other page: "Forside / Reparation /
+              Batteriskift", with its 44px links and its schema from the same
+              list. This was a one-link tracked-caps label, 15px tall. */}
+          <Breadcrumbs lang={lang} trail={trail} className="mb-5" />
 
           <div className="mt-6 flex items-start gap-5">
             <MarkTile name={repair.mark} size="lg" />

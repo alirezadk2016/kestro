@@ -68,7 +68,7 @@ export default function NotFoundPanel() {
               <li key={way.href}>
                 <Link
                   href={way.href}
-                  className="inline-flex min-h-[32px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
+                  className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
                 >
                   {way.da}
                   <span aria-hidden="true" className="px-1.5 text-paper/55">

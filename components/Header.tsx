@@ -181,7 +181,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 aria-expanded={productsOpen}
                 aria-controls="header-products"
                 aria-label={ui.showProducts[lang]}
-                className="inline-flex h-6 w-5 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+                className="-mx-2 inline-flex h-10 w-9 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
               >
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`}

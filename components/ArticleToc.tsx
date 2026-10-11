@@ -31,15 +31,15 @@ export default function ArticleToc({
   if (items.length < 3) return null;
 
   const list = (
-    <ol className="mt-4 space-y-2.5">
+    <ol className="mt-3">
       {items.map((item, i) => (
-        <li key={item.id} className="flex gap-3 text-sm leading-6">
+        <li key={item.id} className="flex items-center gap-3 text-sm leading-5">
           <span aria-hidden="true" className="tabular-nums text-paper/35">
             {String(i + 1).padStart(2, "0")}
           </span>
           <a
             href={`#${item.id}`}
-            className="text-paper/75 underline decoration-white/15 underline-offset-4 transition hover:text-paper hover:decoration-brand-300"
+            className="inline-flex min-h-[44px] items-center py-1 text-paper/75 underline decoration-white/15 underline-offset-4 transition hover:text-paper hover:decoration-brand-300"
           >
             {item.label[lang]}
           </a>

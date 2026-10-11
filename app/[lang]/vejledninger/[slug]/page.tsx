@@ -263,7 +263,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 /* No mark at this size: the drawing is a technical diagram and
                    it turns to mud below about 40px. The large one behind the
                    heading already says which cluster this is. */
-                className="inline-flex min-h-[36px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
+                className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
               >
                 {cluster.name[lang]}
               </Link>
@@ -467,12 +467,12 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               <p className="eyebrow text-brand-300">
                 {c.inCluster} {cluster.name[lang].toLowerCase()}
               </p>
-              <ul className="mt-5 space-y-3">
+              <ul className="mt-4 space-y-1">
                 {inCluster.map((sibling) => (
                   <li key={sibling.slug}>
                     <Link
                       href={localePath(`/vejledninger/${sibling.slug}`, lang)}
-                      className="group flex items-baseline gap-3 text-base font-semibold leading-7 text-paper transition-colors hover:text-brand-300"
+                      className="group flex min-h-[44px] items-center gap-3 py-1.5 text-base font-semibold leading-6 text-paper transition-colors hover:text-brand-300"
                     >
                       <span aria-hidden="true" className="text-brand-300">
                         &rarr;

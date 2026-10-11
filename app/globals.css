@@ -483,6 +483,15 @@ body {
     font-size: clamp(1.75rem, 9.2vw, 2.4rem);
   }
 
+  /* The English accent line, "Ready for the Nordics.", is 22 characters to
+     the Danish 16, and at 9.2vw it broke onto a fourth line. 7.9vw keeps the
+     English headline to three lines, 31px at 390. */
+  @media (max-width: 767px) {
+    :lang(en) .hero-title {
+      font-size: clamp(1.6rem, 7.9vw, 2.2rem);
+    }
+  }
+
   @media (min-width: 768px) {
     .hero-title {
       font-size: clamp(1.85rem, 2.63vw, 3.25rem);
@@ -512,13 +521,10 @@ body {
    */
   .label {
     @apply font-medium uppercase tracking-[0.12em];
+    /* 12px at every width now. It stepped down to 11.2px from sm, which put
+       every date line, count and "Kilder" on the desktop pages under the
+       12px floor the site holds everything else to. */
     font-size: 0.75rem;
-  }
-
-  @screen sm {
-    .label {
-      font-size: 0.7rem;
-    }
   }
 
   /*
