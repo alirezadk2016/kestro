@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { buttonClass } from "@/components/Button";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
@@ -238,7 +239,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
              * card with an edge of its own. Separate plates on a real gap read
              * as four things you can pick up, which is what a jump list is.
              */}
-            <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {groups.map(({ cluster, articles }, i) => (
                 <li key={cluster.id}>
                   <a
@@ -257,15 +258,17 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                      * hundred pixels the reader scrolled past to reach a copy
                      * of what they had just read. What is left is a jump list,
                      * which is the one thing the index does that the sections
-                     * below cannot.
+                     * below cannot. The drawing carried no `hidden` and was on
+                     * the phone after all, four 250px pictures in a column;
+                     * now the four names sit two by two in one screen.
                      */}
                     <VidenClusterPlate
                       cluster={cluster.id}
                       index={String(i + 1).padStart(2, "0")}
-                      className="plate-well transition-opacity group-hover:opacity-100 sm:opacity-90"
+                      className="plate-well hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-90"
                     />
                     <div className="flex flex-1 flex-col px-5 py-4 sm:p-5">
-                      <h3 className="font-display text-lg font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                      <h3 className="text-balance font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-lg">
                         {cluster.name[lang]}
                       </h3>
                       <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/65 sm:block">
@@ -403,7 +406,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       slug={guide.slug}
                       lang={lang}
                       priority={groupIndex === 0 && index === 0}
-                      className="plate-well aspect-[3/2] w-full shrink-0 overflow-hidden sm:w-[17.5rem] lg:w-[20rem]"
+                      className="plate-well aspect-[2/1] w-full shrink-0 overflow-hidden sm:aspect-[3/2] sm:w-[17.5rem] lg:w-[20rem]"
                     />
 
                     <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
@@ -466,7 +469,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
             </div>
             <Link
               href={localePath("/kontakt", lang)}
-              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 flex-none self-start lg:ml-auto lg:self-auto"
+              className={`${buttonClass("primary")} flex-none self-start lg:ml-auto lg:self-auto`}
             >
               {c.adviceCta}
             </Link>

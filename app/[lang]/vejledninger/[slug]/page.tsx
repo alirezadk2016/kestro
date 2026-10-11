@@ -333,16 +333,25 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                   ))}
 
                   {section.table && (
-                    /* A real table, in a container that scrolls on its own so a
-                     narrow screen never makes the page scroll sideways. */
-                    <div className="mt-6 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-                      <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
+                    /* One table, two layouts. On a wide screen it is a table.
+                       On a phone each row stacks, its header on top and every
+                       cell under the name of its column: at 390px the table
+                       was 544px in a box that scrolled sideways with no sign
+                       that it did, and the column cut off was the answer.
+                       The roles are explicit because Safari drops a table's
+                       semantics once its display changes. */
+                    <div className="mt-6 sm:overflow-x-auto">
+                      <table
+                        role="table"
+                        className="w-full border-collapse text-left text-sm sm:min-w-[34rem]"
+                      >
                         <caption className="sr-only">{section.table.caption[lang]}</caption>
-                        <thead>
-                          <tr className="border-b border-white/20">
+                        <thead className="max-sm:sr-only">
+                          <tr role="row" className="border-b border-white/20">
                             {section.table.head.map((cell) => (
                               <th
                                 key={cell.da}
+                                role="columnheader"
                                 scope="col"
                                 className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
                               >
@@ -351,19 +360,26 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="max-sm:block max-sm:border-t max-sm:border-white/20">
                           {section.table.rows.map((row) => (
-                            <tr key={row[0].da} className="border-b border-white/10 align-top">
+                            <tr
+                              key={row[0].da}
+                              role="row"
+                              className="border-b border-white/10 align-top max-sm:block max-sm:py-4"
+                            >
                               <th
+                                role="rowheader"
                                 scope="row"
-                                className="py-4 pr-5 font-semibold leading-6 text-paper/85"
+                                className="py-4 pr-5 font-semibold leading-6 text-paper/85 max-sm:block max-sm:p-0 max-sm:pb-2 max-sm:text-paper"
                               >
                                 {row[0][lang]}
                               </th>
-                              {row.slice(1).map((cell) => (
+                              {row.slice(1).map((cell, i) => (
                                 <td
                                   key={cell.da}
-                                  className="py-4 pr-5 leading-6 text-paper/75 last:pr-0"
+                                  role="cell"
+                                  data-label={section.table?.head[i + 1]?.[lang] ?? ""}
+                                  className="py-4 pr-5 leading-6 text-paper/75 last:pr-0 max-sm:grid max-sm:grid-cols-[6.5rem_1fr] max-sm:gap-x-3 max-sm:py-1 max-sm:pr-0 max-sm:before:font-medium max-sm:before:text-paper/65 max-sm:before:content-[attr(data-label)]"
                                 >
                                   {cell[lang]}
                                 </td>
