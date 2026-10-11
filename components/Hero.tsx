@@ -31,7 +31,6 @@ const copy = {
     subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
     sub: "i Danmark og Norge – testet og klar til brug.",
     secondary: "Se hvad vi skaffer",
-    proof: ["Testet", "Nordisk tastatur", "Levering i DK & NO"],
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
@@ -39,7 +38,6 @@ const copy = {
     subLead: "Kestro is a supplier of used business IT to companies",
     sub: "in Denmark and Norway — tested and ready to use.",
     secondary: "Explore computers",
-    proof: ["Tested", "Nordic keyboard", "Delivery to DK & NO"],
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
 
@@ -203,8 +201,8 @@ export default function Hero({ lang }: { lang: Lang }) {
         on an iPhone the band started under the buttons, so the first screen
         was navy with type on it and a strip of room at the foot. Now the
         room fills the screen from under the bar down, and the headline, the
-        sentence, the three facts and both actions sit together in one glass
-        panel at the bottom, under the thumb.
+        sentence and both actions sit together in one glass panel at the
+        bottom, under the thumb, with the facts running beneath it.
 
         A 2.7:1 photograph still cannot fill a 0.6 screen without losing the
         machine, so it is not stretched to: the phone's own cut (1000x971
@@ -287,28 +285,11 @@ export default function Hero({ lang }: { lang: Lang }) {
                 <span className="md:block md:text-paper/75">{c.sub}</span>
               </p>
 
-              {/* Three facts on the first screen of a phone. On a wide screen
-                  they are in the strip under the photograph, in view with the
-                  headline; on a phone that strip starts below the fold, so the
-                  first screen had a promise and a button and nothing a buyer
-                  could check. They are the strip's own first, second and last
-                  facts, and the strip hides those three on a phone so they are
-                  not said twice. */}
-              {/* Dots, not check icons: three icons and their gaps made the row
-                  344px wide, so it broke onto a second line on every phone
-                  narrower than 390 — the iPhone mini, the SE and most Android
-                  phones at 360. Text with a dot between holds one line down
-                  to 320. */}
-              <ul className="mt-4 flex flex-wrap items-center gap-y-1 text-[13px] font-medium leading-5 text-paper/75 max-[399px]:text-xs md:hidden">
-                {c.proof.map((fact, i) => (
-                  <li key={fact} className="flex items-center">
-                    {i > 0 && (
-                      <span aria-hidden="true" className="mx-1.5 h-1 w-1 rounded-full bg-brand-300 min-[400px]:mx-2" />
-                    )}
-                    {fact}
-                  </li>
-                ))}
-              </ul>
+              {/* No row of facts here any more. It said "Testet · Nordisk
+                  tastatur · Levering" in the panel while the strip a thumb's
+                  width below ran the same three with their reasons, so the
+                  first screen said them twice; the panel keeps to the claim
+                  and the action. */}
             </div>
 
             {/* One primary action. On a phone the second one is a quiet link
