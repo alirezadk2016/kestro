@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
+import { buttonClass } from "./Button";
 
 /* From lib/company.ts, so the fallback address in the "we could not send"
    panel can never drift from the one the route delivers to. */
@@ -365,7 +366,7 @@ export default function ContactForm({
    * people.
    */
   const inputClasses =
-    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40 [&:user-invalid]:border-red-300/80 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-400/25";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -492,7 +493,7 @@ export default function ContactForm({
             {quantities.map((band) => (
               <label
                 key={band}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition ${
+                className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 ${
                   values.antal === band
                     ? "border-brand-400 bg-brand-600/20 text-paper"
                     : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
@@ -713,10 +714,15 @@ export default function ContactForm({
       </div>
 
       <div>
+        {/* The site's one button, from the same string as the front page's
+            form: full width under the thumb on a phone, its own width on a
+            wide screen. It was a hand-written 44px pill a third of the
+            width, without the press state the real button has. */}
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 disabled:opacity-60"
+          aria-busy={status === "sending"}
+          className={`${buttonClass("primary", "lg")} w-full sm:w-auto disabled:opacity-60`}
         >
           {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>

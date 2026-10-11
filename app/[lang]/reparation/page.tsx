@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ArrowDown } from "lucide-react";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import HeaderArt from "@/components/HeaderArt";
@@ -164,6 +166,15 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
                 crumb={lang === "da" ? "Reparation" : "Repairs"}
                 updated="/reparation"
               />
+              {/* The form is the page's action and sat 4,100px down a phone;
+                  the header's quote button is for buying machines. */}
+              <Button
+                href="#reparation-formular"
+                className="mt-8 w-full sm:w-auto"
+                icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
+              >
+                {c.formTitle}
+              </Button>
             </div>
 
             <HeaderArt
@@ -249,7 +260,10 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2
+              id="reparation-formular"
+              className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"
+            >
               {c.formTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Check } from "lucide-react";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import { type CraftMarkName } from "@/components/CraftMark";
 import RelatedLinks from "@/components/RelatedLinks";
@@ -149,11 +150,22 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             lang={lang}
             href="/saelg-til-os"
             crumb={lang === "da" ? "Sælg til os" : "Sell to us"}
-
             updated="/saelg-til-os"
           />
 
-          <div className="mt-16 max-w-3xl">
+          {/* The form is the page's one action and sits 2,700px down a phone,
+              under the steps, the list and the data answer. The header's
+              quote button is for buying, so this page had no way to its own
+              form above the fold. */}
+          <Button
+            href="#saelg-formular"
+            className="mt-8 w-full sm:w-auto"
+            icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
+          >
+            {c.formTitle}
+          </Button>
+
+          <div className="mt-14 max-w-3xl sm:mt-16">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.howTitle}
             </h2>
@@ -182,12 +194,16 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
               <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.buyTitle}
               </h2>
-              <ul className="mt-6 flex flex-wrap gap-2">
+              {/* A checklist, not pills: rounded plate-sm pills are the
+                  site's onward links, and these went nowhere when tapped. */}
+              <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 min-[400px]:grid-cols-2">
                 {accepted.map((item) => (
-                  <li
-                    key={item.da}
-                    className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
-                  >
+                  <li key={item.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
+                    <Check
+                      aria-hidden="true"
+                      className="mt-1 h-4 w-4 flex-none text-brand-300"
+                      strokeWidth={2}
+                    />
                     {item[lang]}
                   </li>
                 ))}
@@ -226,7 +242,10 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody1}</p>
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody2}</p>
 
-            <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2
+              id="saelg-formular"
+              className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper"
+            >
               {c.formTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
