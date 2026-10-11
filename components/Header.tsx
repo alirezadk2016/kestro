@@ -282,6 +282,25 @@ export default function Header({ lang }: { lang: Lang }) {
           the bar itself.
         */}
         <div className="flex items-center gap-1 lg:hidden">
+          {/*
+            The quote, one tap away on every page of a phone.
+
+            The bar is the one thing that stays on screen, and below lg it held
+            the logo and the burger only: on an interior page the first "Få et
+            tilbud" was anywhere from 1,000 to 7,800px down. On the front page
+            the hero's own button is on the first screen, so there this one
+            waits until that has scrolled away (header-cta-home in
+            globals.css) rather than standing beside it.
+          */}
+          <Link
+            href={localePath("/tilbud", lang)}
+            className={`mr-1 inline-flex h-11 items-center justify-center rounded-lg bg-brand-600 px-3.5 text-sm font-semibold tracking-tight text-white transition-colors hover:bg-brand-500 motion-safe:active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 ${
+              basePath === "/" ? "header-cta-home" : ""
+            }`}
+          >
+            {ui.bookCall[lang]}
+          </Link>
+
           {company.phoneHref && (
             <a
               href={`tel:${company.phoneHref}`}

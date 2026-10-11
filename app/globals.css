@@ -279,6 +279,31 @@ body {
     }
   }
 
+  /* The bar's quote button on the front page, below lg: hidden while the
+     hero's own button is on screen, in over the next 80px of scroll after
+     it has gone. visibility, not only opacity, so a hidden button cannot be
+     tapped. Without scroll-driven animation it is simply always there. */
+  @media (max-width: 1023px) {
+    @supports (animation-timeline: scroll()) {
+      .header-cta-home {
+        animation: header-cta-in linear both;
+        animation-timeline: scroll(root);
+        animation-range: 360px 440px;
+      }
+    }
+  }
+
+  @keyframes header-cta-in {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   @keyframes nav-edge {
     from {
       border-bottom-color: transparent;
