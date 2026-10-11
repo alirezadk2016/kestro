@@ -280,22 +280,36 @@ body {
   }
 
   /*
-   * The bar on the front page of a phone is glass, because the room runs up
-   * behind it. Clear over the picture at the top, closing to near-opaque over
-   * the first 160px of scroll where scroll-driven animation exists; where it
-   * does not, it holds at a tint that keeps the logo above 8:1 over the
-   * lightest section on the page.
+   * The bar on a phone is glass, on every page.
+   *
+   * The front page's room runs up behind it, and a bar that is glass on one
+   * page and a slab on the next reads as two sites. What the note above
+   * warns about is a bar you can read through, and that is a matter of blur
+   * as much as of alpha: under 20px of blur a 16px heading is a smear of
+   * colour, not words. The tint is still 92%, so that where a browser draws
+   * no blur at all (a headless renderer after a scroll did exactly that) a
+   * heading under the bar is a shadow at 8%, not a line you can read. Where
+   * the bar sits over a picture at the top of a page it starts clear, and
+   * that is where the glass shows.
+   *
+   * Phone only. The note on cost above was measured at 1440px, where the
+   * wide bar stays opaque and unfiltered; a phone's compositor is built for
+   * exactly this material.
+   *
+   * Where a page puts a picture under the bar (.under-bar: the front page's
+   * room, an interior page's artwork), the bar starts clear over it and
+   * closes over the first 160px of scroll; elsewhere it is simply glass.
    */
   @media (max-width: 767px) {
-    .glass-nav.header-home {
+    .glass-nav {
       background-image: none;
-      background-color: rgb(6 10 22 / 0.8);
-      -webkit-backdrop-filter: blur(16px) saturate(150%);
-      backdrop-filter: blur(16px) saturate(150%);
+      background-color: rgb(6 10 22 / 0.92);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      backdrop-filter: blur(20px) saturate(160%);
     }
 
     @supports (animation-timeline: scroll()) {
-      .glass-nav.header-home {
+      body:has(.under-bar) .glass-nav {
         animation-name: nav-edge, nav-glass;
         animation-timing-function: linear, linear;
         animation-fill-mode: both, both;
@@ -312,7 +326,7 @@ body {
       background-color: rgb(6 10 22 / 0.18);
     }
     to {
-      background-color: rgb(6 10 22 / 0.88);
+      background-color: rgb(6 10 22 / 0.92);
     }
   }
 
@@ -559,6 +573,48 @@ body {
   }
 
   /*
+   * A row of cards you swipe through, on a phone.
+   *
+   * Nine model cards stacked in a column were 1,500px of the category page
+   * and most of the models page; a shelf that runs off the right edge, with
+   * the next card showing, says "there is more this way" without a word and
+   * keeps every card one swipe from the heading it belongs to. It snaps card
+   * by card and bleeds to the screen's edges, with the first card on the
+   * page's own margin. From md the list is whatever grid the caller sets.
+   */
+  @media (max-width: 767px) {
+    .rail {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 1rem;
+      margin-inline: -1rem;
+      padding: 0.25rem 1rem 0.5rem;
+      scrollbar-width: none;
+    }
+
+    .rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .rail > * {
+      flex: 0 0 auto;
+      width: min(82%, 20rem);
+      scroll-snap-align: start;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    .rail {
+      scroll-padding-inline: 1.5rem;
+      margin-inline: -1.5rem;
+      padding-inline: 1.5rem;
+    }
+  }
+
+  /*
    * The strip under the hero on a phone (components/Ticker.tsx).
    *
    * Without JavaScript it is a plain sideways scroller, so every fact can be
@@ -607,19 +663,20 @@ body {
   }
 
   /*
-   * The front page's words on a phone, on glass over the room.
+   * Words on glass over a picture, on a phone: the front page's headline
+   * over the room, and an interior page's title over its artwork.
    *
    * Dark enough that the type is measured against the panel rather than
    * against whatever the picture does behind it (verify samples it), clear
    * enough that the stone and the light of the room read through. The radius
    * is the button's 8px plus the 20px of padding around it, so the corners
-   * run parallel. From md the panel is not drawn; the wide hero has its own
-   * scrim.
+   * run parallel. From md the panel is not drawn; wide layouts have their own
+   * scrim or none.
    */
   @media (max-width: 767px) {
-    .hero-glass {
+    .glass-card {
       border-radius: 28px;
-      padding: 1.375rem 1.25rem 0.5rem;
+      padding: 1.375rem 1.25rem 1.25rem;
       background-color: rgb(8 13 27 / 0.6);
       /* A sheen across the top-left, as light from the window would lie on
          a pane: what makes a dark panel read as glass rather than a tint. */
@@ -1194,6 +1251,25 @@ body {
   .plate-well {
     position: relative;
     box-shadow: 0 1px 0 0 rgb(255 247 233 / 0.1);
+  }
+
+  /*
+   * An interior page's artwork on a phone: full width, from under the glass
+   * bar, fading out at the foot where the title's glass panel overlaps it.
+   * The well's frame is for a picture set into a page; this one is the
+   * page's ground, so it has no frame.
+   */
+  @media (max-width: 767px) {
+    .plate-well.art-bleed {
+      border-radius: 0;
+      box-shadow: none;
+      -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+    }
+
+    .plate-well.art-bleed::after {
+      box-shadow: none;
+    }
   }
 
   .plate-well::after {

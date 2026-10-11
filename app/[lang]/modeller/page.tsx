@@ -111,7 +111,8 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                 </p>
                 <p className="mt-1 max-w-3xl text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
-                <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                {/* A shelf to swipe on a phone (.rail), the grid from md. */}
+                <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
                     <li key={model.slug}>
                       <Link

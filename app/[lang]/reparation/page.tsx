@@ -152,12 +152,13 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <section className="py-10 sm:py-20">
+      <section className="py-10 max-md:-mt-[65px] max-md:pt-0 sm:py-20">
         <Container>
           {/* The workshop's subject in the header: a machine opened into its
-              layers. Beside the text from lg, after the lead on a phone. */}
+              layers. Beside the text from lg; on a phone it is the header's
+              ground under the glass bar, with the title on glass over it. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="lg:col-span-7">
+            <div className="glass-card relative z-10 max-md:-mt-14 lg:col-span-7">
               <PageHeader
                 title={c.title}
                 description={c.description}
@@ -188,6 +189,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               }
               className="mt-8 aspect-[4/3] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-14 lg:self-start"
               imgClassName="object-[50%_42%]"
+              bleed
             />
 
             <div className="mt-10 max-w-3xl lg:col-span-7 lg:mt-12">

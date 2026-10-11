@@ -207,13 +207,23 @@ export default async function CategoryPage(props: {
       {/* Lit by the site's own wash. Two blurred orbs sat here: one was
           bg-brand-950 on bg-brand-950 and drew nothing, the other was the
           generic glow every generated page has. */}
-      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
+      <section
+        className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
+          CATEGORY_ART[category.slug] ? "max-md:-mt-[65px] max-md:pt-0" : ""
+        }`}
+      >
         <Container className="relative">
           {/* Text in the left seven columns, the category's picture in the
-              right five from lg; on a phone the picture comes straight after
-              the lead, before the longer introduction. */}
+              right five from lg. On a phone the picture is the header's
+              ground, from under the glass bar, and the trail, title and lead
+              sit on glass over its foot, as the front page's words sit over
+              the room. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="max-w-3xl lg:col-span-7">
+            <div
+              className={`max-w-3xl lg:col-span-7 ${
+                CATEGORY_ART[category.slug] ? "glass-card relative z-10 max-md:-mt-14" : ""
+              }`}
+            >
               {/* The shared trail: "Forside / Hvad vi skaffer / Bærbare
                 computere", visible and marked up from one list. The schema
                 here already began at Forside while the visible trail did not,
@@ -255,6 +265,7 @@ export default async function CategoryPage(props: {
                 height={675}
                 alt={CATEGORY_ART[category.slug].alt[lang]}
                 className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
+                bleed
               />
             )}
 
@@ -386,7 +397,8 @@ export default async function CategoryPage(props: {
               <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
               <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
 
-              <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              {/* A shelf to swipe on a phone (.rail), two columns from md. */}
+              <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4">
                 {categoryModels.map((model) => (
                   <li key={model.slug}>
                     <Link

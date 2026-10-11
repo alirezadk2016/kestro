@@ -417,21 +417,24 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           was the one page with a centred hero, a pill badge and its own
           h1 sizes (3xl/4xl/5xl), so it read as a landing page bolted onto
           the site rather than a page of it. */}
-      <section className="bg-brand-950 py-12 text-white sm:py-16">
+      <section className="bg-brand-950 py-12 text-white max-md:-mt-[65px] max-md:pt-0 sm:py-16">
         <Container>
-          <Breadcrumbs
-            lang={lang}
-            trail={[
-              {
-                name: lang === "da" ? "Flådeløsninger" : "Fleet solutions",
-                href: "/flaadeloesninger",
-              },
-            ]}
-            className="mb-8"
-          />
-          {/* The fleet room beside the text from lg, after it on a phone. */}
+          {/* The fleet room beside the text from lg. On a phone it is the
+              header's ground under the glass bar, and the trail, title, lead
+              and both actions sit on glass over its foot. The trail lives in
+              the text column so that the room can come first on a phone. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="max-w-3xl lg:col-span-7">
+            <div className="glass-card relative z-10 max-w-3xl max-md:-mt-14 lg:col-span-7">
+              <Breadcrumbs
+                lang={lang}
+                trail={[
+                  {
+                    name: lang === "da" ? "Flådeløsninger" : "Fleet solutions",
+                    href: "/flaadeloesninger",
+                  },
+                ]}
+                className="mb-6 sm:mb-8"
+              />
               <p className="label text-brand-300">{c.badge}</p>
               <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
                 {c.title}
@@ -478,6 +481,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                   : "A room of identical prepared laptops set out on desks"
               }
               className="mt-10 aspect-[3/2] lg:col-span-5 lg:mt-12 lg:self-center"
+              bleed
             />
           </div>
         </Container>

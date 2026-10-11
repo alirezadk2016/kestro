@@ -108,7 +108,7 @@ export default function Hero({ lang }: { lang: Lang }) {
      * measures at every width from 768 up; verify's overflow pass is what
      * catches it if that ever stops being true.
      */
-    <section className="grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
+    <section className="under-bar grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
       {/*
        * The scene.
        *
@@ -247,7 +247,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         className="relative z-10 flex items-center pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-24 md:flex-1 md:pb-14 md:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
       >
         <Container>
-          <div className="hero-glass max-w-2xl lg:max-w-[54%]">
+          <div className="glass-card max-w-2xl max-md:pb-2 lg:max-w-[54%]">
             <div className="rise">
               {/* Sized for the longest word it has to hold rather than for
                   the English: "Erhvervscomputere." is one 18-character word

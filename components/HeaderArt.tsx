@@ -21,6 +21,7 @@ export default function HeaderArt({
   alt,
   className = "",
   imgClassName = "",
+  bleed = false,
 }: {
   src: string;
   width: number;
@@ -29,9 +30,20 @@ export default function HeaderArt({
   className?: string;
   /** e.g. an object-position for a portrait picture in a landscape well. */
   imgClassName?: string;
+  /**
+   * On a phone, the page's ground rather than a picture in it: first in the
+   * header, full width from under the glass bar, 4:3, fading out where the
+   * title's glass panel overlaps its foot. The section must be pulled up
+   * under the bar (max-md:-mt-[65px] max-md:pt-0) and the text after it must
+   * carry .glass-card with a negative top margin. From md, nothing changes.
+   */
+  bleed?: boolean;
 }) {
+  const phone = bleed
+    ? "under-bar art-bleed max-md:order-first max-md:-mx-4 max-md:mt-0 max-md:aspect-[4/3] sm:max-md:-mx-6"
+    : "";
   return (
-    <div className={`plate-well overflow-hidden rounded-2xl ${className}`}>
+    <div className={`plate-well overflow-hidden rounded-2xl ${className} ${phone}`}>
       <Image
         src={src}
         alt={alt}
