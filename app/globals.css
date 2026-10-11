@@ -559,6 +559,54 @@ body {
   }
 
   /*
+   * The strip under the hero on a phone (components/Ticker.tsx).
+   *
+   * Without JavaScript it is a plain sideways scroller, so every fact can be
+   * reached with a swipe. Once the ticker runs it clips instead, keeps the
+   * page's vertical scroll for itself (pan-y) and takes the horizontal drag,
+   * and the row fades in and out at both edges rather than being cut by the
+   * screen.
+   */
+  @media (max-width: 767px) {
+    .ticker {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .ticker::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ticker[data-ticking] {
+      overflow: hidden;
+      touch-action: pan-y;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 28px,
+        #000 calc(100% - 28px),
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 28px,
+        #000 calc(100% - 28px),
+        transparent 100%
+      );
+    }
+
+    .ticker[data-ticking]:active {
+      cursor: grabbing;
+    }
+  }
+
+  /*
    * The front page's words on a phone, on glass over the room.
    *
    * Dark enough that the type is measured against the panel rather than
