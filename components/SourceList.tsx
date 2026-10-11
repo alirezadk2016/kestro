@@ -19,12 +19,15 @@ export default function SourceList({
   ids,
   className = "",
   compact = false,
+  quietHeading = false,
 }: {
   lang: Lang;
   ids: readonly SourceId[];
   className?: string;
   /** Title, publisher and date only — for a panel that has already stated each claim. */
   compact?: boolean;
+  /** Keep the h3 for the outline but not on screen, under a line already labelled "Kilder". */
+  quietHeading?: boolean;
 }) {
   if (!ids.length) return null;
   const items = sourceList(ids);
@@ -36,8 +39,8 @@ export default function SourceList({
       {/* An h3: the list sits under the section's own h2 (FactNote's), and
           as an h2 it put a tracked-caps "KILDER" level with the page's real
           section headings. */}
-      <h3 className="label text-brand-300">{heading}</h3>
-      <ol className="mt-4 space-y-4">
+      <h3 className={quietHeading ? "sr-only" : "label text-brand-300"}>{heading}</h3>
+      <ol className={`${quietHeading ? "" : "mt-4 "}space-y-4`}>
         {items.map((source, index) => (
           <li key={source.id} className="flex gap-3 text-sm leading-6">
             <span className="font-mono text-xs leading-6 text-paper/65 tabular-nums">

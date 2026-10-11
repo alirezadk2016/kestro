@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import ConsentReset from "./ConsentReset";
 import { company, postalAddress } from "@/lib/company";
-import { companyNav, serviceNav, ui } from "@/lib/nav";
+import { companyNav, serviceNav } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -112,13 +111,9 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
 
           <div className="flex flex-col items-start gap-2 lg:items-end">
-            <Link
-              href={localePath("/kontakt", lang)}
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
-            >
-              {ui.talkToAdviser[lang]}
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </Link>
+            {/* No button here. The band above every page already asks, and a
+                second "talk to an adviser" a screen later read as the site
+                repeating itself; the footer keeps the address and the door. */}
             <a
               href={`mailto:${company.email}`}
               className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper"

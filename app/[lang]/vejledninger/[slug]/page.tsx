@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
@@ -45,7 +44,6 @@ export function generateStaticParams() {
 const copy = {
   da: {
     breadcrumb: "Viden",
-    inCluster: "Mere om",
     readingSuffix: "min. læsning",
     updated: "Opdateret",
     forWhom: "Til",
@@ -58,7 +56,6 @@ const copy = {
   },
   en: {
     breadcrumb: "Knowledge",
-    inCluster: "More on",
     readingSuffix: "min read",
     updated: "Updated",
     forWhom: "For",
@@ -119,6 +116,8 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       g.slug !== guide.slug &&
       !others.some((other) => other.slug === g.slug),
   );
+  /* One reading list: the topic's own guides first, then the rotation. */
+  const further = [...inCluster, ...others];
 
   /* One id per section, from the Danish heading so the two languages share an
      anchor and a link into the article survives a language switch. */
@@ -478,71 +477,49 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         </Container>
       </section>
 
-      {inCluster.length > 0 && (
-        <section className="border-t border-white/10 py-10 sm:py-20">
-          <Container>
-            <div className="max-w-3xl">
-              <p className="eyebrow text-brand-300">
-                {c.inCluster} {cluster.name[lang].toLowerCase()}
-              </p>
-              <ul className="mt-4 space-y-1">
-                {inCluster.map((sibling) => (
-                  <li key={sibling.slug}>
-                    <Link
-                      href={localePath(`/vejledninger/${sibling.slug}`, lang)}
-                      className="group flex min-h-[44px] items-center gap-3 py-1.5 text-base font-semibold leading-6 text-paper transition-colors hover:text-brand-300"
-                    >
-                      <span aria-hidden="true" className="text-brand-300">
-                        &rarr;
-                      </span>
-                      {sibling.title[lang]}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Container>
-        </section>
-      )}
-
       {guide.faqs && guide.faqs.length > 0 && (
         <div className="border-t border-white/10">
           <Faq lang={lang} items={guide.faqs} title={{ da: copy.da.faq, en: copy.en.faq }} />
         </div>
       )}
 
-      {others.length > 0 && (
+      {/* One shelf of further reading: this topic's other guides first, then
+          three from elsewhere in Viden. They were two sections — "Mere om
+          <emne>" as a list, then "Flere fra Viden" as hairline rows — each
+          with its own heading, one after the other. */}
+      {further.length > 0 && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="max-w-3xl">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
-              <ul className="mt-8 border-t border-white/15">
-                {others.map((other) => (
-                  <li key={other.slug} className="border-b border-white/10">
-                    <Link
-                      href={localePath(`/vejledninger/${other.slug}`, lang)}
-                      className="group block py-5"
-                    >
-                      <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
-                        {other.title[lang]}
-                      </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-paper/75">
-                        {other.summary[lang]}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
+            <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
+              {further.map((other) => (
+                <li key={other.slug}>
+                  <Link
+                    href={localePath(`/vejledninger/${other.slug}`, lang)}
+                    className="plate plate-lift group flex h-full flex-col p-5"
+                  >
+                    {other.cluster === guide.cluster && (
+                      <span className="label text-brand-300">{cluster.name[lang]}</span>
+                    )}
+                    <span className="mt-1.5 font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                      {other.title[lang]}
+                    </span>
+                    <span className="mt-1.5 text-sm leading-6 text-paper/75">{other.summary[lang]}</span>
+                    <span className="flex-1" />
+                    <span className="mt-4 text-sm tabular-nums text-paper/65">
+                      {other.readingMinutes} min.
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Container>
         </section>
       )}
 
-      {/* CTA weight follows the article's declared intent, not a layout choice.
-          A guide to wiping a disk before selling it has no business carrying
-          the same three-link sales block as one about replacing a fleet; the
-          closing note above already offers the help, quietly. */}
-      {guide.intent !== "informational" && <CtaSection lang={lang} />}
+      {/* No closing band on a guide. The article already ends on its own
+          offer of help ("Hvis du hellere vil have det gjort"), in context,
+          and a second, generic one after the reading list said it again. */}
     </>
   );
 }

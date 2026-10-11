@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
-import RelatedLinks from "@/components/RelatedLinks";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import HeaderArt from "@/components/HeaderArt";
 import CtaSection from "@/components/CtaSection";
@@ -63,11 +62,12 @@ const copy = {
     modelsBody:
       "Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver bedt om at finde – klik ind for specifikationer og hvad de egner sig til.",
     allModels: "Se hele modeloversigten",
-    priceLabel: "Få et tilbud",
+    cardAction: "Se specifikationer",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
     useCases: "Typiske anvendelser",
     specs: "Specifikationer",
     other: "Andre kategorier",
+    readMore: "Læs også",
   },
   en: {
     breadcrumbLabel: "Breadcrumb",
@@ -83,11 +83,12 @@ const copy = {
     modelsBody:
       "We do not hold them in stock. The list shows the models we know well and are most often asked to find — click through for specifications and what they suit.",
     allModels: "See the full model overview",
-    priceLabel: "Get a quote",
+    cardAction: "See specifications",
     priceNote: "The price depends on configuration, condition and quantity.",
     useCases: "Typical uses",
     specs: "Specifications",
     other: "Other categories",
+    readMore: "Read also",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -416,8 +417,11 @@ export default async function CategoryPage(props: {
                       </span>
                       <SpecChips model={model} lang={lang} />
                       <span className="flex-1" />
-                      <span className="mt-3 border-t border-white/10 pt-3 text-sm font-semibold text-paper">
-                        {c.priceLabel}
+                      {/* What tapping the card does. It said "Få et tilbud" here,
+                          as plain text on a card that opens the model page. */}
+                      <span className="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
+                        {c.cardAction}
+                        <span aria-hidden="true">&rarr;</span>
                       </span>
                     </Link>
                   </li>
@@ -492,13 +496,32 @@ export default async function CategoryPage(props: {
                 );
               })}
             </ul>
+
+            {/* The guides that belong to this category, in the same band as
+                the other categories. They were a second band of their own
+                ("Videre herfra") straight after this one: two rows of chips in
+                two sections, each with its own heading and padding. */}
+            {category.guides && category.guides.length > 0 && (
+              <>
+                <p className="eyebrow mt-10 text-brand-300">{c.readMore}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {category.guides.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={localePath(link.href, lang)}
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                      >
+                        {link.label[lang]}
+                        <span aria-hidden="true">&rarr;</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
         </Container>
       </section>
-
-      {category.guides && category.guides.length > 0 && (
-        <RelatedLinks lang={lang} links={category.guides} />
-      )}
 
       <Faq
         lang={lang}

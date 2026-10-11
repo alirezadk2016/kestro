@@ -83,6 +83,8 @@ export default async function ServicePage(props: {
   if (!service) notFound();
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  /* The quote is the closing band's job; everything else this page points to. */
+  const onward = service.related.filter((link) => link.href !== "/tilbud");
   const answers = serviceAnswers[service.slug];
   const updated = pageUpdated("/ydelser/[slug]");
 
@@ -185,49 +187,64 @@ export default async function ServicePage(props: {
               </div>
             ))}
 
-            <div className="mt-12 border-t border-white/15 pt-8">
-              <p className="eyebrow text-brand-300">{c.next}</p>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {service.related.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={localePath(link.href, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
-                    >
-                      {link.label[lang]}
-                      <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </Container>
       </section>
 
-      {others.length > 0 && (
+      {/* Where to go from here, in one band: the sibling services as a shelf
+          of plates, then the pages this one points to. The pointers were a
+          row of chips at the end of the article and the siblings a second
+          section after it, hairline rows that read as a table; and one chip
+          was "Få et tilbud", which the closing band says a screen later. */}
+      {(others.length > 0 || onward.length > 0) && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="max-w-3xl">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
-              <ul className="mt-8 border-t border-white/15">
-                {others.map((other) => (
-                  <li key={other.slug} className="border-b border-white/10">
-                    <Link
-                      href={localePath(`/ydelser/${other.slug}`, lang)}
-                      className="group -mx-4 block rounded-xl px-4 py-5 transition-colors hover:bg-white/5"
-                    >
-                      <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
-                        {other.name[lang]}
-                      </span>
-                      <span className="mt-1.5 block text-sm leading-6 text-paper/75">
-                        {other.summary[lang]}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {others.length > 0 && (
+              <>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
+                <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
+                  {others.map((other) => (
+                    <li key={other.slug}>
+                      <Link
+                        href={localePath(`/ydelser/${other.slug}`, lang)}
+                        className="plate plate-lift group flex h-full flex-col p-5"
+                      >
+                        <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                          {other.name[lang]}
+                        </span>
+                        <span className="mt-1.5 text-sm leading-6 text-paper/75">
+                          {other.summary[lang]}
+                        </span>
+                        <span className="flex-1" />
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="mt-4 h-4 w-4 text-brand-300 transition-transform group-hover:translate-x-1"
+                          strokeWidth={2}
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {onward.length > 0 && (
+              <>
+                <p className={`eyebrow text-brand-300 ${others.length > 0 ? "mt-10" : ""}`}>{c.next}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {onward.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={localePath(link.href, lang)}
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                      >
+                        {link.label[lang]}
+                        <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </Container>
         </section>
       )}
