@@ -175,7 +175,11 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 { name: model.name, href: `/modeller/${model.slug}` },
               ]}
             />
-            <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+            {/* Title and lead, then the photographs, then the longer text on a
+                phone; on a wide screen the photographs stand in the right
+                column beside both. They used to follow the whole text column,
+                900px down a phone. */}
+            <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
               <div className="lg:col-span-7">
                 {/* Brand and format as the page's one label, then mark and
                     title on one row, on the type scale like every page title. */}
@@ -193,30 +197,10 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
                   {model.tagline[lang]} {modelLead(model, lang)}
                 </p>
-
-                <p className="mt-8 text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
-                <p className="label mt-6 text-paper/65">
-                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                  <time
-                    dateTime={pageUpdated("/modeller/[slug]")}
-                    className="tabular-nums text-paper/85"
-                  >
-                    {formatDate(pageUpdated("/modeller/[slug]"), lang)}
-                  </time>
-                </p>
-
-                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-paper/75">
-                  {c.notStock}
-                </p>
-
-                {/* The page describes the machine in detail and then used to say
-                nothing about price, which leaves a buyer guessing whether this
-                is a shop that forgot its prices. */}
-                <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
               </div>
 
               {model.images && (
-                <div className="space-y-3 sm:space-y-4 lg:col-span-5">
+                <div className="space-y-3 sm:space-y-4 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
                   {/* The photographs are studio shots on white. On a navy page a pure
                       white tile was the brightest thing on screen; on the brand's light
                       neutral, with the photo multiplied in, the studio white becomes
@@ -254,6 +238,28 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   <p className="pt-1 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
                 </div>
               )}
+
+              <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
+                <p className="text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
+                <p className="label mt-6 text-paper/65">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time
+                    dateTime={pageUpdated("/modeller/[slug]")}
+                    className="tabular-nums text-paper/85"
+                  >
+                    {formatDate(pageUpdated("/modeller/[slug]"), lang)}
+                  </time>
+                </p>
+
+                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-paper/75">
+                  {c.notStock}
+                </p>
+
+                {/* The page describes the machine in detail and then used to say
+                nothing about price, which leaves a buyer guessing whether this
+                is a shop that forgot its prices. */}
+                <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
+              </div>
             </div>
           </div>
         </Container>

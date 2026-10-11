@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import RelatedLinks from "@/components/RelatedLinks";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import HeaderArt from "@/components/HeaderArt";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
@@ -104,6 +105,51 @@ export async function generateMetadata(props: {
   };
 }
 
+/*
+ * The artwork the site already has for a category, with the alt text the
+ * front page's cards use for the same picture. Mini PCs share the desktop
+ * render (it shows a tower and a mini PC side by side) and docks share the
+ * monitor one (a monitor, a keyboard and a dock). Tablets and phones have
+ * none, and get no picture rather than a borrowed one.
+ */
+const CATEGORY_ART: Record<string, { src: string; alt: { da: string; en: string } }> = {
+  "baerbare-computere": {
+    src: "/cards/cat-laptops.webp",
+    alt: {
+      da: "Åben bærbar erhvervscomputer set fra siden",
+      en: "An open business laptop seen from the side",
+    },
+  },
+  "stationaere-computere": {
+    src: "/cards/cat-desktops.webp",
+    alt: {
+      da: "Stationær computer og en mini-pc side om side",
+      en: "A desktop tower and a mini PC side by side",
+    },
+  },
+  "mini-pc": {
+    src: "/cards/cat-desktops.webp",
+    alt: {
+      da: "Stationær computer og en mini-pc side om side",
+      en: "A desktop tower and a mini PC side by side",
+    },
+  },
+  skaerme: {
+    src: "/cards/cat-monitors.webp",
+    alt: {
+      da: "Bredformatskærm med tastatur og en dockingstation",
+      en: "A widescreen monitor with a keyboard and a docking station",
+    },
+  },
+  dockingstationer: {
+    src: "/cards/cat-monitors.webp",
+    alt: {
+      da: "Bredformatskærm med tastatur og en dockingstation",
+      en: "A widescreen monitor with a keyboard and a docking station",
+    },
+  },
+};
+
 export default async function CategoryPage(props: {
   params: Promise<{ lang: Lang; slug: string }>;
 }) {
@@ -163,50 +209,67 @@ export default async function CategoryPage(props: {
           generic glow every generated page has. */}
       <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
-          <div className="max-w-3xl">
-            {/* The shared trail: "Forside / Hvad vi skaffer / Bærbare
+          {/* Text in the left seven columns, the category's picture in the
+              right five from lg; on a phone the picture comes straight after
+              the lead, before the longer introduction. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
+            <div className="max-w-3xl lg:col-span-7">
+              {/* The shared trail: "Forside / Hvad vi skaffer / Bærbare
                 computere", visible and marked up from one list. The schema
                 here already began at Forside while the visible trail did not,
                 which is the mismatch BreadcrumbSchema warns about. */}
-            <Breadcrumbs
-              lang={lang}
-              trail={[
-                { name: c.breadcrumbHub, href: "/produkter" },
-                { name: category.name[lang], href: `/produkter/${category.slug}` },
-              ]}
-            />
-            {collectionJsonLd && (
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                  __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
-                }}
+              <Breadcrumbs
+                lang={lang}
+                trail={[
+                  { name: c.breadcrumbHub, href: "/produkter" },
+                  { name: category.name[lang], href: `/produkter/${category.slug}` },
+                ]}
               />
-            )}
-            {/* Mark and title on one row at every width, on the type scale.
+              {collectionJsonLd && (
+                <script
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+                  }}
+                />
+              )}
+              {/* Mark and title on one row at every width, on the type scale.
                 Stacked on a phone the 56px tile cost the first screen 80px,
                 and the title was 3xl/4xl/5xl — 48px on a desktop, off the
                 scale every other page title is on. */}
-            <div className="mt-5 flex items-center gap-4 sm:gap-5">
-              <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
-              <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                {category.name[lang]}
-              </h1>
+              <div className="mt-5 flex items-center gap-4 sm:gap-5">
+                <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
+                <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                  {category.name[lang]}
+                </h1>
+              </div>
+              <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
+                {categoryLead(category, lang)}
+              </p>
             </div>
-            <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
-              {categoryLead(category, lang)}
-            </p>
 
-            <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
-            <p className="label mt-6 text-paper/65">
-              {lang === "da" ? "Opdateret" : "Updated"}{" "}
-              <time
-                dateTime={pageUpdated("/produkter/[slug]")}
-                className="tabular-nums text-paper/85"
-              >
-                {formatDate(pageUpdated("/produkter/[slug]"), lang)}
-              </time>
-            </p>
+            {CATEGORY_ART[category.slug] && (
+              <HeaderArt
+                src={CATEGORY_ART[category.slug].src}
+                width={1200}
+                height={675}
+                alt={CATEGORY_ART[category.slug].alt[lang]}
+                className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
+              />
+            )}
+
+            <div className="max-w-3xl lg:col-span-7">
+              <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
+              <p className="label mt-6 text-paper/65">
+                {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                <time
+                  dateTime={pageUpdated("/produkter/[slug]")}
+                  className="tabular-nums text-paper/85"
+                >
+                  {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+                </time>
+              </p>
+            </div>
           </div>
         </Container>
       </section>

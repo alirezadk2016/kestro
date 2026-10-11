@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MarkTile from "@/components/MarkTile";
+import HeaderArt from "@/components/HeaderArt";
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/Container";
@@ -427,41 +428,56 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             ]}
             className="mb-8"
           />
-          <div className="max-w-3xl">
-            <p className="label text-brand-300">{c.badge}</p>
-            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-              {c.title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
-              {c.intro}
-            </p>
+          {/* The fleet room beside the text from lg, after it on a phone. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
+            <div className="max-w-3xl lg:col-span-7">
+              <p className="label text-brand-300">{c.badge}</p>
+              <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {c.title}
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
+                {c.intro}
+              </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <Link
-                href={localePath(QUOTE_HREF, lang)}
-                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
-              >
-                {c.sendEnquiry}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
-              </Link>
-              {salesContact.phoneHref && (
-                <a
-                  href={`tel:${salesContact.phoneHref}`}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+                <Link
+                  href={localePath(QUOTE_HREF, lang)}
                   className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
                 >
-                  <Phone className="h-4 w-4" strokeWidth={2} />
-                  {salesContact.phoneDisplay}
-                </a>
-              )}
+                  {c.sendEnquiry}
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                </Link>
+                {salesContact.phoneHref && (
+                  <a
+                    href={`tel:${salesContact.phoneHref}`}
+                    className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+                  >
+                    <Phone className="h-4 w-4" strokeWidth={2} />
+                    {salesContact.phoneDisplay}
+                  </a>
+                )}
+              </div>
+
+              <div className="mt-8 flex items-center gap-3 text-sm text-paper/75">
+                <TeamAvatar member={salesContact} lang={lang} size={40} className="h-10 w-10" />
+                <span>
+                  {c.talkTo} <span className="font-semibold text-white">{salesContact.name}</span>,{" "}
+                  {salesContact.role[lang].toLowerCase()}
+                </span>
+              </div>
             </div>
 
-            <div className="mt-8 flex items-center gap-3 text-sm text-paper/75">
-              <TeamAvatar member={salesContact} lang={lang} size={40} className="h-10 w-10" />
-              <span>
-                {c.talkTo} <span className="font-semibold text-white">{salesContact.name}</span>,{" "}
-                {salesContact.role[lang].toLowerCase()}
-              </span>
-            </div>
+            <HeaderArt
+              src="/cards/fleet-scene.webp"
+              width={1100}
+              height={733}
+              alt={
+                lang === "da"
+                  ? "Et lokale med ens klargjorte bærbare computere stillet op på borde"
+                  : "A room of identical prepared laptops set out on desks"
+              }
+              className="mt-10 aspect-[3/2] lg:col-span-5 lg:mt-12 lg:self-center"
+            />
           </div>
         </Container>
       </section>

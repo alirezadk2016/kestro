@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
+import HeaderArt from "@/components/HeaderArt";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
@@ -151,18 +152,36 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
       <section className="py-10 sm:py-20">
         <Container>
-          <PageHeader
-            title={c.title}
-            description={c.description}
-            lang={lang}
-            href="/reparation"
-            crumb={lang === "da" ? "Reparation" : "Repairs"}
+          {/* The workshop's subject in the header: a machine opened into its
+              layers. Beside the text from lg, after the lead on a phone. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
+            <div className="lg:col-span-7">
+              <PageHeader
+                title={c.title}
+                description={c.description}
+                lang={lang}
+                href="/reparation"
+                crumb={lang === "da" ? "Reparation" : "Repairs"}
+                updated="/reparation"
+              />
+            </div>
 
-            updated="/reparation"
-          />
+            <HeaderArt
+              src="/cards/exploded.webp"
+              width={900}
+              height={1200}
+              alt={
+                lang === "da"
+                  ? "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade"
+                  : "A laptop separated into layers: screen, keyboard, mainboard and base plate"
+              }
+              className="mt-8 aspect-[4/3] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-14 lg:self-start"
+              imgClassName="object-[50%_42%]"
+            />
 
-          <div className="mt-12 max-w-3xl">
-            <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
+            <div className="mt-10 max-w-3xl lg:col-span-7 lg:mt-12">
+              <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
+            </div>
           </div>
         </Container>
       </section>
