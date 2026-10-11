@@ -240,7 +240,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
                     {grade.description[lang]}
                   </p>
                   <p className="mt-3 text-sm leading-[1.6] text-paper/65">
-                    <span className="font-semibold text-paper/80">{c.suits}</span>{" "}
+                    <span className="font-semibold text-paper/85">{c.suits}</span>{" "}
                     {grade.suits[lang]}
                   </p>
                 </div>
@@ -248,8 +248,8 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             </div>
 
             <div className="plate mt-6 flex gap-3 p-5">
-              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
-              <p className="text-sm leading-[1.6] text-paper/80">{c.warning}</p>
+              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
+              <p className="text-sm leading-[1.6] text-paper/85">{c.warning}</p>
             </div>
           </div>
         </Container>

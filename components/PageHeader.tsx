@@ -55,7 +55,7 @@ export default function PageHeader({
            data rather than a date. */
         <p className="label mt-6 text-paper/65">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
-          <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/80">
+          <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/85">
             {formatDate(pageUpdated(updated), lang ?? "da")}
           </time>
         </p>

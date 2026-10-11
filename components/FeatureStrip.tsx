@@ -64,7 +64,7 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
                 <p className="text-[13px] font-semibold leading-5 text-paper">
                   {feature.title[lang]}
                 </p>
-                <p className="mt-0.5 text-xs leading-[1.35] text-paper/70">{feature.sub[lang]}</p>
+                <p className="mt-0.5 text-xs leading-[1.35] text-paper/75">{feature.sub[lang]}</p>
               </div>
             </li>
           ))}

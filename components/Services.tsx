@@ -64,7 +64,7 @@ export default function Services({ lang }: { lang: Lang }) {
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/70">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         {/*

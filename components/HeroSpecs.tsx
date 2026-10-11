@@ -169,7 +169,7 @@ function Stats({ items, kind }: { items: string[]; kind: string }) {
     <span
       data-stat={kind}
       aria-hidden="true"
-      className="spec-stat absolute inset-x-0 top-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium leading-4 text-paper/70"
+      className="spec-stat absolute inset-x-0 top-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium leading-4 text-paper/75"
     >
       {items.map((item, i) => (
         /* The separator trails the item it follows rather than leading the
@@ -278,7 +278,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
         <div className="relative mt-3 hidden h-10 border-t border-white/10 pt-3 lg:block">
           <span
             data-stat="rest"
-            className="spec-stat spec-stat-rest absolute inset-x-0 top-3 text-[11px] font-medium leading-4 text-paper/70"
+            className="spec-stat spec-stat-rest absolute inset-x-0 top-3 text-[11px] font-medium leading-4 text-paper/75"
           >
             {c.rest}
           </span>

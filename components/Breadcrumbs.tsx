@@ -39,7 +39,7 @@ export default function Breadcrumbs({
             return (
               <li key={crumb.href} className="flex items-center gap-x-2">
                 {last ? (
-                  <span aria-current="page" className="text-paper/80">
+                  <span aria-current="page" className="text-paper/85">
                     {crumb.name}
                   </span>
                 ) : (

@@ -266,12 +266,12 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {c.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
+            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
               {c.lead}
             </p>
             <p className="label mt-6 text-paper/65">
               {lang === "da" ? "Opdateret" : "Updated"}{" "}
-              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/80">
+              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/85">
                 {formatDate(pageUpdated("/tilbud"), lang)}
               </time>
             </p>
@@ -295,7 +295,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                   </h2>
                   <ol className="mt-4 space-y-3">
                     {c.nextSteps.map((step, i) => (
-                      <li key={step} className="flex gap-3 text-sm leading-6 text-paper/70">
+                      <li key={step} className="flex gap-3 text-sm leading-6 text-paper/75">
                         <span
                           aria-hidden="true"
                           className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
@@ -315,7 +315,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                   <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.exampleTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-[1.6] text-paper/70">{c.exampleBody}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.exampleBody}</p>
                   <Link
                     href={localePath("/tilbud-eksempel", lang)}
                     className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"

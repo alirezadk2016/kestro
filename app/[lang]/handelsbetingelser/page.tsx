@@ -268,7 +268,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
         description={c.description}
       />
 
-      <section className="py-10 sm:py-20">
+      <section className="pb-12 pt-10 sm:pb-16 sm:pt-20">
         <Container>
           <PageHeader
             title={c.title}
@@ -278,16 +278,26 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
             crumb={lang === "da" ? "Handelsbetingelser" : "Terms of sale"}
           />
 
-          <div className="mt-14 max-w-3xl">
+        </Container>
+      </section>
+
+      {/* The document on paper. A legal text is the one thing on the site a
+          reader reads start to finish, and it was 26 paragraphs of grey on
+          navy; as a white sheet on the light band it is a document, which
+          is what it is, and it joins the FAQs and the quote as the site's
+          paper. */}
+      <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
+        <Container>
+          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
             {clauses.map((clause) => (
-              <div key={clause.heading.da} className="border-t border-white/10 py-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              <div key={clause.heading.da} className="border-t border-ink-200 py-8 first:border-t-0">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {clause.heading[lang]}
                 </h2>
                 {clause.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] text-paper/75 sm:leading-[1.75]"
+                    className="mt-4 text-base leading-[1.75] text-ink-700 sm:leading-[1.75]"
                   >
                     {paragraph[lang]}
                   </p>
@@ -299,13 +309,13 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 when lib/company.ts actually holds the value — a legal page is the
                 last place to print a placeholder where a registration number
                 belongs. */}
-            <div className="border-t border-white/10 py-8">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+            <div className="border-t border-ink-200 py-8 first:border-t-0">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                 {c.detailsTitle}
               </h2>
-              <dl className="mt-4 space-y-2 text-base leading-7 text-paper/75 sm:leading-8">
+              <dl className="mt-4 space-y-2 text-base leading-7 text-ink-700 sm:leading-8">
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/65">{lang === "da" ? "Navn" : "Name"}</dt>
+                  <dt className="text-ink-600">{lang === "da" ? "Navn" : "Name"}</dt>
                   <dd>
                     {company.name}
                     {company.legalForm ? ` ${company.legalForm}` : ""}
@@ -313,48 +323,48 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 </div>
                 {address && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/65">{lang === "da" ? "Adresse" : "Address"}</dt>
+                    <dt className="text-ink-600">{lang === "da" ? "Adresse" : "Address"}</dt>
                     <dd>{address}</dd>
                   </div>
                 )}
                 {company.cvr && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/65">CVR</dt>
+                    <dt className="text-ink-600">CVR</dt>
                     <dd>{company.cvr}</dd>
                   </div>
                 )}
                 <div className="flex gap-x-3">
-                  <dt className="text-paper/65">{lang === "da" ? "E-mail" : "Email"}</dt>
+                  <dt className="text-ink-600">{lang === "da" ? "E-mail" : "Email"}</dt>
                   <dd>
-                    <a href={`mailto:${company.email}`} className="underline underline-offset-4">
+                    <a href={`mailto:${company.email}`} className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600">
                       {company.email}
                     </a>
                   </dd>
                 </div>
                 {company.phoneDisplay && (
                   <div className="flex gap-x-3">
-                    <dt className="text-paper/65">{lang === "da" ? "Telefon" : "Phone"}</dt>
+                    <dt className="text-ink-600">{lang === "da" ? "Telefon" : "Phone"}</dt>
                     <dd>{company.phoneDisplay}</dd>
                   </div>
                 )}
               </dl>
             </div>
 
-            <p className="border-t border-white/10 pt-8 text-sm leading-[1.6] text-paper/65">
+            <p className="border-t border-ink-200 pt-8 text-sm leading-[1.6] text-ink-600">
               {c.privacyLead}{" "}
               <Link
                 href={localePath("/privatlivspolitik", lang)}
-                className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
+                className="font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
               >
                 {c.privacyLink}
               </Link>
               .
             </p>
 
-            <p className="mt-4 text-sm text-paper/65 leading-[1.6]">
+            <p className="mt-4 text-sm text-ink-600 leading-[1.6]">
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
-          </div>
+          </article>
         </Container>
       </section>
     </>

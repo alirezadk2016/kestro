@@ -236,7 +236,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
         description={c.description}
       />
 
-      <section className="py-10 sm:py-20">
+      <section className="pb-12 pt-10 sm:pb-16 sm:pt-20">
         <Container>
           <PageHeader
             title={c.title}
@@ -246,16 +246,26 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
             crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
           />
 
-          <div className="mt-14 max-w-3xl">
+        </Container>
+      </section>
+
+      {/* The document on paper. A legal text is the one thing on the site a
+          reader reads start to finish, and it was 26 paragraphs of grey on
+          navy; as a white sheet on the light band it is a document, which
+          is what it is, and it joins the FAQs and the quote as the site's
+          paper. */}
+      <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
+        <Container>
+          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
             {sections.map((section) => (
-              <div key={section.heading.da} className="border-t border-white/10 py-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              <div key={section.heading.da} className="border-t border-ink-200 py-8 first:border-t-0">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {section.heading[lang]}
                 </h2>
                 {section.body.map((paragraph) => (
                   <p
                     key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-ink-700"
                   >
                     {paragraph[lang]}
                   </p>
@@ -263,10 +273,10 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
               </div>
             ))}
 
-            <p className="border-t border-white/10 pt-8 text-sm text-paper/65 leading-[1.6]">
+            <p className="border-t border-ink-200 pt-8 text-sm text-ink-600 leading-[1.6]">
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
-          </div>
+          </article>
         </Container>
       </section>
     </>

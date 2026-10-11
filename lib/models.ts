@@ -256,11 +256,13 @@ export const models: Model[] = [
       },
     ],
     images: [
+      /* The angled shot leads: the straight-on one shows a Windows 10 start
+         menu, and this page says the machine ships with Windows 11. */
       {
-        src: "/thinkpad-t480-6.jpg",
+        src: "/thinkpad-t480-4.jpg",
         alt: {
-          da: "Lenovo ThinkPad T480 set forfra med Windows installeret og klar til brug",
-          en: "Lenovo ThinkPad T480 seen from the front with Windows installed and ready to use",
+          da: 'ThinkPad T480 åbnet i vinkel med 14" skærmen tændt',
+          en: 'ThinkPad T480 open at an angle with the 14" screen switched on',
         },
       },
       {
@@ -268,13 +270,6 @@ export const models: Model[] = [
         alt: {
           da: "Tastaturet på ThinkPad T480 set oppefra med trackpoint og fingeraftrykslæser",
           en: "The ThinkPad T480 keyboard from above, with TrackPoint and fingerprint reader",
-        },
-      },
-      {
-        src: "/thinkpad-t480-4.jpg",
-        alt: {
-          da: 'ThinkPad T480 åbnet i vinkel med 14" skærmen tændt',
-          en: 'ThinkPad T480 open at an angle with the 14" screen switched on',
         },
       },
       {
@@ -303,6 +298,13 @@ export const models: Model[] = [
         alt: {
           da: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige",
           en: "ThinkPad T480 from the side, almost closed, with the ports visible",
+        },
+      },
+      {
+        src: "/thinkpad-t480-6.jpg",
+        alt: {
+          da: "Lenovo ThinkPad T480 set forfra med Windows installeret og klar til brug",
+          en: "Lenovo ThinkPad T480 seen from the front with Windows installed and ready to use",
         },
       },
     ],

@@ -211,7 +211,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
                     <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-950 font-display text-xs font-bold tabular-nums text-brand-300">
                       {i + 1}
                     </span>
-                    <span className="pt-1 text-base leading-7 text-paper/70">{step}</span>
+                    <span className="pt-1 text-base leading-7 text-paper/75">{step}</span>
                   </li>
                 ))}
               </ol>

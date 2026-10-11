@@ -176,7 +176,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             />
             <nav
               aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
-              className="text-sm text-ink-400"
+              className="text-sm text-paper/65"
             >
               <Link
                 href={localePath("/modeller", lang)}
@@ -187,7 +187,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               <span className="mx-2" aria-hidden="true">
                 /
               </span>
-              <span className="text-ink-200">{model.name}</span>
+              <span className="text-paper/85">{model.name}</span>
             </nav>
 
             <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
@@ -195,7 +195,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
                   <MarkTile name={getCategoryMark(model.category)} size="lg" />
                   <div>
-                    <span className="text-sm font-semibold uppercase tracking-wider text-paper/70">
+                    <span className="text-sm font-semibold uppercase tracking-wider text-paper/75">
                       {model.brand} · {model.format[lang]}
                     </span>
                     <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
@@ -203,24 +203,24 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     </h1>
                     {/* The tagline, then the answer: what the machine is, with
                         the figures from its own spec table. */}
-                    <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                    <p className="mt-2 text-base text-paper/85 sm:text-lg leading-[1.65]">
                       {model.tagline[lang]} {modelLead(model, lang)}
                     </p>
                   </div>
                 </div>
 
-                <p className="mt-8 text-base leading-[1.75] text-ink-300">{model.intro[lang]}</p>
+                <p className="mt-8 text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
                 <p className="label mt-6 text-paper/65">
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
                   <time
                     dateTime={pageUpdated("/modeller/[slug]")}
-                    className="tabular-nums text-paper/80"
+                    className="tabular-nums text-paper/85"
                   >
                     {formatDate(pageUpdated("/modeller/[slug]"), lang)}
                   </time>
                 </p>
 
-                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-ink-300">
+                <p className="plate mt-6 px-5 py-4 text-sm leading-[1.6] text-paper/75">
                   {c.notStock}
                 </p>
 
@@ -232,13 +232,17 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
               {model.images && (
                 <div className="space-y-3 sm:space-y-4 lg:col-span-5">
-                  <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25">
+                  {/* The photographs are studio shots on white. On a navy page a pure
+                      white tile was the brightest thing on screen; on the brand's light
+                      neutral, with the photo multiplied in, the studio white becomes
+                      the paper the site's answers already sit on. */}
+                  <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
                     <Image
                       src={model.images[0].src}
                       alt={model.images[0].alt[lang]}
                       width={1179}
                       height={1120}
-                      className="h-full w-full object-contain p-3 sm:p-6"
+                      className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
                       sizes="(max-width: 1024px) 92vw, 460px"
                       priority
                     />
@@ -248,14 +252,14 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     {model.images.slice(1).map((img) => (
                       <div
                         key={img.src}
-                        className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
+                        className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
                       >
                         <Image
                           src={img.src}
                           alt={img.alt[lang]}
                           width={1179}
                           height={1120}
-                          className="h-full w-full object-contain p-2 sm:p-3"
+                          className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
                           sizes="(max-width: 640px) 30vw, 150px"
                         />
                       </div>
@@ -316,12 +320,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
               <div className="plate p-5 sm:p-6">
                 <h2 className="flex items-center gap-2 font-display t-h3 font-bold tracking-tight text-paper">
-                  <Info className="h-5 w-5 flex-shrink-0 text-paper/80" strokeWidth={2} />
+                  <Info className="h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
                   {c.watchOut}
                 </h2>
                 <ul className="mt-3 space-y-2.5">
                   {model.notes.map((note) => (
-                    <li key={note.da} className="text-sm leading-6 text-paper/80">
+                    <li key={note.da} className="text-sm leading-6 text-paper/85">
                       {note[lang]}
                     </li>
                   ))}
@@ -392,7 +396,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
                     >
                       {other.name}
                     </Link>

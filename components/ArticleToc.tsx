@@ -31,7 +31,7 @@ export default function ArticleToc({ items, lang }: { items: TocItem[]; lang: La
           </span>
           <a
             href={`#${item.id}`}
-            className="text-paper/70 underline decoration-white/15 underline-offset-4 transition hover:text-paper hover:decoration-brand-300"
+            className="text-paper/75 underline decoration-white/15 underline-offset-4 transition hover:text-paper hover:decoration-brand-300"
           >
             {item.label[lang]}
           </a>

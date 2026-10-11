@@ -134,12 +134,12 @@ export default async function ServicePage(props: {
             </h1>
             {/* The answer first. The card one-liner is `summary`; the page opens
                 with what the service is, with the figure in it. */}
-            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
+            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
               {(answers?.lead ?? service.summary)[lang]}
             </p>
             <p className="label mt-6 text-paper/65">
               {c.updated}{" "}
-              <time dateTime={updated} className="tabular-nums text-paper/80">
+              <time dateTime={updated} className="tabular-nums text-paper/85">
                 {formatDate(updated, lang)}
               </time>
             </p>
@@ -150,7 +150,7 @@ export default async function ServicePage(props: {
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/80">
+            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {service.intro[lang]}
             </p>
 
@@ -192,7 +192,7 @@ export default async function ServicePage(props: {
                   <li key={link.href}>
                     <Link
                       href={localePath(link.href, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                     >
                       {link.label[lang]}
                       <ArrowRight className="h-4 w-4" strokeWidth={2} />

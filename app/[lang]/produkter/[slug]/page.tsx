@@ -179,7 +179,7 @@ export default async function CategoryPage(props: {
                 }}
               />
             )}
-            <nav aria-label={c.breadcrumbLabel} className="text-sm text-ink-400">
+            <nav aria-label={c.breadcrumbLabel} className="text-sm text-paper/65">
               <Link
                 href={localePath("/produkter", lang)}
                 className="inline-flex min-h-[44px] items-center transition hover:text-white"
@@ -189,7 +189,7 @@ export default async function CategoryPage(props: {
               <span className="mx-2" aria-hidden="true">
                 /
               </span>
-              <span className="text-ink-200">{category.name[lang]}</span>
+              <span className="text-paper/85">{category.name[lang]}</span>
             </nav>
 
             <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -198,18 +198,18 @@ export default async function CategoryPage(props: {
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   {category.name[lang]}
                 </h1>
-                <p className="mt-2 text-base text-ink-300 sm:text-lg leading-[1.65]">
+                <p className="mt-2 text-base text-paper/85 sm:text-lg leading-[1.65]">
                   {categoryLead(category, lang)}
                 </p>
               </div>
             </div>
 
-            <p className="mt-8 text-base leading-[1.75] text-ink-300">{category.intro[lang]}</p>
+            <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
             <p className="label mt-6 text-paper/65">
               {lang === "da" ? "Opdateret" : "Updated"}{" "}
               <time
                 dateTime={pageUpdated("/produkter/[slug]")}
-                className="tabular-nums text-paper/80"
+                className="tabular-nums text-paper/85"
               >
                 {formatDate(pageUpdated("/produkter/[slug]"), lang)}
               </time>
@@ -232,7 +232,7 @@ export default async function CategoryPage(props: {
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
                 >
                   {brand}
                 </li>
@@ -282,13 +282,17 @@ export default async function CategoryPage(props: {
                 which is the part a buyer actually looks at.
               */}
               <div className="space-y-3 sm:space-y-4 lg:col-span-6">
-                <div className="aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white shadow-lg shadow-black/25">
+                {/* The photographs are studio shots on white. On a navy page a pure
+                    white tile was the brightest thing on screen; on the brand's light
+                    neutral, with the photo multiplied in, the studio white becomes
+                    the paper the site's answers already sit on. */}
+                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
                   <Image
                     src={exampleModel.images[0].src}
                     alt={exampleModel.images[0].alt[lang]}
                     width={1179}
                     height={1120}
-                    className="h-full w-full object-contain p-3 sm:p-6"
+                    className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
                     sizes="(max-width: 1024px) 92vw, 550px"
                   />
                 </div>
@@ -297,14 +301,14 @@ export default async function CategoryPage(props: {
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
-                      className="aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-white shadow-md shadow-black/25"
+                      className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
                     >
                       <Image
                         src={img.src}
                         alt={img.alt[lang]}
                         width={1179}
                         height={1120}
-                        className="h-full w-full object-contain p-2 sm:p-3"
+                        className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
                         sizes="(max-width: 640px) 30vw, 175px"
                       />
                     </div>
@@ -405,7 +409,7 @@ export default async function CategoryPage(props: {
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-paper/80 transition-colors hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
                     >
                       <CraftMark name={getCategoryMark(other.slug)} className="h-5 w-5" />
                       {other.name[lang]}

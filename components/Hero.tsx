@@ -199,7 +199,7 @@ export default function Hero({ lang }: { lang: Lang }) {
 
               <p className="mt-5 max-w-xl text-[clamp(0.95rem,0.98vw,1.2rem)] leading-[1.72]">
                 <span className="block text-paper">{c.subLead} </span>
-                <span className="block text-paper/70">{c.sub}</span>
+                <span className="block text-paper/75">{c.sub}</span>
               </p>
             </div>
 

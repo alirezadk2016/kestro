@@ -97,7 +97,7 @@ export default function Footer({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <footer className="lit border-t border-white/10 bg-brand-950 text-ink-300">
+    <footer className="lit border-t border-white/10 bg-brand-950 text-paper/75">
       <Container className="pb-10 pt-14 sm:pt-20">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="max-w-xl">
@@ -108,7 +108,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               <Logo className="h-9 w-auto sm:h-10" idPrefix="footer" />
               Kestro
             </Link>
-            <p className="mt-4 text-base leading-[1.65] text-ink-400">{c.blurb}</p>
+            <p className="mt-4 text-base leading-[1.65] text-paper/65">{c.blurb}</p>
           </div>
 
           <div className="flex flex-col items-start gap-2 lg:items-end">
@@ -121,11 +121,11 @@ export default function Footer({ lang }: { lang: Lang }) {
             </Link>
             <a
               href={`mailto:${company.email}`}
-              className="inline-flex min-h-[44px] items-center text-sm text-ink-400 transition hover:text-paper"
+              className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper"
             >
               {company.email}
             </a>
-            <p className="text-sm leading-[1.6] text-ink-400">
+            <p className="text-sm leading-[1.6] text-paper/65">
               {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
             </p>
           </div>
@@ -146,7 +146,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                     <Link
                       href={localePath(link.href, lang)}
                       rel={link.rel}
-                      className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm text-ink-400 transition hover:text-paper"
+                      className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm text-paper/65 transition hover:text-paper"
                     >
                       {link.label[lang]}
                     </Link>
@@ -160,7 +160,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         {/* The legal band. A B2B buyer looks for the entity, the address and
             the CVR before ordering, and e-handelsloven §7 requires them; each
             part appears when there is a real value for it. */}
-        <div className="mt-10 space-y-3 border-t border-white/10 pt-6 text-sm text-ink-400">
+        <div className="mt-10 space-y-3 border-t border-white/10 pt-6 text-sm text-paper/65">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs leading-[1.45]">
               {[
@@ -185,7 +185,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                     rel="me noopener noreferrer"
                     target="_blank"
                     aria-label={`${c.follow} — ${profile.name}`}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-ink-400 transition hover:border-brand-400/50 hover:text-paper"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-paper/65 transition hover:border-brand-400/50 hover:text-paper"
                   >
                     <SocialGlyph name={profile.name} />
                   </a>

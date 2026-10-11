@@ -285,7 +285,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
             <ul className="mt-5 space-y-3">
               {c.quotePoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/80">
+                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
                   <Check
                     className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
                     strokeWidth={2.5}
@@ -329,7 +329,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />

@@ -138,7 +138,7 @@ export function VidenClusterPlate({
       {index && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-3 top-3 inline-flex items-center bg-ink-950/70 px-2 py-1 font-mono text-[11px] leading-none text-paper/70 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.10),inset_0_1px_0_0_rgb(255_247_233/0.16)] backdrop-blur-sm"
+          className="pointer-events-none absolute left-3 top-3 inline-flex items-center bg-ink-950/70 px-2 py-1 font-mono text-[11px] leading-none text-paper/75 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.10),inset_0_1px_0_0_rgb(255_247_233/0.16)] backdrop-blur-sm"
           style={{ letterSpacing: "0.14em" }}
         >
           {index}

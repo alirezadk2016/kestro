@@ -294,7 +294,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/70">
+            <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
               {guide.intro[lang]}
             </p>
 
@@ -341,7 +341,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                           <tr key={row[0].da} className="border-b border-white/10 align-top">
                             <th
                               scope="row"
-                              className="py-4 pr-5 font-semibold leading-6 text-paper/80"
+                              className="py-4 pr-5 font-semibold leading-6 text-paper/85"
                             >
                               {row[0][lang]}
                             </th>
@@ -426,7 +426,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                     <li key={link.href}>
                       <Link
                         href={localePath(link.href, lang)}
-                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                       >
                         {link.label[lang]}
                         <span aria-hidden="true">&rarr;</span>

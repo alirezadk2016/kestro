@@ -143,7 +143,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                   </h3>
                   {item.points ? (
                     <>
-                      <p className="mt-4 text-base leading-[1.75] text-paper/70">
+                      <p className="mt-4 text-base leading-[1.75] text-paper/75">
                         {item.lead?.[lang]}
                       </p>
                       <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
@@ -163,7 +163,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                       </ul>
                     </>
                   ) : (
-                    <p className="mt-4 text-base leading-[1.75] text-paper/70">{item.answer[lang]}</p>
+                    <p className="mt-4 text-base leading-[1.75] text-paper/75">{item.answer[lang]}</p>
                   )}
                 </div>
                 <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">

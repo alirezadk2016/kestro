@@ -176,7 +176,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
             {c.title}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/70 sm:text-lg sm:leading-[1.65]">
+          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
             {c.description}
           </p>
 
@@ -197,14 +197,14 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
            * space cannot orphan. */}
           <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
             <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/80">{guides.length}</span> {c.statGuides}
+              <span className="tabular-nums text-paper/85">{guides.length}</span> {c.statGuides}
             </span>
             <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/80">{groups.length}</span> {c.statClusters}
+              <span className="tabular-nums text-paper/85">{groups.length}</span> {c.statClusters}
             </span>
             <span className="whitespace-nowrap">
               {c.statUpdated}{" "}
-              <time dateTime={lastUpdated} className="tabular-nums text-paper/80">
+              <time dateTime={lastUpdated} className="tabular-nums text-paper/85">
                 {updatedLabel}
               </time>
             </span>
@@ -337,7 +337,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               <h2 className="mt-3 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {cluster.name[lang]}
               </h2>
-              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/70">
+              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/75">
                 {cluster.description[lang]}
               </p>
             </header>

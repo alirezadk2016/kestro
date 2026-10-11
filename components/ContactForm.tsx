@@ -455,7 +455,7 @@ export default function ContactForm({
         {quote && (
           <ol className="mt-6 space-y-3 border-t border-white/10 pt-5">
             {nextSteps[lang].map((step, i) => (
-              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/70">
+              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/75">
                 <span
                   aria-hidden="true"
                   className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
@@ -485,7 +485,7 @@ export default function ContactForm({
     <form onSubmit={handleSubmit} className="relative space-y-5">
       {quote && (
         <fieldset>
-          <legend className="mb-2 text-sm font-medium text-paper/80">
+          <legend className="mb-2 text-sm font-medium text-paper/85">
             {c.quantityLegend} <span className="text-brand-400">*</span>
           </legend>
           <div className="flex flex-wrap gap-2">
@@ -495,7 +495,7 @@ export default function ContactForm({
                 className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition ${
                   values.antal === band
                     ? "border-brand-400 bg-brand-600/20 text-paper"
-                    : "border-white/15 bg-white/5 text-paper/70 hover:border-white/35 hover:text-paper"
+                    : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
                 }`}
               >
                 <input
@@ -516,7 +516,7 @@ export default function ContactForm({
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/80">
+          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/85">
             {c.name} <span className="text-brand-400">*</span>
           </label>
           <input
@@ -533,7 +533,7 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/80">
+          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/85">
             {c.company}{" "}
             {companyRequired ? (
               <span className="text-brand-400">*</span>
@@ -555,7 +555,7 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/80">
+          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/85">
             {c.email} <span className="text-brand-400">*</span>
           </label>
           <input
@@ -572,7 +572,7 @@ export default function ContactForm({
         </div>
 
         <div>
-          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/80">
+          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/85">
             {c.phone}
           </label>
           <input
@@ -591,7 +591,7 @@ export default function ContactForm({
       {quote && (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/80">
+            <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/85">
               {c.equipment}
             </label>
             <input
@@ -606,7 +606,7 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/80">
+            <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
               {c.ram}
             </label>
             <select
@@ -624,7 +624,7 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/80">
+            <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
               {c.storage}
             </label>
             <select
@@ -642,7 +642,7 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/80">
+            <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
               {c.keyboard}
             </label>
             <select
@@ -660,7 +660,7 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/80">
+            <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
               {c.deadline}
             </label>
             <input
@@ -677,7 +677,7 @@ export default function ContactForm({
       )}
 
       <div>
-        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
+        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/85">
           {quote ? c.quoteMessage : c.message}{" "}
           {quote ? (
             <span className="text-paper/65">{c.optional}</span>

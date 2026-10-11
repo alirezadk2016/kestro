@@ -95,10 +95,10 @@ export default function Statement({ lang }: { lang: Lang }) {
             <h2 className="text-balance font-display t-display font-extrabold tracking-display text-paper">
               {c.lead}
             </h2>
-            <p className="mt-6 text-base leading-[1.65] text-paper/70 sm:text-lg sm:leading-[1.65]">
+            <p className="mt-6 text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
               {c.body}
             </p>
-            <p className="mt-6 text-base leading-[1.75] text-paper/90">{c.kicker}</p>
+            <p className="mt-6 text-base leading-[1.75] text-paper/85">{c.kicker}</p>
 
             {/* The machine opened up, beside the promise that it is tested
                 unit by unit. The left column ended a third of the way down
@@ -117,7 +117,7 @@ export default function Statement({ lang }: { lang: Lang }) {
           </div>
 
           <div className="lg:col-span-6 lg:pt-3">
-            <h3 className="label text-paper/70">{c.promisesLabel}</h3>
+            <h3 className="label text-paper/75">{c.promisesLabel}</h3>
             {/* Each title is written once. The title used to be an sr-only
                 copy in the <dt> and an aria-hidden copy in the <dd>, which a
                 screen reader handled but a crawler and every text extractor

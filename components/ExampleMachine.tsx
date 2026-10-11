@@ -98,7 +98,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               {highlights.map((highlight) => (
                 <li
                   key={highlight.da}
-                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/80"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
                 >
                   {highlight[lang]}
                 </li>

@@ -378,7 +378,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/80 transition hover:text-paper"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />

@@ -107,7 +107,7 @@ export default async function RepairPage(props: Params) {
       <section className="py-10 sm:py-20">
         <Container>
           <nav className="label text-paper/65">
-            <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/70">
+            <Link href={localePath("/reparation", lang)} className="transition hover:text-paper/75">
               {c.breadcrumb}
             </Link>
           </nav>
@@ -126,7 +126,7 @@ export default async function RepairPage(props: Params) {
            * Both paragraphs were already written; they were in the wrong
            * order. A reader skimming and a model quoting both take the first
            * one, and the first one used to be the throat-clearing. */}
-          <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/90 sm:text-lg sm:leading-[1.7]">
+          <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/85 sm:text-lg sm:leading-[1.7]">
             {repair.answer[lang]}
           </p>
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
@@ -134,7 +134,7 @@ export default async function RepairPage(props: Params) {
           </p>
           <p className="label mt-6 text-paper/65">
             {c.updated}{" "}
-            <time dateTime={updated} className="tabular-nums text-paper/80">
+            <time dateTime={updated} className="tabular-nums text-paper/85">
               {formatDate(updated, lang)}
             </time>
           </p>
@@ -159,7 +159,7 @@ export default async function RepairPage(props: Params) {
                   <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
                     {band.range}
                   </span>
-                  <span className="text-sm leading-[1.6] text-paper/70">{band.reading[lang]}</span>
+                  <span className="text-sm leading-[1.6] text-paper/75">{band.reading[lang]}</span>
                 </li>
               ))}
             </ul>
@@ -184,7 +184,7 @@ export default async function RepairPage(props: Params) {
                   </h3>
                   <ol className="mt-4 space-y-3">
                     {block.steps.map((step, i) => (
-                      <li key={step.da} className="flex gap-3 text-sm leading-[1.6] text-paper/70">
+                      <li key={step.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
                         <span className="font-display text-xs font-bold tabular-nums text-brand-300">
                           {String(i + 1).padStart(2, "0")}
                         </span>
@@ -212,7 +212,7 @@ export default async function RepairPage(props: Params) {
                 <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{heading}</h2>
                 <ul className="mt-5 space-y-3">
                   {items.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/70">
+                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
                       <Check
                         className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-400"
                         strokeWidth={2}
