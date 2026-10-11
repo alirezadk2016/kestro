@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
+import { buttonClass } from "./Button";
 import { categories } from "@/lib/categories";
 import { company } from "@/lib/company";
 import { mainNav, productsNav, ui } from "@/lib/nav";
@@ -30,8 +31,13 @@ export default function Header({ lang }: { lang: Lang }) {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    /* And out of reach of Tab. The drawer covers the page, so Tab past its
+       last link used to land on a breadcrumb nobody could see. */
+    const behind = [document.querySelector("main"), document.querySelector("footer")];
+    for (const el of behind) if (el) el.inert = true;
     return () => {
       document.body.style.overflow = previous;
+      for (const el of behind) if (el) el.inert = false;
     };
   }, [open]);
   /*
@@ -210,23 +216,23 @@ export default function Header({ lang }: { lang: Lang }) {
                   </Link>
                   <Link
                     href={localePath(productsNav.quality.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.pricing.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.pricing.label[lang]}
-                  </Link>{" "}
+                  </Link>
                   <Link
                     href={localePath(productsNav.sampleQuote.href, lang)}
-                    className="mb-1 block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.sampleQuote.label[lang]}
                   </Link>
-                  <div className="mb-1 border-t border-white/10" />
+                  <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
@@ -316,6 +322,7 @@ export default function Header({ lang }: { lang: Lang }) {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
+            aria-controls="mobile-menu"
             aria-label={ui.openMenu[lang]}
             className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
@@ -342,99 +349,106 @@ export default function Header({ lang }: { lang: Lang }) {
       </Container>
 
       {/* Opaque, not glass: the drawer covers the page rather than floating over
-          a strip of it, and at 82% the article read straight through the links. */}
+          a strip of it, and at 82% the article read straight through the links.
+          It fills the screen under the bar: it used to stop where its links
+          ran out, with the page's heading showing beneath it, live to a tap
+          but locked against scrolling. */}
       {open && (
-        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-white/10 bg-brand-950 lg:hidden">
+        <div
+          id="mobile-menu"
+          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-brand-950 sm:h-[calc(100dvh-5rem)] lg:hidden"
+        >
           <Container className="flex flex-col gap-1 py-4">
             <button
               type="button"
               onClick={() => setMobileProductsOpen((v) => !v)}
               aria-expanded={mobileProductsOpen}
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
+              aria-controls="mobile-products"
+              className="flex min-h-[44px] items-center justify-between rounded-lg px-3 text-base font-medium text-paper/85 transition-colors hover:bg-white/10 hover:text-paper"
             >
               {productsNav.hub.label[lang]}
               <ChevronDown
+                aria-hidden="true"
                 className={`h-4 w-4 transition-transform ${mobileProductsOpen ? "rotate-180" : ""}`}
                 strokeWidth={2}
               />
             </button>
 
+            {/* Every row 44px. They were 36, thirteen of them in a column,
+                which is the densest set of targets on the site and the one
+                most often hit with a thumb. */}
             {mobileProductsOpen && (
-              <div className="mb-1 space-y-0.5 border-l border-white/10 pl-3">
-                <Link
-                  href={localePath(productsNav.hub.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.overview[lang]}
-                </Link>
-                <Link
-                  href={localePath(productsNav.models.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.models.label[lang]}
-                </Link>
-                <Link
-                  href={localePath(productsNav.machine.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.machine.label[lang]}
-                </Link>
-                <Link
-                  href={localePath(productsNav.quality.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.quality.label[lang]}
-                </Link>{" "}
-                <Link
-                  href={localePath(productsNav.pricing.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.pricing.label[lang]}
-                </Link>{" "}
-                <Link
-                  href={localePath(productsNav.sampleQuote.href, lang)}
-                  onClick={closeMobile}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-                >
-                  {productsNav.sampleQuote.label[lang]}
-                </Link>
-                {categories.map((category) => (
+              <div id="mobile-products" className="mb-1 border-l border-white/10 pl-3">
+                {[
+                  { href: productsNav.hub.href, label: productsNav.overview },
+                  productsNav.models,
+                  productsNav.machine,
+                  productsNav.quality,
+                  productsNav.pricing,
+                  productsNav.sampleQuote,
+                ].map((item) => (
                   <Link
-                    key={category.slug}
-                    href={localePath(`/produkter/${category.slug}`, lang)}
+                    key={item.href}
+                    href={localePath(item.href, lang)}
                     onClick={closeMobile}
-                    className="block rounded-lg px-3 py-2 text-sm text-paper/75 transition hover:bg-white/10 hover:text-paper"
+                    aria-current={basePath === item.href ? "page" : undefined}
+                    className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${
+                      basePath === item.href ? "text-paper" : "text-paper/85"
+                    }`}
                   >
-                    {category.name[lang]}
+                    {item.label[lang]}
                   </Link>
                 ))}
+                <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
+                {categories.map((category) => {
+                  const href = `/produkter/${category.slug}`;
+                  return (
+                    <Link
+                      key={category.slug}
+                      href={localePath(href, lang)}
+                      onClick={closeMobile}
+                      aria-current={basePath === href ? "page" : undefined}
+                      className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm transition-colors hover:bg-white/10 hover:text-paper ${
+                        basePath === href ? "font-medium text-paper" : "text-paper/75"
+                      }`}
+                    >
+                      {category.name[lang]}
+                    </Link>
+                  );
+                })}
               </div>
             )}
 
-            {mainNav.map((link) => (
-              <Link
-                key={link.href}
-                href={localePath(link.href, lang)}
-                onClick={closeMobile}
-                className="rounded-lg px-3 py-2.5 text-base font-medium text-paper/85 transition hover:bg-white/10 hover:text-paper"
-              >
-                {link.label[lang]}
-              </Link>
-            ))}
+            {/* The page you are on, marked here as in the bar on a wide
+                screen: aria-current for a screen reader, a lit row and full
+                white for everyone else. */}
+            {mainNav.map((link) => {
+              const current = isCurrent(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={localePath(link.href, lang)}
+                  onClick={closeMobile}
+                  aria-current={current ? "page" : undefined}
+                  className={`flex min-h-[44px] items-center rounded-lg px-3 text-base font-medium transition-colors hover:bg-white/10 hover:text-paper ${
+                    current ? "bg-white/[0.06] text-paper" : "text-paper/85"
+                  }`}
+                >
+                  {link.label[lang]}
+                </Link>
+              );
+            })}
 
             <div className="mt-3 border-t border-white/10 pt-3">
               <LanguageSwitcher lang={lang} basePath={basePath} onNavigate={closeMobile} />
             </div>
 
+            {/* The site's button, not a square-cornered block in the one
+                place every other button has a radius. */}
             <Link
               href={localePath("/tilbud", lang)}
               onClick={closeMobile}
-              className="mt-2 bg-brand-600 px-5 py-3.5 text-center text-sm font-semibold text-paper"
+              className={`${buttonClass("primary", "lg")} mt-3 w-full`}
             >
               {ui.bookCall[lang]}
             </Link>

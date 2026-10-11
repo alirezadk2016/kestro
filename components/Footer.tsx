@@ -140,13 +140,16 @@ export default function Footer({ lang }: { lang: Lang }) {
           {groups.map((group) => (
             <div key={group.label}>
               <h3 className="label text-brand-300">{group.label}</h3>
-              <ul className="mt-2 flex flex-wrap gap-x-6">
+              {/* Two aligned columns on a phone. Wrapped rows put "Priser"
+                  wherever the line before it happened to end, so the eye had
+                  no edge to run down; from sm there is room for one line. */}
+              <ul className="mt-2 grid grid-cols-2 gap-x-6 sm:flex sm:flex-wrap">
                 {group.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={localePath(link.href, lang)}
                       rel={link.rel}
-                      className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm text-paper/65 transition hover:text-paper"
+                      className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper sm:whitespace-nowrap"
                     >
                       {link.label[lang]}
                     </Link>
