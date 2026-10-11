@@ -12,6 +12,7 @@ import PageSchema from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
 import { models } from "@/lib/models";
+import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
@@ -141,7 +142,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             </div>
             <Link
               href={localePath("/modeller", lang)}
-              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 flex-none self-start lg:self-center"
+              className={`${buttonClass("primary")} flex-none self-start lg:self-center`}
             >
               {c.modelsButton}
             </Link>

@@ -287,8 +287,9 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
               {c.quotePoints.map((point) => (
                 <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
                   <Check
-                    className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
-                    strokeWidth={2.5}
+                    aria-hidden="true"
+                    className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
                   />
                   {point}
                 </li>

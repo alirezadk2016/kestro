@@ -155,7 +155,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                             <Check
                               aria-hidden="true"
                               className="mt-1 h-4 w-4 flex-none text-brand-300"
-                              strokeWidth={2.25}
+                              strokeWidth={2}
                             />
                             {point[lang]}
                           </li>

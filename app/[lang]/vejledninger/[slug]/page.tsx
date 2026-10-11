@@ -14,6 +14,7 @@ import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
+import { buttonClass } from "@/components/Button";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -396,8 +397,9 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                       {section.list.map((item) => (
                         <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                           <Check
-                            className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
-                            strokeWidth={2.5}
+                            aria-hidden="true"
+                            className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                            strokeWidth={2}
                           />
                           {item[lang]}
                         </li>
@@ -416,7 +418,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 </p>
                 <Link
                   href={localePath("/kontakt", lang)}
-                  className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6 mt-6"
+                  className={`${buttonClass("primary")} mt-6`}
                 >
                   {c.contact}
                 </Link>

@@ -14,6 +14,7 @@ import { primaryContact } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
+import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
@@ -442,7 +443,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <Link
                   href={localePath(QUOTE_HREF, lang)}
-                  className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+                  className={buttonClass("primary")}
                 >
                   {c.sendEnquiry}
                   <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -450,7 +451,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                 {salesContact.phoneHref && (
                   <a
                     href={`tel:${salesContact.phoneHref}`}
-                    className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+                    className={buttonClass("primary")}
                   >
                     <Phone className="h-4 w-4" strokeWidth={2} />
                     {salesContact.phoneDisplay}
@@ -668,7 +669,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             {salesContact.phoneHref && (
               <a
                 href={`tel:${salesContact.phoneHref}`}
-                className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+                className={buttonClass("primary")}
               >
                 <Phone className="h-4 w-4" strokeWidth={2} />
                 {salesContact.phoneDisplay}
@@ -678,8 +679,8 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               href={localePath(QUOTE_HREF, lang)}
               className={
                 salesContact.phoneHref
-                  ? "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08] px-6"
-                  : "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+                  ? buttonClass("secondary")
+                  : buttonClass("primary")
               }
             >
               {c.ctaButton}

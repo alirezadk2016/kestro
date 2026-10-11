@@ -376,7 +376,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             {c.needItems.map((item) => (
               <div key={item.title} className="plate p-5 sm:p-8">
                 <h3 className="flex gap-2.5 text-base font-semibold text-paper">
-                  <Check className="mt-1 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={2.5} />
+                  <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/75">{item.body}</p>

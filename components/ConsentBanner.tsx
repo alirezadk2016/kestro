@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Container from "./Container";
 import { CONSENT_EVENT, readConsent, writeConsent } from "@/lib/consent";
 import { localePath, type Lang } from "@/lib/i18n";
+import { buttonClass } from "./Button";
 
 /*
  * The consent banner.
@@ -77,7 +78,7 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
+            className={buttonClass("primary")}
           >
             {c.accept}
           </button>

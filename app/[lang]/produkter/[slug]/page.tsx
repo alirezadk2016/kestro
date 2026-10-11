@@ -431,16 +431,22 @@ export default async function CategoryPage(props: {
               {c.useCases}
             </h2>
 
+            {/* A <div> in a <dl> holds only <dt> and <dd>; the mark goes in the
+                term, hung in the row's left gutter. */}
             <dl className="mt-8 space-y-6">
               {category.useCases.map((useCase) => (
-                <div key={useCase.title.da} className="flex gap-4">
-                  <Check className="mt-1 h-5 w-5 flex-shrink-0 text-brand-300" strokeWidth={2} />
-                  <div>
-                    <dt className="text-base font-semibold text-paper">{useCase.title[lang]}</dt>
-                    <dd className="mt-1 text-base leading-7 text-paper/75">
-                      {useCase.description[lang]}
-                    </dd>
-                  </div>
+                <div key={useCase.title.da} className="relative pl-8">
+                  <dt className="text-base font-semibold leading-6 text-paper">
+                    <Check
+                      aria-hidden="true"
+                      className="absolute left-0 top-1 h-4 w-4 text-brand-300"
+                      strokeWidth={2}
+                    />
+                    {useCase.title[lang]}
+                  </dt>
+                  <dd className="mt-1 text-base leading-7 text-paper/75">
+                    {useCase.description[lang]}
+                  </dd>
                 </div>
               ))}
             </dl>

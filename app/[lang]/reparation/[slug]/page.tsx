@@ -213,7 +213,8 @@ export default async function RepairPage(props: Params) {
                   {items.map((item) => (
                     <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
                       <Check
-                        className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-400"
+                        aria-hidden="true"
+                        className="mt-[3px] h-4 w-4 flex-none text-brand-300"
                         strokeWidth={2}
                       />
                       <span className="min-w-0">{item[lang]}</span>

@@ -130,7 +130,7 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
                   <Check
                     aria-hidden="true"
                     className="mt-1 h-4 w-4 flex-none text-brand-600"
-                    strokeWidth={2.5}
+                    strokeWidth={2}
                   />
                   {point}
                 </li>

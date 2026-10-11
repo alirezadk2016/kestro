@@ -261,7 +261,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
           <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             {[c.brief1, c.brief2, c.brief3, c.brief4, c.brief5, c.brief6].map((item) => (
               <li key={item} className="plate flex gap-3 p-5 text-base leading-7 text-paper/75">
-                <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" />
+                <Check aria-hidden="true" className="mt-1.5 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
                 <span>{item}</span>
               </li>
             ))}

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Container from "./Container";
+import Logo from "./Logo";
+import { buttonClass } from "./Button";
 
 /*
  * What a visitor sees at a URL that does not exist.
@@ -25,62 +27,75 @@ const ways = [
 
 export default function NotFoundPanel() {
   return (
-    <section className="flex min-h-[70vh] items-center py-10 sm:py-20">
-      <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mx-auto font-mono text-sm font-semibold tracking-[0.3em] text-brand-300 leading-[1.6]">
-            404
-          </p>
+    <>
+      {/* The bar the rest of the site has, without the navigation: there is
+          no language to draw it in. Without it the page carried no name at
+          all, and a visitor from a stale link could not tell whose 404 it
+          was. */}
+      <header className="border-b border-white/10">
+        <Container className="flex h-16 items-center sm:h-20">
+          <Link
+            href="/"
+            className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
+          >
+            <Logo className="h-7 w-auto" idPrefix="notfound" />
+            Kestro
+          </Link>
+        </Container>
+      </header>
+      <main id="indhold">
+        <section className="flex min-h-[70vh] items-center py-10 sm:py-20">
+          <Container>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="mx-auto font-mono text-sm font-semibold tracking-[0.3em] text-brand-300 leading-[1.6]">
+                404
+              </p>
 
-          <h1 className="mt-5 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl">
-            Siden blev ikke fundet
-          </h1>
-          <p className="mx-auto mt-4 text-base leading-[1.75] text-paper/75">
-            Siden findes ikke, eller den er flyttet. Prøv et af links herunder, eller skriv til os —
-            så finder vi det, I leder efter.
-          </p>
+              <h1 className="mt-5 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl">
+                Siden blev ikke fundet
+              </h1>
+              <p className="mx-auto mt-4 text-base leading-[1.75] text-paper/75">
+                Siden findes ikke, eller den er flyttet. Prøv et af links herunder, eller skriv til
+                os — så finder vi det, I leder efter.
+              </p>
 
-          <p className="mx-auto mt-7 font-display text-xl font-bold tracking-display text-paper/85">
-            This page could not be found
-          </p>
-          <p className="mx-auto mt-3 text-base leading-[1.75] text-paper/75">
-            The page does not exist or has moved. Try one of the links below, or write to us and we
-            will point you to it.
-          </p>
+              <p className="mx-auto mt-7 font-display text-xl font-bold tracking-display text-paper/85">
+                This page could not be found
+              </p>
+              <p className="mx-auto mt-3 text-base leading-[1.75] text-paper/75">
+                The page does not exist or has moved. Try one of the links below, or write to us and
+                we will point you to it.
+              </p>
 
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link
-              href="/"
-              className="group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950 min-h-[44px] text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-500 px-6"
-            >
-              Til forsiden / Front page
-            </Link>
-            <Link
-              href="/kontakt"
-              className="inline-flex min-h-[50px] items-center justify-center rounded-lg border border-white/15 bg-white/[0.04] px-7 text-sm font-semibold tracking-tight text-paper transition hover:border-white/35 hover:bg-white/[0.08]"
-            >
-              Kontakt os / Contact us
-            </Link>
-          </div>
-
-          <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 border-t border-white/10 pt-7">
-            {ways.map((way) => (
-              <li key={way.href}>
-                <Link
-                  href={way.href}
-                  className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
-                >
-                  {way.da}
-                  <span aria-hidden="true" className="px-1.5 text-paper/55">
-                    /
-                  </span>
-                  {way.en}
+              <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+                <Link href="/" className={buttonClass("primary", "lg")}>
+                  Til forsiden / Front page
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Container>
-    </section>
+                <Link href="/kontakt" className={buttonClass("secondary", "lg")}>
+                  Kontakt os / Contact us
+                </Link>
+              </div>
+
+              <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 border-t border-white/10 pt-7">
+                {ways.map((way) => (
+                  <li key={way.href}>
+                    <Link
+                      href={way.href}
+                      className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
+                    >
+                      {way.da}
+                      <span aria-hidden="true" className="px-1.5 text-paper/55">
+                        /
+                      </span>
+                      {way.en}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Container>
+        </section>
+      </main>
+    </>
   );
 }

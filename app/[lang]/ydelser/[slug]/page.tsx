@@ -173,8 +173,9 @@ export default async function ServicePage(props: {
                     {section.list.map((item) => (
                       <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                         <Check
-                          className="mt-1.5 h-4 w-4 flex-shrink-0 text-brand-300"
-                          strokeWidth={2.5}
+                          aria-hidden="true"
+                          className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                          strokeWidth={2}
                         />
                         {item[lang]}
                       </li>
