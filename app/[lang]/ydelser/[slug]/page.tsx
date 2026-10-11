@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
-import BreadcrumbSchema, { type Crumb } from "@/components/BreadcrumbSchema";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
 import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -109,7 +110,6 @@ export default async function ServicePage(props: {
     <>
       <PageSchema lang={lang} route="/ydelser/[slug]" sources={answers?.sources} />
 
-      <BreadcrumbSchema lang={lang} trail={trail} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -120,16 +120,9 @@ export default async function ServicePage(props: {
       <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <nav aria-label={c.breadcrumb} className="text-sm text-paper/65">
-              <Link
-                href={localePath("/ydelser", lang)}
-                className="inline-flex min-h-[44px] items-center transition hover:text-paper"
-              >
-                {c.breadcrumb}
-              </Link>
-            </nav>
+            <Breadcrumbs lang={lang} trail={trail} />
 
-            <h1 className="mt-4 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+            <h1 className="mt-5 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {service.name[lang]}
             </h1>
             {/* The answer first. The card one-liner is `summary`; the page opens

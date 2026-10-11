@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import PriceOnRequest from "@/components/PriceOnRequest";
 import WhatIsFixed from "@/components/WhatIsFixed";
 import CtaSection from "@/components/CtaSection";
@@ -167,47 +167,32 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               side by side on a desktop: as stacked full-width blocks the photos
               alone were two screens of scrolling with half the window empty. */}
           <div className="max-w-6xl">
-            <BreadcrumbSchema
+            {/* The shared trail, visible and marked up from one list. */}
+            <Breadcrumbs
               lang={lang}
               trail={[
                 { name: c.breadcrumb, href: "/modeller" },
                 { name: model.name, href: `/modeller/${model.slug}` },
               ]}
             />
-            <nav
-              aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
-              className="text-sm text-paper/65"
-            >
-              <Link
-                href={localePath("/modeller", lang)}
-                className="inline-flex min-h-[44px] items-center transition hover:text-white"
-              >
-                {c.breadcrumb}
-              </Link>
-              <span className="mx-2" aria-hidden="true">
-                /
-              </span>
-              <span className="text-paper/85">{model.name}</span>
-            </nav>
-
             <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-7">
-                <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-                  <MarkTile name={getCategoryMark(model.category)} size="lg" />
-                  <div>
-                    <span className="text-sm font-semibold uppercase tracking-wider text-paper/75">
-                      {model.brand} · {model.format[lang]}
-                    </span>
-                    <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-                      {model.name}
-                    </h1>
-                    {/* The tagline, then the answer: what the machine is, with
-                        the figures from its own spec table. */}
-                    <p className="mt-2 text-base text-paper/85 sm:text-lg leading-[1.65]">
-                      {model.tagline[lang]} {modelLead(model, lang)}
-                    </p>
-                  </div>
+                {/* Brand and format as the page's one label, then mark and
+                    title on one row, on the type scale like every page title. */}
+                <p className="label mt-2 text-paper/75">
+                  {model.brand} · {model.format[lang]}
+                </p>
+                <div className="mt-3 flex items-center gap-4 sm:gap-5">
+                  <MarkTile name={getCategoryMark(model.category)} size="lg" className="flex-none" />
+                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                    {model.name}
+                  </h1>
                 </div>
+                {/* The tagline, then the answer: what the machine is, with
+                    the figures from its own spec table. */}
+                <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
+                  {model.tagline[lang]} {modelLead(model, lang)}
+                </p>
 
                 <p className="mt-8 text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
                 <p className="label mt-6 text-paper/65">

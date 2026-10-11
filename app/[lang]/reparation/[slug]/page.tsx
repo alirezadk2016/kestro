@@ -125,7 +125,7 @@ export default async function RepairPage(props: Params) {
            * Both paragraphs were already written; they were in the wrong
            * order. A reader skimming and a model quoting both take the first
            * one, and the first one used to be the throat-clearing. */}
-          <p className="mt-8 max-w-2xl text-base font-medium leading-[1.75] text-paper/85 sm:text-lg sm:leading-[1.7]">
+          <p className="mt-6 max-w-2xl text-base leading-[1.7] text-paper/85 sm:text-lg">
             {repair.answer[lang]}
           </p>
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import RelatedLinks from "@/components/RelatedLinks";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
@@ -164,7 +164,11 @@ export default async function CategoryPage(props: {
       <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
         <Container className="relative">
           <div className="max-w-3xl">
-            <BreadcrumbSchema
+            {/* The shared trail: "Forside / Hvad vi skaffer / Bærbare
+                computere", visible and marked up from one list. The schema
+                here already began at Forside while the visible trail did not,
+                which is the mismatch BreadcrumbSchema warns about. */}
+            <Breadcrumbs
               lang={lang}
               trail={[
                 { name: c.breadcrumbHub, href: "/produkter" },
@@ -179,30 +183,19 @@ export default async function CategoryPage(props: {
                 }}
               />
             )}
-            <nav aria-label={c.breadcrumbLabel} className="text-sm text-paper/65">
-              <Link
-                href={localePath("/produkter", lang)}
-                className="inline-flex min-h-[44px] items-center transition hover:text-white"
-              >
-                {c.breadcrumbHub}
-              </Link>
-              <span className="mx-2" aria-hidden="true">
-                /
-              </span>
-              <span className="text-paper/85">{category.name[lang]}</span>
-            </nav>
-
-            <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
-              <MarkTile name={getCategoryMark(category.slug)} size="lg" />
-              <div>
-                <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-                  {category.name[lang]}
-                </h1>
-                <p className="mt-2 text-base text-paper/85 sm:text-lg leading-[1.65]">
-                  {categoryLead(category, lang)}
-                </p>
-              </div>
+            {/* Mark and title on one row at every width, on the type scale.
+                Stacked on a phone the 56px tile cost the first screen 80px,
+                and the title was 3xl/4xl/5xl — 48px on a desktop, off the
+                scale every other page title is on. */}
+            <div className="mt-5 flex items-center gap-4 sm:gap-5">
+              <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
+              <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {category.name[lang]}
+              </h1>
             </div>
+            <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
+              {categoryLead(category, lang)}
+            </p>
 
             <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
             <p className="label mt-6 text-paper/65">
