@@ -136,7 +136,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           thirty kilobytes of HTML saying one thing eight times. */}
       <GuidePanelStyles />
 
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950">
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 max-md:-mt-[65px]">
         {/* The plate sits behind the type and is clipped by the section, so it
             reads as a drawing the page is laid on rather than an illustration
             dropped into it. Fixed aspect, so nothing shifts as it paints. */}
@@ -153,16 +153,21 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
             lines behind the heading — dirt rather than a graphic, and it took
             contrast off the type it lay under. The phone gets the same
             artwork as an actual picture further down instead. */}
-        <VidenHeroPlate className="pointer-events-none absolute hidden opacity-60 sm:-right-24 sm:top-8 sm:block sm:h-[26rem] sm:w-[58rem] lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
+        <VidenHeroPlate className="pointer-events-none absolute hidden opacity-60 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] md:block lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
         {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
             has to stay legible on the right where there is room, and stay out
             of the way of the type where there is not. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950 lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/70 lg:to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950 max-md:hidden lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/70 lg:to-transparent"
         />
 
-        <Container className="relative py-6 sm:py-16 lg:py-20">
+        {/* On a phone the plate is the masthead's ground, from under the
+            glass bar, and the words sit on glass over its foot, as on the
+            front page and the category pages. From md the wrapper is
+            display: contents and the masthead is what it was. */}
+        <Container className="relative flex flex-col py-6 max-md:pt-0 md:block md:py-16 lg:py-20">
+          <div className="glass-card relative z-10 max-md:-mt-14 md:contents">
           <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
 
           {/* w-fit so the box is the width of the label.
@@ -218,7 +223,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
            * and counts before anything was drawn. The plate behind the
            * masthead does not count: at that width it is bg-contain inside a
            * mask that removes three quarters of it. Here it is a picture. */}
-          <VidenHeroPlate variant="band" className="mt-8 aspect-[16/10] w-full sm:hidden" />
+          </div>
+
+          <VidenHeroPlate
+            variant="band"
+            className="under-bar art-bleed order-first -mx-4 aspect-[4/3] sm:-mx-6 md:hidden"
+          />
         </Container>
       </section>
 

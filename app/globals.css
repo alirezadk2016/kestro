@@ -1272,6 +1272,24 @@ body {
     }
   }
 
+  /* A guide's panel: fading at its foot on a phone, where the title's glass
+     overlaps it; dissolving into the page on its left from xl, where it
+     lies behind the heading. One mask per width, never two at once, so
+     nothing depends on mask-composite. */
+  @media (max-width: 767px) {
+    .guide-plate {
+      -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .guide-plate {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%, #000 100%);
+      mask-image: linear-gradient(to right, transparent 0%, #000 42%, #000 100%);
+    }
+  }
+
   .plate-well::after {
     content: "";
     position: absolute;

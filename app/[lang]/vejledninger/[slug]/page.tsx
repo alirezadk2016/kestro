@@ -198,7 +198,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       {/* The header carries depth by layering rather than by ornament: the mark
           sits behind the type on a wide screen and steps out of the way on a
           narrow one, where the words are the only thing worth the space. */}
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper sm:py-10 sm:py-20">
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-0 sm:py-10 sm:py-20">
         {/* The guide's own panel, not its cluster's.
             Three articles sit in "Levetid og udskiftning" and three in "Køb,
             stand og afhændelse", so the cluster mark put the same drawing
@@ -226,16 +226,16 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
          * xl rather than lg, because at 1024 a 30rem plate and a max-w-3xl
          * reading column want the same pixels and the column wins.
          */}
-        <div className="pointer-events-none absolute right-0 top-1/2 hidden aspect-[3/2] w-[32rem] -translate-y-1/2 xl:block 2xl:w-[38rem]">
+        {/* On a phone the same panel is the header's ground: in the flow,
+            full width from under the glass bar, fading at its foot where the
+            words' glass panel overlaps it. One element, so a drawn panel's
+            ids are not repeated. From md to xl it is not shown, as before. */}
+        <div className="under-bar pointer-events-none relative aspect-[3/2] w-full md:hidden xl:absolute xl:right-0 xl:top-1/2 xl:block xl:w-[32rem] xl:-translate-y-1/2 2xl:w-[38rem]">
           <GuidePanel
             slug={guide.slug}
             lang={lang}
             priority
-            className="h-full w-full opacity-70"
-            style={{
-              WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 42%, #000 100%)",
-              maskImage: "linear-gradient(to right, transparent 0%, #000 42%, #000 100%)",
-            }}
+            className="guide-plate h-full w-full xl:opacity-70"
           />
           {/* The bottom edge, softened by painting the section's own colour
               over it rather than by a second mask layer: two mask layers need
@@ -249,7 +249,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         </div>
 
         <Container className="relative">
-          <div className="max-w-3xl">
+          <div className="glass-card relative z-10 max-w-3xl max-md:-mt-14">
             <Breadcrumbs
               lang={lang}
               trail={[
