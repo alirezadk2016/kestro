@@ -277,7 +277,7 @@ export default function MachineInside({ lang }: { lang: Lang }) {
           </svg>
         </div>
 
-        <p className="mt-4 max-w-2xl text-xs leading-[1.45] text-paper/65">{c.note}</p>
+        <p className="mt-4 max-w-2xl text-sm leading-[1.5] text-paper/75">{c.note}</p>
       </div>
 
       <div className="lg:col-span-5">

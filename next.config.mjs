@@ -1,3 +1,7 @@
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+
 /** @type {import('next').NextConfig} */
 
 /*
@@ -206,6 +210,30 @@ function toEnglish(path) {
 const nextConfig = {
   // Do not advertise the framework and its version.
   poweredByHeader: false,
+  /*
+   * No experimental.inlineCss. It removes the render-blocking stylesheet
+   * request, but Next then writes the CSS into the page three times — once
+   * in <style> and twice in the RSC payload — and the 487kB document that
+   * results measured worse on a throttled phone than the request it saved:
+   * Lighthouse median 0.94 inlined against 0.96 linked, FCP 1.27s against
+   * 1.07s (three runs each, 12 Oct 2026).
+   */
+  webpack(config, { isServer }) {
+    /*
+     * Next ships a small polyfill module to every browser — Array.at,
+     * Object.hasOwn, flat/flatMap, Object.fromEntries, trimStart/trimEnd.
+     * Every browser that can run this site's CSS (container queries, :has(),
+     * scroll-driven animation fallbacks) has had all of them for years, so
+     * the 11kB is only parse time on a phone: PageSpeed's "legacy JavaScript".
+     */
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        [require.resolve("next/dist/build/polyfills/polyfill-module")]: false,
+      };
+    }
+    return config;
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

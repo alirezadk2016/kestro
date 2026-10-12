@@ -1643,3 +1643,25 @@ html[data-lang-hint="on"] .lang-hint {
     animation: none;
   }
 }
+
+/*
+ * The phone hero's sharp layer. AVIF where the browser takes it (24kB),
+ * the WebP everywhere else (40kB); a browser that does not understand
+ * image-set() with type() drops the second declaration and keeps the first.
+ */
+.hero-scene-mobile {
+  background-image: url(/hero/scene-mobile.webp);
+  background-image: image-set(
+    url(/hero/scene-mobile.avif) type("image/avif"),
+    url(/hero/scene-mobile.webp) type("image/webp")
+  );
+}
+
+/* The same for the wide hero. */
+.hero-scene {
+  background-image: url(/hero/scene.webp);
+  background-image: image-set(
+    url(/hero/scene.avif) type("image/avif"),
+    url(/hero/scene.webp) type("image/webp")
+  );
+}

@@ -61,10 +61,11 @@ export default function Ticker({
     let frame = 0;
     let previous = 0;
 
-    const measure = () => {
-      const first = row.firstElementChild as HTMLElement | null;
-      setWidth = first ? first.getBoundingClientRect().width : 0;
-    };
+    /* The width of one copy of the set comes from the ResizeObserver, which
+       reports it after layout. Reading getBoundingClientRect() here, straight
+       after data-ticking changed the styles, forced a synchronous layout on
+       every page load — PageSpeed's "forced reflow". */
+    const first = row.firstElementChild as HTMLElement | null;
 
     const wrap = () => {
       if (setWidth <= 0) return;
@@ -149,15 +150,14 @@ export default function Ticker({
     };
 
     const seen = new IntersectionObserver(([entry]) => (inView = entry.isIntersecting));
-    const resize = new ResizeObserver(() => {
-      measure();
+    const resize = new ResizeObserver(([entry]) => {
+      setWidth = entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
       wrap();
       paint();
     });
 
     const start = () => {
       view.dataset.ticking = "";
-      measure();
       paint();
       previous = performance.now();
       frame = requestAnimationFrame(tick);
@@ -169,7 +169,7 @@ export default function Ticker({
       view.addEventListener("focusin", onFocusIn);
       view.addEventListener("focusout", onFocusOut);
       seen.observe(view);
-      resize.observe(row);
+      if (first) resize.observe(first);
     };
 
     const stop = () => {
