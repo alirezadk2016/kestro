@@ -30,7 +30,7 @@ const copy = {
       "Fortæl os antal, specifikation og hvornår det skal stå klar. Vi vender tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
     title: "Få et tilbud",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
-    lead: "Et tilbud fra Kestro er gratis og uforpligtende: I fortæller antal, specifikation og hvornår det skal stå klar, og I får svar inden for 1 arbejdsdag med pris per enhed, stand og leveringstid. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
+    lead: "Et tilbud fra Kestro er gratis og uforpligtende: I fortæller antal, specifikation og hvornår det skal stå klar, og I får svar inden for én arbejdsdag med pris per enhed, stand og leveringstid. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
     nextTitle: "Hvad sker der, når I sender?",
     nextSteps: [
@@ -44,11 +44,11 @@ const copy = {
     exampleLink: "Se eksemplet",
     needTitle: "Hvad har vi brug for at vide?",
     needLead:
-      "Ingen af felterne er obligatoriske, og »ved ikke endnu« er et brugbart svar. Men jo mere af det herunder, I kan sige noget om, jo mindre bliver det første svar en række spørgsmål tilbage.",
+      "Ingen af felterne er obligatoriske, og »ved ikke endnu« er et brugbart svar. Men jo mere I kan sige om punkterne herunder, jo færre spørgsmål skal vi stille, før I får et tilbud.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",
-        body: "Skal der skærme, dockingstationer eller kabler med, ændrer det både prisen og hvor lang tid det tager at samle leverancen. Et cirka-tal er nok til at komme i gang – I kan altid justere, inden I siger ja.",
+        body: "Skal der skærme, dockingstationer eller kabler med, ændrer det både prisen, og hvor lang tid det tager at samle leverancen. Et skøn er nok til at komme i gang – I kan altid justere, inden I siger ja.",
       },
       {
         title: "Hvad maskinerne skal bruges til",
@@ -78,7 +78,7 @@ const copy = {
       },
       {
         title: "I får et tilbud, I kan læse",
-        body: "Tilbuddet står på enhedsniveau frem for som ét tal. Eksempelsiden viser, hvordan det ser ud udfyldt. Kan specifikationen ikke fyldes i det antal, foreslår vi det nærmeste alternativ i stedet for at lade feltet stå tomt.",
+        body: "Tilbuddet viser hver enhed for sig frem for ét samlet tal. Eksempelsiden viser, hvordan det ser ud udfyldt. Kan specifikationen ikke skaffes i det antal, foreslår vi det nærmeste alternativ i stedet for at lade feltet stå tomt.",
       },
       {
         title: "I siger ja eller nej",
@@ -102,7 +102,7 @@ const copy = {
     metaDescription:
       "Tell us the quantity, the specification and when it has to be ready, and we come back with price per unit, condition and lead time. No obligation.",
     title: "Get a quote",
-    lead: "A quote from Kestro is free and commits you to nothing: you tell us the quantity, the specification and when it has to be ready, and you get a reply within 1 working day with price per unit, condition and lead time. Fill in what you know — the rest can stay at “not sure yet”.",
+    lead: "A quote from Kestro is free and commits you to nothing: you tell us the quantity, the specification and when it has to be ready, and you get a reply within one working day with price per unit, condition and lead time. Fill in what you know — the rest can stay at “not sure yet”.",
     formTitle: "Your request",
     nextTitle: "What happens when you send it?",
     nextSteps: [
@@ -116,7 +116,7 @@ const copy = {
     exampleLink: "See the example",
     needTitle: "What do we need to know?",
     needLead:
-      "None of the fields are required, and “not sure yet” is a usable answer. But the more of the below you can say something about, the less the first reply has to be a list of questions back.",
+      "None of the fields are required, and “not sure yet” is a usable answer. But the more you can tell us about the points below, the fewer questions we need to ask before you get a quote.",
     needItems: [
       {
         title: "Quantity, and what goes with it",
@@ -208,7 +208,7 @@ const quoteFaqs = [
   {
     question: { da: "Har I maskinerne på lager?", en: "Do you hold the machines in stock?" },
     answer: {
-      da: "Nej. Vi skaffer per ordre i vores leverandørnetværk frem for at sælge fra et fast lager. Det er også derfor, tilbuddet oplyser stand og leveringstid på det konkrete parti frem for en listepris.",
+      da: "Nej. Vi skaffer maskinerne til hver ordre i vores leverandørnetværk frem for at sælge fra et fast lager. Det er også derfor, tilbuddet oplyser stand og leveringstid på det konkrete parti frem for en listepris.",
       en: "No. We source per order through our supplier network rather than selling from fixed stock. That is also why a quote states the condition and lead time of the actual batch rather than a list price.",
     },
   },

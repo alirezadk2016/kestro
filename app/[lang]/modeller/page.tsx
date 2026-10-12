@@ -14,7 +14,7 @@ const copy = {
   da: {
     metaTitle: "Modeller vi ofte skaffer til erhverv | Kestro",
     metaDescription:
-      "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Ingen lager, ingen listepriser – vi sourcer per ordre.",
+      "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Intet lager, ingen listepriser – vi skaffer maskinerne til hver ordre.",
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
     description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,

@@ -12,7 +12,7 @@ import { getModel, getModelsForCategory } from "@/lib/models";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
 import CraftMark from "@/components/CraftMark";
-import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, type Lang, lowerFirst } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
@@ -52,7 +52,7 @@ const copy = {
     breadcrumbHub: "Hvad vi skaffer",
     brandsTitle: "Mærker vi typisk arbejder med",
     brandsBodyPre:
-      "Vi sourcer per ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
+      "Vi skaffer udstyret til hver ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     imageNote:
@@ -293,7 +293,7 @@ export default async function CategoryPage(props: {
               {c.brandsTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">
-              {c.brandsBodyPre} {category.name[lang].toLowerCase()}:
+              {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
             </p>
 
             <ul className="mt-6 flex flex-wrap gap-2">
@@ -527,8 +527,8 @@ export default async function CategoryPage(props: {
         lang={lang}
         items={categoryFaqs(category)}
         title={{
-          da: `Spørgsmål om ${category.name.da.toLowerCase()}`,
-          en: `Questions about ${category.name.en.toLowerCase()}`,
+          da: `Spørgsmål om ${lowerFirst(category.name.da)}`,
+          en: `Questions about ${lowerFirst(category.name.en)}`,
         }}
       />
 

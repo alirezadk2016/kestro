@@ -25,7 +25,7 @@ const features = [
   {
     mark: "nordic",
     title: { da: "Nordisk klar", en: "Nordic ready" },
-    sub: { da: "Dansk/norsk tastatur & sprog", en: "Danish/Norwegian keyboard & language" },
+    sub: { da: "Dansk eller norsk tastatur og sprog", en: "Danish or Norwegian keyboard and language" },
   },
   {
     mark: "business",
@@ -35,7 +35,7 @@ const features = [
   {
     mark: "sustainable",
     title: { da: "Bæredygtigt valg", en: "Sustainable choice" },
-    sub: { da: "Færre nye enheder produceret", en: "Fewer new units manufactured" },
+    sub: { da: "Færre nye maskiner skal produceres", en: "Fewer new machines need making" },
   },
   {
     mark: "delivery",
@@ -74,7 +74,7 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
       <MarkTile name={feature.mark} size="md" />
       <div className="min-w-0 max-md:whitespace-nowrap">
         <p className="text-[13px] font-semibold leading-5 text-paper">{feature.title[lang]}</p>
-        <p className="mt-0.5 text-xs leading-[1.35] text-paper/75">{feature.sub[lang]}</p>
+        <p className="mt-0.5 text-[13px] leading-[1.35] text-paper/75">{feature.sub[lang]}</p>
       </div>
     </li>
   ));

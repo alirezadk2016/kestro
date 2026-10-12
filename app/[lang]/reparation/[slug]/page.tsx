@@ -156,7 +156,8 @@ export default async function RepairPage(props: Params) {
                       fixed box let it run into the sentence beside it —
                       "Under 70%Skift det." on the live page. */}
                   <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
-                    {band.range}
+                    {/* Danish writes a space before the per cent sign. */}
+                    {lang === "da" ? band.range.replace(/(\d)%/g, "$1 %") : band.range}
                   </span>
                   <span className="text-sm leading-[1.6] text-paper/75">{band.reading[lang]}</span>
                 </li>

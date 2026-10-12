@@ -13,8 +13,8 @@ const situations = [
       en: "Have your computers become too slow?",
     },
     answer: {
-      da: "Ofte er det ét batteri, for lidt RAM eller en langsom disk. Vi opgraderer i stedet for at udskifte – og siger det ærligt, hvis det ikke kan betale sig.",
-      en: "Often it is one battery, too little memory or a slow disk. We upgrade instead of replacing — and say so honestly when it is not worth it.",
+      da: "Ofte er det et slidt batteri, for lidt RAM eller en langsom disk. Vi opgraderer i stedet for at udskifte – og siger det ærligt, hvis det ikke kan betale sig.",
+      en: "Often it is a worn battery, too little memory or a slow disk. We upgrade instead of replacing — and say so honestly when it is not worth it.",
     },
     mark: "adjust" as CraftMarkName,
     href: "/reparation",

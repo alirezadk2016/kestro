@@ -76,7 +76,7 @@ const copy = {
     title: "Sådan ser et tilbud ud",
     /* Answer first: what a quote is made of, then why the example exists. */
     description:
-      "Et tilbud fra Kestro er et dokument i 5 dele – maskinen per enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
+      "Et tilbud fra Kestro er et dokument i fem dele – maskinen per enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
     docLabel: "Eksempel",
     docTitle: "Tilbud",
     metaRows: [
@@ -110,7 +110,7 @@ const copy = {
       },
       {
         k: "Tidsramme",
-        v: "Et interval, ikke en dato. Vi sourcer per ordre, så vi oplyser tidsrammen, når vi ved, hvad der kan skaffes.",
+        v: "Et interval, ikke en dato. Vi skaffer udstyret til hver ordre, så vi oplyser tidsrammen, når vi ved, hvad der kan skaffes.",
       },
       {
         k: "Dokumentation",
@@ -142,7 +142,7 @@ const copy = {
       "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",
     description:
-      "A quote from Kestro is a document in 5 parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",
+      "A quote from Kestro is a document in five parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",
     docLabel: "Example",
     docTitle: "Quote",
     metaRows: [
@@ -409,7 +409,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
           {
             question: { da: "Hvad er ikke med i prisen?", en: "What does the price not include?" },
             answer: {
-              da: `Medmindre det aftales: ${copy.da.excluded.join(" ")}`,
+              da: `Medmindre det aftales: ${copy.da.excluded.join(" ").replace(/^./, (c) => c.toLowerCase())}`,
               en: `Unless agreed: ${copy.en.excluded.join(" ")}`,
             },
           },

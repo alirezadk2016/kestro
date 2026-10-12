@@ -41,10 +41,10 @@ const copy = {
       "Til gengæld står garantiperioden skriftligt i tilbuddet, sammen med hvem I skal kontakte, hvis noget går i stykker. Får I et tilbud – fra os eller fra andre – hvor det ikke fremgår, så spørg, inden I skriver under.",
     disclosureTitle: "Hvad får I oplyst, før I bestiller?",
     disclosureBody:
-      "Vi sourcer per ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
+      "Vi skaffer udstyret til hver ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
     notIncludedTitle: "Det følger typisk ikke med som standard",
     notIncludedBody:
-      "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er den klassiske grund til, at et billigt tilbud pludselig ikke er billigt. Sig det højt fra start, så regner vi det med.",
+      "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er den klassiske grund til, at et billigt tilbud pludselig ikke er billigt. Sig til fra start, så regner vi det med.",
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
@@ -106,7 +106,7 @@ const grades = [
       en: "Few or no visible marks. At arm's length the machine looks new. It is the most expensive grade, and the difference from grade B is purely cosmetic.",
     },
     suits: {
-      da: "Ledelse, salg og medarbejdere, der sidder over for kunder.",
+      da: "ledelse, salg og medarbejdere, der sidder over for kunder.",
       en: "Management, sales and staff who sit across from customers.",
     },
   },
@@ -118,7 +118,7 @@ const grades = [
       en: "Visible but small marks: light scratches on the lid or palm rest, perhaps a shiny key. The screen is flawless and the machine performs like a grade A.",
     },
     suits: {
-      da: "Den typiske erhvervsmaskine. Her ligger det bedste forhold mellem pris og stand.",
+      da: "den typiske erhvervsmaskine. Her ligger det bedste forhold mellem pris og stand.",
       en: "The typical business machine. This is where price and condition balance best.",
     },
   },
@@ -130,7 +130,7 @@ const grades = [
       en: "Scratches, dents or discolouration you notice. The machine is still fully functional and tested exactly like the others.",
     },
     suits: {
-      da: "Lager, produktion, værksted og arbejdspladser, hvor udstyret alligevel får hårde vilkår.",
+      da: "lager, produktion, værksted og arbejdspladser, hvor udstyret alligevel får hårde vilkår.",
       en: "Warehouse, production, workshop and any desk where the equipment gets rough treatment anyway.",
     },
   },
@@ -146,7 +146,7 @@ const testPoints = [
     en: "The screen checked for dead pixels, burn-in and brightness differences",
   },
   {
-    da: "Alle taster, trackpad og eventuel trackpoint",
+    da: "Alle taster, touchpad og eventuel TrackPoint",
     en: "Every key, the trackpad and the TrackPoint where fitted",
   },
   {

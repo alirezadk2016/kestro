@@ -27,7 +27,7 @@ export const company = {
   /** Shown wherever a short location line is needed */
   locationShort: { da: "Aarhus, Danmark", en: "Aarhus, Denmark" } as Localized,
   /** Markets served */
-  serves: { da: "Danmark & Norge", en: "Denmark & Norway" } as Localized,
+  serves: { da: "Danmark og Norge", en: "Denmark & Norway" } as Localized,
   /*
    * The legal identity, as e-handelsloven §7 requires it and as a procurement
    * manager will look for it before placing an order.
@@ -124,12 +124,12 @@ const people: TeamMember[] = [
     id: "ismail-masoumabadi",
     name: "Ismail Masoumabadi",
     role: {
-      da: "Netværkssikkerhed & international salgsledelse",
+      da: "Netværkssikkerhed og international salgsledelse",
       en: "Network Security & International Sales Management",
     },
     bio: {
-      da: "Står for indkøbene i udlandet og for netværkssikkerheden i virksomheden. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer hvad der reelt er i dem, og sørger for, at det I sender os gennem siden, bliver håndteret forsvarligt.",
-      en: "Runs the sourcing abroad and the company's network security. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
+      da: "Han står for indkøbene i udlandet og for netværkssikkerheden i virksomheden. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer, hvad der reelt er i dem, og sørger for, at det, I sender os gennem siden, bliver håndteret forsvarligt.",
+      en: "He runs the sourcing abroad and the company's network security. He finds the batches with suppliers in Southern Europe, checks what is actually in them, and makes sure that what you send us through this site is handled properly.",
     },
     handlesEnquiries: true,
   },
@@ -137,12 +137,12 @@ const people: TeamMember[] = [
     id: "mehdi",
     name: "Mehdi",
     role: {
-      da: "Salgsrådgivning & chef for marketing og salg",
-      en: "Sales Advisory & Head of Marketing and Sales",
+      da: "Salgsrådgiver og chef for marketing og salg",
+      en: "Sales Advisor and Head of Marketing and Sales",
     },
     bio: {
-      da: "Er den, I taler med om en leverance. Han tager imod jeres behov, henter priserne hjem og sender et skriftligt tilbud, I kan regne på – uden at I binder jer til noget.",
-      en: "The one you talk to about a delivery. He takes your requirements, gets the prices in and sends a written quote you can work with — with nothing committed.",
+      da: "Han er den, I taler med om en leverance. Han tager imod jeres behov, henter priserne hjem og sender et skriftligt tilbud, I kan regne på – uden at I binder jer til noget.",
+      en: "He is the one you talk to about a delivery. He takes your requirements, gets the prices in and sends a written quote you can work with — with nothing committed.",
     },
     handlesEnquiries: true,
   },
@@ -150,12 +150,12 @@ const people: TeamMember[] = [
     id: "alireza",
     name: "Alireza Makvandi",
     role: {
-      da: "Medstifter & teknisk ansvarlig",
+      da: "Medstifter og teknisk ansvarlig",
       en: "Co-founder & Technical Director",
     },
     bio: {
-      da: "Har ansvar for den tekniske side af Kestro: sitet, produktdata og den tekniske kontrol, før en maskine bliver præsenteret. Han sikrer, at specifikationerne er korrekte, at komponenterne er kompatible, og at det, der står på siden, stemmer overens med det, der indgår i tilbuddet.",
-      en: "Responsible for the technical side of Kestro: the site, the product data and the technical checks before a machine is presented. He makes sure the specifications are correct, that the components are compatible, and that what the site says matches what goes into the quote.",
+      da: "Han har ansvaret for den tekniske side af Kestro: sitet, produktdata og den tekniske kontrol, før en maskine bliver præsenteret. Han sikrer, at specifikationerne er korrekte, at komponenterne er kompatible, og at det, der står på siden, stemmer overens med det, der indgår i tilbuddet.",
+      en: "He is responsible for the technical side of Kestro: the site, the product data and the technical checks before a machine is presented. He makes sure the specifications are correct, that the components are compatible, and that what the site says matches what goes into the quote.",
     },
   },
 ];

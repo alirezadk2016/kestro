@@ -26,7 +26,7 @@ const copy = {
       "Sådan behandler Kestro personoplysninger: kontaktformularerne, cookiefri besøgstal og den statistik fra Google, der kun kører, hvis I siger ja.",
     title: "Privatlivspolitik",
     description:
-      "Privatlivspolitikken for kestro.dk er de 12 punkter herunder: hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet der følger jer videre.",
+      "Privatlivspolitikken for kestro.dk er de 12 punkter herunder: hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet, der følger jer videre.",
     updated: "Senest opdateret",
   },
   en: {
@@ -85,7 +85,7 @@ const sections: Section[] = [
         en: "When you submit a form, the content goes to our own server on kestro.dk, which passes it on to us as an email. So we receive information only once you press send — but it is the site that sends it, not your own mail client.",
       },
       {
-        da: "Vi behandler: navn, virksomhed, e-mailadresse, telefonnummer hvis oplyst, indholdet af beskeden, og hvilken side på kestro.dk den blev sendt fra. På tilbudsformularen desuden det, I selv udfylder om antal, model, hukommelse, lagerplads, tastatur og ønsket leveringstidspunkt.",
+        da: "Vi behandler: navn, virksomhed, e-mailadresse, telefonnummer, hvis det er oplyst, indholdet af beskeden, og hvilken side på kestro.dk den blev sendt fra. På tilbudsformularen desuden det, I selv udfylder om antal, model, hukommelse, lagerplads, tastatur og ønsket leveringstidspunkt.",
         en: "We process: name, company, email address, phone number if given, the content of the message, and which page on kestro.dk it was sent from. On the quote form, also what you fill in about quantity, model, memory, storage, keyboard and preferred delivery date.",
       },
       {
@@ -116,7 +116,7 @@ const sections: Section[] = [
       },
       {
         da: "Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket »Cookies og statistik« nederst på siden; derefter indlæses Google ikke igen.",
-        en: "The legal basis is your consent — GDPR article 6(1)(a) and the Danish cookie order § 3. You can withdraw it at any time through the “Cookies and statistics” link at the bottom of the page; after that, Google is not loaded again.",
+        en: "The legal basis is your consent — GDPR article 6(1)(a) and the Danish Cookie Executive Order § 3. You can withdraw it at any time through the “Cookies and statistics” link at the bottom of the page; after that, Google is not loaded again.",
       },
       {
         da: "Google LLC behandler oplysningerne som databehandler og er amerikansk. Overførslen sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og EU-US Data Privacy Framework. Vi har slået deling til Googles annonceprodukter fra.",
@@ -131,7 +131,7 @@ const sections: Section[] = [
     },
     body: [
       {
-        da: "Vi fører vores eget besøgstal på vores egen server. For hvert sidevisning gemmer vi hvilken side der blev læst, hvilket land forespørgslen kom fra, om der blev læst på telefon, tablet eller computer, og hvilken hjemmeside eller app I kom fra – for eksempel Google eller Instagram. Vi gemmer også, hvor længe et besøg varede.",
+        da: "Vi fører vores eget besøgstal på vores egen server. For hver sidevisning gemmer vi, hvilken side der blev læst, og hvilket land forespørgslen kom fra. Vi gemmer også, om siden blev læst på telefon, tablet eller computer, og hvilken hjemmeside eller app I kom fra – for eksempel Google eller Instagram. Vi gemmer også, hvor længe et besøg varede.",
         en: "We keep our own visit count on our own server. For each page view we store which page was read, which country the request came from, whether it was read on a phone, tablet or computer, and which website or app you arrived from — for example Google or Instagram. We also store how long a visit lasted.",
       },
       {
@@ -139,8 +139,8 @@ const sections: Section[] = [
         en: "To see that two page views belong to the same visit, we derive a number from your IP address, your browser identification and a random value that is replaced every 24 hours. The IP address itself is neither stored nor logged, and once the day's random value has been deleted the number can no longer be traced back to an address — not even by us. Still no cookies, and still nothing stored in your browser.",
       },
       {
-        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst og hvordan den findes – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand. Tallene ligger i vores egen database hos Neon, Inc. og bliver ikke delt med nogen.",
-        en: "The legal basis is our legitimate interest in knowing whether the site is read and how it is found — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish cookie order. The numbers live in our own database with Neon, Inc. and are not shared with anyone.",
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst, og hvordan den bliver fundet – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand. Tallene ligger i vores egen database hos Neon, Inc. og bliver ikke delt med nogen.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and how it is found — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish Cookie Executive Order. The numbers live in our own database with Neon, Inc. and are not shared with anyone.",
       },
     ],
   },
@@ -151,12 +151,12 @@ const sections: Section[] = [
     },
     body: [
       {
-        da: "Ud over Google Analytics tæller vi besøg med Vercel Analytics og måler sidernes hastighed med Vercel Speed Insights. Begge dele kører uanset, hvad I svarer i banneret, og det er der en grund til: de sætter ingen cookies, gemmer intet i jeres browser og følger jer ikke videre til andre hjemmesider. Der registreres et sidevisning, hvilket land forespørgslen kom fra, og hvor hurtigt siden blev vist.",
+        da: "Ud over Google Analytics tæller vi besøg med Vercel Analytics og måler sidernes hastighed med Vercel Speed Insights. Begge dele kører uanset, hvad I svarer i banneret, og det er der en grund til: de sætter ingen cookies, gemmer intet i jeres browser og følger jer ikke videre til andre hjemmesider. Der registreres en sidevisning, hvilket land forespørgslen kom fra, og hvor hurtigt siden blev vist.",
         en: "Alongside Google Analytics we count visits with Vercel Analytics and measure page speed with Vercel Speed Insights. Both run whatever you answer in the banner, and there is a reason for that: they set no cookies, store nothing in your browser and do not follow you to other websites. What is recorded is a page view, which country the request came from, and how quickly the page rendered.",
       },
       {
         da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst og om den er hurtig nok – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand, og der indsamles ikke oplysninger, der kan pege på en bestemt person.",
-        en: "The legal basis is our legitimate interest in knowing whether the site is read and whether it is fast enough — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish cookie order, and nothing is collected that can point to a particular person.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and whether it is fast enough — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish Cookie Executive Order, and nothing is collected that can point to a particular person.",
       },
       {
         da: "Vercel Inc. er amerikansk og behandler oplysningerne som databehandler for os, på grundlag af EU-Kommissionens standardkontraktbestemmelser. Vercel er i forvejen vores hostingudbyder, så forespørgslen når dem under alle omstændigheder.",

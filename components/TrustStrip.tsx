@@ -52,7 +52,7 @@ const copy = {
     formTitle: "Få en pris på jeres opsætning",
     quantity: "Hvor mange maskiner?",
     model: "Udstyr eller model",
-    modelPlaceholder: "Fx bærbare til kontorbrug, eller ThinkPad T14",
+    modelPlaceholder: "Fx bærbare til kontorbrug eller ThinkPad T14",
     when: "Hvornår skal det stå klar?",
     whenPlaceholder: "Fx inden udgangen af november",
     optional: "(valgfrit)",

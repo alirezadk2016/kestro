@@ -23,17 +23,17 @@ const shared = (repair: Repair): FaqItem[] => [
   {
     question: {
       da: `Hvad koster ${lc(repair.name.da)}?`,
-      en: `What does ${lc(repair.name.en)} cost?`,
+      en: `What is the price of ${lc(repair.name.en)}?`,
     },
     answer: {
-      da: "Du får en pris, før vi går i gang. Skriv model og hvad der sker, så vender vi tilbage med et estimat – og et ærligt svar, hvis det ikke kan betale sig.",
+      da: "Du får en pris, før vi går i gang. Skriv modellen, og hvad der sker, så vender vi tilbage med et estimat – og et ærligt svar, hvis det ikke kan betale sig.",
       en: "You get a price before we start. Write the model and what happens, and we come back with an estimate — and an honest answer if it is not worth doing.",
     },
   },
   {
     question: {
-      da: `Kan private få lavet ${lc(repair.name.da)}?`,
-      en: `Can private customers have ${lc(repair.name.en)} done?`,
+      da: `Kan private også få hjælp til ${lc(repair.name.da)}?`,
+      en: `Can private customers get help with ${lc(repair.name.en)} too?`,
     },
     answer: {
       da: "Ja. Værkstedet er den ene del af Kestro, hvor private også er velkomne – resten er indkøb og levering til virksomheder. Der er ingen minimumsordre.",
@@ -59,7 +59,7 @@ const windowsMinimum: FaqItem = {
     en: "What does Windows 11 require of the machine?",
   },
   answer: {
-    da: "Ifølge Microsoft mindst en 64-bit processor på 1 GHz med 2 kerner, 4 GB RAM, 64 GB lager, TPM 2.0 og UEFI med Secure Boot. Det er gulvet – til kontorarbejde med mange programmer åbne er mere hukommelse end minimum det, der mærkes.",
+    da: "Ifølge Microsoft mindst en 64-bit processor på 1 GHz med 2 kerner, 4 GB RAM, 64 GB lager, TPM 2.0 og UEFI med Secure Boot. Det er minimum – til kontorarbejde med mange programmer åbne er det mere hukommelse, der kan mærkes.",
     en: "According to Microsoft, at least a 1 GHz 64-bit processor with 2 cores, 4 GB RAM, 64 GB storage, TPM 2.0 and UEFI with Secure Boot. That is the floor — for office work with many programs open, memory above the minimum is what you notice.",
   },
 };
@@ -94,8 +94,8 @@ const specific: Record<string, Extra> = {
           en: "Is it worth replacing a single part?",
         },
         answer: {
-          da: "Ofte. De fleste maskiner, der bliver kasseret, fejler én ting – et hængsel, et ladestik, en blæser. Vi finder ud af, hvilken del der fejler, før vi bestiller noget, og siger til, hvis delen koster mere, end maskinen er værd.",
-          en: "Often. Most machines that get scrapped have one fault — a hinge, a charging port, a fan. We find out which part has failed before we order anything, and say so if the part costs more than the machine is worth.",
+          da: "Ofte. Mange maskiner bliver kasseret på grund af én enkelt fejl – et hængsel, et ladestik, en blæser. Vi finder ud af, hvilken del der fejler, før vi bestiller noget, og siger til, hvis delen koster mere, end maskinen er værd.",
+          en: "Often. Many machines get scrapped over a single fault — a hinge, a charging port, a fan. We find out which part has failed before we order anything, and say so if the part costs more than the machine is worth.",
         },
       },
     ],
@@ -109,8 +109,8 @@ const specific: Record<string, Extra> = {
           en: "Why does a hot machine get slower?",
         },
         answer: {
-          da: "Fordi den sætter sig selv ned i fart for ikke at tage skade. Den er altså ikke bare larmende – den er også langsommere, og det bliver ofte læst som, at maskinen er for gammel. Tit er den bare stoppet til med støv og tør kølepasta.",
-          en: "Because it slows itself down to avoid damage. So it is not just loud — it is slower too, and that is often read as the machine being too old. Often it is simply clogged with dust and dry thermal paste.",
+          da: "Fordi den skruer selv ned for farten for ikke at tage skade. Den er altså ikke bare larmende – den er også langsommere, og det bliver ofte forvekslet med, at maskinen er for gammel. Tit er den bare stoppet til med støv og tør kølepasta.",
+          en: "Because it slows itself down to avoid damage. So it is not just loud — it is slower too, and that is often mistaken for the machine being too old. Often it is simply clogged with dust and dry thermal paste.",
         },
       },
     ],
@@ -139,7 +139,7 @@ const specific: Record<string, Extra> = {
           en: "Do licences come with used hardware?",
         },
         answer: {
-          da: "Nej, ikke automatisk. Hardware og licenser købes hver for sig, så afklar hvilke licenser I allerede har, før maskinerne står på skrivebordene. Vi siger til, hvis noget ikke kan overdrages.",
+          da: "Nej, ikke automatisk. Hardware og licenser købes hver for sig, så afklar, hvilke licenser du allerede har, før maskinerne står på skrivebordene. Vi siger til, hvis noget ikke kan overdrages.",
           en: "No, not automatically. Hardware and licences are bought separately, so settle which licences you already have before the machines are on the desks. We tell you if something cannot be transferred.",
         },
       },
@@ -154,8 +154,8 @@ const specific: Record<string, Extra> = {
           en: "When is the old machine erased?",
         },
         answer: {
-          da: "Først når vi har gennemgået listen over filer, profiler og programmer med jer. NIST skelner mellem 3 niveauer af sletning – Clear, Purge og Destroy – så sig til, hvis den gamle maskine skal sælges eller kasseres.",
-          en: "Only once we have gone through the list of files, profiles and programs with you. NIST distinguishes 3 levels of erasure — Clear, Purge and Destroy — so say if the old machine is to be sold or scrapped.",
+          da: "Først når vi har gennemgået listen over filer, profiler og programmer med dig. NIST skelner mellem tre niveauer af sletning: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Sig til, hvis den gamle maskine skal sælges eller kasseres.",
+          en: "Only once we have gone through the list of files, profiles and programs with you. NIST distinguishes three levels of erasure: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). Say if the old machine is to be sold or scrapped.",
         },
       },
     ],
@@ -180,11 +180,11 @@ const specific: Record<string, Extra> = {
     faqs: [
       {
         question: {
-          da: "Kan I bygge videre på vores eksisterende maskine?",
+          da: "Kan I bygge videre på min eksisterende maskine?",
           en: "Can you build on our existing machine?",
         },
         answer: {
-          da: "Ja, hvis den kan bære det. Det, der afgør delene, er hvad maskinen skal kunne – og om der allerede står en maskine, der kan bygges videre på i stedet for at starte forfra.",
+          da: "Ja, hvis den kan bære det. Det, der afgør delene, er, hvad maskinen skal kunne – og om der allerede står en maskine, der kan bygges videre på i stedet for at starte forfra.",
           en: "Yes, if it can carry it. What decides the parts is what the machine has to do — and whether there is already a machine that can be built on instead of starting over.",
         },
       },

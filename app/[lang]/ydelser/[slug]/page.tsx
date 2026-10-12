@@ -7,7 +7,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
-import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, htmlLang, type Lang, lowerFirst } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
@@ -254,8 +254,8 @@ export default async function ServicePage(props: {
           lang={lang}
           items={answers.faqs}
           title={{
-            da: `${copy.da.faq} ${service.name.da.toLowerCase()}`,
-            en: `${copy.en.faq} ${service.name.en.toLowerCase()}`,
+            da: `${copy.da.faq} ${lowerFirst(service.name.da)}`,
+            en: `${copy.en.faq} ${lowerFirst(service.name.en)}`,
           }}
         />
       )}

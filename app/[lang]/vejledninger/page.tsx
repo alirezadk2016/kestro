@@ -34,7 +34,7 @@ const copy = {
     eyebrow: "Kestro Viden",
     title: "Viden om erhvervs-IT",
     description:
-      "Vi tjener penge på at skaffe og klargøre udstyr – ikke på at holde på viden. Her er det, vi selv ville have fortalt dig, hvis du ringede.",
+      "Vi tjener penge på at skaffe og klargøre udstyr – ikke på at holde på viden. Her er det, vi selv ville have fortalt dig, hvis du spurgte os.",
     statGuides: "vejledninger",
     statClusters: "emner",
     statUpdated: "senest opdateret",

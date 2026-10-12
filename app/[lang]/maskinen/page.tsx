@@ -17,7 +17,7 @@ const copy = {
       "Drej en bærbar erhvervscomputer rundt, og se hvor RAM, SSD, trådløst kort, køling og batteri sidder – hvad hver del gør, og hvad der kan opgraderes.",
     title: "Maskinen, del for del",
     description:
-      "Drej den rundt, og tryk på en del. Udvendigt er det den maskine, vi skaffer; indvendigt er det en principskitse over, hvor tingene sidder – og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",
+      "Drej den rundt, og tryk på en del. Udvendigt ser I den maskine, vi skaffer. Indvendigt er det en tegning af, hvor delene sidder, og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",
     outsideTitle: "Hvad kan I se udefra?",
     outsideBody: "Vælg en del, så drejer maskinen hen til den. Eller tag fat i den og drej selv.",
     insideTitle: "Hvad sidder der indeni?",
@@ -34,7 +34,7 @@ const copy = {
       "Turn a business laptop round and see where the memory, SSD, wireless card, cooling and battery sit — what each part does, and what can be upgraded.",
     title: "The machine, part by part",
     description:
-      "Turn it round, and tap a part. Outside is the machine we source; inside is a schematic of where things sit — and what can be changed if you want another couple of years out of the equipment.",
+      "Turn it round, and tap a part. Outside you see the machine we source. Inside is a drawing of where the parts sit, and what can be changed if you want another couple of years out of the equipment.",
     outsideTitle: "What can you see from outside?",
     outsideBody:
       "Pick a part and the machine turns to it. Or take hold of it and turn it yourself.",

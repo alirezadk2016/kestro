@@ -22,19 +22,19 @@ const copy = {
     description:
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
-      "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det ét enkelt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
+      "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det et slidt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
     read: "Læs mere",
     whatWeDo: "Hvad vi laver",
     howTitle: "Sådan foregår det",
     step1: "Du beskriver problemet i formularen – gerne med model og hvad der sker.",
-    step2: "Vi vender tilbage med, hvad vi umiddelbart tror det er, og hvad det koster at se på.",
+    step2: "Vi vender tilbage med, hvad vi umiddelbart tror, det er, og hvad det koster at se på.",
     step3: "Når vi har haft maskinen i hånden, får du en endelig pris, før vi går i gang.",
     step4: "Du får besked, når den er klar.",
     pricesTitle: "Priser",
     pricesBody:
-      "Prisen afhænger af, hvad der skal laves, og hvilke dele der skal bruges. Vi giver en pris, før vi går i gang – du bliver ikke overrasket bagefter. Skriv til os med, hvad der er galt, så vender vi tilbage med et estimat.",
+      "Prisen afhænger af, hvad der skal laves, og hvilke dele der skal bruges. Vi giver en pris, før vi går i gang – du bliver ikke overrasket bagefter.",
     formTitle: "Beskriv problemet",
-    formBody: "Skriv hvad der er galt, så vender vi tilbage med et estimat.",
+    formBody: "Skriv, hvad der er galt, og hvilken model det er, så vender vi tilbage med et estimat.",
   },
   en: {
     metaTitle: "Computer repairs and upgrades | Kestro",
@@ -44,7 +44,7 @@ const copy = {
     description:
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:
-      "Most machines get replaced long before they are worn out. Often it is a single battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
+      "Most machines get replaced long before they are worn out. Often it is a worn battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
     read: "Read more",
     whatWeDo: "What we do",
     howTitle: "How it works",
@@ -54,9 +54,9 @@ const copy = {
     step4: "We let you know when it is ready.",
     pricesTitle: "Prices",
     pricesBody:
-      "The price depends on what needs doing and which parts are needed. We give you a price before we start — no surprises afterwards. Write to us with what is wrong and we come back with an estimate.",
+      "The price depends on what needs doing and which parts are needed. We give you a price before we start — no surprises afterwards.",
     formTitle: "Describe the problem",
-    formBody: "Tell us what is wrong and we come back with an estimate.",
+    formBody: "Tell us what is wrong and which model it is, and we come back with an estimate.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -128,7 +128,7 @@ const repairFaqs = [
       en: "Can you change the keyboard to a Nordic layout?",
     },
     answer: {
-      da: "Ja. Er maskinen købt i udlandet, eller er tastaturet slidt, kan vi skifte det til dansk/nordisk layout, så æ, ø og å sidder korrekt.",
+      da: "Ja. Er maskinen købt i udlandet, eller er tastaturet slidt, kan vi skifte det til dansk eller norsk layout, så æ, ø og å sidder korrekt.",
       en: "Yes. If the machine was bought abroad, or the keyboard is worn, we can change it to a Danish or Norwegian layout so æ, ø and å sit correctly.",
     },
   },
@@ -138,7 +138,7 @@ const repairFaqs = [
       en: "Do you handle Windows and licences too?",
     },
     answer: {
-      da: "Vi installerer Windows med drivere og opdateringer og hjælper med at få licenserne på plads, så maskinerne kører lovligt. Har I jeres egne licensaftaler, bruger vi selvfølgelig dem – ellers taler vi om, hvad der passer til jeres opsætning.",
+      da: "Vi installerer Windows med drivere og opdateringer og hjælper med at få licenserne på plads, så maskinerne kører lovligt. Har du eller virksomheden egne licensaftaler, bruger vi selvfølgelig dem – ellers taler vi om, hvad der passer til opsætningen.",
       en: "We install Windows with drivers and updates and help get the licences in place so the machines run legally. If you have your own licence agreements we use those — otherwise we talk about what fits your setup.",
     },
   },

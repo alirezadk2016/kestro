@@ -19,7 +19,7 @@ const copy = {
     title: "Om Kestro",
     /* Answer first: what Kestro is, where, and for whom. */
     description:
-      "Kestro er en leverandør af brugt erhvervshardware i Aarhus. Vi finder maskinerne i et netværk af leverandører i Sydeuropa og leverer dem til virksomheder i 2 lande, Danmark og Norge – en testet maskine til opgaven frem for en ny til listepris.",
+      "Kestro er en leverandør af brugt erhvervshardware i Aarhus. Vi finder maskinerne i et netværk af leverandører i Sydeuropa og leverer dem til virksomheder i to lande, Danmark og Norge – en testet maskine til opgaven frem for en ny til listepris.",
     quote:
       "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
@@ -29,7 +29,7 @@ const copy = {
       "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
     title: "About Kestro",
     description:
-      "Kestro is a supplier of used business hardware in Aarhus. We find the machines through a network of suppliers in southern Europe and deliver them to companies in 2 countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",
+      "Kestro is a supplier of used business hardware in Aarhus. We find the machines through a network of suppliers in southern Europe and deliver them to companies in two countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",
     quote:
       "Most people write to us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
   },
@@ -55,7 +55,7 @@ const sections = [
       en: "We are a supplier, not a web shop",
     },
     description: {
-      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM hvor det giver mening, og klargjort til det nordiske marked med dansk/nordisk tastatur og korrekt sprogopsætning, før den leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
+      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM, hvor det giver mening, og klargjort til det nordiske marked med dansk eller norsk tastatur og korrekt sprogopsætning, før de leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
       en: "Kestro does not sit on a warehouse for you to pick from. We supply to order: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you. You buy from Kestro: the quote, the invoice and any complaint go through us, not through the supplier.",
     },
   },
@@ -66,7 +66,7 @@ const sections = [
       en: "The advantage of holding no stock",
     },
     description: {
-      da: "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi sourcer til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver, og sætte en maskine i drift igen frem for at den skiftes ud.",
+      da: "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi skaffer maskinerne til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver, og sætte en maskine i drift igen frem for at den skiftes ud.",
       en: "When a supplier has bought big in advance, that stock has to move — and what you get offered is what is on the shelf. Because we source for the individual order, we can go after the specifications the job actually needs instead, and put a machine back into service rather than see it replaced.",
     },
   },
@@ -99,10 +99,10 @@ const aboutFaqs = (contact: { name: string; role: { da: string; en: string } }):
     },
   },
   {
-    question: { da: "Hvem taler jeg med, når jeg skriver?", en: "Who do I talk to when I write?" },
+    question: { da: "Hvem taler vi med, når vi skriver?", en: "Who do we talk to when we write?" },
     answer: {
-      da: `${contact.name}, ${contact.role.da}. Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø – og I får svar inden for 1 arbejdsdag.`,
-      en: `${contact.name}, ${contact.role.en}. The message lands with the person who writes the quote — not in a support queue — and you get a reply within 1 working day.`,
+      da: `${contact.name}, ${contact.role.da[0].toLowerCase()}${contact.role.da.slice(1)}. Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø – og I får svar inden for én arbejdsdag.`,
+      en: `${contact.name}, ${contact.role.en}. The message lands with the person who writes the quote — not in a support queue — and you get a reply within one working day.`,
     },
   },
 ];
@@ -159,11 +159,10 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
             <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
               &ldquo;{c.quote}&rdquo;
             </blockquote>
-            <figcaption className="mt-6 text-sm text-paper/75">
-              <span className="font-semibold text-paper">{salesContact.name}</span>
-              {" – "}
-              {salesContact.role[lang]}, Kestro
-            </figcaption>
+            {/* The words are the company's, so the caption says so. It used to
+                name the market's sales contact, which put the same sentence in
+                Mehdi's mouth in Danish and Ismail's in English. */}
+            <figcaption className="mt-6 text-sm font-semibold text-paper">Kestro</figcaption>
           </figure>
         </Container>
       </section>

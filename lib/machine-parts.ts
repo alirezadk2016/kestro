@@ -46,8 +46,8 @@ export const exteriorViews: ExteriorView[] = [
     id: "overview",
     name: { da: "Hele maskinen", en: "The whole machine" },
     summary: {
-      da: "En 14-tommer erhvervsbærbar. Træk i den for at vende den – det er den samme model, du ser i toppen af forsiden.",
-      en: "A 14-inch business laptop. Drag it to turn it round — it is the same model you see at the top of the front page.",
+      da: "En 14-tommer erhvervsbærbar. Træk i den for at vende den.",
+      en: "A 14-inch business laptop. Drag it to turn it round.",
     },
     checks: [
       {
@@ -333,8 +333,8 @@ export const interiorParts: InteriorPart[] = [
     name: { da: "Bundkortbatteri", en: "Board battery" },
     spec: { da: "CR2032 knapcelle", en: "CR2032 coin cell" },
     what: {
-      da: "Holder ur og opsætning, når maskinen er helt slukket. Et fladt et giver forkert dato og klager ved opstart.",
-      en: "Keeps the clock and settings while the machine is fully off. A flat one gives the wrong date and complaints at start-up.",
+      da: "Holder ur og opsætning, når maskinen er helt slukket. Er det fladt, viser maskinen forkert dato og giver fejl ved opstart.",
+      en: "Keeps the clock and settings while the machine is fully off. When it is flat, the machine shows the wrong date and errors at start-up.",
     },
     upgrade: {
       da: "Koster nogle få kroner og skiftes på et minut. Vi skifter den, hvis maskinen har stået stille længe.",

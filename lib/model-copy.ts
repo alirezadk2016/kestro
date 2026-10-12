@@ -83,13 +83,23 @@ export function modelLead(model: Model, lang: Lang): string {
   const screens = field(model, "Skærme", lang);
   const format = lcFirst(model.format[lang]);
   const drives = screens ? digits(lcFirst(screens)) : "";
+  /* "a USB-C dock that connects through USB-C – one cable…" named the
+     connector twice; when the format already names it, say what it gives. */
+  const named = head(connection) && format.includes(head(connection));
+  const how = named
+    ? da
+      ? ` med ${tail(connection)}`
+      : ` with ${tail(connection)}`
+    : da
+      ? `, der tilsluttes via ${connection}`
+      : ` that connects through ${connection}`;
   return da
-    ? `${model.name} er en ${format}, der tilsluttes via ${connection}.${drives ? ` Den kan køre ${drives}.` : ""}`
-    : `The ${model.name} is ${article(format)} ${format} that connects through ${connection}.${drives ? ` It drives ${drives}.` : ""}`;
+    ? `${model.name} er en ${format}${how}.${drives ? ` Den kan køre ${drives}.` : ""}`
+    : `The ${model.name} is ${article(format)} ${format}${how}.${drives ? ` It drives ${drives}.` : ""}`;
 }
 
 const stock: Localized = {
-  da: "Nej. Vi sourcer den til den enkelte ordre i stedet for at holde lager – fortæl os antal og hvad maskinerne skal bruges til, så vender vi tilbage med pris og leveringstid.",
+  da: "Nej. Vi skaffer den til den enkelte ordre i stedet for at holde lager – fortæl os antal, og hvad maskinerne skal bruges til, så vender vi tilbage med pris og leveringstid.",
   en: "No. We source it per order rather than holding stock — tell us the quantity and what the machines are for, and we come back with price and lead time.",
 };
 
@@ -168,8 +178,8 @@ export function modelFaqs(model: Model): FaqItem[] {
         en: `How can the ${n} be adjusted and mounted?`,
       },
       answer: {
-        da: `Foden: ${stand.da}. Ophæng: ${mount.da}.`,
-        en: `Stand: ${stand.en}. Mount: ${mount.en}.`,
+        da: `Foden har ${lcFirst(stand.da)}. Ophænget er ${mount.da}.`,
+        en: `The stand offers ${lcFirst(stand.en)}. The mount is ${mount.en}.`,
       },
     });
   } else {

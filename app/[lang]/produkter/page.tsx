@@ -17,16 +17,16 @@ const copy = {
   da: {
     metaTitle: "Brugt IT-udstyr til virksomheder – hvad vi skaffer | Kestro",
     metaDescription:
-      "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
+      "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi skaffer udstyret til hver ordre, så specifikationen følger opgaven og ikke et lager.",
     title: "Hvad vi skaffer",
     /* Answer first, with the counts the page and /modeller actually show. */
     description: `Kestro er leverandør, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
     noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
     noPrices1:
-      "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at I ikke betaler for et lager, andre skal have afsat.",
+      "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
     noPrices2:
-      "Kategorierne nedenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
+      "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
     categories: "Kategorier",
     seeCategory: "Se kategori",
     modelsTitle: "Vil I se konkrete modeller?",
@@ -37,7 +37,7 @@ const copy = {
   en: {
     metaTitle: "What we source | Refurbished business IT | Kestro",
     metaDescription:
-      "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
+      "Supplier of refurbished business IT: laptops, desktops, mini PCs, monitors, tablets, smartphones and docking — sourced for your order.",
     title: "What we source",
     description: `Kestro is a supplier, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
@@ -45,7 +45,7 @@ const copy = {
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
-      "The categories below show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
+      "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
     categories: "Categories",
     seeCategory: "See category",
     modelsTitle: "Want to see specific models?",

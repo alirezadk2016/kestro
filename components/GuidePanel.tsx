@@ -2020,8 +2020,8 @@ const artwork: Record<string, Art> = {
     src: "/viden/kompatibilitet.webp",
     neutral: true,
     alt: {
-      da: "En chip svævende foran en lysende port, som spørgsmålet om en ældre maskine kommer igennem eller ej.",
-      en: "A chip floating before a gateway of light, as the question of whether an older machine passes or not.",
+      da: "En chip svævende foran en lysende port – et billede på, om en ældre maskine kan komme med til Windows 11.",
+      en: "A chip floating in front of a gateway of light — a picture of whether an older machine can make the move to Windows 11.",
     },
   },
   "slet-data-foer-du-saelger": {

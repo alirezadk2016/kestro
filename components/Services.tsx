@@ -7,14 +7,14 @@ import { localePath, type Lang } from "@/lib/i18n";
 
 const services = [
   {
-    title: { da: "Sourcing & indkøb", en: "Sourcing and purchasing" },
+    title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
       da: "Vi finder brugte erhvervscomputere i vores leverandørnetværk i Sydeuropa – valgt efter opgaven, ikke efter hvad der står på et lager.",
       en: "We find used business computers through our supplier network in southern Europe — chosen for the job, not for what is in a warehouse.",
     },
   },
   {
-    title: { da: "Klargøring & test", en: "Preparation and testing" },
+    title: { da: "Klargøring og test", en: "Preparation and testing" },
     description: {
       da: "Enhederne funktionstestes og får styresystemet sat op fra bunden. Skal der mere RAM eller en større disk i, opgraderer vi maskinen.",
       en: "The machines are function-tested and have the operating system set up from scratch. If more memory or a larger disk is needed, we upgrade it.",
@@ -30,8 +30,8 @@ const services = [
   {
     title: { da: "Levering til virksomheder", en: "Delivery to companies" },
     description: {
-      da: "Fleksible mængder til virksomheder i Danmark og Norge. Tidsrammen oplyser vi, før I bestiller.",
-      en: "Flexible quantities for companies in Denmark and Norway. We give you the timeframe before you order.",
+      da: "Fra én maskine til hele flåden, til virksomheder i Danmark og Norge. Tidsrammen oplyser vi, før I bestiller.",
+      en: "From one machine to the whole fleet, for companies in Denmark and Norway. We give you the timeframe before you order.",
     },
   },
 ];

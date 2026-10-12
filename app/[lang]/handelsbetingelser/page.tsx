@@ -73,7 +73,7 @@ const clauses: Clause[] = [
     heading: { da: "1. Anvendelse og aftalegrundlag", en: "1. Scope and basis of agreement" },
     body: [
       {
-        da: "Disse betingelser gælder for alle tilbud, ordrebekræftelser, salg og leverancer fra Kestro. Vi sælger udelukkende til virksomheder, offentlige myndigheder og andre erhvervsdrivende. Købet er dermed et handelskøb, og forbrugeraftaleloven — herunder den 14-dages fortrydelsesret — finder ikke anvendelse.",
+        da: "Disse betingelser gælder for alle tilbud, ordrebekræftelser, salg og leverancer fra Kestro. Vi sælger udelukkende til virksomheder, offentlige myndigheder og andre erhvervsdrivende. Købet er dermed et handelskøb, og forbrugeraftaleloven – herunder den 14 dages fortrydelsesret – finder ikke anvendelse.",
         en: "These terms apply to every quote, order confirmation, sale and delivery from Kestro. We sell exclusively to businesses, public authorities and other traders. The purchase is therefore a commercial sale, and the Danish Consumer Contracts Act — including its 14-day right of withdrawal — does not apply.",
       },
       {
@@ -90,8 +90,8 @@ const clauses: Clause[] = [
         en: "A quote from Kestro is valid for 14 days from its date unless the quote says otherwise. The agreement is formed when the buyer has accepted the quote in writing and we have confirmed the order.",
       },
       {
-        da: "Vi har ikke lager. Hver ordre skaffes til den konkrete ordre, og et tilbud er derfor betinget af, at udstyret fortsat kan skaffes i den oplyste stand og til den oplyste pris. Kan det ikke det, kontakter vi køber med et ændret tilbud, før vi bestiller. Køber er ikke bundet af det ændrede tilbud.",
-        en: "We hold no stock. Every order is sourced for that order, so a quote is conditional on the equipment still being obtainable in the stated condition and at the stated price. If it is not, we contact the buyer with a revised quote before ordering. The buyer is not bound by the revised quote.",
+        da: "Vi har ikke lager. Udstyret skaffes til den konkrete ordre, og et tilbud er derfor betinget af, at udstyret fortsat kan skaffes i den oplyste stand og til den oplyste pris. Kan det ikke lade sig gøre, kontakter vi køber med et ændret tilbud, før vi bestiller. Køber er ikke bundet af det ændrede tilbud.",
+        en: "We hold no stock. The equipment is sourced for the specific order, so a quote is conditional on the equipment still being obtainable in the stated condition and at the stated price. If it is not, we contact the buyer with a revised quote before ordering. The buyer is not bound by the revised quote.",
       },
     ],
   },
@@ -129,7 +129,7 @@ const clauses: Clause[] = [
         en: "The delivery date is agreed for each order and appears in the quote or order confirmation. We state an expected delivery date once we have confirmed what can be sourced. We deliver in Denmark and Norway.",
       },
       {
-        da: "Risikoen for udstyret overgår til køber ved levering på den aftalte adresse, eller — hvis køber selv afhenter eller bruger egen fragtfører — når udstyret overgives til køber eller dennes fragtfører. Bliver leveringen forsinket af forhold hos leverandøren eller fragtføreren, underretter vi køber hurtigst muligt og oplyser en ny forventet dato.",
+        da: "Risikoen for udstyret overgår til køber ved levering på den aftalte adresse, eller – hvis køber selv afhenter eller bruger egen fragtfører – når udstyret overgives til køber eller dennes fragtfører. Bliver leveringen forsinket af forhold hos leverandøren eller fragtføreren, underretter vi køber hurtigst muligt og oplyser en ny forventet dato.",
         en: "Risk in the equipment passes to the buyer on delivery at the agreed address or — if the buyer collects, or uses its own carrier — when the equipment is handed to the buyer or that carrier. If delivery is delayed by circumstances at the supplier or the carrier, we notify the buyer as soon as possible and state a new expected date.",
       },
     ],
@@ -155,7 +155,7 @@ const clauses: Clause[] = [
         en: "Ordinary marks of use that are described in the quote are not a defect. Unless the quote states otherwise, equipment is supplied without original packaging, without original accessories and without software licences beyond the operating system installed.",
       },
       {
-        da: "Lagermediet i brugt udstyr slettes, før udstyret sættes op igen, og vi oplyser hvilken metode der er anvendt. Køber er selv ansvarlig for at sikre egne data på udstyr, som køber sender til os.",
+        da: "Lagermediet i brugt udstyr slettes, før udstyret sættes op igen, og vi oplyser, hvilken metode der er anvendt. Køber er selv ansvarlig for at sikre egne data på udstyr, som køber sender til os.",
         en: "Storage media in used equipment are erased before the equipment is set up again, and we state which method was used. The buyer is responsible for securing its own data on equipment the buyer sends to us.",
       },
     ],
@@ -176,7 +176,7 @@ const clauses: Clause[] = [
         en: "Where a complaint is justified, we remedy the defect by repair or replacement, or we grant a proportionate reduction. The choice between these is ours. If the defect cannot be remedied within a reasonable time, the buyer may cancel the purchase as regards the defective part of the delivery.",
       },
       {
-        da: "Reklamationsretten omfatter ikke fejl, der skyldes almindelig slitage, forkert brug, manglende vedligeholdelse, indgreb foretaget af andre end os, uheld, væskeskade eller ændringer i købers eget it-miljø. Sliddele — herunder batterier — er kun omfattet i det omfang, tilbuddet siger det.",
+        da: "Reklamationsretten omfatter ikke fejl, der skyldes almindelig slitage, forkert brug, manglende vedligeholdelse, indgreb foretaget af andre end os, uheld, væskeskade eller ændringer i købers eget it-miljø. Sliddele – herunder batterier – er kun omfattet i det omfang, tilbuddet siger det.",
         en: "The right to complain does not cover faults caused by ordinary wear, incorrect use, lack of maintenance, work carried out by anyone other than us, accident, liquid damage or changes in the buyer's own IT environment. Wear parts — batteries in particular — are covered only to the extent the quote says so.",
       },
     ],
@@ -198,7 +198,7 @@ const clauses: Clause[] = [
     heading: { da: "10. Force majeure", en: "10. Force majeure" },
     body: [
       {
-        da: "Ingen af parterne er ansvarlig for manglende opfyldelse, der skyldes forhold uden for partens kontrol, som parten ikke burde have taget i betragtning ved aftalens indgåelse — herunder krig, myndighedsindgreb, importrestriktioner, strejke, brand, alvorlige it-nedbrud og svigt hos underleverandører af samme grund. Varer forholdet mere end 60 dage, kan hver part hæve aftalen for den berørte leverance uden erstatningspligt.",
+        da: "Ingen af parterne er ansvarlig for manglende opfyldelse, der skyldes forhold uden for partens kontrol, som parten ikke burde have taget i betragtning ved aftalens indgåelse. Det gælder blandt andet krig, myndighedsindgreb, importrestriktioner, strejke, brand, alvorlige it-nedbrud og svigt hos underleverandører af samme grund. Varer forholdet mere end 60 dage, kan hver part hæve aftalen for den berørte leverance uden erstatningspligt.",
         en: "Neither party is liable for non-performance caused by circumstances beyond its control that it could not reasonably have taken into account when the agreement was made — including war, action by public authorities, import restrictions, strike, fire, serious IT outages and failure by subcontractors for the same reasons. If the circumstance lasts more than 60 days, either party may cancel the agreement for the affected delivery without liability.",
       },
     ],
@@ -207,8 +207,8 @@ const clauses: Clause[] = [
     heading: { da: "11. Returnering og annullering", en: "11. Returns and cancellation" },
     body: [
       {
-        da: "Da hver ordre skaffes til den konkrete ordre, kan en bekræftet ordre ikke annulleres, og udstyr kan ikke returneres, medmindre andet er aftalt skriftligt, eller der er tale om en berettiget reklamation efter punkt 8. Aftales en returnering, skal udstyret være i samme stand som ved levering.",
-        en: "Because every order is sourced for that order, a confirmed order cannot be cancelled and equipment cannot be returned, unless agreed otherwise in writing or unless there is a justified complaint under clause 8. Where a return is agreed, the equipment must be in the same condition as on delivery.",
+        da: "Da udstyret skaffes til den konkrete ordre, kan en bekræftet ordre ikke annulleres, og udstyr kan ikke returneres, medmindre andet er aftalt skriftligt, eller der er tale om en berettiget reklamation efter punkt 8. Aftales en returnering, skal udstyret være i samme stand som ved levering.",
+        en: "Because the equipment is sourced for the specific order, a confirmed order cannot be cancelled and equipment cannot be returned, unless agreed otherwise in writing or unless there is a justified complaint under clause 8. Where a return is agreed, the equipment must be in the same condition as on delivery.",
       },
     ],
   },

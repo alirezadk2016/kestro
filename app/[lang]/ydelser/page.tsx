@@ -24,7 +24,7 @@ const copy = {
     /* Answer first, with the two counts the page actually lists. */
     description: `Kestro er leverandør af brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     processTitle: "Sådan foregår en leverance",
-    processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
+    processSub: "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
       "Enhederne funktionstestes og nulstilles, før de sendes videre. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
@@ -85,7 +85,7 @@ const services = [
     title: { da: "Opgradering og reparation", en: "Upgrades and repairs" },
     description: {
       da: "Mere hukommelse, ny disk, nyt batteri, nordisk tastatur, Windows og licenser. Ofte billigere end at udskifte maskinen – og vi siger til, hvis det ikke kan betale sig.",
-      en: "More memory, a new disk, a new battery, a Nordic keyboard, Windows and licences. Often cheaper than replacing the machine — and we say so when it is not worth it.",
+      en: "More memory, a new disk, a new battery, a Danish or Norwegian keyboard, Windows and licences. Often cheaper than replacing the machine — and we say so when it is not worth it.",
     },
     href: "/reparation",
     linkLabel: { da: "Se opgraderinger", en: "See upgrades" },
@@ -94,7 +94,7 @@ const services = [
     mark: "sustainable" as CraftMarkName,
     title: { da: "Opkøb af brugt udstyr", en: "Buying used equipment" },
     description: {
-      da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi dem og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
+      da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi lagermedierne og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
       en: "If you need to get rid of old machines, we buy them and collect them. If there is data on the units, we erase it and can provide documentation per device. You get a valuation before you decide.",
     },
     href: "/saelg-til-os",
@@ -128,7 +128,7 @@ const steps = [
     slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi leverer på bestilling og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
+      da: "Vi leverer på bestilling og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse indkøbet til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
       en: "We supply to order and find used business laptops and desktops through suppliers in southern Europe — without tying up capital in stock of our own. That means we can shape the sourcing around the individual order instead of being limited by whatever happens to be on a shelf.",
     },
   },
@@ -155,7 +155,7 @@ const steps = [
     slug: "levering",
     title: { da: "Levering til virksomheden", en: "Delivery to the company" },
     description: {
-      da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Fordi vi sourcer per ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
+      da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Fordi vi skaffer maskinerne til hver ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
       en: "We deliver to companies in Denmark and Norway in whatever quantity you need. Because we source per order, lead time depends on the specific order; we give you a time frame once we have talked about what you need.",
     },
   },

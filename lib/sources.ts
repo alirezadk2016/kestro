@@ -101,7 +101,7 @@ export const sources = {
     id: "windows11Requirements",
     publisher: "Microsoft",
     title: {
-      da: "Windows 11 — specifikationer og systemkrav",
+      da: "Windows 11 – specifikationer og systemkrav",
       en: "Windows 11 specifications and system requirements",
     },
     url: "https://www.microsoft.com/en-us/windows/windows-11-specifications",
@@ -122,7 +122,7 @@ export const sources = {
     url: "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
     accessed: "2026-09-13",
     claim: {
-      da: "NIST definerer tre niveauer af datasletning — Clear, Purge og Destroy — efter hvor stor en indsats det kræver at gendanne data bagefter.",
+      da: "NIST definerer tre niveauer af datasletning – Clear, Purge og Destroy – efter hvor stor en indsats det kræver at gendanne data bagefter.",
       en: "NIST defines three levels of media sanitisation — Clear, Purge and Destroy — by the level of recovery effort each one defeats.",
     },
   },

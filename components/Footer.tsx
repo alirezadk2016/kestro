@@ -13,7 +13,7 @@ const copy = {
     services: "Ydelser",
     company: "Virksomhed",
     delivers: "Leverer i",
-    follow: "Følg Kestro",
+    follow: "Følg Kestro på",
     pages: "Sider",
     rights: "Alle rettigheder forbeholdes.",
     cvrLabel: "CVR",
@@ -26,7 +26,7 @@ const copy = {
     services: "Services",
     company: "Company",
     delivers: "Delivers in",
-    follow: "Follow Kestro",
+    follow: "Follow Kestro on",
     pages: "Pages",
     rights: "All rights reserved.",
     cvrLabel: "CVR",
@@ -182,7 +182,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                     href={profile.href}
                     rel="me noopener noreferrer"
                     target="_blank"
-                    aria-label={`${c.follow} — ${profile.name}`}
+                    aria-label={`${c.follow} ${profile.name}`}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-paper/65 transition hover:border-brand-400/50 hover:text-paper"
                   >
                     <SocialGlyph name={profile.name} />

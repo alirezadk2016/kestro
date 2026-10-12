@@ -66,7 +66,7 @@ export const clusters: ClusterMeta[] = [
     anchor: "koeb-stand-og-afhaendelse",
     name: { da: "Køb, stand og afhændelse", en: "Buying, condition and disposal" },
     description: {
-      da: "Hvad man skal se efter, før man køber brugt — og hvad der skal ske med udstyret, når det skal videre.",
+      da: "Hvad man skal se efter, før man køber brugt – og hvad der skal ske med udstyret, når det skal videre.",
       en: "What to look for before buying used — and what has to happen to the equipment when it moves on.",
     },
   },
@@ -93,8 +93,8 @@ export const clusters: ClusterMeta[] = [
     anchor: "oevrige",
     name: { da: "Øvrige vejledninger", en: "Other guides" },
     description: {
-      da: "Står uden for klyngerne. De bliver stående, men der bygges ikke videre på dem.",
-      en: "Outside the clusters. They stay, but nothing is built on top of them.",
+      da: "Vejledninger, der ikke hører under et af de tre emner ovenfor.",
+      en: "Guides that do not belong under one of the three topics above.",
     },
   },
 ];
@@ -208,7 +208,7 @@ export const guides: Guide[] = [
       en: "Windows 10 support has ended — what now?",
     },
     metaTitle: {
-      da: "Windows 10 support slut: hvad nu for virksomheden? | Kestro",
+      da: "Windows 10-supporten er slut: hvad nu for virksomheden? | Kestro",
       en: "Windows 10 end of support: what it means | Kestro",
     },
     metaDescription: {
@@ -216,8 +216,8 @@ export const guides: Guide[] = [
       en: "Support ended on 14 October 2025. What that means for your machines, how to work out which ones can be upgraded, and what to do with the rest.",
     },
     summary: {
-      da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan gør I op, hvad der skal ske med hvilke.",
-      en: "The machines do not stop working — but the security updates have stopped. How to work out what happens to which.",
+      da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan finder I ud af, hvad der skal ske med hver enkelt maskine.",
+      en: "The machines do not stop working — but the security updates have stopped. How to work out what should happen to each machine.",
     },
     audience: {
       da: "Virksomheder med maskiner på Windows 10",
@@ -226,11 +226,11 @@ export const guides: Guide[] = [
     readingMinutes: 7,
     updated: "2026-08-31",
     tldr: {
-      da: "Supporten sluttede 14. oktober 2025. Maskinerne virker stadig, men de får ikke længere sikkerhedsopdateringer. Opgørelsen afgør resten: en del af flåden kan opgraderes til Windows 11, en del skal skiftes, og en del kan vente. Det er sjældent, at alle tre ikke er i spil på én gang.",
-      en: "Support ended on 14 October 2025. The machines still run, but they no longer receive security updates. The inventory decides the rest: part of the fleet can be upgraded to Windows 11, part needs replacing, and part can wait. It is rare that all three are not in play at once.",
+      da: "Supporten sluttede 14. oktober 2025. Maskinerne virker stadig, men de får ikke længere sikkerhedsopdateringer. Opgørelsen afgør resten: en del af flåden kan opgraderes til Windows 11, en del skal skiftes, og en del kan vente. Som regel er alle tre i spil på én gang.",
+      en: "Support ended on 14 October 2025. The machines still run, but they no longer receive security updates. The inventory decides the rest: part of the fleet can be upgraded to Windows 11, part needs replacing, and part can wait. Usually all three are in play at once.",
     },
     intro: {
-      da: "Den 14. oktober 2025 stoppede Microsoft med at udsende sikkerhedsopdateringer til Windows 10. Der skete ikke noget synligt den dag, og det er præcis derfor, opgaven er let at udskyde. Denne vejledning handler ikke om, hvorvidt I skal gøre noget, men om hvordan I finder ud af hvad – uden at skifte maskiner, der ikke behøver at blive skiftet.",
+      da: "Den 14. oktober 2025 stoppede Microsoft med at udsende sikkerhedsopdateringer til Windows 10. Der skete ikke noget synligt den dag, og det er præcis derfor, opgaven er let at udskyde. Denne vejledning handler ikke om, hvorvidt I skal gøre noget, men om, hvordan I finder ud af hvad – uden at skifte maskiner, der ikke behøver at blive skiftet.",
       en: "On 14 October 2025 Microsoft stopped issuing security updates for Windows 10. Nothing visible happened that day, which is exactly why the job is easy to put off. This guide is not about whether you need to do something, but about working out what — without replacing machines that do not need replacing.",
     },
     sections: [
@@ -241,7 +241,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Microsoft holdt op med at udsende sikkerhedsopdateringer, kvalitetsopdateringer og teknisk support til Windows 10. Ingen maskine blev slukket, ingen licens holdt op med at virke, og ingen fil forsvandt. En Windows 10-maskine starter i dag præcis som den gjorde i oktober 2025.",
+            da: "Microsoft holdt op med at udsende sikkerhedsopdateringer, kvalitetsopdateringer og teknisk support til Windows 10. Ingen maskine blev slukket, ingen licens holdt op med at virke, og ingen fil forsvandt. En Windows 10-maskine starter i dag præcis, som den gjorde i oktober 2025.",
             en: "Microsoft stopped issuing security updates, quality updates and technical support for Windows 10. No machine was switched off, no licence stopped working, and no file disappeared. A Windows 10 machine boots today exactly as it did in October 2025.",
           },
           {
@@ -289,8 +289,8 @@ export const guides: Guide[] = [
             en: "Microsoft offers Extended Security Updates to organisations: paid security fixes for Windows 10, bought a year at a time for a limited number of years past the end date. It is fixes and nothing else — no new features and no general technical support.",
           },
           {
-            da: "ESU er en bro, ikke en destination. Prisen stiger for hvert år, man forlænger, og slutdatoen rykker sig kun – den forsvinder ikke. Programmet er værd at bruge til at få en udskiftning til at ske i den rigtige rækkefølge frem for på én weekend; det er ikke værd at bruge som en måde at lade være med at beslutte sig.",
-            en: "ESU is a bridge, not a destination. The price rises with each year you extend, and the end date only moves — it does not disappear. The programme is worth using to make a replacement happen in the right order rather than over one weekend; it is not worth using as a way of not deciding.",
+            da: "ESU er en bro, ikke en destination. Prisen stiger for hvert år, man forlænger, og slutdatoen rykker sig kun – den forsvinder ikke. Brug programmet til at skifte maskinerne ud i den rigtige rækkefølge i stedet for alle på én weekend. Brug det ikke til at udskyde beslutningen.",
+            en: "ESU is a bridge, not a destination. The price rises with each year you extend, and the end date only moves — it does not disappear. Use the programme to replace machines in the right order rather than all in one weekend. Do not use it to put off the decision.",
           },
           {
             da: "Vi oplyser ikke priser eller nøjagtige vilkår her, fordi de ændrer sig, og fordi de afhænger af, hvilke aftaler I har i forvejen. Spørg jeres Microsoft-partner eller slå programmet op hos Microsoft.",
@@ -319,8 +319,8 @@ export const guides: Guide[] = [
             en: "Does the machine meet the Windows 11 requirements — TPM 2.0, Secure Boot in UEFI, processor on the list?",
           },
           {
-            da: "Hvordan står maskinen fysisk? Batteri, lagerplads og hukommelse afgør, om den er værd at tage med videre, også når den godt må.",
-            en: "What condition is the machine in? Battery, storage and memory decide whether it is worth taking forward, even when it is allowed to come.",
+            da: "Hvordan står maskinen fysisk? Batteri, lagerplads og hukommelse afgør, om den er værd at tage med videre, også når den kan opgraderes.",
+            en: "What condition is the machine in? Battery, storage and memory decide whether it is worth taking forward, even when it can be upgraded.",
           },
           {
             da: "Hvad bruges den til? En maskine i receptionen og en maskine til konstruktion har ikke det samme svar.",
@@ -351,11 +351,11 @@ export const guides: Guide[] = [
             en: "Upgrade. If the machine meets the requirements and is otherwise good enough for the job, upgrading to Windows 11 is the cheapest route. Microsoft has so far made the upgrade available at no charge for machines with a valid Windows 10 licence that meet the requirements — confirm the current terms before planning around it. For many fleets this is where most machines end up.",
           },
           {
-            da: "Udskift. Maskiner, der ikke opfylder kravene, og maskiner, der godt må, men er slidte, skal skiftes. Det betyder ikke nødvendigvis nyt: en brugt erhvervsmaskine, der opfylder kravene, gør det samme arbejde. Der er usædvanligt mange af dem på markedet netop nu, fordi andre virksomheder skiftede flåde af nøjagtig samme grund.",
+            da: "Udskift. Maskiner, der ikke opfylder kravene, og maskiner, der kan opgraderes, men er slidte, skal skiftes. Det betyder ikke nødvendigvis nyt: en brugt erhvervsmaskine, der opfylder kravene, gør det samme arbejde. Der er usædvanligt mange af dem på markedet netop nu, fordi andre virksomheder skiftede flåde af nøjagtig samme grund.",
             en: "Replace. Machines that do not meet the requirements, and machines that do but are worn out, need replacing. That does not have to mean new: a used business machine that meets the requirements does the same work. There are unusually many of them about right now, precisely because other companies changed fleets for exactly the same reason.",
           },
           {
-            da: "Planlæg. Nogle maskiner kan vente: dem uden netværk, dem uden personoplysninger, dem der er bundet til software, som ikke kan flytte endnu. At vente er et fint valg, når det er truffet med en dato og en begrundelse. Det er et dårligt valg, når det bare er det, der sker.",
+            da: "Planlæg. Nogle maskiner kan vente: dem uden netværk, dem uden personoplysninger, dem, der er bundet til software, som ikke kan flytte endnu. At vente er et fint valg, når det er truffet med en dato og en begrundelse. Det er et dårligt valg, når det bare er det, der sker.",
             en: "Plan. Some machines can wait: the ones off the network, the ones with no personal data, the ones tied to software that cannot move yet. Waiting is a fine choice when it is made with a date and a reason. It is a poor choice when it is simply what happens.",
           },
           {
@@ -382,7 +382,7 @@ export const guides: Guide[] = [
       },
     ],
     closing: {
-      da: "Skal en hel flåde gøres op, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan opgraderes, og hvilke der bedre kan betale sig at skifte. Skal der skiftes noget, skaffer vi brugte erhvervsmaskiner, der opfylder Windows 11-kravene, og vi kan give et bud på de gamle samtidig. Der er ingen binding i at spørge.",
+      da: "Skal en hel flåde gøres op, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan opgraderes, og hvilke det bedre kan betale sig at skifte. Skal der skiftes noget, skaffer vi brugte erhvervsmaskiner, der opfylder Windows 11-kravene, og vi kan give et bud på de gamle samtidig. Der er ingen binding i at spørge.",
       en: "If a whole fleet needs assessing, we can go through the list with you and say which machines can be upgraded and which are better replaced. If something does need replacing, we source used business machines that meet the Windows 11 requirements, and we can price the old ones at the same time. Asking commits you to nothing.",
     },
     related: [
@@ -441,7 +441,7 @@ export const guides: Guide[] = [
           en: "Can we simply stay on Windows 10?",
         },
         answer: {
-          da: "Teknisk set ja. Om det er forsvarligt afhænger af, hvad maskinerne bruges til, om de er på netværket, og hvilke forpligtelser I har omkring de data, de behandler. ESU er den understøttede måde at købe sig tid på; at blive uden ESU er en risiko, nogen hos jer bør have taget stilling til frem for at arve.",
+          da: "Teknisk set ja. Om det er forsvarligt, afhænger af, hvad maskinerne bruges til, om de er på netværket, og hvilke forpligtelser I har omkring de data, de behandler. ESU er den understøttede måde at købe sig tid på; at blive uden ESU er en risiko, nogen hos jer bør have taget stilling til frem for at arve.",
           en: "Technically yes. Whether it is defensible depends on what the machines are used for, whether they are on the network, and what obligations you have around the data they handle. ESU is the supported way to buy time; staying on without it is a risk somebody with you should have decided to accept rather than inherited.",
         },
       },
@@ -487,7 +487,7 @@ export const guides: Guide[] = [
       en: "Used describes the machine's history. Refurbished describes work somebody did to it. Why the two words are not the same — and what a company should ask about.",
     },
     summary: {
-      da: "To ord, der bruges i flæng, og en forskel, der afgør hvad I får. Sådan finder I ud af, hvad der faktisk er lavet ved maskinen.",
+      da: "To ord, der bruges i flæng, og en forskel, der afgør, hvad I får. Sådan finder I ud af, hvad der faktisk er lavet ved maskinen.",
       en: "Two words used interchangeably, and a difference that decides what you get. How to find out what was actually done to the machine.",
     },
     audience: {
@@ -497,7 +497,7 @@ export const guides: Guide[] = [
     readingMinutes: 8,
     updated: "2026-08-31",
     tldr: {
-      da: "Brugt beskriver maskinens historie: den har haft en ejer før. Refurbished beskriver et arbejde, nogen har udført på den bagefter – kontrol, rengøring, udskiftning af slidte dele, sletning af data. Forskellen er reel, men ordet er ikke en standard, nogen håndhæver. To sælgere kan bruge det om vidt forskellige processer, og derfor er spørgsmålet ikke om en maskine er refurbished, men hvad der konkret blev gjort ved den.",
+      da: "Brugt beskriver maskinens historie: den har haft en ejer før. Refurbished beskriver et arbejde, nogen har udført på den bagefter – kontrol, rengøring, udskiftning af slidte dele, sletning af data. Forskellen er reel, men ordet er ikke en standard, nogen håndhæver. To sælgere kan bruge det om vidt forskellige processer, og derfor er spørgsmålet ikke, om en maskine er refurbished, men hvad der konkret blev gjort ved den.",
       en: "Used describes the machine's history: it had an owner before. Refurbished describes work somebody did to it afterwards — checking, cleaning, replacing worn parts, erasing data. The difference is real, but the word is not a standard anyone enforces. Two sellers can use it for completely different processes, which is why the question is not whether a machine is refurbished, but what was actually done to it.",
     },
     intro: {
@@ -581,15 +581,15 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Refurbished er et markedsføringsord, ikke en mærkning nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer per maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
+            da: "Refurbished er et markedsføringsord, ikke en mærkning, som nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer per maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
             en: "Refurbished is a marketing word, not a label anyone polices. There is no authority that approves when a seller may use it, and there is no single set of steps everyone follows. A seller who spends three hours per machine and a seller who spends three minutes can write the same thing in the advert.",
           },
           {
-            da: "Det gør ikke ordet værdiløst. Det flytter bare, hvor man skal kigge: væk fra ordet og hen på beskrivelsen af, hvad der blev gjort. En sælger, der har lavet et reelt stykke arbejde, har som regel ikke noget imod at fortælle præcis hvilket – og en, der ikke har, svarer i almindeligheder.",
+            da: "Det gør ikke ordet værdiløst. Det flytter bare, hvor man skal kigge: væk fra ordet og hen på beskrivelsen af, hvad der blev gjort. En sælger, der har lavet et reelt stykke arbejde, har som regel ikke noget imod at fortælle præcis, hvilket – og en, der ikke har, svarer i almindeligheder.",
             en: "That does not make the word worthless. It just moves where you have to look: away from the word and onto the description of what was done. A seller who has done real work usually has no objection to saying exactly what — and one who has not will answer in generalities.",
           },
           {
-            da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en konkret sælger følger dem, er noget man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
+            da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en konkret sælger følger dem, er noget, man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
             en: "There are industry schemes and standards for parts of the work, particularly for data erasure, where recognised method descriptions exist. Whether a given seller follows them is something to ask about and get in writing. We do not point to a specific standard here, because we cannot confirm which one any given supplier works to.",
           },
         ],
@@ -619,7 +619,7 @@ export const guides: Guide[] = [
             en: "How data was handled: a format, a reinstall on top, or an actual erasure of the drive. The three are not the same, and only the last removes data.",
           },
           {
-            da: "Om der følger dokumentation med: en sletterapport, en liste over serienumre, en angivelse af batteriets målte tilstand. Dokumentation er det, der gør en påstand efterprøvelig.",
+            da: "Om der følger dokumentation med: en sletterapport, en liste over serienumre, en angivelse af batteriets målte tilstand. Dokumentation er det, der gør det muligt at kontrollere en påstand.",
             en: "Whether documentation comes with it: an erasure report, a list of serial numbers, a statement of the battery's measured condition. Documentation is what makes a claim checkable.",
           },
           {
@@ -643,7 +643,7 @@ export const guides: Guide[] = [
             en: "For one machine, the difference between used and refurbished is a risk you carry yourself, and one a return can solve. For forty machines it is an operations problem. That is where the word stops being a detail.",
           },
           {
-            da: "Et konkret eksempel: fyrre maskiner købt som brugte uden ensartet proces kan have fem forskellige batteritilstande, tre forskellige diskstørrelser og to Windows-versioner. Hver afvigelse er en support-sag, der lander hos jer i løbet af det første år. Fyrre maskiner gennem den samme proces har den samme opsætning, og afvigelserne er kendt på forhånd.",
+            da: "Et konkret eksempel: fyrre maskiner købt som brugte uden ensartet proces kan have fem forskellige batteritilstande, tre forskellige diskstørrelser og to Windows-versioner. Hver afvigelse er en supportsag, der lander hos jer i løbet af det første år. Fyrre maskiner gennem den samme proces har den samme opsætning, og afvigelserne er kendt på forhånd.",
             en: "A concrete example: forty machines bought as used with no consistent process can arrive with five different battery conditions, three different drive sizes and two Windows versions. Every deviation is a support case that lands with you during the first year. Forty machines through the same process have the same setup, and the deviations are known up front.",
           },
           {
@@ -702,15 +702,15 @@ export const guides: Guide[] = [
         heading: { da: "Sådan ser vi på det hos Kestro", en: "How we see it at Kestro" },
         body: [
           {
-            da: "Vi bruger ordet refurbished, fordi det er det ord, markedet bruger, og fordi en indkøber leder efter det. Men vi går ikke ud fra, at ordet i sig selv fortæller jer noget. Vi holder ikke lager: vi skaffer maskinerne per ordre i vores leverandørnetværk, og det betyder, at vi kender det konkrete parti frem for at beskrive en generel proces.",
+            da: "Vi bruger ordet refurbished, fordi det er det ord, markedet bruger, og fordi en indkøber leder efter det. Men vi går ikke ud fra, at ordet i sig selv fortæller jer noget. Vi holder ikke lager: vi skaffer maskinerne til hver ordre i vores leverandørnetværk, og det betyder, at vi kender det konkrete parti frem for at beskrive en generel proces.",
             en: "We use the word refurbished because it is the word the market uses, and because a buyer looks for it. But we do not assume the word tells you anything by itself. We hold no stock: we source per order through our supplier network, which means we know the actual batch rather than describing a general process.",
           },
           {
-            da: "I praksis betyder det, at tilbuddet står på enhedsniveau frem for som ét tal: model, hukommelse, lagring, skærm, kosmetisk stand, batteri, tastaturlayout og styresystem. Eksempelsiden viser, hvordan det ser ud udfyldt. Vi tester og klargør maskinerne, før de sendes, og vi skifter tastaturlayout på maskiner, der kommer fra udlandet.",
+            da: "I praksis betyder det, at tilbuddet viser hver enhed for sig frem for ét samlet tal: model, hukommelse, lagring, skærm, kosmetisk stand, batteri, tastaturlayout og styresystem. Eksempelsiden viser, hvordan det ser ud udfyldt. Vi tester og klargør maskinerne, før de sendes, og vi skifter tastaturlayout på maskiner, der kommer fra udlandet.",
             en: "In practice that means the quote is written per unit rather than as a single number: model, memory, storage, screen, cosmetic condition, battery, keyboard layout and operating system. The example page shows what that looks like filled in. We test and prepare the machines before they are sent, and we change the keyboard layout on machines that come from abroad.",
           },
           {
-            da: "Og lige så vigtigt: vi lover ikke en fast proces på tværs af alt, hvad der findes i markedet. Hvad der kan skaffes til en given specifikation og et givent antal, afhænger af, hvad der er tilgængeligt, når I spørger. Kan vi ikke fylde specifikationen, siger vi det og foreslår det nærmeste alternativ. Det er en dårligere overskrift end et løfte – og det er det, der gør, at tallene i tilbuddet holder.",
+            da: "Og lige så vigtigt: vi lover ikke en fast proces på tværs af alt, hvad der findes i markedet. Hvad der kan skaffes til en given specifikation og et givent antal, afhænger af, hvad der er tilgængeligt, når I spørger. Kan vi ikke skaffe præcis den specifikation, siger vi det og foreslår det nærmeste alternativ. Det er en dårligere overskrift end et løfte – og det er det, der gør, at tallene i tilbuddet holder.",
             en: "And just as importantly: we do not promise a fixed process across everything in the market. What can be sourced at a given specification and quantity depends on what is available when you ask. If we cannot meet the specification, we say so and propose the closest alternative. That is a worse headline than a promise — and it is what makes the numbers in the quote hold.",
           },
         ],
@@ -802,15 +802,15 @@ export const guides: Guide[] = [
       en: "A simple way to decide whether your computer is worth repairing: what the parts cost, what the machine is worth, and when to stop.",
     },
     summary: {
-      da: "Regnestykket der afgør, om en langsom eller defekt maskine skal repareres eller skiftes ud.",
+      da: "Regnestykket, der afgør, om en langsom eller defekt maskine skal repareres eller skiftes ud.",
       en: "The calculation that decides whether a slow or broken machine gets repaired or replaced.",
     },
     audience: { da: "Private og mindre virksomheder", en: "Individuals and small businesses" },
     readingMinutes: 4,
     updated: "2026-08-23",
     tldr: {
-      da: "Regn på det i stedet for at gætte. Er reparationen under en tredjedel af, hvad en tilsvarende brugt maskine koster, og har maskinen mere end et par år tilbage i sig, er reparation som regel det billigste. Er den det ikke, køber man tid, ikke en løsning.",
-      en: "Do the arithmetic instead of guessing. If the repair costs less than a third of an equivalent used machine and the machine has more than a couple of years left in it, repairing is usually cheapest. If it does not, you are buying time rather than a solution.",
+      da: "Regn på det i stedet for at gætte. Er reparationen under en tredjedel af, hvad en tilsvarende brugt maskine koster, og har maskinen mere end et par år tilbage i sig, er reparation som regel det billigste. Hvis ikke, køber man tid frem for en løsning.",
+      en: "Do the arithmetic instead of guessing. If the repair costs less than a third of an equivalent used machine and the machine has more than a couple of years left in it, repairing is usually cheapest. If not, you are buying time rather than a solution.",
     },
     intro: {
       da: "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Spørgsmålet er ikke, om en computer kan repareres – det kan næsten alle – men om det kan betale sig. Her er den måde, vi selv regner på, når nogen spørger.",
@@ -836,7 +836,7 @@ export const guides: Guide[] = [
         ],
         list: [
           {
-            da: "Batteriet holder ikke en arbejdsdag. Et batteri er en sliddel – den skal skiftes efter nogle år, præcis som dæk på en bil.",
+            da: "Batteriet holder ikke en arbejdsdag. Et batteri er en sliddel – det skal skiftes efter nogle år, præcis som dæk på en bil.",
             en: "The battery no longer lasts a working day. A battery is a wear part — it gets replaced after a few years, like tyres on a car.",
           },
           {
@@ -857,7 +857,7 @@ export const guides: Guide[] = [
         heading: { da: "De dyre fejl", en: "The expensive faults" },
         body: [
           {
-            da: "Bundkort, hængsler der har revet kabinettet i stykker, og væskeskader ligger i den anden ende. På en ældre maskine overstiger de næsten altid værdien. Skærme ligger midt imellem: prisen svinger meget efter model, så få den oplyst, før du beslutter.",
+            da: "Bundkort, hængsler, der har revet kabinettet i stykker, og væskeskader ligger i den anden ende. På en ældre maskine overstiger de næsten altid værdien. Skærme ligger midt imellem: prisen svinger meget efter model, så få den oplyst, før du beslutter dig.",
             en: "Motherboards, hinges that have torn the chassis apart, and liquid damage sit at the other end. On an older machine they almost always exceed its value. Screens sit in between: the price varies a lot by model, so get it quoted before you decide.",
           },
         ],
@@ -866,7 +866,7 @@ export const guides: Guide[] = [
         heading: { da: "Regn også tiden med", en: "Count the time too" },
         body: [
           {
-            da: "En ny maskine skal sættes op, programmer skal installeres, og filer skal flyttes. For en virksomhed er det ofte en halv arbejdsdag per medarbejder. Den time koster også noget, og den udgift forsvinder, hvis den gamle maskine bare kører videre.",
+            da: "En ny maskine skal sættes op, programmer skal installeres, og filer skal flyttes. For en virksomhed er det ofte en halv arbejdsdag per medarbejder. Den tid koster også noget, og den udgift forsvinder, hvis den gamle maskine bare kører videre.",
             en: "A new machine has to be set up, software installed and files moved. For a company that is often half a working day per employee. That time costs money too, and the cost disappears if the old machine simply keeps running.",
           },
         ],
@@ -901,7 +901,7 @@ export const guides: Guide[] = [
           en: "Why does my old computer feel slow?",
         },
         answer: {
-          da: "Fire ting står bag langt de fleste henvendelser: et batteri der ikke holder en arbejdsdag, for lidt hukommelse, en gammeldags harddisk i stedet for SSD, og støv og gammel kølepasta, der får maskinen til at skrue ydelsen ned. Alle fire er billige at rette i forhold til en ny maskine.",
+          da: "Fire ting står bag langt de fleste henvendelser: et batteri, der ikke holder en arbejdsdag, for lidt hukommelse, en gammeldags harddisk i stedet for SSD, og støv og gammel kølepasta, der får maskinen til at skrue ydelsen ned. Alle fire er billige at rette i forhold til en ny maskine.",
           en: "Four things are behind the large majority of enquiries: a battery that no longer lasts a working day, too little memory, an old hard disk instead of an SSD, and dust and old thermal paste making the machine throttle itself. All four are cheap to fix compared with a new machine.",
         },
       },
@@ -911,7 +911,7 @@ export const guides: Guide[] = [
           en: "Which repairs are the expensive ones?",
         },
         answer: {
-          da: "Bundkort, hængsler der har revet kabinettet i stykker, og væskeskader. På en ældre maskine overstiger de næsten altid maskinens værdi. Skærme ligger midt imellem – prisen svinger meget efter model, så få den oplyst, før du beslutter.",
+          da: "Bundkort, hængsler, der har revet kabinettet i stykker, og væskeskader. På en ældre maskine overstiger de næsten altid maskinens værdi. Skærme ligger midt imellem – prisen svinger meget efter model, så få den oplyst, før du beslutter dig.",
           en: "Motherboards, hinges that have torn the chassis apart, and liquid damage. On an older machine they almost always exceed what the machine is worth. Screens sit in between — the price varies a lot by model, so get it quoted before you decide.",
         },
       },
@@ -947,15 +947,15 @@ export const guides: Guide[] = [
       en: "Find out whether your laptop can take more RAM, which type to buy, and how to fit it — including the traps people fall into.",
     },
     summary: {
-      da: "Den billigste opgradering der findes – hvis maskinen overhovedet kan tage imod den.",
+      da: "Den billigste opgradering, der findes – hvis maskinen overhovedet kan tage imod den.",
       en: "The cheapest upgrade there is — if the machine can take it at all.",
     },
     audience: { da: "Private der selv vil prøve", en: "People who want to do it themselves" },
     readingMinutes: 5,
     updated: "2026-08-23",
     tldr: {
-      da: "De fleste erhvervsbærbare kan skiftes RAM på med en skruetrækker og ti minutter. Det, der afgør det, er ikke evnen, men typen: SO-DIMM eller loddet fast, DDR3, DDR4 eller DDR5, og hvor meget kortet overhovedet understøtter. Tjek de tre først.",
-      en: "Most business laptops take a memory change with a screwdriver and ten minutes. What decides it is not skill but type: SO-DIMM or soldered down, DDR3, DDR4 or DDR5, and how much the board supports at all. Check those three first.",
+      da: "På de fleste erhvervsbærbare kan RAM skiftes med en skruetrækker på ti minutter. Det, der afgør det, er ikke dit håndelag, men typen: et udskifteligt modul (SO-DIMM) eller loddet fast, DDR3, DDR4 eller DDR5, og hvor meget bundkortet overhovedet kan tage. Tjek de tre ting først.",
+      en: "Most business laptops take a memory change with a screwdriver and ten minutes. What decides it is not skill but type: a removable module (SO-DIMM) or soldered down, DDR3, DDR4 or DDR5, and how much the board supports at all. Check those three first.",
     },
     intro: {
       da: "Mere hukommelse er som regel den billigste vej til en mærkbart hurtigere maskine. Men det virker kun, hvis maskinen kan udvides, og hvis du køber den rigtige type. Her er rækkefølgen.",
@@ -1013,8 +1013,8 @@ export const guides: Guide[] = [
             en: "Shut the machine down, unplug it, and remove the external battery if there is one. Take the bottom cover off, and touch bare metal on the chassis before you touch the module — static is the only real risk.",
           },
           {
-            da: "Klemmerne i hver side af soklen springer ud til siden, og modulet vipper op. Det nye sættes i skråt og trykkes ned, til klemmerne klikker. Det skal ikke tvinges: passer det ikke, er det den forkerte type.",
-            en: "The clips on each side of the slot spring outwards and the module tilts up. The new one goes in at an angle and is pressed down until the clips click. It should not be forced: if it does not fit, it is the wrong type.",
+            da: "Skub klemmerne i hver side af soklen udad, så vipper modulet op. Det nye sættes i skråt og trykkes ned, til klemmerne klikker. Det skal ikke tvinges: passer det ikke, er det den forkerte type.",
+            en: "Push the clips on each side of the slot outwards, and the module tilts up. The new one goes in at an angle and is pressed down until the clips click. It should not be forced: if it does not fit, it is the wrong type.",
           },
         ],
       },
@@ -1022,8 +1022,8 @@ export const guides: Guide[] = [
         heading: { da: "Bagefter", en: "Afterwards" },
         body: [
           {
-            da: "Tænd maskinen og tjek, at den ser hele mængden. I Windows står det under Indstillinger, System, Om. Ser den kun halvdelen, sidder det ene modul ikke ordentligt – tag det ud og sæt det i igen.",
-            en: "Power up and check that the machine sees all of it. In Windows that is under Settings, System, About. If it only sees half, one module is not seated properly — take it out and refit it.",
+            da: "Tænd maskinen, og tjek, at den ser hele mængden. I Windows står det under Indstillinger → System → Om. Ser den kun halvdelen, sidder det ene modul ikke ordentligt – tag det ud og sæt det i igen.",
+            en: "Power up and check that the machine sees all of it. In Windows that is under Settings → System → About. If it only sees half, one module is not seated properly — take it out and refit it.",
           },
         ],
       },
@@ -1080,8 +1080,8 @@ export const guides: Guide[] = [
           en: "The machine only sees half the memory — what is wrong?",
         },
         answer: {
-          da: "Så sidder det ene modul ikke ordentligt. Tag det ud og sæt det i igen. Du kan se, hvor meget maskinen faktisk ser, under Indstillinger, System, Om i Windows.",
-          en: "One of the modules is not seated properly. Take it out and put it back in. You can see how much the machine actually sees under Settings, System, About in Windows.",
+          da: "Så sidder det ene modul ikke ordentligt. Tag det ud og sæt det i igen. Du kan se, hvor meget maskinen faktisk ser, under Indstillinger → System → Om i Windows.",
+          en: "One of the modules is not seated properly. Take it out and put it back in. You can see how much the machine actually sees under Settings → System → About in Windows.",
         },
       },
     ],
@@ -1122,7 +1122,7 @@ export const guides: Guide[] = [
     },
     sections: [
       {
-        heading: { da: "Det du kan se på ti minutter", en: "What you can see in ten minutes" },
+        heading: { da: "Det, du kan se på ti minutter", en: "What you can see in ten minutes" },
         body: [
           {
             da: "Tag maskinen i hånden og gå listen igennem i rækkefølge. Hvert punkt tager under et minut.",
@@ -1132,7 +1132,7 @@ export const guides: Guide[] = [
         list: [
           {
             da: "Batteriets tilstand. I Windows: åbn Kommandoprompt og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Under 70 procent betyder, at et nyt batteri er på vej.",
-            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. Below 70 percent means a new battery is coming.",
+            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. Below 70 per cent means a new battery is coming.",
           },
           {
             da: "Skærmen på hvid og på sort baggrund. Døde pixels ses på hvid, lysutæthed og indbrænding ses på sort.",
@@ -1167,8 +1167,8 @@ export const guides: Guide[] = [
             en: "BIOS password and device locks. Restart and enter the BIOS. A machine locked by a previous owner cannot always be unlocked — not by us either.",
           },
           {
-            da: "Windows-licensen. Under Indstillinger, System, Aktivering skal der stå, at Windows er aktiveret.",
-            en: "The Windows licence. Under Settings, System, Activation it should say that Windows is activated.",
+            da: "Windows-licensen. Under Indstillinger → System → Aktivering skal der stå, at Windows er aktiveret.",
+            en: "The Windows licence. Under Settings → System → Activation it should say that Windows is activated.",
           },
         ],
       },
@@ -1269,7 +1269,7 @@ export const guides: Guide[] = [
       en: "Which parts have to match, what order to assemble in, and what goes wrong the first time. A walkthrough without the mystique.",
     },
     summary: {
-      da: "Rækkefølgen, de dele der skal passe sammen, og fejlene alle laver første gang.",
+      da: "Rækkefølgen, de dele, der skal passe sammen, og de fejl, alle laver første gang.",
       en: "The order, the parts that must match, and the mistakes everyone makes first time.",
     },
     audience: { da: "Private og gaming", en: "Individuals and gaming" },
@@ -1285,7 +1285,7 @@ export const guides: Guide[] = [
     },
     sections: [
       {
-        heading: { da: "De fem ting der skal passe sammen", en: "The five things that must match" },
+        heading: { da: "De fem ting, der skal passe sammen", en: "The five things that must match" },
         body: [
           {
             da: "Vælg i denne rækkefølge, så låser hvert valg det næste:",
@@ -1319,8 +1319,8 @@ export const guides: Guide[] = [
         heading: { da: "Rækkefølgen ved samling", en: "The order of assembly" },
         body: [
           {
-            da: "Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet, og det er den fejl, folk oftest fortryder.",
-            en: "Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case, and this is the mistake people most often regret.",
+            da: "Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet – at gøre det i kabinettet er den fejl, folk oftest fortryder.",
+            en: "Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case — doing it inside the case is the mistake people most often regret.",
           },
           {
             da: "Så kommer bundkortet i kabinettet, derefter strømforsyningen, og til sidst grafikkortet. Kabler føres bagest, mens der stadig er plads til hænderne.",
@@ -1342,7 +1342,7 @@ export const guides: Guide[] = [
             en: "The extra 8-pin CPU power connector at the top of the board is not plugged in. The machine is completely dead.",
           },
           {
-            da: "Hukommelsen sidder i de forkerte sokler. Manualen siger hvilke to der skal bruges, når du kun har to moduler.",
+            da: "Hukommelsen sidder i de forkerte sokler. Manualen siger, hvilke to der skal bruges, når du kun har to moduler.",
             en: "Memory is in the wrong slots. The manual says which two to use when you only have two modules.",
           },
           {
@@ -1359,7 +1359,7 @@ export const guides: Guide[] = [
         heading: { da: "Første start", en: "First boot" },
         body: [
           {
-            da: "Gå i BIOS først. Tjek at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Slå også TPM (fTPM på AMD, PTT på Intel) og Secure Boot til: ifølge Microsoft kræver Windows 11 begge dele, og på nogle bundkort står de slået fra fra fabrikken. Derefter installerer du Windows fra en USB-nøgle.",
+            da: "Gå i BIOS først. Tjek, at processoren, hele hukommelsen og disken er der, og slå XMP eller EXPO til, så hukommelsen kører den hastighed, du betalte for. Slå også TPM (fTPM på AMD, PTT på Intel) og Secure Boot til: ifølge Microsoft kræver Windows 11 begge dele, og på nogle bundkort er de slået fra, når de kommer fra fabrikken. Derefter installerer du Windows fra en USB-nøgle.",
             en: "Go into the BIOS first. Check that the processor, all the memory and the drive are there, and switch on XMP or EXPO so the memory runs at the speed you paid for. Switch on TPM (fTPM on AMD, PTT on Intel) and Secure Boot as well: according to Microsoft, Windows 11 requires both, and on some motherboards they are off from the factory. Then install Windows from a USB stick.",
           },
         ],
@@ -1393,8 +1393,8 @@ export const guides: Guide[] = [
           en: "Should the motherboard be assembled in the case?",
         },
         answer: {
-          da: "Nej. Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet, og det er den fejl, folk oftest fortryder.",
-          en: "No. Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case, and it is the mistake people most often regret.",
+          da: "Nej. Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet – at gøre det i kabinettet er den fejl, folk oftest fortryder.",
+          en: "No. Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case — doing it inside the case is the mistake people most often regret.",
         },
       },
       {
@@ -1439,15 +1439,15 @@ export const guides: Guide[] = [
       en: "TPM, Secure Boot and processor requirements explained, and what to do if your machine is not on the list.",
     },
     summary: {
-      da: "Hvorfor en fungerende maskine pludselig ikke må opdatere – og hvad mulighederne så er.",
-      en: "Why a working machine is suddenly not allowed to update — and what the options are.",
+      da: "Hvorfor en maskine, der virker fint, ikke kan få Windows 11 – og hvad mulighederne så er.",
+      en: "Why a machine that works fine cannot get Windows 11 — and what the options are.",
     },
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
     readingMinutes: 4,
     updated: "2026-08-23",
     tldr: {
-      da: "Tre ting afgør det: TPM 2.0, Secure Boot i UEFI-tilstand, og om processoren står på Microsofts liste. De to første er ofte kun en indstilling i BIOS. Den tredje kan ikke omgås — og det er dér, en maskine, der kører helt fint, alligevel må skiftes.",
-      en: "Three things decide it: TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The first two are often just a BIOS setting. The third cannot be worked around — and that is where a machine running perfectly well still has to be replaced.",
+      da: "Tre ting afgør det: TPM 2.0, Secure Boot i UEFI-tilstand, og om processoren står på Microsofts liste. De to første er ofte kun en indstilling i BIOS. Den tredje kan ikke ændres – og det er derfor, en maskine, der kører helt fint, alligevel kan være nødt til at blive skiftet.",
+      en: "Three things decide it: TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The first two are often just a BIOS setting. The third cannot be changed — which is why a machine running perfectly well may still have to be replaced.",
     },
     intro: {
       da: "Mange maskiner, der kører helt fint, får at vide, at de ikke kan opdatere til Windows 11. Det handler sjældent om ydelse og næsten altid om tre krav, der kan tjekkes på et par minutter.",
@@ -1471,8 +1471,8 @@ export const guides: Guide[] = [
         heading: { da: "Tjek det selv", en: "Check it yourself" },
         body: [
           {
-            da: "Tryk Windows-tasten og R, skriv tpm.msc og tryk enter. Vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
-            en: "Press the Windows key and R, type tpm.msc and hit enter. The window tells you whether there is a TPM and which version. Type msinfo32 in the same place: it shows both BIOS mode, which should be UEFI, and Secure Boot state.",
+            da: "Tryk Windows-tasten og R, skriv tpm.msc, og tryk Enter. Vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
+            en: "Press the Windows key and R, type tpm.msc and press Enter. The window tells you whether there is a TPM and which version. Type msinfo32 in the same place: it shows both BIOS mode, which should be UEFI, and Secure Boot state.",
           },
           {
             da: "Står TPM som slået fra, er det ofte bare en indstilling i BIOS – den hedder typisk PTT på Intel og fTPM på AMD.",
@@ -1498,7 +1498,7 @@ export const guides: Guide[] = [
       },
     ],
     closing: {
-      da: "Skal en hel flåde vurderes, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan følge med, og hvilke der bedre kan betale sig at skifte.",
+      da: "Skal en hel flåde vurderes, kan vi gennemgå listen med jer og sige, hvilke maskiner der kan følge med, og hvilke det bedre kan betale sig at skifte.",
       en: "If a whole fleet needs assessing, we can go through the list with you and say which machines can come along and which are better replaced.",
     },
     related: [
@@ -1529,8 +1529,8 @@ export const guides: Guide[] = [
           en: "How do I check whether my machine meets the requirements?",
         },
         answer: {
-          da: "Tryk Windows-tasten og R, skriv tpm.msc og tryk enter – vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
-          en: "Press the Windows key and R, type tpm.msc and press enter — the window says whether there is a TPM and which version. Type msinfo32 in the same place: it shows both the BIOS mode, which has to be UEFI, and the Secure Boot state.",
+          da: "Tryk Windows-tasten og R, skriv tpm.msc, og tryk Enter – vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
+          en: "Press the Windows key and R, type tpm.msc and press Enter — the window says whether there is a TPM and which version. Type msinfo32 in the same place: it shows both the BIOS mode, which has to be UEFI, and the Secure Boot state.",
         },
       },
       {
@@ -1582,8 +1582,8 @@ export const guides: Guide[] = [
     readingMinutes: 4,
     updated: "2026-08-23",
     tldr: {
-      da: "At slette filer og tømme papirkurven fjerner ikke data. På en SSD er den rigtige fremgangsmåde en indbygget secure erase eller kryptering efterfulgt af sletning af nøglen. Skal udstyret ud af en virksomhed, er dokumentationen for sletningen lige så vigtig som sletningen selv.",
-      en: "Deleting files and emptying the recycle bin does not remove data. On an SSD the right approach is a built-in secure erase, or encryption followed by destroying the key. If the equipment is leaving a company, the documentation of the erasure matters as much as the erasure itself.",
+      da: "At slette filer og tømme papirkurven fjerner ikke data. På en SSD skal du bruge diskens indbyggede sletning (Secure Erase) – eller kryptere disken og derefter slette nøglen. Skal udstyret ud af en virksomhed, er dokumentationen for sletningen lige så vigtig som sletningen selv.",
+      en: "Deleting files and emptying the recycle bin does not remove data. On an SSD, use the drive's built-in erase (Secure Erase) — or encrypt the drive and then destroy the key. If the equipment is leaving a company, the documentation of the erasure matters as much as the erasure itself.",
     },
     intro: {
       da: "Når en maskine skifter hænder, følger data med, hvis man ikke gør noget aktivt. En hurtig formatering fjerner kun indholdsfortegnelsen – filerne ligger der stadig og kan hentes frem med gratis værktøjer.",
@@ -1594,8 +1594,8 @@ export const guides: Guide[] = [
         heading: { da: "For en privat maskine", en: "For a personal machine" },
         body: [
           {
-            da: "Log ud af alt først: Microsoft-konto, Google, iCloud og eventuel diskkryptering. Slå derefter Windows' egen nulstilling til med indstillingen, der fjerner alt og renser drevet. Den overskriver, i stedet for bare at slette henvisningerne.",
-            en: "Sign out of everything first: Microsoft account, Google, iCloud and any disk encryption. Then run Windows' own reset with the option that removes everything and cleans the drive. That overwrites, rather than simply deleting the references.",
+            da: "Log først ud af alle konti: Microsoft-konto, Google og iCloud. Nulstil derefter maskinen med Windows' egen funktion, og vælg at fjerne alt og rense drevet. Det overskriver data i stedet for bare at slette henvisningerne.",
+            en: "Sign out of every account first: Microsoft account, Google and iCloud. Then reset the machine with Windows' own reset, choosing to remove everything and clean the drive. That overwrites the data rather than simply deleting the references.",
           },
           {
             da: "Har maskinen allerede kørt med BitLocker eller FileVault slået til, er sagen enklere: slettes nøglen, er data i praksis uigenkaldelige.",

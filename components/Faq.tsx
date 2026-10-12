@@ -26,7 +26,7 @@ const defaultFaqs: FaqItem[] = [
   {
     question: { da: "Hvor lang er leveringstiden?", en: "How long does delivery take?" },
     answer: {
-      da: "Vi sourcer enheder per ordre i stedet for at holde fast lager, så leveringstiden afhænger af den konkrete bestilling. Vi oplyser en tidsramme, så snart vi kender omfanget.",
+      da: "Vi skaffer enhederne til hver ordre i stedet for at holde fast lager, så leveringstiden afhænger af den konkrete bestilling. Vi oplyser en tidsramme, så snart vi kender omfanget.",
       en: "We source per order rather than holding stock, so delivery time depends on the specific order. We give you a time frame as soon as we know the scope.",
     },
   },
@@ -40,7 +40,7 @@ const defaultFaqs: FaqItem[] = [
   {
     question: { da: "Er der et minimumsantal enheder?", en: "Is there a minimum order?" },
     answer: {
-      da: "Nej. Vi tilpasser leverancen fra enkelte enheder til større indkøb til hele teams eller virksomheder.",
+      da: "Nej. Vi leverer alt fra en enkelt enhed til større indkøb for hele teams eller virksomheder.",
       en: "No. We scale the delivery from single machines up to larger purchases for whole teams or companies.",
     },
   },

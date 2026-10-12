@@ -165,3 +165,32 @@ export function formatDate(iso: string, lang: Lang) {
     timeZone: "UTC",
   });
 }
+
+const numberWords: Record<Lang, string[]> = {
+  da: ["nul", "én", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti"],
+  en: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"],
+};
+
+/**
+ * A small count as a word, the way it is written in running text: "ni i
+ * detaljer", not "9 i detaljer" — and never a digit at the start of a
+ * sentence. Above ten the digits stay, as both languages write them.
+ */
+export function countWord(n: number, lang: Lang, capital = false) {
+  const word = numberWords[lang][n] ?? String(n);
+  return capital ? word[0].toUpperCase() + word.slice(1) : word;
+}
+
+/* Words that keep their capital in the middle of a sentence. */
+const properFirst = /^(Nordic|Windows|Danish|Norwegian|Microsoft|Apple|Lenovo|Dell|HP)\b/;
+
+/**
+ * A name dropped into the middle of a sentence: "Mini-pc'er" → "mini-pc'er",
+ * "Mini PCs" → "mini PCs", but "Nordic preparation" keeps its capital.
+ * Lowercasing the whole string turned "PCs" into "pcs" in every heading
+ * that used it.
+ */
+export function lowerFirst(text: string) {
+  if (properFirst.test(text) || !/^[A-ZÆØÅ][a-zæøå]/.test(text)) return text;
+  return text[0].toLowerCase() + text.slice(1);
+}

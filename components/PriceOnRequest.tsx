@@ -24,15 +24,15 @@ const copy = {
   da: {
     label: "Pris",
     heading: "Få et tilbud",
-    body: "Prisen afhænger af specifikationer, stand og antal. Derfor sætter vi ikke et listetal på en maskine, der ikke er købt hjem endnu – I får en pris, der gælder jeres konkrete leverance.",
-    volume: "Skal I bruge 5, 20 eller 100 maskiner? Vi sourcer, klargør og leverer det samlet.",
+    body: "Prisen afhænger af specifikationer, stand og antal. Derfor sætter vi ikke en listepris på en maskine, der ikke er købt hjem endnu – I får en pris, der gælder jeres konkrete leverance.",
+    volume: "Skal I bruge 5, 20 eller 100 maskiner? Vi skaffer, klargør og leverer dem samlet.",
     cta: "Få et tilbud",
     secondary: "Hvad afgør prisen?",
   },
   en: {
     label: "Price",
     heading: "Get a quote",
-    body: "The price depends on specification, condition and quantity. So we do not put a list figure on a machine that has not been bought in yet — you get a price that holds for your actual delivery.",
+    body: "The price depends on specification, condition and quantity. So we do not put a list price on a machine that has not been bought in yet — you get a price that holds for your actual delivery.",
     volume: "Need 5, 20 or 100 machines? We source, prepare and deliver them together.",
     cta: "Get a quote",
     secondary: "What decides the price?",

@@ -1,6 +1,6 @@
 import type { FaqItem } from "@/components/Faq";
 import type { Category } from "./categories";
-import type { Lang } from "./i18n";
+import { countWord, type Lang } from "./i18n";
 import { models } from "./models";
 import type { SourceId } from "./sources";
 
@@ -56,8 +56,9 @@ export function categoryFaqs(category: Category): FaqItem[] {
         en: `Which models of ${name.en} have you described?`,
       },
       answer: {
-        da: `${known.length === 1 ? "Én" : known.length} i detaljer: ${list(known, "og")}. Hver har sin egen side med typisk konfiguration, hvad den er god til, og hvad man skal være opmærksom på.`,
-        en: `${known.length === 1 ? "One" : known.length} in detail: ${list(known, "and")}. Each has its own page with the typical configuration, what it suits and what to watch for.`,
+        /* A sentence does not start with a digit, so the count is a word. */
+        da: `${countWord(known.length, "da", true)} i detaljer: ${list(known, "og")}. ${known.length === 1 ? "Den" : "Hver"} har sin egen side med typisk konfiguration, hvad den er god til, og hvad man skal være opmærksom på.`,
+        en: `${countWord(known.length, "en", true)} in detail: ${list(known, "and")}. ${known.length === 1 ? "It has" : "Each has"} its own page with the typical configuration, what it suits and what to watch for.`,
       },
     });
   }
@@ -91,7 +92,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
   items.push({
     question: { da: `Har I ${name.da} på lager?`, en: `Do you have ${name.en} in stock?` },
     answer: {
-      da: "Nej. Vi sourcer til den enkelte ordre i stedet for at holde lager, så specifikationerne følger opgaven. Der er ingen minimumsordre.",
+      da: "Nej. Vi skaffer udstyret til den enkelte ordre i stedet for at holde lager, så specifikationerne følger opgaven. Der er ingen minimumsordre.",
       en: "No. We source per order rather than holding stock, so the specification follows the job. There is no minimum order.",
     },
   });

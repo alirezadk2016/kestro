@@ -17,7 +17,7 @@ import type { Lang } from "@/lib/i18n";
  */
 const copy = {
   da: {
-    title: "Hvad er fast, og hvad afhænger af partiet",
+    title: "Hvad er fast, og hvad afhænger af partiet?",
     columns: [
       {
         mark: "adjust",

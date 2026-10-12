@@ -11,6 +11,11 @@ import { localePath, type Lang } from "@/lib/i18n";
  * The entrance is the .rise utility in globals.css.
  */
 
+
+/* public/hero/scene-mobile.webp at 32×31, blurred: the phone hero's fill. */
+const SCENE_BLUR =
+  "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAABwBQCdASogAB8APrVMoEonJCMhsAgA4BaJZQC073ph4DZhFlfZ08D0WWZvocQHfOaAnXgoAP76lvetq5+r0zR+5YEJX/pu4tKRNjbyjN0WAemQKqKEq63OTddkoKaOV5lVn4wL+ep9eRmjEbjT0oTPFeE0gbX3d0G5gvQ6teeLseika/6dyWRIJ41PV+H1j2nl47o01su2ULotuS2fzVmELebE3HCkAAA=";
+
 const copy = {
   da: {
     /* Two lines, two weights of attention: what it is, then who it is for.
@@ -30,6 +35,10 @@ const copy = {
        where that has to be unambiguous. */
     subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
     sub: "i Danmark og Norge – testet og klar til brug.",
+    /* The second sentence is the answer the first one promises: how the
+       machines are bought, and what is in writing before anyone says yes. */
+    subMore:
+      "Vi skaffer maskinerne til den enkelte ordre, og pris, stand og garantivilkår står skriftligt, før I bestiller.",
     secondary: "Se hvad vi skaffer",
   },
   en: {
@@ -37,6 +46,8 @@ const copy = {
     headlineAccent: "Ready for the Nordics.",
     subLead: "Kestro is a supplier of used business IT to companies",
     sub: "in Denmark and Norway — tested and ready to use.",
+    subMore:
+      "We source the machines for each order, and price, condition and warranty terms are in writing before you order.",
     secondary: "Explore computers",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
@@ -147,22 +158,26 @@ export default function Hero({ lang }: { lang: Lang }) {
       <link
         rel="preload"
         as="image"
-        href="/hero/scene.webp"
+        href="/hero/scene.avif"
+        type="image/avif"
         media="(min-width: 768px)"
         fetchPriority="high"
       />
+      {/* AVIF on a phone: 24kB against the WebP's 40kB for the same picture,
+          and it is the Largest Contentful Paint. Browsers without AVIF skip
+          this preload and take the WebP from the stylesheet's image-set(). */}
       <link
         rel="preload"
         as="image"
-        href="/hero/scene-mobile.webp"
+        href="/hero/scene-mobile.avif"
+        type="image/avif"
         media="(max-width: 767px)"
         fetchPriority="high"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
-        style={{ backgroundImage: "url(/hero/scene.webp)" }}
+        className="hero-scene pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
       />
 
       {/*
@@ -217,14 +232,16 @@ export default function Hero({ lang }: { lang: Lang }) {
       */}
       <div className="relative flex min-h-[100svh] flex-col justify-end md:contents">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 md:hidden">
+          {/* The blurred fill is a 32-pixel copy of the scene, blurred when it
+              was made and stretched by the browser, rather than the full
+              picture under a 40px CSS blur. The filter was the page's most
+              expensive paint and this layer is the largest thing on a phone's
+              first screen, so it held up Largest Contentful Paint; 188 bytes
+              in the markup need no request and no filter. */}
+          <div className="absolute inset-0 bg-cover bg-top opacity-60" style={{ backgroundImage: `url(${SCENE_BLUR})` }} />
           <div
-            className="absolute inset-0 scale-110 bg-cover bg-top opacity-60 blur-2xl"
-            style={{ backgroundImage: "url(/hero/scene-mobile.webp)" }}
-          />
-          <div
-            className="absolute inset-x-0 top-0 aspect-[1000/971] bg-cover bg-top"
+            className="hero-scene-mobile absolute inset-x-0 top-0 aspect-[1000/971] bg-cover bg-top"
             style={{
-              backgroundImage: "url(/hero/scene-mobile.webp)",
               WebkitMaskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
               maskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
             }}
@@ -283,6 +300,12 @@ export default function Hero({ lang }: { lang: Lang }) {
               <p className="mt-4 max-w-xl text-base leading-[1.6] text-paper/85 max-md:text-balance md:mt-5 md:text-[clamp(0.95rem,0.98vw,1.2rem)] md:leading-[1.72]">
                 <span className="md:block md:text-paper">{keepTerm(c.subLead)} </span>
                 <span className="md:block md:text-paper/75">{c.sub}</span>
+              </p>
+              {/* On a short phone screen (an SE-size Safari window, 548px tall) the
+                  second sentence pushed the glass up over the whole picture,
+                  so there it gives way; every taller screen has it. */}
+              <p className="mt-2 max-w-xl text-[0.9375rem] leading-[1.6] text-paper/75 max-md:text-pretty md:mt-3 md:text-[clamp(0.9rem,0.9vw,1.1rem)] md:leading-[1.7] max-md:[@media(max-height:600px)]:hidden">
+                {c.subMore}
               </p>
 
               {/* No row of facts here any more. It said "Testet · Nordisk

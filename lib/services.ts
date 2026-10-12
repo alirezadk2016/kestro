@@ -104,8 +104,8 @@ export const services: Service[] = [
             en: "Laptops: ThinkPad, EliteBook, Latitude and equivalent business ranges.",
           },
           {
-            da: "Stationære og små formfaktorer til kontorpladser og receptioner.",
-            en: "Desktops and small form factors for desks and reception areas.",
+            da: "Stationære i store og små kabinetter til kontorpladser og receptioner.",
+            en: "Desktops in large and small cases for desks and reception areas.",
           },
           {
             da: "Skærme, dockingstationer, tastaturer og mus, så en plads er komplet.",
@@ -113,7 +113,7 @@ export const services: Service[] = [
           },
           {
             da: "Nordisk tastatur og dansk opsætning, hvis maskinerne skal bruges her.",
-            en: "Nordic keyboards and Danish setup when the machines are to be used here.",
+            en: "Danish or Norwegian keyboards and setup when the machines are to be used here.",
           },
         ],
       },
@@ -121,11 +121,11 @@ export const services: Service[] = [
         heading: { da: "5, 20 eller 100 maskiner", en: "5, 20 or 100 machines" },
         body: [
           {
-            da: "Antallet ændrer opgaven. Fem maskiner er et indkøb; halvtreds er et rul, hvor det betyder noget, at alle maskiner er ens, at de kommer samlet, og at de gamle bliver hentet med retur.",
+            da: "Antallet ændrer opgaven. Fem maskiner er et indkøb; halvtreds er en udrulning, hvor det betyder noget, at alle maskiner er ens, at de kommer samlet, og at de gamle bliver hentet med retur.",
             en: "Quantity changes the job. Five machines is a purchase; fifty is a rollout, where it matters that every machine is identical, that they arrive together, and that the old ones go back with us.",
           },
           {
-            da: "Ved større antal sourcer vi på samme konfiguration hele vejen rundt, klargør dem ens og aftaler leveringen, så I ikke skal koordinere den maskine for maskine.",
+            da: "Ved større antal skaffer vi den samme konfiguration til alle, klargør maskinerne ens og aftaler leveringen, så I ikke skal koordinere den maskine for maskine.",
             en: "At larger quantities we source a single configuration throughout, prepare them the same way and agree the delivery, so you are not coordinating it machine by machine.",
           },
         ],
@@ -153,20 +153,20 @@ export const services: Service[] = [
           },
           {
             da: "Tilbehør og klargøring: dock, skærm, nordisk tastatur, opsætning og levering.",
-            en: "Accessories and preparation: dock, monitor, Nordic keyboard, setup and delivery.",
+            en: "Accessories and preparation: dock, monitor, Danish or Norwegian keyboard, setup and delivery.",
           },
         ],
       },
       {
-        heading: { da: "Fortæl os hvad I søger", en: "Tell us what you are looking for" },
+        heading: { da: "Fortæl os, hvad I søger", en: "Tell us what you are looking for" },
         body: [
           {
-            da: "I behøver ikke have en modelliste klar. Skriv hvor mange maskiner det drejer sig om, hvad de skal bruges til, og hvornår I skal have dem – så foreslår vi noget konkret.",
+            da: "I behøver ikke have en modelliste klar. Skriv, hvor mange maskiner det drejer sig om, hvad de skal bruges til, og hvornår I skal have dem – så foreslår vi noget konkret.",
             en: "You do not need a list of models ready. Tell us how many machines it is about, what they will be used for, and when you need them — and we will come back with something concrete.",
           },
           {
-            da: "Ved I mere end det, går det hurtigere: skærmstørrelse, hukommelse, om der skal dockingstationer og skærme med, og om tastaturerne skal være nordiske.",
-            en: "If you know more than that, it goes faster: screen size, memory, whether docks and monitors are included, and whether the keyboards need to be Nordic.",
+            da: "Ved I mere end det, går det hurtigere: skærmstørrelse, hukommelse, om der skal dockingstationer og skærme med, og om tastaturerne skal være danske eller norske.",
+            en: "If you know more than that, it goes faster: screen size, memory, whether docks and monitors are included, and whether the keyboards need to be Danish or Norwegian.",
           },
         ],
       },
@@ -189,7 +189,7 @@ export const services: Service[] = [
       en: "Function testing of screen, keyboard, battery and performance, memory and disk upgrades where needed, and erasure of the storage media before setup.",
     },
     summary: {
-      da: "Det, der sker mellem at maskinen er købt, og at den står på et skrivebord.",
+      da: "Det, der sker, fra maskinen er købt, til den står på et skrivebord.",
       en: "What happens between buying a machine and having it on a desk.",
     },
     intro: {
@@ -313,7 +313,7 @@ export const services: Service[] = [
         heading: { da: "Om leveringstid", en: "About lead time" },
         body: [
           {
-            da: "Fordi vi sourcer per ordre og ikke sælger fra et lager, afhænger leveringstiden af den konkrete bestilling. Vi lover ikke en fast leveringstid på forhånd – vi oplyser en tidsramme, når vi har talt om, hvad I skal bruge, og den står i tilbuddet sammen med pris og stand.",
+            da: "Fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager, afhænger leveringstiden af den konkrete bestilling. Vi lover ikke en fast leveringstid på forhånd – vi oplyser en tidsramme, når vi har talt om, hvad I skal bruge, og den står i tilbuddet sammen med pris og stand.",
             en: "Because we source per order rather than selling from stock, lead time depends on the specific order. We do not promise a fixed delivery time up front — we give you a time frame once we have talked about what you need, and it goes in the quote alongside price and condition.",
           },
         ],
@@ -351,11 +351,11 @@ export const services: Service[] = [
       en: "Placing overstock and returned IT equipment | Kestro",
     },
     metaDescription: {
-      da: "Returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned det står stille. Vi finder køberne i stedet for jer.",
+      da: "Returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned, det står stille. Vi finder køberne i stedet for jer.",
       en: "Returns, demo units or equipment from a cancelled order that never reached a customer. We find the buyers instead of letting it lose value on a shelf.",
     },
     summary: {
-      da: "Udstyr, der aldrig nåede en kunde, taber værdi hver måned det står stille.",
+      da: "Udstyr, der aldrig nåede en kunde, taber værdi hver måned, det står stille.",
       en: "Equipment that never reached a customer loses value every month it sits still.",
     },
     intro: {
@@ -367,7 +367,7 @@ export const services: Service[] = [
         heading: { da: "Hvad vi gør ved det", en: "What we do with it" },
         body: [
           {
-            da: "Vi handler begge veje. Samme netværk, vi bruger til at finde maskiner til nordiske virksomheder, kan bruges til at finde køberne til jeres. I får en vurdering, før I beslutter jer, og I er ikke bundet af at have bedt om den.",
+            da: "Vi handler begge veje. Det samme netværk, vi bruger til at finde maskiner til nordiske virksomheder, kan bruges til at finde køberne til jeres. I får en vurdering, før I beslutter jer, og I er ikke bundet af at have bedt om den.",
             en: "We trade in both directions. The same network we use to find machines for Nordic companies can be used to find the buyers for yours. You get a valuation before you decide, and asking for one commits you to nothing.",
           },
           {

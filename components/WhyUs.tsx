@@ -3,14 +3,14 @@ import type { Lang } from "@/lib/i18n";
 
 const benefits = [
   {
-    title: { da: "Maskiner der bliver i brug", en: "Machines that stay in use" },
+    title: { da: "Maskiner, der bliver i brug", en: "Machines that stay in use" },
     description: {
       da: "Vi køber maskiner, der stadig kan arbejde, og sætter dem i drift igen i stedet for at de bliver skiftet ud efter tre år.",
       en: "We buy machines that can still do the work and put them back into service, rather than seeing them replaced after three years.",
     },
   },
   {
-    title: { da: "Kvalitet & tillid", en: "Quality and trust" },
+    title: { da: "Kvalitet og tillid", en: "Quality and trust" },
     description: {
       da: "Vi funktionstester og klargør maskinerne, før de sendes videre, og oplyser stand og batteritilstand skriftligt, før I bestiller.",
       en: "We function-test and prepare the machines before they go on, and put condition and battery state in writing before you order.",

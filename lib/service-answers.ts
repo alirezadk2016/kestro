@@ -34,8 +34,8 @@ const erasure: FaqItem = {
     en: "What happens to the data on the devices?",
   },
   answer: {
-    da: "Lagermedierne slettes, før enhederne klargøres igen, og vi oplyser, hvilken metode der er brugt. NIST, den amerikanske standardiseringsmyndighed, skelner mellem 3 niveauer – Clear, Purge og Destroy – så aftal på forhånd, hvilket I har brug for, og om I skal bruge dokumentation.",
-    en: "The storage is erased before the devices are prepared again, and we tell you which method was used. NIST, the US standards body, distinguishes 3 levels — Clear, Purge and Destroy — so agree up front which one you need and whether you need documentation.",
+    da: "Lagermedierne slettes, før enhederne klargøres igen, og vi oplyser, hvilken metode der er brugt. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Aftal på forhånd, hvilket I har brug for, og om I skal bruge dokumentation.",
+    en: "The storage is erased before the devices are prepared again, and we tell you which method was used. NIST, the US standards body, distinguishes three levels: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). Agree up front which one you need and whether you need documentation.",
   },
 };
 
@@ -53,16 +53,16 @@ const windows: FaqItem = {
 export const serviceAnswers: Record<string, ServiceAnswers> = {
   "sourcing-og-indkoeb": {
     lead: {
-      da: "Sourcing er, at vi finder brugte erhvervsmaskiner hos leverandører i Sydeuropa til jeres konkrete ordre – fra 1 maskine til en hel flåde – og først køber ind, når I ved, hvad I skal bruge.",
-      en: "Sourcing means we find used business machines through suppliers in southern Europe for your specific order — from 1 machine to a whole fleet — and buy only once you know what you need.",
+      da: "Sourcing er, at vi finder brugte erhvervsmaskiner hos leverandører i Sydeuropa til jeres konkrete ordre – fra én maskine til en hel flåde – og først køber ind, når I ved, hvad I skal bruge.",
+      en: "Sourcing means we find used business machines through suppliers in southern Europe for your specific order — from one machine to a whole fleet — and buy only once you know what you need.",
     },
     faqs: [
       noStock,
       {
         question: { da: "Hvilke maskiner kan I skaffe?", en: "Which machines can you source?" },
         answer: {
-          da: "Erhvervsserier frem for forbrugermodeller: bærbare som ThinkPad, EliteBook og Latitude, stationære og små formfaktorer, og skærme, dockingstationer, tastaturer og mus, så en plads er komplet.",
-          en: "Business ranges rather than consumer models: laptops such as ThinkPad, EliteBook and Latitude, desktops and small form factors, and monitors, docks, keyboards and mice so a desk is complete.",
+          da: "Erhvervsserier frem for forbrugermodeller: bærbare som ThinkPad, EliteBook og Latitude, stationære i store og små kabinetter, og skærme, dockingstationer, tastaturer og mus, så en plads er komplet.",
+          en: "Business ranges rather than consumer models: laptops such as ThinkPad, EliteBook and Latitude, desktops in large and small cases, and monitors, docks, keyboards and mice so a desk is complete.",
         },
       },
       {
@@ -85,8 +85,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "klargoering-og-test": {
     lead: {
-      da: "Klargøring er arbejdet mellem indkøb og levering: en funktionstest af 4 ting – skærm, tastatur, batteri og ydeevne – opgradering efter behov og sletning af lagermediet, før maskinen sættes op igen.",
-      en: "Preparation is the work between purchase and delivery: a function test of 4 things — screen, keyboard, battery and performance — upgrades where needed, and erasing the storage before the machine is set up again.",
+      da: "Klargøring er arbejdet mellem indkøb og levering: en funktionstest af fire ting – skærm, tastatur, batteri og ydeevne – opgradering efter behov og sletning af lagermediet, før maskinen sættes op igen.",
+      en: "Preparation is the work between purchase and delivery: a function test of four things — screen, keyboard, battery and performance — upgrades where needed, and erasing the storage before the machine is set up again.",
     },
     faqs: [
       {
@@ -120,8 +120,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "nordisk-tilpasning": {
     lead: {
-      da: "Nordisk tilpasning er 2 ting: et fysisk skift af tastaturet til dansk eller norsk layout, så æ, ø og å sidder rigtigt, og Windows sat op med drivere og sprog, så maskinen er klar fra dag 1.",
-      en: "Nordic preparation is 2 things: a physical keyboard swap to a Danish or Norwegian layout, so æ, ø and å are where they belong, and Windows set up with drivers and language, so the machine is ready from day 1.",
+      da: "Nordisk tilpasning er to ting: et fysisk skift af tastaturet til dansk eller norsk layout, så æ, ø og å sidder rigtigt, og Windows sat op med drivere og sprog, så maskinen er klar fra første dag.",
+      en: "Nordic preparation is two things: a physical keyboard swap to a Danish or Norwegian layout, so æ, ø and å are where they belong, and Windows set up with drivers and language, so the machine is ready from day one.",
     },
     faqs: [
       {
@@ -145,8 +145,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
       {
         question: { da: "Hvad med licenserne?", en: "What about the licences?" },
         answer: {
-          da: "Har I egne licensaftaler eller et image, I ruller ud, bruger vi dem. Ellers hjælper vi med at få licenserne på plads, så maskinerne kører lovligt fra dag 1.",
-          en: "If you have your own licence agreements or an image you roll out, we use those. Otherwise we help get the licences in place so the machines run legally from day 1.",
+          da: "Har I egne licensaftaler eller et image, I ruller ud, bruger vi dem. Ellers hjælper vi med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
+          en: "If you have your own licence agreements or an image you roll out, we use those. Otherwise we help get the licences in place so the machines run legally from day one.",
         },
       },
     ],
@@ -155,14 +155,14 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   levering: {
     lead: {
-      da: "Levering er én samlet leverance til 1 eller flere adresser i Danmark og Norge, med en tidsramme, der står skriftligt i tilbuddet, før I bestiller noget.",
-      en: "Delivery is one consignment to 1 or more addresses in Denmark and Norway, with a time frame that is in the quote, in writing, before you order anything.",
+      da: "Levering er én samlet leverance til én eller flere adresser i Danmark og Norge, med en tidsramme, der står skriftligt i tilbuddet, før I bestiller noget.",
+      en: "Delivery is one consignment to one or more addresses in Denmark and Norway, with a time frame that is in the quote, in writing, before you order anything.",
     },
     faqs: [
       {
         question: { da: "Hvor lang er leveringstiden?", en: "How long is the lead time?" },
         answer: {
-          da: "Det afhænger af den konkrete bestilling, fordi vi sourcer per ordre og ikke sælger fra et lager. Vi lover ikke en fast leveringstid på forhånd – tidsrammen står i tilbuddet sammen med pris og stand.",
+          da: "Det afhænger af den konkrete bestilling, fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager. Vi lover ikke en fast leveringstid på forhånd – tidsrammen står i tilbuddet sammen med pris og stand.",
           en: "It depends on the specific order, because we source per order rather than selling from stock. We do not promise a fixed lead time up front — the time frame is in the quote, with the price and condition.",
         },
       },
@@ -179,8 +179,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
           en: "Can you take the old machines back?",
         },
         answer: {
-          da: "Ja. Vi køber brugte erhvervsmaskiner og henter dem, og det kan aftales sammen med leverancen. Lagermedierne slettes, før enhederne klargøres til videresalg – NIST skelner mellem 3 niveauer af sletning, Clear, Purge og Destroy, så sig til, hvis I skal bruge dokumentation.",
-          en: "Yes. We buy used business machines and collect them, and that can be agreed alongside the delivery. The storage is erased before the devices are prepared for resale — NIST distinguishes 3 levels of erasure, Clear, Purge and Destroy, so say if you need documentation.",
+          da: "Ja. Vi køber brugte erhvervsmaskiner og henter dem, og det kan aftales sammen med leverancen. Lagermedierne slettes, før enhederne klargøres til videresalg – sig til, hvis I skal bruge dokumentation for sletningen.",
+          en: "Yes. We buy used business machines and collect them, and that can be agreed alongside the delivery. The storage is erased before the devices are prepared for resale — say if you need documentation of the erasure.",
         },
       },
     ],
@@ -189,8 +189,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "overskudslager-og-returvarer": {
     lead: {
-      da: "Overskudslager er 4 slags udstyr, der aldrig nåede en kunde: returvarer, demoenheder, varer fra aflyste ordrer og modeller udfaset midt i et indkøb. Det taber værdi hver måned, det står stille, så vi finder køberne for jer.",
-      en: "Surplus stock is 4 kinds of equipment that never reached a customer: returns, demo units, goods from cancelled orders and models discontinued mid-purchase. It loses value every month it sits still, so we find the buyers for you.",
+      da: "Overskudslager er fire slags udstyr, der aldrig nåede en kunde: returvarer, demoenheder, varer fra aflyste ordrer og modeller udfaset midt i et indkøb. Det taber værdi hver måned, det står stille, så vi finder køberne for jer.",
+      en: "Surplus stock is four kinds of equipment that never reached a customer: returns, demo units, goods from cancelled orders and models discontinued mid-purchase. It loses value every month it sits still, so we find the buyers for you.",
     },
     faqs: [
       {
@@ -217,8 +217,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "opstart-af-arbejdspladser": {
     lead: {
-      da: "En komplet arbejdsplads er 4 dele – maskine, skærm, dockingstation og tastatur – sat op ens hver gang og leveret samlet til datoen, så alt virker den første morgen.",
-      en: "A complete workstation is 4 parts — machine, monitor, docking station and keyboard — set up the same way every time and delivered together for the date, so everything works on the first morning.",
+      da: "En komplet arbejdsplads er fire dele – maskine, skærm, dockingstation og tastatur – sat op ens hver gang og leveret samlet til datoen, så alt virker den første morgen.",
+      en: "A complete workstation is four parts — machine, monitor, docking station and keyboard — set up the same way every time and delivered together for the date, so everything works on the first morning.",
     },
     faqs: [
       {

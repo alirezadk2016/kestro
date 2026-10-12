@@ -21,7 +21,7 @@ const copy = {
     title: "Sælg jeres brugte IT-udstyr",
     /* Answer first: yes, what, and what happens to the data. */
     description:
-      "Ja, vi køber brugte erhvervscomputere, telefoner og tablets fra virksomheder i Danmark og Norge. Vi henter dem, sletter lagermedierne og giver dem et nyt liv – og I får en vurdering, før I beslutter jer.",
+      "Vi køber brugte erhvervscomputere, telefoner og tablets fra virksomheder i Danmark og Norge. Vi henter dem, sletter lagermedierne og giver dem et nyt liv – og I får en vurdering, før I beslutter jer.",
     howTitle: "Hvordan foregår et salg?",
     buyTitle: "Hvad køber I?",
     buyNote: "Er I i tvivl, om jeres udstyr er relevant? Spørg os – vi kigger gerne på det.",
@@ -46,7 +46,7 @@ const copy = {
       "Replacing your company IT? Kestro buys used business computers, phones and tablets — with documented data erasure and collection in Denmark and Norway.",
     title: "Sell us your used IT equipment",
     description:
-      "Yes, we buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",
+      "We buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",
     howTitle: "How does a sale work?",
     buyTitle: "What do you buy?",
     buyNote: "Not sure whether your equipment is relevant? Ask us — we are happy to look at it.",
@@ -92,7 +92,7 @@ const steps = [
     mark: "written" as CraftMarkName,
     title: { da: "1. Send os en liste", en: "1. Send us a list" },
     description: {
-      da: "Fortæl os hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
+      da: "Fortæl os, hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
       en: "Tell us what you have — quantity, models and rough age. The more precise, the faster we can assess it.",
     },
   },

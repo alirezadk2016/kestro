@@ -8,6 +8,7 @@ import ExampleMachine from "@/components/ExampleMachine";
 import TrustStrip from "@/components/TrustStrip";
 import type { Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 /*
  * The front page is the one route a junk first segment can still reach.
@@ -44,6 +45,10 @@ export default async function Home(props: { params: Promise<{ lang: Lang }> }) {
       <QualifySection lang={lang} />
       <Services lang={lang} />
       <ExampleMachine lang={lang} />
+      {/* The source behind the Windows answer, in the same folded line the
+          other pages close on. It was only a link inside a closed answer,
+          so the page cited nothing a reader or a crawler could see. */}
+      <FactNote lang={lang} ids={["windows10Eol"]} />
       <TrustStrip lang={lang} />
     </>
   );

@@ -12,7 +12,7 @@ import { models, getModel } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
-import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, type Lang, lowerFirst } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
@@ -52,7 +52,7 @@ const copy = {
       "Billederne viser modeltypen. Stand, specifikationer og antal aftales for den enkelte ordre.",
     configTitle: "Typisk konfiguration",
     configBody:
-      "Brugt hardware findes i mange sammensætninger. Tallene her viser, hvad modellen som regel er bygget i – den præcise konfiguration aftaler vi for jeres ordre.",
+      "Brugt hardware findes i mange sammensætninger. Tallene her viser, hvad modellen som regel er bygget med – den præcise konfiguration aftaler vi for jeres ordre.",
     goodFor: "God til",
     watchOut: "Vær opmærksom på",
     whyTitle: "Derfor peger vi ofte på denne model",
@@ -344,7 +344,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   href={localePath(`/produkter/${category.slug}`, lang)}
                   className="font-semibold text-brand-300 hover:text-paper"
                 >
-                  {category.name[lang].toLowerCase()}
+                  {lowerFirst(category.name[lang])}
                 </Link>
                 .
               </p>

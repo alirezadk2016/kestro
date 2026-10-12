@@ -29,7 +29,7 @@ const copy = {
     capabilitiesTitle: "Det, større indkøb kræver",
     scaleTitle: "Ti, halvtreds og to hundrede maskiner er tre forskellige opgaver",
     scaleLead:
-      "Antallet ændrer ikke bare prisen – det ændrer, hvordan indkøbet skal gribes an. Vi holder ikke lager, men skaffer maskinerne per ordre i vores leverandørnetværk, og det er dér, forskellen mellem ti og to hundrede enheder viser sig først.",
+      "Antallet ændrer ikke bare prisen – det ændrer, hvordan indkøbet skal gribes an. Vi holder ikke lager, men skaffer maskinerne til hver ordre i vores leverandørnetværk, og det er dér, forskellen mellem ti og to hundrede enheder viser sig først.",
     scaleClose:
       "Prisen per enhed følger ikke antallet alene. Den afhænger af model, stand, specifikation og hvad der er tilgængeligt, når I spørger.",
     scaleCloseLink: "Hvad der afgør prisen",
@@ -46,7 +46,7 @@ const copy = {
     faqTitle: "Spørgsmål om større ordrer",
     ctaTitle: "Skal vi regne på jeres flåde?",
     ctaBody:
-      "Ring, eller send en forespørgsel med antal og ønsket specifikation – så vender vi tilbage med, hvad vi kan skaffe.",
+      "Send en forespørgsel med antal og ønsket specifikation, så vender vi tilbage med, hvad vi kan skaffe.",
     ctaButton: "Send forespørgsel",
   },
   en: {
@@ -79,7 +79,7 @@ const copy = {
     faqTitle: "Questions about larger orders",
     ctaTitle: "Shall we price up your fleet?",
     ctaBody:
-      "Call, or send an enquiry with quantity and the specification you want — and we will come back with what we can source.",
+      "Send an enquiry with quantity and the specification you want, and we will come back with what we can source.",
     ctaButton: "Send enquiry",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -126,7 +126,7 @@ const capabilities = [
       en: "From a single team to the whole company",
     },
     description: {
-      da: "Om det er ti maskiner til et nyt team eller udskiftning af hele medarbejderflåden, tilpasser vi sourcingen til antallet. Fortæl os omfanget, så vender vi tilbage med, hvad vi kan skaffe.",
+      da: "Om det er ti maskiner til et nyt team eller udskiftning af hele medarbejderflåden, tilpasser vi indkøbet til antallet. Fortæl os omfanget, så vender vi tilbage med, hvad vi kan skaffe.",
       en: "Whether it is ten machines for a new team or replacing the entire staff fleet, we scale the sourcing to the quantity. Tell us the scope and we will come back with what we can get.",
     },
   },
@@ -142,10 +142,10 @@ const capabilities = [
     mark: "nordic" as CraftMarkName,
     title: {
       da: "Nordisk tastatur i hele leverancen",
-      en: "A Nordic keyboard across the delivery",
+      en: "Danish or Norwegian keyboards across the delivery",
     },
     description: {
-      da: "Importerede maskiner får skiftet tastatur til dansk/nordisk layout, så medarbejderne ikke skal lede efter æ, ø og å på maskiner købt i udlandet.",
+      da: "Importerede maskiner får skiftet tastatur til dansk eller norsk layout, så medarbejderne ikke skal lede efter æ, ø og å på maskiner købt i udlandet.",
       en: "Imported machines get their keyboard changed to a Danish or Norwegian layout, so nobody has to hunt for æ, ø and å on a machine bought abroad.",
     },
   },
@@ -191,16 +191,16 @@ const scaleTiers = [
     },
   },
   {
-    range: { da: "Omkring 20–50 enheder", en: "Around 20–50 units" },
+    range: { da: "Omkring 10–50 enheder", en: "Around 10–50 units" },
     body: {
       da: "Her begynder ensartetheden at koste noget. Et parti på halvtreds ens maskiner med samme byggeår findes ikke altid, og så står valget mellem at vente, at betale mere, eller at acceptere to nært beslægtede modeller. Vi siger, hvad der reelt kan skaffes, før I binder jer. Samtidig bliver listen over serienumre og den gamle flåde en opgave i sig selv.",
       en: "This is where uniformity starts to cost something. A batch of fifty identical machines from the same build year is not always out there, and the choice becomes: wait, pay more, or accept two closely related models. We tell you what can actually be sourced before you commit. At the same time, the serial-number list and the old fleet turn into a job of their own.",
     },
   },
   {
-    range: { da: "50-200+ enheder", en: "50-200+ units" },
+    range: { da: "50–200+ enheder", en: "50–200+ units" },
     body: {
-      da: "Et indkøb i den størrelse løber typisk over flere leverandører og over tid, og leverancen deles næsten altid op i hold. Konfigurationen skal låses tidligt – ændrer den sig undervejs, begynder sourcingen forfra på resten. Til gengæld er det her, en fast aftalt opsætning tjener sig hjem: support på to hundrede ens maskiner er en anden opgave end support på to hundrede forskellige.",
+      da: "Et indkøb i den størrelse løber typisk over flere leverandører og over tid, og leverancen deles næsten altid op i hold. Konfigurationen skal låses tidligt – ændrer den sig undervejs, begynder indkøbet forfra for resten. Til gengæld er det her, en fast aftalt opsætning tjener sig hjem: support på to hundrede ens maskiner er en anden opgave end support på to hundrede forskellige.",
       en: "A purchase that size usually runs across several suppliers and over time, and the delivery is nearly always split into batches. The configuration has to be locked early — change it midway and sourcing starts again on whatever is left. In return, this is where an agreed setup pays for itself: supporting two hundred identical machines is a different job from supporting two hundred different ones.",
     },
   },
@@ -223,10 +223,10 @@ const rolloutPhases = [
     },
   },
   {
-    when: { da: "Uge 1-2 · Sourcing og tilbud", en: "Week 1-2 · Sourcing and quote" },
+    when: { da: "Uge 1–2 · Sourcing og tilbud", en: "Week 1–2 · Sourcing and quote" },
     body: {
-      da: "Vi søger i leverandørnetværket og vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris per enhed og leveringstid. Kan specifikationen ikke fyldes i det antal, siger vi det og foreslår det nærmeste alternativ i stedet for at love noget, der ikke findes.",
-      en: "We search the supplier network and come back with what can actually be sourced: model, condition, quantity, price per unit and delivery time. If the specification cannot be filled at that quantity, we say so and propose the closest alternative rather than promising something that is not there.",
+      da: "Vi søger i leverandørnetværket og vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris per enhed og leveringstid. Kan specifikationen ikke skaffes i det antal, siger vi det og foreslår det nærmeste alternativ i stedet for at love noget, der ikke findes.",
+      en: "We search the supplier network and come back with what can actually be sourced: model, condition, quantity, price per unit and delivery time. If the specification cannot be sourced at that quantity, we say so and propose the closest alternative rather than promising something that is not there.",
     },
     link: {
       href: "/ydelser/sourcing-og-indkoeb",
@@ -236,8 +236,8 @@ const rolloutPhases = [
   {
     when: { da: "Efter accept · Klargøring", en: "After acceptance · Preparation" },
     body: {
-      da: "Vi tester og klargør maskinerne: RAM og lagring bringes op på det aftalte, Windows, drivere og sprogopsætning kommer på plads, og tastaturerne skiftes til nordisk layout. Skal I bruge en liste over serienumre til jeres aktivregister, aftaler vi det her – ikke efter levering.",
-      en: "We test and prepare the machines: memory and storage are brought up to what was agreed, Windows, drivers and language settings are put in place, and the keyboards are changed to a Nordic layout. If you need a serial-number list for your asset register, we agree that here — not after delivery.",
+      da: "Vi tester og klargør maskinerne: RAM og lagring bringes op på det aftalte, Windows, drivere og sprogopsætning kommer på plads, og tastaturerne skiftes til dansk eller norsk layout. Skal I bruge en liste over serienumre til jeres aktivregister, aftaler vi det her – ikke efter levering.",
+      en: "We test and prepare the machines: memory and storage are brought up to what was agreed, Windows, drivers and language settings are put in place, and the keyboards are changed to a Danish or Norwegian layout. If you need a serial-number list for your asset register, we agree that here — not after delivery.",
     },
     link: {
       href: "/ydelser/klargoering-og-test",
@@ -296,8 +296,8 @@ const tradeInSteps = [
   {
     title: { da: "Levering af den nye flåde", en: "Delivery of the new fleet" },
     description: {
-      da: "De nye maskiner leveres testet og klargjort med dansk/nordisk tastatur, klar til udlevering.",
-      en: "The new machines arrive tested and prepared with a Nordic keyboard, ready to hand out.",
+      da: "De nye maskiner leveres testet og klargjort med dansk eller norsk tastatur, klar til udlevering.",
+      en: "The new machines arrive tested and prepared with a Danish or Norwegian keyboard, ready to hand out.",
     },
   },
 ];
@@ -306,7 +306,7 @@ const enterpriseFaqs = [
   {
     question: { da: "Hvor mange enheder kan I levere?", en: "How many machines can you deliver?" },
     answer: {
-      da: "Vi sourcer til den enkelte ordre frem for at sælge fra et fast lager, så antallet afhænger af, hvad der kan skaffes til den ønskede specifikation og tidsramme. Fortæl os omfanget, så melder vi konkret tilbage på, hvad vi kan levere og hvornår.",
+      da: "Vi skaffer maskinerne til den enkelte ordre frem for at sælge fra et fast lager, så antallet afhænger af, hvad der kan skaffes til den ønskede specifikation og tidsramme. Fortæl os omfanget, så melder vi konkret tilbage på, hvad vi kan levere og hvornår.",
       en: "We source per order rather than selling from fixed stock, so the number depends on what can be found at the specification and timing you want. Tell us the scope and we come back concretely on what we can deliver and when.",
     },
   },
@@ -316,7 +316,7 @@ const enterpriseFaqs = [
       en: "Can we get the same model for everyone?",
     },
     answer: {
-      da: "Ja, det er typisk det, større kunder ønsker. Vi går efter én konfiguration i hele leverancen, så support og udrulning bliver enklere. Er en enkelt model ikke tilgængelig i det antal, foreslår vi nærmeste alternativ, før vi går videre.",
+      da: "Ja, det er typisk det, større kunder ønsker. Vi går efter én konfiguration i hele leverancen, så support og udrulning bliver enklere. Er en enkelt model ikke tilgængelig i det antal, foreslår vi det nærmeste alternativ, før vi går videre.",
       en: "Yes, and it is usually what larger customers want. We aim for one configuration across the delivery, which makes support and rollout simpler. If a single model is not available in that quantity, we propose the closest alternative before going ahead.",
     },
   },
@@ -376,7 +376,7 @@ const enterpriseFaqs = [
       en: "What happens if the requirement changes along the way?",
     },
     answer: {
-      da: "Sig til så tidligt som muligt. Er sourcingen ikke afsluttet, kan vi som regel justere antal eller specifikation undervejs. Er en del af leverancen allerede skaffet, gælder ændringen den resterende del – og vi siger klart, hvad der kan nås, og hvad der ikke kan.",
+      da: "Sig til så tidligt som muligt. Er indkøbet ikke afsluttet, kan vi som regel justere antal eller specifikation undervejs. Er en del af leverancen allerede skaffet, gælder ændringen den resterende del – og vi siger klart, hvad der kan nås, og hvad der ikke kan.",
       en: "Tell us as early as you can. If the sourcing is not finished, we can usually adjust quantity or specification along the way. If part of the delivery has already been sourced, the change applies to what is left — and we say clearly what can still be done and what cannot.",
     },
   },

@@ -28,12 +28,12 @@ type Status = "idle" | "sending" | "sent" | "error" | "unavailable";
 const copy = {
   da: {
     name: "Navn",
-    namePlaceholder: "Dit fulde navn",
+    namePlaceholder: "Fulde navn",
     company: "Virksomhed",
     companyPlaceholder: "Firmanavn",
     optional: "(valgfrit)",
-    email: "Email",
-    emailPlaceholder: "dig@virksomhed.dk",
+    email: "E-mail",
+    emailPlaceholder: "navn@virksomhed.dk",
     phone: "Telefon",
     phonePlaceholder: "+45 12 34 56 78",
     message: "Besked",
@@ -56,10 +56,13 @@ const copy = {
     quantityLegend: "Hvor mange maskiner?",
     quantityHelp: "Vælg det nærmeste – tallet må gerne ændre sig undervejs.",
     equipment: "Udstyr eller model",
-    equipmentPlaceholder: "Fx bærbare til kontorbrug, eller ThinkPad T14",
+    equipmentPlaceholder: "Fx bærbare til kontorbrug eller ThinkPad T14",
     ram: "Hukommelse",
     storage: "Lagerplads",
     keyboard: "Tastatur",
+    keyboardDa: "Dansk",
+    keyboardNo: "Norsk",
+    keyboardEn: "Engelsk (UK/US)",
     deadline: "Hvornår skal det stå klar?",
     deadlinePlaceholder: "Fx inden udgangen af oktober",
     dontKnow: "Ved ikke endnu",
@@ -109,6 +112,9 @@ const copy = {
     ram: "Memory",
     storage: "Storage",
     keyboard: "Keyboard",
+    keyboardDa: "Danish",
+    keyboardNo: "Norwegian",
+    keyboardEn: "English (UK/US)",
     deadline: "When does it need to be ready?",
     deadlinePlaceholder: "E.g. before the end of October",
     dontKnow: "Not sure yet",
@@ -511,7 +517,7 @@ export default function ContactForm({
               </label>
             ))}
           </div>
-          <p className="mt-2 text-xs leading-[1.45] text-paper/65">{c.quantityHelp}</p>
+          <p className="mt-2 text-sm leading-[1.5] text-paper/75">{c.quantityHelp}</p>
         </fieldset>
       )}
 
@@ -654,9 +660,11 @@ export default function ContactForm({
               className={inputClasses}
             >
               <option value="">{c.dontKnow}</option>
-              <option value="Dansk">Dansk</option>
-              <option value="Norsk">Norsk</option>
-              <option value="Engelsk (UK/US)">Engelsk (UK/US)</option>
+              {/* The value is what lands in the enquiry, which is read in
+                  Danish; the label is in the reader's language. */}
+              <option value="Dansk">{c.keyboardDa}</option>
+              <option value="Norsk">{c.keyboardNo}</option>
+              <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
             </select>
           </div>
 
@@ -727,7 +735,7 @@ export default function ContactForm({
           {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
         </button>
 
-        <p className="mt-3 text-xs leading-[1.45] text-paper/65">
+        <p className="mt-3 text-sm leading-[1.5] text-paper/75">
           {c.privacy}{" "}
           <Link
             href={localePath("/privatlivspolitik", lang)}

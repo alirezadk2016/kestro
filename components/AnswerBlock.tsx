@@ -95,8 +95,8 @@ const faqs: FaqEntry[] = [
   {
     question: { da: "Hvilket tastatur har maskinerne?", en: "What keyboard do the machines have?" },
     answer: {
-      da: "Dansk eller norsk. Mange af maskinerne kommer fra Sydeuropa med spansk eller italiensk tastatur, og det skifter vi fysisk før levering, så æ, ø og å er trykt på tasterne – det er ikke bare en indstilling i Windows.",
-      en: "Danish or Norwegian. Many of the machines come from southern Europe with a Spanish or Italian keyboard, and we physically swap it before delivery, so æ, ø and å are printed on the keys — it is not just a Windows setting.",
+      da: "Dansk eller norsk. Mange af maskinerne kommer fra Sydeuropa med spansk eller italiensk tastatur. Vi skifter det fysisk før levering, så æ, ø og å er trykt på tasterne – det er ikke bare en indstilling i Windows.",
+      en: "Danish or Norwegian. Many of the machines come from southern Europe with a Spanish or Italian keyboard. We physically swap it before delivery, so æ, ø and å are printed on the keys — it is not just a Windows setting.",
     },
   },
   {
@@ -109,8 +109,8 @@ const faqs: FaqEntry[] = [
   {
     question: { da: "Er der et minimumsantal?", en: "Is there a minimum order?" },
     answer: {
-      da: "Nej. Vi leverer alt fra enkelte maskiner til indkøb til hele teams og virksomheder.",
-      en: "No. We deliver anything from single machines to purchases for whole teams and companies.",
+      da: "Nej. Vi leverer alt fra en enkelt maskine til udstyr til hele teams og virksomheder.",
+      en: "No. We deliver anything from a single machine to equipment for whole teams and companies.",
     },
   },
   {
@@ -216,7 +216,7 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
                             target="_blank"
                             className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
                           >
-                            {win10.publisher}
+                            <cite className="not-italic">{win10.publisher}</cite>
                           </a>
                         </p>
                       )}

@@ -17,17 +17,17 @@ const copy = {
   da: {
     metaTitle: "Kontakt os i Aarhus | Kestro",
     metaDescription:
-      "Skriv til os om et indkøb, en flåde eller udstyr, I skal af med. Vi svarer inden for én arbejdsdag – og vi sælger ikke til jer i mellemtiden.",
+      "Skriv til os om et indkøb, en flåde eller udstyr, I skal af med. Vi svarer inden for én arbejdsdag – uforpligtende og uden salgstale.",
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
-    description: `Skriv via formularen herunder eller direkte til ${company.email}. I får svar inden for 1 arbejdsdag fra den, der skriver tilbuddet. Vi leverer i Danmark og Norge, og der er intet minimumsantal.`,
-    emailTitle: "Foretrækker du email?",
+    description: `Skriv via formularen herunder eller direkte til ${company.email}. I får svar inden for én arbejdsdag fra den, der skriver tilbuddet. Vi leverer i Danmark og Norge, og der er intet minimumsantal.`,
+    emailTitle: "Foretrækker I e-mail?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
     companyTitle: "Virksomhedsoplysninger",
     fieldCompany: "Virksomhed",
     fieldPhone: "Telefon",
-    fieldEmail: "Email",
+    fieldEmail: "E-mail",
     fieldAddress: "Adresse",
     fieldServes: "Leverer i",
     fieldCvr: "CVR",
@@ -48,9 +48,9 @@ const copy = {
   en: {
     metaTitle: "Contact us in Aarhus | Kestro",
     metaDescription:
-      "Write to us about a purchase, a fleet, or equipment you need to move on. We reply within one working day, and we do not chase you in between.",
+      "Write to us about a purchase, a fleet, or equipment you need to move on. We reply within one working day — no obligation and no sales pitch.",
     title: "Contact us",
-    description: `Write through the form below or directly to ${company.email}. You get a reply within 1 working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
+    description: `Write through the form below or directly to ${company.email}. You get a reply within one working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
     companyTitle: "Company details",
@@ -97,8 +97,8 @@ const contactFaqs: FaqItem[] = [
       en: "Is there a minimum number of devices?",
     },
     answer: {
-      da: "Nej. Vi leverer fra en enkelt maskine til indkøb til hele teams og virksomheder i Danmark og Norge.",
-      en: "No. We deliver anything from a single machine to purchases for whole teams and companies in Denmark and Norway.",
+      da: "Nej. Vi leverer alt fra en enkelt maskine til udstyr til hele teams og virksomheder i Danmark og Norge.",
+      en: "No. We deliver anything from a single machine to equipment for whole teams and companies in Denmark and Norway.",
     },
   },
   {
@@ -107,7 +107,7 @@ const contactFaqs: FaqItem[] = [
       en: "We still run Windows 10 — what should we write?",
     },
     answer: {
-      da: "Antal maskiner og modelnavne. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og om en maskine kan opgraderes til Windows 11, afgøres bl.a. af TPM 2.0 og Secure Boot. Med listen kan vi sige, hvilke maskiner der kan opgraderes, og hvilke der bedre kan betale sig at skifte. Computerne på vores modelsider leveres med Windows 11 installeret.",
+      da: "Antal maskiner og modelnavne. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og om en maskine kan opgraderes til Windows 11, afgøres bl.a. af TPM 2.0 og Secure Boot. Med listen kan vi sige, hvilke maskiner der kan opgraderes, og hvilke det bedre kan betale sig at skifte. Computerne på vores modelsider leveres med Windows 11 installeret.",
       en: "The number of machines and their model names. According to Microsoft, Windows 10 support ended on 14 October 2025, and whether a machine can move to Windows 11 is decided by TPM 2.0 and Secure Boot among other things. With the list we can tell you which machines can be upgraded and which are better replaced. The computers on our model pages are delivered with Windows 11 installed.",
     },
   },
@@ -117,14 +117,14 @@ const contactFaqs: FaqItem[] = [
       en: "We have old machines to move on — what happens to the data?",
     },
     answer: {
-      da: "Lagermedierne slettes, før enhederne klargøres til videresalg. Skal I bruge dokumentation for sletningen til jeres egne GDPR-procedurer, så skriv det i beskeden. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer af sletning – Clear, Purge og Destroy – og det er en god idé at aftale, hvilket I har brug for.",
-      en: "The storage is erased before the devices are prepared for resale. If you need documentation of the erasure for your own GDPR procedures, say so in the message. NIST, the US standards body, distinguishes three levels of erasure — Clear, Purge and Destroy — and it is worth agreeing which one you need.",
+      da: "Lagermedierne slettes, før enhederne klargøres til videresalg. Skal I bruge dokumentation for sletningen til jeres egne GDPR-procedurer, så skriv det i beskeden. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Det er en god idé at aftale, hvilket I har brug for.",
+      en: "The storage is erased before the devices are prepared for resale. If you need documentation of the erasure for your own GDPR procedures, say so in the message. NIST, the US standards body, distinguishes three levels: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). It is worth agreeing which one you need.",
     },
   },
   {
     question: {
-      da: "Hvad sker der med de oplysninger, jeg sender?",
-      en: "What happens to the details I send?",
+      da: "Hvad sker der med de oplysninger, vi sender?",
+      en: "What happens to the details we send?",
     },
     answer: {
       da: "De bruges til at besvare henvendelsen og til at indgå eller opfylde en aftale med jer – databeskyttelsesforordningens artikel 6, stk. 1, litra b. Korrespondance gemmes, så længe dialogen eller kundeforholdet kræver det; bilag efter bogføringsloven i fem år. I kan altid bede om indsigt, rettelse eller sletning, og I kan klage til Datatilsynet.",

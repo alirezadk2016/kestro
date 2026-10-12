@@ -158,8 +158,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "2× USB 3.0, USB-C og Thunderbolt 3 (begge med opladning og skærmudgang), HDMI, dockstik, Gigabit-netværk, kortlæser og combo-jack",
-          en: "2× USB 3.0, USB-C and Thunderbolt 3 (both with charging and display output), HDMI, dock connector, Gigabit Ethernet, card reader and combo jack",
+          da: "2× USB 3.0, USB-C og Thunderbolt 3 (begge med opladning og skærmudgang), HDMI, dockstik, Gigabit-netværk, kortlæser og kombineret lydstik",
+          en: "2× USB 3.0, USB-C and Thunderbolt 3 (both with charging and display output), HDMI, dock connector, Gigabit Ethernet, card reader and headset jack",
         },
       },
       {
@@ -176,7 +176,7 @@ export const models: Model[] = [
       {
         label: { da: "Tastatur", en: "Keyboard" },
         value: {
-          da: "Fuldt tastatur med trackpoint og fingeraftrykslæser – baggrundslys som tilvalg, layout kan skiftes til dansk eller norsk",
+          da: "Fuldt tastatur med TrackPoint og fingeraftrykslæser – baggrundslys som tilvalg, layout kan skiftes til dansk eller norsk",
           en: "Full keyboard with TrackPoint and fingerprint reader — backlight optional, layout can be changed to Danish or Norwegian",
         },
       },
@@ -229,8 +229,8 @@ export const models: Model[] = [
       },
       {
         title: {
-          da: "Tastaturet kan skiftes til nordisk layout",
-          en: "The keyboard can be changed to a Nordic layout",
+          da: "Tastaturet kan skiftes til dansk eller norsk layout",
+          en: "The keyboard can be changed to a Danish or Norwegian layout",
         },
         description: {
           da: "Derfor kan vi levere sydeuropæiske maskiner med dansk eller norsk tastatur, uden at det ser eftermonteret ud.",
@@ -268,7 +268,7 @@ export const models: Model[] = [
       {
         src: "/thinkpad-t480-7.jpg",
         alt: {
-          da: "Tastaturet på ThinkPad T480 set oppefra med trackpoint og fingeraftrykslæser",
+          da: "Tastaturet på ThinkPad T480 set oppefra med TrackPoint og fingeraftrykslæser",
           en: "The ThinkPad T480 keyboard from above, with TrackPoint and fingerprint reader",
         },
       },
@@ -289,7 +289,7 @@ export const models: Model[] = [
       {
         src: "/thinkpad-t480-3.jpg",
         alt: {
-          da: "ThinkPad T480 set skråt oppefra med tastatur og trackpoint",
+          da: "ThinkPad T480 set skråt oppefra med tastatur og TrackPoint",
           en: "ThinkPad T480 from above at an angle, showing keyboard and TrackPoint",
         },
       },
@@ -334,7 +334,7 @@ export const models: Model[] = [
     },
     goodFor: [
       {
-        da: "Virksomheder, der vil et par generationer nyere end T480",
+        da: "Virksomheder, der vil have en maskine et par generationer nyere end T480",
         en: "Companies that want a couple of generations newer than the T480",
       },
       {
@@ -392,8 +392,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, kortlæser og combo-jack",
-          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, card reader and combo jack",
+          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, kortlæser og kombineret lydstik",
+          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, card reader and headset jack",
         },
       },
       {
@@ -403,8 +403,8 @@ export const models: Model[] = [
       {
         label: { da: "Tastatur", en: "Keyboard" },
         value: {
-          da: "Fuldt tastatur med trackpoint og fingeraftrykslæser – layout kan skiftes til nordisk",
-          en: "Full keyboard with TrackPoint and fingerprint reader — layout can be changed to Nordic",
+          da: "Fuldt tastatur med TrackPoint og fingeraftrykslæser – layout kan skiftes til dansk eller norsk",
+          en: "Full keyboard with TrackPoint and fingerprint reader — layout can be changed to Danish or Norwegian",
         },
       },
       {
@@ -417,7 +417,7 @@ export const models: Model[] = [
     ],
     notes: [
       {
-        da: "AMD-modellerne giver flere kerner for pengene. Intel-modellerne har Thunderbolt og dermed flere dockingmuligheder – vælg efter hvilke docks I allerede har.",
+        da: "AMD-modellerne giver flere kerner for pengene. Intel-modellerne har Thunderbolt og dermed flere dockingmuligheder – vælg efter, hvilke docks I allerede har.",
         en: "The AMD models give you more cores for the money. The Intel models have Thunderbolt and therefore more docking options — choose based on the docks you already own.",
       },
       {
@@ -446,7 +446,7 @@ export const models: Model[] = [
       en: "The ThinkPad X1 Carbon as a used business laptop: light chassis, strong screen, and what to know about soldered memory. Sourced for your order.",
     },
     intro: {
-      da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
+      da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem, der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
       en: "The X1 Carbon is the ThinkPad line cut down to just over a kilo without giving up the keyboard or the screen. It is for sales people, consultants and management — those who have the machine in a bag every week. In return, it is less flexible than the T series, and that belongs in the decision.",
     },
     goodFor: [
@@ -499,8 +499,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "2× Thunderbolt 3, 2× USB-A, HDMI og combo-jack",
-          en: "2× Thunderbolt 3, 2× USB-A, HDMI and combo jack",
+          da: "2× Thunderbolt 3, 2× USB-A, HDMI og kombineret lydstik",
+          en: "2× Thunderbolt 3, 2× USB-A, HDMI and headset jack",
         },
       },
       {
@@ -593,15 +593,15 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk og combo-jack",
-          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet and combo jack",
+          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk og kombineret lydstik",
+          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet and headset jack",
         },
       },
       {
         label: { da: "Tastatur", en: "Keyboard" },
         value: {
-          da: "Fuldt ThinkPad-tastatur med trackpoint – layout kan skiftes til nordisk",
-          en: "Full ThinkPad keyboard with TrackPoint — layout can be changed to Nordic",
+          da: "Fuldt ThinkPad-tastatur med TrackPoint – layout kan skiftes til dansk eller norsk",
+          en: "Full ThinkPad keyboard with TrackPoint — layout can be changed to Danish or Norwegian",
         },
       },
       {
@@ -618,7 +618,7 @@ export const models: Model[] = [
         en: "The shell is plastic rather than the magnesium used in the T series. It handles normal office use fine, but it is not built for the same wear.",
       },
       {
-        da: "Lidt tungere end en T14 – mærkes hvis maskinen skal med i tasken hver dag.",
+        da: "Lidt tungere end en T14 – mærkes, hvis maskinen skal med i tasken hver dag.",
         en: "A little heavier than a T14 — noticeable if the machine goes in a bag every day.",
       },
     ],
@@ -643,7 +643,7 @@ export const models: Model[] = [
       en: "The HP EliteBook 840 (G5 and G6) as a used business laptop: specifications, memory in two slots, and what Sure View means. Sourced for your order.",
     },
     intro: {
-      da: "EliteBook 840 er en af de mest udbredte erhvervsbærbare i Europa, og netop derfor er den nem at skaffe i antal og til en fornuftig pris. Den har to hukommelsessokler, hvilket gør den billig at opgradere, og et fladt kabinet der fylder lidt mindre i tasken end T-serien.",
+      da: "EliteBook 840 er en af de mest udbredte erhvervsbærbare i Europa, og netop derfor er den nem at skaffe i antal og til en fornuftig pris. Den har to hukommelsessokler, hvilket gør den billig at opgradere, og et fladt kabinet, der fylder lidt mindre i tasken end T-serien.",
       en: "The EliteBook 840 is one of the most common business laptops in Europe, which is exactly why it is easy to source in numbers at a sensible price. It has two memory slots, which makes it cheap to upgrade, and a flat chassis that takes slightly less room in a bag than the T series.",
     },
     goodFor: [
@@ -696,8 +696,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "2× USB-A, USB-C, HDMI, Gigabit-netværk og combo-jack",
-          en: "2× USB-A, USB-C, HDMI, Gigabit Ethernet and combo jack",
+          da: "2× USB-A, USB-C, HDMI, Gigabit-netværk og kombineret lydstik",
+          en: "2× USB-A, USB-C, HDMI, Gigabit Ethernet and headset jack",
         },
       },
       {
@@ -718,7 +718,7 @@ export const models: Model[] = [
         en: "Some models have Sure View, a built-in privacy filter. Good on a train, but it makes the screen darker in the office — choose deliberately.",
       },
       {
-        da: "Tastaturet har ikke trackpoint. Kommer medarbejderne fra ThinkPad, er det den største omstilling.",
+        da: "Tastaturet har ikke TrackPoint. Kommer medarbejderne fra ThinkPad, er det den største omstilling.",
         en: "The keyboard has no TrackPoint. If your staff are coming from ThinkPads, that is the biggest adjustment.",
       },
     ],
@@ -790,15 +790,15 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk og combo-jack",
-          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet and combo jack",
+          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk og kombineret lydstik",
+          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet and headset jack",
         },
       },
       {
         label: { da: "Tastatur", en: "Keyboard" },
         value: {
-          da: "Fuldt tastatur med numerisk del – layout kan skiftes til nordisk",
-          en: "Full keyboard with number pad — layout can be changed to Nordic",
+          da: "Fuldt tastatur med numerisk del – layout kan skiftes til dansk eller norsk",
+          en: "Full keyboard with number pad — layout can be changed to Danish or Norwegian",
         },
       },
       {
@@ -887,8 +887,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, combo-jack – smartkortlæser på nogle modeller",
-          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, combo jack — smart card reader on some models",
+          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, kombineret lydstik – smartkortlæser på nogle modeller",
+          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, headset jack — smart card reader on some models",
         },
       },
       {
@@ -981,8 +981,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C/Thunderbolt, 2× USB-A, HDMI, Gigabit-netværk og combo-jack",
-          en: "USB-C/Thunderbolt, 2× USB-A, HDMI, Gigabit Ethernet and combo jack",
+          da: "USB-C/Thunderbolt, 2× USB-A, HDMI, Gigabit-netværk og kombineret lydstik",
+          en: "USB-C/Thunderbolt, 2× USB-A, HDMI, Gigabit Ethernet and headset jack",
         },
       },
       {
@@ -1137,8 +1137,8 @@ export const models: Model[] = [
       {
         label: { da: "Model", en: "Model" },
         value: {
-          da: "HP EliteDesk 800 (G4 og G5) – stationær i SFF-kabinet",
-          en: "HP EliteDesk 800 (G4 and G5) — desktop in an SFF case",
+          da: "HP EliteDesk 800 (G4 og G5) – stationær i lille kabinet (SFF)",
+          en: "HP EliteDesk 800 (G4 and G5) — desktop in a small form factor (SFF) case",
         },
       },
       {
@@ -1340,8 +1340,8 @@ export const models: Model[] = [
       {
         label: { da: "Model", en: "Model" },
         value: {
-          da: "Dell OptiPlex 5060 og 5070 – stationær i SFF eller Micro",
-          en: "Dell OptiPlex 5060 and 5070 — desktop in SFF or Micro",
+          da: "Dell OptiPlex 5060 og 5070 – stationær i lille kabinet (SFF) eller Micro",
+          en: "Dell OptiPlex 5060 and 5070 — desktop in a small form factor (SFF) or Micro case",
         },
       },
       {
@@ -1393,7 +1393,7 @@ export const models: Model[] = [
         en: "The Micro has fewer expansion options than the SFF. If a graphics card or extra drives might be needed later, choose SFF from the start.",
       },
       {
-        da: "Kabinetterne ligner hinanden på papiret – sig hvilken variant I vil have, så der ikke kommer en Micro, hvor der skulle stå en SFF.",
+        da: "Kabinetterne ligner hinanden på papiret – sig, hvilken variant I vil have, så der ikke kommer en Micro, hvor der skulle stå en SFF.",
         en: "The cases look alike on paper — say which variant you want, so a Micro does not turn up where an SFF was meant to be.",
       },
     ],
@@ -1661,7 +1661,7 @@ export const models: Model[] = [
       en: "The ThinkPad Ultra Dock as a used docking station: a mechanical dock connector, multiple monitors and network in one connection. Sourced for your order.",
     },
     intro: {
-      da: "Ultra Dock klikker fast i bunden af maskinen i stedet for at sidde i et kabel. Det giver en fast forbindelse, der ikke ryger ud, når nogen flytter på maskinen, og medarbejderen skal kun gøre én ting, når hun sætter sig ved skrivebordet.",
+      da: "Ultra Dock klikker fast i bunden af maskinen i stedet for at sidde i et kabel. Det giver en fast forbindelse, der ikke ryger ud, når nogen flytter på maskinen, og medarbejderen skal kun gøre én ting, når arbejdsdagen begynder ved skrivebordet.",
       en: "The Ultra Dock clicks onto the bottom of the machine instead of hanging off a cable. That gives a solid connection that does not fall out when somebody nudges the laptop, and it leaves the employee with one thing to do when they sit down.",
     },
     goodFor: [
@@ -1821,8 +1821,8 @@ export const models: Model[] = [
       en: "The HP USB-C Dock G5 as a used docking station: monitors, network and power over a single USB-C cable. Sourced for your order.",
     },
     intro: {
-      da: "G5-docken er HP's bud på det samme: ét USB-C-kabel til skærme, netværk og opladning. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",
-      en: "The G5 dock is HP's take on the same thing: one USB-C cable for monitors, network and charging. It is cheap to source second-hand, because it shipped with a great many EliteBook deliveries.",
+      da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",
+      en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is cheap to source second-hand, because it shipped with a great many EliteBook deliveries.",
     },
     goodFor: [
       { da: "Arbejdspladser med HP-maskiner", en: "Desks running HP machines" },
@@ -1868,7 +1868,7 @@ export const models: Model[] = [
         en: "It works on most USB-C machines, but HP's own features, such as powering the machine on from the dock, only work with HP.",
       },
       {
-        da: "Ældre HP UltraSlim-docks bruger et fladt stik i siden af maskinen og passer ikke til nyere modeller. Sig hvilke maskiner I har.",
+        da: "Ældre HP UltraSlim-docks bruger et fladt stik i siden af maskinen og passer ikke til nyere modeller. Sig, hvilke maskiner I har.",
         en: "Older HP UltraSlim docks use a flat connector on the side of the machine and do not fit newer models. Tell us which machines you have.",
       },
     ],
@@ -1952,7 +1952,7 @@ const CARD_CHIPS: Record<string, Localized[]> = {
     { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
   ],
   "hp-zbook-15": [
-    { da: "Intel i7 6-kerne el. Xeon", en: "Intel i7 6-core or Xeon" },
+    { da: "Intel i7 med 6 kerner el. Xeon", en: "Intel i7 6-core or Xeon" },
     { da: "16–64 GB DDR4", en: "16–64 GB DDR4" },
     { da: "512 GB–2 TB NVMe SSD", en: "512 GB–2 TB NVMe SSD" },
   ],

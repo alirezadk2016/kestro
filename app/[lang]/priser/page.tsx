@@ -76,12 +76,12 @@ const copy = {
       "Hvorfor der ikke står en pris på siden, hvad der afgør jeres pris, og hvad der står i tilbuddet, før I bestiller noget som helst.",
     title: "Hvad koster det?",
     description:
-      "Det ærlige svar er, at det afhænger – og her står præcis hvad det afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
+      "Det ærlige svar er: Det kommer an på opgaven – og her står præcis, hvad prisen afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
     whyTitle: "Hvorfor er der ikke en prisliste?",
     whyBody1:
       "Vi holder ikke lager. Der står ingen hylde med maskiner og mærkater på, og derfor findes der ikke en pris, vi kan skrive op på forhånd. Vi går ud i leverandørnetværket, når vi ved, hvad opgaven kræver – og prisen er den, vi kan skaffe det til, plus vores arbejde.",
     whyBody2:
-      "Vi kunne godt skrive »fra 1.995 kr.« og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
+      "Vi kunne godt sætte en lav »fra-pris« på siden og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
     driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
@@ -99,7 +99,7 @@ const copy = {
     freeBody:
       "Nej. Der er ingen pris på at spørge, og ingen forpligtelse, når I har fået svaret. Passer der ikke noget til opgaven, siger vi det – det er en kortere samtale end at sælge jer noget, der ikke løser problemet.",
     fastTitle: "Hvordan får I et realistisk tal hurtigt?",
-    fastLead: "Jo mere af det her I skriver med det samme, jo færre runder frem og tilbage:",
+    fastLead: "Jo mere af det her, I skriver med det samme, jo færre runder frem og tilbage:",
     fastPoints: [
       "Hvor mange maskiner, og om de skal være ens.",
       "Hvad de skal bruges til – kontorarbejde, konstruktion, billedarbejde.",
@@ -125,7 +125,7 @@ const copy = {
     whyBody1:
       "We hold no stock. There is no shelf of machines with labels on them, so there is no price we can write up in advance. We go out into the supplier network once we know what the job needs — and the price is what we can source it for, plus our work.",
     whyBody2:
-      "We could write “from DKK 1,995” and let you discover the rest along the way. We do not. A figure we cannot document for your actual order is not information, it is bait, and you find out when the quote arrives anyway.",
+      "We could put a low “from” price on the page and let you discover the rest along the way. We do not. A figure we cannot document for your actual order is not information, it is bait, and you find out when the quote arrives anyway.",
     driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
