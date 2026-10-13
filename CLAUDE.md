@@ -16,6 +16,14 @@ This is a standing rule, not a task. Any change that touches a page, a
 component that renders text, or a route obeys the list below. It is cheaper to
 write it right than to have an audit find it.
 
+**Read `docs/seo-playbook.md` before any keyword, title, category or new-page
+decision.** It holds the owner's SEO method: one page per search intent, with
+the results page deciding; categories cut the way buyers search; the blog
+tree kept apart from the product tree; and per-page keyword research that
+leaves children's keywords alone. When a lesson is added there, the keyword
+map (`docs/seo-keyword-map.md` / `.csv`) is checked against it in the same
+change.
+
 ### Structure
 
 - **One `<h1>` per page.** Enforced in `scripts/verify/checks.mjs`.
