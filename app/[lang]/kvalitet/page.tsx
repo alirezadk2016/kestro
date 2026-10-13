@@ -12,9 +12,9 @@ import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
-    metaTitle: "Garanti og stand på refurbished erhvervs-IT | Kestro",
+    metaTitle: "Refurbished computere: grad A, B og C og garanti | Kestro",
     metaDescription:
-      "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvad I bør have skriftligt om garanti, før I køber brugt IT-udstyr.",
+      "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvilke garantivilkår I bør have på skrift, før I køber brugt IT-udstyr.",
     title: "Stand, test og hvad I bør spørge om",
     description:
       "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
@@ -48,9 +48,9 @@ const copy = {
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
-    metaTitle: "Grade A, B and C on refurbished IT | Kestro",
+    metaTitle: "Refurbished grades A, B and C and warranty explained | Kestro",
     metaDescription:
-      "How used business equipment is graded, what a function test covers, and what you should always be told before you order.",
+      "What grades A, B and C cover, what a function test should include, and which warranty terms to get in writing before you buy used IT.",
     title: "Condition, testing and what to ask about",
     description:
       "“Used” says nothing about quality on its own. Here is the grading the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",

@@ -15,9 +15,9 @@ import type { SourceId } from "@/lib/sources";
 
 const copy = {
   da: {
-    metaTitle: "Kontakt os i Aarhus | Kestro",
+    metaTitle: "Kontakt Kestro, Aarhus – brugte computere til virksomheder",
     metaDescription:
-      "Skriv til os om et indkøb, en flåde eller udstyr, I skal af med. Vi svarer inden for én arbejdsdag – uforpligtende og uden salgstale.",
+      "Skriv om et indkøb, en flåde eller udstyr, I skal af med. Svar inden for én arbejdsdag fra den, der skriver tilbuddet – uforpligtende og uden salgstale.",
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
@@ -46,9 +46,9 @@ const copy = {
     faqTitle: "Spørgsmål, før I skriver",
   },
   en: {
-    metaTitle: "Contact us in Aarhus | Kestro",
+    metaTitle: "Contact Kestro in Aarhus — used business IT",
     metaDescription:
-      "Write to us about a purchase, a fleet, or equipment you need to move on. We reply within one working day — no obligation and no sales pitch.",
+      "Write to us about a purchase, a fleet or equipment you need to move on. A reply within one working day from the person who writes the quote.",
     title: "Contact us",
     description: `Write through the form below or directly to ${company.email}. You get a reply within one working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
     emailTitle: "Prefer email?",

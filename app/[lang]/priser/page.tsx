@@ -71,9 +71,9 @@ const drivers = [
 
 const copy = {
   da: {
-    metaTitle: "Hvad koster brugte erhvervscomputere? | Kestro",
+    metaTitle: "Hvad koster brugte computere til virksomheder? | Kestro",
     metaDescription:
-      "Hvorfor der ikke står en pris på siden, hvad der afgør jeres pris, og hvad der står i tilbuddet, før I bestiller noget som helst.",
+      "Hvorfor der ikke står en pris på siden, hvad der afgør prisen på brugt erhvervs-IT, og hvad tilbuddet viser per enhed, før I bestiller noget.",
     title: "Hvad koster det?",
     description:
       "Det ærlige svar er: Det kommer an på opgaven – og her står præcis, hvad prisen afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
@@ -115,7 +115,7 @@ const copy = {
     ],
   },
   en: {
-    metaTitle: "What do used business computers cost? How we price | Kestro",
+    metaTitle: "What do used business computers cost? | Kestro",
     metaDescription:
       "No price list, because we hold no stock. What decides the price of used business IT, and what to write to get a realistic figure.",
     title: "What does it cost?",

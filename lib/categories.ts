@@ -36,11 +36,11 @@ export const categories: Category[] = [
     },
     metaTitle: {
       da: "Brugte bærbare computere til erhverv | Kestro",
-      en: "Refurbished business laptops for companies | Kestro",
+      en: "Refurbished business laptops — ThinkPad, EliteBook | Kestro",
     },
     metaDescription: {
-      da: "Refurbished erhvervsbærbare fra ThinkPad-, EliteBook- og Latitude-serierne. Funktionstestet, nordisk tastatur og skriftlige vilkår før bestilling.",
-      en: "Refurbished business laptops — ThinkPad, MacBook, Latitude, EliteBook and more. Function-tested, with a Nordic keyboard.",
+      da: "Refurbished ThinkPad, EliteBook og Latitude til erhverv – med dansk eller norsk tastatur, målt batteri og skriftlige vilkår før bestilling.",
+      en: "Refurbished ThinkPad, EliteBook and Latitude laptops for companies — Danish or Norwegian keyboard, measured battery and terms in writing.",
     },
     intro: {
       da: "Bærbare er det, vi oftest bliver bedt om at skaffe. Vi skaffer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk eller norsk tastatur, så de er klar til udlevering til medarbejderen.",
@@ -114,11 +114,11 @@ export const categories: Category[] = [
       en: "Refurbished desktops and workstations for fixed desks",
     },
     metaTitle: {
-      da: "Brugte stationære computere til erhverv | Kestro",
-      en: "Refurbished business desktop computers | Kestro",
+      da: "Brugte stationære computere til kontoret | Kestro",
+      en: "Refurbished business desktops and workstations | Kestro",
     },
     metaDescription: {
-      da: "Refurbished stationære erhvervsmaskiner i store og små kabinetter til kontoret. Vi skaffer dem til den enkelte ordre og oplyser stand skriftligt.",
+      da: "Refurbished stationære pc'er og workstations – OptiPlex, EliteDesk og ThinkCentre – i tårn, lille kabinet eller mini. Skaffet til ordren, stand på skrift.",
       en: "Refurbished business desktops and workstations — OptiPlex, EliteDesk, ThinkCentre and more. Function-tested and prepared.",
     },
     intro: {
@@ -179,11 +179,11 @@ export const categories: Category[] = [
       en: "Refurbished business monitors for fixed desks",
     },
     metaTitle: {
-      da: "Brugte skærme til kontor og erhverv | Kestro",
-      en: "Used and refurbished business monitors | Kestro",
+      da: "Brugte skærme til kontoret – 22 til 27 tommer | Kestro",
+      en: "Refurbished business monitors, 24 and 27 inch | Kestro",
     },
     metaDescription: {
-      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docking, så en arbejdsplads står komplet.",
+      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docks, så arbejdspladsen står komplet.",
       en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27" with height adjustment and a USB hub. Sourced per order.',
     },
     intro: {
@@ -234,12 +234,12 @@ export const categories: Category[] = [
       en: "Compact machines for desks with no room to spare",
     },
     metaTitle: {
-      da: "Brugte mini-pc'er til erhverv | Kestro",
-      en: "Refurbished mini PCs for business | Kestro",
+      da: "Brugte mini-pc'er til erhverv – ThinkCentre Tiny m.fl. | Kestro",
+      en: "Refurbished mini PCs for business — ThinkCentre Tiny | Kestro",
     },
     metaDescription: {
-      da: "Refurbished mini-pc'er til receptioner, kasseborde og kontorpladser med lidt plads. Skaffet til den enkelte ordre og testet før levering.",
-      en: "Refurbished mini PCs and tiny desktops — Lenovo ThinkCentre Tiny, Dell OptiPlex Micro, HP Mini, Intel NUC. For offices, digital signage and tight workspaces.",
+      da: "Refurbished mini-pc'er til reception, kasse og trange kontorpladser – fx Lenovo ThinkCentre Tiny og Dell OptiPlex Micro. Skaffet til ordren.",
+      en: "Refurbished mini PCs — ThinkCentre Tiny, OptiPlex Micro, HP Mini — for receptions, tills, digital signage and desks with little room.",
     },
     intro: {
       da: "Mini-pc'er giver samme ydelse som en almindelig stationær i et kabinet, der kan skjules bag skærmen eller monteres under bordet. De er populære, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
@@ -291,12 +291,12 @@ export const categories: Category[] = [
       en: "Refurbished tablets for field work, shops and presentations",
     },
     metaTitle: {
-      da: "Brugte tablets til erhverv | Kestro",
-      en: "Refurbished business tablets | Kestro",
+      da: "Brugte tablets til erhverv – iPad, Galaxy Tab, Surface | Kestro",
+      en: "Refurbished business tablets — iPad, Galaxy, Surface | Kestro",
     },
     metaDescription: {
       da: "Refurbished tablets til lager, service og mødelokaler. Vi skaffer dem per ordre og oplyser stand og batteritilstand, før I bestiller.",
-      en: "Refurbished tablets for companies — iPad, Samsung Galaxy Tab, Microsoft Surface and Lenovo Tab. Tested and prepared, delivered in Denmark and Norway.",
+      en: "Refurbished iPad, Galaxy Tab, Surface and Lenovo tablets for warehouse, service and meeting rooms. Condition and battery stated up front.",
     },
     intro: {
       da: "Tablets er velegnede til medarbejdere i marken, i butikken eller på lageret, hvor en bærbar er for tung og en telefon for lille. Vi klargør enhederne, så de er nulstillet og klar til jeres system til styring af enheder (MDM).",
@@ -348,11 +348,11 @@ export const categories: Category[] = [
       en: "Refurbished phones and smartwatches for employees",
     },
     metaTitle: {
-      da: "Refurbished mobiltelefoner til virksomheder | Kestro",
-      en: "Refurbished business smartphones | Kestro",
+      da: "Brugte firmatelefoner – refurbished iPhone og Samsung | Kestro",
+      en: "Refurbished business phones — iPhone and Samsung | Kestro",
     },
     metaDescription: {
-      da: "Brugte firmatelefoner, skaffet til den enkelte ordre. Stand og batteritilstand oplyses per enhed, og gamle telefoner kan hentes retur med datasletning.",
+      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og de gamle telefoner kan hentes retur og slettes.",
       en: "Refurbished company phones and smartwatches — iPhone, Samsung Galaxy, Pixel, Apple Watch. Tested, reset and ready to hand out.",
     },
     intro: {
@@ -413,11 +413,11 @@ export const categories: Category[] = [
       en: "Docks, monitors and accessories for the desk",
     },
     metaTitle: {
-      da: "Dockingstationer til erhvervsbærbare | Kestro",
-      en: "Business docking stations and accessories | Kestro",
+      da: "Dockingstation til bærbar – brugte docks til erhverv | Kestro",
+      en: "Docking stations for business laptops, refurbished | Kestro",
     },
     metaDescription: {
-      da: "Brugte dockingstationer, kabler og tilbehør, der passer til de maskiner, vi leverer – så skærme og netværk virker, uden at nogen skal fejlfinde.",
+      da: "Brugte dockingstationer fra Lenovo, Dell og HP – plus kabler og tilbehør, der passer til maskinerne, så skærme og netværk virker fra første dag.",
       en: "Refurbished docking stations, monitors, keyboards and mice for business — ThinkPad Dock, Dell WD series, HP Thunderbolt Dock and more.",
     },
     intro: {

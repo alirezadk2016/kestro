@@ -25,9 +25,9 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 
 const copy = {
   da: {
-    metaTitle: "Få et tilbud på brugt erhvervs-IT | Kestro",
+    metaTitle: "Få et tilbud på brugte computere til virksomheden | Kestro",
     metaDescription:
-      "Fortæl os antal, specifikation og hvornår det skal stå klar. Vi vender tilbage med pris per enhed, stand og leveringstid. Uforpligtende.",
+      "Skriv antal, specifikation og hvornår det skal stå klar. I får svar inden for én arbejdsdag med pris per enhed, stand og leveringstid. Uforpligtende.",
     title: "Få et tilbud",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
     lead: "Et tilbud fra Kestro er gratis og uforpligtende: I fortæller antal, specifikation og hvornår det skal stå klar, og I får svar inden for én arbejdsdag med pris per enhed, stand og leveringstid. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
@@ -98,9 +98,9 @@ const copy = {
     otherLink: "Kontakt os",
   },
   en: {
-    metaTitle: "Get a quote on used business IT | Kestro",
+    metaTitle: "Get a quote on used business computers | Kestro",
     metaDescription:
-      "Tell us the quantity, the specification and when it has to be ready, and we come back with price per unit, condition and lead time. No obligation.",
+      "Tell us the quantity, the specification and when it has to be ready. A reply within one working day with price per unit, condition and lead time.",
     title: "Get a quote",
     lead: "A quote from Kestro is free and commits you to nothing: you tell us the quantity, the specification and when it has to be ready, and you get a reply within one working day with price per unit, condition and lead time. Fill in what you know — the rest can stay at “not sure yet”.",
     formTitle: "Your request",

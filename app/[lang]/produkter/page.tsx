@@ -15,9 +15,9 @@ import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
-    metaTitle: "Brugt IT-udstyr til virksomheder – hvad vi skaffer | Kestro",
+    metaTitle: "Brugt IT-udstyr til virksomheder: pc, skærm og dock | Kestro",
     metaDescription:
-      "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi skaffer udstyret til hver ordre, så specifikationen følger opgaven og ikke et lager.",
+      "Refurbished bærbare, stationære, mini-pc'er, skærme, tablets og docks til virksomheder i Danmark og Norge – skaffet til ordren, med vilkår på skrift.",
     title: "Hvad vi skaffer",
     /* Answer first, with the counts the page and /modeller actually show. */
     description: `Kestro er leverandør, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
@@ -35,9 +35,9 @@ const copy = {
     modelsButton: "Se modeloversigten",
   },
   en: {
-    metaTitle: "What we source | Refurbished business IT | Kestro",
+    metaTitle: "Used business computers and IT equipment | Kestro",
     metaDescription:
-      "Supplier of refurbished business IT: laptops, desktops, mini PCs, monitors, tablets, smartphones and docking — sourced for your order.",
+      "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
     title: "What we source",
     description: `Kestro is a supplier, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",

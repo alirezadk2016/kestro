@@ -13,9 +13,9 @@ import Faq, { type FaqItem } from "@/components/Faq";
 
 const copy = {
   da: {
-    metaTitle: "Om os – hvem I handler med | Kestro",
+    metaTitle: "Om Kestro – brugt erhvervs-IT fra Sydeuropa til Norden",
     metaDescription:
-      "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Norden, der skal bruge testet IT-udstyr uden at købe nyt.",
+      "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Danmark og Norge, der skal bruge testet IT-udstyr uden at købe nyt.",
     title: "Om Kestro",
     /* Answer first: what Kestro is, where, and for whom. */
     description:
@@ -24,7 +24,7 @@ const copy = {
       "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
   },
   en: {
-    metaTitle: "About us – who you are dealing with | Kestro",
+    metaTitle: "About Kestro — used business IT from southern Europe",
     metaDescription:
       "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
     title: "About Kestro",

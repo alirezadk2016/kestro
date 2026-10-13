@@ -30,9 +30,9 @@ const copy = {
     updated: "Senest opdateret",
   },
   en: {
-    metaTitle: "Privacy policy: how we handle your data | Kestro",
+    metaTitle: "Privacy policy | Kestro",
     metaDescription:
-      "How Kestro handles personal data: the contact forms, what we store locally, cookieless visit counts, and statistics that only run if you accept them.",
+      "How Kestro handles personal data: the contact forms, what is stored locally, cookieless visit counts, and statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
       "The privacy policy for kestro.dk is the 12 sections below: what data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",

@@ -83,14 +83,14 @@ export const dynamicParams = false;
 
 const meta = {
   da: {
-    title: "Refurbished erhvervscomputere til virksomheder | Kestro",
+    title: "Brugte og refurbished computere til virksomheder | Kestro",
     description:
-      "Kestro skaffer refurbished erhvervscomputere til danske og norske virksomheder. Pris, stand og garantivilkår står skriftligt, før I bestiller.",
+      "Refurbished bærbare, stationære og skærme til virksomheder i Danmark og Norge – dansk eller norsk tastatur, stand og pris på skrift, før I bestiller.",
   },
   en: {
     title: "Refurbished business computers for companies | Kestro",
     description:
-      "Kestro sources refurbished business computers for companies in Denmark and Norway. Price, condition and warranty terms in writing before you order.",
+      "Refurbished laptops, desktops and monitors for companies in Denmark and Norway — Danish or Norwegian keyboard, and the terms in writing first.",
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 

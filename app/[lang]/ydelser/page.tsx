@@ -16,9 +16,9 @@ import { repairs } from "@/lib/repairs";
 
 const copy = {
   da: {
-    metaTitle: "Ydelser: indkøb, flåder, opgradering og opkøb | Kestro",
+    metaTitle: "Ydelser: indkøb, klargøring, levering og opkøb af IT | Kestro",
     metaDescription:
-      "Indkøb af renoveret IT, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
+      "Indkøb af renoveret IT, flådeleverancer, klargøring med dansk tastatur, reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
     /* Answer first, with the two counts the page actually lists. */
@@ -31,7 +31,7 @@ const copy = {
     qualityLink: "Sådan vurderer vi stand",
   },
   en: {
-    metaTitle: "Services: sourcing, fleets, upgrades and buy-back | Kestro",
+    metaTitle: "Services: sourcing, setup, delivery and buy-back of IT | Kestro",
     metaDescription:
       "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
     stepLink: "Read more",

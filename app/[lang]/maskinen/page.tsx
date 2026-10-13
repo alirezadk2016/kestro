@@ -12,9 +12,9 @@ import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
-    metaTitle: "Maskinen indeni: hvad er RAM, SSD og køling? | Kestro",
+    metaTitle: "Hvad er RAM, SSD og køling? Se en bærbar indefra | Kestro",
     metaDescription:
-      "Drej en bærbar erhvervscomputer rundt, og se hvor RAM, SSD, trådløst kort, køling og batteri sidder – hvad hver del gør, og hvad der kan opgraderes.",
+      "Drej en bærbar rundt, og se, hvor RAM, SSD, trådløst kort, køling og batteri sidder – hvad hver del gør, og hvad der kan opgraderes.",
     title: "Maskinen, del for del",
     description:
       "Drej den rundt, og tryk på en del. Udvendigt ser I den maskine, vi skaffer. Indvendigt er det en tegning af, hvor delene sidder, og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",
@@ -29,9 +29,9 @@ const copy = {
       "– vi har skrevet trin for trin, hvordan I skifter RAM og tjekker en brugt maskine.",
   },
   en: {
-    metaTitle: "Inside the machine: what is RAM, SSD and cooling? | Kestro",
+    metaTitle: "What are RAM, SSD and cooling? See inside a laptop | Kestro",
     metaDescription:
-      "Turn a business laptop round and see where the memory, SSD, wireless card, cooling and battery sit — what each part does, and what can be upgraded.",
+      "Turn a laptop round and see where the memory, SSD, wireless card, cooling and battery sit — what each part does, and what can be upgraded.",
     title: "The machine, part by part",
     description:
       "Turn it round, and tap a part. Outside you see the machine we source. Inside is a drawing of where the parts sit, and what can be changed if you want another couple of years out of the equipment.",

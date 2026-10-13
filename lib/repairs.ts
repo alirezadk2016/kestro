@@ -62,12 +62,12 @@ export const repairs: Repair[] = [
     mark: "battery",
     name: { da: "Batteriskift", en: "Battery replacement" },
     metaTitle: {
-      da: "Batteriskift til bærbar – tjek batteriets tilstand",
-      en: "Laptop battery replacement and how to check battery health",
+      da: "Batteriskift på bærbar: tjek batteritilstanden først | Kestro",
+      en: "Laptop battery replacement: check battery health first | Kestro",
     },
     metaDescription: {
-      da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et batteri er værd at skifte.",
-      en: "What the battery percentage means, how to measure it yourself on Windows and Mac, and when a battery is worth replacing.",
+      da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et nyt batteri kan betale sig. Pris, før vi går i gang.",
+      en: "What the battery percentage means, how to measure it yourself on Windows and Mac, and when a new battery is worth it. A price before we start.",
     },
     summary: {
       da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
@@ -182,12 +182,12 @@ export const repairs: Repair[] = [
     mark: "memory",
     name: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
     metaTitle: {
-      da: "RAM- og SSD-opgradering af bærbare og stationære",
-      en: "Memory and SSD upgrades for laptops and desktops",
+      da: "RAM- og SSD-opgradering af bærbar og stationær | Kestro",
+      en: "RAM and SSD upgrades for laptops and desktops | Kestro",
     },
     metaDescription: {
-      da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine. Sådan finder vi ud af, om det kan betale sig.",
-      en: "More memory and faster storage is often the cheapest route to a noticeably quicker machine. How we work out whether it is worth it.",
+      da: "Mere RAM og en SSD er ofte den billigste vej til en mærkbart hurtigere computer. Sådan finder vi ud af, om det kan betale sig. Pris først.",
+      en: "More memory and an SSD are often the cheapest route to a noticeably quicker computer. How we work out whether it is worth it. Price first.",
     },
     summary: {
       da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
@@ -228,12 +228,12 @@ export const repairs: Repair[] = [
     mark: "screen",
     name: { da: "Skærmskift", en: "Screen replacement" },
     metaTitle: {
-      da: "Skærmskift på bærbar, tablet og telefon",
-      en: "Screen replacement for laptops, tablets and phones",
+      da: "Skærmskift på bærbar, tablet og telefon | Kestro",
+      en: "Screen replacement for laptops, tablets and phones | Kestro",
     },
     metaDescription: {
-      da: "Revnet eller defekt skærm på bærbar, tablet og telefon. Samme model er solgt med flere paneler, så vi identificerer panelet i maskinen – ikke bare modellen.",
-      en: "Cracked or faulty screens on laptops, tablets and phones. One model ships with several panels, so we identify the panel in the machine, not just the model.",
+      da: "Revnet eller defekt skærm? Samme model fås med flere paneler, så vi finder det panel, der sidder i netop din maskine. Pris, før vi går i gang.",
+      en: "Cracked or faulty screen? One model ships with several panels, so we identify the panel in your machine, not just the model. A price before we start.",
     },
     summary: {
       da: "Revnet eller defekt skærm på bærbar, tablet eller telefon.",
@@ -270,12 +270,12 @@ export const repairs: Repair[] = [
     mark: "keyboard",
     name: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
     metaTitle: {
-      da: "Tastaturskift og dansk eller norsk layout",
-      en: "Keyboard replacement and Danish or Norwegian layout",
+      da: "Tastaturskift og dansk tastatur på bærbar | Kestro",
+      en: "Keyboard replacement and Danish or Norwegian layout | Kestro",
     },
     metaDescription: {
-      da: "Defekt tastatur skiftes, og importerede maskiner kan få dansk eller norsk layout, så æ, ø og å sidder, hvor de skal.",
-      en: "Faulty keyboards replaced, and imported machines can get a Danish or Norwegian layout so æ, ø and å sit where they should.",
+      da: "Defekt tastatur skiftes, og importerede bærbare kan få dansk eller norsk layout, så æ, ø og å er trykt på tasterne. For både virksomheder og private.",
+      en: "Faulty keyboards replaced, and imported laptops can get a Danish or Norwegian layout with æ, ø and å printed on the keys. Individuals welcome.",
     },
     summary: {
       da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk eller norsk layout, så æ, ø og å sidder, hvor de skal.",
@@ -314,10 +314,13 @@ export const repairs: Repair[] = [
     slug: "reservedele-og-komponentskift",
     mark: "parts",
     name: { da: "Reservedele og komponentskift", en: "Spare parts and components" },
-    metaTitle: { da: "Reservedele og komponentskift", en: "Spare parts and component replacement" },
+    metaTitle: {
+      da: "Reservedele til bærbar: blæser, hængsler, ladestik | Kestro",
+      en: "Laptop spare parts: fans, hinges, charging ports | Kestro",
+    },
     metaDescription: {
-      da: "Blæser, hængsler, ladestik, højttalere og kabler – de dele, der slides, og som en maskine ellers ofte bliver kasseret for.",
-      en: "Fans, hinges, charging ports, speakers and cables. The parts that wear, and that a machine otherwise gets scrapped over.",
+      da: "Blæser, hængsler, ladestik, højttalere og kabler – delene, der slides, og som en ellers god maskine ofte bliver kasseret for. Vi skaffer og skifter dem.",
+      en: "Fans, hinges, charging ports, speakers and cables — the parts that wear, and that a good machine otherwise gets scrapped over. We fit them.",
     },
     summary: {
       da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
@@ -355,12 +358,12 @@ export const repairs: Repair[] = [
     mark: "cooling",
     name: { da: "Rens og køling", en: "Cleaning and cooling" },
     metaTitle: {
-      da: "Rens og køling – varm og larmende maskine",
-      en: "Cleaning and cooling — a hot, loud machine",
+      da: "Varm og larmende bærbar? Rens og ny kølepasta | Kestro",
+      en: "Hot, loud laptop? Cleaning and new thermal paste | Kestro",
     },
     metaDescription: {
-      da: "Støv og gammel kølepasta gør en maskine varm og larmende, og en varm maskine skruer selv ned for farten. Hvad en rens gør.",
-      en: "Dust and old thermal paste make a machine hot and loud, and a hot machine slows itself down. What a clean does.",
+      da: "Støv og tør kølepasta gør en computer varm, larmende og langsom, fordi den skruer ned for farten. Vi renser, skifter pasta og måler temperaturen.",
+      en: "Dust and dried-out thermal paste make a computer hot, loud and slow, because it throttles itself. We clean it, re-paste it and check the heat.",
     },
     summary: {
       da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
@@ -396,12 +399,12 @@ export const repairs: Repair[] = [
     mark: "install",
     name: { da: "Windows-installation", en: "Windows installation" },
     metaTitle: {
-      da: "Ren Windows-installation med drivere",
-      en: "A clean Windows install with drivers",
+      da: "Geninstallation af Windows med de rigtige drivere | Kestro",
+      en: "Clean Windows reinstall with the right drivers | Kestro",
     },
     metaDescription: {
-      da: "Windows sat op fra bunden med de rigtige drivere, så en langsom maskine starter rent igen. Hvad vi gør, og hvornår det kan betale sig.",
-      en: "Windows set up from scratch with the right drivers, so a slow machine boots clean again. What we do, and when it is worth doing.",
+      da: "Windows sat op fra bunden med de rigtige drivere, så en langsom computer starter rent igen. Hvad vi gør, og hvornår det kan betale sig.",
+      en: "Windows set up from scratch with the right drivers, so a slow computer boots clean again. What we do, and when it is worth doing.",
     },
     summary: {
       da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
@@ -441,10 +444,10 @@ export const repairs: Repair[] = [
     slug: "software-og-licenser",
     mark: "written",
     name: { da: "Software og licenser", en: "Software and licences" },
-    metaTitle: { da: "Software og licenser på plads", en: "Software and licences in order" },
+    metaTitle: { da: "Software og licenser på nye firmacomputere | Kestro", en: "Software and licences on new company computers | Kestro" },
     metaDescription: {
-      da: "Programmerne og licenserne på plads, før maskinerne når frem til medarbejderne. Hvad vi sætter op, og hvad du selv skal levere.",
-      en: "Software and licences in place before the machines reach your staff. What we set up, and what you need to supply.",
+      da: "Programmerne og licenserne på plads, før maskinerne når frem til medarbejderne. Hvad vi sætter op, og hvad I selv skal levere.",
+      en: "Software and licences in place before the machines reach your staff. What we set up, and what you need to supply yourself.",
     },
     summary: {
       da: "Vi installerer de programmer, du bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
@@ -480,10 +483,10 @@ export const repairs: Repair[] = [
     slug: "ny-opsaetning-og-dataflytning",
     mark: "adjust",
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
-    metaTitle: { da: "Ny opsætning og flytning af data", en: "Fresh setup and moving your data" },
+    metaTitle: { da: "Flyt data til ny computer – opsætning og dataflytning | Kestro", en: "Move data to a new computer — setup and transfer | Kestro" },
     metaDescription: {
-      da: "Styresystemet installeres på ny, og filer, profiler og programmer flyttes med over. Vi gennemgår listen med dig, før den gamle maskine bliver slettet.",
-      en: "A fresh installation of the operating system, with files, profiles and software moved across. We go through the list with you before the old machine is wiped.",
+      da: "Ny computer? Vi installerer styresystemet og flytter filer, profiler og programmer over – og gennemgår listen med dig, før den gamle slettes.",
+      en: "New computer? We install the system and move files, profiles and software across — and go through the list with you before the old one is wiped.",
     },
     summary: {
       da: "Styresystemet installeres på ny, og dine filer og programmer flyttes med over.",
@@ -521,12 +524,12 @@ export const repairs: Repair[] = [
     mark: "repair",
     name: { da: "Fejlfinding", en: "Troubleshooting" },
     metaTitle: {
-      da: "Fejlfinding – maskinen starter ikke eller går ned",
-      en: "Troubleshooting: the machine will not start or crashes",
+      da: "Computer starter ikke eller går ned? Fejlfinding | Kestro",
+      en: "Computer won't start or keeps crashing? Diagnosis | Kestro",
     },
     metaDescription: {
-      da: "Maskinen starter ikke, går ned eller opfører sig underligt. Vi finder årsagen og fortæller, hvad det vil koste at rette.",
-      en: "The machine will not start, crashes or behaves oddly. We find the cause and tell you what a fix would cost.",
+      da: "Starter computeren ikke, går den ned, eller opfører den sig underligt? Vi finder årsagen og siger, hvad det koster at rette, før vi går i gang.",
+      en: "Computer will not start, crashes or behaves oddly? We find the cause and tell you what the fix would cost before we start.",
     },
     summary: {
       da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
@@ -566,10 +569,10 @@ export const repairs: Repair[] = [
     slug: "samling-af-pc",
     mark: "assembly",
     name: { da: "Samling af pc", en: "PC assembly" },
-    metaTitle: { da: "Samling og opgradering af pc", en: "PC assembly and upgrades, built to the job" },
+    metaTitle: { da: "Få samlet en pc efter opgaven – bygget og testet | Kestro", en: "Custom PC building and upgrades, load-tested | Kestro" },
     metaDescription: {
-      da: "Vi bygger efter opgaven, ikke efter et datablad – fra bunden eller videre på den maskine, du har. Samlet, installeret og belastningstestet, før den bliver leveret.",
-      en: "We build to the job rather than to a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested before it is delivered.",
+      da: "Vi bygger efter opgaven, ikke efter et datablad – fra bunden eller videre på din nuværende maskine. Samlet, installeret og belastningstestet.",
+      en: "We build to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
     },
     summary: {
       da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
@@ -608,10 +611,13 @@ export const repairs: Repair[] = [
     slug: "klargoering-af-brugt-udstyr",
     mark: "tested",
     name: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
-    metaTitle: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
+    metaTitle: {
+      da: "Tjek af brugt computer: batteri, stand og opsætning | Kestro",
+      en: "Used computer check-up: battery, condition, setup | Kestro",
+    },
     metaDescription: {
-      da: "Har du købt en brugt maskine? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget skal skiftes.",
-      en: "Bought a used machine? We go through it, state the battery's actual capacity in percent, set it up and say so if anything needs replacing.",
+      da: "Har du købt en brugt computer? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget skal skiftes.",
+      en: "Bought a used computer? We go through it, state the battery's actual capacity in percent, set it up and tell you if anything needs replacing.",
     },
     summary: {
       da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",

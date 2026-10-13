@@ -17,9 +17,9 @@ import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
-    metaTitle: "Computere til flere medarbejdere – flådeløsninger | Kestro",
+    metaTitle: "Computere til alle medarbejdere – én model, én levering | Kestro",
     metaDescription:
-      "Fra ti maskiner til en hel medarbejderflåde: samme konfiguration hele vejen rundt, samlet levering og gamle maskiner hentet retur.",
+      "Fra ti maskiner til hele virksomheden: samme konfiguration hele vejen rundt, samlet levering og de gamle maskiner hentet retur. Ét samlet tilbud.",
     badge: "Til større virksomheder",
     title: "Udstyr hele virksomheden",
     intro:
@@ -50,9 +50,9 @@ const copy = {
     ctaButton: "Send forespørgsel",
   },
   en: {
-    metaTitle: "Fleet solutions — equip the whole company | Kestro",
+    metaTitle: "Business computers in bulk — fleet solutions | Kestro",
     metaDescription:
-      "Refurbished business computers in volume: one configuration across the fleet, upgraded memory and the option to trade your old equipment in.",
+      "From ten machines to the whole company: one configuration across the fleet, one delivery and the old machines collected. One combined quote.",
     badge: "For larger companies",
     title: "Equip the whole company",
     intro:

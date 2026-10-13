@@ -208,12 +208,12 @@ export const guides: Guide[] = [
       en: "Windows 10 support has ended — what now?",
     },
     metaTitle: {
-      da: "Windows 10-supporten er slut: hvad nu for virksomheden? | Kestro",
-      en: "Windows 10 end of support: what it means | Kestro",
+      da: "Windows 10-support slut: hvad gør virksomheden nu? | Kestro",
+      en: "Windows 10 end of support: what companies do now | Kestro",
     },
     metaDescription: {
-      da: "Supporten sluttede 14. oktober 2025. Hvad det betyder for jeres maskiner, hvordan I finder ud af, hvilke der kan opgraderes, og hvad I gør med resten.",
-      en: "Support ended on 14 October 2025. What that means for your machines, how to work out which ones can be upgraded, and what to do with the rest.",
+      da: "Supporten sluttede 14. oktober 2025. Hvad det betyder for jeres maskiner, hvilke der kan få Windows 11, og hvad I gør med resten.",
+      en: "Support ended on 14 October 2025. What that means for your machines, which ones can take Windows 11, and what to do with the rest.",
     },
     summary: {
       da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan finder I ud af, hvad der skal ske med hver enkelt maskine.",
@@ -483,8 +483,8 @@ export const guides: Guide[] = [
       en: "Refurbished vs. used: what is the difference? | Kestro",
     },
     metaDescription: {
-      da: "Brugt beskriver maskinens historie. Refurbished beskriver et arbejde, nogen har udført på den. Hvorfor de ikke er ens – og hvad en virksomhed bør spørge om.",
-      en: "Used describes the machine's history. Refurbished describes work somebody did to it. Why the two words are not the same — and what a company should ask about.",
+      da: "Brugt beskriver maskinens historie, refurbished et arbejde, nogen har udført på den. Forskellen – og hvad en virksomhed bør spørge sælgeren om.",
+      en: "Used describes the machine's history; refurbished describes work somebody did to it. The difference — and what a company should ask the seller.",
     },
     summary: {
       da: "To ord, der bruges i flæng, og en forskel, der afgør, hvad I får. Sådan finder I ud af, hvad der faktisk er lavet ved maskinen.",
@@ -939,7 +939,7 @@ export const guides: Guide[] = [
       en: "How to upgrade the memory in a laptop",
     },
     metaTitle: {
-      da: "Sådan opgraderer du RAM i en bærbar computer | Kestro",
+      da: "Opgrader RAM i bærbar: tjek, køb og skift selv | Kestro",
       en: "How to upgrade RAM in a laptop — step by step | Kestro",
     },
     metaDescription: {
@@ -1102,8 +1102,8 @@ export const guides: Guide[] = [
       en: "Buying a used laptop? Ten things to check first | Kestro",
     },
     metaDescription: {
-      da: "Batteri, hængsler, porte, skærm og tastatur: tjeklisten, der afslører, om en brugt bærbar holder til et par år mere hos jer.",
-      en: "Battery, screen, keyboard, ports and disk — a check you can do in ten minutes before paying for a used computer.",
+      da: "Batteri, skærm, taster, porte, disk og hængsler: tjeklisten, der på ti minutter afslører, om en brugt bærbar holder et par år mere.",
+      en: "Battery, screen, keys, ports, disk and hinges: a ten-minute check that shows whether a used laptop has a few good years left in it.",
     },
     summary: {
       da: "En gennemgang på ti minutter, der afslører det, sælgeren ikke skrev i annoncen.",
@@ -1261,11 +1261,11 @@ export const guides: Guide[] = [
     author: "alireza",
     title: { da: "Sådan samler du din egen pc", en: "How to build your own PC" },
     metaTitle: {
-      da: "Samle sin egen pc: rækkefølge, dele og fejl | Kestro",
-      en: "Building your own PC: order, parts and mistakes | Kestro",
+      da: "Byg din egen pc: dele, rækkefølge og typiske fejl | Kestro",
+      en: "Build your own PC: parts, order and common mistakes | Kestro",
     },
     metaDescription: {
-      da: "Hvilke dele skal passe sammen, i hvilken rækkefølge samler du, og hvad går galt første gang. En gennemgang uden mystik.",
+      da: "Hvilke dele skal passe sammen, i hvilken rækkefølge samler du pc'en, og hvad går galt første gang? En gennemgang uden mystik.",
       en: "Which parts have to match, what order to assemble in, and what goes wrong the first time. A walkthrough without the mystique.",
     },
     summary: {
@@ -1431,12 +1431,12 @@ export const guides: Guide[] = [
       en: "Windows 11 on an older machine: what does it take?",
     },
     metaTitle: {
-      da: "Windows 11 på en ældre maskine: hvad kræver det? | Kestro",
-      en: "Windows 11 on an older computer — requirements | Kestro",
+      da: "Windows 11 på ældre computer: krav og løsninger | Kestro",
+      en: "Windows 11 on an older PC: requirements and options | Kestro",
     },
     metaDescription: {
-      da: "TPM 2.0, Secure Boot og processorkrav forklaret – og hvad I stiller op med de maskiner i flåden, der ikke kommer med over.",
-      en: "TPM, Secure Boot and processor requirements explained, and what to do if your machine is not on the list.",
+      da: "TPM 2.0, Secure Boot og processorkrav forklaret – og hvad I gør med de maskiner i flåden, der ikke kan opgraderes til Windows 11.",
+      en: "TPM 2.0, Secure Boot and the processor list explained — and what to do with the machines in the fleet that cannot be upgraded to Windows 11.",
     },
     summary: {
       da: "Hvorfor en maskine, der virker fint, ikke kan få Windows 11 – og hvad mulighederne så er.",
@@ -1568,7 +1568,7 @@ export const guides: Guide[] = [
     },
     metaTitle: {
       da: "Sikker datasletning før salg eller kassering | Kestro",
-      en: "Erase data before selling a computer — how to | Kestro",
+      en: "Secure data erasure before selling or scrapping a PC | Kestro",
     },
     metaDescription: {
       da: "En formateret disk er ikke en slettet disk. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",

@@ -15,9 +15,9 @@ import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
-    metaTitle: "Sælg jeres brugte IT-udstyr | Kestro",
+    metaTitle: "Sælg brugt IT-udstyr – vi henter og sletter data | Kestro",
     metaDescription:
-      "Vi køber brugte erhvervsmaskiner, henter dem og sletter lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
+      "Vi køber brugte computere, telefoner og tablets fra virksomheder i Danmark og Norge, henter dem og sletter lagermedierne. I får en vurdering først.",
     title: "Sælg jeres brugte IT-udstyr",
     /* Answer first: yes, what, and what happens to the data. */
     description:
@@ -41,9 +41,9 @@ const copy = {
     formBody: "Udfyld formularen, så vender vi tilbage med en vurdering.",
   },
   en: {
-    metaTitle: "Sell us your used IT equipment | Kestro",
+    metaTitle: "Sell used IT equipment — collection and data erasure | Kestro",
     metaDescription:
-      "Replacing your company IT? Kestro buys used business computers, phones and tablets — with documented data erasure and collection in Denmark and Norway.",
+      "Replacing company IT? Kestro buys used business computers, phones and tablets in Denmark and Norway, collects them and erases the storage.",
     title: "Sell us your used IT equipment",
     description:
       "We buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",

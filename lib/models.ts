@@ -93,12 +93,12 @@ export const models: Model[] = [
       en: "The workhorse of the T series — sturdy, repairable and easy to upgrade.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T480 til erhverv | Kestro",
-      en: "Used Lenovo ThinkPad T480 for business | Kestro",
+      da: "Brugt Lenovo ThinkPad T480: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T480: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad T480 som brugt erhvervsbærbar: specifikationer, hvad den egner sig til, og hvad man skal være opmærksom på. Vi skaffer den til den enkelte ordre.",
-      en: "The ThinkPad T480 as a used business laptop: specifications, what it suits, and what to watch out for. We source it per order.",
+      da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og batteri.',
+      en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Written quote.',
     },
     intro: {
       da: "T480 er den model, vi oftest bliver spurgt om, og med god grund. Den er bygget til at blive slæbt rundt hver dag, delene er lette at skaffe, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
@@ -321,12 +321,12 @@ export const models: Model[] = [
       en: "The successor to the T480 — newer processor, same sturdiness.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14 til erhverv | Kestro",
-      en: "Used Lenovo ThinkPad T14 for business | Kestro",
+      da: "Brugt Lenovo ThinkPad T14: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad T14 (Gen 1 og 2) som brugt erhvervsbærbar: specifikationer, forskellen på Intel og AMD, og hvad den egner sig til. Skaffes til jeres ordre.",
-      en: "The ThinkPad T14 (Gen 1 and 2) as a used business laptop: specifications, the difference between Intel and AMD, and what it suits. Sourced for your order.",
+      da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og udskiftelig SSD. Forskellen på Intel og AMD forklaret.',
+      en: 'Refurbished ThinkPad T14 Gen 1 and 2: 14" Full HD, Intel i5/i7 or AMD Ryzen PRO and a swappable SSD. The Intel and AMD versions compared.',
     },
     intro: {
       da: "T14 er det, T480 blev til. Samme grundidé – erhvervskabinet, godt tastatur, dele der kan skaffes – men med nyere processorer og en tyndere maskine. Den findes både med Intel og med AMD Ryzen PRO, og de to varianter er ikke helt ens.",
@@ -438,12 +438,12 @@ export const models: Model[] = [
       en: "Just over a kilo — for people who travel with the machine.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X1 Carbon til erhverv | Kestro",
-      en: "Used Lenovo ThinkPad X1 Carbon for business | Kestro",
+      da: "Brugt ThinkPad X1 Carbon: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad X1 Carbon som brugt erhvervsbærbar: let kabinet, kraftig skærm og hvad man skal vide om loddet hukommelse. Skaffes til jeres ordre.",
-      en: "The ThinkPad X1 Carbon as a used business laptop: light chassis, strong screen, and what to know about soldered memory. Sourced for your order.",
+      da: 'Brugt ThinkPad X1 Carbon Gen 6–8: 14" på godt et kilo, men med loddet RAM – vælg hukommelsen rigtigt fra start. Tilbud med stand og batteri.',
+      en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over a kilo, but the RAM is soldered — so choose the memory right from the start.',
     },
     intro: {
       da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem, der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
@@ -538,12 +538,12 @@ export const models: Model[] = [
       en: "A business machine for a tight budget.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14 til erhverv | Kestro",
-      en: "Used Lenovo ThinkPad L14 for business | Kestro",
+      da: "Brugt Lenovo ThinkPad L14: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L14: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad L14 som brugt erhvervsbærbar: samme tastatur og porte som T-serien til en lavere pris. Skaffes til den enkelte ordre.",
-      en: "The ThinkPad L14 as a used business laptop: the same keyboard and ports as the T series at a lower price. Sourced per order.",
+      da: 'Brugt ThinkPad L14: samme tastatur og porte som T-serien til et strammere budget. Intel eller AMD og 14" Full HD. Tilbud med stand og batteri.',
+      en: 'Refurbished ThinkPad L14: the T series keyboard and ports on a tighter budget. Intel or AMD and 14" Full HD. Quote with condition and battery.',
     },
     intro: {
       da: "L-serien er ThinkPad uden det dyre kabinet. Tastatur, porte og opgraderingsmuligheder følger stort set T-serien, men chassiset er enklere, og prisen ligger under. Skal I have mange maskiner ud på én gang, er det ofte her, regnestykket går op.",
@@ -635,12 +635,12 @@ export const models: Model[] = [
       en: "HP's answer to the T series — thin, common and easy to get parts for.",
     },
     metaTitle: {
-      da: "Brugt HP EliteBook 840 til erhverv | Kestro",
-      en: "Used HP EliteBook 840 for business | Kestro",
+      da: "Brugt HP EliteBook 840: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP EliteBook 840: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "HP EliteBook 840 (G5 og G6) som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og hvad Sure View betyder. Skaffes til jeres ordre.",
-      en: "The HP EliteBook 840 (G5 and G6) as a used business laptop: specifications, memory in two slots, and what Sure View means. Sourced for your order.",
+      da: 'Brugt HP EliteBook 840 G5 og G6: 14" Full HD, Intel i5/i7 og op til 32 GB RAM i to sokler – fås med Sure View. Tilbud med stand og batteri.',
+      en: 'Refurbished HP EliteBook 840 G5 and G6: 14" Full HD, Intel i5/i7, up to 32 GB RAM in two slots — available with Sure View. Quote with condition.',
     },
     intro: {
       da: "EliteBook 840 er en af de mest udbredte erhvervsbærbare i Europa, og netop derfor er den nem at skaffe i antal og til en fornuftig pris. Den har to hukommelsessokler, hvilket gør den billig at opgradere, og et fladt kabinet, der fylder lidt mindre i tasken end T-serien.",
@@ -735,12 +735,12 @@ export const models: Model[] = [
       en: "A big screen and a number pad, for the desk.",
     },
     metaTitle: {
-      da: "Brugt HP ProBook 450 til erhverv | Kestro",
-      en: "Used HP ProBook 450 for business | Kestro",
+      da: "Brugt HP ProBook 450: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP ProBook 450: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'HP ProBook 450 som brugt erhvervsbærbar: 15,6" skærm, numerisk tastatur og plads til udvidelser. Skaffes til den enkelte ordre.',
-      en: 'The HP ProBook 450 as a used business laptop: 15.6" screen, number pad and room to expand. Sourced per order.',
+      da: 'Brugt HP ProBook 450 G7 og G8: 15,6" Full HD og numerisk tastatur til skrivebordet, RAM i to sokler. Skriftligt tilbud med stand og målt batteri.',
+      en: 'Refurbished HP ProBook 450 G7 and G8: 15.6" Full HD and a number pad for the desk, with RAM in two slots. Quote with condition and battery.',
     },
     intro: {
       da: 'ProBook 450 er den store bærbare til dem, der arbejder i regneark og systemer hele dagen. 15,6" skærm og numerisk tastatur gør en mærkbar forskel i bogholderi, ordrestyring og support – og prisen ligger under en tilsvarende EliteBook.',
@@ -832,12 +832,12 @@ export const models: Model[] = [
       en: "Dell's workhorse — two memory slots and every port still there.",
     },
     metaTitle: {
-      da: "Brugt Dell Latitude 5410 til erhverv | Kestro",
-      en: "Used Dell Latitude 5410 for business | Kestro",
+      da: "Brugt Dell Latitude 5410: specs, fordele og ulemper | Kestro",
+      en: "Refurbished Dell Latitude 5410: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Dell Latitude 5410 og 5420 som brugt erhvervsbærbar: specifikationer, hukommelse i to sokler og fuldt portudvalg. Skaffes til jeres ordre.",
-      en: "The Dell Latitude 5410 and 5420 as used business laptops: specifications, memory in two slots and a full set of ports. Sourced for your order.",
+      da: 'Brugt Dell Latitude 5410 og 5420: 14" Full HD, Intel i5/i7 og op til 64 GB RAM i to sokler, alle porte i behold. Tilbud med stand og batteri.',
+      en: 'Refurbished Dell Latitude 5410 and 5420: 14" Full HD, Intel i5/i7, up to 64 GB RAM in two slots and every port kept. Quote with condition.',
     },
     intro: {
       da: 'Latitude 5000-serien er Dells svar på T-serien og EliteBook: en 14" erhvervsmaskine, der er lavet til at blive serviceret. To hukommelsessokler, netværksstik, HDMI og USB-C – den kan sættes ind i næsten enhver opsætning uden adaptere.',
@@ -926,12 +926,12 @@ export const models: Model[] = [
       en: "The light Latitude — premium chassis, full set of ports.",
     },
     metaTitle: {
-      da: "Brugt Dell Latitude 7490 til erhverv | Kestro",
-      en: "Used Dell Latitude 7490 for business | Kestro",
+      da: "Brugt Dell Latitude 7490: specs, fordele og ulemper | Kestro",
+      en: "Refurbished Dell Latitude 7490: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Dell Latitude 7490 som brugt erhvervsbærbar: let kabinet, lang batteritid og alle porte i behold. Skaffes til den enkelte ordre.",
-      en: "The Dell Latitude 7490 as a used business laptop: light chassis, long battery life and every port still there. Sourced per order.",
+      da: 'Brugt Dell Latitude 7490: let 14" på omkring 1,4 kg med Thunderbolt, HDMI og netværksstik i behold. Skriftligt tilbud med stand og målt batteri.',
+      en: 'Refurbished Dell Latitude 7490: a light 14" at around 1.4 kg with Thunderbolt, HDMI and Ethernet kept. Quote with condition and measured battery.',
     },
     intro: {
       da: "7000-serien er Latitude i den pæne udgave: lettere kabinet, bedre skærm og længere batteritid end 5000-serien, men stadig med netværksstik og HDMI direkte i maskinen. Et godt kompromis mellem en X1 Carbon og en almindelig arbejdsbærbar.",
@@ -1020,12 +1020,12 @@ export const models: Model[] = [
       en: "For CAD, 3D and video editing out at the client.",
     },
     metaTitle: {
-      da: "Brugt HP ZBook 15 mobil workstation til erhverv | Kestro",
-      en: "Used HP ZBook 15 mobile workstation for business | Kestro",
+      da: "Brugt HP ZBook 15: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP ZBook 15: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "HP ZBook 15 som brugt mobil workstation: dedikeret Quadro-grafik, mange kerner og plads til flere diske. Skaffes til den enkelte ordre.",
-      en: "The HP ZBook 15 as a used mobile workstation: dedicated Quadro graphics, plenty of cores and room for several drives. Sourced per order.",
+      da: "Brugt HP ZBook 15 G5 og G6: mobil workstation med NVIDIA Quadro, i7 med 6 kerner eller Xeon og op til 64 GB RAM – til CAD og 3D.",
+      en: "Refurbished HP ZBook 15 G5 and G6: a mobile workstation with NVIDIA Quadro, a 6-core i7 or Xeon and up to 64 GB RAM — for CAD and 3D.",
     },
     intro: {
       da: "ZBook er ikke en kontormaskine, og det skal den heller ikke være. Den har dedikeret grafik, processorer med flere kerner og plads til flere diske – til tegnestuer, ingeniører og produktionsvirksomheder, hvor programmerne stiller reelle krav.",
@@ -1114,12 +1114,12 @@ export const models: Model[] = [
       en: "A classic office PC with room to grow.",
     },
     metaTitle: {
-      da: "Brugt HP EliteDesk 800 til erhverv | Kestro",
-      en: "Used HP EliteDesk 800 for business | Kestro",
+      da: "Brugt HP EliteDesk 800: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP EliteDesk 800: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "HP EliteDesk 800 som brugt stationær erhvervs-pc: desktop-processor, fire hukommelsessokler og plads til udvidelser. Skaffes til jeres ordre.",
-      en: "The HP EliteDesk 800 as a used business desktop: a desktop processor, four memory slots and room to expand. Sourced for your order.",
+      da: "Brugt HP EliteDesk 800 G4 og G5 SFF: 6-kernet desktop-i5/i7, fire RAM-sokler og plads til grafikkort og ekstra disk. Skriftligt tilbud med stand.",
+      en: "Refurbished HP EliteDesk 800 G4 and G5 SFF: 6-core desktop i5/i7, four RAM slots and room for a graphics card and a second drive.",
     },
     intro: {
       da: "EliteDesk 800 er den faste arbejdsplads, hvor der ikke skal spares på ydelsen. Den bruger rigtige desktop-processorer frem for bærbar-varianter, har fire hukommelsessokler og plads til både SSD og harddisk. Skal maskinen holde længe, er det den nemmeste at udvide.",
@@ -1211,12 +1211,12 @@ export const models: Model[] = [
       en: "The size of a book — it can sit behind the monitor.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkCentre M720q Tiny mini-pc | Kestro",
-      en: "Used Lenovo ThinkCentre M720q Tiny mini PC | Kestro",
+      da: "Brugt ThinkCentre M720q Tiny: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkCentre M720q Tiny: pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkCentre M720q Tiny som brugt mini-pc til erhverv: 1 liters kabinet, VESA-beslag og lavt strømforbrug. Skaffes til den enkelte ordre.",
-      en: "The ThinkCentre M720q Tiny as a used business mini PC: a 1-litre case, VESA mount and low power draw. Sourced per order.",
+      da: "Brugt ThinkCentre M720q og M920q Tiny: mini-pc på 1 liter, der kan sidde bag skærmen, med to skærmudgange og lavt strømforbrug.",
+      en: "Refurbished ThinkCentre M720q and M920q Tiny: a 1-litre mini PC that can mount behind the monitor, with two display outputs and low power draw.",
     },
     intro: {
       da: "M720q fylder omkring en liter og kan monteres bag skærmen med et VESA-beslag. Den giver en ryddelig arbejdsplads, bruger lidt strøm og støjer næsten ikke – og til almindeligt kontorarbejde mærker man ikke, at den er lille.",
@@ -1311,12 +1311,12 @@ export const models: Model[] = [
       en: "The same machine — you decide how much room it takes.",
     },
     metaTitle: {
-      da: "Brugt Dell OptiPlex 5060 til erhverv | Kestro",
-      en: "Used Dell OptiPlex 5060 for business | Kestro",
+      da: "Brugt Dell OptiPlex 5060: specs, fordele og ulemper | Kestro",
+      en: "Refurbished Dell OptiPlex 5060: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Dell OptiPlex 5060 og 5070 som brugt stationær erhvervs-pc: fås som SFF og Micro med samme indmad. Skaffes til jeres ordre.",
-      en: "The Dell OptiPlex 5060 and 5070 as used business desktops: available as SFF and Micro with the same internals. Sourced for your order.",
+      da: "Brugt Dell OptiPlex 5060 og 5070 som SFF eller Micro: samme indmad, Intel i5/i7 og flere skærme. Vælg størrelsen efter pladsen. Tilbud på skrift.",
+      en: "Refurbished Dell OptiPlex 5060 and 5070 as SFF or Micro: the same internals, Intel i5/i7 and multiple monitors. Pick the size to fit the desk.",
     },
     intro: {
       da: "OptiPlex 5000-serien findes i flere kabinetstørrelser med stort set samme indmad. Skal maskinen kunne udvides, tager man SFF-udgaven; skal den bare fylde mindst muligt, tager man Micro. Det gør det nemt at give hele huset samme maskine i forskellige former.",
@@ -1410,12 +1410,12 @@ export const models: Model[] = [
       en: "The office monitor that is easy to source many identical units of.",
     },
     metaTitle: {
-      da: "Brugt Dell UltraSharp U2419H skærm til erhverv | Kestro",
-      en: "Used Dell UltraSharp U2419H business monitor | Kestro",
+      da: "Brugt Dell U2419H-skærm: specs, fordele og ulemper | Kestro",
+      en: "Refurbished Dell U2419H monitor: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Dell UltraSharp U2419H som brugt erhvervsskærm: 24" IPS, tynd ramme, højdejustering og USB-hub. Skaffes til den enkelte ordre.',
-      en: 'The Dell UltraSharp U2419H as a used business monitor: 24" IPS, thin bezel, height adjustment and a USB hub. Sourced per order.',
+      da: 'Brugt Dell UltraSharp U2419H: 23,8" IPS i Full HD med tynd ramme, USB-hub og fod med højde og pivot. Let at skaffe mange ens. Tilbud på skrift.',
+      en: 'Refurbished Dell UltraSharp U2419H: 23.8" IPS Full HD, thin bezel, USB hub and a stand with height and pivot. Easy to source in matching sets.',
     },
     intro: {
       da: "UltraSharp er Dells erhvervsserie, og netop U2419H sad på tusindvis af arbejdspladser, før den blev udskiftet. Det betyder, at den er let at skaffe i antal – og at man kan give hele kontoret den samme skærm uden at betale nypris.",
@@ -1496,12 +1496,12 @@ export const models: Model[] = [
       en: "HP's office monitor — same class, usually a little cheaper.",
     },
     metaTitle: {
-      da: "Brugt HP EliteDisplay E243 skærm til erhverv | Kestro",
-      en: "Used HP EliteDisplay E243 business monitor | Kestro",
+      da: "Brugt HP EliteDisplay E243: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP EliteDisplay E243: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'HP EliteDisplay E243 som brugt erhvervsskærm: 24" IPS med højdejustering, USB-hub og flere indgange. Skaffes til jeres ordre.',
-      en: 'The HP EliteDisplay E243 as a used business monitor: 24" IPS with height adjustment, a USB hub and several inputs. Sourced for your order.',
+      da: 'Brugt HP EliteDisplay E243: 23,8" IPS i Full HD med DisplayPort, HDMI, VGA, USB-hub og fuldt justerbar fod. Skriftligt tilbud med stand.',
+      en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand.',
     },
     intro: {
       da: "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundfunktioner – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
@@ -1576,12 +1576,12 @@ export const models: Model[] = [
       en: "Matches a ThinkPad fleet — in looks and in price.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkVision T24i skærm til erhverv | Kestro",
-      en: "Used Lenovo ThinkVision T24i business monitor | Kestro",
+      da: "Brugt ThinkVision T24i: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkVision T24i: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Lenovo ThinkVision T24i som brugt erhvervsskærm: 24" IPS, tynde rammer og en fuldt justerbar fod. Skaffes til den enkelte ordre.',
-      en: 'The Lenovo ThinkVision T24i as a used business monitor: 24" IPS, thin bezels and a fully adjustable stand. Sourced per order.',
+      da: 'Brugt Lenovo ThinkVision T24i: 23,8" IPS i Full HD, tynde rammer og fuldt justerbar fod – passer til en ThinkPad-flåde. Skriftligt tilbud med stand.',
+      en: 'Refurbished Lenovo ThinkVision T24i: 23.8" IPS Full HD, thin bezels and a fully adjustable stand — a match for a ThinkPad fleet.',
     },
     intro: {
       da: "ThinkVision T-serien er Lenovos erhvervsskærme og den naturlige makker til en ThinkPad-flåde. Tynde rammer gør, at to skærme ved siden af hinanden ikke får en tyk streg ned i midten.",
@@ -1653,12 +1653,12 @@ export const models: Model[] = [
       en: "A mechanical dock that clicks onto the bottom of the machine.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad Ultra Dock til erhverv | Kestro",
-      en: "Used Lenovo ThinkPad Ultra Dock for business | Kestro",
+      da: "Brugt ThinkPad Ultra Dock: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad Ultra Dock: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "ThinkPad Ultra Dock som brugt dockingstation: mekanisk dockstik, flere skærme og netværk i én forbindelse. Skaffes til jeres ordre.",
-      en: "The ThinkPad Ultra Dock as a used docking station: a mechanical dock connector, multiple monitors and network in one connection. Sourced for your order.",
+      da: "Brugt ThinkPad Ultra Dock: klikker fast under maskinen og giver op til tre skærme, netværk og nøglelås. Passer kun til visse ThinkPad-modeller.",
+      en: "Refurbished ThinkPad Ultra Dock: clicks in under the laptop for up to three monitors, Ethernet and a key lock. Fits certain ThinkPad models only.",
     },
     intro: {
       da: "Ultra Dock klikker fast i bunden af maskinen i stedet for at sidde i et kabel. Det giver en fast forbindelse, der ikke ryger ud, når nogen flytter på maskinen, og medarbejderen skal kun gøre én ting, når arbejdsdagen begynder ved skrivebordet.",
@@ -1738,12 +1738,12 @@ export const models: Model[] = [
       en: "One USB-C cable — and it works on other brands too.",
     },
     metaTitle: {
-      da: "Brugt Dell WD19 dockingstation til erhverv | Kestro",
-      en: "Used Dell WD19 docking station for business | Kestro",
+      da: "Brugt Dell WD19-dock: specs, fordele og ulemper | Kestro",
+      en: "Refurbished Dell WD19 dock: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Dell WD19 som brugt USB-C dockingstation: flere skærme, netværk og strøm i ét kabel. Skaffes til den enkelte ordre.",
-      en: "The Dell WD19 as a used USB-C docking station: multiple monitors, network and power over one cable. Sourced per order.",
+      da: "Brugt Dell WD19 USB-C-dock: skærme, netværk og strøm i ét kabel – virker også med andre mærker. 130 eller 180 W. Skriftligt tilbud med stand.",
+      en: "Refurbished Dell WD19 USB-C dock: monitors, network and power over one cable — it works with other brands too. 130 or 180 W.",
     },
     intro: {
       da: "WD19 kobles til med ét USB-C-kabel og giver skærme, netværk, USB og strøm på én gang. Fordi den bruger almindelig USB-C frem for et mærkespecifikt stik, kan den også bruges på maskiner fra andre producenter – praktisk hvis I har en blandet flåde.",
@@ -1813,12 +1813,12 @@ export const models: Model[] = [
       en: "HP's universal dock for machines with USB-C.",
     },
     metaTitle: {
-      da: "Brugt HP USB-C Dock G5 til erhverv | Kestro",
-      en: "Used HP USB-C Dock G5 for business | Kestro",
+      da: "Brugt HP USB-C Dock G5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished HP USB-C Dock G5: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "HP USB-C Dock G5 som brugt dockingstation: skærme, netværk og strøm gennem ét USB-C-kabel. Skaffes til jeres ordre.",
-      en: "The HP USB-C Dock G5 as a used docking station: monitors, network and power over a single USB-C cable. Sourced for your order.",
+      da: "Brugt HP USB-C Dock G5: to skærme via DisplayPort og HDMI, netværk og opladning gennem ét USB-C-kabel. Skriftligt tilbud med stand.",
+      en: "Refurbished HP USB-C Dock G5: two monitors over DisplayPort and HDMI, network and charging through one USB-C cable.",
     },
     intro: {
       da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",

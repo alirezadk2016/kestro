@@ -70,9 +70,9 @@ const lines = [
 
 const copy = {
   da: {
-    metaTitle: "Sådan ser et tilbud fra Kestro ud – eksempel | Kestro",
+    metaTitle: "Eksempel på et tilbud på brugt IT – felt for felt | Kestro",
     metaDescription:
-      "Et eksempel på et tilbud på brugt erhvervs-IT: model, stand, målt batterikapacitet, tastatur, garanti og tidsramme – felt for felt.",
+      "Sådan ser et tilbud fra Kestro ud: model, stand, målt batterikapacitet, tastatur, garanti og tidsramme – forklaret felt for felt, før I selv beder om et.",
     title: "Sådan ser et tilbud ud",
     /* Answer first: what a quote is made of, then why the example exists. */
     description:
@@ -137,7 +137,7 @@ const copy = {
     ],
   },
   en: {
-    metaTitle: "What a quote from Kestro looks like — an example | Kestro",
+    metaTitle: "Example quote for used business IT, field by field | Kestro",
     metaDescription:
       "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",

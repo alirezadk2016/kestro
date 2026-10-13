@@ -28,9 +28,9 @@ import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
-    metaTitle: "Viden om erhvervs-IT: køb og udskiftning | Kestro",
+    metaTitle: "Vejledninger: køb, tjek og udskiftning af erhvervs-IT | Kestro",
     metaDescription:
-      "Vejledninger til virksomheder om at købe, vurdere og udskifte erhvervs-IT. Skrevet af os, der skaffer maskinerne – og ærlige om, hvornår I ikke skal købe.",
+      "Vejledninger om at købe, tjekke og udskifte computere i virksomheden: Windows 11, datasletning, RAM og brugt mod refurbished, konkret forklaret.",
     eyebrow: "Kestro Viden",
     title: "Viden om erhvervs-IT",
     description:
@@ -47,9 +47,9 @@ const copy = {
     crumb: "Viden",
   },
   en: {
-    metaTitle: "Knowledge: buying and replacing business IT | Kestro",
+    metaTitle: "Guides: buying, checking and replacing business IT | Kestro",
     metaDescription:
-      "Guides for companies on buying, assessing and replacing business IT. Written by the people who source the machines — and honest about when not to buy.",
+      "Guides on buying, checking and replacing company computers: Windows 11, data erasure, RAM, and refurbished versus used — explained plainly.",
     eyebrow: "Kestro Knowledge",
     title: "Knowledge for business IT",
     description:

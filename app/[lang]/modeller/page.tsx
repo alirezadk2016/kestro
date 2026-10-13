@@ -12,9 +12,9 @@ import SpecChips from "@/components/SpecChips";
 
 const copy = {
   da: {
-    metaTitle: "Modeller vi ofte skaffer til erhverv | Kestro",
+    metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     metaDescription:
-      "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Intet lager, ingen listepriser – vi skaffer maskinerne til hver ordre.",
+      "Specifikationer, fordele og ulemper for de erhvervsmodeller, vi oftest skaffer: ThinkPad, EliteBook, Latitude, OptiPlex, skærme og docks.",
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
     description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
@@ -27,9 +27,9 @@ const copy = {
     seeSpecs: "Se specifikationer",
   },
   en: {
-    metaTitle: "Models we often source for business | Kestro",
+    metaTitle: "Refurbished ThinkPad, EliteBook, Latitude and OptiPlex | Kestro",
     metaDescription:
-      "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
+      "Specifications, pros and cons for the business models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
     title: "Models we often source",
     description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
