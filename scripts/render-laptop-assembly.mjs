@@ -12,6 +12,11 @@ if (!process.argv.includes("--check")) {
     .resize(1536, 960, { fit: "cover" })
     .webp({ quality: 88 })
     .toFile(join(root, "public/models/laptop-wallpaper.webp"));
+  for (const name of ["keyboard", "internals"]) {
+    await sharp(join(root, `assets/artwork/thinkpad-${name}-reference.png`))
+      .webp({ quality: 94 })
+      .toFile(join(root, `public/models/thinkpad-${name}-texture.webp`));
+  }
 }
 let playwright;
 try {
@@ -41,7 +46,7 @@ try {
   window.bounds=[]; window.frames=[];
   for(const phase of [0,0.25,0.5,0.75,1]) {
     assembly.setProgress(phase,true);assembly.draw(phase);
-    window.frames.push({phase,image:renderer.domElement.toDataURL('image/webp',0.93)});
+    window.frames.push({phase,image:renderer.domElement.toDataURL('image/png')});
     const gl=renderer.getContext();
     if(gl.isContextLost())throw new Error('WebGL context lost while rendering poster');
     const pixels=new Uint8Array(1200*1200*4);
@@ -58,7 +63,21 @@ try {
     window.bounds.push({phase,frame:[minX,minY,maxX,maxY],calls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
   }
   assembly.setProgress(0,true);assembly.draw(0);
-  window.result=renderer.domElement.toDataURL('image/webp',0.93);
+  window.result=renderer.domElement.toDataURL('image/png');
+  let keycaps=0;
+  assembly.scene.traverse(node=>{if(node.isInstancedMesh&&node.geometry.attributes.keyUvRect)keycaps+=node.count;});
+  if(keycaps!==84)throw new Error('Expected 84 independent keycaps, got '+keycaps);
+  for(const aspect of [1,4/3]) for(const phase of [0,1]) for(let angle=0;angle<4;angle++) {
+    assembly.camera.aspect=aspect;assembly.camera.updateProjectionMatrix();
+    assembly.resetOrbit();assembly.orbitBy(angle*Math.PI/2,0);assembly.setProgress(phase);assembly.draw();
+    const projected=new THREE.Box3();
+    assembly.scene.children.filter(node=>node.isGroup).forEach(node=>projected.expandByObject(node));
+    for(let i=0;i<8;i++) {
+      const point=new THREE.Vector3(i&1?projected.max.x:projected.min.x,i&2?projected.max.y:projected.min.y,i&4?projected.max.z:projected.min.z).project(assembly.camera);
+      if(Math.abs(point.x)>.99||Math.abs(point.y)>.99)throw new Error('Orbit cropped at '+[aspect,phase,angle]);
+    }
+  }
+  assembly.camera.aspect=1;assembly.camera.updateProjectionMatrix();assembly.resetOrbit();assembly.setProgress(0);assembly.draw();
 }catch(error){window.failure=String(error);}
 </script>`;
 const types = { ".js": "text/javascript", ".mjs": "text/javascript", ".glb": "model/gltf-binary" };
@@ -95,7 +114,7 @@ try {
   });
   const page = await browser.newPage({ viewport: { width: 1200, height: 1200 } });
   await page.goto(`http://127.0.0.1:${server.address().port}`);
-  await page.waitForFunction(() => window.result || window.failure);
+  await page.waitForFunction(() => window.result || window.failure, { timeout: 60000 });
   const result = await page.evaluate(() => ({
     image: window.result,
     error: window.failure,
@@ -107,7 +126,9 @@ try {
     for (const frame of result.frames ?? []) {
       await writeFile(
         join(process.env.ASSEMBLY_PREVIEW_DIR, `assembly-${frame.phase}.webp`),
-        Buffer.from(frame.image.split(",")[1], "base64"),
+        await sharp(Buffer.from(frame.image.split(",")[1], "base64"))
+          .webp({ quality: 93 })
+          .toBuffer(),
       );
     }
     await page.evaluate(() => (document.body.style.background = "#0B1426"));
@@ -115,12 +136,14 @@ try {
     console.log(JSON.stringify(result.bounds));
   }
   if (result.error) throw new Error(result.error);
-  const data = Buffer.from(result.image.split(",")[1], "base64");
+  const data = await sharp(Buffer.from(result.image.split(",")[1], "base64"))
+    .webp({ quality: 93 })
+    .toBuffer();
   if (!process.argv.includes("--check")) {
     await writeFile(join(root, "public/models/laptop-assembly.webp"), data);
   }
   console.log(
-    `laptop-assembly.webp: 1200x1200, ${Math.round(data.length / 1024)} kB; all five assembly phases are framed`,
+    `laptop-assembly.webp: 1200x1200, ${Math.round(data.length / 1024)} kB; five phases, 84 keycaps and 16 orbit/framing checks passed`,
   );
 } finally {
   await browser?.close();
