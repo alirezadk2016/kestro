@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { WebGLRenderer } from "three";
 import type { Lang } from "@/lib/i18n";
-import view from "@/lib/hero-view.json";
 
 type Assembly = {
   setProgress: (progress: number, immediate?: boolean) => void;
@@ -54,7 +53,7 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
         if (disposed || reduced.matches || token !== generation) return;
         renderer = new THREE.WebGLRenderer({ canvas: element!, alpha: true, antialias: true });
         renderer.setClearAlpha(0);
-        assembly = (await createLaptopAssembly(renderer, view)) as unknown as Assembly;
+        assembly = (await createLaptopAssembly(renderer)) as unknown as Assembly;
         if (disposed || reduced.matches || token !== generation) {
           assembly.dispose();
           renderer.dispose();
@@ -64,7 +63,7 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
       } catch {
         assembly?.dispose();
         renderer?.dispose();
-        if (!disposed) setState("fallback");
+        if (!disposed && token === generation) setState("fallback");
         return;
       }
 
@@ -91,9 +90,7 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
       function resize() {
         const bounds = element!.getBoundingClientRect();
         if (!bounds.width || !bounds.height) return;
-        engine.setPixelRatio(
-          Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.5 : 1.75),
-        );
+        engine.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.5 : 2));
         engine.setSize(bounds.width, bounds.height, false);
         scene.camera.aspect = bounds.width / bounds.height;
         scene.camera.updateProjectionMatrix();
@@ -145,6 +142,8 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
         cancelAnimationFrame(frame);
         frame = 0;
         visible = false;
+        cleanup?.();
+        cleanup = undefined;
         setState("fallback");
       };
 
