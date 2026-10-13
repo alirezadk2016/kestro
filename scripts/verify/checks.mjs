@@ -580,6 +580,31 @@ for (const [name, viewport] of [
   await context.close();
 }
 
+/* Desktop-only repair artwork must cost nothing on a mobile connection. */
+for (const path of ["/reparation", "/en/repairs"]) {
+  for (const javaScriptEnabled of [true, false]) {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      javaScriptEnabled,
+    });
+    const page = await context.newPage();
+    const requests = [];
+    page.on("request", (request) => {
+      if (/models\/(laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp/.test(request.url()))
+        requests.push(request.url());
+    });
+    await page.goto(BASE + path, { waitUntil: "networkidle" });
+    await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(250);
+    const figure = page.locator(".repair-laptop");
+    if (await figure.isVisible()) fail(path, "desktop laptop visible on mobile");
+    const state = await figure.getAttribute("data-scene-state");
+    if (state === "ready") fail(path, "mobile WebGL renderer started");
+    if (requests.length) fail(path, "mobile downloaded desktop laptop artwork");
+    await context.close();
+  }
+}
+
 /* ---------------------------------------------------------------- navigation */
 
 /*

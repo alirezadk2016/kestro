@@ -1,9 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "./Container";
 import { getModel } from "@/lib/models";
 import { localePath, type Lang } from "@/lib/i18n";
-import LaptopAssembly from "./LaptopAssembly";
 
 /*
  * A concrete machine on the front page. We do not hold stock, so this is
@@ -40,7 +40,21 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   return (
     <section className="stage py-10 sm:py-16">
       <Container>
-        <LaptopAssembly lang={lang}>
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="relative aspect-square w-full min-w-0 max-lg:max-h-[55svh]">
+            <Image
+              src="/models/laptop-assembly.webp?v=service-v2"
+              fill
+              quality={88}
+              alt={
+                lang === "da"
+                  ? "Illustreret sort erhvervsbærbar med individuelle taster og rød TrackPoint"
+                  : "Illustrated black business laptop with individual keys and red TrackPoint"
+              }
+              sizes="(min-width: 1536px) 40vw, (min-width: 1024px) 560px, 92vw"
+              className="object-contain"
+            />
+          </div>
           <div>
             {/* The heading says what the section is; the model is the example
                 in it. With the model name as the h2, the front page's outline
@@ -77,7 +91,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>
-        </LaptopAssembly>
+        </div>
       </Container>
     </section>
   );

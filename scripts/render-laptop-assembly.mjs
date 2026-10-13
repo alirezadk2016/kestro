@@ -4,17 +4,33 @@ import { existsSync } from "node:fs";
 import { extname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
+import { stepAssemblyMotion } from "../lib/laptop-motion.mjs";
+
+for (const fps of [15, 30, 60, 120]) {
+  let state = { position: 1, velocity: 0 };
+  for (let frame = 0; frame < fps; frame++)
+    state = stepAssemblyMotion(state.position, state.velocity, 0, 1 / fps);
+  if (Math.abs(state.position - 3.8 * Math.exp(-2.8)) > 1e-10)
+    throw new Error(`Frame-rate-dependent motion at ${fps}fps`);
+  const before = state.position;
+  state = stepAssemblyMotion(state.position, state.velocity, 1, 0);
+  if (state.position !== before) throw new Error("Retargeting jumped");
+  for (let frame = 0; frame < fps * 5; frame++) {
+    state = stepAssemblyMotion(state.position, state.velocity, 1, 1 / fps);
+    if (state.position < 0 || state.position > 1) throw new Error("Motion overshot its endpoints");
+  }
+}
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const home = process.env.USERPROFILE ?? process.env.HOME ?? "";
 if (!process.argv.includes("--check")) {
   await sharp(join(root, "assets/artwork/laptop-wallpaper.png"))
     .resize(1536, 960, { fit: "cover" })
-    .webp({ quality: 88 })
+    .webp({ quality: 80, effort: 6 })
     .toFile(join(root, "public/models/laptop-wallpaper.webp"));
   for (const name of ["keyboard", "internals"]) {
     await sharp(join(root, `assets/artwork/thinkpad-${name}-reference.png`))
-      .webp({ quality: 94 })
+      .webp({ quality: 84, effort: 6 })
       .toFile(join(root, `public/models/thinkpad-${name}-texture.webp`));
   }
 }
@@ -44,8 +60,15 @@ try {
   const assembly=await createLaptopAssembly(renderer);
   assembly.camera.aspect=1;assembly.camera.updateProjectionMatrix();
   window.bounds=[]; window.frames=[];
-  for(const phase of [0,0.25,0.5,0.75,1]) {
-    assembly.setProgress(phase,true);assembly.draw(phase);
+  const scales=new Map();
+  assembly.scene.traverse(node=>scales.set(node.uuid,node.scale.clone()));
+  let lens;
+  for(const phase of Array.from({length:11},(_,i)=>i/10)) {
+    assembly.setProgress(phase);assembly.draw(0,true);
+    assembly.scene.traverse(node=>{if(!scales.get(node.uuid).equals(node.scale))throw new Error('Part scale changed at '+phase);});
+    const distance=assembly.camera.userData.framingDistance;
+    if(lens!==undefined&&Math.abs(distance-lens)>1e-8)throw new Error('Lens distance changed during teardown');
+    lens=distance;
     window.frames.push({phase,image:renderer.domElement.toDataURL('image/png')});
     const gl=renderer.getContext();
     if(gl.isContextLost())throw new Error('WebGL context lost while rendering poster');
@@ -62,22 +85,25 @@ try {
     if(minX<12||minY<12||maxX>1187||maxY>1187)throw new Error('Assembly cropped at '+phase+': '+[minX,minY,maxX,maxY].join(','));
     window.bounds.push({phase,frame:[minX,minY,maxX,maxY],calls:renderer.info.render.calls,triangles:renderer.info.render.triangles});
   }
-  assembly.setProgress(0,true);assembly.draw(0);
+  window.service=window.frames.find(frame=>frame.phase===1).image;
+  assembly.setProgress(0);assembly.draw(0,true);
   window.result=renderer.domElement.toDataURL('image/png');
   let keycaps=0;
   assembly.scene.traverse(node=>{if(node.isInstancedMesh&&node.geometry.attributes.keyUvRect)keycaps+=node.count;});
   if(keycaps!==84)throw new Error('Expected 84 independent keycaps, got '+keycaps);
-  for(const aspect of [1,4/3]) for(const phase of [0,1]) for(let angle=0;angle<4;angle++) {
+  for(const aspect of [1,4/3]) for(const phase of [0,.35,.6,1]) for(let angle=0;angle<4;angle++) {
     assembly.camera.aspect=aspect;assembly.camera.updateProjectionMatrix();
-    assembly.resetOrbit();assembly.orbitBy(angle*Math.PI/2,0);assembly.setProgress(phase);assembly.draw();
-    const projected=new THREE.Box3();
-    assembly.scene.children.filter(node=>node.isGroup).forEach(node=>projected.expandByObject(node));
-    for(let i=0;i<8;i++) {
-      const point=new THREE.Vector3(i&1?projected.max.x:projected.min.x,i&2?projected.max.y:projected.min.y,i&4?projected.max.z:projected.min.z).project(assembly.camera);
-      if(Math.abs(point.x)>.99||Math.abs(point.y)>.99)throw new Error('Orbit cropped at '+[aspect,phase,angle]);
-    }
+    assembly.resetOrbit();assembly.orbitBy(angle*Math.PI/2,0);assembly.setProgress(phase);assembly.draw(0,true);
+    assembly.scene.children.filter(node=>node.isGroup).forEach(group=>group.traverse(node=>{
+      if(!node.isMesh)return;
+      const box=node.isInstancedMesh?node.boundingBox:node.geometry.boundingBox;
+      for(let i=0;i<8;i++) {
+        const point=new THREE.Vector3(i&1?box.max.x:box.min.x,i&2?box.max.y:box.min.y,i&4?box.max.z:box.min.z).applyMatrix4(node.matrixWorld).project(assembly.camera);
+        if(Math.abs(point.x)>.99||Math.abs(point.y)>.99)throw new Error('Orbit cropped at '+[aspect,phase,angle]);
+      }
+    }));
   }
-  assembly.camera.aspect=1;assembly.camera.updateProjectionMatrix();assembly.resetOrbit();assembly.setProgress(0);assembly.draw();
+  assembly.camera.aspect=1;assembly.camera.updateProjectionMatrix();assembly.resetOrbit();assembly.setProgress(0);assembly.draw(0,true);
 }catch(error){window.failure=String(error);}
 </script>`;
 const types = { ".js": "text/javascript", ".mjs": "text/javascript", ".glb": "model/gltf-binary" };
@@ -117,6 +143,7 @@ try {
   await page.waitForFunction(() => window.result || window.failure, { timeout: 60000 });
   const result = await page.evaluate(() => ({
     image: window.result,
+    service: window.service,
     error: window.failure,
     frames: window.frames,
     bounds: window.bounds,
@@ -127,7 +154,7 @@ try {
       await writeFile(
         join(process.env.ASSEMBLY_PREVIEW_DIR, `assembly-${frame.phase}.webp`),
         await sharp(Buffer.from(frame.image.split(",")[1], "base64"))
-          .webp({ quality: 93 })
+          .webp({ quality: 86, effort: 6 })
           .toBuffer(),
       );
     }
@@ -137,13 +164,16 @@ try {
   }
   if (result.error) throw new Error(result.error);
   const data = await sharp(Buffer.from(result.image.split(",")[1], "base64"))
-    .webp({ quality: 93 })
+    .webp({ quality: 86, effort: 6 })
     .toBuffer();
   if (!process.argv.includes("--check")) {
     await writeFile(join(root, "public/models/laptop-assembly.webp"), data);
+    await sharp(Buffer.from(result.service.split(",")[1], "base64"))
+      .webp({ quality: 86, effort: 6 })
+      .toFile(join(root, "public/models/laptop-service.webp"));
   }
   console.log(
-    `laptop-assembly.webp: 1200x1200, ${Math.round(data.length / 1024)} kB; five phases, 84 keycaps and 16 orbit/framing checks passed`,
+    `Assembly and service posters: 1200x1200; ${Math.round(data.length / 1024)} kB assembled; 11 phases, fixed scale/lens, 84 keycaps and 32 framing checks passed`,
   );
 } finally {
   await browser?.close();

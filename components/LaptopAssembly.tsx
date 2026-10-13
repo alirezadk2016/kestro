@@ -1,74 +1,104 @@
 "use client";
 
-import Image from "next/image";
-import { RotateCcw } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Laptop, RotateCcw, Wrench } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { WebGLRenderer } from "three";
 import type { Lang } from "@/lib/i18n";
+import { stepAssemblyMotion } from "@/lib/laptop-motion.mjs";
 
 type Assembly = {
-  setProgress: (progress: number, immediate?: boolean) => void;
-  draw: (seconds: number) => void;
-  camera: { aspect: number; updateProjectionMatrix: () => void };
+  setProgress: (progress: number) => void;
+  draw: (delta: number, immediate?: boolean) => void;
+  camera: {
+    aspect: number;
+    updateProjectionMatrix: () => void;
+    userData: { framingDistance: number };
+  };
   dispose: () => void;
   orbitBy: (horizontal: number, vertical: number) => void;
+  setHover: (horizontal: number, vertical: number) => void;
   resetOrbit: () => void;
   orbit: { yaw: number; pitch: number };
+  moving: boolean;
 };
 
-const css = `
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .laptop-assembly-story[data-scene-state="ready"] { min-height: 200svh; }
-  .laptop-assembly-story[data-scene-state="ready"] .laptop-assembly-stage { position: sticky; top: 97px; min-height: calc(100svh - 113px); }
-}
-@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
-  .laptop-assembly-story[data-scene-state="ready"] .laptop-assembly-track { height: 140svh; }
-  .laptop-assembly-story[data-scene-state="ready"] .laptop-assembly-viewport { position: sticky; top: 97px; }
-}
-`;
+const buttonClass =
+  "flex h-11 w-11 flex-none items-center justify-center rounded border border-transparent text-paper/80 transition-colors hover:bg-paper/5 hover:text-paper aria-pressed:border-brand-300/40 aria-pressed:bg-brand-400/10 aria-pressed:text-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
 
-export default function LaptopAssembly({ lang, children }: { lang: Lang; children: ReactNode }) {
-  const story = useRef<HTMLDivElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
+/** The workshop's interactive product view; the homepage uses a server-rendered still. */
+export default function LaptopAssembly({
+  lang,
+  className = "",
+}: {
+  lang: Lang;
+  className?: string;
+}) {
+  const root = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
-  const reset = useRef<HTMLButtonElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const slider = useRef<HTMLInputElement>(null);
+  const controller = useRef<{
+    target: (value: number, scrub: boolean) => void;
+    reset: () => void;
+  } | null>(null);
+  const requested = useRef(1);
   const [state, setState] = useState("poster");
+  const [target, setTarget] = useState(1);
+  const instructionsId = useId();
+  const labels =
+    lang === "da"
+      ? {
+          model: "Interaktiv illustration af en bærbar computer til reparation",
+          assembled: "Samlet computer",
+          service: "Servicedele",
+          separation: "Adskillelse",
+          reset: "Nulstil visning",
+        }
+      : {
+          model: "Interactive illustration of a laptop for repair",
+          assembled: "Assembled laptop",
+          service: "Service components",
+          separation: "Disassembly",
+          reset: "Reset view",
+        };
+
+  function choose(value: number, scrub = false) {
+    requested.current = value;
+    setTarget(value);
+    controller.current?.target(value, scrub);
+  }
 
   useEffect(() => {
-    const element = canvas.current;
-    const root = story.current;
-    const panel = stage.current;
-    const rail = track.current;
-    const view = viewport.current;
-    const resetButton = reset.current;
-    if (!element || !root || !panel || !rail || !view || !resetButton) return;
-
+    const element = canvas.current,
+      view = viewport.current,
+      figure = root.current,
+      input = slider.current;
+    if (!element || !view || !figure || !input) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = window.matchMedia("(min-width: 1024px)");
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
       .connection;
-    let disposed = false;
+    let disposed = false,
+      starting = false,
+      generation = 0;
     let cleanup: (() => void) | undefined;
-    let starting = false;
-    let generation = 0;
 
     async function start() {
-      if (starting || disposed || reduced.matches || connection?.saveData) return;
+      if (disposed || starting || !desktop.matches || reduced.matches || connection?.saveData)
+        return;
       starting = true;
       const token = ++generation;
-      let renderer: WebGLRenderer | undefined;
-      let assembly: Assembly | undefined;
+      let renderer: WebGLRenderer | undefined, assembly: Assembly | undefined;
       try {
         const [THREE, { createLaptopAssembly }] = await Promise.all([
           import("three"),
           import("@/lib/laptop-assembly-scene.mjs"),
         ]);
-        if (disposed || reduced.matches || token !== generation) return;
+        if (disposed || !desktop.matches || reduced.matches || token !== generation) return;
         renderer = new THREE.WebGLRenderer({ canvas: element!, alpha: true, antialias: true });
         renderer.setClearAlpha(0);
         assembly = (await createLaptopAssembly(renderer)) as unknown as Assembly;
-        if (disposed || reduced.matches || token !== generation) {
+        if (disposed || !desktop.matches || reduced.matches || token !== generation) {
           assembly.dispose();
           renderer.dispose();
           return;
@@ -81,80 +111,87 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
         return;
       }
 
-      const scene = assembly!;
-      const engine = renderer!;
-      let frame = 0;
-      let visible = false;
-      let previous = 0;
-      let target = 0;
-      let current = 0;
-      let measure = true;
-      let lastMotion = performance.now();
+      const scene = assembly!,
+        engine = renderer!;
+      let frame = 0,
+        previous = 0,
+        velocity = 0,
+        lastMotion = performance.now(),
+        scrubUntil = 0;
+      let visible = false,
+        current = requested.current,
+        destination = current;
+      let pointer:
+        { id: number; x: number; y: number; touch: boolean; dragging: boolean } | undefined;
 
-      function progress() {
-        if (window.innerWidth >= 1024) {
-          const distance = Math.max(1, root!.offsetHeight - panel!.offsetHeight);
-          return Math.min(1, Math.max(0, (97 - root!.getBoundingClientRect().top) / distance));
+      function draw(now: number) {
+        frame = 0;
+        if (!desktop.matches || reduced.matches) {
+          motionChanged();
+          return;
         }
-        const distance = Math.max(1, rail!.offsetHeight - view!.offsetHeight);
-        return Math.min(1, Math.max(0, (97 - rail!.getBoundingClientRect().top) / distance));
+        if (disposed || !visible || document.hidden) return;
+        const delta = previous ? Math.max(0, (now - previous) / 1000) : 1 / 60;
+        previous = now;
+        const omega = now < scrubUntil ? 18 : 2.8;
+        const motion = stepAssemblyMotion(current, velocity, destination, delta, omega);
+        current = motion.position;
+        velocity = motion.velocity;
+        scene.setProgress(current);
+        scene.draw(delta);
+        figure!.dataset.assemblyProgress = current.toFixed(4);
+        figure!.dataset.animationTime = now.toFixed(3);
+        figure!.dataset.orbitYaw = scene.orbit.yaw.toFixed(4);
+        figure!.dataset.framingDistance = scene.camera.userData.framingDistance.toFixed(4);
+        if (now >= scrubUntil) input!.value = String(Math.round(current * 100));
+        if (
+          Math.abs(current - destination) + Math.abs(velocity) > 0.00015 ||
+          scene.moving ||
+          now - lastMotion < 250
+        )
+          frame = requestAnimationFrame(draw);
       }
-
+      function schedule() {
+        if (!desktop.matches || reduced.matches) {
+          motionChanged();
+          return;
+        }
+        if (!frame && visible && !document.hidden && desktop.matches && !reduced.matches) {
+          previous = 0;
+          frame = requestAnimationFrame(draw);
+        }
+      }
+      function wake() {
+        lastMotion = performance.now();
+        schedule();
+      }
       function resize() {
-        if (reduced.matches) {
+        if (!desktop.matches || reduced.matches) {
           motionChanged();
           return;
         }
         const bounds = element!.getBoundingClientRect();
         if (!bounds.width || !bounds.height) return;
-        engine.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.5 : 2));
+        engine.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         engine.setSize(bounds.width, bounds.height, false);
         scene.camera.aspect = bounds.width / bounds.height;
         scene.camera.updateProjectionMatrix();
-        measure = true;
-        lastMotion = performance.now();
+        wake();
       }
-
-      function draw(now: number) {
-        frame = 0;
-        if (reduced.matches) {
-          motionChanged();
-          return;
-        }
-        if (disposed || !visible || document.hidden) return;
-        const delta = previous ? Math.min((now - previous) / 1000, 0.1) : 0.016;
-        previous = now;
-        if (measure) {
-          target = progress();
-          measure = false;
-        }
-        current += (target - current) * (1 - Math.exp(-delta / 0.12));
-        scene.setProgress(current);
-        scene.draw(now / 1000);
-        root!.dataset.assemblyProgress = current.toFixed(3);
-        root!.dataset.orbitYaw = scene.orbit.yaw.toFixed(3);
-        if (Math.abs(target - current) > 0.001 || now - lastMotion < 1400) {
-          frame = requestAnimationFrame(draw);
-        }
-      }
-
-      function schedule() {
-        if (!frame && visible && !document.hidden && !reduced.matches) {
-          previous = 0;
-          frame = requestAnimationFrame(draw);
-        }
-      }
-
-      const onScroll = () => {
-        measure = true;
-        lastMotion = performance.now();
-        schedule();
+      const resetView = () => {
+        scene.resetOrbit();
+        wake();
       };
-      let pointer:
-        { id: number; x: number; y: number; touch: boolean; dragging: boolean } | undefined;
+      controller.current = {
+        target(value, scrub) {
+          destination = value;
+          scrubUntil = scrub ? performance.now() + 200 : 0;
+          wake();
+        },
+        reset: resetView,
+      };
       const onPointerDown = (event: PointerEvent) => {
-        if (!event.isPrimary || event.button !== 0 || !(event.target instanceof HTMLCanvasElement))
-          return;
+        if (!event.isPrimary || event.button !== 0 || event.target !== element) return;
         pointer = {
           id: event.pointerId,
           x: event.clientX,
@@ -162,10 +199,21 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
           touch: event.pointerType === "touch",
           dragging: false,
         };
+        scene.setHover(0, 0);
         view!.focus({ preventScroll: true });
       };
       const onPointerMove = (event: PointerEvent) => {
-        if (!pointer || pointer.id !== event.pointerId) return;
+        if (!pointer) {
+          if (event.pointerType !== "mouse" || event.target !== element) return;
+          const box = view!.getBoundingClientRect();
+          scene.setHover(
+            ((event.clientX - box.left) / box.width) * 2 - 1,
+            ((event.clientY - box.top) / box.height) * 2 - 1,
+          );
+          wake();
+          return;
+        }
+        if (pointer.id !== event.pointerId) return;
         const x = event.clientX - pointer.x,
           y = event.clientY - pointer.y;
         if (!pointer.dragging) {
@@ -178,76 +226,62 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
           element!.setPointerCapture(event.pointerId);
           view!.dataset.dragging = "true";
         }
-        scene.orbitBy(-x * 0.007, pointer.touch ? 0 : y * 0.005);
+        scene.orbitBy(-x * 0.006, pointer.touch ? 0 : y * 0.004);
         pointer.x = event.clientX;
         pointer.y = event.clientY;
-        lastMotion = performance.now();
-        schedule();
+        wake();
       };
       const onPointerEnd = (event: PointerEvent) => {
         if (pointer && event.pointerId !== pointer.id) return;
         pointer = undefined;
         delete view!.dataset.dragging;
       };
+      const onPointerLeave = () => {
+        scene.setHover(0, 0);
+        wake();
+      };
       const onKeyDown = (event: KeyboardEvent) => {
-        if (event.target !== view) return;
-        if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home"].includes(event.key))
+        if (
+          event.target !== view ||
+          !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home"].includes(event.key)
+        )
           return;
         event.preventDefault();
-        if (event.key === "Home") scene.resetOrbit();
+        if (event.key === "Home") resetView();
         else
           scene.orbitBy(
             event.key === "ArrowLeft" ? -0.12 : event.key === "ArrowRight" ? 0.12 : 0,
             event.key === "ArrowUp" ? 0.08 : event.key === "ArrowDown" ? -0.08 : 0,
           );
-        lastMotion = performance.now();
-        schedule();
-      };
-      const onReset = () => {
-        scene.resetOrbit();
-        lastMotion = performance.now();
-        schedule();
+        wake();
       };
       const onVisibility = () => {
         if (document.hidden) {
           cancelAnimationFrame(frame);
           frame = 0;
-        } else {
-          measure = true;
-          schedule();
-        }
+        } else wake();
       };
       const onContextLost = (event: Event) => {
         event.preventDefault();
-        cancelAnimationFrame(frame);
-        frame = 0;
-        visible = false;
         cleanup?.();
         cleanup = undefined;
         setState("fallback");
       };
 
       resize();
-      current = target = progress();
-      scene.setProgress(current, true);
-      scene.draw(0);
+      scene.setProgress(current);
+      scene.draw(0, true);
       const resizeObserver = new ResizeObserver(resize);
-      resizeObserver.observe(element!);
-      resizeObserver.observe(root!);
-      resizeObserver.observe(rail!);
+      resizeObserver.observe(view!);
       const visibilityObserver = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
-        if (visible) {
-          measure = true;
-          schedule();
-        } else {
+        if (visible) wake();
+        else {
           cancelAnimationFrame(frame);
           frame = 0;
         }
       });
-      visibilityObserver.observe(element!);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll, { passive: true });
+      visibilityObserver.observe(view!);
       document.addEventListener("visibilitychange", onVisibility);
       element!.addEventListener("webglcontextlost", onContextLost);
       view!.addEventListener("pointerdown", onPointerDown);
@@ -255,16 +289,14 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
       view!.addEventListener("pointerup", onPointerEnd);
       view!.addEventListener("pointercancel", onPointerEnd);
       view!.addEventListener("lostpointercapture", onPointerEnd);
+      view!.addEventListener("pointerleave", onPointerLeave);
       view!.addEventListener("keydown", onKeyDown);
-      resetButton!.addEventListener("click", onReset);
       setState("ready");
-
       cleanup = () => {
         cancelAnimationFrame(frame);
+        controller.current = null;
         resizeObserver.disconnect();
         visibilityObserver.disconnect();
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onScroll);
         document.removeEventListener("visibilitychange", onVisibility);
         element!.removeEventListener("webglcontextlost", onContextLost);
         view!.removeEventListener("pointerdown", onPointerDown);
@@ -272,23 +304,24 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
         view!.removeEventListener("pointerup", onPointerEnd);
         view!.removeEventListener("pointercancel", onPointerEnd);
         view!.removeEventListener("lostpointercapture", onPointerEnd);
+        view!.removeEventListener("pointerleave", onPointerLeave);
         view!.removeEventListener("keydown", onKeyDown);
-        resetButton!.removeEventListener("click", onReset);
         scene.dispose();
         engine.dispose();
       };
     }
 
     const motionChanged = () => {
-      if (reduced.matches) {
+      if (!desktop.matches || reduced.matches) {
         generation++;
         cleanup?.();
         cleanup = undefined;
-        setState("poster");
         starting = false;
+        setState(desktop.matches ? "fallback" : "poster");
       } else void start();
     };
     reduced.addEventListener("change", motionChanged);
+    desktop.addEventListener("change", motionChanged);
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
@@ -296,72 +329,112 @@ export default function LaptopAssembly({ lang, children }: { lang: Lang; childre
           void start();
         }
       },
-      { rootMargin: "400px" },
+      { rootMargin: "250px" },
     );
-    observer.observe(element);
+    observer.observe(view);
     if (reduced.matches || connection?.saveData) setState("fallback");
-
     return () => {
       disposed = true;
       generation++;
       observer.disconnect();
       reduced.removeEventListener("change", motionChanged);
+      desktop.removeEventListener("change", motionChanged);
       cleanup?.();
     };
   }, []);
 
   return (
-    <div ref={story} className="laptop-assembly-story relative" data-scene-state={state}>
-      <style>{css}</style>
+    <figure
+      ref={root}
+      className={`repair-laptop hidden min-w-0 lg:block ${className}`}
+      data-scene-state={state}
+    >
+      <span id={instructionsId} className="sr-only" hidden={state !== "ready"}>
+        {lang === "da"
+          ? "Brug piletasterne til at dreje modellen og Home til at nulstille visningen."
+          : "Use the arrow keys to rotate the model and Home to reset the view."}
+      </span>
       <div
-        ref={stage}
-        className="laptop-assembly-stage grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16"
+        ref={viewport}
+        className={`repair-laptop-viewport relative aspect-square max-h-[min(540px,65svh)] w-full min-w-0 ${state === "ready" ? "cursor-grab touch-pan-y select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper/70 data-[dragging=true]:cursor-grabbing motion-reduce:cursor-default" : ""}`}
+        role={state === "ready" ? "group" : undefined}
+        tabIndex={state === "ready" ? 0 : undefined}
+        aria-label={state === "ready" ? labels.model : undefined}
+        aria-describedby={state === "ready" ? instructionsId : undefined}
       >
-        <div ref={track} className="laptop-assembly-track min-w-0">
-          <div
-            ref={viewport}
-            className={`laptop-assembly-viewport relative aspect-square min-w-0 max-lg:max-h-[55svh] ${state === "ready" ? "cursor-grab touch-pan-y select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper/70 data-[dragging=true]:cursor-grabbing" : ""}`}
-            role={state === "ready" ? "group" : undefined}
-            tabIndex={state === "ready" ? 0 : undefined}
-            aria-label={
-              state === "ready"
-                ? lang === "da"
-                  ? "Interaktiv 3D-model af en illustreret erhvervsbærbar"
-                  : "Interactive 3D model of an illustrated business laptop"
-                : undefined
+        <picture>
+          <source media="(min-width: 1024px)" srcSet="/models/laptop-service.webp" />
+          {/* A media-scoped source keeps the desktop poster off mobile networks, even without JS. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+            alt={
+              lang === "da"
+                ? "Illustreret bærbar i servicevisning med bundplade, RAM, SSD og batteri"
+                : "Illustrated laptop in service view with base cover, memory, SSD and battery"
             }
-          >
-            <Image
-              src="/models/laptop-assembly.webp"
-              alt={
-                lang === "da"
-                  ? "Illustreret sort erhvervsbærbar med individuelle taster og rød TrackPoint"
-                  : "Illustrated black business laptop with individual keys and red TrackPoint"
-              }
-              fill
-              quality={88}
-              sizes="(min-width: 1536px) 40vw, (min-width: 1024px) 560px, 92vw"
-              className={`object-contain transition-opacity duration-300 motion-reduce:transition-none ${state === "ready" ? "opacity-0" : "opacity-100"}`}
-            />
-            <canvas
-              ref={canvas}
-              aria-hidden="true"
-              className={`absolute inset-0 h-full w-full transition-opacity duration-300 motion-reduce:transition-none ${state === "ready" ? "opacity-100" : "opacity-0"}`}
-            />
-            <button
-              ref={reset}
-              type="button"
-              hidden={state !== "ready"}
-              title={lang === "da" ? "Nulstil visning" : "Reset view"}
-              aria-label={lang === "da" ? "Nulstil 3D-visning" : "Reset 3D view"}
-              className={`absolute bottom-2 right-2 ${state === "ready" ? "flex" : "hidden"} h-11 w-11 items-center justify-center rounded border border-paper/20 bg-ink/80 text-paper/80 transition-colors hover:border-paper/50 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
-            >
-              <RotateCcw size={18} aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-        {children}
+            width={1200}
+            height={1200}
+            decoding="async"
+            className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 motion-reduce:transition-none motion-reduce:!opacity-100 ${state === "ready" ? "opacity-0" : "opacity-100"}`}
+          />
+        </picture>
+        <canvas
+          ref={canvas}
+          aria-hidden="true"
+          className={`absolute inset-0 h-full w-full transition-opacity duration-300 motion-reduce:transition-none motion-reduce:!opacity-0 ${state === "ready" ? "opacity-100" : "opacity-0"}`}
+        />
       </div>
-    </div>
+      <div
+        className={`mt-2 flex items-center gap-2 border-t border-paper/10 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none ${state === "ready" ? "" : "invisible pointer-events-none"}`}
+        aria-hidden={state !== "ready"}
+      >
+        <button
+          type="button"
+          className={buttonClass}
+          title={labels.assembled}
+          aria-label={labels.assembled}
+          aria-pressed={target === 0}
+          disabled={state !== "ready"}
+          onClick={() => choose(0)}
+        >
+          <Laptop size={19} aria-hidden="true" />
+        </button>
+        <input
+          ref={slider}
+          type="range"
+          min={0}
+          max={100}
+          step={1}
+          defaultValue={100}
+          disabled={state !== "ready"}
+          aria-label={labels.separation}
+          title={labels.separation}
+          className="h-11 min-w-0 flex-1 cursor-ew-resize accent-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          onChange={(event) => choose(Number(event.currentTarget.value) / 100, true)}
+        />
+        <button
+          type="button"
+          className={buttonClass}
+          title={labels.service}
+          aria-label={labels.service}
+          aria-pressed={target === 1}
+          disabled={state !== "ready"}
+          onClick={() => choose(1)}
+        >
+          <Wrench size={19} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className={buttonClass}
+          title={labels.reset}
+          aria-label={labels.reset}
+          disabled={state !== "ready"}
+          onClick={() => controller.current?.reset()}
+        >
+          <RotateCcw size={18} aria-hidden="true" />
+        </button>
+      </div>
+    </figure>
   );
 }

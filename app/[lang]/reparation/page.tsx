@@ -3,7 +3,7 @@ import { ArrowDown } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
-import HeaderArt from "@/components/HeaderArt";
+import LaptopAssembly from "@/components/LaptopAssembly";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
@@ -34,7 +34,8 @@ const copy = {
     pricesBody:
       "Prisen afhænger af, hvad der skal laves, og hvilke dele der skal bruges. Vi giver en pris, før vi går i gang – du bliver ikke overrasket bagefter.",
     formTitle: "Beskriv problemet",
-    formBody: "Skriv, hvad der er galt, og hvilken model det er, så vender vi tilbage med et estimat.",
+    formBody:
+      "Skriv, hvad der er galt, og hvilken model det er, så vender vi tilbage med et estimat.",
   },
   en: {
     metaTitle: "Computer repairs and upgrades — individuals welcome | Kestro",
@@ -152,13 +153,10 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <section className="py-10 max-md:-mt-[65px] max-md:pt-[65px] sm:py-20">
+      <section className="py-8 sm:py-16">
         <Container>
-          {/* The workshop's subject in the header: a machine opened into its
-              layers. Beside the text from lg; on a phone it is the header's
-              ground under the glass bar, with the title on glass over it. */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="glass-card relative z-10 max-md:-mt-14 lg:col-span-7">
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-12">
+            <div className="relative z-10 lg:col-span-6">
               <PageHeader
                 title={c.title}
                 description={c.description}
@@ -178,21 +176,12 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               </Button>
             </div>
 
-            <HeaderArt
-              src="/cards/exploded.webp"
-              width={1536}
-              height={1024}
-              alt={
-                lang === "da"
-                  ? "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade"
-                  : "A laptop separated into layers: screen, keyboard, mainboard and base plate"
-              }
-              className="mt-8 aspect-[4/3] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-14 lg:self-start"
-              imgClassName="!object-contain"
-              bleed
+            <LaptopAssembly
+              lang={lang}
+              className="mt-6 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-center"
             />
 
-            <div className="mt-10 max-w-3xl lg:col-span-7 lg:mt-12">
+            <div className="mt-8 max-w-3xl lg:col-span-6 lg:mt-10">
               <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
             </div>
           </div>

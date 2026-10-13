@@ -1,63 +1,93 @@
-# Homepage Laptop Assembly
+# Laptop Product and Service Views
 
-The typical-machine section uses a scroll-controlled Three.js assembly inspired
-by the supplied product assembly video. The homepage hero is independent and
-unchanged by this implementation.
+## Scope
 
-`ExampleMachine.tsx` retains the bilingual copy and real catalogue link.
-`LaptopAssembly.tsx` supplies the responsive scene, desktop sticky stage and
-mobile visual track. Horizontal drag rotates the camera without consuming
-vertical page scrolling; arrow keys and Home provide a keyboard alternative.
-The localized reset control restores the initial camera angle.
-`laptop-assembly-model.mjs` builds an independent detailed device: rounded
-matte black soft-touch panels, sculpted instanced keycaps with reference-based
-US legends, red TrackPoint, ports, Mylar-style touchpad, webcam shutter, hinges,
-PCB traces and solder, radial fan, single copper heatpipe, two SO-DIMM modules,
-storage caddy and NVMe illustration, internal and removable batteries, speakers
-and bottom-cover screws. `laptop-keyboard.mjs` maps the approved keyboard artwork
-onto 84 independent keycaps rather than placing one photograph over a flat plane.
-`laptop-assembly-scene.mjs` supplies physical materials, studio reflections,
-adaptive-resolution self-shadows and a soft contact shadow. The illustration
-is not engineering-validated ThinkPad CAD or a promise of a supplied
-configuration. The catalogue's GLBs and photographs are unchanged.
+The homepage is deliberately quiet: `ExampleMachine.tsx` renders a static,
+assembled illustration. There is no WebGL, sticky story or scroll-driven
+teardown in that section. The main homepage hero is independent and unchanged.
 
-Scroll progress starts assembled and separates the enclosure, keyboard,
-display layers and serviceable components in stages. Reverse scrolling
-reassembles them. Soldered components remain attached to the board.
-Camera distance fits the assembly bounds at every phase and viewing angle.
-The renderer is imported near the section, pauses outside the viewport and
-when hidden, and sleeps after its camera and parts settle. Reduced motion,
-data saving and unavailable WebGL retain the static poster.
+The workshop header at `/reparation` and `/en/repairs` uses `LaptopAssembly.tsx`
+on desktop (1024px and above). Below that breakpoint the entire viewer,
+including poster and controls, is absent from the layout. A media-scoped
+picture source prevents mobile poster downloads, even without JavaScript;
+the renderer's media-query guard prevents Three.js and texture downloads.
+Resizing below the breakpoint disposes an active renderer.
+Its initial service view shows the hardware from the underside. Pointer hover
+adds a restrained, damped response; dragging or arrow keys rotates the camera.
+The assembled/service icon buttons and native range input control teardown.
+The page's wheel scrolling is never captured. The reset icon restores the
+viewing angle without changing the assembly state.
 
-Run `npm run build:assembly` to regenerate `public/models/laptop-assembly.webp`
-from the exact same scene. The renderer needs Playwright and Chromium, using
-the same environment variables supported by the existing verification tools.
-The export checks canvas pixels and framing before writing the poster.
-Set `ASSEMBLY_PREVIEW_DIR` to export every checked phase and render-cost data.
+Existing copy, SEO, service links, contact form and catalogue assets are intact.
 
-## Hardware References
+## Mechanical Choreography
 
-The two `assets/artwork/thinkpad-*-reference.png` masters are original generated
+`laptop-assembly-model.mjs` keeps serviceable components as independent meshes,
+with a thinner enclosure and keycaps. The lid pivots around the hinge; the
+intact device lifts clear of the surface and turns to its service side before
+any parts are removed. Captive
+screws loosen along their own axes and remain with the bottom cover. The cover
+first lifts clear, then moves behind the device before tilting out of the way.
+
+Memory modules tilt around their connector edges before being extracted.
+Storage slides out of its connector before lifting. The internal battery and
+cooling assembly release later. The motherboard, soldered chips, display,
+touchpad and keyboard remain intact: keys do not float off their keyboard.
+Reversing the control reverses the same continuous sequence.
+
+Transforms never animate part scale. The camera fits the complete motion
+envelope once per viewing angle/aspect rather than zooming to each pose.
+Convex hulls of transformed mesh bounds keep framing tight without treating
+empty corners of a global bounding box as hardware. Deliberate camera elevation
+and target changes accompany the service-side turn. Pointer rotation and hover
+are damped; teardown uses an interruptible, critically damped timeline and
+quintic phase transitions, without elastic bounce. `laptop-motion.mjs` holds
+the exact damped step and endpoint stops; its timing is checked at 15, 30, 60
+and 120fps, including continuous retargeting.
+
+## Rendering and Fallbacks
+
+`laptop-assembly-scene.mjs` supplies studio lighting, physical materials,
+reflections and adaptive-resolution shadows, updated only when hardware moves.
+The renderer loads near the
+workshop header, pauses offscreen/when hidden and sleeps when settled.
+Reduced motion, data saving, missing WebGL and context loss retain the service
+poster. The control row reserves its space but is invisible and disabled when
+the renderer is unavailable. The static homepage always works without JS.
+
+`npm run build:assembly` exports both `public/models/laptop-assembly.webp`
+(assembled) and `public/models/laptop-service.webp` (service). It checks pixels
+at eleven phases, invariant part scales/lens distance, 84 keycaps and 32 camera
+framing cases. Set `ASSEMBLY_PREVIEW_DIR` to export the reviewed poses. The
+renderer requires Playwright and Chromium, with the existing environment
+variable overrides. `--check` verifies without writing assets.
+
+## Artwork and Hardware References
+
+The `assets/artwork/thinkpad-*-reference.png` masters are original generated
 studies approved during the design review, not manufacturer photography.
-Their corresponding WebP atlases are exported at quality 94 without cropping.
-The internal study informed materials and layout; selected UV regions supply
-RAM and SSD surface detail. Physical meshes remain independently animated.
+Quality-84 WebP atlases are exported at their original dimensions without
+cropping; original PNG masters are retained. The keyboard atlas
+supplies US key legends; selected regions of the internal study supply RAM
+and SSD surface detail. These remain genuine 3D meshes, not photograph layers.
 
-Proportions and service-part relationships were checked against the official
-[Lenovo T480 service manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t480_hmm_en.pdf)
-and existing local product photographs. The manual's photographs are not
-redistributed. This remains a simplified illustration: optional motherboard,
-storage, keyboard and battery configurations vary.
+Proportions and service relationships were informed by the existing local
+product photographs and the official
+[Lenovo T480 service manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t480_hmm_en.pdf).
+The manual's photographs are not redistributed. This is a simplified service
+illustration, not engineering-validated T480 CAD, a repair instruction or a
+promise of a supplied configuration. Optional storage, board, keyboard and
+battery configurations vary. The catalogue retains its real photographs,
+specifications and existing GLBs.
 
-## Display Artwork
+The display uses the original generated Scandinavian landscape in
+`assets/artwork/laptop-wallpaper.png`, exported at 1536x960, quality 80, to
+`public/models/laptop-wallpaper.webp`.
+Both 1200x1200 posters use quality 86. All WebP exports use effort 6.
 
-`assets/artwork/laptop-wallpaper.png` is an original built-in imagegen image,
-exported at 1536x960, quality 88, to `public/models/laptop-wallpaper.webp`.
-It is loaded only when the assembly enters the viewport's loading margin.
-
-Prompt: "Photorealistic Scandinavian desktop wallpaper, not a laptop image.
-Angular granite mountains and a still Norwegian fjord, mineral rock detail,
-remnant snow, deep blue foreground water and naturally softened distant peaks.
-Blue-hour daylight, pale cool horizon, subtle warm light grazing a ridge.
+Original prompt: "Photorealistic Scandinavian desktop wallpaper, not a laptop
+image. Angular granite mountains and a still Norwegian fjord, mineral rock
+detail, remnant snow, deep blue foreground water and naturally softened distant
+peaks. Blue-hour daylight, pale cool horizon, subtle warm light grazing a ridge.
 Restrained 16:10 landscape photography. No people, buildings, devices, frames,
 typography, logos, watermark, icons, interface, neon glow or oversaturation."
