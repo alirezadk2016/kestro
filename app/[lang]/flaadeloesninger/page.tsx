@@ -472,8 +472,8 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
 
             <HeaderArt
               src="/cards/fleet-scene.webp"
-              width={1100}
-              height={733}
+              width={1536}
+              height={1024}
               alt={
                 lang === "da"
                   ? "Et lokale med ens klargjorte bærbare computere stillet op på borde"

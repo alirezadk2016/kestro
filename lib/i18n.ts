@@ -6,6 +6,7 @@
  */
 
 import { toDanishPath, toEnglishPath } from "./routes";
+import { absoluteUrl, SITE_ORIGIN } from "./site";
 
 export const langs = ["da", "en"] as const;
 
@@ -112,14 +113,15 @@ export function alternatesFor(path: string, lang: Lang) {
  * The image has to be named here even though app/opengraph-image.tsx already
  * generates it: a page that declares `openGraph` replaces the one Next
  * assembled from the file convention, so leaving it out silently drops
- * og:image and downgrades the Twitter card to the small one. Resolved against
- * metadataBase in the layout, so it comes out absolute on the canonical host.
+ * og:image and downgrades the Twitter card to the small one. It is absolute
+ * here, so isolated roots such as /admin and /_not-found cannot fall back to
+ * localhost while Next resolves social metadata.
  *
  * No title or description: Next fills those from the page's own metadata, and
  * repeating them would be two places to edit for one change.
  */
 const OG_IMAGE = {
-  url: "/opengraph-image",
+  url: absoluteUrl("/opengraph-image"),
   width: 1200,
   height: 630,
   type: "image/png",
@@ -129,7 +131,7 @@ export function openGraphFor(path: string, lang: Lang) {
   return {
     type: "website" as const,
     siteName: "Kestro",
-    url: localePath(path, lang),
+    url: absoluteUrl(localePath(path, lang)),
     locale: lang === "da" ? "da_DK" : "en_GB",
     alternateLocale: lang === "da" ? "en_GB" : "da_DK",
     images: [OG_IMAGE],
@@ -139,6 +141,7 @@ export function openGraphFor(path: string, lang: Lang) {
 /** Canonical, hreflang, Open Graph and the Twitter card for a page. */
 export function metaFor(path: string, lang: Lang) {
   return {
+    metadataBase: new URL(SITE_ORIGIN),
     alternates: alternatesFor(path, lang),
     openGraph: openGraphFor(path, lang),
     twitter: {

@@ -1,0 +1,276 @@
+{
+  "version": 1,
+  "created": "2026-10-13",
+  "generator": "Built-in image_gen",
+  "direction": "Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign.",
+  "masters": [
+    {
+      "id": "hero",
+      "prompt": "Use case: product-mockup. Asset type: KESTRO homepage full-width photographic background, wide 2.43:1 landscape, at least 2560 pixels across. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign.\nScene: A believable contemporary Copenhagen waterfront office at blue hour, dark architectural stone, full-height glazing with the actual-looking roofs and waterfront receding beyond. A single beautifully detailed black business laptop open on a honed dark stone desk at the RIGHT 72 percent of the image, front three-quarter view, sharp raised keys, realistic ports and hinge, display with one quiet abstract blue light ribbon. Soft neutral-to-warm architectural grazing light, electric-blue window fill, restrained filmic exposure. The LEFT 55 percent is an exceptionally calm near-black interior wall and shadowed desk, intended for white HTML headline copy with excellent contrast. Keep all bright edges and product to the right. Top 15 percent dark ceiling for navigation. No painted text anywhere, no K logo (real logo is separate in UI), no people, no chairs blocking desk. Actual hardware must be clearly inspectable, not blurry or hidden. Designed composition, high-end commercial camera, no generic neon grid, no beams or haze. Leave the laptop fully within the rightmost 40 percent so mobile art crop can show it.",
+      "file": "hero.png"
+    },
+    {
+      "id": "cat-laptops",
+      "prompt": "Use case: product-mockup. Asset type: category card for KESTRO website. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. This is a new category photograph, not a crop. Reference image 1 is STYLE / MATERIAL / ROOM REFERENCE ONLY. Same blue-hour Nordic room and graphite stone, subtle warm key from left, cool ambient fill, sharp professional 85mm product photography. Landscape 16:9. Subject occupies 75% of width, entirely visible with 10% safety margins, strong separation even in a small card. No people, no red pointing stick, no fake UI; screen carries a single restrained blue light ribbon. Subject: One open black 14-inch business laptop, front-left three-quarter, professional raised keyboard, thin squared bezel, credible metallic hinge and I/O ports. Close product framing, clear keyboard and screen. A simpler quiet stone wall behind, only a little blue-hour window at right. Rich detailed actual surfaces; no glow under device.",
+      "file": "cat-laptops.png"
+    },
+    {
+      "id": "cat-desktops",
+      "prompt": "Use case: product-mockup. Asset type: category card for KESTRO website. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. This is a new category photograph, not a crop. Reference image 1 is STYLE / MATERIAL / ROOM REFERENCE ONLY. Same blue-hour Nordic room and graphite stone, subtle warm key from left, cool ambient fill, sharp professional 85mm product photography. Landscape 16:9. Subject occupies 75% of width, entirely visible with 10% safety margins, strong separation even in a small card. No people, no red pointing stick, no fake UI; screen carries a single restrained blue light ribbon. Subject: One refined small-form-factor graphite desktop tower, standing upright, plus a compact mini-PC horizontally beside it, three-quarter front perspective, realistic front USB-A/USB-C and a tiny blue power indicator, precision ventilation, sharply defined anodized chassis. Both devices in full view, clear readable silhouettes. No screens or laptops.",
+      "file": "cat-desktops.png"
+    },
+    {
+      "id": "cat-monitors",
+      "prompt": "Use case: product-mockup. Asset type: category card for KESTRO website. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. This is a new category photograph, not a crop. Reference image 1 is STYLE / MATERIAL / ROOM REFERENCE ONLY. Same blue-hour Nordic room and graphite stone, subtle warm key from left, cool ambient fill, sharp professional 85mm product photography. Landscape 16:9. Subject occupies 75% of width, entirely visible with 10% safety margins, strong separation even in a small card. No people, no red pointing stick, no fake UI; screen carries a single restrained blue light ribbon. Subject: One 27-inch business monitor with a slim dark graphite frame and a realistic height-adjustable stand, small black USB-C docking station on desk at its right and compact keyboard in front. Landscape screen, plausible ports and one orderly cable. All objects completely inside frame, calm architectural dark background, screen ribbon subtle, no fake text.",
+      "file": "cat-monitors.png"
+    },
+    {
+      "id": "cat-fleet",
+      "prompt": "Use case: product-mockup. Asset type: category card for KESTRO website. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. This is a new category photograph, not a crop. Reference image 1 is STYLE / MATERIAL / ROOM REFERENCE ONLY. Same blue-hour Nordic room and graphite stone, subtle warm key from left, cool ambient fill, sharp professional 85mm product photography. Landscape 16:9. Subject occupies 75% of width, entirely visible with 10% safety margins, strong separation even in a small card. No people, no red pointing stick, no fake UI; screen carries a single restrained blue light ribbon. Subject: Six identical closed premium black business laptops arranged in TWO perfectly aligned stacks of THREE on the stone desk, with one matching open laptop alongside showing their keyboard and display. Credible device thickness, clean ports on the stacked edges. Whole collection fills 80% frame width; tidy precise order fulfillment composition, not a warehouse and not tiny devices.",
+      "file": "cat-fleet.png"
+    },
+    {
+      "id": "exploded",
+      "prompt": "Use case: scientific-educational. Asset type: KESTRO laptop repair campaign technical artwork. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Create a LANDSCAPE 3:2 image on a clean charcoal photography studio set, with very quiet blue-hour architectural fill and warm-neutral key, no window clutter. A believable exploded assembly of ONE black business laptop with FOUR DISTINCT horizontal layers, aligned on one vertical assembly axis: top is a COMPLETE hinged open display with black screen, next is a separate keyboard and touchpad deck, next a high-detail populated motherboard with copper heatpipe, cooling fan, memory and internal battery, bottom is the matching magnesium base shell. Three-quarter elevated camera. All four layers COMPLETELY inside the central 70% width and central 70% height with generous clear margins, not cutting anything. This is a polished engineering illustration of disassembly, so layers float only to expose assembly, not magical levitation. Crisp component detail and subtle thin blue rim light, no glow haze or diagrams or annotations. Perfect exploded view readability even at 480px wide. Do not repeat keyboards, extra lids or multiple computers.",
+      "file": "exploded.png"
+    },
+    {
+      "id": "fleet-scene",
+      "prompt": "Use case: product-mockup. Asset type: KESTRO corporate IT fleet header. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Wide LANDSCAPE 3:2 editorial product photograph. A Nordic equipment preparation studio at blue hour, three orderly rows of IDENTICAL black 14-inch laptops on long dark workbenches, each open at exactly the same angle with one restrained blue ribbon on screen, realistic keyboards and I/O ports. Camera at desk level, close hero laptop in front right, rows recede diagonally to upper left with controlled optical depth of field. Soft warm-neutral overhead inspection lights and blue evening windows. Every front device completely framed with 12% safety margin on all sides. Subject remains legible in a center 4:3 mobile crop. Equipment preparation rather than an empty generic office. No people, no signage, no text, no stacks replacing rows, no arbitrary neon.",
+      "file": "fleet-scene.png"
+    },
+    {
+      "id": "inspektion",
+      "prompt": "Use case: scientific-educational. Asset type: KESTRO buying inspection guide cover, 3:2 landscape. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. One open black business laptop resting firmly on a graphite precision test workbench, front three-quarter elevated camera, screen and keyboard tack sharp. A single narrow quiet electric-blue diagnostic scan line travels vertically across screen and keyboard, only a small understated blue trace outlining the inspected physical edges. Screen is dark with a fine technical test GRID ONLY no text or interface. Nearby one small precision driver and one disconnected USB-C inspection cable, neatly aligned. Focus is plausible inspection of ports, screen, keyboard, hinge and battery. Soft neutral overhead light reveals real surface texture, minimal architectural navy-black background. Laptop fills 75% width with full uncropped corners, no labels, no callout boxes, no fake X-ray circuitry inside screen, no glowing explosion, no dots in space.",
+      "file": "inspektion.png"
+    },
+    {
+      "id": "ydelse",
+      "prompt": "Use case: scientific-educational. Asset type: KESTRO RAM and SSD upgrade guide cover, 3:2 landscape. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Extreme-sharp macro commercial product photograph of ONE laptop DDR4 SODIMM memory module and ONE M.2 2280 NVMe SSD laid diagonally parallel on a matte charcoal precision workbench, RAM above and SSD below, clear separation, matching camera perspective, both fully visible with 14% margins. RAM has realistic black ICs, a single correct notch and fine gold edge contacts; SSD has controller, NAND chips and correct M-key connector. Tiny visible circuit-board copper traces, graphite PCB. Very controlled cool blue edge accent from right with wide neutral white softbox reflection from left. Components are grounded by contact shadows, no levitating components, no beams, no rings, no fake letters, no manufactured labels, no giant oversized pin rows. Premium believable scientific still life that is clearly readable at thumbnail size.",
+      "refinement": "Edit target: the supplied memory and SSD workbench image. Make ONE precise technical correction ONLY: the lower M.2 NVMe SSD currently has two notches on its gold connector at the far right. Make this a proper M-key NVMe connector with exactly ONE off-centre notch near its bottom edge: fill the upper unnecessary notch with matching black PCB and continuing gold contact fingers, keeping the lower notch intact. Keep the complete RAM module, every chip, layout, camera, crop, workbench, tools, lighting and material colours identical. This is a surgical connector geometry repair, not a redesign. No text, no labels.",
+      "file": "ydelse.png"
+    },
+    {
+      "id": "levetid",
+      "prompt": "Use case: product-mockup. Asset type: business hardware lifecycle guide cover. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Landscape 3:2, high-end precise technical editorial photography / physically credible engineering visualization. Graphite studio workbench, calm nearly black architectural background, soft neutral key from upper left and one thin controlled electric-blue rim from right. All primary objects fully inside frame with 12% safety margins, subject fills 75% width, excellent fine detail and small-size readability. No galaxy, star field, glowing particles, vortex, neon rings, sci-fi portals or fake UI. No labels or written words. Three identical business laptops in a sculptural but believable arranged sequence on three very LOW rectangular graphite display plinths, left laptop closed, central laptop open and working with quiet blue screen ribbon, right laptop open with its bottom cover removed revealing repairable motherboard and battery. Each is grounded on its plinth and correctly proportioned, no float. An extremely subtle thin blue path inlaid into the stone visually connects the three stages. The center open laptop is the primary sharp subject. Visually expresses keeping business computers useful through assessment and upgrading rather than a giant glowing lifecycle infographic.",
+      "file": "levetid.png"
+    },
+    {
+      "id": "beslutning",
+      "prompt": "Use case: product-mockup. Asset type: repair-or-replace guide cover. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Landscape 3:2, high-end precise technical editorial photography / physically credible engineering visualization. Graphite studio workbench, calm nearly black architectural background, soft neutral key from upper left and one thin controlled electric-blue rim from right. All primary objects fully inside frame with 12% safety margins, subject fills 75% width, excellent fine detail and small-size readability. No galaxy, star field, glowing particles, vortex, neon rings, sci-fi portals or fake UI. No labels or written words. A balanced editorial still life illustrating a business IT decision: on LEFT an open existing black laptop turned partially over with its bottom cover removed, revealing battery and cooling system, plus a small neat screwdriver and replacement RAM on the table; on RIGHT one intact matching black business laptop open with calm blue ribbon on display. The two occupy equal visual weight separated by clear negative space; precise credible anatomy and visible repair components. No dramatic split-screen effect or beams or divide glow. Dark neutral materials, believable product camera, clean minimal workshop, only the equipment.",
+      "file": "beslutning.png"
+    },
+    {
+      "id": "montering",
+      "prompt": "Use case: scientific-educational. Asset type: build-your-own-PC guide cover. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Landscape 3:2, high-end precise technical editorial photography / physically credible engineering visualization. Graphite studio workbench, calm nearly black architectural background, soft neutral key from upper left and one thin controlled electric-blue rim from right. All primary objects fully inside frame with 12% safety margins, subject fills 75% width, excellent fine detail and small-size readability. No galaxy, star field, glowing particles, vortex, neon rings, sci-fi portals or fake UI. No labels or written words. A meticulously arranged PC assembly still life: one open compact dark graphite desktop case at RIGHT, angled to show the open side and its internal mounting points; a full-size motherboard lying flat at front LEFT, two RAM sticks, one compact graphics card, one dark power supply and a single finned cooler placed neatly around it on the graphite workbench. Each component has a believable distinct shape and is resting on the table, not floating. Enough spacing to see each part, restrained metal highlights and tiny blue accent reflection. Real motherboard proportions, subtle copper traces, no RGB gaming aesthetic or glowing exposed fantasy wires. Subject centered so a tight 3:2 crop preserves every major object.",
+      "file": "montering.png"
+    },
+    {
+      "id": "kompatibilitet",
+      "prompt": "Use case: scientific-educational. Asset type: older hardware OS compatibility guide cover. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Landscape 3:2, high-end precise technical editorial photography / physically credible engineering visualization. Graphite studio workbench, calm nearly black architectural background, soft neutral key from upper left and one thin controlled electric-blue rim from right. All primary objects fully inside frame with 12% safety margins, subject fills 75% width, excellent fine detail and small-size readability. No galaxy, star field, glowing particles, vortex, neon rings, sci-fi portals or fake UI. No labels or written words. One black business laptop open in a minimal precision workshop, understated abstract blue screen background with a single unlabelled four-pane blue window shape rendered as light rather than a trademark. Beside it on the table at front right, one square realistic processor package and one small security-controller circuit board in a neat shallow graphite component tray, clearly grounded. Compatibility expressed through visible inspectable computer hardware, not a floating portal or enormous sci-fi chip. Laptop screen and raised keys are sharp, carefully ordered composition with full product corners visible. No checkmarks, no invented messages, no operating-system text or words.",
+      "file": "kompatibilitet.png"
+    },
+    {
+      "id": "datasikkerhed",
+      "prompt": "Use case: scientific-educational. Asset type: KESTRO secure data erasure knowledge guide cover, 3:2 landscape. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. A calm razor-sharp editorial macro still life on a dark graphite precision workshop bench: ONE correct unbranded M.2 2280 NVMe SSD with a SINGLE off-center M-key notch, alongside one 2.5-inch SATA SSD in a black enclosure, its SATA connector visible. Both resting on table, fully framed with 12% margins. At the back, a laptop is visible only as a subtle secondary shape with screen softly blue and blank. Security suggested by one small PHYSICAL matte metal padlock next to the drives, not a glowing hologram; padlock is a secondary item and no claim/certificate is visible. Soft neutral overhead key shows detailed black IC packages, gold contacts, credible PCB components. Restrained thin blue side light, beautiful metal texture, deep navy-black quiet background, no particles, no annihilation, no fantasy erasing beam, no text.",
+      "file": "datasikkerhed.png"
+    },
+    {
+      "id": "stand",
+      "prompt": "Use case: product-mockup. Asset type: KESTRO refurbished versus used guide cover, 3:2 landscape. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. Two EXACTLY MATCHING graphite-black 14-inch business laptops on the same charcoal workbench side by side, same realistic chassis, same open angle, same neutral key light so comparison is fair. LEFT machine has subtle honest dust, light visible palmrest wear and a few fine scuffs, not broken or grotesque; RIGHT machine is clean and neatly prepared, squared keys and detailed touchpad, same hardware model, tiny precision inspection tools and folded microfiber cloth beside it. Both screens equally dark with one quiet blue reflection, never a fake before/after interface. Each computer fully visible, no bright split effect, no neon aura suggesting new hardware. Precision product photography, believable materials, adequate separation and high readability in thumbnail. No label or text or maker identification.",
+      "file": "stand.png"
+    },
+    {
+      "id": "knowledge",
+      "prompt": "Use case: stylized-concept. Asset type: KESTRO knowledge hub premium editorial artwork. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign. WIDE 2.35:1 landscape composition. A precisely crafted physical sculpture of FOUR upright thin smoked-glass and brushed-aluminium reference folios, arranged as a fan of transparent panels on a charcoal architectural stone plinth at the RIGHT 65% of the image. Panels have a few sparse precise etched schematic lines, a simple circuit diagram, a tiny component outline and a simple graph, NO fake paragraphs, letters, numbers, text, logos or UI labels. Edges catch controlled electric-blue light, broad neutral softbox makes the actual glass material clear, realistic contact shadows and reflections. The LEFT 35% is calm almost-black empty studio ground for real HTML heading. Physical collectible technical publications as a metaphor for practical knowledge, sophisticated premium Scandinavian restraint, not floating magical sci-fi cards. Include generous margins above and below all panels so a 3:2 mobile crop at right retains them completely. High detail, no dust, stars, particles, bokeh blobs, grid, beam or portal.",
+      "file": "knowledge.png"
+    }
+  ],
+  "exports": [
+    {
+      "source": "hero",
+      "group": "hero",
+      "output": "hero/scene.webp",
+      "width": 1942,
+      "height": 800,
+      "quality": 90
+    },
+    {
+      "source": "hero",
+      "group": "hero",
+      "output": "hero/scene.avif",
+      "width": 1942,
+      "height": 800,
+      "quality": 90
+    },
+    {
+      "source": "hero",
+      "group": "hero",
+      "output": "hero/scene-mobile.webp",
+      "width": 820,
+      "height": 796,
+      "crop": [
+        0.51,
+        0,
+        0.43,
+        1
+      ],
+      "quality": 90
+    },
+    {
+      "source": "hero",
+      "group": "hero",
+      "output": "hero/scene-mobile.avif",
+      "width": 820,
+      "height": 796,
+      "crop": [
+        0.51,
+        0,
+        0.43,
+        1
+      ],
+      "quality": 90
+    },
+    {
+      "source": "cat-laptops",
+      "group": "cards",
+      "output": "cards/cat-laptops.webp",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "source": "cat-desktops",
+      "group": "cards",
+      "output": "cards/cat-desktops.webp",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "source": "cat-monitors",
+      "group": "cards",
+      "output": "cards/cat-monitors.webp",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "source": "cat-fleet",
+      "group": "cards",
+      "output": "cards/cat-fleet.webp",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "source": "exploded",
+      "group": "cards",
+      "output": "cards/exploded.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "fleet-scene",
+      "group": "cards",
+      "output": "cards/fleet-scene.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "inspektion",
+      "group": "guides",
+      "output": "viden/inspektion.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "ydelse",
+      "group": "guides",
+      "output": "viden/ydelse.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "levetid",
+      "group": "guides",
+      "output": "viden/levetid.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "beslutning",
+      "group": "guides",
+      "output": "viden/beslutning.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "montering",
+      "group": "guides",
+      "output": "viden/montering.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "kompatibilitet",
+      "group": "guides",
+      "output": "viden/kompatibilitet.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "datasikkerhed",
+      "group": "guides",
+      "output": "viden/datasikkerhed.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "stand",
+      "group": "guides",
+      "output": "viden/stand.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "source": "levetid",
+      "group": "knowledge",
+      "output": "viden/k-lifecycle.webp",
+      "width": 840,
+      "height": 560
+    },
+    {
+      "source": "inspektion",
+      "group": "knowledge",
+      "output": "viden/k-buying.webp",
+      "width": 840,
+      "height": 560
+    },
+    {
+      "source": "ydelse",
+      "group": "knowledge",
+      "output": "viden/k-memory.webp",
+      "width": 840,
+      "height": 560
+    },
+    {
+      "source": "montering",
+      "group": "knowledge",
+      "output": "viden/k-other.webp",
+      "width": 840,
+      "height": 560
+    },
+    {
+      "source": "knowledge",
+      "group": "knowledge",
+      "output": "viden/k-hero.webp",
+      "width": 1600,
+      "height": 681
+    },
+    {
+      "source": "knowledge",
+      "group": "knowledge",
+      "output": "viden/viden.webp",
+      "width": 1200,
+      "height": 800,
+      "position": "right"
+    }
+  ]
+}

@@ -100,6 +100,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                     alt={card.alt[lang]}
                     width={card.width}
                     height={card.height}
+                    quality={88}
                     sizes="(min-width: 1024px) 24vw, (min-width: 640px) 46vw, 46vw"
                     className="h-full w-full object-cover"
                   />

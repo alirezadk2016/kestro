@@ -163,6 +163,9 @@ export default async function CategoryPage(props: {
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
   const categoryModels = getModelsForCategory(category.slug);
+  const pagePath = `/produkter/${category.slug}`;
+  const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
+  const collectionId = `${pageUrl}#collection`;
 
   /*
    * The category as a collection, not just a page with a breadcrumb.
@@ -182,10 +185,10 @@ export default async function CategoryPage(props: {
     ? {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "@id": `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}#collection`,
+        "@id": collectionId,
         name: category.name[lang],
         description: category.metaDescription[lang],
-        url: `${SITE_ORIGIN}${localePath(`/produkter/${category.slug}`, lang)}`,
+        url: pageUrl,
         isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
         about: { "@id": `${SITE_ORIGIN}/#organization` },
         mainEntity: {
@@ -203,7 +206,16 @@ export default async function CategoryPage(props: {
 
   return (
     <>
-      <PageSchema lang={lang} route="/produkter/[slug]" sources={categorySources(category)} />
+      <PageSchema
+        lang={lang}
+        route="/produkter/[slug]"
+        type="CollectionPage"
+        pagePath={pagePath}
+        name={category.name[lang]}
+        description={category.metaDescription[lang]}
+        sources={categorySources(category)}
+        primaryEntityId={collectionJsonLd ? collectionId : undefined}
+      />
 
       {/* Lit by the site's own wash. Two blurred orbs sat here: one was
           bg-brand-950 on bg-brand-950 and drew nothing, the other was the
@@ -357,6 +369,7 @@ export default async function CategoryPage(props: {
                 <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
                   <Image
                     src={exampleModel.images[0].src}
+                    quality={90}
                     alt={exampleModel.images[0].alt[lang]}
                     width={1179}
                     height={1120}
@@ -373,6 +386,7 @@ export default async function CategoryPage(props: {
                     >
                       <Image
                         src={img.src}
+                        quality={90}
                         alt={img.alt[lang]}
                         width={1179}
                         height={1120}

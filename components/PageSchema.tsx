@@ -45,8 +45,10 @@ export default function PageSchema({
   name,
   description,
   sources,
+  /** The real URL path for dynamic routes such as /modeller/[slug]. */
+  pagePath,
   /** Set on pages whose main content is a typed node published separately
-      (Article, Product), so the WebPage points at it instead of repeating it. */
+      (Article, Product, Service), so the WebPage points at it instead of repeating it. */
   primaryEntityId,
 }: {
   lang: Lang;
@@ -55,10 +57,11 @@ export default function PageSchema({
   name?: string;
   description?: string;
   sources?: readonly SourceId[];
+  pagePath?: string;
   primaryEntityId?: string;
 }) {
   const dates = pageDates[route];
-  const url = `${SITE_ORIGIN}${localePath(route.replace(/\/\[slug\]$/, ""), lang)}`;
+  const url = `${SITE_ORIGIN}${localePath(pagePath ?? route.replace(/\/\[slug\]$/, ""), lang)}`;
 
   const json = {
     "@context": "https://schema.org",

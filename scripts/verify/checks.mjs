@@ -23,10 +23,46 @@
  *
  * Exits non-zero on any failure, so it can gate a deploy.
  */
-import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
+const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
+
+async function loadPlaywright() {
+  try {
+    return await import("playwright");
+  } catch {
+    /* Fall through to the bundled runtimes used by local Codex workspaces. */
+  }
+
+  const candidates = [
+    process.env.PLAYWRIGHT_MODULE,
+    "/opt/node22/lib/node_modules/playwright/index.mjs",
+    HOME &&
+      join(
+        HOME,
+        ".cache",
+        "codex-runtimes",
+        "codex-primary-runtime",
+        "dependencies",
+        "node",
+        "node_modules",
+        "playwright",
+        "index.mjs",
+      ),
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return import(pathToFileURL(candidate).href);
+  }
+
+  throw new Error("Playwright is not installed. Set PLAYWRIGHT_MODULE or install playwright.");
+}
+
+const { chromium } = await loadPlaywright();
 
 /** The pages worth checking: one of every template, in both languages. */
 const PAGES = [
@@ -65,9 +101,20 @@ const contrastRatio = (a, b) => {
   return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
 };
 
+const executablePath = [
+  process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,
+  "/opt/pw-browsers/chromium",
+  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+  "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+]
+  .filter(Boolean)
+  .find((candidate) => existsSync(candidate));
+
 const browser = await chromium.launch({
-  executablePath: "/opt/pw-browsers/chromium",
-  args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader"],
+  ...(executablePath ? { executablePath } : {}),
+  args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
 });
 
 /* ---------------------------------------------------------------- structure */
@@ -417,6 +464,9 @@ for (const [name, viewport] of [
       if (texts.length === 0) continue;
 
       const hide = await page.addStyleTag({
+        /* Hide glyph fill without animating the foreground colour. Under GPU
+           load a colour transition can leave antialiased letters in the shot;
+           those are not the background. Keep currentColor surfaces intact. */
         /* text-decoration-color as well as color. An underline drawn in an
            explicit colour — decoration-brand-400/60 on the promise links —
            survives `color: transparent`, and then the sampler reads the
@@ -424,7 +474,7 @@ for (const [name, viewport] of [
            2.62:1 against a link that is in fact sitting on navy. It is part of
            the text, not behind it. */
         content:
-          "*{color:transparent !important;text-decoration-color:transparent !important} svg{visibility:hidden !important}",
+          "*{-webkit-text-fill-color:transparent !important;text-decoration-color:transparent !important;transition:none !important} svg{visibility:hidden !important}",
       });
       await page.waitForTimeout(250);
       const shot = await page.screenshot();

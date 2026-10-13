@@ -707,9 +707,11 @@ export default function ContactForm({
       </div>
 
       {/* Hidden from people by position rather than display:none, which some
-          bots check for. Never focusable, never announced. */}
+          bots check for. Never focusable, never announced, and deliberately
+          carries no visible text: search snippets have picked up off-screen
+          honeypot labels before, which makes a contact result look like a raw
+          form dump instead of a company page. */}
       <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
-        <label htmlFor="website">Website</label>
         <input
           id="website"
           name="website"

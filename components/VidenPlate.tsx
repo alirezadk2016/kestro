@@ -1,36 +1,19 @@
+import Image from "next/image";
 import type { Cluster } from "@/lib/guides";
 
 /*
- * The plates — the Viden hub's own graphic language.
- *
- * These were 600 lines of hand-built isometric SVG: planes, slabs, a lit face
- * per visible side, a contact shadow, an ambient glow. That was the right
- * answer while the alternative was flat wireframe, and it is the wrong answer
- * now that there are rendered plates. On a page whose whole subject is
- * machines, a drawing of a machine sits beside a photograph of one and loses.
- *
- * So they are renders, and the drawing code is gone rather than left behind as
- * something to maintain. What is kept is everything that was never the
- * drawing's job: the corner frame, the index number, the aspect the hub lays
- * out against.
- *
- * Backgrounds rather than <img>. These are decoration — every one sits beside
- * text that says the same thing — so the correct alt is the empty one, and a
- * CSS background has no alt to argue about with a checker. They are also
- * pre-sized to what they draw at, so there is nothing for an optimiser to do.
- *
- * Cost: 52 kB for all five, against about 3 kB of inline SVG. Paid once, on one
- * page, for the difference between a diagram of the subject and a picture of it.
+ * Decorative hub artwork. Cluster thumbnails use next/image for responsive
+ * delivery; the masthead uses a masked background to protect text contrast.
  */
 
-/** 224x150 plates, one per cluster, matched to what the cluster is about. */
+/** 840x560 exports from the same masters as the guide covers. */
 const plate: Record<Cluster, string> = {
   lifecycle: "/viden/k-lifecycle.webp",
   "buying-condition": "/viden/k-buying.webp",
   "memory-storage": "/viden/k-memory.webp",
   /* No guides sit here today, so it never renders; it takes the neutral one
      rather than a picture of something it is not about. */
-  "workplace-hardware": "/viden/k-other.webp",
+  "workplace-hardware": "/cards/cat-monitors.webp",
   "uden-klynge": "/viden/k-other.webp",
 };
 
@@ -121,10 +104,13 @@ export function VidenClusterPlate({
        own, and without this the card collapses to nothing before the image
        paints and jumps when it arrives. */
     <div className={`relative aspect-[224/150] w-full overflow-hidden ${className}`}>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${plate[cluster]})` }}
+      <Image
+        src={plate[cluster]}
+        alt=""
+        fill
+        quality={88}
+        sizes="(min-width: 1024px) 288px, 46vw"
+        className="object-cover"
       />
 
       {/* Kept as text rather than baked into the render: it stays sharp at any

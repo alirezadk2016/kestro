@@ -110,8 +110,9 @@ export default function Statement({ lang }: { lang: Lang }) {
                 src="/cards/exploded.webp"
                 alt={c.explodedAlt}
                 fill
+                quality={88}
                 sizes="(min-width: 1024px) 560px, 92vw"
-                className="object-cover object-[50%_42%]"
+                className="object-contain"
               />
             </div>
           </div>

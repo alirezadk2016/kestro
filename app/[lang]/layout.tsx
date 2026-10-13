@@ -127,7 +127,6 @@ export async function generateMetadata(props: {
   const lang: Lang = isLang(params.lang) ? params.lang : "da";
 
   return {
-    metadataBase: new URL(SITE_ORIGIN),
     title: meta[lang].title,
     description: meta[lang].description,
     ...(Object.keys(verification).length > 0 ? { verification } : {}),

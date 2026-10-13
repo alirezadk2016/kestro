@@ -7,6 +7,7 @@ import AdminNav from "@/components/admin/AdminNav";
 import { AlertIcon } from "@/components/admin/icons";
 import { SESSION_COOKIE, FAILED_COOKIE, sessionValid, adminConfigured } from "@/lib/admin-auth";
 import { countNew } from "@/lib/db";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /**
  * The panel's own shell.
@@ -17,6 +18,7 @@ import { countNew } from "@/lib/db";
  * those and a URL that says /da/admin.
  */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: "Kestro admin",
   /* Belt and braces with the header set in next.config.mjs. Neither is the
      access control — the session below is. */

@@ -104,6 +104,9 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
     (m) => m.group === model.group && m.slug !== model.slug && !sameCategory.includes(m),
   );
   const related = [...sameCategory, ...sameGroup];
+  const pagePath = `/modeller/${model.slug}`;
+  const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
+  const productId = `${pageUrl}#product`;
 
   /*
    * The model as a product Google can recognise.
@@ -118,10 +121,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": productId,
     name: model.name,
     brand: { "@type": "Brand", name: model.brand },
     category: category?.name[lang],
     description: model.intro[lang],
+    url: pageUrl,
     ...(model.images?.length
       ? { image: model.images.map((img) => `${SITE_ORIGIN}${img.src}`) }
       : {}),
@@ -137,7 +142,16 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
   return (
     <>
-      <PageSchema lang={lang} route="/modeller/[slug]" sources={modelSources(model)} />
+      <PageSchema
+        lang={lang}
+        route="/modeller/[slug]"
+        type="ItemPage"
+        pagePath={pagePath}
+        name={model.name}
+        description={model.metaDescription[lang]}
+        sources={modelSources(model)}
+        primaryEntityId={productId}
+      />
 
       <script
         type="application/ld+json"
@@ -196,6 +210,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
                     <Image
                       src={model.images[0].src}
+                      quality={90}
                       alt={model.images[0].alt[lang]}
                       width={1179}
                       height={1120}
@@ -213,6 +228,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                       >
                         <Image
                           src={img.src}
+                          quality={90}
                           alt={img.alt[lang]}
                           width={1179}
                           height={1120}

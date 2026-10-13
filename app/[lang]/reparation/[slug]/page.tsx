@@ -13,7 +13,8 @@ import { repairFaqs, repairFaqTitle, repairSources } from "@/lib/repair-answers"
 import ServiceTile from "@/components/ServiceTile";
 import FactNote from "@/components/FactNote";
 import { repairs, getRepair } from "@/lib/repairs";
-import { formatDate, localePath, metaFor, langs, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -88,20 +89,46 @@ export default async function RepairPage(props: Params) {
   const others = repairs.filter((r) => r.slug !== slug).slice(0, 4);
   const sources = repairSources(repair);
   const updated = pageUpdated("/reparation/[slug]");
+  const pagePath = `/reparation/${repair.slug}`;
+  const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
+  const serviceId = `${pageUrl}#service`;
 
   const trail: Crumb[] = [
     { name: c.breadcrumb, href: "/reparation" },
     { name: repair.name[lang], href: `/reparation/${slug}` },
   ];
 
+  const repairServiceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceId,
+    name: repair.name[lang],
+    description: repair.metaDescription[lang],
+    inLanguage: htmlLang[lang],
+    serviceType: repair.name[lang],
+    provider: { "@id": `${SITE_ORIGIN}/#organization` },
+    areaServed: ["DK", "NO"],
+    url: pageUrl,
+  };
+
   return (
     <>
       <PageSchema
         lang={lang}
         route="/reparation/[slug]"
+        type="ItemPage"
+        pagePath={pagePath}
         name={repair.name[lang]}
         description={repair.metaDescription[lang]}
         sources={sources}
+        primaryEntityId={serviceId}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(repairServiceJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
 
       <section className="py-10 sm:py-20">

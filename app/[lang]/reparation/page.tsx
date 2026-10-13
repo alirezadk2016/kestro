@@ -152,7 +152,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <section className="py-10 max-md:-mt-[65px] max-md:pt-0 sm:py-20">
+      <section className="py-10 max-md:-mt-[65px] max-md:pt-[65px] sm:py-20">
         <Container>
           {/* The workshop's subject in the header: a machine opened into its
               layers. Beside the text from lg; on a phone it is the header's
@@ -180,15 +180,15 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
             <HeaderArt
               src="/cards/exploded.webp"
-              width={900}
-              height={1200}
+              width={1536}
+              height={1024}
               alt={
                 lang === "da"
                   ? "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade"
                   : "A laptop separated into layers: screen, keyboard, mainboard and base plate"
               }
               className="mt-8 aspect-[4/3] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-14 lg:self-start"
-              imgClassName="object-[50%_42%]"
+              imgClassName="!object-contain"
               bleed
             />
 

@@ -4,6 +4,7 @@ import Button from "./Button";
 import FeatureStrip from "./FeatureStrip";
 import { ui } from "@/lib/nav";
 import { localePath, type Lang } from "@/lib/i18n";
+import artworkPlaceholders from "@/lib/artwork-placeholders.json";
 
 /*
  * No "use client" here on purpose. The hero is a photograph, six lines of text
@@ -11,10 +12,6 @@ import { localePath, type Lang } from "@/lib/i18n";
  * The entrance is the .rise utility in globals.css.
  */
 
-
-/* public/hero/scene-mobile.webp at 32×31, blurred: the phone hero's fill. */
-const SCENE_BLUR =
-  "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAABwBQCdASogAB8APrVMoEonJCMhsAgA4BaJZQC073ph4DZhFlfZ08D0WWZvocQHfOaAnXgoAP76lvetq5+r0zR+5YEJX/pu4tKRNjbyjN0WAemQKqKEq63OTddkoKaOV5lVn4wL+ep9eRmjEbjT0oTPFeE0gbX3d0G5gvQ6teeLseika/6dyWRIJ41PV+H1j2nl47o01su2ULotuS2fzVmELebE3HCkAAA=";
 
 const copy = {
   da: {
@@ -95,8 +92,7 @@ export default function Hero({ lang }: { lang: Lang }) {
      * The scene fills the section with background-size: cover, and cover
      * crops whichever axis is proportionally longer. A section whose height
      * came from its copy was 2.06:1 against a 2.70:1 plate, so cover scaled to
-     * the height and ate 450px off the sides — the plant on the left and the
-     * right-hand window with it. Giving the section the plate's own ratio
+     * the height and cropped the architectural setting. Giving the section the plate's own ratio
      * means nothing is cropped and the composition arrives as it was framed.
      *
      * w-full is not decorative: without it the ratio drives the width as well
@@ -123,21 +119,15 @@ export default function Hero({ lang }: { lang: Lang }) {
       {/*
        * The scene.
        *
-       * The room the product stands in: the lit K cut into the wall, the
-       * glazing, the blue-hour waterfront, the machine on dark stone. It
+       * The room the product stands in: the glazing, the blue-hour waterfront,
+       * the machine on dark stone. It
        * carries what three separate decorations used to be asked to carry —
        * the K watermark, the world map, the cut-out laptop — so all three are
        * gone. One picture, one story.
        *
-       * Every word in it has been taken out of the pixels rather than covered
-       * up: the supplied artwork is a mockup of this whole page, with the
-       * headline, both buttons, all four editorial marks and the trust bar
-       * painted in. Used as-is, every real element here would land on top of a
-       * painted copy of itself. The removal is a morphological opening — erode
-       * then dilate — which deletes light strokes and puts the ground's own
-       * level back, followed by a Coons patch over the block that remains.
-       * See the note in the cleaning script for why that order and not the
-       * other one.
+       * The artwork contains no text or branding. Real headings, actions and
+       * the Kestro logo remain in HTML. scripts/build-artwork.mjs exports the
+       * desktop plate and a separate mobile crop from the same master.
        */}
       {/*
         Told to the browser before the stylesheet is parsed.
@@ -187,7 +177,7 @@ export default function Hero({ lang }: { lang: Lang }) {
        * the picture is doing behind it, and a photograph has no obligation to
        * be dark where a sentence lands. The left third of this plate is
        * already near-black, so this only has to hold that and let go early —
-       * by 64% the window, the machine and the lit K are untouched.
+       * by 66% the window and the machine are untouched.
        */}
       <div
         aria-hidden="true"
@@ -220,9 +210,8 @@ export default function Hero({ lang }: { lang: Lang }) {
         bottom, under the thumb, with the facts running beneath it.
 
         A 2.7:1 photograph still cannot fill a 0.6 screen without losing the
-        machine, so it is not stretched to: the phone's own cut (1000x971
-        from x 1000, y 100 of the cleaned plate; the whole lit K and the
-        whole machine in its top two thirds) stands sharp at the top at its
+        machine, so it is not stretched to: the phone's own right-hand crop
+        keeps the whole machine and stands sharp at the top at its
         own ratio, and the same file, blurred and enlarged, fills whatever
         height the phone has below it. One download, any screen. The dark
         stone of the desk is what the glass sits on.
@@ -238,7 +227,7 @@ export default function Hero({ lang }: { lang: Lang }) {
               expensive paint and this layer is the largest thing on a phone's
               first screen, so it held up Largest Contentful Paint; 188 bytes
               in the markup need no request and no filter. */}
-          <div className="absolute inset-0 bg-cover bg-top opacity-60" style={{ backgroundImage: `url(${SCENE_BLUR})` }} />
+          <div className="absolute inset-0 bg-cover bg-top opacity-60" style={{ backgroundImage: `url(${artworkPlaceholders.heroMobile})` }} />
           <div
             className="hero-scene-mobile absolute inset-x-0 top-0 aspect-[1000/971] bg-cover bg-top"
             style={{

@@ -136,11 +136,15 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
   }));
 
   const author = teamMember(guide.author);
+  const pagePath = `/vejledninger/${guide.slug}`;
+  const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
+  const articleId = `${pageUrl}#article`;
 
   /* Article schema so the guide can win a rich result rather than a bare link. */
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
+    "@id": articleId,
     headline: guide.title[lang],
     description: guide.metaDescription[lang],
     inLanguage: htmlLang[lang],
@@ -179,13 +183,20 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
     publisher: { "@id": `${SITE_ORIGIN}/#organization` },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`,
+      "@id": `${pageUrl}#webpage`,
     },
   };
 
   return (
     <>
-      <PageSchema lang={lang} route="/vejledninger/[slug]" />
+      <PageSchema
+        lang={lang}
+        route="/vejledninger/[slug]"
+        pagePath={pagePath}
+        name={guide.title[lang]}
+        description={guide.metaDescription[lang]}
+        primaryEntityId={articleId}
+      />
 
       <script
         type="application/ld+json"
@@ -197,7 +208,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       {/* The header carries depth by layering rather than by ornament: the mark
           sits behind the type on a wide screen and steps out of the way on a
           narrow one, where the words are the only thing worth the space. */}
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-0 sm:py-10 sm:py-20">
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-[65px] sm:py-10 sm:py-20">
         {/* The guide's own panel, not its cluster's.
             Three articles sit in "Levetid og udskiftning" and three in "Køb,
             stand og afhændelse", so the cluster mark put the same drawing

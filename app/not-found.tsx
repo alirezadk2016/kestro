@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import NotFoundPanel from "@/components/NotFoundPanel";
+import { SITE_ORIGIN } from "@/lib/site";
 
 /*
  * The 404, and the only one. It carries its own <html> and <body> because
@@ -48,6 +49,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: "Siden blev ikke fundet | Kestro",
   description:
     "Siden findes ikke længere, eller adressen er skrevet forkert. Her er vejene videre.",

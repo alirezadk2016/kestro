@@ -13,7 +13,11 @@ import sharp from "sharp";
  * Run after ingest. Reports rather than exits non-zero on the soft checks:
  * these are judgements with a defensible band, not build errors.
  */
-const HERO_MEAN = 39; // measured off public/hero/scene.webp
+const hero = await sharp("public/hero/scene.webp").stats();
+const HERO_MEAN = hero.channels.slice(0, 3).reduce(
+  (sum, channel, index) => sum + channel.mean * [0.2126, 0.7152, 0.0722][index],
+  0,
+);
 /* A directory other than public/cards, so a test render can be measured
    before it replaces anything. */
 const DIR = process.argv[2] ?? "public/cards";
@@ -23,8 +27,8 @@ const ASSETS = [
   { file: "cat-desktops.webp", ratio: 16 / 9, renders: [290, 163] },
   { file: "cat-monitors.webp", ratio: 16 / 9, renders: [290, 163] },
   { file: "cat-fleet.webp", ratio: 16 / 9, renders: [290, 163] },
-  { file: "exploded.webp", ratio: 3 / 4, renders: [164, 219] },
-  { file: "fleet-scene.webp", ratio: 2 / 3, renders: [290, 521], crop: 0.62 },
+  { file: "exploded.webp", ratio: 3 / 2, renders: [560, 350] },
+  { file: "fleet-scene.webp", ratio: 3 / 2, renders: [480, 320] },
 ];
 
 const problems = [];
@@ -73,7 +77,8 @@ for (const asset of ASSETS) {
   /* 2. does it live in the hero's exposure? */
   if (mean < HERO_MEAN - 18 || mean > HERO_MEAN + 25) {
     problems.push(
-      `${asset.file}: mean luminance ${mean.toFixed(1)}, hero is ${HERO_MEAN} (band 21-64)`,
+      `${asset.file}: mean luminance ${mean.toFixed(1)}, hero is ${HERO_MEAN.toFixed(1)} ` +
+      `(band ${(HERO_MEAN - 18).toFixed(1)}-${(HERO_MEAN + 25).toFixed(1)})`,
     );
   }
 

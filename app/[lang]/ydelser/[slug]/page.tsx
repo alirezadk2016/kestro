@@ -87,12 +87,16 @@ export default async function ServicePage(props: {
   const onward = service.related.filter((link) => link.href !== "/tilbud");
   const answers = serviceAnswers[service.slug];
   const updated = pageUpdated("/ydelser/[slug]");
+  const pagePath = `/ydelser/${service.slug}`;
+  const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
+  const serviceId = `${pageUrl}#service`;
 
   /* Service schema, so the page can be understood as one thing we do rather
      than as an article about it. */
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": serviceId,
     name: service.name[lang],
     description: service.metaDescription[lang],
     inLanguage: htmlLang[lang],
@@ -100,7 +104,7 @@ export default async function ServicePage(props: {
        copy of it — same reason as the Article's publisher. */
     provider: { "@id": `${SITE_ORIGIN}/#organization` },
     areaServed: ["DK", "NO"],
-    url: `${SITE_ORIGIN}${localePath(`/ydelser/${service.slug}`, lang)}`,
+    url: pageUrl,
   };
 
   const trail: Crumb[] = [
@@ -110,7 +114,16 @@ export default async function ServicePage(props: {
 
   return (
     <>
-      <PageSchema lang={lang} route="/ydelser/[slug]" sources={answers?.sources} />
+      <PageSchema
+        lang={lang}
+        route="/ydelser/[slug]"
+        type="ItemPage"
+        pagePath={pagePath}
+        name={service.name[lang]}
+        description={service.metaDescription[lang]}
+        sources={answers?.sources}
+        primaryEntityId={serviceId}
+      />
 
       <script
         type="application/ld+json"

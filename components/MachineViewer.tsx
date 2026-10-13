@@ -262,6 +262,7 @@ export default function MachineViewer({ lang }: { lang: Lang }) {
 
           <Image
             src="/models/laptop-still.webp"
+            quality={88}
             alt={c.still}
             fill
             sizes="(min-width: 1024px) 58vw, 92vw"

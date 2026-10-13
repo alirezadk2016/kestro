@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
-import GuidePanel, { GuidePanelStyles } from "@/components/GuidePanel";
+import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -123,7 +123,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
       {/* One stylesheet for all eight guide panels. Rendered here rather than
           inside each panel: eight identical copies of the same keyframes is
           thirty kilobytes of HTML saying one thing eight times. */}
-      <GuidePanelStyles />
+      {guides.some((guide) => needsPanelChrome(guide.slug, lang)) && <GuidePanelStyles />}
 
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 max-md:-mt-[65px]">
         {/* The plate sits behind the type and is clipped by the section, so it
@@ -405,7 +405,8 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       slug={guide.slug}
                       lang={lang}
                       priority={groupIndex === 0 && index === 0}
-                      className="plate-well aspect-[2/1] w-full shrink-0 overflow-hidden sm:aspect-[3/2] sm:w-[17.5rem] lg:w-[20rem]"
+                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 100vw"
+                      className="plate-well aspect-[3/2] w-full shrink-0 overflow-hidden sm:w-[17.5rem] lg:w-[20rem]"
                     />
 
                     <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">

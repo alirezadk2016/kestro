@@ -145,6 +145,22 @@ async function adminGate(request: NextRequest, pathname: string) {
   });
 }
 
+function withQueryNoindex(response: NextResponse, request: NextRequest) {
+  /*
+   * Query strings on public pages are for visitors, not for the index.
+   *
+   * The quote form accepts ?model=, ?antal= and ?hvornaar= so a link can
+   * prefill the form. Campaign links may also arrive with utm_* parameters.
+   * None of those creates a new document: the canonical stays on the clean
+   * URL, and this header tells crawlers not to keep the parameterized address
+   * as a separate result while still following every link on the page.
+   */
+  if (request.nextUrl.search) {
+    response.headers.set("X-Robots-Tag", "noindex, follow");
+  }
+  return response;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -155,9 +171,11 @@ export async function middleware(request: NextRequest) {
 
   if (STATIC_FILE.test(pathname)) return NextResponse.next();
 
-  if (pathname === "/en" || pathname.startsWith("/en/")) return NextResponse.next();
+  if (pathname === "/en" || pathname.startsWith("/en/")) {
+    return withQueryNoindex(NextResponse.next(), request);
+  }
 
-  return NextResponse.rewrite(new URL(`/da${pathname}`, request.url));
+  return withQueryNoindex(NextResponse.rewrite(new URL(`/da${pathname}`, request.url)), request);
 }
 
 export const config = {

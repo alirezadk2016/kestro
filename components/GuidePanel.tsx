@@ -2,30 +2,9 @@ import Image from "next/image";
 import type { Lang, Localized } from "@/lib/i18n";
 
 /*
- * The guide panels — Kestro's illustration system for Viden.
- *
- * These replace GuidePlate, which was the same idea at a tenth of the size:
- * 124×84 line drawings beside a title. At that size a drawing can hold one
- * shape and nothing else — no label, no instrument, no light — so what was
- * meant as an illustration system arrived as eight small icons. This is the
- * same subject matter drawn at the size the work actually needs.
- *
- * One panel is 768×512. That is not an arbitrary box: it is the size the
- * reference sheets are drawn at, which means the type inside a panel is set at
- * the size it is read at, rather than at a size that halves on the way to the
- * screen.
- *
- * Every panel is built from the same kit — frame, blueprint ground, numbered
- * eyebrow, corner straplines, callout chips, leader nodes, one lamp above and
- * to the left — so eight subjects read as eight plates from one system rather
- * than eight drawings by one hand. That is the whole point of the exercise:
- * a visitor should recognise a Kestro panel without the logo on it.
- *
- * Still inline SVG and still CSS. No canvas, no WebGL, no image request, no
- * client bundle: the panels render in a server component, are on screen before
- * JavaScript is, and hold a fixed aspect so nothing shifts as they paint.
- * Animation is one idea per panel over 12–16 seconds, and all of it sits
- * inside prefers-reduced-motion: no-preference.
+ * Guide covers use 1536x1024 text-free artwork in both languages. The SVG
+ * panels remain available as a fallback for a guide without suitable artwork.
+ * Both paths render on the server in a stable 3:2 frame.
  */
 
 /* The palette, from tailwind.config.ts. Written out because SVG gradients and
@@ -1946,57 +1925,34 @@ export function GuidePanelStyles() {
 }
 
 /*
- * Supplied artwork.
- *
- * Three of these guides have a rendered plate that Kestro had made rather
- * than one drawn here, and where a real render exists it beats a drawing of
- * one: the light, the depth of field and the material on a photographed board
- * are not things inline SVG gets to for free.
- *
- * Danish only, and the reason is in the artwork. The labels inside these
- * images — SKÆRM, TASTATUR, BATTERI, RAM, HURTIGERE ARBEJDSGANG — are baked
- * into the pixels and cannot be swapped for a reader who chose English. The
- * English hub keeps the drawn panel, which is the same picture in the
- * language the reader asked for. That is a deliberate trade, not an oversight.
- *
- * Local WebP through next/image: 23-42 kB each, down from 400-480 kB as PNG,
- * with a fixed 3:2 box so nothing shifts as they decode.
- */
-/*
- * The rendered plates.
- *
- * `neutral` is the whole of the language question. The first three plates were
- * supplied with their labels baked into the pixels, and two of those labels are
- * Danish — "HURTIGERE ARBEJDSGANG" is painted into ydelse.webp and no amount of
- * routing will translate it. Those stay on the Danish pages only.
- *
- * The five newer ones carry no text at all, which is what makes them usable in
- * both languages: nothing in the image has a language to be wrong in. That is
- * worth more than it sounds. Until now an English visitor saw drawn panels on
- * every guide and never one of these plates.
+ * Only language-neutral artwork is shared across locales. All current covers
+ * meet that rule; keep the flag for future images that contain language.
  */
 type Art = { src: string; alt: Localized; neutral?: boolean };
 
 const artwork: Record<string, Art> = {
   "tjek-brugt-baerbar-foer-koeb": {
     src: "/viden/inspektion.webp",
+    neutral: true,
     alt: {
-      da: "Bærbar under gennemgang med kontrolpunkter for skærm, tastatur, porte, batteri og hardware.",
-      en: "Laptop under inspection with checkpoints for screen, keyboard, ports, battery and hardware.",
+      da: "En bærbar på et testbord med en blå kontrollinje over skærm og tastatur.",
+      en: "A laptop on an inspection bench with a blue test line across its screen and keyboard.",
     },
   },
   "opgrader-ram-i-baerbar": {
     src: "/viden/ydelse.webp",
+    neutral: true,
     alt: {
-      da: "Et RAM-modul og et NVMe SSD over hinanden, som de to opgraderinger der flytter mest.",
-      en: "A memory module and an NVMe SSD, one above the other, as the two upgrades that move the most.",
+      da: "Et RAM-modul og et NVMe SSD med synlige chips og kontakter på et arbejdsbord.",
+      en: "A memory module and an NVMe SSD with visible chips and connectors on a workbench.",
     },
   },
   "windows-10-support-slutter": {
     src: "/viden/levetid.webp",
+    neutral: true,
     alt: {
-      da: "En bærbar i midten af et livscyklusforløb: ny, udrullet, aktiv, opgraderet, udskiftet.",
-      en: "A laptop at the centre of a lifecycle: new, deployed, active, upgraded, replaced.",
+      da: "Tre bærbare viser udstyrets livscyklus: lukket, i brug og åbnet til opgradering.",
+      en: "Three laptops illustrate the equipment lifecycle: closed, in use and opened for upgrading.",
     },
   },
 
@@ -2004,40 +1960,40 @@ const artwork: Record<string, Art> = {
     src: "/viden/beslutning.webp",
     neutral: true,
     alt: {
-      da: "En bærbar svævende mellem to strømme af lys: til venstre reservedele, til højre en anden maskine.",
-      en: "A laptop suspended between two streams of light: spare parts to the left, another machine to the right.",
+      da: "En bærbar åbnet til reparation ved siden af en intakt maskine, med reservedele på bordet.",
+      en: "A laptop opened for repair beside an intact machine, with replacement parts on the table.",
     },
   },
   "samle-din-egen-pc": {
     src: "/viden/montering.webp",
     neutral: true,
     alt: {
-      da: "Et åbent pc-kabinet med komponenterne svævende omkring sig, hver forbundet til sin egen plads med en tråd af lys.",
-      en: "An open PC chassis with its components floating around it, each tied to its own slot by a thread of light.",
+      da: "Et åbent pc-kabinet med bundkort, RAM, grafikkort, køler og strømforsyning på arbejdsbordet.",
+      en: "An open PC case with a motherboard, memory, graphics card, cooler and power supply on the workbench.",
     },
   },
   "windows-11-paa-aeldre-maskine": {
     src: "/viden/kompatibilitet.webp",
     neutral: true,
     alt: {
-      da: "En chip svævende foran en lysende port – et billede på, om en ældre maskine kan komme med til Windows 11.",
-      en: "A chip floating in front of a gateway of light — a picture of whether an older machine can make the move to Windows 11.",
+      da: "En bærbar med blå skærm ved siden af en processor og et lille sikkerhedskort til hardwarekontrol.",
+      en: "A laptop with a blue screen beside a processor and a small security board for hardware checks.",
     },
   },
   "slet-data-foer-du-saelger": {
     src: "/viden/datasikkerhed.webp",
     neutral: true,
     alt: {
-      da: "Et NVMe-drev, hvis bagkant opløses i lysende partikler, mens forkanten står skarp.",
-      en: "An NVMe drive whose trailing edge dissolves into luminous particles while its leading edge stays sharp.",
+      da: "Et SSD og et andet drev på et arbejdsbord under gennemgang før sikker datasletning.",
+      en: "An SSD and another drive on a workbench, being checked before secure data erasure.",
     },
   },
   "refurbished-eller-brugt": {
     src: "/viden/stand.webp",
     neutral: true,
     alt: {
-      da: "To ens bærbare side om side: den ene mat og træt, den anden med lys langs hver kant.",
-      en: "Two identical laptops side by side: one dulled and tired, the other with light along every edge.",
+      da: "To ens bærbare side om side, den ene med brugsspor og den anden rengjort og klargjort.",
+      en: "Two matching laptops side by side, one with wear marks and the other cleaned and prepared.",
     },
   },
 };
@@ -2047,9 +2003,7 @@ export const hasGuidePanel = (slug: string) => slug in panels;
 /**
  * Whether a page showing this guide needs the drawn panels' chrome at all.
  *
- * Three guides render supplied artwork in Danish, and an <img> needs neither
- * the keyframes nor the shared defs. An article page for one of them was
- * shipping 17 kB of stylesheet and symbol for a drawing it does not contain.
+ * Image-only pages need neither the fallback keyframes nor its shared SVG defs.
  */
 export const needsPanelChrome = (slug: string, lang: Lang) => !plateFor(slug, lang);
 
@@ -2085,6 +2039,7 @@ export default function GuidePanel({
   className = "",
   style,
   priority = false,
+  sizes = "(min-width: 1280px) 608px, 100vw",
 }: {
   slug: string;
   lang: Lang;
@@ -2093,6 +2048,7 @@ export default function GuidePanel({
   style?: React.CSSProperties;
   /** The first panel on the page paints eagerly; the rest can wait. */
   priority?: boolean;
+  sizes?: string;
 }) {
   const def = panels[slug];
   if (!def) return null;
@@ -2105,9 +2061,10 @@ export default function GuidePanel({
         <Image
           src={art.src}
           alt={art.alt[lang]}
-          width={768}
-          height={512}
-          sizes="(min-width: 1024px) 768px, 100vw"
+          width={1536}
+          height={1024}
+          quality={88}
+          sizes={sizes}
           priority={priority}
           className="h-full w-full object-cover"
         />

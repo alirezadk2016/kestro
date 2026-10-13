@@ -10,9 +10,15 @@ import { once } from "node:events";
 
 const PORT = process.env.VERIFY_PORT ?? "4173";
 const BASE = `http://127.0.0.1:${PORT}`;
+const NEXT_CLI = "node_modules/next/dist/bin/next";
+
+const bin = (command) =>
+  process.platform === "win32" && (command === "npm" || command === "npx")
+    ? `${command}.cmd`
+    : command;
 
 const run = (command, args, options = {}) =>
-  spawn(command, args, { stdio: "inherit", shell: false, ...options });
+  spawn(bin(command), args, { stdio: "inherit", shell: false, ...options });
 
 /*
  * Refuse to run against somebody else's server.
@@ -43,7 +49,7 @@ const [contentCode] = await once(content, "exit");
 if (contentCode !== 0) process.exit(contentCode);
 
 console.log("verify: building");
-const build = run("npx", ["next", "build"]);
+const build = run(process.execPath, [NEXT_CLI, "build"]);
 const [code] = await once(build, "exit");
 if (code !== 0) process.exit(code);
 
@@ -57,7 +63,7 @@ console.log(`verify: serving on ${BASE}`);
  * The value is local to this process and never leaves it.
  */
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "verify-only-password";
-const server = spawn("npx", ["next", "start", "-p", PORT], {
+const server = spawn(process.execPath, [NEXT_CLI, "start", "-p", PORT], {
   stdio: "ignore",
   env: { ...process.env, ADMIN_PASSWORD, ADMIN_SESSION_SECRET: "" },
 });

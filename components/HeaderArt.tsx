@@ -49,6 +49,7 @@ export default function HeaderArt({
         alt={alt}
         width={width}
         height={height}
+        quality={88}
         priority
         sizes="(min-width: 1024px) 480px, 92vw"
         className={`h-full w-full object-cover ${imgClassName}`}

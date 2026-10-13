@@ -1,5 +1,11 @@
 # Kestro — artwork brief: category cards, exploded view, fleet room
 
+> **2026-10-13:** The current commissioned-style imagegen set, full prompts and
+> exports live in `assets/artwork/`. Run `npm run build:artwork` or
+> `npm run build:cards` to export it. Technical header images now use landscape
+> 3:2 masters to match their page slots. The notes below document the previous
+> rendering pipeline and its lighting rationale.
+
 > **2026-09-27 — pipeline replaced.** Everything below about
 > `scripts/build/cards3d/` and `lib/card-subjects.mjs` is history: that
 > rasteriser is gone. Five of the six images are now path-traced with Cycles

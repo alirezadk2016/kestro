@@ -34,7 +34,7 @@ const companySrc = read("lib/company.ts");
 const field = (block, name) => block.match(new RegExp(`(?:^|\\n)    ${name}: "([^"]*)"`))?.[1];
 
 const blocks = guidesSrc
-  .split(/\n  \{\n/)
+  .split(/\r?\n  \{\r?\n/)
   .slice(1)
   .filter((block) => block.includes("    slug: "));
 
