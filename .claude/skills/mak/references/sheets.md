@@ -1,0 +1,70 @@
+# The sheets
+
+The course keeps its SEO work in spreadsheets. Here are their shapes, and the
+Kestro file that plays each part.
+
+## Pillar cluster  →  `docs/seo-pillar-cluster.csv`
+
+| Course column | Kestro column |
+| --- | --- |
+| Pillar (one per tree: services, training, error codes) | Træ |
+| Level 1 … Level 5, stepped: one row per item, the deeper level one column further in | Niveau 1–3 |
+| — | URL, Findes (ja/nej/—), Primært søgeord |
+| SEO title, `=LEN(title)` | SEO-title, Title-tegn, Title-px |
+| SEO description, `=LEN(description)` | Meta description, Description-tegn, Description-px |
+| (H1, part of the homework) | H1 |
+
+- **Grouping rows** such as "by brand", "by city" or "Efter model" are not
+  pages. They have no URL and `Findes = —`.
+- **Proposed pages** have `Findes = nej`, and come from the keyword map's
+  `New` rows.
+- **One product may appear under several categories.** The OptiPlex 5060
+  sits under both stationære and mini-pc'er.
+- **Rebuild:** `python3 .claude/skills/mak/scripts/pillar.py --audit <audit json>`.
+
+## Keyword pool  →  `docs/keyword-pool/<page>.csv` (when real data exists)
+
+The course exports one block per category from its keyword tool:
+
+| keyword | search volume | difficulty |
+| --- | --- | --- |
+
+Pools are built per page, and the city and brand combinations are kept in
+them. A pool's keywords are then sorted into the page's own, its children's,
+and other intents (method, rule 4).
+
+**At Kestro there is no Danish volume source in the environment.** A pool is
+created only from an export the owner supplies, such as Google Keyword
+Planner or Search Console. Its columns are `keyword, volume, difficulty,
+source, date`. No numbers are estimated.
+
+## Keyword research  →  `docs/seo-keyword-map.csv`
+
+- **One row per keyword.** Columns: language, intent, category, primary
+  URL, primary or secondary, priority, existing or new page, cannibalisation,
+  B2B intent, volume, difficulty, CPC, notes, live title, and keyword in
+  title (ja/delvist/nej).
+- **One primary per URL,** and never the same primary on two URLs.
+- **Check it** with `scripts/check-map.py`.
+
+## Product categories  →  `lib/categories.ts` + `lib/models.ts`
+
+- **Course columns:** level 2, level 3, exists on site ✔, SEO title,
+  product count, description.
+- **The ✔ is the rule:** no category page for products the site does not
+  have.
+- **Kestro has no stock and no counts.** A model page exists because Kestro
+  sources that model repeatedly, and that is what the page says.
+- **The course's title pattern does not transfer as written.** It runs
+  "buy + category + brand + original + [direct from the maker + price
+  list]". Kestro has no price list, so a bracket of true benefits takes its
+  place, such as "dansk tastatur" or "skriftligt tilbud".
+
+## Article categories  →  `lib/guides.ts` clusters
+
+- **The blog tree has its own levels.** Topic, then subtopic, then articles,
+  and sometimes a level under that (recipes by type, sherbets by season).
+- **At Kestro:** five clusters, guides under them.
+  - Proposed guides wait in the keyword map as `New` rows.
+  - A possible error-codes and warning-lights cluster is the
+    repair-business pattern from rule 3. It needs page-one evidence first.

@@ -16,13 +16,19 @@ This is a standing rule, not a task. Any change that touches a page, a
 component that renders text, or a route obeys the list below. It is cheaper to
 write it right than to have an audit find it.
 
-**Read `docs/seo-playbook.md` before any keyword, title, category or new-page
-decision.** It holds the owner's SEO method: one page per search intent, with
-the results page deciding; categories cut the way buyers search; the blog
-tree kept apart from the product tree; and per-page keyword research that
-leaves children's keywords alone. When a lesson is added there, the keyword
-map (`docs/seo-keyword-map.md` / `.csv`) is checked against it in the same
-change.
+**Use the `mak` skill (`.claude/skills/mak/`, "مک") for any keyword, title,
+description, H1, category or new-page decision.** It holds the owner's SEO
+method, taught lesson by lesson from their course:
+- one page per search intent, with the results page deciding;
+- categories cut the way buyers search;
+- the blog tree kept apart from the product tree;
+- per-page keyword research that leaves children's keywords alone;
+- a measured title, description and H1 for every page.
+
+It also carries the scripts that audit the live site against those rules.
+`docs/seo-playbook.md` records where the site stands against them. When a
+lesson is added, the keyword map (`docs/seo-keyword-map.md` / `.csv`) and the
+playbook are checked against it in the same change.
 
 ### Structure
 
