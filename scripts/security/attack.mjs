@@ -564,6 +564,28 @@ async function main() {
     record("leak", "version endpoint", spill.length === 0, spill.join(", ") || "clean");
   }
 
+  /* The site search's index is public by design. It must hold public pages
+     only: no admin or API path, no address that is not a page, and nothing
+     a writer can change by posting to it. */
+  {
+    const { status, text } = await ask("/search.json");
+    let hrefs = [];
+    try {
+      const index = JSON.parse(text);
+      hrefs = [...index.da, ...index.en].map((entry) => entry.h);
+    } catch {}
+    const stray = hrefs.filter((h) => !/^\/(en\/)?[a-z0-9-]+(\/[a-z0-9-]+)?$/.test(h) || /admin|api/.test(h));
+    const spill = leaked(text);
+    record(
+      "leak",
+      "search index holds public pages only",
+      status === 200 && hrefs.length > 0 && stray.length === 0 && spill.length === 0,
+      `${status}, ${hrefs.length} entries${stray.length ? `, stray ${stray.slice(0, 3).join(" ")}` : ""}${spill.length ? `, leaked ${spill.join(", ")}` : ""}`,
+    );
+    const post = await ask("/search.json", { method: "POST", body: "{}" });
+    record("leak", "search index refuses a write", [403, 404, 405].includes(post.status), String(post.status));
+  }
+
   /* ---- The two implementations of one signature ------------------------- */
 
   {

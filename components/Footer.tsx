@@ -3,7 +3,7 @@ import Container from "./Container";
 import Logo from "./Logo";
 import ConsentReset from "./ConsentReset";
 import { company, postalAddress } from "@/lib/company";
-import { companyNav, serviceNav, type NavLink } from "@/lib/nav";
+import { buyNav, companyNav, productExtras, serviceNav, type NavLink } from "@/lib/nav";
 import { categories } from "@/lib/categories";
 import { localePath, type Lang } from "@/lib/i18n";
 
@@ -12,6 +12,7 @@ const copy = {
     blurb:
       "Kestro sælger refurbished erhvervs-IT til virksomheder i Danmark og Norge. Vi skaffer maskinerne hos leverandører i vores netværk, klargør dem til det nordiske marked og står selv for tilbud, faktura og reklamation.",
     products: "Produkter",
+    buy: "Sådan køber I",
     services: "Ydelser",
     company: "Virksomhed",
     delivers: "Leverer i",
@@ -26,6 +27,7 @@ const copy = {
     blurb:
       "Kestro sells refurbished business IT to companies in Denmark and Norway. We source the machines from suppliers in our network, prepare them for the Nordic market and handle the quote, the invoice and any complaint ourselves.",
     products: "Products",
+    buy: "How to buy",
     services: "Services",
     company: "Company",
     delivers: "Delivers in",
@@ -107,7 +109,15 @@ export default function Footer({ lang }: { lang: Lang }) {
         : category.name,
   }));
   const groups = [
-    { label: c.products, links: productLinks },
+    {
+      label: c.products,
+      links: [
+        { href: "/produkter", label: { da: "Alle produkter", en: "All products" } },
+        ...productLinks,
+        ...productExtras,
+      ],
+    },
+    { label: c.buy, links: buyNav },
     { label: c.services, links: serviceNav },
     { label: c.company, links: companyNav },
   ];

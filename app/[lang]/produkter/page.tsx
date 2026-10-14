@@ -88,7 +88,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             description={c.description}
             lang={lang}
             href="/produkter"
-            crumb={lang === "da" ? "Hvad vi skaffer" : "What we source"}
+            crumb={lang === "da" ? "Produkter" : "Products"}
 
             updated="/produkter"
           />

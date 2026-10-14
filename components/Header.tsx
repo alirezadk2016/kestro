@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Phone } from "lucide-react";
+import dynamic from "next/dynamic";
+import { ArrowRight, ChevronDown, Phone, Search } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import { buttonClass } from "./Button";
@@ -12,10 +13,15 @@ import { company } from "@/lib/company";
 import { mainNav, productsNav, ui } from "@/lib/nav";
 import { localePath, stripLocale, langs, langLabel, type Lang } from "@/lib/i18n";
 
+/* Loaded the first time someone opens search, not with every page. */
+const SiteSearch = dynamic(() => import("./SiteSearch"), { ssr: false });
+
 export default function Header({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchLoaded, setSearchLoaded] = useState(false);
   const burger = useRef<HTMLButtonElement>(null);
   const productsTrigger = useRef<HTMLButtonElement>(null);
 
@@ -62,6 +68,25 @@ export default function Header({ lang }: { lang: Lang }) {
   }, [open]);
 
   const pathname = usePathname() ?? "/";
+
+  function openSearch() {
+    setOpen(false);
+    setMobileProductsOpen(false);
+    setSearchLoaded(true);
+    setSearchOpen(true);
+  }
+
+  /* Ctrl+K / ⌘K, the shortcut every documentation site has taught. */
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        openSearch();
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -153,7 +178,7 @@ export default function Header({ lang }: { lang: Lang }) {
         */}
         <nav
           aria-label={ui.mainNav[lang]}
-          className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7"
+          className="hidden items-center gap-4 whitespace-nowrap lg:flex xl:gap-7"
         >
           {/*
             A link and a disclosure, not a link pretending to be one.
@@ -237,12 +262,6 @@ export default function Header({ lang }: { lang: Lang }) {
                     {productsNav.quality.label[lang]}
                   </Link>
                   <Link
-                    href={localePath(productsNav.pricing.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
-                  >
-                    {productsNav.pricing.label[lang]}
-                  </Link>
-                  <Link
                     href={localePath(productsNav.sampleQuote.href, lang)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
@@ -272,7 +291,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 /* aria-current is the half a screen reader hears; the rule
                    below is the half everyone else sees. Both, not either. */
                 aria-current={current ? "page" : undefined}
-                className={`relative inline-flex min-h-[44px] items-center text-sm transition ${
+                className={`relative ${link.wide ? "hidden xl:inline-flex" : "inline-flex"} min-h-[44px] items-center text-sm transition ${
                   current
                     ? "font-semibold text-paper after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-400"
                     : "font-medium text-paper/75 hover:text-paper"
@@ -285,6 +304,15 @@ export default function Header({ lang }: { lang: Lang }) {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
+          <button
+            type="button"
+            onClick={openSearch}
+            aria-label={ui.search[lang]}
+            title={`${ui.search[lang]} (Ctrl K)`}
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-lg text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+          >
+            <Search className="h-[18px] w-[18px]" strokeWidth={1.9} />
+          </button>
           <LanguageSwitcher lang={lang} basePath={basePath} />
           <Link href={localePath("/tilbud", lang)} className={buttonClass("primary")}>
             {ui.bookCall[lang]}
@@ -331,6 +359,15 @@ export default function Header({ lang }: { lang: Lang }) {
           )}
 
           <button
+            type="button"
+            onClick={openSearch}
+            aria-label={ui.search[lang]}
+            className="inline-flex h-11 w-11 items-center justify-center text-paper/85 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+          >
+            <Search className="h-5 w-5" strokeWidth={1.9} />
+          </button>
+
+          <button
             ref={burger}
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -372,6 +409,17 @@ export default function Header({ lang }: { lang: Lang }) {
           className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-brand-950 sm:h-[calc(100dvh-5rem)] lg:hidden"
         >
           <Container className="flex flex-col gap-1 py-4">
+            {/* Search first: on a phone it is the fastest way to any of the
+                136 pages, and it looks like the field it opens. */}
+            <button
+              type="button"
+              onClick={openSearch}
+              className="mb-2 flex min-h-[48px] items-center gap-3 rounded-xl border border-white/15 bg-white/[0.04] px-3.5 text-left text-base text-paper/75 transition-colors hover:border-white/25 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+            >
+              <Search aria-hidden="true" className="h-5 w-5 flex-none" strokeWidth={1.9} />
+              {ui.searchSite[lang]}
+            </button>
+
             <button
               type="button"
               onClick={() => setMobileProductsOpen((v) => !v)}
@@ -397,7 +445,6 @@ export default function Header({ lang }: { lang: Lang }) {
                   productsNav.models,
                   productsNav.machine,
                   productsNav.quality,
-                  productsNav.pricing,
                   productsNav.sampleQuote,
                 ].map((item) => (
                   <Link
@@ -467,6 +514,10 @@ export default function Header({ lang }: { lang: Lang }) {
             </Link>
           </Container>
         </div>
+      )}
+
+      {searchLoaded && (
+        <SiteSearch lang={lang} open={searchOpen} onClose={() => setSearchOpen(false)} />
       )}
     </header>
   );

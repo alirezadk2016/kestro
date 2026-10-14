@@ -68,7 +68,7 @@ const services = [
       en: "You tell us what you need. We find the machines in our supplier network, prepare them and deliver — from single units to whole departments.",
     },
     href: "/produkter",
-    linkLabel: { da: "Se hvad vi skaffer", en: "See what we source" },
+    linkLabel: { da: "Se produkterne", en: "See the products" },
   },
   {
     mark: "who" as CraftMarkName,

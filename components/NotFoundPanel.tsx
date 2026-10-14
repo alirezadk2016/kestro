@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "./Container";
 import Logo from "./Logo";
 import { buttonClass } from "./Button";
+import SearchLauncher from "./SearchLauncher";
 
 /*
  * What a visitor sees at a URL that does not exist.
@@ -19,6 +20,7 @@ import { buttonClass } from "./Button";
  */
 const ways = [
   { href: "/produkter", da: "Produkter", en: "Products" },
+  { href: "/priser", da: "Priser", en: "Pricing" },
   { href: "/ydelser", da: "Ydelser", en: "Services" },
   { href: "/vejledninger", da: "Viden", en: "Knowledge" },
   { href: "/flaadeloesninger", da: "Flådeløsninger", en: "Fleet solutions" },
@@ -67,7 +69,12 @@ export default function NotFoundPanel() {
                 we will point you to it.
               </p>
 
-              <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              {/* Search first: whoever lands here was looking for a page. */}
+              <div className="mx-auto mt-9 max-w-md">
+                <SearchLauncher lang="da" label="Søg på siden / Search the site" />
+              </div>
+
+              <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
                 <Link href="/" className={buttonClass("primary", "lg")}>
                   Til forsiden / Front page
                 </Link>

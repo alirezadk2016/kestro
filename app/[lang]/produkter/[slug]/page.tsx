@@ -49,7 +49,7 @@ export function generateStaticParams() {
 const copy = {
   da: {
     breadcrumbLabel: "Brødkrumme",
-    breadcrumbHub: "Hvad vi skaffer",
+    breadcrumbHub: "Produkter",
     brandsTitle: "Mærker vi typisk arbejder med",
     brandsBodyPre:
       "Vi skaffer udstyret til hver ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
@@ -71,7 +71,7 @@ const copy = {
   },
   en: {
     breadcrumbLabel: "Breadcrumb",
-    breadcrumbHub: "What we source",
+    breadcrumbHub: "Products",
     brandsTitle: "Brands we usually work with",
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
@@ -237,7 +237,7 @@ export default async function CategoryPage(props: {
                 CATEGORY_ART[category.slug] ? "glass-card relative z-10 max-md:-mt-14" : ""
               }`}
             >
-              {/* The shared trail: "Forside / Hvad vi skaffer / Bærbare
+              {/* The shared trail: "Forside / Produkter / Bærbare
                 computere", visible and marked up from one list. The schema
                 here already began at Forside while the visible trail did not,
                 which is the mismatch BreadcrumbSchema warns about. */}

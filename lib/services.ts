@@ -178,7 +178,7 @@ export const services: Service[] = [
       },
     ],
     related: [
-      { href: "/produkter", label: { da: "Hvad vi skaffer", en: "What we source" } },
+      { href: "/produkter", label: { da: "Produkter vi skaffer", en: "Products we source" } },
       { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
       { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
     ],
@@ -443,7 +443,7 @@ export const services: Service[] = [
       },
     ],
     related: [
-      { href: "/produkter", label: { da: "Hvad vi skaffer", en: "What we source" } },
+      { href: "/produkter", label: { da: "Produkter vi skaffer", en: "Products we source" } },
       { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
       { href: "/kontakt", label: { da: "Tal med os om opstart", en: "Talk to us about setup" } },
     ],
