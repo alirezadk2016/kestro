@@ -311,7 +311,10 @@ export default function Hero({ lang }: { lang: Lang }) {
                   <li key={step} className="flex items-baseline gap-2.5">
                     <span
                       aria-hidden="true"
-                      className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full border border-brand-400/60 text-[0.6875rem] font-bold tabular-nums text-brand-200"
+                      /* A solid disc, not a ring over the glass: where the
+                         English lines wrap, the numerals sat on the lit part of
+                         the photograph and brand-200 measured 4.0:1. */
+                      className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full border border-brand-400/70 bg-brand-950 text-[0.6875rem] font-bold tabular-nums text-paper"
                     >
                       {i + 1}
                     </span>
