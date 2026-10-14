@@ -1608,7 +1608,7 @@ export const guides: Guide[] = [
     },
     metaTitle: {
       da: "Sikker datasletning før salg eller kassering | Kestro",
-      en: "Secure data erasure before selling or scrapping a PC | Kestro",
+      en: "Secure data erasure before selling or scrapping PCs | Kestro",
     },
     metaDescription: {
       da: "Sikker datasletning: en formateret disk er ikke slettet. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",

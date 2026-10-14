@@ -68,8 +68,8 @@ export const repairs: Repair[] = [
     name: { da: "Batteriskift", en: "Battery replacement" },
     h1: { da: "Batteriskift på bærbar", en: "Laptop battery replacement" },
     metaTitle: {
-      da: "Batteriskift på bærbar: tjek batteritilstanden først | Kestro",
-      en: "Laptop battery replacement: check battery health first | Kestro",
+      da: "Batteriskift på bærbar: tjek batteriet først | Kestro",
+      en: "Laptop battery replacement: check its health first | Kestro",
     },
     metaDescription: {
       da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et nyt batteri kan betale sig. Pris, før vi går i gang.",
@@ -496,7 +496,7 @@ export const repairs: Repair[] = [
     mark: "adjust",
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
     h1: { da: "Opsætning af ny computer og flytning af data", en: "Setting up a new computer and moving your data" },
-    metaTitle: { da: "Flyt data til ny computer – opsætning og dataflytning | Kestro", en: "Move data to a new computer — setup and transfer | Kestro" },
+    metaTitle: { da: "Flyt data til ny computer – og få den sat op | Kestro", en: "Move data to a new computer — setup and transfer | Kestro" },
     metaDescription: {
       da: "Flyt data til ny computer: vi installerer styresystemet, flytter filer, profiler og programmer – og gennemgår listen med dig, før den gamle slettes.",
       en: "New computer? We install the system and move files, profiles and software across — and go through the list with you before the old one is wiped.",

@@ -93,7 +93,7 @@ export const models: Model[] = [
       en: "The workhorse of the T series — sturdy, repairable and easy to upgrade.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T480: specs, fordele og ulemper | Kestro",
+      da: "Brugt ThinkPad T480: specs, fordele og ulemper | Kestro",
       en: "Refurbished ThinkPad T480: specs, pros and cons | Kestro",
     },
     metaDescription: {
@@ -321,7 +321,7 @@ export const models: Model[] = [
       en: "The successor to the T480 — newer processor, same sturdiness.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14: specs, fordele og ulemper | Kestro",
+      da: "Brugt ThinkPad T14: specs, fordele og ulemper | Kestro",
       en: "Refurbished ThinkPad T14: specs, pros and cons | Kestro",
     },
     metaDescription: {
@@ -439,7 +439,7 @@ export const models: Model[] = [
     },
     metaTitle: {
       da: "Brugt ThinkPad X1 Carbon: specs, fordele og ulemper | Kestro",
-      en: "Refurbished ThinkPad X1 Carbon: specs, pros and cons | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X1 Carbon Gen 6–8: 14" på godt et kilo, men med loddet RAM – vælg hukommelsen rigtigt fra start. Tilbud med stand og batteri.',
@@ -538,7 +538,7 @@ export const models: Model[] = [
       en: "A business machine for a tight budget.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14: specs, fordele og ulemper | Kestro",
+      da: "Brugt ThinkPad L14: specs, fordele og ulemper | Kestro",
       en: "Refurbished ThinkPad L14: specs, pros and cons | Kestro",
     },
     metaDescription: {
@@ -833,7 +833,7 @@ export const models: Model[] = [
     },
     metaTitle: {
       da: "Brugt Dell Latitude 5410: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Dell Latitude 5410: specs, pros and cons | Kestro",
+      en: "Refurbished Dell Latitude 5410: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt Dell Latitude 5410: 14" Full HD, Intel Core i5/i7, to RAM-sokler og op til 32 GB ifølge Dell. Se specs, og kontakt os om muligheder og behov.',
@@ -930,7 +930,7 @@ export const models: Model[] = [
     },
     metaTitle: {
       da: "Brugt Dell Latitude 7490: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Dell Latitude 7490: specs, pros and cons | Kestro",
+      en: "Refurbished Dell Latitude 7490: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt Dell Latitude 7490: let 14" på omkring 1,4 kg med Thunderbolt, HDMI og netværksstik i behold. Skriftligt tilbud med stand og målt batteri.',
@@ -1315,7 +1315,7 @@ export const models: Model[] = [
     },
     metaTitle: {
       da: "Brugt Dell OptiPlex 5060: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Dell OptiPlex 5060: specs, pros and cons | Kestro",
+      en: "Refurbished Dell OptiPlex 5060: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: "Brugt Dell OptiPlex 5060 som SFF eller Micro med Intel i5/i7 fra 8. generation. Se forskelle i porte og udvidelser, og kontakt os om jeres behov.",
@@ -1414,7 +1414,7 @@ export const models: Model[] = [
     },
     metaTitle: {
       da: "Brugt Dell U2419H-skærm: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Dell U2419H monitor: specs, pros and cons | Kestro",
+      en: "Refurbished Dell U2419H monitor: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt Dell UltraSharp U2419H: 23,8" IPS i Full HD med tynd ramme, USB-hub og fod med højde og pivot. Let at skaffe mange ens. Tilbud på skrift.',
@@ -1499,8 +1499,8 @@ export const models: Model[] = [
       en: "HP's office monitor — same class, usually a little cheaper.",
     },
     metaTitle: {
-      da: "Brugt HP EliteDisplay E243: specs, fordele og ulemper | Kestro",
-      en: "Refurbished HP EliteDisplay E243: specs, pros and cons | Kestro",
+      da: "Brugt HP EliteDisplay E243: specs, fordele, ulemper | Kestro",
+      en: "Refurbished HP EliteDisplay E243: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt HP EliteDisplay E243: 23,8" IPS i Full HD med DisplayPort, HDMI, VGA, USB-hub og fuldt justerbar fod. Skriftligt tilbud med stand pr. skærm.',
@@ -1656,8 +1656,8 @@ export const models: Model[] = [
       en: "A mechanical dock that clicks onto the bottom of the machine.",
     },
     metaTitle: {
-      da: "Brugt ThinkPad Ultra Dock: specs, fordele og ulemper | Kestro",
-      en: "Refurbished ThinkPad Ultra Dock: specs, pros and cons | Kestro",
+      da: "Brugt ThinkPad Ultra Dock: specs, fordele, ulemper | Kestro",
+      en: "Refurbished ThinkPad Ultra Dock: specs, pros, cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad Ultra Dock: klikker fast under maskinen og giver op til tre skærme, netværk og nøglelås. Passer kun til visse ThinkPad-modeller.",

@@ -27,7 +27,7 @@ const copy = {
     seeSpecs: "Se specifikationer",
   },
   en: {
-    metaTitle: "Refurbished ThinkPad, EliteBook, Latitude and OptiPlex | Kestro",
+    metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
     metaDescription:
       "Specifications, pros and cons for the refurbished models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
     title: "Models we often source",

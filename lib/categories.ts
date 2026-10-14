@@ -243,8 +243,8 @@ export const categories: Category[] = [
       en: "Compact machines for desks with no room to spare",
     },
     metaTitle: {
-      da: "Brugte mini-pc'er til erhverv – ThinkCentre Tiny m.fl. | Kestro",
-      en: "Refurbished mini PCs for business — ThinkCentre Tiny | Kestro",
+      da: "Brugte mini-pc'er til erhverv – fx ThinkCentre Tiny | Kestro",
+      en: "Refurbished business mini PCs — ThinkCentre Tiny | Kestro",
     },
     metaDescription: {
       da: "Brugte og refurbished mini-pc'er til reception, kasse og trange kontorpladser – fx Lenovo ThinkCentre Tiny og Dell OptiPlex Micro. Skaffet til ordren.",
@@ -301,7 +301,7 @@ export const categories: Category[] = [
       en: "Refurbished tablets for field work, shops and presentations",
     },
     metaTitle: {
-      da: "Brugte tablets til erhverv – iPad, Galaxy Tab, Surface | Kestro",
+      da: "Brugte tablets til erhverv – iPad, Galaxy, Surface | Kestro",
       en: "Refurbished business tablets — iPad, Galaxy, Surface | Kestro",
     },
     metaDescription: {
@@ -359,7 +359,7 @@ export const categories: Category[] = [
       en: "Refurbished phones and smartwatches for employees",
     },
     metaTitle: {
-      da: "Brugte firmatelefoner – refurbished iPhone og Samsung | Kestro",
+      da: "Brugte firmatelefoner – refurbished iPhone, Samsung | Kestro",
       en: "Refurbished business phones — iPhone and Samsung | Kestro",
     },
     metaDescription: {
@@ -425,7 +425,7 @@ export const categories: Category[] = [
       en: "Docks, monitors and accessories for the desk",
     },
     metaTitle: {
-      da: "Dockingstation til bærbar – brugte docks til erhverv | Kestro",
+      da: "Dockingstation til bærbar – brugte erhvervsdocks | Kestro",
       en: "Docking stations for business laptops, refurbished | Kestro",
     },
     metaDescription: {

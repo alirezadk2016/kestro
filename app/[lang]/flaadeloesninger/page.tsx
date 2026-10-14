@@ -17,7 +17,7 @@ import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
-    metaTitle: "Computere til alle medarbejdere – én model, én levering | Kestro",
+    metaTitle: "Computere til medarbejdere – én model, én levering | Kestro",
     metaDescription:
       "Fra ti maskiner til hele virksomheden: samme konfiguration hele vejen rundt, samlet levering og de gamle maskiner hentet retur. Ét samlet tilbud.",
     badge: "Til større virksomheder",

@@ -41,7 +41,7 @@ const copy = {
     formBody: "Udfyld formularen, så vender vi tilbage med en vurdering.",
   },
   en: {
-    metaTitle: "Sell used IT equipment — collection and data erasure | Kestro",
+    metaTitle: "Sell used IT equipment — collection, data erasure | Kestro",
     metaDescription:
       "Replacing company IT? Kestro buys used business computers, phones and tablets in Denmark and Norway, collects them and erases the storage.",
     title: "Sell your company's used IT equipment to us",

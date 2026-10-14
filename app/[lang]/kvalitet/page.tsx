@@ -48,7 +48,7 @@ const copy = {
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
-    metaTitle: "Refurbished grades A, B and C and warranty explained | Kestro",
+    metaTitle: "Refurbished grades A, B, C and warranty explained | Kestro",
     metaDescription:
       "What grades A, B and C cover, what a function test should include, and which warranty terms to get in writing before you buy used or refurbished IT.",
     title: "Condition, testing and what to ask about",

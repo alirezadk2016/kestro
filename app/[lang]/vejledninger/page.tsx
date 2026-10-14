@@ -28,7 +28,7 @@ import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
-    metaTitle: "Vejledninger: køb, tjek og udskiftning af erhvervs-IT | Kestro",
+    metaTitle: "Vejledninger om køb, tjek og udskiftning af IT | Kestro",
     metaDescription:
       "Vejledninger om at købe, tjekke og udskifte computere i virksomheden: Windows 11, datasletning, RAM og brugt mod refurbished, konkret forklaret.",
     eyebrow: "Kestro Viden",

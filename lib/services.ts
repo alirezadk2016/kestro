@@ -189,7 +189,7 @@ export const services: Service[] = [
     h1: { da: "Klargøring og test af computere til medarbejdere", en: "Preparing and testing computers for employees" },
     metaTitle: {
       da: "Klargøring og test af computere til medarbejdere | Kestro",
-      en: "Preparing computers for employees — tested and set up | Kestro",
+      en: "Preparing computers for employees — tested, set up | Kestro",
     },
     metaDescription: {
       da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering efter behov og sletning af lagermediet, før maskinen sættes op til medarbejderen.",
@@ -302,7 +302,7 @@ export const services: Service[] = [
     name: { da: "Levering til virksomheden", en: "Delivery to the company" },
     h1: { da: "Levering af IT-udstyr til virksomheden", en: "Delivering IT equipment to your company" },
     metaTitle: {
-      da: "Levering af IT-udstyr til virksomheder i DK og Norge | Kestro",
+      da: "IT-udstyr leveret til virksomheder i DK og Norge | Kestro",
       en: "Delivery of business IT in Denmark and Norway | Kestro",
     },
     metaDescription: {
