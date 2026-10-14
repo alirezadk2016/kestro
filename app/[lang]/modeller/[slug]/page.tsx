@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import ModelGallery from "@/components/ModelGallery";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -189,7 +189,11 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   {model.brand} · {model.format[lang]}
                 </p>
                 <div className="mt-3 flex items-center gap-4 sm:gap-5">
-                  <MarkTile name={getCategoryMark(model.category)} size="lg" className="flex-none" />
+                  <MarkTile
+                    name={getCategoryMark(model.category)}
+                    size="lg"
+                    className="flex-none"
+                  />
                   <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
                     {model.name}
                   </h1>
@@ -203,43 +207,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
               {model.images && (
                 <div className="space-y-3 sm:space-y-4 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
-                  {/* The photographs are studio shots on white. On a navy page a pure
-                      white tile was the brightest thing on screen; on the brand's light
-                      neutral, with the photo multiplied in, the studio white becomes
-                      the paper the site's answers already sit on. */}
-                  <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
-                    <Image
-                      src={model.images[0].src}
-                      quality={90}
-                      alt={model.images[0].alt[lang]}
-                      width={1179}
-                      height={1120}
-                      className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
-                      sizes="(max-width: 1024px) 92vw, 460px"
-                      priority
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                    {model.images.slice(1).map((img) => (
-                      <div
-                        key={img.src}
-                        className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
-                      >
-                        <Image
-                          src={img.src}
-                          quality={90}
-                          alt={img.alt[lang]}
-                          width={1179}
-                          height={1120}
-                          className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
-                          sizes="(max-width: 640px) 30vw, 150px"
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className="pt-1 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
+                  <ModelGallery
+                    images={model.images}
+                    lang={lang}
+                    name={model.name}
+                    note={c.imageNote}
+                  />
                 </div>
               )}
 
@@ -273,7 +246,9 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           <div className="max-w-6xl">
             <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.configTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                  {c.configTitle}
+                </h2>
                 <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
               </div>
 

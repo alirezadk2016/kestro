@@ -17,19 +17,19 @@ const copy = {
   da: {
     metaTitle: "Kontakt Kestro, Aarhus – brugte computere til virksomheder",
     metaDescription:
-      "Skriv om et indkøb, en flåde eller udstyr, I skal af med. Svar inden for én arbejdsdag fra den, der skriver tilbuddet – uforpligtende og uden salgstale.",
+      "Kontakt Kestro om brugt IT, en flåde eller udstyr, I skal af med. Skriv til kontakt@kestro.dk eller brug formularen til en uforpligtende forespørgsel.",
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
-    description: `Skriv via formularen herunder eller direkte til ${company.email}. I får svar inden for én arbejdsdag fra den, der skriver tilbuddet. Vi leverer i Danmark og Norge, og der er intet minimumsantal.`,
+    description: `Skriv via formularen herunder eller direkte til ${company.email}. Kestro er under etablering med fokus på brugt erhvervs-IT i Danmark og Norge. Vi modtager indledende, uforpligtende forespørgsler, ikke bestillinger.`,
     emailTitle: "Foretrækker I e-mail?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
-    companyTitle: "Virksomhedsoplysninger",
+    companyTitle: "Projekt og kontakt",
     fieldCompany: "Virksomhed",
     fieldPhone: "Telefon",
     fieldEmail: "E-mail",
     fieldAddress: "Adresse",
-    fieldServes: "Leverer i",
+    fieldServes: "Fokusområde",
     fieldCvr: "CVR",
     fieldHours: "Åbningstider",
     at: "hos",
@@ -48,17 +48,17 @@ const copy = {
   en: {
     metaTitle: "Contact Kestro in Aarhus — used business IT",
     metaDescription:
-      "Write to us about a purchase, a fleet or equipment you need to move on. A reply within one working day from the person who writes the quote.",
+      "Contact Kestro about used business IT, a fleet or equipment to move on. Email kontakt@kestro.dk or use the form for an initial, non-binding enquiry.",
     title: "Contact us",
-    description: `Write through the form below or directly to ${company.email}. You get a reply within one working day from the person who writes the quote. We deliver in Denmark and Norway, and there is no minimum order.`,
+    description: `Write through the form below or directly to ${company.email}. Kestro is in preparation with a focus on used business IT in Denmark and Norway. We welcome initial, non-binding enquiries, not orders.`,
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
-    companyTitle: "Company details",
+    companyTitle: "Project and contact",
     fieldCompany: "Company",
     fieldPhone: "Phone",
     fieldEmail: "Email",
     fieldAddress: "Address",
-    fieldServes: "Delivers in",
+    fieldServes: "Market focus",
     fieldCvr: "VAT no. (CVR)",
     fieldHours: "Opening hours",
     at: "at",
@@ -87,8 +87,8 @@ const contactFaqs: FaqItem[] = [
   {
     question: { da: "Hvor hurtigt svarer I?", en: "How quickly do you reply?" },
     answer: {
-      da: "Inden for én arbejdsdag. Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø – så svaret kommer fra en, der kan svare på det, I spørger om.",
-      en: "Within one working day. The message lands with the person who writes the quote — not in a support queue — so the answer comes from someone who can answer what you asked.",
+      da: "Vi læser henvendelserne og vender tilbage hurtigst muligt. Der er ikke en garanteret svartid i projektets etableringsfase.",
+      en: "We read enquiries and get back to you as soon as we can. There is no guaranteed response time during the project's preparation phase.",
     },
   },
   {
@@ -192,13 +192,17 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
               <ContactFlipCard lang={lang} />
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.emailTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                  {c.emailTitle}
+                </h2>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/75">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />
               </div>
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.companyTitle}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                  {c.companyTitle}
+                </h2>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">
                     <dt className="text-paper/65">{c.fieldCompany}</dt>
@@ -261,7 +265,11 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
           <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             {[c.brief1, c.brief2, c.brief3, c.brief4, c.brief5, c.brief6].map((item) => (
               <li key={item} className="plate flex gap-3 p-5 text-base leading-7 text-paper/75">
-                <Check aria-hidden="true" className="mt-1.5 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
+                <Check
+                  aria-hidden="true"
+                  className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                  strokeWidth={2}
+                />
                 <span>{item}</span>
               </li>
             ))}

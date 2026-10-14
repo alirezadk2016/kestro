@@ -230,8 +230,8 @@ export const guides: Guide[] = [
       en: "Support ended on 14 October 2025. The machines still run, but they no longer receive security updates. The inventory decides the rest: part of the fleet can be upgraded to Windows 11, part needs replacing, and part can wait. Usually all three are in play at once.",
     },
     intro: {
-      da: "Den 14. oktober 2025 stoppede Microsoft med at udsende sikkerhedsopdateringer til Windows 10. Der skete ikke noget synligt den dag, og det er præcis derfor, opgaven er let at udskyde. Denne vejledning handler ikke om, hvorvidt I skal gøre noget, men om, hvordan I finder ud af hvad – uden at skifte maskiner, der ikke behøver at blive skiftet.",
-      en: "On 14 October 2025 Microsoft stopped issuing security updates for Windows 10. Nothing visible happened that day, which is exactly why the job is easy to put off. This guide is not about whether you need to do something, but about working out what — without replacing machines that do not need replacing.",
+      da: "Den almindelige support til Windows 10 version 22H2 sluttede 14. oktober 2025. Maskiner tilmeldt Extended Security Updates (ESU) kan fortsat få sikkerhedsrettelser; LTSC-udgaver har særskilte livscyklusser. Denne vejledning hjælper jer med at afklare opdateringer, Windows 11 og udskiftning – uden at skifte maskiner unødigt.",
+      en: "General support for Windows 10 version 22H2 ended on 14 October 2025. Devices enrolled in Extended Security Updates (ESU) can still receive security fixes; LTSC editions have separate lifecycles. This guide helps you assess updates, Windows 11 and replacement without replacing machines unnecessarily.",
     },
     sections: [
       {
@@ -241,8 +241,8 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Microsoft holdt op med at udsende sikkerhedsopdateringer, kvalitetsopdateringer og teknisk support til Windows 10. Ingen maskine blev slukket, ingen licens holdt op med at virke, og ingen fil forsvandt. En Windows 10-maskine starter i dag præcis, som den gjorde i oktober 2025.",
-            en: "Microsoft stopped issuing security updates, quality updates and technical support for Windows 10. No machine was switched off, no licence stopped working, and no file disappeared. A Windows 10 machine boots today exactly as it did in October 2025.",
+            da: "Microsoft afsluttede almindelige opdateringer og teknisk support til Windows 10 version 22H2. ESU giver særskilt adgang til sikkerhedsrettelser, og LTSC har andre supportdatoer. Ingen maskine blev slukket, ingen licens holdt op med at virke, og ingen fil forsvandt som følge af slutdatoen.",
+            en: "Microsoft ended general updates and technical support for Windows 10 version 22H2. ESU provides separate access to security fixes, and LTSC has different support dates. The end date did not switch machines off, invalidate licences or remove files.",
           },
           {
             da: "Det, der stoppede, er strømmen af rettelser til sårbarheder, der bliver fundet efter den dato. Forskellen viser sig ikke med det samme. Den viser sig, når der bliver fundet noget nyt, og rettelsen kommer til Windows 11 og ikke til jer.",
@@ -265,8 +265,8 @@ export const guides: Guide[] = [
             en: "The two get mixed together in almost every conversation about this, and that leads to wrong decisions in both directions. The questions are independent.",
           },
           {
-            da: "Det første handler om styresystemet: får Windows 10 stadig sikkerhedsopdateringer? Svaret er det samme for hver eneste maskine i verden, uanset hvor ny eller dyr den er. En maskine købt i går, der kører Windows 10, er lige så uden opdateringer som en fra 2017.",
-            en: "The first is about the operating system: is Windows 10 still receiving security updates? The answer is the same for every machine in the world, however new or expensive. A machine bought yesterday running Windows 10 is exactly as unpatched as one from 2017.",
+            da: "Det første handler om styresystemet: får den konkrete maskine stadig sikkerhedsrettelser? Kontrollér Windows-udgave, supportdato og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
+            en: "The first concerns the operating system: does this particular device still receive security fixes? Check the Windows edition, support date and whether valid ESU enrolment is actually active. A newer device running Windows 10 version 22H2 without ESU does not receive general security updates simply because it is newer.",
           },
           {
             da: "Det andet handler om den enkelte maskine: må den installere Windows 11? Her er svaret forskelligt fra maskine til maskine, og det afgøres af TPM 2.0, Secure Boot i UEFI-tilstand og om processoren står på Microsofts liste. Kravene og hvordan I tjekker dem står i vejledningen om Windows 11 på en ældre maskine.",
@@ -403,6 +403,7 @@ export const guides: Guide[] = [
       },
     ],
     sources: [
+      guideSource("windows10Servicing"),
       {
         href: {
           da: "https://www.microsoft.com/da-dk/windows/end-of-support",
@@ -1285,7 +1286,10 @@ export const guides: Guide[] = [
     },
     sections: [
       {
-        heading: { da: "De fem ting, der skal passe sammen", en: "The five things that must match" },
+        heading: {
+          da: "De fem ting, der skal passe sammen",
+          en: "The five things that must match",
+        },
         body: [
           {
             da: "Vælg i denne rækkefølge, så låser hvert valg det næste:",

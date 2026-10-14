@@ -6,6 +6,7 @@ import { company, postalAddress } from "@/lib/company";
 import { localePath, metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
 import { legalUpdated } from "@/lib/legal";
 import PageSchema from "@/components/PageSchema";
+import { project, projectNotice, priceDisclaimer } from "@/lib/project";
 
 /*
  * Salgs- og leveringsbetingelser.
@@ -39,7 +40,7 @@ import PageSchema from "@/components/PageSchema";
    so the page and the <lastmod> can never disagree. */
 const UPDATED = legalUpdated["/handelsbetingelser"];
 
-const copy = {
+const commercialCopy = {
   da: {
     metaTitle: "Handelsbetingelser for erhvervskunder | Kestro",
     metaDescription:
@@ -68,7 +69,8 @@ const copy = {
 
 type Clause = { heading: Localized; body: Localized[] };
 
-const clauses: Clause[] = [
+// Retained as an inactive draft. Launching requires a fresh legal review, including consumer repairs.
+const commercialClauses: Clause[] = [
   {
     heading: { da: "1. Anvendelse og aftalegrundlag", en: "1. Scope and basis of agreement" },
     body: [
@@ -241,6 +243,61 @@ const clauses: Clause[] = [
   },
 ];
 
+const copy = project.prelaunch
+  ? {
+      da: {
+        ...commercialCopy.da,
+        metaDescription:
+          "Kestro er under etablering. Læs om uforpligtende forespørgsler, vejledende budgetpriser og kontakt. Ingen bestilling eller betaling her på siden.",
+        description: projectNotice.da.body,
+        detailsTitle: "Projekt og kontakt",
+      },
+      en: {
+        ...commercialCopy.en,
+        metaDescription:
+          "Kestro is still in preparation. Read about non-binding enquiries, indicative budgets and contact. No orders or payments are accepted on the site.",
+        description: projectNotice.en.body,
+        detailsTitle: "Project and contact",
+      },
+    }
+  : commercialCopy;
+
+const previewClauses: Clause[] = [
+  {
+    heading: { da: "1. Sidens status", en: "1. Site status" },
+    body: [{ da: projectNotice.da.body, en: projectNotice.en.body }],
+  },
+  {
+    heading: { da: "2. Forespørgsler er ikke bestillinger", en: "2. Enquiries are not orders" },
+    body: [
+      {
+        da: "Kontakt- og tilbudsformularerne bruges til at drøfte behov og indledende muligheder. En besked er ikke en bestilling, reservation eller aftale om køb eller reparation. I bliver ikke bedt om at betale gennem siden.",
+        en: "The contact and quote forms are for discussing requirements and initial options. A message is not an order, reservation or agreement to buy or repair anything. You will not be asked to pay through this site.",
+      },
+    ],
+  },
+  {
+    heading: { da: "3. Vejledende priser og modeller", en: "3. Indicative prices and models" },
+    body: [
+      { da: priceDisclaimer.da, en: priceDisclaimer.en },
+      {
+        da: "Budgeteksempler bygger på daterede, offentlige detailpriser fra de angivne eksterne forhandlere. De er ikke Kestros salgspriser. Modeller, billeder og specifikationer beskriver eksempler, ikke bekræftet lager eller en bestemt leverance. Siden lover ikke momsfradrag.",
+        en: "Budget examples are based on dated public retail prices from the stated external retailers. They are not Kestro selling prices. Models, images and specifications describe examples, not confirmed stock or a particular delivery. The site does not promise VAT deductibility.",
+      },
+    ],
+  },
+  {
+    heading: { da: "4. Før eventuelt salg eller reparation", en: "4. Before any sale or repair" },
+    body: [
+      {
+        da: "Før projektet åbner for handel, skal sælgerens identitet, kontaktoplysninger og relevante registreringer være afklaret. Konkrete vilkår for pris, afgifter, levering, betaling og reklamation skal oplyses før en aftale. En privat kundes køb eller reparation må ikke behandles efter erhvervsvilkår. Indlevering, undersøgelsesgebyr og arbejde aftales på forhånd; send ikke udstyr uden en konkret aftale.",
+        en: "Before the project opens for trading, the seller's identity, contact details and relevant registrations must be established. Specific terms for price, taxes, delivery, payment and complaints must be provided before an agreement. A private customer's purchase or repair must not be treated under business-only terms. Handover, diagnostic fees and work must be agreed in advance; do not send equipment without a specific arrangement.",
+      },
+    ],
+  },
+];
+const clauses = project.prelaunch ? previewClauses : commercialClauses;
+
 export async function generateMetadata(props: {
   params: Promise<{ lang: Lang }>;
 }): Promise<Metadata> {
@@ -277,7 +334,6 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
             href="/handelsbetingelser"
             crumb={lang === "da" ? "Handelsbetingelser" : "Terms of sale"}
           />
-
         </Container>
       </section>
 
@@ -290,7 +346,10 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
         <Container>
           <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
             {clauses.map((clause) => (
-              <div key={clause.heading.da} className="border-t border-ink-200 py-8 first:border-t-0">
+              <div
+                key={clause.heading.da}
+                className="border-t border-ink-200 py-8 first:border-t-0"
+              >
                 <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {clause.heading[lang]}
                 </h2>
@@ -336,7 +395,10 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 <div className="flex gap-x-3">
                   <dt className="text-ink-600">{lang === "da" ? "E-mail" : "Email"}</dt>
                   <dd>
-                    <a href={`mailto:${company.email}`} className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600">
+                    <a
+                      href={`mailto:${company.email}`}
+                      className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
+                    >
                       {company.email}
                     </a>
                   </dd>

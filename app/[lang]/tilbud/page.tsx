@@ -27,16 +27,16 @@ const copy = {
   da: {
     metaTitle: "Få et tilbud på brugte computere til virksomheden | Kestro",
     metaDescription:
-      "Skriv antal, specifikation og hvornår det skal stå klar. I får svar inden for én arbejdsdag med pris per enhed, stand og leveringstid. Uforpligtende.",
+      "Skriv antal, specifikation og ønsket tidsramme til Kestro. Vi afklarer mulighederne i en uforpligtende dialog; formularen er ikke en bestilling.",
     title: "Få et tilbud",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
-    lead: "Et tilbud fra Kestro er gratis og uforpligtende: I fortæller antal, specifikation og hvornår det skal stå klar, og I får svar inden for én arbejdsdag med pris per enhed, stand og leveringstid. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
+    lead: "Kestro er under etablering. Skriv antal, specifikation og ønsket tidsramme, så vi kan afklare de indledende muligheder. Forespørgslen er gratis og uforpligtende, ikke en bestilling eller reservation. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
     nextTitle: "Hvad sker der, når I sender?",
     nextSteps: [
       "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
-      "Vi finder maskinerne i leverandørnetværket og sender et tilbud med pris per enhed, stand, antal og leveringstid.",
-      "I godkender – eller siger nej. Der er ingen binding i at spørge.",
+      "Vi afklarer de indledende muligheder. Der er endnu ikke bekræftet lager eller en aftalt pris.",
+      "Før et eventuelt køb skal sælger, pris og vilkår være afklaret. En forespørgsel er ikke en bestilling.",
     ],
     exampleTitle: "Se et tilbud, før I beder om et",
     exampleBody:
@@ -44,7 +44,7 @@ const copy = {
     exampleLink: "Se eksemplet",
     needTitle: "Hvad har vi brug for at vide?",
     needLead:
-      "Ingen af felterne er obligatoriske, og »ved ikke endnu« er et brugbart svar. Men jo mere I kan sige om punkterne herunder, jo færre spørgsmål skal vi stille, før I får et tilbud.",
+      "Specifikationsfelterne er valgfrie, og »ved ikke endnu« er et brugbart svar. Navn, virksomhed og e-mail skal udfyldes, så vi kan besvare forespørgslen. Jo mere I kan sige om behovet, jo færre spørgsmål skal vi stille.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",
@@ -66,7 +66,7 @@ const copy = {
     needLinkLabel: "Sådan køber vi brugt udstyr",
     processTitle: "Fra forespørgsel til tilbud",
     processLead:
-      "Fire trin, og der er ingen binding i nogen af dem. Vi sætter ikke et antal dage på herunder – vi skaffer maskinerne per ordre, så tiden afhænger af, hvad der skal findes, og i hvilket antal. Til gengæld skal I ikke gætte, hvad der sker undervejs.",
+      "Her er det planlagte forløb for en fremtidig leverance. Projektet tager endnu ikke imod ordrer; sælgerens identitet, registreringer og konkrete handelsvilkår skal være på plads, før handel åbnes. En indledende forespørgsel binder jer ikke.",
     processSteps: [
       {
         title: "I sender forespørgslen",
@@ -100,15 +100,15 @@ const copy = {
   en: {
     metaTitle: "Get a quote on used business computers | Kestro",
     metaDescription:
-      "Tell us the quantity, the specification and when it has to be ready. A reply within one working day with price per unit, condition and lead time.",
+      "Tell Kestro the quantity, specification and timing you need. We discuss the options in a non-binding conversation; submitting the form is not an order.",
     title: "Get a quote",
-    lead: "A quote from Kestro is free and commits you to nothing: you tell us the quantity, the specification and when it has to be ready, and you get a reply within one working day with price per unit, condition and lead time. Fill in what you know — the rest can stay at “not sure yet”.",
+    lead: "Kestro is in preparation. Tell us the quantity, specification and timing you need so we can discuss initial options. The enquiry is free and non-binding, not an order or reservation. Fill in what you know; the rest can stay at “not sure yet”.",
     formTitle: "Your request",
     nextTitle: "What happens when you send it?",
     nextSteps: [
       "We read the request and ask if anything is missing.",
-      "We find the machines in our supplier network and send a quote with price per unit, condition, quantity and lead time.",
-      "You approve — or you say no. Asking commits you to nothing.",
+      "We discuss the initial options. There is no confirmed stock or agreed price yet.",
+      "Before any purchase, the seller, price and terms must be established. An enquiry is not an order.",
     ],
     exampleTitle: "See a quote before you ask for one",
     exampleBody:
@@ -116,7 +116,7 @@ const copy = {
     exampleLink: "See the example",
     needTitle: "What do we need to know?",
     needLead:
-      "None of the fields are required, and “not sure yet” is a usable answer. But the more you can tell us about the points below, the fewer questions we need to ask before you get a quote.",
+      "The specification fields are optional, and “not sure yet” is a usable answer. Name, company and email are required so we can answer your enquiry. The more you can say about your needs, the fewer questions we have to ask.",
     needItems: [
       {
         title: "Quantity, and what goes with it",
@@ -138,7 +138,7 @@ const copy = {
     needLinkLabel: "How we buy used equipment",
     processTitle: "From enquiry to quote",
     processLead:
-      "Four steps, and none of them commits you to anything. We do not put a number of days on them below — we source per order, so the time depends on what has to be found and in what quantity. What you should not have to do is guess what is happening in between.",
+      "This is the planned process for a future delivery. The project does not yet accept orders; the seller's identity, registrations and specific trading terms must be established before trading opens. An initial enquiry does not commit you.",
     processSteps: [
       {
         title: "You send the request",
@@ -376,7 +376,11 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             {c.needItems.map((item) => (
               <div key={item.title} className="plate p-5 sm:p-8">
                 <h3 className="flex gap-2.5 text-base font-semibold text-paper">
-                  <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
+                  />
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-[1.6] text-paper/75">{item.body}</p>

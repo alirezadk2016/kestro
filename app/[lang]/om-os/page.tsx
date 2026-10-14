@@ -101,8 +101,8 @@ const aboutFaqs = (contact: { name: string; role: { da: string; en: string } }):
   {
     question: { da: "Hvem taler vi med, når vi skriver?", en: "Who do we talk to when we write?" },
     answer: {
-      da: `${contact.name}, ${contact.role.da[0].toLowerCase()}${contact.role.da.slice(1)}. Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø – og I får svar inden for én arbejdsdag.`,
-      en: `${contact.name}, ${contact.role.en}. The message lands with the person who writes the quote — not in a support queue — and you get a reply within one working day.`,
+      da: `${contact.name}, ${contact.role.da[0].toLowerCase()}${contact.role.da.slice(1)}. Skriv til vores fælles kontaktadresse for en uforpligtende samtale om projektet og jeres behov.`,
+      en: `${contact.name}, ${contact.role.en}. Write to our shared contact address for a non-binding conversation about the project and your requirements.`,
     },
   },
 ];
@@ -142,7 +142,9 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
                     pill around a technical drawing fights it. */}
                 <MarkTile name={section.mark} size="md" />
                 <div>
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{section.title[lang]}</h2>
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                    {section.title[lang]}
+                  </h2>
                   <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {section.description[lang]}
                   </p>

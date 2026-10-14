@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GA_MEASUREMENT_ID, events, track } from "@/lib/analytics";
+import { GA_MEASUREMENT_ID, events, syncAnalyticsConsent, track } from "@/lib/analytics";
 import { CONSENT_EVENT, readConsent, type Consent } from "@/lib/consent";
 
 /**
@@ -27,18 +27,26 @@ export default function Analytics() {
   /* Read the stored answer after hydration: localStorage does not exist on the
      server, and a mismatch here would be a hydration error. */
   useEffect(() => {
-    setConsent(readConsent());
-    const onChange = (e: Event) => setConsent((e as CustomEvent).detail ?? null);
+    const onChange = () => {
+      const next = readConsent();
+      syncAnalyticsConsent(next);
+      setConsent(next);
+    };
+    onChange();
     window.addEventListener(CONSENT_EVENT, onChange);
-    return () => window.removeEventListener(CONSENT_EVENT, onChange);
+    window.addEventListener("storage", onChange);
+    return () => {
+      window.removeEventListener(CONSENT_EVENT, onChange);
+      window.removeEventListener("storage", onChange);
+    };
   }, []);
 
   /* One page_view per page, including the first one after the tag loads. */
   useEffect(() => {
     if (consent !== "granted" || !ready) return;
-    window.gtag?.("event", "page_view", {
+    track("page_view", {
       page_path: pathname,
-      page_location: window.location.href,
+      page_location: window.location.origin + window.location.pathname,
       page_title: document.title,
     });
   }, [pathname, consent, ready]);
@@ -92,7 +100,14 @@ export default function Analytics() {
       {/* The queue first, the library second — the order of Google's own
           snippet. Anything sent before gtag.js finishes loading lands in
           dataLayer and is processed when it does, so no event is lost. */}
-      <Script id="ga4-config" strategy="afterInteractive" onReady={() => setReady(true)}>
+      <Script
+        id="ga4-config"
+        strategy="afterInteractive"
+        onReady={() => {
+          syncAnalyticsConsent(readConsent());
+          setReady(true);
+        }}
+      >
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

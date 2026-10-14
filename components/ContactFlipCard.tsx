@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, MapPin, Globe2 } from "lucide-react";
+import { Mail, Phone, MapPin, Globe2 } from "lucide-react";
 import TeamAvatar from "./TeamAvatar";
 import { team, company, type TeamMember } from "@/lib/company";
 import type { Lang } from "@/lib/i18n";
@@ -16,7 +16,7 @@ const copy = {
     writeDirect: "Skriv direkte til",
     busy: "Har I travlt, eller er det nemmere at tage det over telefonen?",
     lands:
-      "Beskeden lander hos den, der skriver tilbuddet – ikke i en supportkø. I får svar inden for én arbejdsdag.",
+      "Skriv til vores fælles kontaktadresse med kontaktpersonens navn i emnet. Henvendelsen er uforpligtende.",
     mainNumber: "Hovednummer",
   },
   en: {
@@ -27,7 +27,7 @@ const copy = {
     writeDirect: "Write directly to",
     busy: "In a hurry, or easier to sort it out over the phone?",
     lands:
-      "Your message lands with the person who writes the quote, not in a support queue. You get an answer within one working day.",
+      "Email our shared contact address with the contact's name in the subject. The enquiry is non-binding.",
     mainNumber: "Main number",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -53,14 +53,13 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
   return (
     <div>
       <div
-        role="tablist"
+        role="group"
         aria-label={c.choose}
         className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/75 sm:w-auto"
       >
         <button
           type="button"
-          role="tab"
-          aria-selected={!showIntl}
+          aria-pressed={!showIntl}
           onClick={() => setShowIntl(false)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             !showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
@@ -71,8 +70,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
         </button>
         <button
           type="button"
-          role="tab"
-          aria-selected={showIntl}
+          aria-pressed={showIntl}
           onClick={() => setShowIntl(true)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
             showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
@@ -85,7 +83,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
 
       <div className="[perspective:1600px]">
         <div
-          className={`relative min-h-[272px] w-full transition-transform duration-700 ease-out [transform-style:preserve-3d] sm:min-h-[248px] ${
+          className={`relative grid min-h-[272px] w-full transition-transform duration-700 ease-out motion-reduce:transition-none [transform-style:preserve-3d] sm:min-h-[248px] ${
             showIntl ? "[transform:rotateY(180deg)]" : ""
           }`}
         >
@@ -113,7 +111,7 @@ function Face({
   return (
     <div
       aria-hidden={hidden}
-      className={`absolute inset-0 flex flex-col border border-white/10 bg-brand-950 p-6 text-white [backface-visibility:hidden] sm:p-8 ${
+      className={`flex min-w-0 flex-col border border-white/10 bg-brand-950 p-6 text-white [grid-area:1/1] [backface-visibility:hidden] sm:p-8 ${
         hidden ? "pointer-events-none" : ""
       } ${flipped ? "[transform:rotateY(180deg)]" : ""}`}
     >
@@ -132,6 +130,14 @@ function Face({
       </p>
 
       <div className="mt-auto pt-4">
+        <a
+          href={`mailto:${company.email}?subject=${encodeURIComponent(`${lang === "da" ? "Til" : "For"} ${member.name} - Kestro`)}`}
+          tabIndex={hidden ? -1 : undefined}
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+        >
+          <Mail aria-hidden="true" className="h-4 w-4 flex-none" />
+          {company.email}
+        </a>
         {(member.phoneHref || company.phoneHref) && (
           <a
             href={`tel:${member.phoneHref || company.phoneHref}`}

@@ -9,12 +9,23 @@ This file is the other half: where kestro.dk stands against those rules. It
 records what passes, what is pending, and what waits on the owner. Update it
 in every change that applies Mak or adds a lesson.
 
-| Lesson | In Mak | Checked here |
-| --- | --- | --- |
-| 2-1 | Waiting | — |
-| 2-2 | Rules 1–5 | 13 October 2026 |
-| 2-3 | Waiting | — |
-| 2-4 | Waiting | — |
+## Pre-launch Audit Fixes — 14 October 2026
+
+- The owner has explicitly requested indicative pricing during the preparation phase. `/priser` now shows four dated external retail examples, with configurations, VAT context, fees and sources. These are budget references, not Kestro offers or stock claims. No `Product.offers` markup is created.
+- A shared Danish/English notice identifies the project as not yet a registered business and makes enquiries non-binding. The terms URL now renders preparation-phase information instead of the retained commercial draft. No CVR, legal identity, address or trading registration has been invented.
+- Model references no longer mix Latitude 5410 with 5420 or OptiPlex 5060 with 5070. Dell's documented RAM maximum, CPU generations and optional HDMI are reflected in model tables, chips and generated answers.
+- The Windows 10 article distinguishes general 22H2 support from ESU and LTSC servicing. Existing URLs, canonicals, hreflang and sitemap membership stay unchanged.
+- Changed pricing, terms and Dell descriptions were measured in both languages: 145–148 characters and 883–911 px, within the 920 px limit. Titles and keyword ownership were preserved.
+- Technical fixes cover consent withdrawal, non-JavaScript form safety, menu resize cleanup, a keyboard-accessible T480 gallery and explicit desktop 3D activation. The homepage hero and its four bitmap assets are unchanged; mobile repair artwork still downloads nothing.
+- `npm audit --omit=dev` reports zero findings after compatible patches. Nine development-tool dependency findings remain; no forced Tailwind major upgrade or unverified override is used to hide them.
+- Not resolved by wording: the real data controller's identity/contact details, processor agreements and legal review before trading; authentic photos for 17 model pages; actual customer evidence; stock, margins, repair handover and service policies. Catalogue comparison/filtering, broader visual simplification and new articles remain separate design/content work, not claims of defects already fixed.
+
+| Lesson | In Mak    | Checked here    |
+| ------ | --------- | --------------- |
+| 2-1    | Waiting   | —               |
+| 2-2    | Rules 1–5 | 13 October 2026 |
+| 2-3    | Waiting   | —               |
+| 2-4    | Waiting   | —               |
 
 ---
 
@@ -22,12 +33,12 @@ in every change that applies Mak or adds a lesson.
 
 **Structure today:**
 
-| Tree | Where |
-| --- | --- |
+| Tree     | Where                            |
+| -------- | -------------------------------- |
 | Products | `/produkter/*` and `/modeller/*` |
-| Services | `/ydelser/*` |
-| Repairs | `/reparation/*` |
-| Blog | `/vejledninger/*` |
+| Services | `/ydelser/*`                     |
+| Repairs  | `/reparation/*`                  |
+| Blog     | `/vejledninger/*`                |
 
 ### Rules 1–5, checked 13 October 2026
 
@@ -39,16 +50,16 @@ in every change that applies Mak or adds a lesson.
   keywords are secondary on a service or category page, and their intent is
   probably "how do I", not "do it for me":
 
-  | Keyword | Page it sits on |
-  | --- | --- |
-  | `bærbar larmer` | `/reparation/rens-og-koeling` |
-  | `bærbar bliver varm` | `/reparation/rens-og-koeling` |
-  | `computer går ned` | `/reparation/fejlfinding` |
-  | `overføre filer til ny pc` | `/reparation/ny-opsaetning-og-dataflytning` |
-  | `tjek batteri bærbar` | `/reparation/batteriskift` |
-  | `skifte ssd i bærbar` | `/reparation/ram-og-ssd-opgradering` |
-  | `dobbeltskærm opsætning kontor` | `/produkter/skaerme` |
-  | `usb-c dock til flere skærme` | `/produkter/dockingstationer` |
+  | Keyword                         | Page it sits on                             |
+  | ------------------------------- | ------------------------------------------- |
+  | `bærbar larmer`                 | `/reparation/rens-og-koeling`               |
+  | `bærbar bliver varm`            | `/reparation/rens-og-koeling`               |
+  | `computer går ned`              | `/reparation/fejlfinding`                   |
+  | `overføre filer til ny pc`      | `/reparation/ny-opsaetning-og-dataflytning` |
+  | `tjek batteri bærbar`           | `/reparation/batteriskift`                  |
+  | `skifte ssd i bærbar`           | `/reparation/ram-og-ssd-opgradering`        |
+  | `dobbeltskærm opsætning kontor` | `/produkter/skaerme`                        |
+  | `usb-c dock til flere skærme`   | `/produkter/dockingstationer`               |
 
   For each one, read Danish page one:
   - Mostly guides and forums → it moves to a `/vejledninger` article (new or
@@ -58,6 +69,7 @@ in every change that applies Mak or adds a lesson.
   `google.com` is blocked from this environment, so the check needs the
   owner's screenshots or Search Console data. The `WebSearch` tool returns US
   results and does not count.
+
 - **Rule 3, a repair business has more than one tree: candidate.** A
   `/vejledninger` cluster for error codes and warning lights, such as
   "Lenovo fejlkode" or "Dell blinkende lys". Build it only after a
@@ -70,6 +82,7 @@ in every change that applies Mak or adds a lesson.
   Each one gets a page only when page one shows category pages for it and
   Kestro has a real answer to give. No page is made just because a keyword
   exists.
+
 - **Rule 5, one sheet with every page: done.**
   [`docs/seo-pillar-cluster.csv`](seo-pillar-cluster.csv) is Kestro's version
   of the course sheet (`.claude/skills/mak/references/sheets.md`).

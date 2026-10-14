@@ -41,8 +41,8 @@ const copy = {
   da: {
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
-      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro sælger den slags maskiner til virksomheder i Danmark og Norge: I fortæller, hvad I skal bruge, og vi finder maskinerne og sender en pris på skrift.",
-    who: "Kort sagt: I køber hos Kestro. Vi skaffer maskinerne hos leverandører i vores netværk, men tilbud, faktura og reklamation går gennem os.",
+      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro er under etablering med fokus på den slags maskiner til virksomheder i Danmark og Norge. I kan sende en uforpligtende forespørgsel om jeres behov.",
+    who: "Kestro er endnu ikke en registreret virksomhed. Siden viser projektet og modeltyperne; den modtager ikke ordrer eller betaling. Skriv til os for en indledende afklaring.",
     terms: "Handelsbetingelserne",
     updated: "Opdateret",
     faqTitle: "Det spørger virksomheder også om",
@@ -50,8 +50,8 @@ const copy = {
   en: {
     question: "What is refurbished business IT?",
     answer:
-      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro sells that equipment to companies in Denmark and Norway: you tell us what you need, we find the machines and send a written price.",
-    who: "In short: you buy from Kestro. We source the machines from suppliers in our network, but the quote, the invoice and any complaint go through us.",
+      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro is in preparation with a focus on this equipment for companies in Denmark and Norway. You can send a non-binding enquiry about your requirements.",
+    who: "Kestro is not yet a registered business. The site presents the project and model types; it does not accept orders or payment. Write to us for an initial discussion.",
     terms: "Terms of sale",
     updated: "Updated",
     faqTitle: "What companies also ask",
@@ -71,25 +71,25 @@ const faqs: FaqEntry[] = [
       en: "Who are we buying from — Kestro or a supplier?",
     },
     answer: {
-      da: "Af Kestro. Vi skaffer maskinerne hos leverandører i vores netværk, men tilbuddet, ordrebekræftelsen og fakturaen kommer fra Kestro, og det er os, I henvender jer til, hvis noget er galt. Vores handelsbetingelser gælder for alle tilbud og ordrer.",
-      en: "From Kestro. We source the machines from suppliers in our network, but the quote, the order confirmation and the invoice come from Kestro, and we are who you contact if something is wrong. Our terms of sale apply to every quote and order.",
+      da: copy.da.who,
+      en: copy.en.who,
     },
   },
   {
     question: { da: "Hvor lang er garantien?", en: "How long is the warranty?" },
     answer: {
-      da: "Reklamationsperioden står i tilbuddet for hver leverance, fordi den afhænger af udstyrets alder og stand – så I kender den, før I bestiller. Er der ikke aftalt en periode, gælder købelovens regler. Ved en berettiget reklamation reparerer eller omleverer vi, eller I får et forholdsmæssigt afslag.",
-      en: "The complaint period is written into the quote for each delivery, because it depends on the age and condition of the equipment — so you know it before you order. Where no period is agreed, the Danish Sale of Goods Act applies. For a justified complaint we repair or replace, or you get a proportionate price reduction.",
+      da: "Der er endnu ingen salgs- eller garantivilkår for konkrete leverancer fra projektet. Før eventuelt salg skal reklamation, garanti og den ansvarlige sælger oplyses skriftligt. Private kunders ufravigelige rettigheder kan ikke erstattes af erhvervsvilkår.",
+      en: "There are no sale or warranty terms for specific deliveries from the project yet. Before any sale, complaint rights, warranty and the responsible seller must be stated in writing. Private customers' mandatory rights cannot be replaced by business-only terms.",
     },
   },
   {
     question: {
-      da: "Hvorfor står der ingen priser på siden?",
-      en: "Why are there no prices on the site?",
+      da: "Er priserne på siden bindende?",
+      en: "Are the prices on the site binding?",
     },
     answer: {
-      da: "Fordi vi ikke holder lager. Maskinerne skaffes til den enkelte ordre, så prisen afhænger af model, stand og antal på det tidspunkt. I får pris per enhed og samlet i et skriftligt tilbud, som gælder i 14 dage.",
-      en: "Because we hold no stock. The machines are sourced for each order, so the price depends on the model, condition and quantity at the time. You get a price per unit and in total in a written quote, valid for 14 days.",
+      da: "Nej. På prissiden vises daterede, eksterne detailreferencer som omtrentlige budgeteksempler, ikke Kestros salgspriser eller bekræftet lager. Kontakt os om muligheder, tilgængelighed og en konkret pris. En forespørgsel er ikke en bestilling.",
+      en: "No. The pricing page shows dated external retail references as approximate budget examples, not Kestro selling prices or confirmed stock. Contact us about options, availability and a specific price. An enquiry is not an order.",
     },
   },
   {
@@ -102,8 +102,8 @@ const faqs: FaqEntry[] = [
   {
     question: { da: "Kører maskinerne Windows 11?", en: "Do the machines run Windows 11?" },
     answer: {
-      da: `Computerne på vores modelsider leveres med Windows 11 installeret. Det betyder noget, fordi Microsoft stoppede sikkerhedsopdateringerne til Windows 10 den ${formatDate("2025-10-14", "da")}.`,
-      en: `The computers on our model pages are delivered with Windows 11 installed. That matters because Microsoft stopped security updates for Windows 10 on ${formatDate("2025-10-14", "en")}.`,
+      da: `Udgangspunktet er Windows 11, men den konkrete konfiguration skal afklares. Den almindelige support til Windows 10 version 22H2 sluttede ${formatDate("2025-10-14", "da")}; ESU og LTSC har særskilte opdateringsvilkår.`,
+      en: `Windows 11 is the intended starting point, but the actual configuration must be confirmed. General support for Windows 10 version 22H2 ended on ${formatDate("2025-10-14", "en")}; ESU and LTSC have separate update terms.`,
     },
   },
   {
@@ -135,9 +135,15 @@ const faqs: FaqEntry[] = [
 /* Where an answer has a page that documents it in full, it links there. */
 const more: Record<number, { href: string; label: { da: string; en: string } }> = {
   1: { href: "/handelsbetingelser", label: { da: "Handelsbetingelserne", en: "Terms of sale" } },
-  2: { href: "/handelsbetingelser", label: { da: "Punkt 8 om reklamation", en: "Clause 8 on complaints" } },
+  2: {
+    href: "/handelsbetingelser",
+    label: { da: "Punkt 8 om reklamation", en: "Clause 8 on complaints" },
+  },
   3: { href: "/priser", label: { da: "Sådan bliver prisen til", en: "How the price is set" } },
-  4: { href: "/ydelser/nordisk-tilpasning", label: { da: "Nordisk tilpasning", en: "Nordic preparation" } },
+  4: {
+    href: "/ydelser/nordisk-tilpasning",
+    label: { da: "Nordisk tilpasning", en: "Nordic preparation" },
+  },
   8: { href: "/saelg-til-os", label: { da: "Sælg jeres udstyr", en: "Sell your equipment" } },
 };
 

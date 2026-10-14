@@ -219,5 +219,12 @@ export function modelFaqs(model: Model): FaqItem[] {
 }
 
 /** Only the documents a model's answers lean on: Windows for computers, e-waste for the rest. */
-export const modelSources = (model: Model): SourceId[] =>
-  isComputer(model) ? ["windows11Requirements", "windows10Eol"] : ["ewasteMonitor"];
+export const modelSources = (model: Model): SourceId[] => [
+  ...(isComputer(model)
+    ? (["windows11Requirements", "windows10Eol"] as const)
+    : (["ewasteMonitor"] as const)),
+  ...(model.slug === "dell-latitude-5410"
+    ? (["latitudeProcessors", "latitudeMemory", "latitudePorts"] as const)
+    : []),
+  ...(model.slug === "dell-optiplex-5060" ? (["optiplexSpecs"] as const) : []),
+];

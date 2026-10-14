@@ -63,6 +63,22 @@ export default function Header({ lang }: { lang: Lang }) {
 
   const pathname = usePathname() ?? "/";
 
+  useEffect(() => {
+    setOpen(false);
+    setMobileProductsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => {
+      if (!desktop.matches) return;
+      setOpen(false);
+      setMobileProductsOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
   /** The same page in the other language. */
   const basePath = stripLocale(pathname);
 
@@ -270,10 +286,7 @@ export default function Header({ lang }: { lang: Lang }) {
 
         <div className="hidden items-center gap-4 lg:flex">
           <LanguageSwitcher lang={lang} basePath={basePath} />
-          <Link
-            href={localePath("/tilbud", lang)}
-            className={buttonClass("primary")}
-          >
+          <Link href={localePath("/tilbud", lang)} className={buttonClass("primary")}>
             {ui.bookCall[lang]}
             <ArrowRight
               className="h-4 w-4 transition-transform group-hover:translate-x-1"

@@ -669,6 +669,155 @@ for (const path of ["/reparation", "/en/repairs"]) {
   await page.close();
 }
 
+/* --------------------------------------------------------- regressions */
+
+for (const path of ["/kontakt", "/en/contact"]) {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+  const state = await page.locator("form[action='/api/kontakt']").evaluate((form) => ({
+    method: form.method,
+    disabled: [...form.querySelectorAll("input,textarea,select,button")].every((el) =>
+      el.matches(":disabled"),
+    ),
+    emailFallback: Boolean(form.querySelector("noscript a[href='mailto:kontakt@kestro.dk']")),
+  }));
+  if (state.method !== "post" || !state.disabled || !state.emailFallback)
+    fail(path, "no-JS form could expose personal data in a GET URL or lacks email fallback");
+  await context.close();
+}
+
+{
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto(BASE + "/kontakt", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
+  const toggle = page.locator("header button[aria-controls='mobile-menu']");
+  await toggle.click();
+  await page.waitForFunction(() => document.querySelector("main").inert);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForFunction(
+    () => !document.querySelector("main").inert && document.body.style.overflow !== "hidden",
+  );
+  if ((await toggle.getAttribute("aria-expanded")) !== "false")
+    fail("menu resize", "drawer remained open on desktop");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await toggle.click();
+  await page.locator("header a[href='/']").first().click();
+  await page.waitForURL(BASE + "/");
+  await page.waitForFunction(
+    () => !document.querySelector("main").inert && document.body.style.overflow !== "hidden",
+  );
+  const statusLink = page.locator("aside[aria-label='Under etablering'] a");
+  await statusLink.scrollIntoViewIfNeeded();
+  if (
+    !(await statusLink.evaluate((el) => {
+      const rect = el.getBoundingClientRect();
+      return el.contains(
+        document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2),
+      );
+    }))
+  )
+    fail("project notice", "homepage hero obscures the status link");
+  await context.close();
+}
+
+{
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+  // No synthetic enquiry or Google request is ever delivered to a real service.
+  await page.route(/googletagmanager\.com/, (route) =>
+    route.fulfill({ contentType: "application/javascript", body: "" }),
+  );
+  await page.route(/google-analytics\.com/, (route) => route.fulfill({ status: 204 }));
+  await page.route("**/api/kontakt", (route) =>
+    route.fulfill({ contentType: "application/json", body: '{"ok":true}' }),
+  );
+  await page.goto(BASE + "/kontakt", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Accepter statistik", exact: true }).click();
+  await page.waitForFunction(() => typeof window.gtag === "function");
+  await page.evaluate(() => {
+    document.cookie = "_ga=synthetic; Path=/";
+  });
+  await page.getByRole("button", { name: "Cookies og statistik", exact: true }).click();
+  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
+  const before = await page.evaluate(() => ({
+    disabled: window["ga-disable-G-5BCBNXTR8T"],
+    cookie: document.cookie,
+    count: window.dataLayer.length,
+  }));
+  if (!before.disabled || /(?:^|;\s*)_ga=/.test(before.cookie))
+    fail("consent withdrawal", "GA not disabled or cookie not cleared");
+  await page.locator("#navn").fill("Synthetic QA");
+  await page.locator("#virksomhed").fill("Synthetic QA company");
+  await page.locator("#email").fill("qa@example.invalid");
+  await page.locator("#besked").fill("Intercepted locally; never sent.");
+  await page.locator("form button[type='submit']").click();
+  await page.locator("#kontakt-udfald").waitFor();
+  const after = await page.evaluate(() => window.dataLayer.slice());
+  if (after.slice(before.count).some((entry) => entry[0] === "event"))
+    fail("consent withdrawal", "event queued after refusal");
+  await page.getByRole("button", { name: "Cookies og statistik", exact: true }).click();
+  await page.getByRole("button", { name: "Accepter statistik", exact: true }).click();
+  await page.waitForFunction(() => window["ga-disable-G-5BCBNXTR8T"] === false);
+  await context.close();
+}
+
+for (const [width, height] of [
+  [320, 667],
+  [390, 844],
+  [844, 430],
+  [1440, 900],
+]) {
+  const context = await browser.newContext({ viewport: { width, height } });
+  const page = await context.newPage();
+  await page.goto(BASE + "/modeller/lenovo-thinkpad-t480", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
+  const photos = page.getByRole("group", { name: "Produktbilleder", exact: true });
+  await photos.getByRole("button").nth(1).click();
+  if ((await photos.getByRole("button").nth(1).getAttribute("aria-pressed")) !== "true")
+    fail("gallery", "selection did not update");
+  const enlarge = page.getByRole("button", {
+    name: "Forstør billede af Lenovo ThinkPad T480",
+    exact: true,
+  });
+  await enlarge.click();
+  const dialog = page.locator("dialog[open]");
+  await dialog.waitFor();
+  await page.getByRole("button", { name: "Næste billede", exact: true }).click();
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("Escape");
+  await page.waitForFunction(
+    () => !document.querySelector("dialog").open && document.body.style.overflow !== "hidden",
+  );
+  if (!(await enlarge.evaluate((el) => el === document.activeElement)))
+    fail("gallery", "focus did not return after Escape");
+  await context.close();
+}
+
+{
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+  const textures = [];
+  page.on("request", (request) => {
+    if (/laptop-wallpaper|thinkpad-.*texture/.test(request.url())) textures.push(request.url());
+  });
+  await page.goto(BASE + "/reparation", { waitUntil: "networkidle" });
+  const figure = page.locator(".repair-laptop");
+  await figure.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  if ((await figure.getAttribute("data-scene-state")) !== "poster" || textures.length)
+    fail("3D activation", "model loaded before user intent");
+  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
+  await page.getByRole("button", { name: "Åbn 3D-visning", exact: true }).click();
+  await page.waitForFunction(
+    () => document.querySelector(".repair-laptop").dataset.sceneState === "ready",
+    null,
+    { timeout: 60000 },
+  );
+  await context.close();
+}
+
 /* ------------------------------------------------------------------ console */
 
 {

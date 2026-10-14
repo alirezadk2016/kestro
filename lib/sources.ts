@@ -35,6 +35,128 @@ export type Source = {
 };
 
 export const sources = {
+  latitudeMemory: {
+    id: "latitudeMemory",
+    publisher: "Dell",
+    title: { da: "Latitude 5410: hukommelse", en: "Latitude 5410: memory" },
+    url: "https://www.dell.com/support/manuals/en-us/latitude-14-5410-laptop/latitude_5410_specs/memory?guid=guid-239fc4c1-eca1-47c1-afd1-fc24284c76e9&lang=en-us",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Latitude 5410 har to SoDIMM-sokler til DDR4. Dell angiver maksimalt 32 GB RAM.",
+      en: "Latitude 5410 has two DDR4 SoDIMM slots. Dell specifies a maximum of 32 GB RAM.",
+    },
+  },
+  latitudeProcessors: {
+    id: "latitudeProcessors",
+    publisher: "Dell",
+    title: { da: "Latitude 5410: processorer", en: "Latitude 5410: processors" },
+    url: "https://www.dell.com/support/manuals/en-us/latitude-14-5410-laptop/latitude_5410_specs/processors?guid=guid-ef8410b6-1db7-4ff7-89e0-a2db671dbe0c&lang=en-us",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Dells processorvalg til Latitude 5410 omfatter Core i5-8365U fra 8. generation samt Core i3, i5 og i7 fra 10. generation, ikke 11. generation.",
+      en: "Dell's Latitude 5410 processor options include the 8th-generation Core i5-8365U and 10th-generation Core i3, i5 and i7, not 11th-generation processors.",
+    },
+  },
+  latitudePorts: {
+    id: "latitudePorts",
+    publisher: "Dell",
+    title: { da: "Latitude 5410: porte", en: "Latitude 5410: ports" },
+    url: "https://www.dell.com/support/manuals/en-us/latitude-14-5410-laptop/latitude_5410_specs/ports-and-connectors?guid=guid-3aabd552-e72e-49db-bc78-735fe1734fc9&lang=en-us",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Latitude 5410 har tre USB-A-porte, en USB-C-port, HDMI, RJ-45 og kombineret lydstik.",
+      en: "Latitude 5410 has three USB-A ports, one USB-C port, HDMI, RJ-45 and a headset jack.",
+    },
+  },
+  optiplexSpecs: {
+    id: "optiplexSpecs",
+    publisher: "Dell",
+    title: {
+      da: "OptiPlex 5060: tekniske specifikationer",
+      en: "OptiPlex 5060: technical specifications",
+    },
+    url: "https://i.dell.com/sites/csdocuments/Shared-Content_data-Sheets_Documents/en/OptiPlex_5060_Spec_Sheet.pdf",
+    accessed: "2026-10-14",
+    claim: {
+      da: "OptiPlex 5060 bruger Intel-processorer fra 8. generation, med T-varianter i Micro. To DisplayPort-udgange er standard; HDMI er et valgfrit ekstra modul.",
+      en: "OptiPlex 5060 uses 8th-generation Intel processors, with T variants in Micro. Two DisplayPort outputs are standard; HDMI is an optional module.",
+    },
+  },
+  windows10Servicing: {
+    id: "windows10Servicing",
+    publisher: "Microsoft Learn",
+    title: { da: "Windows 10: ESU og LTSC-support", en: "Windows 10: ESU and LTSC servicing" },
+    url: "https://learn.microsoft.com/en-us/windows/release-health/release-information",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Windows 10 version 22H2 er ude af almindelig support, men ESU modtager særskilte sikkerhedsrettelser. Enterprise- og IoT Enterprise-LTSC-udgaver har egne supportdatoer.",
+      en: "Windows 10 version 22H2 is out of general support but ESU receives separate security fixes. Enterprise and IoT Enterprise LTSC editions have their own support dates.",
+    },
+  },
+  budgetT480: {
+    id: "budgetT480",
+    publisher: "refurbed.dk",
+    title: {
+      da: "Prisreference: ThinkPad T480 i5-8250U",
+      en: "Price reference: ThinkPad T480 i5-8250U",
+    },
+    url: "https://www.refurbed.dk/p/lenovo-tp-t480-8250u/95266/",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Vist produktpris: 2.655 DKK for i5-8250U, 16 GB, 256 GB SSD og nordisk tastatur. Et dateret detailpriseksempel, ikke Kestros lager eller tilbud.",
+      en: "Displayed product price: DKK 2,655 for i5-8250U, 16 GB, 256 GB SSD and Nordic keyboard. A dated retail example, not Kestro stock or an offer.",
+    },
+  },
+  budgetT14: {
+    id: "budgetT14",
+    publisher: "refurbed.dk",
+    title: {
+      da: "Prisreference: ThinkPad T14 G2 i5-1145G7",
+      en: "Price reference: ThinkPad T14 G2 i5-1145G7",
+    },
+    url: "https://www.refurbed.dk/p/lenovo-thinkpad-t14-g2-1145g7/",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Vist produktpris: 2.955 DKK for i5-1145G7, 16 GB, 256 GB SSD, nordisk tastatur og stand God.",
+      en: "Displayed product price: DKK 2,955 for i5-1145G7, 16 GB, 256 GB SSD, Nordic keyboard and Good condition.",
+    },
+  },
+  budgetOptiplex: {
+    id: "budgetOptiplex",
+    publisher: "refurbed.dk",
+    title: { da: "Prisreference: OptiPlex 5060 SFF", en: "Price reference: OptiPlex 5060 SFF" },
+    url: "https://www.refurbed.dk/en-dk/p/dell-optiplez-5060-sff/",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Vist produktpris: 2.029 DKK for i5-8400, 8 GB, 256 GB SSD og stand Fremragende.",
+      en: "Displayed product price: DKK 2,029 for i5-8400, 8 GB, 256 GB SSD and Excellent condition.",
+    },
+  },
+  budgetMonitor: {
+    id: "budgetMonitor",
+    publisher: "refurbed.dk",
+    title: { da: "Prisreference: Dell U2419H", en: "Price reference: Dell U2419H" },
+    url: "https://www.refurbed.dk/p/dell-ultrasharp-u2419h/",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Vist produktpris: 1.185 DKK for Dell U2419H med fod, stand God.",
+      en: "Displayed product price: DKK 1,185 for Dell U2419H with stand, Good condition.",
+    },
+  },
+  budgetRetailTerms: {
+    id: "budgetRetailTerms",
+    publisher: "refurbed.dk",
+    title: {
+      da: "Prisreferencernes moms og servicegebyr",
+      en: "VAT and service fees for the price references",
+    },
+    url: "https://www.refurbed.dk/tos/",
+    accessed: "2026-10-14",
+    claim: {
+      da: "Punkt 8.3: produktpriser vises inklusive moms, uden løfte om momsfradrag. Punkt 9: separat servicegebyr; 15 DKK ved produktværdi over 1.000 til 1.500 DKK, 30 DKK over 2.000 til 2.500 DKK og 37 DKK over 2.500 til 5.000 DKK.",
+      en: "Section 8.3: product prices include VAT, without promising VAT deductibility. Section 9: separate service fee; DKK 15 for product value over 1,000 to 1,500, DKK 30 over 2,000 to 2,500 and DKK 37 over 2,500 to 5,000.",
+    },
+  },
   windows10Eol: {
     id: "windows10Eol",
     publisher: "Microsoft",
@@ -42,11 +164,11 @@ export const sources = {
       da: "Windows 10 support er slut",
       en: "Windows 10 support has ended",
     },
-    url: "https://www.microsoft.com/en-us/windows/end-of-support",
-    accessed: "2026-09-13",
+    url: "https://learn.microsoft.com/en-us/windows/release-health/release-information",
+    accessed: "2026-10-14",
     claim: {
-      da: "Supporten for Windows 10 sluttede 14. oktober 2025. Microsoft leverer ikke længere softwareopdateringer, sikkerhedsrettelser eller teknisk hjælp til Windows 10-pc'er.",
-      en: "Windows 10 support ended on 14 October 2025. Microsoft no longer provides software updates, security fixes or technical assistance for Windows 10 PCs.",
+      da: "Den almindelige support til Windows 10 version 22H2 sluttede 14. oktober 2025. Extended Security Updates (ESU) er en særskilt mulighed for fortsatte sikkerhedsrettelser; LTSC-udgaver har andre supportdatoer.",
+      en: "General Windows 10 version 22H2 support ended on 14 October 2025. Extended Security Updates (ESU) is a separate option for continued security fixes; LTSC editions have different support dates.",
     },
   },
 

@@ -836,8 +836,8 @@ export const models: Model[] = [
       en: "Refurbished Dell Latitude 5410: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt Dell Latitude 5410 og 5420: 14" Full HD, Intel i5/i7 og op til 64 GB RAM i to sokler, alle porte i behold. Tilbud med stand og batteri.',
-      en: 'Refurbished Dell Latitude 5410 and 5420: 14" Full HD, Intel i5/i7, up to 64 GB RAM in two slots and every port kept. Quote with condition.',
+      da: 'Brugt Dell Latitude 5410: 14" Full HD, Intel Core i5/i7, to RAM-sokler og op til 32 GB ifølge Dell. Se specs, og kontakt os om muligheder og behov.',
+      en: 'Refurbished Dell Latitude 5410: 14" Full HD, Intel i5/i7 and two RAM slots, up to 32 GB as stated by Dell. Read the specs and discuss your needs.',
     },
     intro: {
       da: 'Latitude 5000-serien er Dells svar på T-serien og EliteBook: en 14" erhvervsmaskine, der er lavet til at blive serviceret. To hukommelsessokler, netværksstik, HDMI og USB-C – den kan sættes ind i næsten enhver opsætning uden adaptere.',
@@ -858,20 +858,23 @@ export const models: Model[] = [
       {
         label: { da: "Model", en: "Model" },
         value: {
-          da: 'Dell Latitude 5410 og 5420 – 14" erhvervsbærbar',
-          en: 'Dell Latitude 5410 and 5420 — 14" business laptop',
+          da: 'Dell Latitude 5410 – 14" erhvervsbærbar',
+          en: 'Dell Latitude 5410 — 14" business laptop',
         },
       },
       {
         label: { da: "Processor", en: "Processor" },
         value: {
-          da: "Intel Core i5 eller i7 (10. eller 11. generation)",
-          en: "Intel Core i5 or i7 (10th or 11th generation)",
+          da: "Intel Core i5 eller i7 (10. generation); i5-8365U (8. generation) findes også",
+          en: "Intel Core i5 or i7 (10th generation); i5-8365U (8th generation) also available",
         },
       },
       {
         label: { da: "Hukommelse", en: "Memory" },
-        value: { da: "8–64 GB DDR4 i to sokler", en: "8–64 GB DDR4 across two slots" },
+        value: {
+          da: "8–32 GB DDR4 i to sokler (Dells angivne maksimum: 32 GB)",
+          en: "8–32 GB DDR4 across two slots (Dell's specified maximum: 32 GB)",
+        },
       },
       {
         label: { da: "Lagring", en: "Storage" },
@@ -887,8 +890,8 @@ export const models: Model[] = [
       {
         label: { da: "Porte", en: "Ports" },
         value: {
-          da: "USB-C, 2× USB-A, HDMI, Gigabit-netværk, kombineret lydstik – smartkortlæser på nogle modeller",
-          en: "USB-C, 2× USB-A, HDMI, Gigabit Ethernet, headset jack — smart card reader on some models",
+          da: "USB-C, 3× USB-A, HDMI, Gigabit-netværk, kombineret lydstik – smartkortlæser på nogle modeller",
+          en: "USB-C, 3× USB-A, HDMI, Gigabit Ethernet, headset jack — smart card reader on some models",
         },
       },
       {
@@ -1307,20 +1310,20 @@ export const models: Model[] = [
     group: "stationaere",
     category: "stationaere-computere",
     tagline: {
-      da: "Samme maskine – vælg selv, om den skal fylde noget.",
-      en: "The same machine — you decide how much room it takes.",
+      da: "Samme serie, forskellige kabinetter og udvidelsesmuligheder.",
+      en: "Same range, different cases and expansion options.",
     },
     metaTitle: {
       da: "Brugt Dell OptiPlex 5060: specs, fordele og ulemper | Kestro",
       en: "Refurbished Dell OptiPlex 5060: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt Dell OptiPlex 5060 og 5070 som SFF eller Micro: samme indmad, Intel i5/i7 og flere skærme. Vælg størrelsen efter pladsen. Tilbud på skrift.",
-      en: "Refurbished Dell OptiPlex 5060 and 5070 as SFF or Micro: the same internals, Intel i5/i7 and multiple monitors. Pick the size to fit the desk.",
+      da: "Brugt Dell OptiPlex 5060 som SFF eller Micro med Intel i5/i7 fra 8. generation. Se forskelle i porte og udvidelser, og kontakt os om jeres behov.",
+      en: "Refurbished Dell OptiPlex 5060 as SFF or Micro with 8th-gen Intel i5/i7. See port and expansion differences, and contact us to discuss your needs.",
     },
     intro: {
-      da: "OptiPlex 5000-serien findes i flere kabinetstørrelser med stort set samme indmad. Skal maskinen kunne udvides, tager man SFF-udgaven; skal den bare fylde mindst muligt, tager man Micro. Det gør det nemt at give hele huset samme maskine i forskellige former.",
-      en: "The OptiPlex 5000 series comes in several case sizes with much the same internals. If the machine has to be expandable, take the SFF; if it just has to take up as little room as possible, take the Micro. That makes it easy to give the whole building the same machine in different shapes.",
+      da: "OptiPlex 5060 findes som SFF og Micro, men indmaden er ikke identisk. SFF giver flere muligheder for udvidelseskort og diske; Micro fylder mindre og bruger strømbesparende processorvarianter. Kontrollér kabinet, processor og porte for den konkrete maskine, ikke kun serienavnet.",
+      en: "OptiPlex 5060 comes as SFF and Micro, but the internals are not identical. SFF offers more options for expansion cards and drives; Micro takes less space and uses lower-power processor variants. Check the case, processor and ports for the actual machine, not just the range name.",
     },
     goodFor: [
       {
@@ -1340,15 +1343,15 @@ export const models: Model[] = [
       {
         label: { da: "Model", en: "Model" },
         value: {
-          da: "Dell OptiPlex 5060 og 5070 – stationær i lille kabinet (SFF) eller Micro",
-          en: "Dell OptiPlex 5060 and 5070 — desktop in a small form factor (SFF) or Micro case",
+          da: "Dell OptiPlex 5060 – stationær i lille kabinet (SFF) eller Micro",
+          en: "Dell OptiPlex 5060 — desktop in a small form factor (SFF) or Micro case",
         },
       },
       {
         label: { da: "Processor", en: "Processor" },
         value: {
-          da: "Intel Core i5 eller i7 (8. eller 9. generation), desktop-udgave",
-          en: "Intel Core i5 or i7 (8th or 9th generation), desktop version",
+          da: "Intel Core i5 eller i7 (8. generation); Micro bruger strømbesparende T-varianter",
+          en: "Intel Core i5 or i7 (8th generation); Micro uses lower-power T variants",
         },
       },
       {
@@ -1368,8 +1371,8 @@ export const models: Model[] = [
       {
         label: { da: "Skærmudgange", en: "Display outputs" },
         value: {
-          da: "DisplayPort og HDMI – understøtter flere skærme",
-          en: "DisplayPort and HDMI — supports multiple monitors",
+          da: "2× DisplayPort som standard; HDMI er ekstraudstyr – kontrollér den konkrete konfiguration",
+          en: "2× DisplayPort as standard; HDMI is optional — check the actual configuration",
         },
       },
       {
@@ -1942,8 +1945,8 @@ const CARD_CHIPS: Record<string, Localized[]> = {
     { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
   ],
   "dell-latitude-5410": [
-    { da: "Intel i5/i7 · 10.–11. gen", en: "Intel i5/i7 · 10th–11th gen" },
-    { da: "8–64 GB DDR4", en: "8–64 GB DDR4" },
+    { da: "Intel i5/i7 · 10. gen", en: "Intel i5/i7 · 10th gen" },
+    { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
     { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
   ],
   "dell-latitude-7490": [
@@ -1967,7 +1970,7 @@ const CARD_CHIPS: Record<string, Localized[]> = {
     { da: "256–512 GB NVMe SSD", en: "256–512 GB NVMe SSD" },
   ],
   "dell-optiplex-5060": [
-    { da: "Intel i5/i7 · 8.–9. gen", en: "Intel i5/i7 · 8th–9th gen" },
+    { da: "Intel i5/i7 · 8. gen", en: "Intel i5/i7 · 8th gen" },
     { da: "8–32 GB DDR4", en: "8–32 GB DDR4" },
     { da: "256–512 GB SSD", en: "256–512 GB SSD" },
   ],

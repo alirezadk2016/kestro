@@ -6,6 +6,7 @@ import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { buttonClass } from "./Button";
+import { projectNotice } from "@/lib/project";
 
 /* From lib/company.ts, so the fallback address in the "we could not send"
    panel can never drift from the one the route delivers to. */
@@ -39,8 +40,7 @@ const copy = {
     message: "Besked",
     submit: "Send besked",
     unavailableTitle: "Formularen kan ikke sende lige nu",
-    unavailableBody:
-      "Send beskeden direkte til os i stedet – den står klar herunder. Vi svarer inden for én arbejdsdag.",
+    unavailableBody: "Send beskeden direkte til os i stedet – den står klar herunder.",
     openMail: "Åbn i mailprogram",
     copyMessage: "Kopiér beskeden",
     copied: "Kopieret",
@@ -48,7 +48,8 @@ const copy = {
     back: "Tilbage til formularen",
     sending: "Sender …",
     thanksTitle: "Tak for jeres henvendelse.",
-    thanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    thanksBody:
+      "Vi læser beskeden og vender tilbage. Henvendelsen er uforpligtende og er ikke en bestilling.",
     thanksAgain: "Send en besked mere",
     privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
     privacyLink: "privatlivspolitikken",
@@ -69,9 +70,10 @@ const copy = {
     quoteMessage: "Andet, vi skal vide",
     quoteMessagePlaceholder:
       "Fx: dockingstationer til alle pladser, vi skal samtidig af med 30 ældre maskiner, levering til to adresser.",
-    quoteSubmit: "Få et tilbud",
+    quoteSubmit: "Send en forespørgsel",
     quoteThanksTitle: "Tak – forespørgslen er sendt.",
-    quoteThanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    quoteThanksBody:
+      "Vi læser forespørgslen og vender tilbage om mulighederne. Den er ikke en ordre eller reservation.",
     nextTitle: "Hvad sker der nu?",
     defaultSubject: "Henvendelse",
     defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
@@ -91,8 +93,7 @@ const copy = {
     message: "Message",
     submit: "Send message",
     unavailableTitle: "The form cannot send right now",
-    unavailableBody:
-      "Send the message to us directly instead — it is ready below. We answer within one working day.",
+    unavailableBody: "Send the message to us directly instead — it is ready below.",
     openMail: "Open in mail app",
     copyMessage: "Copy the message",
     copied: "Copied",
@@ -100,7 +101,8 @@ const copy = {
     back: "Back to the form",
     sending: "Sending …",
     thanksTitle: "Thank you for getting in touch.",
-    thanksBody: "We will come back to you within one working day.",
+    thanksBody:
+      "We will read your message and get back to you. The enquiry is non-binding and is not an order.",
     thanksAgain: "Send another message",
     privacy: "We use the details only to answer the enquiry. See the",
     privacyLink: "privacy policy",
@@ -121,9 +123,10 @@ const copy = {
     quoteMessage: "Anything else we should know",
     quoteMessagePlaceholder:
       "E.g. docking stations for every desk, we also need to get rid of 30 older machines, delivery to two addresses.",
-    quoteSubmit: "Get a quote",
+    quoteSubmit: "Send an enquiry",
     quoteThanksTitle: "Thank you — your request is on its way.",
-    quoteThanksBody: "We will come back to you within one working day.",
+    quoteThanksBody:
+      "We will read the enquiry and discuss the options with you. It is not an order or reservation.",
     nextTitle: "What happens now?",
     defaultSubject: "Enquiry",
     defaultPlaceholder:
@@ -139,13 +142,13 @@ const copy = {
 const nextSteps: Record<Lang, string[]> = {
   da: [
     "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
-    "Vi finder maskinerne i leverandørnetværket og sender et tilbud med pris per enhed, stand, antal og leveringstid.",
-    "I godkender – eller siger nej. Der er ingen binding i at spørge.",
+    "Vi afklarer de indledende muligheder. Modeller og budgeteksempler er ikke bekræftet lager.",
+    "Før et eventuelt køb skal sælger, pris og vilkår være afklaret. At spørge er ikke at bestille.",
   ],
   en: [
     "We read the request and ask if anything is missing.",
-    "We find the machines in our supplier network and send a quote with price per unit, condition, quantity and lead time.",
-    "You approve — or you say no. Asking commits you to nothing.",
+    "We discuss the initial options. Models and budget examples are not confirmed stock.",
+    "Before any purchase, the seller, price and terms must be established. Asking is not ordering.",
   ],
 };
 
@@ -190,6 +193,9 @@ export default function ContactForm({
     messagePlaceholder?.[lang] ?? (quote ? c.quoteMessagePlaceholder : c.defaultPlaceholder);
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
+  const [ready, setReady] = useState(false);
+  const started = useRef(false);
+  useEffect(() => setReady(true), []);
 
   /*
    * Where submitting lands you.
@@ -345,9 +351,11 @@ export default function ContactForm({
       /* 503 means the server has no mail credentials yet. That is ours to fix,
          not the visitor's, so it gets the same honest panel as a failure. */
       setStatus(response.status === 503 ? "unavailable" : "error");
+      track(events.formError, { form: quote ? "quote" : "contact", status: response.status });
     } catch {
       /* Offline, or the request was blocked. */
       setStatus("unavailable");
+      track(events.formError, { form: quote ? "quote" : "contact", reason: "network" });
     }
   }
 
@@ -401,11 +409,7 @@ export default function ContactForm({
         </pre>
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={copyMessage}
-            className={buttonClass("primary")}
-          >
+          <button type="button" onClick={copyMessage} className={buttonClass("primary")}>
             {copied ? c.copied : c.copyMessage}
           </button>
           <a
@@ -478,6 +482,7 @@ export default function ContactForm({
           type="button"
           onClick={() => {
             setValues(emptyValues);
+            started.current = false;
             setStatus("idle");
           }}
           className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
@@ -489,265 +494,298 @@ export default function ContactForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative space-y-5">
-      {quote && (
-        <fieldset>
-          <legend className="mb-2 text-sm font-medium text-paper/85">
-            {c.quantityLegend} <span className="text-brand-400">*</span>
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {quantities.map((band) => (
-              <label
-                key={band}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 ${
-                  values.antal === band
-                    ? "border-brand-400 bg-brand-600/20 text-paper"
-                    : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="antal"
-                  value={band}
-                  checked={values.antal === band}
-                  onChange={handleChange}
-                  className="sr-only"
-                />
-                {band}
-              </label>
-            ))}
-          </div>
-          <p className="mt-2 text-sm leading-[1.5] text-paper/75">{c.quantityHelp}</p>
-        </fieldset>
-      )}
+    <form
+      action="/api/kontakt"
+      method="post"
+      onSubmit={handleSubmit}
+      onFocusCapture={() => {
+        if (started.current) return;
+        started.current = true;
+        track(events.formStart, { form: quote ? "quote" : "contact" });
+      }}
+      className="relative space-y-5"
+    >
+      <p className="border-l-2 border-brand-400 pl-4 text-sm leading-6 text-paper/85">
+        {projectNotice[lang].body}
+      </p>
+      <noscript>
+        <p className="text-sm leading-6 text-paper/85">
+          {lang === "da"
+            ? "Formularen kræver JavaScript. Skriv i stedet til "
+            : "This form requires JavaScript. Please email "}
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          .
+        </p>
+      </noscript>
+      <fieldset
+        disabled={!ready}
+        className="min-w-0 space-y-5"
+        aria-label={lang === "da" ? "Kontaktformular" : "Enquiry form"}
+      >
+        {quote && (
+          <fieldset>
+            <legend className="mb-2 text-sm font-medium text-paper/85">
+              {c.quantityLegend} <span className="text-brand-400">*</span>
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {quantities.map((band) => (
+                <label
+                  key={band}
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 ${
+                    values.antal === band
+                      ? "border-brand-400 bg-brand-600/20 text-paper"
+                      : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="antal"
+                    value={band}
+                    checked={values.antal === band}
+                    onChange={handleChange}
+                    className="sr-only"
+                  />
+                  {band}
+                </label>
+              ))}
+            </div>
+            <p className="mt-2 text-sm leading-[1.5] text-paper/75">{c.quantityHelp}</p>
+          </fieldset>
+        )}
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/85">
-            {c.name} <span className="text-brand-400">*</span>
-          </label>
-          <input
-            id="navn"
-            name="navn"
-            type="text"
-            autoComplete="name"
-            required
-            value={values.navn}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.namePlaceholder}
-          />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.name} <span className="text-brand-400">*</span>
+            </label>
+            <input
+              id="navn"
+              name="navn"
+              type="text"
+              autoComplete="name"
+              required
+              value={values.navn}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.namePlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.company}{" "}
+              {companyRequired ? (
+                <span className="text-brand-400">*</span>
+              ) : (
+                <span className="text-paper/65">{c.optional}</span>
+              )}
+            </label>
+            <input
+              id="virksomhed"
+              name="virksomhed"
+              type="text"
+              autoComplete="organization"
+              required={companyRequired}
+              value={values.virksomhed}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.companyPlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.email} <span className="text-brand-400">*</span>
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={values.email}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.emailPlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.phone}
+            </label>
+            <input
+              id="telefon"
+              name="telefon"
+              type="tel"
+              autoComplete="tel"
+              value={values.telefon}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.phonePlaceholder}
+            />
+          </div>
         </div>
 
+        {quote && (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.equipment}
+              </label>
+              <input
+                id="udstyr"
+                name="udstyr"
+                type="text"
+                value={values.udstyr}
+                onChange={handleChange}
+                className={inputClasses}
+                placeholder={c.equipmentPlaceholder}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.ram}
+              </label>
+              <select
+                id="ram"
+                name="ram"
+                value={values.ram}
+                onChange={handleChange}
+                className={inputClasses}
+              >
+                <option value="">{c.dontKnow}</option>
+                <option value="8 GB">8 GB</option>
+                <option value="16 GB">16 GB</option>
+                <option value="32 GB+">32 GB+</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.storage}
+              </label>
+              <select
+                id="disk"
+                name="disk"
+                value={values.disk}
+                onChange={handleChange}
+                className={inputClasses}
+              >
+                <option value="">{c.dontKnow}</option>
+                <option value="256 GB SSD">256 GB SSD</option>
+                <option value="512 GB SSD">512 GB SSD</option>
+                <option value="1 TB SSD+">1 TB SSD+</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.keyboard}
+              </label>
+              <select
+                id="tastatur"
+                name="tastatur"
+                value={values.tastatur}
+                onChange={handleChange}
+                className={inputClasses}
+              >
+                <option value="">{c.dontKnow}</option>
+                {/* The value is what lands in the enquiry, which is read in
+                  Danish; the label is in the reader's language. */}
+                <option value="Dansk">{c.keyboardDa}</option>
+                <option value="Norsk">{c.keyboardNo}</option>
+                <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.deadline}
+              </label>
+              <input
+                id="hvornaar"
+                name="hvornaar"
+                type="text"
+                value={values.hvornaar}
+                onChange={handleChange}
+                className={inputClasses}
+                placeholder={c.deadlinePlaceholder}
+              />
+            </div>
+          </div>
+        )}
+
         <div>
-          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/85">
-            {c.company}{" "}
-            {companyRequired ? (
-              <span className="text-brand-400">*</span>
-            ) : (
+          <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/85">
+            {quote ? c.quoteMessage : c.message}{" "}
+            {quote ? (
               <span className="text-paper/65">{c.optional}</span>
+            ) : (
+              <span className="text-brand-400">*</span>
             )}
           </label>
-          <input
-            id="virksomhed"
-            name="virksomhed"
-            type="text"
-            autoComplete="organization"
-            required={companyRequired}
-            value={values.virksomhed}
+          <textarea
+            id="besked"
+            name="besked"
+            required={!quote}
+            rows={quote ? 4 : 5}
+            value={values.besked}
             onChange={handleChange}
             className={inputClasses}
-            placeholder={c.companyPlaceholder}
+            placeholder={placeholder}
           />
         </div>
 
-        <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/85">
-            {c.email} <span className="text-brand-400">*</span>
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            value={values.email}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.emailPlaceholder}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/85">
-            {c.phone}
-          </label>
-          <input
-            id="telefon"
-            name="telefon"
-            type="tel"
-            autoComplete="tel"
-            value={values.telefon}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.phonePlaceholder}
-          />
-        </div>
-      </div>
-
-      {quote && (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.equipment}
-            </label>
-            <input
-              id="udstyr"
-              name="udstyr"
-              type="text"
-              value={values.udstyr}
-              onChange={handleChange}
-              className={inputClasses}
-              placeholder={c.equipmentPlaceholder}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.ram}
-            </label>
-            <select
-              id="ram"
-              name="ram"
-              value={values.ram}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              <option value="8 GB">8 GB</option>
-              <option value="16 GB">16 GB</option>
-              <option value="32 GB+">32 GB+</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.storage}
-            </label>
-            <select
-              id="disk"
-              name="disk"
-              value={values.disk}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              <option value="256 GB SSD">256 GB SSD</option>
-              <option value="512 GB SSD">512 GB SSD</option>
-              <option value="1 TB SSD+">1 TB SSD+</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.keyboard}
-            </label>
-            <select
-              id="tastatur"
-              name="tastatur"
-              value={values.tastatur}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              {/* The value is what lands in the enquiry, which is read in
-                  Danish; the label is in the reader's language. */}
-              <option value="Dansk">{c.keyboardDa}</option>
-              <option value="Norsk">{c.keyboardNo}</option>
-              <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.deadline}
-            </label>
-            <input
-              id="hvornaar"
-              name="hvornaar"
-              type="text"
-              value={values.hvornaar}
-              onChange={handleChange}
-              className={inputClasses}
-              placeholder={c.deadlinePlaceholder}
-            />
-          </div>
-        </div>
-      )}
-
-      <div>
-        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/85">
-          {quote ? c.quoteMessage : c.message}{" "}
-          {quote ? (
-            <span className="text-paper/65">{c.optional}</span>
-          ) : (
-            <span className="text-brand-400">*</span>
-          )}
-        </label>
-        <textarea
-          id="besked"
-          name="besked"
-          required={!quote}
-          rows={quote ? 4 : 5}
-          value={values.besked}
-          onChange={handleChange}
-          className={inputClasses}
-          placeholder={placeholder}
-        />
-      </div>
-
-      {/* Hidden from people by position rather than display:none, which some
+        {/* Hidden from people by position rather than display:none, which some
           bots check for. Never focusable, never announced, and deliberately
           carries no visible text: search snippets have picked up off-screen
           honeypot labels before, which makes a contact result look like a raw
           form dump instead of a company page. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
-        <input
-          id="website"
-          name="website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          value={values.website}
-          onChange={handleChange}
-        />
-      </div>
+        <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={values.website}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div>
-        {/* The site's one button, from the same string as the front page's
+        <div>
+          {/* The site's one button, from the same string as the front page's
             form: full width under the thumb on a phone, its own width on a
             wide screen. It was a hand-written 44px pill a third of the
             width, without the press state the real button has. */}
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          aria-busy={status === "sending"}
-          className={`${buttonClass("primary", "lg")} w-full sm:w-auto disabled:opacity-60`}
-        >
-          {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
-        </button>
-
-        <p className="mt-3 text-sm leading-[1.5] text-paper/75">
-          {c.privacy}{" "}
-          <Link
-            href={localePath("/privatlivspolitik", lang)}
-            className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            aria-busy={status === "sending"}
+            className={`${buttonClass("primary", "lg")} w-full sm:w-auto disabled:opacity-60`}
           >
-            {c.privacyLink}
-          </Link>
-          .
-        </p>
-      </div>
+            {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
+          </button>
+
+          <p className="mt-3 text-sm leading-[1.5] text-paper/75">
+            {c.privacy}{" "}
+            <Link
+              href={localePath("/privatlivspolitik", lang)}
+              className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
+            >
+              {c.privacyLink}
+            </Link>
+            .
+          </p>
+        </div>
+      </fieldset>
     </form>
   );
 }

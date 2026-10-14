@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Container from "./Container";
 import { CONSENT_EVENT, readConsent, writeConsent } from "@/lib/consent";
 import { localePath, type Lang } from "@/lib/i18n";
-import { buttonClass } from "./Button";
 
 /*
  * The consent banner.
@@ -22,7 +21,7 @@ import { buttonClass } from "./Button";
 const copy = {
   da: {
     title: "Må vi måle, hvordan siden bruges?",
-    body: "Vi bruger Google Analytics til at se, hvilke sider der bliver læst. Ingen annoncer, ingen deling til markedsføring. Siden virker præcis lige så godt, hvis du siger nej.",
+    body: "Google Analytics er valgfrit. Ingen annoncer eller deling til markedsføring. Du kan altid ændre dit valg nederst på siden.",
     accept: "Accepter statistik",
     reject: "Kun nødvendige",
     more: "Læs privatlivspolitikken",
@@ -30,7 +29,7 @@ const copy = {
   },
   en: {
     title: "May we measure how the site is used?",
-    body: "We use Google Analytics to see which pages get read. No advertising, no sharing for marketing. The site works exactly as well if you say no.",
+    body: "Google Analytics is optional. No advertising or sharing for marketing. Change your choice at any time in the footer.",
     accept: "Accept statistics",
     reject: "Necessary only",
     more: "Read the privacy policy",
@@ -74,18 +73,18 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
           </p>
         </div>
 
-        <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row lg:ml-auto">
+        <div className="grid flex-shrink-0 grid-cols-2 gap-3 lg:ml-auto">
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className={buttonClass("primary")}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
           >
             {c.accept}
           </button>
           <button
             type="button"
             onClick={() => writeConsent("denied")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 px-6 text-sm font-semibold text-paper transition hover:border-white/50"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
           >
             {c.reject}
           </button>

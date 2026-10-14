@@ -1,112 +1,112 @@
 {
   "/": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 10
+    "modified": "2026-10-14",
+    "files": 12
   },
   "/flaadeloesninger": {
     "published": "2026-08-23",
     "modified": "2026-10-12",
-    "files": 9
+    "files": 14
   },
   "/handelsbetingelser": {
     "published": "2026-09-02",
-    "modified": "2026-10-12",
-    "files": 3
+    "modified": "2026-10-14",
+    "files": 8
   },
   "/kontakt": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 8
+    "modified": "2026-10-14",
+    "files": 13
   },
   "/kvalitet": {
     "published": "2026-08-23",
     "modified": "2026-10-12",
-    "files": 5
+    "files": 9
   },
   "/maskinen": {
     "published": "2026-08-24",
     "modified": "2026-10-12",
-    "files": 6
+    "files": 10
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 6
+    "modified": "2026-10-14",
+    "files": 10
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 10
+    "modified": "2026-10-14",
+    "files": 17
   },
   "/om-os": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 7
+    "modified": "2026-10-14",
+    "files": 12
   },
   "/priser": {
     "published": "2026-08-29",
-    "modified": "2026-10-12",
-    "files": 4
+    "modified": "2026-10-14",
+    "files": 9
   },
   "/privatlivspolitik": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 3
+    "modified": "2026-10-14",
+    "files": 7
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 9
+    "modified": "2026-10-14",
+    "files": 13
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 11
+    "modified": "2026-10-14",
+    "files": 17
   },
   "/reparation": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 9
+    "modified": "2026-10-14",
+    "files": 13
   },
   "/reparation/[slug]": {
     "published": "2026-09-14",
     "modified": "2026-10-12",
-    "files": 7
+    "files": 14
   },
   "/saelg-til-os": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 8
+    "modified": "2026-10-14",
+    "files": 12
   },
   "/tilbud": {
     "published": "2026-08-30",
-    "modified": "2026-10-12",
-    "files": 3
+    "modified": "2026-10-14",
+    "files": 7
   },
   "/tilbud-eksempel": {
     "published": "2026-08-29",
     "modified": "2026-10-12",
-    "files": 3
+    "files": 8
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 4
+    "modified": "2026-10-14",
+    "files": 10
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-12",
-    "files": 7
+    "modified": "2026-10-14",
+    "files": 13
   },
   "/ydelser": {
     "published": "2026-08-23",
     "modified": "2026-10-12",
-    "files": 9
+    "files": 13
   },
   "/ydelser/[slug]": {
     "published": "2026-08-25",
     "modified": "2026-10-12",
-    "files": 5
+    "files": 12
   }
 }

@@ -16,6 +16,6 @@
  * otherwise, so a date that moves on every deploy costs more than none.
  */
 export const legalUpdated = {
-  "/handelsbetingelser": "2026-09-02",
-  "/privatlivspolitik": "2026-09-04",
+  "/handelsbetingelser": "2026-10-14",
+  "/privatlivspolitik": "2026-10-14",
 } as const;

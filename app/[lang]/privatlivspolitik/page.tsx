@@ -47,8 +47,8 @@ const sections: Section[] = [
     heading: { da: "Hvem er dataansvarlig?", en: "Who is the data controller?" },
     body: [
       {
-        da: `${company.name}, ${company.locationShort.da}. E-mail: ${company.email}.`,
-        en: `${company.name}, ${company.locationShort.en}. Email: ${company.email}.`,
+        da: `${company.name} er et projekt under etablering, endnu ikke en registreret virksomhed. Kontakt om siden og personoplysninger: ${company.email}.`,
+        en: `${company.name} is a project in preparation, not yet a registered business. Contact for this site and personal data: ${company.email}.`,
       },
     ],
   },
@@ -245,7 +245,6 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
             href="/privatlivspolitik"
             crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
           />
-
         </Container>
       </section>
 
@@ -258,7 +257,10 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
         <Container>
           <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
             {sections.map((section) => (
-              <div key={section.heading.da} className="border-t border-ink-200 py-8 first:border-t-0">
+              <div
+                key={section.heading.da}
+                className="border-t border-ink-200 py-8 first:border-t-0"
+              >
                 <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {section.heading[lang]}
                 </h2>

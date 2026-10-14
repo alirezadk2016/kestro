@@ -1,6 +1,6 @@
 "use client";
 
-import { Laptop, RotateCcw, Wrench } from "lucide-react";
+import { Box, Laptop, LoaderCircle, RotateCcw, Wrench } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import type { WebGLRenderer } from "three";
 import type { Lang } from "@/lib/i18n";
@@ -42,7 +42,8 @@ export default function LaptopAssembly({
     reset: () => void;
   } | null>(null);
   const requested = useRef(1);
-  const [state, setState] = useState("poster");
+  const activate = useRef<() => void>(() => {});
+  const [state, setState] = useState("static");
   const [target, setTarget] = useState(1);
   const instructionsId = useId();
   const labels =
@@ -53,6 +54,8 @@ export default function LaptopAssembly({
           service: "Servicedele",
           separation: "Adskillelse",
           reset: "Nulstil visning",
+          activate: "Åbn 3D-visning",
+          loading: "Indlæser 3D-visning",
         }
       : {
           model: "Interactive illustration of a laptop for repair",
@@ -60,6 +63,8 @@ export default function LaptopAssembly({
           service: "Service components",
           separation: "Disassembly",
           reset: "Reset view",
+          activate: "Open 3D view",
+          loading: "Loading 3D view",
         };
 
   function choose(value: number, scrub = false) {
@@ -80,6 +85,7 @@ export default function LaptopAssembly({
       .connection;
     let disposed = false,
       starting = false,
+      activated = false,
       generation = 0;
     let cleanup: (() => void) | undefined;
 
@@ -87,6 +93,7 @@ export default function LaptopAssembly({
       if (disposed || starting || !desktop.matches || reduced.matches || connection?.saveData)
         return;
       starting = true;
+      setState("loading");
       const token = ++generation;
       let renderer: WebGLRenderer | undefined, assembly: Assembly | undefined;
       try {
@@ -318,25 +325,19 @@ export default function LaptopAssembly({
         cleanup = undefined;
         starting = false;
         setState(desktop.matches ? "fallback" : "poster");
-      } else void start();
+      } else if (activated) void start();
     };
     reduced.addEventListener("change", motionChanged);
     desktop.addEventListener("change", motionChanged);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          observer.disconnect();
-          void start();
-        }
-      },
-      { rootMargin: "250px" },
-    );
-    observer.observe(view);
-    if (reduced.matches || connection?.saveData) setState("fallback");
+    activate.current = () => {
+      activated = true;
+      void start();
+    };
+    setState(reduced.matches || connection?.saveData ? "fallback" : "poster");
     return () => {
       disposed = true;
       generation++;
-      observer.disconnect();
+      activate.current = () => {};
       reduced.removeEventListener("change", motionChanged);
       desktop.removeEventListener("change", motionChanged);
       cleanup?.();
@@ -384,6 +385,22 @@ export default function LaptopAssembly({
           aria-hidden="true"
           className={`absolute inset-0 h-full w-full transition-opacity duration-300 motion-reduce:transition-none motion-reduce:!opacity-0 ${state === "ready" ? "opacity-100" : "opacity-0"}`}
         />
+        {(state === "poster" || state === "loading") && (
+          <button
+            type="button"
+            onClick={() => activate.current()}
+            disabled={state === "loading"}
+            aria-label={state === "loading" ? labels.loading : labels.activate}
+            title={state === "loading" ? labels.loading : labels.activate}
+            className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded border border-white/25 bg-brand-950/95 text-paper shadow-lg transition-colors hover:border-brand-300 hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper disabled:cursor-wait motion-reduce:hidden"
+          >
+            {state === "loading" ? (
+              <LoaderCircle aria-hidden="true" size={23} className="animate-spin" />
+            ) : (
+              <Box aria-hidden="true" size={23} />
+            )}
+          </button>
+        )}
       </div>
       <div
         className={`mt-2 flex items-center gap-2 border-t border-paper/10 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none ${state === "ready" ? "" : "invisible pointer-events-none"}`}

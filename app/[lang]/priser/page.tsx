@@ -8,21 +8,9 @@ import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
+import BudgetExamples from "@/components/BudgetExamples";
 
-/*
- * What it costs, without a price list.
- *
- * The site had no pricing information of any kind, which is the first thing a
- * buyer screening suppliers looks for and the fastest way to be dropped from a
- * shortlist. It cannot have a price list — we hold no stock, so there is no
- * shelf with prices on it, and a made-up "from" figure is exactly the kind of
- * claim markedsføringsloven §13 makes us document.
- *
- * What a buyer actually needs at this stage is not a number. It is to know why
- * there is no number, what will move theirs, and what they will be told before
- * they commit. That is answerable honestly and completely, and it is what this
- * page does. Not one figure on it is invented.
- */
+// Dated budget references and the factors a future, specific quote must account for.
 
 const drivers = [
   {
@@ -73,15 +61,15 @@ const copy = {
   da: {
     metaTitle: "Hvad koster brugte computere til virksomheder? | Kestro",
     metaDescription:
-      "Hvorfor der ikke står en pris på siden, hvad der afgør prisen på brugt erhvervs-IT, og hvad tilbuddet viser per enhed, før I bestiller noget.",
+      "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se hvad prisen afhænger af, og kontakt os om en konkret pris og muligheder til jer.",
     title: "Hvad koster det?",
     description:
-      "Det ærlige svar er: Det kommer an på opgaven – og her står præcis, hvad prisen afhænger af. Ingen prisliste, men heller ingen overraskelser: prisen står skriftligt, før I bestiller.",
-    whyTitle: "Hvorfor er der ikke en prisliste?",
+      "Se daterede budgeteksempler på bærbare, stationære og skærme. Det er eksterne detailreferencer, ikke Kestros salgspriser. Projektet er under etablering; kontakt os for en uforpligtende afklaring.",
+    whyTitle: "Hvorfor er priserne vejledende?",
     whyBody1:
-      "Vi holder ikke lager. Der står ingen hylde med maskiner og mærkater på, og derfor findes der ikke en pris, vi kan skrive op på forhånd. Vi går ud i leverandørnetværket, når vi ved, hvad opgaven kræver – og prisen er den, vi kan skaffe det til, plus vores arbejde.",
+      "Vi har ikke et bekræftet lager eller faste salgspriser. Budgeteksemplerne viser konkrete, offentlige detailpriser fra eksterne forhandlere på den angivne dato. De siger ikke, at vi kan levere samme maskine til samme pris.",
     whyBody2:
-      "Vi kunne godt sætte en lav »fra-pris« på siden og lade jer finde ud af resten undervejs. Det gør vi ikke. Et tal, vi ikke kan dokumentere for den konkrete leverance, er ikke oplysning – det er lokkemad, og I opdager det alligevel, når tilbuddet kommer.",
+      "Model, stand, antal, tastatur og klargøring kan ændre det konkrete beløb. Kontakt os, før I lægger et indkøbsbudget fast. En forespørgsel på denne side er ikke en ordre, og vi modtager ikke betaling gennem siden.",
     driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
@@ -117,15 +105,15 @@ const copy = {
   en: {
     metaTitle: "What do used business computers cost? | Kestro",
     metaDescription:
-      "No price list, because we hold no stock. What decides the price of used business IT, and what to write to get a realistic figure.",
+      "Indicative budgets for used business IT, dated retail price examples and what affects the price. Contact us to discuss options and a specific price.",
     title: "What does it cost?",
     description:
-      "The honest answer is that it depends — and this page says exactly what it depends on. No price list, but no surprises either: the price is in writing before you order.",
-    whyTitle: "Why is there no price list?",
+      "See dated budget examples for laptops, desktops and monitors. These are external retail references, not Kestro selling prices. The project is in preparation; contact us for a non-binding discussion.",
+    whyTitle: "Why are the prices indicative?",
     whyBody1:
-      "We hold no stock. There is no shelf of machines with labels on them, so there is no price we can write up in advance. We go out into the supplier network once we know what the job needs — and the price is what we can source it for, plus our work.",
+      "We have no confirmed stock or fixed selling prices. The budget examples show specific public retail prices from external retailers on the stated date. They do not mean we can supply the same machine at the same price.",
     whyBody2:
-      "We could put a low “from” price on the page and let you discover the rest along the way. We do not. A figure we cannot document for your actual order is not information, it is bait, and you find out when the quote arrives anyway.",
+      "Model, condition, quantity, keyboard and preparation may change the actual amount. Contact us before fixing a purchasing budget. An enquiry on this site is not an order, and we do not accept payment through it.",
     driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
@@ -219,6 +207,8 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           updated="/priser"
         />
       </Container>
+
+      <BudgetExamples lang={lang} />
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>

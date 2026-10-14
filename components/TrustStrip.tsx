@@ -41,7 +41,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     title: "Alt står skriftligt, mens I stadig kan sige nej",
-    sub: "Tilbuddet viser pris per enhed og samlet, den præcise specifikation, stand og batteritilstand per maskine, garantivilkår og hvem I kontakter, hvis noget går i stykker. Det gælder i 14 dage.",
+    sub: "Et fremtidigt tilbud skal vise pris per enhed og samlet, specifikation, stand og batteritilstand, garantivilkår og kontakt ved fejl. Den konkrete pris og vilkårene skal være afklaret, før I bestiller.",
     cta: "Se et rigtigt tilbud",
     points: [
       "Pris per enhed og samlet – ikke kun en totalsum",
@@ -63,7 +63,7 @@ const copy = {
   },
   en: {
     title: "It is all in writing while you can still say no",
-    sub: "The quote shows the price per unit and in total, the exact specification, condition and battery health per machine, warranty terms and who to contact if something breaks. It is valid for 14 days.",
+    sub: "A future quote must show the price per unit and in total, specification, condition and battery health, warranty terms and contact for faults. The specific price and terms must be established before you order.",
     cta: "See a real quote",
     points: [
       "Price per unit and in total — not just a lump sum",
@@ -162,7 +162,9 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
                   <li key={member.id} className="flex items-center gap-3">
                     <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold leading-[1.5] text-ink-900">{member.name}</p>
+                      <p className="text-sm font-semibold leading-[1.5] text-ink-900">
+                        {member.name}
+                      </p>
                       <p className="text-sm leading-[1.5] text-ink-600">{member.role[lang]}</p>
                     </div>
                   </li>
@@ -211,7 +213,10 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
               </fieldset>
 
               <div className="mt-5">
-                <label htmlFor="quote-start-model" className="mb-1.5 block text-sm font-semibold text-ink-800">
+                <label
+                  htmlFor="quote-start-model"
+                  className="mb-1.5 block text-sm font-semibold text-ink-800"
+                >
                   {c.model} <span className="font-normal text-ink-600">{c.optional}</span>
                 </label>
                 <input
@@ -226,7 +231,10 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
               </div>
 
               <div className="mt-5">
-                <label htmlFor="quote-start-when" className="mb-1.5 block text-sm font-semibold text-ink-800">
+                <label
+                  htmlFor="quote-start-when"
+                  className="mb-1.5 block text-sm font-semibold text-ink-800"
+                >
                   {c.when} <span className="font-normal text-ink-600">{c.optional}</span>
                 </label>
                 <input
@@ -240,7 +248,10 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
                 />
               </div>
 
-              <button type="submit" className={`${buttonClass("primary", "lg")} mt-7 w-full sm:w-auto`}>
+              <button
+                type="submit"
+                className={`${buttonClass("primary", "lg")} mt-7 w-full sm:w-auto`}
+              >
                 {c.submit}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
               </button>

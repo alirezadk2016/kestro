@@ -2,40 +2,29 @@ import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import { localePath, type Lang } from "@/lib/i18n";
 import { buttonClass } from "./Button";
+import { priceDisclaimer } from "@/lib/project";
+import { budgetExamples, budgetAmount, formatDkk } from "@/lib/pricing";
+import { getModel } from "@/lib/models";
 
-/*
- * What a machine costs — answered where the buyer asks it.
- *
- * Every model page describes a machine in detail and then said nothing at all
- * about price, which leaves the reader to guess whether they are on a shop
- * that forgot its prices or a supplier that works differently. This says which.
- *
- * No figure, and no "from" price either. Forbrugerombudsmanden treats a
- * fra-pris as a claim: the goods have to actually be obtainable at it. We
- * source per order, so until there is a price we can stand behind for a
- * specific configuration, quoting one would be a number the buyer plans
- * around and we cannot honour. Naming the three things that move the price is
- * more use to them than a figure that moves.
- *
- * The quantity line belongs here rather than in the closing CTA because
- * quantity is one of the things that changes the number.
- */
+// Only documented external budget references; never a Kestro offer or stock claim.
 const copy = {
   da: {
     label: "Pris",
-    heading: "Få et tilbud",
-    body: "Prisen afhænger af specifikationer, stand og antal. Derfor sætter vi ikke en listepris på en maskine, der ikke er købt hjem endnu – I får en pris, der gælder jeres konkrete leverance.",
-    volume: "Skal I bruge 5, 20 eller 100 maskiner? Vi skaffer, klargør og leverer dem samlet.",
-    cta: "Få et tilbud",
-    secondary: "Hvad afgør prisen?",
+    heading: "Spørg om pris og muligheder",
+    body: priceDisclaimer.da,
+    volume:
+      "Skriv antal, specifikationer og ønsket tastatur. Projektet er under etablering; en forespørgsel er ikke en bestilling.",
+    cta: "Send en forespørgsel",
+    secondary: "Budgeteksempler og prisgrundlag",
   },
   en: {
     label: "Price",
-    heading: "Get a quote",
-    body: "The price depends on specification, condition and quantity. So we do not put a list price on a machine that has not been bought in yet — you get a price that holds for your actual delivery.",
-    volume: "Need 5, 20 or 100 machines? We source, prepare and deliver them together.",
-    cta: "Get a quote",
-    secondary: "What decides the price?",
+    heading: "Ask about pricing and options",
+    body: priceDisclaimer.en,
+    volume:
+      "Tell us the quantity, specifications and keyboard you need. The project is in preparation; an enquiry is not an order.",
+    cta: "Send an enquiry",
+    secondary: "Budget examples and price references",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -50,6 +39,9 @@ export default function PriceOnRequest({
   className?: string;
 }) {
   const c = copy[lang];
+  const example = budgetExamples.find(
+    (item) => item.name === equipment || getModel(item.model)?.name === equipment,
+  );
   const href = equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud";
 
   return (
@@ -59,6 +51,22 @@ export default function PriceOnRequest({
         {c.heading}
       </p>
       <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>
+      {example && (
+        <div className="mt-4 border-y border-white/10 py-4">
+          <p className="font-display text-2xl font-bold tabular-nums text-paper">
+            {lang === "da" ? "Budget ca." : "Budget approx."}{" "}
+            {formatDkk(budgetAmount(example), lang)}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-paper/75">
+            {example.name} · {example.configuration[lang]}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-paper/75">
+            {lang === "da"
+              ? "Dateret ekstern detailreference, inkl. forhandlerens moms og servicegebyr. Ikke Kestros salgspris. Se dato og beregning under budgeteksempler."
+              : "Dated external retail reference, including the retailer's VAT and service fee. Not a Kestro selling price. See date and calculation under budget examples."}
+          </p>
+        </div>
+      )}
 
       <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">
         <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={1.75} />
@@ -66,10 +74,7 @@ export default function PriceOnRequest({
       </p>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Link
-          href={localePath(href, lang)}
-          className={buttonClass("primary")}
-        >
+        <Link href={localePath(href, lang)} className={buttonClass("primary")}>
           {c.cta}
           <ArrowRight
             className="h-4 w-4 transition-transform group-hover:translate-x-1"
