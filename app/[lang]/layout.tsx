@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ProjectNotice from "@/components/ProjectNotice";
 import PageViewTracker from "@/components/PageViewTracker";
 import Analytics from "@/components/Analytics";
 /* Aliased: the project already has a component called Analytics, and it is
@@ -263,7 +262,6 @@ export default async function RootLayout({
         )}
         <Header lang={lang} />
         <main id="indhold" tabIndex={-1} className="focus:outline-none">
-          <ProjectNotice lang={lang} />
           {children}
         </main>
         <Footer lang={lang} />

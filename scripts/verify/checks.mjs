@@ -708,18 +708,66 @@ for (const path of ["/kontakt", "/en/contact"]) {
   await page.waitForFunction(
     () => !document.querySelector("main").inert && document.body.style.overflow !== "hidden",
   );
-  const statusLink = page.locator("aside[aria-label='Under etablering'] a");
-  await statusLink.scrollIntoViewIfNeeded();
-  if (
-    !(await statusLink.evaluate((el) => {
-      const rect = el.getBoundingClientRect();
-      return el.contains(
-        document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2),
-      );
-    }))
-  )
-    fail("project notice", "homepage hero obscures the status link");
+  if (await page.locator("aside[aria-label='Under etablering']").count())
+    fail("project notice", "notice appeared on the homepage after navigation");
   await context.close();
+}
+
+for (const { home, pricing, terms, label, refuse } of [
+  {
+    home: "/",
+    pricing: "/priser",
+    terms: "/handelsbetingelser",
+    label: "Under etablering",
+    refuse: "Kun nødvendige",
+  },
+  {
+    home: "/en",
+    pricing: "/en/pricing",
+    terms: "/en/terms-of-sale",
+    label: "Pre-launch",
+    refuse: "Necessary only",
+  },
+]) {
+  for (const width of [320, 1440]) {
+    for (const javaScriptEnabled of [false, true]) {
+      const context = await browser.newContext({
+        javaScriptEnabled,
+        viewport: { width, height: 900 },
+      });
+      const page = await context.newPage();
+      const notice = page.locator(`aside[aria-label='${label}']`);
+      const where = `project notice (${pricing}, ${width}px, JS ${javaScriptEnabled})`;
+      await page.goto(BASE + home, { waitUntil: "networkidle" });
+      if (await notice.count()) fail(where, "notice appeared on the homepage");
+      if (javaScriptEnabled)
+        await page.getByRole("button", { name: refuse, exact: true }).click();
+
+      await page.locator(`footer a[href='${pricing}']`).first().click();
+      await page.waitForURL(BASE + pricing, { waitUntil: "networkidle" });
+      if ((await notice.count()) !== 1 || !(await notice.isVisible()))
+        fail(where, "pricing page must show exactly one visible notice");
+      const statusLink = notice.locator(`a[href='${terms}']`);
+      await statusLink.scrollIntoViewIfNeeded();
+      if (
+        !(await statusLink.evaluate((el) => {
+          const rect = el.getBoundingClientRect();
+          return el.contains(
+            document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2),
+          );
+        }))
+      )
+        fail(where, "pricing status link is obscured");
+
+      await statusLink.click();
+      await page.waitForURL(BASE + terms, { waitUntil: "networkidle" });
+      if (await notice.count()) fail(where, "notice leaked into the terms page");
+      await page.locator(`header a[href='${home}']`).first().click();
+      await page.waitForURL(BASE + home, { waitUntil: "networkidle" });
+      if (await notice.count()) fail(where, "notice persisted after leaving pricing");
+      await context.close();
+    }
+  }
 }
 
 {

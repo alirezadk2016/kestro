@@ -9,6 +9,7 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import BudgetExamples from "@/components/BudgetExamples";
+import ProjectNotice from "@/components/ProjectNotice";
 
 // Dated budget references and the factors a future, specific quote must account for.
 
@@ -207,6 +208,8 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           updated="/priser"
         />
       </Container>
+
+      <ProjectNotice lang={lang} />
 
       <BudgetExamples lang={lang} />
 
