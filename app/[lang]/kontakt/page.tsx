@@ -46,7 +46,7 @@ const copy = {
     faqTitle: "Spørgsmål, før I skriver",
   },
   en: {
-    metaTitle: "Contact Kestro in Aarhus — used business IT",
+    metaTitle: "Contact Kestro in Aarhus — used and refurbished business IT",
     metaDescription:
       "Contact Kestro about used business IT, a fleet or equipment to move on. Email kontakt@kestro.dk or use the form for an initial, non-binding enquiry.",
     title: "Contact us",

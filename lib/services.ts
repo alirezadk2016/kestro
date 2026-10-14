@@ -42,7 +42,7 @@ export const services: Service[] = [
       en: "IT purchasing for business — we source the model | Kestro",
     },
     metaDescription: {
-      da: "Vi finder det rigtige IT-udstyr til jer hos leverandører i Sydeuropa og køber først ind, når I ved, hvad I skal bruge – ikke før.",
+      da: "IT-indkøb til erhverv: vi finder det rigtige brugte IT-udstyr hos leverandører i Sydeuropa og køber først ind, når I ved, hvad I skal bruge – ikke før.",
       en: "We find used business computers through suppliers in southern Europe to match what you need, rather than selling what happens to be in stock.",
     },
     summary: {
@@ -181,7 +181,7 @@ export const services: Service[] = [
     slug: "klargoering-og-test",
     name: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     metaTitle: {
-      da: "Klargøring af computere til medarbejdere | Kestro",
+      da: "Klargøring og test af computere til medarbejdere | Kestro",
       en: "Preparing computers for employees — tested and set up | Kestro",
     },
     metaDescription: {
@@ -248,7 +248,7 @@ export const services: Service[] = [
       en: "Danish and Norwegian keyboards on used computers | Kestro",
     },
     metaDescription: {
-      da: "Tastaturet skiftes fysisk til dansk eller norsk layout, og Windows sættes op med drivere og sprog, så maskinen er klar fra dag ét.",
+      da: "Dansk tastatur på importerede computere: tasterne skiftes fysisk til dansk eller norsk layout, og Windows sættes op med sprog, så maskinen er klar.",
       en: "Machines from southern Europe arrive with Spanish or Italian layouts. We fit Danish or Norwegian keyboards and set Windows up to match.",
     },
     summary: {
@@ -297,8 +297,8 @@ export const services: Service[] = [
       en: "Delivery of business IT in Denmark and Norway | Kestro",
     },
     metaDescription: {
-      da: "Samlet levering til én eller flere adresser i Danmark og Norge, med en tidsramme, I får oplyst skriftligt, før I bestiller noget.",
-      en: "We deliver to companies in Denmark and Norway in whatever quantity you need, with a lead time you get in writing before you commit.",
+      da: "Levering af IT-udstyr til virksomheder: samlet til én eller flere adresser i Danmark og Norge, med en tidsramme, I får skriftligt, før I bestiller noget.",
+      en: "Delivery of business IT to companies in Denmark and Norway, in whatever quantity you need, with a lead time you get in writing before you commit.",
     },
     summary: {
       da: "Én modtagelse, pakket enkeltvis, med en tidsramme aftalt på forhånd.",
@@ -347,12 +347,12 @@ export const services: Service[] = [
     slug: "overskudslager-og-returvarer",
     name: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
     metaTitle: {
-      da: "Sælg overskudslager og returvarer i IT | Kestro",
-      en: "Sell overstock and returned IT equipment | Kestro",
+      da: "Sælg IT-overskudslager, returvarer og demoenheder | Kestro",
+      en: "Sell IT overstock, returned stock and demo units | Kestro",
     },
     metaDescription: {
-      da: "Returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned, det står stille. Vi finder køberne i stedet for jer.",
-      en: "Returns, demo units and equipment from cancelled orders lose value every month they sit. We find the buyers for you.",
+      da: "Overskudslager af IT: returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned, det står stille. Vi finder køberne i stedet for jer.",
+      en: "Surplus IT stock and returns: demo units and equipment from cancelled orders lose value every month they sit unused. We find the buyers for you.",
     },
     summary: {
       da: "Udstyr, der aldrig nåede en kunde, taber værdi hver måned, det står stille.",
@@ -390,7 +390,7 @@ export const services: Service[] = [
       en: "IT equipment for new employees — ready on day one | Kestro",
     },
     metaDescription: {
-      da: "En komplet arbejdsplads til den nye medarbejder: maskine, skærm, dock og tastatur, sat op ens hver gang og leveret til datoen.",
+      da: "IT-udstyr til nye medarbejdere: en komplet arbejdsplads med maskine, skærm, dock og tastatur, sat op ens hver gang og leveret til den aftalte dato.",
       en: "A complete workstation for each new starter: computer, monitor, dock and keyboard, set up the same way every time and delivered on the date.",
     },
     summary: {

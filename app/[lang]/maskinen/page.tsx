@@ -14,7 +14,7 @@ const copy = {
   da: {
     metaTitle: "Hvad er RAM, SSD og køling? Se en bærbar indefra | Kestro",
     metaDescription:
-      "Drej en bærbar rundt, og se, hvor RAM, SSD, trådløst kort, køling og batteri sidder – hvad hver del gør, og hvad der kan opgraderes.",
+      "Drej en bærbar rundt, og se, hvor RAM, SSD, trådløst kort, køling og batteri sidder i maskinen – hvad hver del gør, og hvad der kan opgraderes.",
     title: "Maskinen, del for del",
     description:
       "Drej den rundt, og tryk på en del. Udvendigt ser I den maskine, vi skaffer. Indvendigt er det en tegning af, hvor delene sidder, og hvad der kan skiftes, hvis I vil have et par år mere ud af udstyret.",

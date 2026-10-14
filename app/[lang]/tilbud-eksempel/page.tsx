@@ -139,7 +139,7 @@ const copy = {
   en: {
     metaTitle: "Example quote for used business IT, field by field | Kestro",
     metaDescription:
-      "An example quote for used business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
+      "An example quote for refurbished business IT: model, condition, measured battery capacity, keyboard, warranty and timeframe — field by field.",
     title: "What a quote looks like",
     description:
       "A quote from Kestro is a document in five parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",

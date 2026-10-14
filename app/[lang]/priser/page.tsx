@@ -104,7 +104,7 @@ const copy = {
     ],
   },
   en: {
-    metaTitle: "What do used business computers cost? | Kestro",
+    metaTitle: "What do used business computers cost? Examples | Kestro",
     metaDescription:
       "Indicative budgets for used business IT, dated retail price examples and what affects the price. Contact us to discuss options and a specific price.",
     title: "What does it cost?",

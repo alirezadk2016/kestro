@@ -35,7 +35,7 @@ const copy = {
     modelsButton: "Se modeloversigten",
   },
   en: {
-    metaTitle: "Used business computers and IT equipment | Kestro",
+    metaTitle: "Used and refurbished business computers and IT | Kestro",
     metaDescription:
       "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
     title: "What we source",

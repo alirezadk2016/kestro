@@ -98,7 +98,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og batteri.',
-      en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Written quote.',
+      en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Quote with battery.',
     },
     intro: {
       da: "T480 er den model, vi oftest bliver spurgt om, og med god grund. Den er bygget til at blive slæbt rundt hver dag, delene er lette at skaffe, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
@@ -325,7 +325,7 @@ export const models: Model[] = [
       en: "Refurbished ThinkPad T14: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og udskiftelig SSD. Forskellen på Intel og AMD forklaret.',
+      da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og udskiftelig SSD. Intel og AMD sammenlignet. Tilbud på skrift.',
       en: 'Refurbished ThinkPad T14 Gen 1 and 2: 14" Full HD, Intel i5/i7 or AMD Ryzen PRO and a swappable SSD. The Intel and AMD versions compared.',
     },
     intro: {
@@ -443,7 +443,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt ThinkPad X1 Carbon Gen 6–8: 14" på godt et kilo, men med loddet RAM – vælg hukommelsen rigtigt fra start. Tilbud med stand og batteri.',
-      en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over a kilo, but the RAM is soldered — so choose the memory right from the start.',
+      en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over 1 kg, but the RAM is soldered — choose the memory right from the start. Written quote.',
     },
     intro: {
       da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem, der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
@@ -639,7 +639,7 @@ export const models: Model[] = [
       en: "Refurbished HP EliteBook 840: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt HP EliteBook 840 G5 og G6: 14" Full HD, Intel i5/i7 og op til 32 GB RAM i to sokler – fås med Sure View. Tilbud med stand og batteri.',
+      da: 'Brugt HP EliteBook 840 G5 og G6: 14" Full HD, Intel i5/i7 og op til 32 GB RAM i to sokler – fås med Sure View. Skriftligt tilbud med stand og batteri.',
       en: 'Refurbished HP EliteBook 840 G5 and G6: 14" Full HD, Intel i5/i7, up to 32 GB RAM in two slots — available with Sure View. Quote with condition.',
     },
     intro: {
@@ -1027,7 +1027,7 @@ export const models: Model[] = [
       en: "Refurbished HP ZBook 15: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt HP ZBook 15 G5 og G6: mobil workstation med NVIDIA Quadro, i7 med 6 kerner eller Xeon og op til 64 GB RAM – til CAD og 3D.",
+      da: "Brugt HP ZBook 15 G5 og G6: mobil workstation med NVIDIA Quadro, i7 med 6 kerner eller Xeon og op til 64 GB RAM – til CAD og 3D-arbejde.",
       en: "Refurbished HP ZBook 15 G5 and G6: a mobile workstation with NVIDIA Quadro, a 6-core i7 or Xeon and up to 64 GB RAM — for CAD and 3D.",
     },
     intro: {
@@ -1122,7 +1122,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: "Brugt HP EliteDesk 800 G4 og G5 SFF: 6-kernet desktop-i5/i7, fire RAM-sokler og plads til grafikkort og ekstra disk. Skriftligt tilbud med stand.",
-      en: "Refurbished HP EliteDesk 800 G4 and G5 SFF: 6-core desktop i5/i7, four RAM slots and room for a graphics card and a second drive.",
+      en: "Refurbished HP EliteDesk 800 G4 and G5 SFF: 6-core i5/i7, four RAM slots and room for a graphics card and a second drive. Written quote.",
     },
     intro: {
       da: "EliteDesk 800 er den faste arbejdsplads, hvor der ikke skal spares på ydelsen. Den bruger rigtige desktop-processorer frem for bærbar-varianter, har fire hukommelsessokler og plads til både SSD og harddisk. Skal maskinen holde længe, er det den nemmeste at udvide.",
@@ -1218,7 +1218,7 @@ export const models: Model[] = [
       en: "Refurbished ThinkCentre M720q Tiny: pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt ThinkCentre M720q og M920q Tiny: mini-pc på 1 liter, der kan sidde bag skærmen, med to skærmudgange og lavt strømforbrug.",
+      da: "Brugt ThinkCentre M720q og M920q Tiny: 1-liters mini-pc, der kan sidde bag skærmen. To skærmudgange, lavt strømforbrug og tilbud på skrift.",
       en: "Refurbished ThinkCentre M720q and M920q Tiny: a 1-litre mini PC that can mount behind the monitor, with two display outputs and low power draw.",
     },
     intro: {
@@ -1503,8 +1503,8 @@ export const models: Model[] = [
       en: "Refurbished HP EliteDisplay E243: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt HP EliteDisplay E243: 23,8" IPS i Full HD med DisplayPort, HDMI, VGA, USB-hub og fuldt justerbar fod. Skriftligt tilbud med stand.',
-      en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand.',
+      da: 'Brugt HP EliteDisplay E243: 23,8" IPS i Full HD med DisplayPort, HDMI, VGA, USB-hub og fuldt justerbar fod. Skriftligt tilbud med stand pr. skærm.',
+      en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand. Quote with condition.',
     },
     intro: {
       da: "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundfunktioner – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
@@ -1584,7 +1584,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt Lenovo ThinkVision T24i: 23,8" IPS i Full HD, tynde rammer og fuldt justerbar fod – passer til en ThinkPad-flåde. Skriftligt tilbud med stand.',
-      en: 'Refurbished Lenovo ThinkVision T24i: 23.8" IPS Full HD, thin bezels and a fully adjustable stand — a match for a ThinkPad fleet.',
+      en: 'Refurbished Lenovo ThinkVision T24i: 23.8" IPS Full HD, thin bezels and a fully adjustable stand — a match for a ThinkPad fleet. Quote in writing.',
     },
     intro: {
       da: "ThinkVision T-serien er Lenovos erhvervsskærme og den naturlige makker til en ThinkPad-flåde. Tynde rammer gør, at to skærme ved siden af hinanden ikke får en tyk streg ned i midten.",
@@ -1746,7 +1746,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: "Brugt Dell WD19 USB-C-dock: skærme, netværk og strøm i ét kabel – virker også med andre mærker. 130 eller 180 W. Skriftligt tilbud med stand.",
-      en: "Refurbished Dell WD19 USB-C dock: monitors, network and power over one cable — it works with other brands too. 130 or 180 W.",
+      en: "Refurbished Dell WD19 USB-C dock: monitors, network and power over one cable — it works with other brands too. 130 or 180 W. Written quote.",
     },
     intro: {
       da: "WD19 kobles til med ét USB-C-kabel og giver skærme, netværk, USB og strøm på én gang. Fordi den bruger almindelig USB-C frem for et mærkespecifikt stik, kan den også bruges på maskiner fra andre producenter – praktisk hvis I har en blandet flåde.",
@@ -1820,8 +1820,8 @@ export const models: Model[] = [
       en: "Refurbished HP USB-C Dock G5: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt HP USB-C Dock G5: to skærme via DisplayPort og HDMI, netværk og opladning gennem ét USB-C-kabel. Skriftligt tilbud med stand.",
-      en: "Refurbished HP USB-C Dock G5: two monitors over DisplayPort and HDMI, network and charging through one USB-C cable.",
+      da: "Brugt HP USB-C Dock G5: to skærme via DisplayPort og HDMI, netværk og opladning gennem ét USB-C-kabel. Skriftligt tilbud med stand pr. dock.",
+      en: "Refurbished HP USB-C Dock G5: two monitors over DisplayPort and HDMI, network and charging through one USB-C cable. Quote with condition.",
     },
     intro: {
       da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",

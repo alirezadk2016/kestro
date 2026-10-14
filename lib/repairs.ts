@@ -186,8 +186,8 @@ export const repairs: Repair[] = [
       en: "RAM and SSD upgrades for laptops and desktops | Kestro",
     },
     metaDescription: {
-      da: "Mere RAM og en SSD er ofte den billigste vej til en mærkbart hurtigere computer. Sådan finder vi ud af, om det kan betale sig. Pris først.",
-      en: "More memory and an SSD are often the cheapest route to a noticeably quicker computer. How we work out whether it is worth it. Price first.",
+      da: "RAM- og SSD-opgradering: ofte den billigste vej til en mærkbart hurtigere computer. Sådan finder vi ud af, om det kan betale sig – med pris først.",
+      en: "Memory and SSD upgrades: often the cheapest route to a noticeably quicker computer. How we work out whether it is worth it — with a price first.",
     },
     summary: {
       da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
@@ -228,7 +228,7 @@ export const repairs: Repair[] = [
     mark: "screen",
     name: { da: "Skærmskift", en: "Screen replacement" },
     metaTitle: {
-      da: "Skærmskift på bærbar, tablet og telefon | Kestro",
+      da: "Skærmskift på bærbar, tablet og telefon: pris først | Kestro",
       en: "Screen replacement for laptops, tablets and phones | Kestro",
     },
     metaDescription: {
@@ -363,7 +363,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Støv og tør kølepasta gør en computer varm, larmende og langsom, fordi den skruer ned for farten. Vi renser, skifter pasta og måler temperaturen.",
-      en: "Dust and dried-out thermal paste make a computer hot, loud and slow, because it throttles itself. We clean it, re-paste it and check the heat.",
+      en: "Dust and dried-out thermal paste make a computer hot, loud and slow, because it throttles itself. We clean it, re-paste it and check the temperature.",
     },
     summary: {
       da: "Støv og gammel kølepasta gør maskinen varm og larmende. En rens kan give ro og stabilitet tilbage.",
@@ -403,8 +403,8 @@ export const repairs: Repair[] = [
       en: "Clean Windows reinstall with the right drivers | Kestro",
     },
     metaDescription: {
-      da: "Windows sat op fra bunden med de rigtige drivere, så en langsom computer starter rent igen. Hvad vi gør, og hvornår det kan betale sig.",
-      en: "Windows set up from scratch with the right drivers, so a slow computer boots clean again. What we do, and when it is worth doing.",
+      da: "Geninstallation af Windows fra bunden med de rigtige drivere, så en langsom computer starter rent igen. Hvad vi gør, og hvornår det kan betale sig.",
+      en: "Reinstalling Windows from scratch with the right drivers, so a slow computer boots clean again. What we do, and when it is worth doing. Price first.",
     },
     summary: {
       da: "Ren installation af Windows med drivere og opdateringer, så maskinen starter op som en ny.",
@@ -446,8 +446,8 @@ export const repairs: Repair[] = [
     name: { da: "Software og licenser", en: "Software and licences" },
     metaTitle: { da: "Software og licenser på nye firmacomputere | Kestro", en: "Software and licences on new company computers | Kestro" },
     metaDescription: {
-      da: "Programmerne og licenserne på plads, før maskinerne når frem til medarbejderne. Hvad vi sætter op, og hvad I selv skal levere.",
-      en: "Software and licences in place before the machines reach your staff. What we set up, and what you need to supply yourself.",
+      da: "Licenser og programmer til firmacomputere på plads, før maskinerne når medarbejderne: hvad vi sætter op, hvad der kan flyttes, og hvad I leverer.",
+      en: "Software and licences for company computers, in place before they reach your staff: what we set up, what can be transferred, and what you supply.",
     },
     summary: {
       da: "Vi installerer de programmer, du bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
@@ -485,7 +485,7 @@ export const repairs: Repair[] = [
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
     metaTitle: { da: "Flyt data til ny computer – opsætning og dataflytning | Kestro", en: "Move data to a new computer — setup and transfer | Kestro" },
     metaDescription: {
-      da: "Ny computer? Vi installerer styresystemet og flytter filer, profiler og programmer over – og gennemgår listen med dig, før den gamle slettes.",
+      da: "Flyt data til ny computer: vi installerer styresystemet, flytter filer, profiler og programmer – og gennemgår listen med dig, før den gamle slettes.",
       en: "New computer? We install the system and move files, profiles and software across — and go through the list with you before the old one is wiped.",
     },
     summary: {
@@ -528,8 +528,8 @@ export const repairs: Repair[] = [
       en: "Computer won't start or keeps crashing? Diagnosis | Kestro",
     },
     metaDescription: {
-      da: "Starter computeren ikke, går den ned, eller opfører den sig underligt? Vi finder årsagen og siger, hvad det koster at rette, før vi går i gang.",
-      en: "Computer will not start, crashes or behaves oddly? We find the cause and tell you what the fix would cost before we start.",
+      da: "Fejlfinding: starter computeren ikke, går den ned, eller opfører den sig underligt? Vi finder årsagen og siger, hvad det koster, før vi går i gang.",
+      en: "Fault diagnosis: computer will not start, crashes or behaves oddly? We find the cause and tell you what the fix would cost before we start any work.",
     },
     summary: {
       da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
@@ -571,8 +571,8 @@ export const repairs: Repair[] = [
     name: { da: "Samling af pc", en: "PC assembly" },
     metaTitle: { da: "Få samlet en pc efter opgaven – bygget og testet | Kestro", en: "Custom PC building and upgrades, load-tested | Kestro" },
     metaDescription: {
-      da: "Vi bygger efter opgaven, ikke efter et datablad – fra bunden eller videre på din nuværende maskine. Samlet, installeret og belastningstestet.",
-      en: "We build to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
+      da: "Få samlet en pc efter opgaven, ikke efter et datablad – fra bunden eller videre på din nuværende maskine. Samlet, installeret og belastningstestet.",
+      en: "Get a PC built to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
     },
     summary: {
       da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
@@ -617,7 +617,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Har du købt en brugt computer? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget skal skiftes.",
-      en: "Bought a used computer? We go through it, state the battery's actual capacity in percent, set it up and tell you if anything needs replacing.",
+      en: "Bought a used computer? We check it, state the battery's actual capacity in percent, set it up and tell you if anything needs replacing. Price first.",
     },
     summary: {
       da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",

@@ -18,7 +18,7 @@ const copy = {
   da: {
     metaTitle: "Ydelser: indkøb, klargøring, levering og opkøb af IT | Kestro",
     metaDescription:
-      "Indkøb af renoveret IT, flådeleverancer, klargøring med dansk tastatur, reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
+      "Alle Kestros ydelser: indkøb af renoveret IT, flådeleverancer, klargøring med dansk tastatur, reparation, opkøb af brugt udstyr og nye arbejdspladser.",
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
     /* Answer first, with the two counts the page actually lists. */
@@ -33,7 +33,7 @@ const copy = {
   en: {
     metaTitle: "Services: sourcing, setup, delivery and buy-back of IT | Kestro",
     metaDescription:
-      "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
+      "All Kestro services: sourcing refurbished IT, fleet deliveries, Nordic keyboards, repairs and upgrades, buying used equipment and new workstations.",
     stepLink: "Read more",
     title: "What we help with",
     description: `Kestro is a supplier of used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,

@@ -212,8 +212,8 @@ export const guides: Guide[] = [
       en: "Windows 10 end of support: what companies do now | Kestro",
     },
     metaDescription: {
-      da: "Supporten sluttede 14. oktober 2025. Hvad det betyder for jeres maskiner, hvilke der kan få Windows 11, og hvad I gør med resten.",
-      en: "Support ended on 14 October 2025. What that means for your machines, which ones can take Windows 11, and what to do with the rest.",
+      da: "Windows 10 mistede support 14. oktober 2025: hvad det betyder for virksomheden, hvilke maskiner kan få Windows 11, og hvad I gør med resten.",
+      en: "Windows 10 support ended 14 October 2025: what it means for a company, which machines can take Windows 11, and what to do with the rest.",
     },
     summary: {
       da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan finder I ud af, hvad der skal ske med hver enkelt maskine.",
@@ -800,7 +800,7 @@ export const guides: Guide[] = [
     },
     metaDescription: {
       da: "En enkel måde at afgøre, om din computer kan betale sig at reparere: hvad delene koster, hvad maskinen er værd, og hvornår du skal lade være.",
-      en: "A simple way to decide whether your computer is worth repairing: what the parts cost, what the machine is worth, and when to stop.",
+      en: "A simple way to decide whether a computer is worth repairing or replacing: what the parts cost, what the machine is worth, and when to stop.",
     },
     summary: {
       da: "Regnestykket, der afgør, om en langsom eller defekt maskine skal repareres eller skiftes ud.",
@@ -944,8 +944,8 @@ export const guides: Guide[] = [
       en: "How to upgrade RAM in a laptop — step by step | Kestro",
     },
     metaDescription: {
-      da: "Find ud af, om din bærbare kan få mere RAM, hvilken type du skal købe, og hvordan du skifter den. Med de fælder, folk oftest falder i.",
-      en: "Find out whether your laptop can take more RAM, which type to buy, and how to fit it — including the traps people fall into.",
+      da: "Sådan opgraderer du RAM i en bærbar: om den kan få mere, hvilken type du skal købe, og hvordan du skifter den. Med de fælder, folk falder i.",
+      en: "How to upgrade the RAM in a laptop: whether it can take more, which type to buy, and how to fit it — including the traps people most often fall into.",
     },
     summary: {
       da: "Den billigste opgradering, der findes – hvis maskinen overhovedet kan tage imod den.",
@@ -1103,8 +1103,8 @@ export const guides: Guide[] = [
       en: "Buying a used laptop? Ten things to check first | Kestro",
     },
     metaDescription: {
-      da: "Batteri, skærm, taster, porte, disk og hængsler: tjeklisten, der på ti minutter afslører, om en brugt bærbar holder et par år mere.",
-      en: "Battery, screen, keys, ports, disk and hinges: a ten-minute check that shows whether a used laptop has a few good years left in it.",
+      da: "Batteri, skærm, taster, porte, disk og hængsler: tjeklisten, der på ti minutter afslører, om en brugt bærbar holder et par år mere – før du køber den.",
+      en: "Battery, screen, keys, ports, disk and hinges: a ten-minute check that shows whether a used laptop has a few good years left in it — before you buy.",
     },
     summary: {
       da: "En gennemgang på ti minutter, der afslører det, sælgeren ikke skrev i annoncen.",
@@ -1266,8 +1266,8 @@ export const guides: Guide[] = [
       en: "Build your own PC: parts, order and common mistakes | Kestro",
     },
     metaDescription: {
-      da: "Hvilke dele skal passe sammen, i hvilken rækkefølge samler du pc'en, og hvad går galt første gang? En gennemgang uden mystik.",
-      en: "Which parts have to match, what order to assemble in, and what goes wrong the first time. A walkthrough without the mystique.",
+      da: "Sådan samler du din egen pc: hvilke dele skal passe sammen, i hvilken rækkefølge, og hvad går galt første gang? En gennemgang uden mystik.",
+      en: "How to build your own PC: which parts must match, what order to assemble in, and what goes wrong the first time. A walkthrough without mystique.",
     },
     summary: {
       da: "Rækkefølgen, de dele, der skal passe sammen, og de fejl, alle laver første gang.",
@@ -1439,7 +1439,7 @@ export const guides: Guide[] = [
       en: "Windows 11 on an older PC: requirements and options | Kestro",
     },
     metaDescription: {
-      da: "TPM 2.0, Secure Boot og processorkrav forklaret – og hvad I gør med de maskiner i flåden, der ikke kan opgraderes til Windows 11.",
+      da: "Kan en gammel computer få Windows 11? Kravene – TPM 2.0, Secure Boot og processor – forklaret, og hvad I gør med de maskiner, der ikke kan.",
       en: "TPM 2.0, Secure Boot and the processor list explained — and what to do with the machines in the fleet that cannot be upgraded to Windows 11.",
     },
     summary: {
@@ -1575,8 +1575,8 @@ export const guides: Guide[] = [
       en: "Secure data erasure before selling or scrapping a PC | Kestro",
     },
     metaDescription: {
-      da: "En formateret disk er ikke en slettet disk. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",
-      en: "Formatting is not erasing. How to properly remove data from an SSD or hard disk, and what a company must be able to document.",
+      da: "Sikker datasletning: en formateret disk er ikke slettet. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",
+      en: "Secure data erasure: formatting is not erasing. How to properly remove data from an SSD or hard disk, and what a company must document.",
     },
     summary: {
       da: "Formatering er ikke sletning. Forskellen kan koste dyrt, hvis det er en firmamaskine.",

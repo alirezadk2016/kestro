@@ -14,7 +14,7 @@ const copy = {
   da: {
     metaTitle: "Refurbished computere: grad A, B og C og garanti | Kestro",
     metaDescription:
-      "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvilke garantivilkår I bør have på skrift, før I køber brugt IT-udstyr.",
+      "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvilke garantivilkår I bør have på skrift, før I køber brugt eller refurbished IT.",
     title: "Stand, test og hvad I bør spørge om",
     description:
       "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
@@ -50,7 +50,7 @@ const copy = {
   en: {
     metaTitle: "Refurbished grades A, B and C and warranty explained | Kestro",
     metaDescription:
-      "What grades A, B and C cover, what a function test should include, and which warranty terms to get in writing before you buy used IT.",
+      "What grades A, B and C cover, what a function test should include, and which warranty terms to get in writing before you buy used or refurbished IT.",
     title: "Condition, testing and what to ask about",
     description:
       "“Used” says nothing about quality on its own. Here is the grading the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",

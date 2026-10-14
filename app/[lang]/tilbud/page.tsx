@@ -27,7 +27,7 @@ const copy = {
   da: {
     metaTitle: "Få et tilbud på brugte computere til virksomheden | Kestro",
     metaDescription:
-      "Skriv antal, specifikation og ønsket tidsramme til Kestro. Vi afklarer mulighederne i en uforpligtende dialog; formularen er ikke en bestilling.",
+      "Skriv antal, model og tidsramme for de brugte computere, I mangler. Vi afklarer det i en uforpligtende dialog; formularen er ikke en bestilling.",
     title: "Få et tilbud",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
     lead: "Kestro er under etablering. Skriv antal, specifikation og ønsket tidsramme, så vi kan afklare de indledende muligheder. Forespørgslen er gratis og uforpligtende, ikke en bestilling eller reservation. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
@@ -98,7 +98,7 @@ const copy = {
     otherLink: "Kontakt os",
   },
   en: {
-    metaTitle: "Get a quote on used business computers | Kestro",
+    metaTitle: "Quote on used business computers, no obligation | Kestro",
     metaDescription:
       "Tell Kestro the quantity, specification and timing you need. We discuss the options in a non-binding conversation; submitting the form is not an order.",
     title: "Get a quote",

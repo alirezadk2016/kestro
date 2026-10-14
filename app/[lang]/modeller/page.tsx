@@ -14,7 +14,7 @@ const copy = {
   da: {
     metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     metaDescription:
-      "Specifikationer, fordele og ulemper for de erhvervsmodeller, vi oftest skaffer: ThinkPad, EliteBook, Latitude, OptiPlex, skærme og docks.",
+      "Specifikationer, fordele og ulemper for de brugte erhvervsmodeller, vi oftest skaffer: ThinkPad, EliteBook, Latitude, OptiPlex, skærme og docks.",
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
     description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
@@ -29,7 +29,7 @@ const copy = {
   en: {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude and OptiPlex | Kestro",
     metaDescription:
-      "Specifications, pros and cons for the business models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
+      "Specifications, pros and cons for the refurbished models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
     title: "Models we often source",
     description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
