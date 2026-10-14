@@ -9,20 +9,16 @@ import { getModel } from "@/lib/models";
 // Only documented external budget references; never a Kestro offer or stock claim.
 const copy = {
   da: {
-    label: "Pris",
     heading: "Spørg om pris og muligheder",
     body: priceDisclaimer.da,
-    volume:
-      "Skriv antal, specifikationer og ønsket tastatur. Projektet er under etablering; en forespørgsel er ikke en bestilling.",
+    volume: "Skriv antal, specifikationer og ønsket tastatur.",
     cta: "Send en forespørgsel",
     secondary: "Budgeteksempler og prisgrundlag",
   },
   en: {
-    label: "Price",
     heading: "Ask about pricing and options",
     body: priceDisclaimer.en,
-    volume:
-      "Tell us the quantity, specifications and keyboard you need. The project is in preparation; an enquiry is not an order.",
+    volume: "Tell us the quantity, specifications and keyboard you need.",
     cta: "Send an enquiry",
     secondary: "Budget examples and price references",
   },
@@ -46,11 +42,13 @@ export default function PriceOnRequest({
 
   return (
     <div className={`plate p-6 sm:p-7 ${className}`}>
-      <p className="label text-brand-300">{c.label}</p>
-      <p className="mt-2 font-display text-2xl font-extrabold tracking-display text-paper">
+      <p className="font-display text-2xl font-extrabold tracking-display text-paper">
         {c.heading}
       </p>
-      <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>
+      {/* "Not our price" once, where the figure is. The box said it three
+          times: the general disclaimer, the small print under the figure,
+          and the pre-launch line above the button. */}
+      {!example && <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>}
       {example && (
         <div className="mt-4 border-y border-white/10 py-4">
           <p className="font-display text-2xl font-bold tabular-nums text-paper">
@@ -62,8 +60,8 @@ export default function PriceOnRequest({
           </p>
           <p className="mt-2 text-sm leading-6 text-paper/75">
             {lang === "da"
-              ? "Dateret ekstern detailreference, inkl. forhandlerens moms og servicegebyr. Ikke Kestros salgspris. Se dato og beregning under budgeteksempler."
-              : "Dated external retail reference, including the retailer's VAT and service fee. Not a Kestro selling price. See date and calculation under budget examples."}
+              ? "Ekstern detailreference inkl. moms og servicegebyr – ikke Kestros salgspris."
+              : "External retail reference incl. VAT and service fee — not a Kestro selling price."}
           </p>
         </div>
       )}

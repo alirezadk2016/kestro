@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { budgetExamples, budgetAmount, budgetSource, formatDkk } from "@/lib/pricing";
+import { budgetExamples, budgetAmount, budgetReadOn, budgetSource, formatDkk } from "@/lib/pricing";
 import { priceDisclaimer } from "@/lib/project";
 import { company } from "@/lib/company";
 import { formatDate, localePath, type Lang } from "@/lib/i18n";
@@ -13,22 +13,10 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
     <section className="border-y border-white/10 py-10 sm:py-16" aria-labelledby="budget-heading">
       <Container>
         <div className="max-w-3xl">
-          <p className="label text-brand-300">
-            {da ? "Budget · ikke et salgstilbud" : "Budget · not a sales offer"}
-          </p>
-          <h2 id="budget-heading" className="t-h2 mt-3 font-display font-extrabold text-paper">
+          <h2 id="budget-heading" className="t-h2 font-display font-extrabold text-paper">
             {da ? "Et konkret udgangspunkt" : "A concrete starting point"}
           </h2>
           <p className="mt-4 text-base leading-7 text-paper/85">{priceDisclaimer[lang]}</p>
-          <p className="mt-3 text-sm leading-6 text-paper/75">
-            {da
-              ? "Per enhed i DKK, afrundet op til nærmeste 100 kr. fra de angivne eksterne detailpriser inklusive forhandlerens moms og oplyste servicegebyr. Referencer læst "
-              : "Per unit in DKK, rounded up to the nearest DKK 100 from the external retail prices, including the retailer's VAT and stated service fee. References read "}
-            <time dateTime="2026-10-14">{formatDate("2026-10-14", lang)}</time>.
-            {da
-              ? " Ikke Kestros salgspriser, ikke et markeds-gennemsnit og ikke et løfte om momsfradrag. Tilpasning og andre konfigurationer kan ændre beløbet; fragt og afgifter ved levering til Norge er ikke beregnet."
-              : " Not Kestro selling prices, a market average or a promise of VAT deductibility. Preparation and other configurations may change the amount; shipping and taxes for Norway have not been calculated."}
-          </p>
         </div>
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
           {budgetExamples.map((item) => (
@@ -75,6 +63,18 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
           <summary className="cursor-pointer py-3 text-sm font-semibold text-paper/85">
             {da ? "Kilder og beregningsgrundlag" : "Sources and calculation"}
           </summary>
+          {/* How the figures were reached, folded with the sources it rests
+              on. It was a six-line paragraph of small print above the cards,
+              the third telling of "not our prices" before a single figure. */}
+          <p className="pt-2 text-sm leading-6 text-paper/75">
+            {da
+              ? "Per enhed i DKK, afrundet op til nærmeste 100 kr. fra de angivne eksterne detailpriser inklusive forhandlerens moms og oplyste servicegebyr. Referencer læst "
+              : "Per unit in DKK, rounded up to the nearest DKK 100 from the external retail prices, including the retailer's VAT and stated service fee. References read "}
+            <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>.
+            {da
+              ? " Ikke Kestros salgspriser, ikke et markeds-gennemsnit og ikke et løfte om momsfradrag. Tilpasning og andre konfigurationer kan ændre beløbet; fragt og afgifter ved levering til Norge er ikke beregnet."
+              : " Not Kestro selling prices, a market average or a promise of VAT deductibility. Preparation and other configurations may change the amount; shipping and taxes for Norway have not been calculated."}
+          </p>
           <SourceList
             lang={lang}
             ids={[...budgetExamples.map((item) => item.source), "budgetRetailTerms"]}

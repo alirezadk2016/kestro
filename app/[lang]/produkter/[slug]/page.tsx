@@ -56,11 +56,11 @@ const copy = {
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     imageNote:
-      "Billederne viser modeltypen. Vi holder ikke lager – stand, specifikationer og antal aftales for den enkelte ordre.",
+      "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi ofte skaffer",
     modelsBody:
-      "Vi har dem ikke på lager. Listen viser de modeller, vi kender godt og oftest bliver bedt om at finde – klik ind for specifikationer og hvad de egner sig til.",
+      "Erhvervsmodeller, vi kender godt. Klik ind for specifikationer og hvad de egner sig til.",
     allModels: "Se hele modeloversigten",
     cardAction: "Se specifikationer",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -77,11 +77,11 @@ const copy = {
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     imageNote:
-      "The photos show the model type. We do not hold stock — condition, specifications and quantity are agreed per order.",
+      "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we often source",
     modelsBody:
-      "We do not hold them in stock. The list shows the models we know well and are most often asked to find — click through for specifications and what they suit.",
+      "Business models we know well. Click through for specifications and what they suit.",
     allModels: "See the full model overview",
     cardAction: "See specifications",
     priceNote: "The price depends on configuration, condition and quantity.",

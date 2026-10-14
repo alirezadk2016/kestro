@@ -27,7 +27,7 @@ const copy = {
     processSub: "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
-      "Enhederne funktionstestes og nulstilles, før de sendes videre. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
+      "Stand, batteritilstand, konfiguration og garantivilkår står skriftligt, før I bestiller. Vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren.",
     qualityLink: "Sådan vurderer vi stand",
   },
   en: {
@@ -42,7 +42,7 @@ const copy = {
       "From used equipment in southern Europe to tested, Nordic-ready machines at your desks.",
     qualityTitle: "Quality assurance",
     qualityBody:
-      "The machines are function-tested and reset before they are passed on. We state condition, battery health, configuration and warranty terms in writing before you order — and we do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier behind the individual delivery.",
+      "Condition, battery health, configuration and warranty terms are in writing before you order. We do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier.",
     qualityLink: "How we assess condition",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -94,8 +94,8 @@ const services = [
     mark: "sustainable" as CraftMarkName,
     title: { da: "Opkøb af brugt udstyr", en: "Buying used equipment" },
     description: {
-      da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi lagermedierne og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
-      en: "If you need to get rid of old machines, we buy them and collect them. If there is data on the units, we erase it and can provide documentation per device. You get a valuation before you decide.",
+      da: "Vi køber og henter gamle maskiner og sletter lagermedierne. I får en vurdering, før I beslutter jer.",
+      en: "We buy and collect old machines and erase the storage. You get a valuation before you decide.",
     },
     href: "/saelg-til-os",
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
@@ -128,8 +128,8 @@ const steps = [
     slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi leverer på bestilling og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse indkøbet til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
-      en: "We supply to order and find used business laptops and desktops through suppliers in southern Europe — without tying up capital in stock of our own. That means we can shape the sourcing around the individual order instead of being limited by whatever happens to be on a shelf.",
+      da: "Vi finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa til den enkelte ordre – ikke ud fra, hvad der står på en hylde.",
+      en: "We find used business laptops and desktops through suppliers in southern Europe for the individual order — not from whatever is on a shelf.",
     },
   },
   {
@@ -137,8 +137,8 @@ const steps = [
     slug: "klargoering-og-test",
     title: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     description: {
-      da: "Enhederne gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes, før enheden nulstilles.",
-      en: "The machines go through a function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk are upgraded where needed, and previous data is erased before the machine is reset.",
+      da: "Funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og data slettes.",
+      en: "A function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk upgraded where needed, and data erased.",
     },
   },
   {
@@ -146,8 +146,8 @@ const steps = [
     slug: "nordisk-tilpasning",
     title: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     description: {
-      da: "Tastaturet skiftes til dansk eller norsk layout, så æ, ø og å sidder korrekt. Windows installeres med drivere og sprogopsætning, og vi hjælper med at få licenserne på plads, så maskinerne kører lovligt fra dag ét.",
-      en: "The keyboard is changed to a Danish or Norwegian layout, so æ, ø and å sit where they should. Windows is installed with drivers and language settings, and we help get the licences in order so the machines run legally from day one.",
+      da: "Dansk eller norsk tastatur, Windows med drivere og sprogopsætning, og licenserne på plads fra dag ét.",
+      en: "A Danish or Norwegian keyboard, Windows with drivers and language settings, and the licences in order from day one.",
     },
   },
   {
@@ -155,8 +155,8 @@ const steps = [
     slug: "levering",
     title: { da: "Levering til virksomheden", en: "Delivery to the company" },
     description: {
-      da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Fordi vi skaffer maskinerne til hver ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
-      en: "We deliver to companies in Denmark and Norway in whatever quantity you need. Because we source per order, lead time depends on the specific order; we give you a time frame once we have talked about what you need.",
+      da: "Til virksomheder i Danmark og Norge. Leveringstiden afhænger af ordren, og tidsrammen får I, før I bestiller.",
+      en: "To companies in Denmark and Norway. Lead time depends on the order, and you get the time frame before you order.",
     },
   },
 ];

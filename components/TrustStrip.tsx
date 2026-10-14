@@ -41,7 +41,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     title: "Alt står skriftligt, mens I stadig kan sige nej",
-    sub: "Et fremtidigt tilbud skal vise pris per enhed og samlet, specifikation, stand og batteritilstand, garantivilkår og kontakt ved fejl. Den konkrete pris og vilkårene skal være afklaret, før I bestiller.",
+    sub: "Et fremtidigt tilbud skal vise alt herunder, og pris og vilkår skal være afklaret, før I bestiller.",
     cta: "Se et rigtigt tilbud",
     points: [
       "Pris per enhed og samlet – ikke kun en totalsum",
@@ -63,7 +63,7 @@ const copy = {
   },
   en: {
     title: "It is all in writing while you can still say no",
-    sub: "A future quote must show the price per unit and in total, specification, condition and battery health, warranty terms and contact for faults. The specific price and terms must be established before you order.",
+    sub: "A future quote must show everything below, and the price and terms must be settled before you order.",
     cta: "See a real quote",
     points: [
       "Price per unit and in total — not just a lump sum",

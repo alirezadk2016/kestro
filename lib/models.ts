@@ -101,8 +101,8 @@ export const models: Model[] = [
       en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Quote with battery.',
     },
     intro: {
-      da: "T480 er den model, vi oftest bliver spurgt om, og med god grund. Den er bygget til at blive slæbt rundt hver dag, delene er lette at skaffe, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
-      en: "The T480 is the model we get asked about most, and for good reason. It is built to be carried every day, parts are easy to get hold of, and it can be expanded instead of replaced. For ordinary office work it is still plenty fast, years after it was released.",
+      da: "T480 er bygget til at blive slæbt rundt hver dag, delene er lette at skaffe, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
+      en: "The T480 is built to be carried every day, parts are easy to get hold of, and it can be expanded instead of replaced. For ordinary office work it is still plenty fast, years after it was released.",
     },
     goodFor: [
       { da: "Kontor, administration og sagsbehandling", en: "Office, administration and casework" },

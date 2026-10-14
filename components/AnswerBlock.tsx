@@ -41,8 +41,8 @@ const copy = {
   da: {
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
-      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro er under etablering med fokus på den slags maskiner til virksomheder i Danmark og Norge. I kan sende en uforpligtende forespørgsel om jeres behov.",
-    who: "Kestro er endnu ikke en registreret virksomhed. Siden viser projektet og modeltyperne; den modtager ikke ordrer eller betaling. Skriv til os for en indledende afklaring.",
+      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro har fokus på den slags maskiner til virksomheder i Danmark og Norge.",
+    who: "Kestro er under etablering og endnu ikke en registreret virksomhed. Siden modtager ikke ordrer eller betaling – skriv til os for en uforpligtende afklaring.",
     terms: "Handelsbetingelserne",
     updated: "Opdateret",
     faqTitle: "Det spørger virksomheder også om",
@@ -50,8 +50,8 @@ const copy = {
   en: {
     question: "What is refurbished business IT?",
     answer:
-      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro is in preparation with a focus on this equipment for companies in Denmark and Norway. You can send a non-binding enquiry about your requirements.",
-    who: "Kestro is not yet a registered business. The site presents the project and model types; it does not accept orders or payment. Write to us for an initial discussion.",
+      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro focuses on this equipment for companies in Denmark and Norway.",
+    who: "Kestro is in preparation and not yet a registered business. The site does not accept orders or payment — write to us for a non-binding discussion.",
     terms: "Terms of sale",
     updated: "Updated",
     faqTitle: "What companies also ask",

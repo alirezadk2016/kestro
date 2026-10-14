@@ -22,7 +22,7 @@ const copy = {
     description:
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
-      "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Ofte er det et slidt batteri, for lidt RAM eller en langsom harddisk, der får en ellers god computer til at føles færdig. Det kan som regel løses – billigere og hurtigere end at købe nyt.",
+      "Ofte er det batteriet, RAM eller harddisken, der får en ellers god computer til at føles færdig – og det kan som regel løses billigere end at købe nyt.",
     read: "Læs mere",
     whatWeDo: "Hvad vi laver",
     howTitle: "Sådan foregår det",
@@ -45,7 +45,7 @@ const copy = {
     description:
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:
-      "Most machines get replaced long before they are worn out. Often it is a worn battery, too little memory or a slow hard disk that makes an otherwise good computer feel finished. That can usually be fixed — cheaper and faster than buying new.",
+      "Often it is the battery, the memory or the hard disk that makes an otherwise good computer feel finished — and that can usually be fixed for less than buying new.",
     read: "Read more",
     whatWeDo: "What we do",
     howTitle: "How it works",

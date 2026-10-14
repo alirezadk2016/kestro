@@ -5,11 +5,12 @@ import Container from "@/components/Container";
 import FaqSchema from "@/components/FaqSchema";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import BudgetExamples from "@/components/BudgetExamples";
 import ProjectNotice from "@/components/ProjectNotice";
+import { budgetExamples, budgetAmount, budgetReadOn } from "@/lib/pricing";
 
 // Dated budget references and the factors a future, specific quote must account for.
 
@@ -64,13 +65,11 @@ const copy = {
     metaDescription:
       "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se hvad prisen afhænger af, og kontakt os om en konkret pris og muligheder til jer.",
     title: "Hvad koster brugte computere?",
-    description:
-      "Se daterede budgeteksempler på bærbare, stationære og skærme. Det er eksterne detailreferencer, ikke Kestros salgspriser. Projektet er under etablering; kontakt os for en uforpligtende afklaring.",
     whyTitle: "Hvorfor er priserne vejledende?",
     whyBody1:
-      "Vi har ikke et bekræftet lager eller faste salgspriser. Budgeteksemplerne viser konkrete, offentlige detailpriser fra eksterne forhandlere på den angivne dato. De siger ikke, at vi kan levere samme maskine til samme pris.",
+      "Vi har endnu ikke et bekræftet lager eller faste salgspriser, så eksemplerne er offentlige detailpriser hos eksterne forhandlere på den angivne dato – ikke et løfte om, at vi kan levere samme maskine til samme pris.",
     whyBody2:
-      "Model, stand, antal, tastatur og klargøring kan ændre det konkrete beløb. Kontakt os, før I lægger et indkøbsbudget fast. En forespørgsel på denne side er ikke en ordre, og vi modtager ikke betaling gennem siden.",
+      "Model, stand, antal, tastatur og klargøring kan ændre beløbet, så kontakt os, før I lægger et indkøbsbudget fast.",
     driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
@@ -86,7 +85,7 @@ const copy = {
     ],
     freeTitle: "Koster et tilbud noget?",
     freeBody:
-      "Nej. Der er ingen pris på at spørge, og ingen forpligtelse, når I har fået svaret. Passer der ikke noget til opgaven, siger vi det – det er en kortere samtale end at sælge jer noget, der ikke løser problemet.",
+      "Nej. Det koster intet at spørge, og svaret forpligter jer ikke. Passer intet til opgaven, siger vi det.",
     fastTitle: "Hvordan får I et realistisk tal hurtigt?",
     fastLead: "Jo mere af det her, I skriver med det samme, jo færre runder frem og tilbage:",
     fastPoints: [
@@ -108,13 +107,11 @@ const copy = {
     metaDescription:
       "Indicative budgets for used business IT, dated retail price examples and what affects the price. Contact us to discuss options and a specific price.",
     title: "What do used business computers cost?",
-    description:
-      "See dated budget examples for laptops, desktops and monitors. These are external retail references, not Kestro selling prices. The project is in preparation; contact us for a non-binding discussion.",
     whyTitle: "Why are the prices indicative?",
     whyBody1:
-      "We have no confirmed stock or fixed selling prices. The budget examples show specific public retail prices from external retailers on the stated date. They do not mean we can supply the same machine at the same price.",
+      "We have no confirmed stock or fixed selling prices yet, so the examples are public retail prices from external retailers on the stated date — not a promise that we can supply the same machine at the same price.",
     whyBody2:
-      "Model, condition, quantity, keyboard and preparation may change the actual amount. Contact us before fixing a purchasing budget. An enquiry on this site is not an order, and we do not accept payment through it.",
+      "Model, condition, quantity, keyboard and preparation can change the amount, so contact us before you fix a purchasing budget.",
     driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
@@ -130,7 +127,7 @@ const copy = {
     ],
     freeTitle: "Does a quote cost anything?",
     freeBody:
-      "No. There is no charge for asking and no obligation once you have the answer. If nothing suits the job we will say so — that is a shorter conversation than selling you something that does not solve the problem.",
+      "No. Asking costs nothing, and the answer does not commit you. If nothing suits the job, we say so.",
     fastTitle: "How do you get a realistic figure quickly?",
     fastLead: "The more of this you write straight away, the fewer rounds back and forth:",
     fastPoints: [
@@ -166,13 +163,23 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
   const { lang } = params;
   const c = copy[lang];
 
+  /* Answer first, with the numbers: the range the examples below span,
+     read from the same data the cards render, so it cannot drift from them. */
+  const amounts = budgetExamples.map(budgetAmount);
+  const nf = new Intl.NumberFormat(lang === "da" ? "da-DK" : "en-GB");
+  const range = `${nf.format(Math.min(...amounts))}–${nf.format(Math.max(...amounts))} DKK`;
+  const lead =
+    lang === "da"
+      ? `Ca. ${range} per enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Det er budgetreferencer, ikke Kestros salgspriser.`
+      : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}. These are budget references, not Kestro selling prices.`;
+
   /* The two questions a buyer types into a search box before they trust a
      supplier enough to write to them. Marked up so the answers can appear
      under the result rather than only on the page. */
 
   return (
     <>
-      <PageSchema lang={lang} route="/priser" name={c.title} description={c.description} />
+      <PageSchema lang={lang} route="/priser" name={c.title} description={lead} />
 
       {/* The two questions this page answers in full. Built from the copy
           object rather than the language-resolved `c`, so both languages come
@@ -200,7 +207,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
       <Container>
         <PageHeader
           title={c.title}
-          description={c.description}
+          description={lead}
           lang={lang}
           href="/priser"
           crumb={lang === "da" ? "Priser" : "Pricing"}

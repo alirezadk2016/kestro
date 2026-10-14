@@ -21,7 +21,7 @@ const copy = {
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
-    description: `Skriv via formularen herunder eller direkte til ${company.email}. Kestro er under etablering med fokus på brugt erhvervs-IT i Danmark og Norge. Vi modtager indledende, uforpligtende forespørgsler, ikke bestillinger.`,
+    description: `Skriv via formularen herunder eller direkte til ${company.email} om brugt erhvervs-IT i Danmark og Norge. Vi modtager uforpligtende forespørgsler, ikke bestillinger.`,
     emailTitle: "Foretrækker I e-mail?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
     companyTitle: "Projekt og kontakt",
@@ -35,7 +35,7 @@ const copy = {
     at: "hos",
     briefTitle: "Hvad skal der stå i beskeden?",
     briefBody:
-      "Antal, type og tidsramme er det vigtigste. Jo mere af listen herunder beskeden har med, jo færre spørgsmål skal vi stille tilbage, før I får et forslag.",
+      "Antal, type og tidsramme er det vigtigste. Resten sparer en runde spørgsmål.",
     brief1: "Antal enheder – også hvis det er et skøn.",
     brief2: "Type: bærbar, stationær, mini-pc, skærm, dockingstation eller andet.",
     brief3: "Krav til processor, hukommelse (RAM) og lagerplads, hvis I har dem.",
@@ -50,7 +50,7 @@ const copy = {
     metaDescription:
       "Contact Kestro about used business IT, a fleet or equipment to move on. Email kontakt@kestro.dk or use the form for an initial, non-binding enquiry.",
     title: "Contact us",
-    description: `Write through the form below or directly to ${company.email}. Kestro is in preparation with a focus on used business IT in Denmark and Norway. We welcome initial, non-binding enquiries, not orders.`,
+    description: `Write through the form below or directly to ${company.email} about used business IT in Denmark and Norway. We welcome non-binding enquiries, not orders.`,
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
     companyTitle: "Project and contact",
@@ -64,7 +64,7 @@ const copy = {
     at: "at",
     briefTitle: "What should the message say?",
     briefBody:
-      "Quantity, type and timing matter most. The more of the list below the message covers, the fewer questions we have to ask back before you get a proposal.",
+      "Quantity, type and timing matter most. The rest saves a round of questions.",
     brief1: "Number of devices — an estimate is fine.",
     brief2: "Type: laptop, desktop, mini PC, monitor, docking station or something else.",
     brief3: "Requirements for processor, memory (RAM) and storage, if you have them.",

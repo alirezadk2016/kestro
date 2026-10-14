@@ -49,8 +49,8 @@ export const categories: Category[] = [
       en: "Refurbished ThinkPad, EliteBook and Latitude laptops for companies — Danish or Norwegian keyboard, measured battery and terms in writing.",
     },
     intro: {
-      da: "Bærbare er det, vi oftest bliver bedt om at skaffe. Vi skaffer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk eller norsk tastatur, så de er klar til udlevering til medarbejderen.",
-      en: "Laptops are what we are asked for most often. We source used business machines — built for daily office work rather than consumer use — function-test them and prepare them with a Danish or Norwegian keyboard, so they are ready to hand to the employee.",
+      da: "Vi skaffer brugte erhvervsbærbare – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk eller norsk tastatur, så de er klar til udlevering til medarbejderen.",
+      en: "We source used business laptops — built for daily office work rather than consumer use — function-test them and prepare them with a Danish or Norwegian keyboard, so they are ready to hand to the employee.",
     },
     brands: [
       "Lenovo ThinkPad",

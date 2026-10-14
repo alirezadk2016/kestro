@@ -13,8 +13,8 @@ const situations = [
       en: "Have your computers become too slow?",
     },
     answer: {
-      da: "Ofte er det et slidt batteri, for lidt RAM eller en langsom disk. Vi opgraderer i stedet for at udskifte – og siger det ærligt, hvis det ikke kan betale sig.",
-      en: "Often it is a worn battery, too little memory or a slow disk. We upgrade instead of replacing — and say so honestly when it is not worth it.",
+      da: "Ofte er det batteriet, RAM eller disken. Vi opgraderer i stedet for at udskifte – når det kan betale sig.",
+      en: "Often it is the battery, the memory or the disk. We upgrade instead of replacing — when it pays.",
     },
     mark: "adjust" as CraftMarkName,
     href: "/reparation",
@@ -26,8 +26,8 @@ const situations = [
       en: "Are you sitting on equipment you need to get rid of?",
     },
     answer: {
-      da: "Vi køber brugte erhvervsmaskiner og henter dem. Er der data på enhederne, sletter vi lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
-      en: "We buy used business machines and collect them. If there is data on the units, we erase the storage media before they get a second life. You get a valuation before you decide.",
+      da: "Vi køber og henter brugte erhvervsmaskiner og sletter lagermedierne. I får en vurdering, før I beslutter jer.",
+      en: "We buy and collect used business machines and erase the storage. You get a valuation before you decide.",
     },
     mark: "sustainable" as CraftMarkName,
     href: "/saelg-til-os",
@@ -60,8 +60,8 @@ const situations = [
       en: "Are you setting up a new company from scratch?",
     },
     answer: {
-      da: "Skal arbejdspladserne stå klar til første arbejdsdag, hjælper vi med at vælge udstyret, klargøre det og få det leveret samlet.",
-      en: "If the desks have to be ready for the first day of work, we help choose the equipment, prepare it and deliver it all at once.",
+      da: "Udstyret valgt, klargjort og leveret samlet – klar til første arbejdsdag.",
+      en: "Equipment chosen, prepared and delivered together — ready for the first day of work.",
     },
     mark: "delivery" as CraftMarkName,
     href: "/kontakt",
@@ -72,17 +72,17 @@ const situations = [
 const copy = {
   da: {
     title: "Genkender I én af disse?",
-    sub: "De fleste henvendelser starter i én af de fire situationer herunder. I beskriver, hvad I står med – vi skaffer maskinerne, klargør dem og sender en pris. I slipper for at lede, forhandle og vurdere.",
-    footPre: "Passer jeres situation ikke helt ind i én af kasserne?",
+    sub: "I beskriver situationen – vi skaffer, klargør og sender en pris.",
+    footPre: "Passer ingen af dem?",
     footLink: "Skriv til os",
-    footPost: "– de fleste henvendelser starter med et spørgsmål, ikke en bestilling.",
+    footPost: "– et spørgsmål er nok til at starte.",
   },
   en: {
     title: "Recognise any of these?",
-    sub: "Most enquiries start in one of the four situations below. You describe where you are — we source the machines, prepare them and send a price. You avoid the searching, the negotiating and the judging.",
-    footPre: "Does your situation not quite fit one of the boxes?",
+    sub: "You describe the situation — we source, prepare and send a price.",
+    footPre: "None of them fit?",
     footLink: "Write to us",
-    footPost: "— most enquiries start with a question, not an order.",
+    footPost: "— a question is enough to start.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

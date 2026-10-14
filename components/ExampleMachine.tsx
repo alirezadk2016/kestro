@@ -20,13 +20,13 @@ const highlights = [
 const copy = {
   da: {
     title: "Sådan ser en typisk maskine ud",
-    body: "Når vi skaffer bærbare til en virksomhed, er det typisk en erhvervsmodel som denne: den kan repareres og opgraderes, får nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
+    body: "Typisk en erhvervsmodel som denne: den kan repareres og opgraderes og får nordisk tastatur og Windows sat op. Vi finder den, når I har brug for den.",
     link: "Se specifikationer og flere billeder",
     illustration: "Erhvervsbærbar – illustreret",
   },
   en: {
     title: "What a typical machine looks like",
-    body: "When we source laptops for a company, it is typically a business model like this one: it can be repaired and upgraded, and gets a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
+    body: "Typically a business model like this one: it can be repaired and upgraded, and gets a Nordic keyboard and Windows set up. We find it when you need it.",
     link: "See specifications and more photos",
     illustration: "Business laptop — illustrated",
   },

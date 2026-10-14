@@ -24,14 +24,14 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     lead: "Vi holder ikke lager.",
-    body: "Det er ikke en mangel – det er hele pointen. En leverandør med et fyldt lager sælger jer det, der står på hylden. Vi køber først, når I ved, hvad I skal bruge, og går efter de specifikationer, opgaven faktisk kræver.",
+    body: "Vi køber først, når I ved, hvad I skal bruge – og går efter de specifikationer, opgaven kræver, ikke efter det, der står på en hylde.",
     kicker: "Derfor kan vi sige nej til en handel, der ikke er god for jer.",
     promisesLabel: "Det kan I holde os op på",
     explodedAlt: "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade",
   },
   en: {
     lead: "We hold no stock.",
-    body: "That is not a shortcoming — it is the whole point. A supplier with a full warehouse sells you what is on the shelf. We buy only once you know what you need, and go after the specifications the job actually requires.",
+    body: "We buy only once you know what you need — and go after the specifications the job requires, not what happens to be on a shelf.",
     kicker: "Which is why we can turn down a deal that is not good for you.",
     promisesLabel: "Hold us to these",
     explodedAlt: "A laptop separated into layers: screen, keyboard, mainboard and base plate",
@@ -44,8 +44,8 @@ const promises = [
     mark: "written" as CraftMarkName,
     term: { da: "I køber hos Kestro", en: "You buy from Kestro" },
     body: {
-      da: "Vi skaffer maskinerne hos leverandører i vores netværk, men tilbud, faktura og reklamation går gennem os. Én modpart, ét sæt betingelser.",
-      en: "We source the machines from suppliers in our network, but the quote, the invoice and any complaint go through us. One counterparty, one set of terms.",
+      da: "Tilbud, faktura og reklamation går gennem os, ikke gennem leverandøren. Én modpart, ét sæt betingelser.",
+      en: "The quote, the invoice and any complaint go through us, not the supplier. One counterparty, one set of terms.",
     },
     link: { da: "Handelsbetingelserne", en: "Terms of sale" },
   },
@@ -57,8 +57,8 @@ const promises = [
        Spanish or Italian layout" as the opening line read as a warning; it
        is the reason the swap exists, not the thing a buyer gets. */
     body: {
-      da: "Æ, ø og å trykt på tasterne. Mange maskiner kommer fra Sydeuropa med spansk eller italiensk tastatur, og det skifter vi fysisk før levering – det er ikke en indstilling i Windows.",
-      en: "Æ, ø and å printed on the keys. Many machines come from southern Europe with a Spanish or Italian keyboard, and we physically swap it before delivery — it is not a Windows setting.",
+      da: "Æ, ø og å trykt på tasterne. Tastaturet skiftes fysisk før levering – det er ikke en indstilling i Windows.",
+      en: "Æ, ø and å printed on the keys. The keyboard is physically swapped before delivery — it is not a Windows setting.",
     },
     link: { da: "Nordisk tilpasning", en: "Nordic preparation" },
   },
@@ -67,8 +67,8 @@ const promises = [
     mark: "tested" as CraftMarkName,
     term: { da: "Testet enhed for enhed", en: "Tested unit by unit" },
     body: {
-      da: "Hver tast trykkes igennem, og vi kan oplyse batteriets faktiske kapacitet i procent – ikke bare som »OK«.",
-      en: "Every key gets pressed through, and we can give the battery’s actual capacity as a percentage — not just as “OK”.",
+      da: "Hver tast trykkes igennem, og vi kan oplyse batteriets kapacitet i procent – ikke bare »OK«.",
+      en: "Every key is pressed through, and we can give the battery’s capacity as a percentage — not just “OK”.",
     },
     link: { da: "Klargøring og test", en: "Preparation and testing" },
   },

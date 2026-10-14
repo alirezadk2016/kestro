@@ -76,8 +76,8 @@ export const repairs: Repair[] = [
       en: "What the battery percentage means, how to measure it yourself on Windows and Mac, and when a new battery is worth it. A price before we start.",
     },
     summary: {
-      da: "Holder den bærbare ikke længere en arbejdsdag? Batteriet er en af de billigste dele at skifte – vi oplyser prisen, før vi går i gang.",
-      en: "Laptop no longer lasting a working day? The battery is one of the cheapest parts to change — we quote the price before we start.",
+      da: "Holder den bærbare ikke en arbejdsdag længere? Et nyt batteri er en af de billigste reparationer.",
+      en: "Laptop no longer lasting a working day? A new battery is one of the cheapest repairs.",
     },
     answer: {
       da: "Et batteri er slidt, når det ikke længere holder en arbejdsdag. Tallet at gå efter er kapaciteten i procent af, hvad batteriet kunne som nyt: over 80 % er almindeligt slid, under 70 % er det tid til at skifte. Du finder tallet selv på ti sekunder – powercfg /batteryreport på Windows, Systemindstillinger → Batteri på en Mac.",
@@ -286,8 +286,8 @@ export const repairs: Repair[] = [
       en: "Faulty keyboards replaced, and imported laptops can get a Danish or Norwegian layout with æ, ø and å printed on the keys. Individuals welcome.",
     },
     summary: {
-      da: "Defekt tastatur skiftes – og importerede maskiner kan få dansk eller norsk layout, så æ, ø og å sidder, hvor de skal.",
-      en: "Faulty keyboards replaced — and imported machines can get a Danish or Norwegian layout, so æ, ø and å sit where they should.",
+      da: "Defekt tastatur skiftes, og importerede maskiner kan få dansk eller norsk layout med æ, ø og å.",
+      en: "A faulty keyboard replaced, and imported machines can get a Danish or Norwegian layout with æ, ø and å.",
     },
     answer: {
       da: "Importerede maskiner kan få dansk eller norsk tastatur. Det er et fysisk skift, ikke en indstilling: man kan ændre layoutet i Windows, men så står der stadig det forkerte på tasterne, og det er æ, ø og å, man rammer forkert hele dagen.",
@@ -462,8 +462,8 @@ export const repairs: Repair[] = [
       en: "Software and licences for company computers, in place before they reach your staff: what we set up, what can be transferred, and what you supply.",
     },
     summary: {
-      da: "Vi installerer de programmer, du bruger, og hjælper med at få licenserne på plads, så maskinerne kører lovligt fra første dag.",
-      en: "We install the programs you use and help get the licences in order, so the machines run legally from day one.",
+      da: "Dine programmer installeret og licenserne på plads, så maskinen kører lovligt fra første dag.",
+      en: "Your programs installed and the licences in place, so the machine runs legally from day one.",
     },
     answer: {
       da: "Licenser følger ikke automatisk med brugt hardware. De to ting købes hver for sig, så det er værd at afklare, hvilke licenser du allerede har, før maskinerne står på skrivebordene.",
@@ -546,8 +546,8 @@ export const repairs: Repair[] = [
       en: "Fault diagnosis: computer will not start, crashes or behaves oddly? We find the cause and tell you what the fix would cost before we start any work.",
     },
     summary: {
-      da: "Maskinen starter ikke, går ned eller opfører sig underligt – vi finder årsagen og fortæller, hvad det vil koste at rette.",
-      en: "The machine will not start, crashes or behaves oddly — we find the cause and tell you what a fix would cost.",
+      da: "Starter den ikke, går den ned, eller opfører den sig underligt? Vi finder årsagen og siger, hvad det koster at rette.",
+      en: "Will it not start, does it crash or behave oddly? We find the cause and tell you what it costs to fix.",
     },
     answer: {
       da: "Vi finder årsagen først og melder tilbage med, hvad en reparation vil koste, før vi retter noget. Det, vi leder efter, er et mønster: hvornår sker fejlen, og hvad kører der, når den sker.",
@@ -590,8 +590,8 @@ export const repairs: Repair[] = [
       en: "Get a PC built to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
     },
     summary: {
-      da: "Vi samler en maskine efter dine ønsker – enten helt fra bunden eller ved at opgradere den, du har.",
-      en: "We build a machine to your specification — from scratch, or by upgrading the one you have.",
+      da: "En maskine samlet efter dine ønsker – fra bunden eller ved at opgradere den, du har.",
+      en: "A machine built to your wishes — from scratch or by upgrading the one you have.",
     },
     answer: {
       da: "Vi bygger efter opgaven, ikke efter et datablad. Delene vælges efter, hvad maskinen skal kunne – og efter, om der allerede står en maskine, der kan bygges videre på i stedet for at starte forfra.",
@@ -636,8 +636,8 @@ export const repairs: Repair[] = [
       en: "Bought a used computer? We check it, state the battery's actual capacity in percent, set it up and tell you if anything needs replacing. Price first.",
     },
     summary: {
-      da: "Har du købt en brugt maskine? Vi tjekker den igennem, sætter den op og gør den klar til brug.",
-      en: "Bought a used machine? We check it over, set it up and get it ready to use.",
+      da: "Købt en brugt maskine? Vi tjekker den igennem og gør den klar til brug.",
+      en: "Bought a used machine? We check it over and get it ready to use.",
     },
     answer: {
       da: "En brugt maskine er en ukendt størrelse, indtil nogen har set efter. Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget er slidt nok til at skulle skiftes.",

@@ -30,13 +30,13 @@ const copy = {
       "Skriv antal, model og tidsramme for de brugte computere, I mangler. Vi afklarer det i en uforpligtende dialog; formularen er ikke en bestilling.",
     title: "Få et tilbud på brugte computere",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
-    lead: "Kestro er under etablering. Skriv antal, specifikation og ønsket tidsramme, så vi kan afklare de indledende muligheder. Forespørgslen er gratis og uforpligtende, ikke en bestilling eller reservation. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
+    lead: "Skriv antal, specifikation og ønsket tidsramme, så afklarer vi de indledende muligheder. Forespørgslen er gratis og uforpligtende. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
     nextTitle: "Hvad sker der, når I sender?",
     nextSteps: [
-      "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
-      "Vi afklarer de indledende muligheder. Der er endnu ikke bekræftet lager eller en aftalt pris.",
-      "Før et eventuelt køb skal sælger, pris og vilkår være afklaret. En forespørgsel er ikke en bestilling.",
+      "Vi læser forespørgslen og spørger ind, hvis noget mangler, frem for at gætte på en pris.",
+      "Vi søger i leverandørnetværket efter det, der reelt kan skaffes. Der er endnu ikke bekræftet lager eller en aftalt pris.",
+      "I får et tilbud per enhed. Før et eventuelt køb skal sælger, pris og vilkår være afklaret – en forespørgsel er ikke en bestilling.",
     ],
     exampleTitle: "Se et tilbud, før I beder om et",
     exampleBody:
@@ -44,47 +44,26 @@ const copy = {
     exampleLink: "Se eksemplet",
     needTitle: "Hvad har vi brug for at vide?",
     needLead:
-      "Specifikationsfelterne er valgfrie, og »ved ikke endnu« er et brugbart svar. Navn, virksomhed og e-mail skal udfyldes, så vi kan besvare forespørgslen. Jo mere I kan sige om behovet, jo færre spørgsmål skal vi stille.",
+      "Jo mere I kan sige om de fire ting her, jo færre spørgsmål skal vi stille bagefter.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",
-        body: "Skal der skærme, dockingstationer eller kabler med, ændrer det både prisen, og hvor lang tid det tager at samle leverancen. Et skøn er nok til at komme i gang – I kan altid justere, inden I siger ja.",
+        body: "Skærme, dockingstationer og kabler ændrer både prisen og leveringstiden. Et skøn er nok til at komme i gang.",
       },
       {
         title: "Hvad maskinerne skal bruges til",
-        body: "Kontorarbejde, konstruktion og billedarbejde stiller vidt forskellige krav. Kender I ikke specifikationen, er opgaven et bedre svar: så foreslår vi et niveau, I kan forholde jer til, frem for at bede jer gætte på hukommelse og processor.",
+        body: "Kontorarbejde, konstruktion og billedarbejde stiller vidt forskellige krav. Kender I ikke specifikationen, så beskriv opgaven – så foreslår vi et niveau.",
       },
       {
         title: "Hvornår det skal stå klar",
-        body: "Vi skaffer maskinerne per ordre, så tidsrammen er en del af opgaven og ikke en detalje til sidst. Har I en fast dato – en ny medarbejder, en flytning, et supportophør – så sig det med det samme.",
+        body: "Vi skaffer maskinerne per ordre, så tidsrammen er en del af opgaven. Har I en fast dato, så skriv den med det samme.",
       },
       {
         title: "Om I samtidig skal af med noget",
-        body: "Har I ældre maskiner, der skal væk, kan vi regne på begge dele på én gang, og værdien af det gamle kan modregnes i indkøbet.",
+        body: "Har I ældre maskiner, der skal væk, regner vi på begge dele, og værdien kan modregnes i indkøbet.",
       },
     ],
     needLinkLabel: "Sådan køber vi brugt udstyr",
-    processTitle: "Fra forespørgsel til tilbud",
-    processLead:
-      "Her er det planlagte forløb for en fremtidig leverance. Projektet tager endnu ikke imod ordrer; sælgerens identitet, registreringer og konkrete handelsvilkår skal være på plads, før handel åbnes. En indledende forespørgsel binder jer ikke.",
-    processSteps: [
-      {
-        title: "I sender forespørgslen",
-        body: "Formularen herover er nok. Mangler der noget, vi skal bruge for at kunne regne på det, spørger vi ind frem for at gætte os frem til en pris, der ikke holder.",
-      },
-      {
-        title: "Vi søger i leverandørnetværket",
-        body: "Vi har ikke et lager, I vælger fra. Maskinerne findes hos vores leverandører, og det er her, det afgøres, hvad der reelt kan skaffes til den specifikation og det antal, I har bedt om.",
-      },
-      {
-        title: "I får et tilbud, I kan læse",
-        body: "Tilbuddet viser hver enhed for sig frem for ét samlet tal. Eksempelsiden viser, hvordan det ser ud udfyldt. Kan specifikationen ikke skaffes i det antal, foreslår vi det nærmeste alternativ i stedet for at lade feltet stå tomt.",
-      },
-      {
-        title: "I siger ja eller nej",
-        body: "Der er ingen binding i at spørge. Siger I ja, aftaler vi klargøring, levering og vilkår, før noget sættes i gang.",
-      },
-    ],
     trustTitle: "Inden I skriver",
     trustLinks: [
       { href: "/priser", label: "Hvad afgør prisen" },
@@ -102,13 +81,13 @@ const copy = {
     metaDescription:
       "Tell Kestro the quantity, specification and timing you need. We discuss the options in a non-binding conversation; submitting the form is not an order.",
     title: "Get a quote on used business computers",
-    lead: "Kestro is in preparation. Tell us the quantity, specification and timing you need so we can discuss initial options. The enquiry is free and non-binding, not an order or reservation. Fill in what you know; the rest can stay at “not sure yet”.",
+    lead: "Tell us the quantity, specification and timing you need, and we discuss the initial options. The enquiry is free and non-binding. Fill in what you know; the rest can stay at “not sure yet”.",
     formTitle: "Your request",
     nextTitle: "What happens when you send it?",
     nextSteps: [
-      "We read the request and ask if anything is missing.",
-      "We discuss the initial options. There is no confirmed stock or agreed price yet.",
-      "Before any purchase, the seller, price and terms must be established. An enquiry is not an order.",
+      "We read the request and ask if anything is missing, rather than guessing at a price.",
+      "We search the supplier network for what can actually be sourced. There is no confirmed stock or agreed price yet.",
+      "You get a quote per unit. Before any purchase, the seller, price and terms must be established — an enquiry is not an order.",
     ],
     exampleTitle: "See a quote before you ask for one",
     exampleBody:
@@ -116,47 +95,26 @@ const copy = {
     exampleLink: "See the example",
     needTitle: "What do we need to know?",
     needLead:
-      "The specification fields are optional, and “not sure yet” is a usable answer. Name, company and email are required so we can answer your enquiry. The more you can say about your needs, the fewer questions we have to ask.",
+      "The more you can say about these four things, the fewer questions we have to ask afterwards.",
     needItems: [
       {
         title: "Quantity, and what goes with it",
-        body: "Monitors, docking stations or cables change both the price and how long the delivery takes to assemble. A rough number is enough to start — you can adjust before you say yes.",
+        body: "Monitors, docking stations and cables change both the price and the delivery time. A rough number is enough to start.",
       },
       {
         title: "What the machines are for",
-        body: "Office work, engineering and image work make very different demands. If you do not know the specification, the job is the better answer: we suggest a level you can react to rather than asking you to guess at memory and processor.",
+        body: "Office work, engineering and image work make very different demands. If you do not know the specification, describe the job — we suggest a level.",
       },
       {
         title: "When it has to be ready",
-        body: "We source per order, so timing is part of the job rather than a detail at the end. If you have a fixed date — a new starter, an office move, a support deadline — say so straight away.",
+        body: "We source per order, so timing is part of the job. If you have a fixed date, give it straight away.",
       },
       {
         title: "Whether something is going out at the same time",
-        body: "If you have older machines to move on, we can price both sides at once, and the value of the old can be offset against the purchase.",
+        body: "If you have older machines to move on, we price both sides, and the value can be offset against the purchase.",
       },
     ],
     needLinkLabel: "How we buy used equipment",
-    processTitle: "From enquiry to quote",
-    processLead:
-      "This is the planned process for a future delivery. The project does not yet accept orders; the seller's identity, registrations and specific trading terms must be established before trading opens. An initial enquiry does not commit you.",
-    processSteps: [
-      {
-        title: "You send the request",
-        body: "The form above is enough. If something is missing that we need in order to price it, we ask rather than guessing our way to a number that will not hold.",
-      },
-      {
-        title: "We search the supplier network",
-        body: "There is no warehouse for you to pick from. The machines sit with our suppliers, and that is where it is decided what can actually be sourced at the specification and quantity you asked for.",
-      },
-      {
-        title: "You get a quote you can read",
-        body: "The quote is written per unit rather than as a single number. The example page shows what that looks like filled in. If the specification cannot be met at that quantity, we propose the closest alternative instead of leaving the field blank.",
-      },
-      {
-        title: "You say yes or no",
-        body: "Asking commits you to nothing. If you say yes, we agree preparation, delivery and terms before anything is set in motion.",
-      },
-    ],
     trustTitle: "Before you write",
     trustLinks: [
       { href: "/priser", label: "What decides the price" },
@@ -395,31 +353,6 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             {c.needLinkLabel}
             <span aria-hidden="true">&rarr;</span>
           </Link>
-        </Container>
-      </section>
-
-      <section className="py-10 sm:py-20">
-        <Container>
-          <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.processTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.processLead}</p>
-
-            <ol className="mt-10 space-y-6">
-              {c.processSteps.map((step, i) => (
-                <li key={step.title} className="flex gap-5">
-                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-950 text-sm font-bold text-white">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="text-base font-semibold text-paper">{step.title}</h3>
-                    <p className="mt-1 text-base leading-[1.75] text-paper/75">{step.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
         </Container>
       </section>
 

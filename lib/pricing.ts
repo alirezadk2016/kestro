@@ -57,6 +57,10 @@ export const budgetExamples: {
 ];
 
 // Round the documented consumer total upwards to the nearest DKK 100 for budgeting.
+/* The day the retail references were read. Shown beside the figures and in
+   the price page's opening line. */
+export const budgetReadOn = "2026-10-14";
+
 export const budgetAmount = (item: (typeof budgetExamples)[number]) =>
   Math.ceil((item.observed + item.fee) / 100) * 100;
 

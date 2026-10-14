@@ -31,7 +31,7 @@ const copy = {
     seeCategory: "Se kategori",
     modelsTitle: "Vil I se konkrete modeller?",
     modelsBody:
-      "Vi har samlet de maskiner, vi oftest bliver bedt om at skaffe – ThinkPad, EliteBook, Latitude, EliteDesk og flere – med specifikationer og hvad de hver især egner sig til. Ingen priser og ingen lagerstatus: det er en oversigt, ikke en butik.",
+      "ThinkPad, EliteBook, Latitude, EliteDesk og flere – med specifikationer og hvad de hver især egner sig til.",
     modelsButton: "Se modeloversigten",
   },
   en: {
@@ -50,7 +50,7 @@ const copy = {
     seeCategory: "See category",
     modelsTitle: "Want to see specific models?",
     modelsBody:
-      "We have collected the machines we are asked for most often — ThinkPad, EliteBook, Latitude, EliteDesk and more — with specifications and what each one suits. No prices and no stock levels: it is an overview, not a shop.",
+      "ThinkPad, EliteBook, Latitude, EliteDesk and more — with specifications and what each one suits.",
     modelsButton: "See the model overview",
   },
 } satisfies Record<Lang, Record<string, string>>;

@@ -17,7 +17,7 @@ const copy = {
       "Specifikationer, fordele og ulemper for de brugte erhvervsmodeller, vi oftest skaffer: ThinkPad, EliteBook, Latitude, OptiPlex, skærme og docks.",
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
-    description: `Her er de ${models.length} erhvervsmodeller, vi kender bedst og oftest bliver bedt om at finde, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
+    description: `Her er ${models.length} erhvervsmodeller, vi kender godt, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
     noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
     noShopBody1:
@@ -31,7 +31,7 @@ const copy = {
     metaDescription:
       "Specifications, pros and cons for the refurbished models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
     title: "Models we often source",
-    description: `Here are the ${models.length} business models we know best and are most often asked to find, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
+    description: `Here are ${models.length} business models we know well, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",
     noShopBody1:

@@ -55,8 +55,8 @@ const sections = [
       en: "We are a supplier, not a web shop",
     },
     description: {
-      da: "Kestro sidder ikke med et lager, I skal vælge fra. Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa. Enhederne bliver funktionstestet, opgraderet med mere RAM, hvor det giver mening, og klargjort til det nordiske marked med dansk eller norsk tastatur og korrekt sprogopsætning, før de leveres til jer. I køber hos Kestro: tilbuddet, fakturaen og en eventuel reklamation går gennem os, ikke gennem leverandøren.",
-      en: "Kestro does not sit on a warehouse for you to pick from. We supply to order: you tell us what you need, and we find it in our supplier network in southern Europe. The machines are function-tested, upgraded with more memory where it makes sense, and prepared for the Nordic market with a Danish or Norwegian keyboard and the right language setup before it reaches you. You buy from Kestro: the quote, the invoice and any complaint go through us, not through the supplier.",
+      da: "Vi leverer på bestilling: I fortæller, hvad I har brug for, og vi finder det i vores leverandørnetværk i Sydeuropa, tester det og klargør det med dansk eller norsk tastatur. Tilbud, faktura og reklamation går gennem os, ikke gennem leverandøren.",
+      en: "We supply to order: you tell us what you need, and we find it in our supplier network in southern Europe, test it and prepare it with a Danish or Norwegian keyboard. The quote, the invoice and any complaint go through us, not through the supplier.",
     },
   },
   {
@@ -66,16 +66,16 @@ const sections = [
       en: "The advantage of holding no stock",
     },
     description: {
-      da: "Når en leverandør har købt stort ind på forhånd, skal det lager afsættes – og I bliver tilbudt det, der står på hylden. Fordi vi skaffer maskinerne til den enkelte ordre, kan vi i stedet gå efter de specifikationer, opgaven faktisk kræver, og sætte en maskine i drift igen frem for at den skiftes ud.",
-      en: "When a supplier has bought big in advance, that stock has to move — and what you get offered is what is on the shelf. Because we source for the individual order, we can go after the specifications the job actually needs instead, and put a machine back into service rather than see it replaced.",
+      da: "Et stort lager skal afsættes, og så bliver I tilbudt det, der står på hylden. Vi skaffer til den enkelte ordre og går efter de specifikationer, opgaven kræver.",
+      en: "A big stock has to be sold, so you get offered what is on the shelf. We source for the individual order and go after the specifications the job needs.",
     },
   },
   {
     mark: "who" as CraftMarkName,
     title: { da: "Hvem hjælper vi?", en: "Who do we help?" },
     description: {
-      da: "Vi arbejder med IT-indkøbere og beslutningstagere i danske og norske virksomheder – fra mindre virksomheder, der skal udstyre et nyt team, til større indkøb af flere enheder på én gang. Fortæl os om jeres behov, så finder vi de enheder, der matcher.",
-      en: "We work with IT buyers and decision-makers in Danish and Norwegian companies — from smaller businesses equipping a new team to larger purchases of many machines at once. Tell us what you need, and we will find the machines that match.",
+      da: "IT-indkøbere og beslutningstagere i danske og norske virksomheder – fra et nyt team, der skal udstyres, til større indkøb af mange maskiner på én gang.",
+      en: "IT buyers and decision-makers in Danish and Norwegian companies — from a new team to equip to larger purchases of many machines at once.",
     },
   },
 ];
