@@ -32,20 +32,30 @@ const copy = {
        where that has to be unambiguous. */
     subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
     sub: "i Danmark og Norge – testet og klar til brug.",
-    /* The second sentence is the answer the first one promises: how the
-       machines are bought, and what is in writing before anyone says yes. */
-    subMore:
-      "Vi skaffer maskinerne til den enkelte ordre, og pris, stand og garantivilkår står skriftligt, før I bestiller.",
-    secondary: "Se hvad vi skaffer",
+    /* How buying works, on the first screen. It was one sentence ("we
+       source per order, and price, condition and warranty are in writing")
+       that said what is true but not what to do; a visitor still had to
+       find out that the way in is an enquiry and that it binds nothing. */
+    stepsLabel: "Sådan foregår det",
+    steps: [
+      "Skriv, hvad I skal bruge",
+      "Få et skriftligt tilbud per enhed",
+      "Beslut jer – en forespørgsel binder ikke",
+    ],
+    secondary: "Se produkterne",
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
     headlineAccent: "Ready for the Nordics.",
     subLead: "Kestro is a supplier of used business IT to companies",
     sub: "in Denmark and Norway — tested and ready to use.",
-    subMore:
-      "We source the machines for each order, and price, condition and warranty terms are in writing before you order.",
-    secondary: "Explore computers",
+    stepsLabel: "How it works",
+    steps: [
+      "Tell us what you need",
+      "Get a written quote per unit",
+      "Decide — an enquiry commits you to nothing",
+    ],
+    secondary: "See the products",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
 
@@ -291,11 +301,24 @@ export default function Hero({ lang }: { lang: Lang }) {
                 <span className="md:block md:text-paper/75">{c.sub}</span>
               </p>
               {/* On a short phone screen (an SE-size Safari window, 548px tall) the
-                  second sentence pushed the glass up over the whole picture,
-                  so there it gives way; every taller screen has it. */}
-              <p className="mt-2 max-w-xl text-[0.9375rem] leading-[1.6] text-paper/75 max-md:text-pretty md:mt-3 md:text-[clamp(0.9rem,0.9vw,1.1rem)] md:leading-[1.7] max-md:[@media(max-height:600px)]:hidden">
-                {c.subMore}
-              </p>
+                  steps pushed the glass up over the whole picture, so there
+                  they give way; every taller screen has them. */}
+              <ol
+                aria-label={c.stepsLabel}
+                className="mt-3 max-w-xl space-y-1 text-[0.9375rem] leading-[1.55] text-paper/85 md:mt-4 md:space-y-1.5 md:text-[clamp(0.9rem,0.9vw,1.1rem)] max-md:[@media(max-height:600px)]:hidden"
+              >
+                {(c.steps as string[]).map((step, i) => (
+                  <li key={step} className="flex items-baseline gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full border border-brand-400/60 text-[0.6875rem] font-bold tabular-nums text-brand-200"
+                    >
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
 
               {/* No row of facts here any more. It said "Testet · Nordisk
                   tastatur · Levering" in the panel while the strip a thumb's

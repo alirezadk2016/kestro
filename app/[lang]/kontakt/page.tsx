@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import Container from "@/components/Container";
@@ -6,7 +7,7 @@ import ContactForm from "@/components/ContactForm";
 import CopyEmailButton from "@/components/CopyEmailButton";
 import PageHeader from "@/components/PageHeader";
 import { company, postalAddress } from "@/lib/company";
-import { metaFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import Faq, { type FaqItem } from "@/components/Faq";
 import FactNote from "@/components/FactNote";
@@ -21,7 +22,9 @@ const copy = {
     title: "Kontakt os",
     /* Answer first: how to reach us, how fast, and to where — the three things
        a person landing here wants, before any of the context below. */
-    description: `Skriv via formularen herunder eller direkte til ${company.email} om brugt erhvervs-IT i Danmark og Norge. Vi modtager uforpligtende forespørgsler, ikke bestillinger.`,
+    description: `Skriv via formularen herunder eller direkte til ${company.email} om brugt erhvervs-IT i Danmark og Norge.`,
+    quoteHint: "Skal I have en pris på maskiner?",
+    quoteLink: "Brug tilbudsformularen",
     emailTitle: "Foretrækker I e-mail?",
     emailBody: "Skriv direkte til os, så vender vi tilbage hurtigst muligt.",
     companyTitle: "Projekt og kontakt",
@@ -50,7 +53,9 @@ const copy = {
     metaDescription:
       "Contact Kestro about used business IT, a fleet or equipment to move on. Email kontakt@kestro.dk or use the form for an initial, non-binding enquiry.",
     title: "Contact us",
-    description: `Write through the form below or directly to ${company.email} about used business IT in Denmark and Norway. We welcome non-binding enquiries, not orders.`,
+    description: `Write through the form below or directly to ${company.email} about used business IT in Denmark and Norway.`,
+    quoteHint: "Need a price on machines?",
+    quoteLink: "Use the quote form",
     emailTitle: "Prefer email?",
     emailBody: "Write to us directly and we will come back to you as soon as we can.",
     companyTitle: "Project and contact",
@@ -183,6 +188,17 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
 
           <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
             <div className="lg:col-span-3">
+              {/* Two forms on the site, and a buyer on this page should not
+                  have to guess which one asks the right questions. */}
+              <p className="mb-4 text-sm leading-[1.6] text-paper/75">
+                {c.quoteHint}{" "}
+                <Link
+                  href={localePath("/tilbud", lang)}
+                  className="inline-flex min-h-[44px] items-center font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
+                >
+                  {c.quoteLink}
+                </Link>
+              </p>
               <div className="plate p-6 sm:p-8">
                 <ContactForm lang={lang} />
               </div>

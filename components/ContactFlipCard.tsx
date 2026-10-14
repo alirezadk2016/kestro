@@ -16,7 +16,7 @@ const copy = {
     writeDirect: "Skriv direkte til",
     busy: "Har I travlt, eller er det nemmere at tage det over telefonen?",
     lands:
-      "Skriv til vores fælles kontaktadresse med kontaktpersonens navn i emnet. Henvendelsen er uforpligtende.",
+      "Skriv til vores fælles kontaktadresse med kontaktpersonens navn i emnet.",
     mainNumber: "Hovednummer",
   },
   en: {
@@ -27,7 +27,7 @@ const copy = {
     writeDirect: "Write directly to",
     busy: "In a hurry, or easier to sort it out over the phone?",
     lands:
-      "Email our shared contact address with the contact's name in the subject. The enquiry is non-binding.",
+      "Email our shared contact address with the contact's name in the subject.",
     mainNumber: "Main number",
   },
 } satisfies Record<Lang, Record<string, string>>;
