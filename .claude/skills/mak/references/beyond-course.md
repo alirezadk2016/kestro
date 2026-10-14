@@ -91,7 +91,9 @@ Rule 12 is the course's part of this. In addition:
   `/llms.txt`.
 - **Bing Webmaster Tools.** Several assistants search Bing's index, not
   Google's. Verify kestro.dk there as well and submit the same sitemap. It
-  can import the property straight from Search Console.
+  can import the property straight from Search Console, or verify with
+  `NEXT_PUBLIC_BING_SITE_VERIFICATION` set in Vercel (the layout renders
+  the tag).
 - **Entity consistency.** The business's name, description and services
   read the same everywhere: site, structured data, social profiles,
   directories.

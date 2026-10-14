@@ -610,7 +610,14 @@ after the date. No year goes into a guide's URL (rule 8).
 **At Kestro:**
 - **Property:** a Domain property for `kestro.dk`, verified with a TXT
   record. The owner creates the property and reads the TXT value off the
-  verification screen; the record goes wherever kestro.dk's DNS is managed.
+  verification screen. kestro.dk's DNS is at one.com (nameservers
+  `ns01.one.com`, `ns02.one.com`, checked 14 October 2026), so the TXT
+  record is added in one.com's DNS settings, not in Vercel.
+- **The fallback needs no code.** For a URL-prefix property verified by
+  meta tag, set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in Vercel and
+  redeploy; `app/[lang]/layout.tsx` renders the tag when the variable is
+  set. Bing: `NEXT_PUBLIC_BING_SITE_VERIFICATION`, or import the site from
+  Search Console in Bing Webmaster Tools.
 - **Sitemap:** submit `https://kestro.dk/sitemap.xml` once the property is
   verified.
 - **Reading it, the Mak way:**
