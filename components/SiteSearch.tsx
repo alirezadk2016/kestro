@@ -21,7 +21,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 
 type Group = "page" | "product" | "model" | "repair" | "service" | "guide";
 type Entry = { g: Group; t: string; d: string; h: string; k?: string };
-type Prepared = Entry & { ft: string; fw: string[]; fk: string; fd: string };
+type Prepared = Entry & { ft: string; fw: string[]; fk: string; fd: string; all: string[] };
 
 const groupLabel: Record<Group, Record<Lang, string>> = {
   page: { da: "Sider", en: "Pages" },
@@ -79,7 +79,11 @@ const loadIndex = () =>
     .then((raw) => {
       const prep = (e: Entry): Prepared => {
         const ft = fold(e.t);
-        return { ...e, ft, fw: ft.split(/[^a-z0-9]+/).filter(Boolean), fk: fold(e.k ?? ""), fd: fold(e.d) };
+        const fw = ft.split(/[^a-z0-9]+/).filter(Boolean);
+        const fk = fold(e.k ?? "");
+        const fd = fold(e.d);
+        const all = [...fw, ...`${fk} ${fd}`.split(/[^a-z0-9]+/).filter(Boolean)];
+        return { ...e, ft, fw, fk, fd, all };
       };
       return { da: raw.da.map(prep), en: raw.en.map(prep) };
     })
@@ -88,14 +92,44 @@ const loadIndex = () =>
       throw error;
     }));
 
+/* At most one letter wrong, missing, extra or swapped with its neighbour. */
+function oneEdit(x: string, y: string) {
+  if (x === y) return true;
+  if (Math.abs(x.length - y.length) > 1) return false;
+  let i = 0;
+  while (i < x.length && i < y.length && x[i] === y[i]) i++;
+  return (
+    x.slice(i + 1) === y.slice(i + 1) || // one letter wrong
+    x.slice(i) === y.slice(i + 1) || // one letter missing
+    x.slice(i + 1) === y.slice(i) || // one letter extra
+    (x[i] === y[i + 1] && x[i + 1] === y[i] && x.slice(i + 2) === y.slice(i + 2)) // two swapped
+  );
+}
+
+/* A typed word is a near-prefix of a word in the index: "thinkapd" finds
+   ThinkPad, "kontkat" Kontakt, "optiplx" OptiPlex. */
+const nearly = (word: string, token: string) =>
+  [token.length - 1, token.length, token.length + 1].some((n) => n > 0 && oneEdit(word.slice(0, n), token));
+
 function rank(entries: Prepared[], query: string): Prepared[] {
+  const strict = rankWith(entries, query, false);
+  /* Only when nothing matches exactly: a typo should find the page, but it
+     should not crowd out a real match. */
+  return strict.length ? strict : rankWith(entries, query, true);
+}
+
+function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[] {
   const tokens = fold(query).split(/[^a-z0-9]+/).filter(Boolean);
   if (!tokens.length) return [];
   const scored: [number, Prepared][] = [];
   for (const e of entries) {
     let score = 0;
     for (const token of tokens) {
-      const s = e.ft.startsWith(token)
+      const s = fuzzy
+        ? token.length >= 4 && e.all.some((w) => nearly(w, token))
+          ? 2
+          : 0
+        : e.ft.startsWith(token)
         ? 8
         : e.fw.some((w) => w.startsWith(token))
           ? 6

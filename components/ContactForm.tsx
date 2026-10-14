@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
@@ -49,7 +50,7 @@ const copy = {
     sending: "Sender …",
     thanksTitle: "Tak for jeres henvendelse.",
     thanksBody:
-      "Vi læser beskeden og vender tilbage. Henvendelsen er uforpligtende og er ikke en bestilling.",
+      "Svaret kommer på e-mail til den adresse, I har skrevet – tjek også spam-mappen. Mangler vi noget, spørger vi ind. Henvendelsen binder jer ikke.",
     thanksAgain: "Send en besked mere",
     privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
     privacyLink: "privatlivspolitikken",
@@ -66,6 +67,7 @@ const copy = {
     keyboardEn: "Engelsk (UK/US)",
     deadline: "Hvornår skal det stå klar?",
     deadlinePlaceholder: "Fx inden udgangen af oktober",
+    moreDetails: "Hukommelse, disk, tastatur og tidsramme",
     dontKnow: "Ved ikke endnu",
     quoteMessage: "Andet, vi skal vide",
     quoteMessagePlaceholder:
@@ -102,7 +104,7 @@ const copy = {
     sending: "Sending …",
     thanksTitle: "Thank you for getting in touch.",
     thanksBody:
-      "We will read your message and get back to you. The enquiry is non-binding and is not an order.",
+      "The reply comes by email to the address you gave — check your spam folder too. If anything is missing, we ask. The enquiry does not bind you.",
     thanksAgain: "Send another message",
     privacy: "We use the details only to answer the enquiry. See the",
     privacyLink: "privacy policy",
@@ -119,6 +121,7 @@ const copy = {
     keyboardEn: "English (UK/US)",
     deadline: "When does it need to be ready?",
     deadlinePlaceholder: "E.g. before the end of October",
+    moreDetails: "Memory, storage, keyboard and timing",
     dontKnow: "Not sure yet",
     quoteMessage: "Anything else we should know",
     quoteMessagePlaceholder:
@@ -240,6 +243,12 @@ export default function ContactForm({
     website: "",
   };
   const [values, setValues] = useState(emptyValues);
+  /* The four specification fields fold away on the quote form: three fields
+     are required and eleven were on screen, which on a phone read as a long
+     form to fill in. They open by themselves when something arrives filled
+     in, from the front page's mini form or a link. */
+  const [moreOpen, setMoreOpen] = useState(false);
+  const specFilled = Boolean(values.ram || values.disk || values.tastatur || values.hvornaar);
 
   /*
    * Prefill from the link the buyer arrived on: /tilbud?model=…&antal=….
@@ -649,76 +658,92 @@ export default function ContactForm({
               />
             </div>
 
-            <div>
-              <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
-                {c.ram}
-              </label>
-              <select
-                id="ram"
-                name="ram"
-                value={values.ram}
-                onChange={handleChange}
-                className={inputClasses}
-              >
-                <option value="">{c.dontKnow}</option>
-                <option value="8 GB">8 GB</option>
-                <option value="16 GB">16 GB</option>
-                <option value="32 GB+">32 GB+</option>
-              </select>
-            </div>
+            <details
+              open={moreOpen || specFilled}
+              onToggle={(event) => setMoreOpen(event.currentTarget.open)}
+              className="group sm:col-span-2"
+            >
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper [&::-webkit-details-marker]:hidden">
+                <ChevronDown
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-open:rotate-180"
+                  strokeWidth={2}
+                />
+                {c.moreDetails} <span className="font-normal text-paper/65">{c.optional}</span>
+              </summary>
+              <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.ram}
+                  </label>
+                  <select
+                    id="ram"
+                    name="ram"
+                    value={values.ram}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    <option value="8 GB">8 GB</option>
+                    <option value="16 GB">16 GB</option>
+                    <option value="32 GB+">32 GB+</option>
+                  </select>
+                </div>
 
-            <div>
-              <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
-                {c.storage}
-              </label>
-              <select
-                id="disk"
-                name="disk"
-                value={values.disk}
-                onChange={handleChange}
-                className={inputClasses}
-              >
-                <option value="">{c.dontKnow}</option>
-                <option value="256 GB SSD">256 GB SSD</option>
-                <option value="512 GB SSD">512 GB SSD</option>
-                <option value="1 TB SSD+">1 TB SSD+</option>
-              </select>
-            </div>
+                <div>
+                  <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.storage}
+                  </label>
+                  <select
+                    id="disk"
+                    name="disk"
+                    value={values.disk}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    <option value="256 GB SSD">256 GB SSD</option>
+                    <option value="512 GB SSD">512 GB SSD</option>
+                    <option value="1 TB SSD+">1 TB SSD+</option>
+                  </select>
+                </div>
 
-            <div>
-              <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
-                {c.keyboard}
-              </label>
-              <select
-                id="tastatur"
-                name="tastatur"
-                value={values.tastatur}
-                onChange={handleChange}
-                className={inputClasses}
-              >
-                <option value="">{c.dontKnow}</option>
-                {/* The value is what lands in the enquiry, which is read in
-                  Danish; the label is in the reader's language. */}
-                <option value="Dansk">{c.keyboardDa}</option>
-                <option value="Norsk">{c.keyboardNo}</option>
-                <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
-              </select>
-            </div>
+                <div>
+                  <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.keyboard}
+                  </label>
+                  <select
+                    id="tastatur"
+                    name="tastatur"
+                    value={values.tastatur}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    {/* The value is what lands in the enquiry, which is read in
+                      Danish; the label is in the reader's language. */}
+                    <option value="Dansk">{c.keyboardDa}</option>
+                    <option value="Norsk">{c.keyboardNo}</option>
+                    <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
+                  </select>
+                </div>
 
-            <div>
-              <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
-                {c.deadline}
-              </label>
-              <input
-                id="hvornaar"
-                name="hvornaar"
-                type="text"
-                value={values.hvornaar}
-                onChange={handleChange}
-                className={inputClasses}
-                placeholder={c.deadlinePlaceholder}
-              />
-            </div>
+                <div>
+                  <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.deadline}
+                  </label>
+                  <input
+                    id="hvornaar"
+                    name="hvornaar"
+                    type="text"
+                    value={values.hvornaar}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder={c.deadlinePlaceholder}
+                  />
+                </div>
+              </div>
+            </details>
           </div>
         )}
 

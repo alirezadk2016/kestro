@@ -39,8 +39,11 @@ export default async function Home(props: { params: Promise<{ lang: Lang }> }) {
       <PageSchema lang={lang} route="/" sources={["windows10Eol"]} />
 
       <Hero lang={lang} />
-      <AnswerBlock lang={lang} />
+      {/* What we source straight after the hero. A visitor had to scroll
+          past the definition and eight questions to see a single machine;
+          the answer block follows, still the second band a crawler reads. */}
       <CategoryCards lang={lang} />
+      <AnswerBlock lang={lang} />
       <Statement lang={lang} />
       <QualifySection lang={lang} />
       <Services lang={lang} />

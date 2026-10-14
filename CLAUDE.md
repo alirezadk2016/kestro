@@ -75,7 +75,11 @@ playbook are checked against it in the same change.
   customer statistic, and a project that is not trading yet has none.
 - **No universal claims about refurbished hardware,** and no claim that every
   device has been tested unless Kestro can actually guarantee it.
-- Prices: the site carries none until real ones exist. Do not add one.
+- **Prices: Kestro has no selling prices yet.** The one exception is the
+  owner's dated budget references (`lib/pricing.ts`: external retail prices,
+  their source and the day they were read), shown on /priser and the model
+  pages they belong to, each labelled as not Kestro's price. Do not add any
+  other figure, and do not present one of these as Kestro's.
 
 ### Machine readability
 

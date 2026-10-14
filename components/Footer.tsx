@@ -10,7 +10,7 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     blurb:
-      "Kestro sælger refurbished erhvervs-IT til virksomheder i Danmark og Norge. Vi skaffer maskinerne hos leverandører i vores netværk, klargør dem til det nordiske marked og står selv for tilbud, faktura og reklamation.",
+      "Kestro: refurbished erhvervs-IT til virksomheder i Danmark og Norge. Maskinerne skaffes hos leverandører i vores netværk og klargøres til det nordiske marked; tilbud, faktura og reklamation går gennem Kestro.",
     products: "Produkter",
     buy: "Sådan køber I",
     services: "Ydelser",
@@ -25,7 +25,7 @@ const copy = {
   },
   en: {
     blurb:
-      "Kestro sells refurbished business IT to companies in Denmark and Norway. We source the machines from suppliers in our network, prepare them for the Nordic market and handle the quote, the invoice and any complaint ourselves.",
+      "Kestro: refurbished business IT for companies in Denmark and Norway. The machines are sourced from suppliers in our network and prepared for the Nordic market; the quote, the invoice and any complaint go through Kestro.",
     products: "Products",
     buy: "How to buy",
     services: "Services",

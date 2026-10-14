@@ -21,18 +21,18 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     title: "Må vi måle, hvordan siden bruges?",
-    body: "Google Analytics er valgfrit. Ingen annoncer eller deling til markedsføring. Du kan altid ændre dit valg nederst på siden.",
+    body: "Google Analytics er valgfrit og uden annoncer. Valget kan ændres nederst på siden.",
     accept: "Accepter statistik",
     reject: "Kun nødvendige",
-    more: "Læs privatlivspolitikken",
+    more: "Privatlivspolitik",
     label: "Samtykke til statistik",
   },
   en: {
     title: "May we measure how the site is used?",
-    body: "Google Analytics is optional. No advertising or sharing for marketing. Change your choice at any time in the footer.",
+    body: "Google Analytics is optional and carries no advertising. Change your choice in the footer.",
     accept: "Accept statistics",
     reject: "Necessary only",
-    more: "Read the privacy policy",
+    more: "Privacy policy",
     label: "Consent to statistics",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -50,6 +50,19 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     return () => window.removeEventListener(CONSENT_EVENT, onChange);
   }, []);
 
+  /* While the banner is up it covers the foot of a phone's first screen —
+     on the front page, the hero's own quote button. The bar's button is
+     normally held back there until the hero scrolls away; this lets it show
+     while the hero's is covered (globals.css, header-cta-home). */
+  useEffect(() => {
+    const root = document.documentElement;
+    if (asked) delete root.dataset.consentOpen;
+    else root.dataset.consentOpen = "1";
+    return () => {
+      delete root.dataset.consentOpen;
+    };
+  }, [asked]);
+
   if (asked) return null;
 
   return (
@@ -58,11 +71,10 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
       aria-label={c.label}
       className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
     >
-      <Container className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
+      <Container className="flex flex-col gap-3 py-3 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold text-paper leading-[1.6]">{c.title}</p>
-          <p className="mt-1 text-sm leading-[1.6] text-paper/75">
-            {c.body}{" "}
+          <p className="text-sm leading-[1.55] text-paper/75">
+            <span className="font-semibold text-paper">{c.title}</span> {c.body}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}
               className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"

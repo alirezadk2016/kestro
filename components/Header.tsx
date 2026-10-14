@@ -170,11 +170,9 @@ export default function Header({ lang }: { lang: Lang }) {
 
           Fixed by giving the row less to carry rather than by pushing the
           breakpoint up and sending laptops back to the burger menu. The items
-          are told not to wrap, the gap tightens below xl, and the call to
-          action steps aside until there is room for it — it is the widest
-          thing in the header and, at the top of the page, it repeats the
-          button in the hero directly underneath. It comes back at xl, and in
-          between the nav's own Kontakt link still reaches the same page.
+          are told not to wrap, the gap tightens below xl, and "Viden" waits
+          for xl (lib/nav.ts, `wide`). The quote button stays at every width:
+          at 1024 px the row has about 16 px to spare, measured.
         */}
         <nav
           aria-label={ui.mainNav[lang]}

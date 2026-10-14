@@ -346,6 +346,12 @@ body {
     }
   }
 
+  html[data-consent-open] .header-cta-home {
+    animation: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
   @keyframes header-cta-in {
     from {
       opacity: 0;
