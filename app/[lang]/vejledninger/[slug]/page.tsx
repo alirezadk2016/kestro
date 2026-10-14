@@ -205,14 +205,61 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         }}
       />
 
-      {/* The words, and the guide's own panel beside them from xl. */}
-      <section className="border-b border-ink-200 bg-white py-12 text-ink-900 sm:py-20">
+      {/* The header carries depth by layering rather than by ornament: the mark
+          sits behind the type on a wide screen and steps out of the way on a
+          narrow one, where the words are the only thing worth the space. */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-[65px] sm:py-10 sm:py-20">
+        {/* The guide's own panel, not its cluster's.
+            Three articles sit in "Levetid og udskiftning" and three in "Køb,
+            stand og afhændelse", so the cluster mark put the same drawing
+            behind six of the eight headings. Same corner, same breakpoint —
+            the only thing that changed is that it now says which guide this
+            is, and is large enough to be read. */}
         {/* Only where a drawn panel is what renders: the three guides with
             supplied artwork show an image, which needs neither the keyframes
             nor the shared defs. */}
         {needsPanelChrome(guide.slug, lang) && <GuidePanelStyles />}
-        <Container className="xl:grid xl:grid-cols-12 xl:items-center xl:gap-14">
-          <div className="max-w-3xl xl:col-span-7">
+        {/*
+         * Inside the frame, and fading rather than cut.
+         *
+         * This bled off the right at -right-16 so the drawing would run out of
+         * the page. That works for a transparent line drawing and fails for a
+         * rendered plate: the artwork carries its own frame in the pixels, so
+         * the section's overflow-hidden sliced a border in half and the panel
+         * read as a broken image rather than as a picture running off.
+         *
+         * Now it sits fully inside, and dissolves into the page on its left
+         * with a mask instead of ending on a hard vertical edge. The mask also
+         * does the work opacity used to: the part that passes behind the
+         * heading is the part that is gone.
+         *
+         * xl rather than lg, because at 1024 a 30rem plate and a max-w-3xl
+         * reading column want the same pixels and the column wins.
+         */}
+        {/* On a phone the same panel is the header's ground: in the flow,
+            full width from under the glass bar, fading at its foot where the
+            words' glass panel overlaps it. One element, so a drawn panel's
+            ids are not repeated. From md to xl it is not shown, as before. */}
+        <div className="under-bar pointer-events-none relative aspect-[3/2] w-full md:hidden xl:absolute xl:right-0 xl:top-1/2 xl:block xl:w-[32rem] xl:-translate-y-1/2 2xl:w-[38rem]">
+          <GuidePanel
+            slug={guide.slug}
+            lang={lang}
+            priority
+            className="guide-plate h-full w-full xl:opacity-70"
+          />
+          {/* The bottom edge, softened by painting the section's own colour
+              over it rather than by a second mask layer: two mask layers need
+              mask-composite to intersect, and where that is not supported they
+              union instead — which would remove the fade rather than add one.
+              A gradient in the background colour cannot fail that way. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-950 to-transparent"
+          />
+        </div>
+
+        <Container className="relative">
+          <div className="glass-card relative z-10 max-w-3xl max-md:-mt-14">
             <Breadcrumbs
               lang={lang}
               trail={[
@@ -227,19 +274,19 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 /* No mark at this size: the drawing is a technical diagram and
                    it turns to mud below about 40px. The large one behind the
                    heading already says which cluster this is. */
-                className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-700 transition hover:text-ink-900"
+                className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
               >
                 {cluster.name[lang]}
               </Link>
             </p>
 
-            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
+            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {guide.title[lang]}
             </h1>
 
             {/* The answer, before the scroll. Someone who reads only this
                 should still have got what they came for. */}
-            <p className="mt-6 text-base leading-[1.65] text-ink-800 sm:text-lg sm:leading-[1.65]">
+            <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
               {guide.tldr[lang]}
             </p>
 
@@ -249,14 +296,6 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               readingMinutes={guide.readingMinutes}
               lang={lang}
             />
-          </div>
-
-          {/* The guide's own panel, not its cluster's, framed as a picture:
-              after the words on a phone, beside them from xl. Between md and
-              xl a 30rem panel and the reading column want the same pixels and
-              the column wins, so it is not shown there. */}
-          <div className="plate-well pointer-events-none mt-8 aspect-[3/2] w-full overflow-hidden rounded-2xl md:hidden xl:col-span-5 xl:mt-0 xl:block">
-            <GuidePanel slug={guide.slug} lang={lang} priority className="h-full w-full" />
           </div>
         </Container>
       </section>
@@ -281,7 +320,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               </div>
             </aside>
             <div className="max-w-3xl lg:order-1 lg:col-span-8">
-              <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-ink-700">
+              <p className="text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/75">
                 {guide.intro[lang]}
               </p>
 
@@ -289,16 +328,16 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 <div
                   key={section.heading.da}
                   id={sectionId(section.heading.da)}
-                  className="scroll-mt-24 border-t border-ink-200 py-8 first:mt-10"
+                  className="scroll-mt-24 border-t border-white/10 py-8 first:mt-10"
                 >
-                  <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+                  <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                     {section.heading[lang]}
                   </h2>
 
                   {section.body.map((paragraph) => (
                     <p
                       key={paragraph.da}
-                      className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-ink-700"
+                      className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
                     >
                       {paragraph[lang]}
                     </p>
@@ -319,30 +358,30 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                       >
                         <caption className="sr-only">{section.table.caption[lang]}</caption>
                         <thead className="max-sm:sr-only">
-                          <tr role="row" className="border-b border-ink-300">
+                          <tr role="row" className="border-b border-white/20">
                             {section.table.head.map((cell) => (
                               <th
                                 key={cell.da}
                                 role="columnheader"
                                 scope="col"
-                                className="py-3 pr-5 align-bottom font-display text-sm font-bold text-ink-900 last:pr-0"
+                                className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
                               >
                                 {cell[lang]}
                               </th>
                             ))}
                           </tr>
                         </thead>
-                        <tbody className="max-sm:block max-sm:border-t max-sm:border-ink-300">
+                        <tbody className="max-sm:block max-sm:border-t max-sm:border-white/20">
                           {section.table.rows.map((row) => (
                             <tr
                               key={row[0].da}
                               role="row"
-                              className="border-b border-ink-200 align-top max-sm:block max-sm:py-4"
+                              className="border-b border-white/10 align-top max-sm:block max-sm:py-4"
                             >
                               <th
                                 role="rowheader"
                                 scope="row"
-                                className="py-4 pr-5 font-semibold leading-6 text-ink-800 max-sm:block max-sm:p-0 max-sm:pb-2 max-sm:text-ink-900"
+                                className="py-4 pr-5 font-semibold leading-6 text-paper/85 max-sm:block max-sm:p-0 max-sm:pb-2 max-sm:text-paper"
                               >
                                 {row[0][lang]}
                               </th>
@@ -351,7 +390,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                                   key={cell.da}
                                   role="cell"
                                   data-label={section.table?.head[i + 1]?.[lang] ?? ""}
-                                  className="py-4 pr-5 leading-6 text-ink-700 last:pr-0 max-sm:grid max-sm:grid-cols-[6.5rem_1fr] max-sm:gap-x-3 max-sm:py-1 max-sm:pr-0 max-sm:before:font-medium max-sm:before:text-ink-600 max-sm:before:content-[attr(data-label)]"
+                                  className="py-4 pr-5 leading-6 text-paper/75 last:pr-0 max-sm:grid max-sm:grid-cols-[6.5rem_1fr] max-sm:gap-x-3 max-sm:py-1 max-sm:pr-0 max-sm:before:font-medium max-sm:before:text-paper/65 max-sm:before:content-[attr(data-label)]"
                                 >
                                   {cell[lang]}
                                 </td>
@@ -366,10 +405,10 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                   {section.list && (
                     <ul className="mt-6 space-y-3.5">
                       {section.list.map((item) => (
-                        <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-700">
+                        <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                           <Check
                             aria-hidden="true"
-                            className="mt-1.5 h-4 w-4 flex-none text-brand-700"
+                            className="mt-1.5 h-4 w-4 flex-none text-brand-300"
                             strokeWidth={2}
                           />
                           {item[lang]}
@@ -381,10 +420,10 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
               ))}
 
               <div className="plate mt-6 p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {c.closingTitle}
                 </h2>
-                <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-ink-700">
+                <p className="mt-3 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
                   {guide.closing[lang]}
                 </p>
                 <Link
@@ -399,8 +438,8 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 that actually decides a date is not leaked authority; it is the
                 difference between a page that asserts and a page that cites. */}
               {guide.sources && guide.sources.length > 0 && (
-                <div className="mt-10 border-t border-ink-300 pt-8">
-                  <p className="eyebrow text-brand-700">{c.sources}</p>
+                <div className="mt-10 border-t border-white/15 pt-8">
+                  <p className="eyebrow text-brand-300">{c.sources}</p>
                   <ul className="mt-4 space-y-2">
                     {guide.sources.map((source) => (
                       <li key={source.href.da}>
@@ -408,7 +447,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                           href={source.href[lang]}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+                          className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
                         >
                           {source.label[lang]}
                           <ExternalLink
@@ -427,14 +466,14 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 answers a question and then stops leaves the reader to find the
                 commercial page on their own. */}
               {guide.related.length > 0 && (
-                <div className="mt-10 border-t border-ink-300 pt-8">
-                  <p className="eyebrow text-brand-700">{c.next}</p>
+                <div className="mt-10 border-t border-white/15 pt-8">
+                  <p className="eyebrow text-brand-300">{c.next}</p>
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {guide.related.map((link) => (
                       <li key={link.href}>
                         <Link
                           href={localePath(link.href, lang)}
-                          className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
+                          className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                         >
                           {link.label[lang]}
                           <span aria-hidden="true">&rarr;</span>
@@ -450,7 +489,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       </section>
 
       {guide.faqs && guide.faqs.length > 0 && (
-        <div className="border-t border-ink-200">
+        <div className="border-t border-white/10">
           <Faq lang={lang} items={guide.faqs} title={{ da: copy.da.faq, en: copy.en.faq }} />
         </div>
       )}
@@ -460,9 +499,9 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
           <emne>" as a list, then "Flere fra Viden" as hairline rows — each
           with its own heading, one after the other. */}
       {further.length > 0 && (
-        <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">{c.more}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
             <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
               {further.map((other) => (
                 <li key={other.slug}>
@@ -471,16 +510,14 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                     className="plate plate-lift group flex h-full flex-col p-5"
                   >
                     {other.cluster === guide.cluster && (
-                      <span className="label text-brand-700">{cluster.name[lang]}</span>
+                      <span className="label text-brand-300">{cluster.name[lang]}</span>
                     )}
-                    <span className="mt-1.5 font-display text-base font-bold tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
+                    <span className="mt-1.5 font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                       {other.title[lang]}
                     </span>
-                    <span className="mt-1.5 text-sm leading-6 text-ink-700">
-                      {other.summary[lang]}
-                    </span>
+                    <span className="mt-1.5 text-sm leading-6 text-paper/75">{other.summary[lang]}</span>
                     <span className="flex-1" />
-                    <span className="mt-4 text-sm tabular-nums text-ink-600">
+                    <span className="mt-4 text-sm tabular-nums text-paper/65">
                       {other.readingMinutes} min.
                     </span>
                   </Link>

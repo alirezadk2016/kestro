@@ -147,7 +147,7 @@ export default function Header({ lang }: { lang: Lang }) {
       */}
       <a
         href="#indhold"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-none focus:bg-brand-700 focus:px-5 focus:text-sm focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-none focus:bg-brand-700 focus:px-5 focus:text-sm focus:font-semibold focus:text-paper focus:outline-none focus:ring-2 focus:ring-paper focus:ring-offset-2"
       >
         {ui.skipToContent[lang]}
       </a>
@@ -155,7 +155,7 @@ export default function Header({ lang }: { lang: Lang }) {
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
-          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-ink-900"
+          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
         >
           <Logo className="h-7 w-auto" idPrefix="header" />
           Kestro
@@ -215,7 +215,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <div className="flex items-center gap-1">
               <Link
                 href={localePath(productsNav.hub.href, lang)}
-                className="inline-flex min-h-[44px] items-center text-sm font-medium text-ink-700 transition hover:text-ink-900"
+                className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
               >
                 {productsNav.hub.label[lang]}
               </Link>
@@ -226,7 +226,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 aria-expanded={productsOpen}
                 aria-controls="header-products"
                 aria-label={ui.showProducts[lang]}
-                className="-mx-3 inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                className="-mx-3 inline-flex h-11 w-11 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
               >
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`}
@@ -240,37 +240,37 @@ export default function Header({ lang }: { lang: Lang }) {
                 id="header-products"
                 className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
               >
-                <div className="glass-panel rounded-xl p-2 shadow-xl shadow-ink-900/15">
+                <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
                   <Link
                     href={localePath(productsNav.models.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-ink-100"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.models.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.machine.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-ink-100"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.machine.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.quality.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-ink-100"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.quality.label[lang]}
                   </Link>
                   <Link
                     href={localePath(productsNav.sampleQuote.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-ink-900 transition hover:bg-ink-100"
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
                   >
                     {productsNav.sampleQuote.label[lang]}
                   </Link>
-                  <div aria-hidden="true" className="mx-3 my-1.5 border-t border-ink-200" />
+                  <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
-                      className="block rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-ink-100 hover:text-ink-900"
+                      className="block rounded-lg px-3 py-2 text-sm text-paper/75 transition hover:bg-white/10 hover:text-paper"
                     >
                       {category.name[lang]}
                     </Link>
@@ -291,8 +291,8 @@ export default function Header({ lang }: { lang: Lang }) {
                 aria-current={current ? "page" : undefined}
                 className={`relative ${link.wide ? "hidden xl:inline-flex" : "inline-flex"} min-h-[44px] items-center text-sm transition ${
                   current
-                    ? "font-semibold text-ink-900 after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-600"
-                    : "font-medium text-ink-700 hover:text-ink-900"
+                    ? "font-semibold text-paper after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-400"
+                    : "font-medium text-paper/75 hover:text-paper"
                 }`}
               >
                 {link.label[lang]}
@@ -307,7 +307,7 @@ export default function Header({ lang }: { lang: Lang }) {
             onClick={openSearch}
             aria-label={ui.search[lang]}
             title={`${ui.search[lang]} (Ctrl K)`}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink-700 transition hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-lg text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <Search className="h-[18px] w-[18px]" strokeWidth={1.9} />
           </button>
@@ -339,7 +339,7 @@ export default function Header({ lang }: { lang: Lang }) {
           */}
           <Link
             href={localePath("/tilbud", lang)}
-            className={`mr-1 inline-flex h-11 items-center justify-center rounded-lg bg-brand-600 px-3.5 text-sm font-semibold tracking-tight text-white transition-colors hover:bg-brand-700 motion-safe:active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 ${
+            className={`mr-1 inline-flex h-11 items-center justify-center rounded-lg bg-brand-600 px-3.5 text-sm font-semibold tracking-tight text-white transition-colors hover:bg-brand-500 motion-safe:active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 ${
               basePath === "/" ? "header-cta-home" : ""
             }`}
           >
@@ -350,7 +350,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <a
               href={`tel:${company.phoneHref}`}
               aria-label={ui.callUs[lang]}
-              className="inline-flex h-11 w-11 items-center justify-center text-ink-700 transition hover:text-ink-900"
+              className="inline-flex h-11 w-11 items-center justify-center text-paper/75 transition hover:text-paper"
             >
               <Phone className="h-5 w-5" strokeWidth={1.9} />
             </a>
@@ -360,7 +360,7 @@ export default function Header({ lang }: { lang: Lang }) {
             type="button"
             onClick={openSearch}
             aria-label={ui.search[lang]}
-            className="inline-flex h-11 w-11 items-center justify-center text-ink-800 transition hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            className="inline-flex h-11 w-11 items-center justify-center text-paper/85 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <Search className="h-5 w-5" strokeWidth={1.9} />
           </button>
@@ -372,7 +372,7 @@ export default function Header({ lang }: { lang: Lang }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={ui.openMenu[lang]}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -404,7 +404,7 @@ export default function Header({ lang }: { lang: Lang }) {
       {open && (
         <div
           id="mobile-menu"
-          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-ink-200 bg-white sm:h-[calc(100dvh-5rem)] lg:hidden"
+          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-brand-950 sm:h-[calc(100dvh-5rem)] lg:hidden"
         >
           <Container className="flex flex-col gap-1 py-4">
             {/* Search first: on a phone it is the fastest way to any of the
@@ -412,7 +412,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <button
               type="button"
               onClick={openSearch}
-              className="mb-2 flex min-h-[48px] items-center gap-3 rounded-xl border border-ink-300 bg-ink-50 px-3.5 text-left text-base text-ink-700 transition-colors hover:border-ink-300 hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+              className="mb-2 flex min-h-[48px] items-center gap-3 rounded-xl border border-white/15 bg-white/[0.04] px-3.5 text-left text-base text-paper/75 transition-colors hover:border-white/25 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
             >
               <Search aria-hidden="true" className="h-5 w-5 flex-none" strokeWidth={1.9} />
               {ui.searchSite[lang]}
@@ -423,7 +423,7 @@ export default function Header({ lang }: { lang: Lang }) {
               onClick={() => setMobileProductsOpen((v) => !v)}
               aria-expanded={mobileProductsOpen}
               aria-controls="mobile-products"
-              className="flex min-h-[44px] items-center justify-between rounded-lg px-3 text-base font-medium text-ink-800 transition-colors hover:bg-ink-100 hover:text-ink-900"
+              className="flex min-h-[44px] items-center justify-between rounded-lg px-3 text-base font-medium text-paper/85 transition-colors hover:bg-white/10 hover:text-paper"
             >
               {productsNav.hub.label[lang]}
               <ChevronDown
@@ -437,7 +437,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 which is the densest set of targets on the site and the one
                 most often hit with a thumb. */}
             {mobileProductsOpen && (
-              <div id="mobile-products" className="mb-1 border-l border-ink-200 pl-3">
+              <div id="mobile-products" className="mb-1 border-l border-white/10 pl-3">
                 {[
                   { href: productsNav.hub.href, label: productsNav.overview },
                   productsNav.models,
@@ -450,14 +450,14 @@ export default function Header({ lang }: { lang: Lang }) {
                     href={localePath(item.href, lang)}
                     onClick={closeMobile}
                     aria-current={basePath === item.href ? "page" : undefined}
-                    className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-ink-100 hover:text-ink-900 ${
-                      basePath === item.href ? "text-ink-900" : "text-ink-800"
+                    className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${
+                      basePath === item.href ? "text-paper" : "text-paper/85"
                     }`}
                   >
                     {item.label[lang]}
                   </Link>
                 ))}
-                <div aria-hidden="true" className="mx-3 my-1 border-t border-ink-200" />
+                <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
                 {categories.map((category) => {
                   const href = `/produkter/${category.slug}`;
                   return (
@@ -466,8 +466,8 @@ export default function Header({ lang }: { lang: Lang }) {
                       href={localePath(href, lang)}
                       onClick={closeMobile}
                       aria-current={basePath === href ? "page" : undefined}
-                      className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm transition-colors hover:bg-ink-100 hover:text-ink-900 ${
-                        basePath === href ? "font-medium text-ink-900" : "text-ink-700"
+                      className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm transition-colors hover:bg-white/10 hover:text-paper ${
+                        basePath === href ? "font-medium text-paper" : "text-paper/75"
                       }`}
                     >
                       {category.name[lang]}
@@ -488,8 +488,8 @@ export default function Header({ lang }: { lang: Lang }) {
                   href={localePath(link.href, lang)}
                   onClick={closeMobile}
                   aria-current={current ? "page" : undefined}
-                  className={`flex min-h-[44px] items-center rounded-lg px-3 text-base font-medium transition-colors hover:bg-ink-100 hover:text-ink-900 ${
-                    current ? "bg-ink-100 text-ink-900" : "text-ink-800"
+                  className={`flex min-h-[44px] items-center rounded-lg px-3 text-base font-medium transition-colors hover:bg-white/10 hover:text-paper ${
+                    current ? "bg-white/[0.06] text-paper" : "text-paper/85"
                   }`}
                 >
                   {link.label[lang]}
@@ -497,7 +497,7 @@ export default function Header({ lang }: { lang: Lang }) {
               );
             })}
 
-            <div className="mt-3 border-t border-ink-200 pt-3">
+            <div className="mt-3 border-t border-white/10 pt-3">
               <LanguageSwitcher lang={lang} basePath={basePath} onNavigate={closeMobile} />
             </div>
 
@@ -550,13 +550,13 @@ function LanguageSwitcher({
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
           className={`group inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
-            code === lang ? "text-ink-900" : "text-ink-600 hover:text-ink-900"
+            code === lang ? "text-paper" : "text-paper/65 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>
           <span
             aria-hidden="true"
-            className={`border-b-2 pb-0.5 pt-0.5 ${code === lang ? "border-ink-900" : "border-transparent"}`}
+            className={`border-b-2 pb-0.5 pt-0.5 ${code === lang ? "border-paper" : "border-transparent"}`}
           >
             {code}
           </span>

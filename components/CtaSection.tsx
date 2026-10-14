@@ -19,7 +19,7 @@ const copy = {
 } satisfies Record<Lang, Record<string, string>>;
 
 /*
- * The close of a page: one band, one sentence, one action.
+ * The close of a page: one glass band, one sentence, one action.
  *
  * It used to be a display-size heading, two full buttons and the two people
  * behind the inbox with their photographs and titles — 786px on a phone, at
@@ -29,17 +29,16 @@ const copy = {
  * where somebody deciding whether to write is looking for them; here the band
  * says the one thing and gets out of the way.
  *
- * A plain navy band, the one dark thing on a light page apart from the footer
- * under it: the end of the page, said once. It was a glass pane over a lit
- * stage with grain; on a light site that was the last of the effects.
+ * Glass on the stage's own light: the key light up and to the right shows
+ * through the panel, which is what makes it read as a pane and not a box.
  */
 export default function CtaSection({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="bg-brand-950 py-12 sm:py-16">
+    <section className="stage py-10 sm:py-16">
       <Container>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+        <div className="glass-band flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div className="max-w-2xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.title}
@@ -47,11 +46,7 @@ export default function CtaSection({ lang }: { lang: Lang }) {
             <p className="mt-3 text-base leading-[1.65] text-paper/75">{c.body}</p>
           </div>
           <div className="flex flex-none flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
-            <Button
-              href={localePath("/tilbud", lang)}
-              size="lg"
-              className="w-full focus-visible:ring-offset-brand-950 sm:w-auto"
-            >
+            <Button href={localePath("/tilbud", lang)} size="lg" className="w-full sm:w-auto">
               {ui.bookCall[lang]}
             </Button>
             <Link

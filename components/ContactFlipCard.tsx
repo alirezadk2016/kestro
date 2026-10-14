@@ -15,7 +15,8 @@ const copy = {
     callDirect: "Ring direkte til",
     writeDirect: "Skriv direkte til",
     busy: "Har I travlt, eller er det nemmere at tage det over telefonen?",
-    lands: "Skriv til vores fælles kontaktadresse med kontaktpersonens navn i emnet.",
+    lands:
+      "Skriv til vores fælles kontaktadresse med kontaktpersonens navn i emnet.",
     mainNumber: "Hovednummer",
   },
   en: {
@@ -25,7 +26,8 @@ const copy = {
     callDirect: "Call",
     writeDirect: "Write directly to",
     busy: "In a hurry, or easier to sort it out over the phone?",
-    lands: "Email our shared contact address with the contact's name in the subject.",
+    lands:
+      "Email our shared contact address with the contact's name in the subject.",
     mainNumber: "Main number",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -53,14 +55,14 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
       <div
         role="group"
         aria-label={c.choose}
-        className="mb-4 inline-flex w-full rounded-full border border-ink-300 bg-ink-50 p-1 text-sm font-semibold text-ink-700 sm:w-auto"
+        className="mb-4 inline-flex w-full rounded-full border border-white/15 bg-white/5 p-1 text-sm font-semibold text-paper/75 sm:w-auto"
       >
         <button
           type="button"
           aria-pressed={!showIntl}
           onClick={() => setShowIntl(false)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
-            !showIntl ? "bg-brand-600 text-white" : "hover:text-ink-900"
+            !showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
           <MapPin className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
@@ -71,7 +73,7 @@ export default function ContactFlipCard({ lang }: { lang: Lang }) {
           aria-pressed={showIntl}
           onClick={() => setShowIntl(true)}
           className={`inline-flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full min-h-[44px] px-3 py-2 transition sm:flex-none sm:px-4 ${
-            showIntl ? "bg-brand-600 text-white" : "hover:text-ink-900"
+            showIntl ? "bg-brand-600 text-white" : "hover:text-paper"
           }`}
         >
           <Globe2 className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
@@ -109,7 +111,7 @@ function Face({
   return (
     <div
       aria-hidden={hidden}
-      className={`flex min-w-0 flex-col border border-ink-200 bg-white p-6 text-ink-900 [grid-area:1/1] [backface-visibility:hidden] sm:p-8 ${
+      className={`flex min-w-0 flex-col border border-white/10 bg-brand-950 p-6 text-white [grid-area:1/1] [backface-visibility:hidden] sm:p-8 ${
         hidden ? "pointer-events-none" : ""
       } ${flipped ? "[transform:rotateY(180deg)]" : ""}`}
     >
@@ -119,11 +121,11 @@ function Face({
           <h2 className="font-display t-h3 font-bold tracking-tight">
             {member.phoneHref ? c.callDirect : c.writeDirect} {member.name}
           </h2>
-          <p className="text-sm text-ink-600 leading-[1.6]">{member.role[lang]}</p>
+          <p className="text-sm text-paper/65 leading-[1.6]">{member.role[lang]}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-[1.6] text-ink-700">
+      <p className="mt-4 text-sm leading-[1.6] text-paper/75">
         {member.phoneHref ? c.busy : c.lands}
       </p>
 
@@ -131,7 +133,7 @@ function Face({
         <a
           href={`mailto:${company.email}?subject=${encodeURIComponent(`${lang === "da" ? "Til" : "For"} ${member.name} - Kestro`)}`}
           tabIndex={hidden ? -1 : undefined}
-          className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-700 underline underline-offset-4 hover:text-ink-900"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
         >
           <Mail aria-hidden="true" className="h-4 w-4 flex-none" />
           {company.email}
@@ -148,7 +150,7 @@ function Face({
         )}
 
         {member.phoneHref && company.phoneDisplay && (
-          <p className="mt-4 border-t border-ink-200 pt-4 text-xs text-ink-600 leading-[1.45]">
+          <p className="mt-4 border-t border-white/10 pt-4 text-xs text-paper/65 leading-[1.45]">
             {c.mainNumber}: {company.phoneDisplay}
           </p>
         )}

@@ -38,14 +38,14 @@ export default function ModelGallery({
   }, [zoomed]);
   if (!item) return null;
   const iconClass =
-    "inline-flex h-11 w-11 flex-none items-center justify-center rounded border border-ink-300 bg-white text-ink-900 hover:border-brand-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-600";
+    "inline-flex h-11 w-11 flex-none items-center justify-center rounded border border-white/20 bg-brand-950 text-paper hover:border-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300";
   return (
     <div className="space-y-3 sm:space-y-4">
       <button
         type="button"
         onClick={() => setZoomed(true)}
         aria-label={da ? `Forstør billede af ${name}` : `Enlarge photo of ${name}`}
-        className="group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper-dim ring-1 ring-ink-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+        className="group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper-dim ring-1 ring-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
       >
         <Image
           src={item.src}
@@ -73,7 +73,7 @@ export default function ModelGallery({
             onClick={() => setSelected(index)}
             aria-pressed={selected === index}
             aria-label={`${index + 1}: ${image.alt[lang]}`}
-            className={`aspect-[4/3] min-h-11 overflow-hidden rounded border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 ${selected === index ? "border-brand-600" : "border-transparent hover:border-ink-400"}`}
+            className={`aspect-[4/3] min-h-11 overflow-hidden rounded border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${selected === index ? "border-brand-300" : "border-transparent hover:border-ink-400"}`}
           >
             <Image
               src={image.src}
@@ -87,7 +87,7 @@ export default function ModelGallery({
           </button>
         ))}
       </div>
-      <p className="pt-1 text-sm leading-[1.6] text-ink-600">{note}</p>
+      <p className="pt-1 text-sm leading-[1.6] text-paper/65">{note}</p>
       <dialog
         ref={dialog}
         aria-labelledby={titleId}
@@ -105,14 +105,14 @@ export default function ModelGallery({
             step(1);
           }
         }}
-        className="m-auto max-h-[calc(100svh-2rem)] w-[min(96vw,1100px)] max-w-none overflow-y-auto rounded-lg border border-ink-300 bg-white p-0 text-ink-900 backdrop:bg-ink-900/40"
+        className="m-auto max-h-[calc(100svh-2rem)] w-[min(96vw,1100px)] max-w-none overflow-y-auto rounded-lg border border-white/20 bg-brand-950 p-0 text-paper backdrop:bg-black/85"
       >
         {zoomed && (
           <div className="p-3 sm:p-5">
             <div className="mb-3 flex items-center justify-between gap-4">
               <p id={titleId} className="min-w-0 text-sm font-semibold">
                 {name}{" "}
-                <span className="text-ink-700">
+                <span className="text-paper/75">
                   · {selected + 1}/{images.length}
                 </span>
               </p>
@@ -147,7 +147,7 @@ export default function ModelGallery({
               >
                 <ChevronLeft aria-hidden="true" size={24} />
               </button>
-              <p className="text-center text-sm leading-6 text-ink-800" aria-live="polite">
+              <p className="text-center text-sm leading-6 text-paper/85" aria-live="polite">
                 {item.alt[lang]}
               </p>
               <button

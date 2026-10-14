@@ -31,7 +31,7 @@ export default function Breadcrumbs({
       <BreadcrumbSchema lang={lang} trail={trail} />
       <nav
         aria-label={lang === "da" ? "Brødkrumme" : "Breadcrumb"}
-        className={`text-sm text-ink-600 ${className}`}
+        className={`text-sm text-paper/65 ${className}`}
       >
         {/* One line. The current page's name is the h1 right below, so when
             it is long (a guide title) it is truncated with an ellipsis rather
@@ -45,19 +45,19 @@ export default function Breadcrumbs({
                 className={`flex items-center gap-x-2 ${last ? "min-w-0" : "flex-none"}`}
               >
                 {last ? (
-                  <span aria-current="page" className="truncate text-ink-800">
+                  <span aria-current="page" className="truncate text-paper/85">
                     {crumb.name}
                   </span>
                 ) : (
                   <Link
                     href={localePath(crumb.href, lang)}
-                    className="inline-flex min-h-[44px] items-center transition hover:text-ink-900"
+                    className="inline-flex min-h-[44px] items-center transition hover:text-paper"
                   >
                     {crumb.name}
                   </Link>
                 )}
                 {!last && (
-                  <span aria-hidden="true" className="text-ink-500">
+                  <span aria-hidden="true" className="text-paper/30">
                     /
                   </span>
                 )}

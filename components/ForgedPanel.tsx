@@ -1,19 +1,26 @@
 import Link from "next/link";
+import PointerLight from "@/components/PointerLight";
 
 /*
- * A card: one panel, or one link.
+ * The panel with a machined edge: a lit frame holding a sunk face.
  *
- * It was a lit frame holding a sunk face, with a highlight that followed the
- * pointer and a tilt on hover — the machined language of the dark site. On
- * the light one it is the site's plain panel (.forge in globals.css, the same
- * surface as .plate), and a card that goes somewhere says so with a blue ring
- * and its prompt line, not with movement.
+ * .plate lights one lip and rings the shape, which is right for a panel that
+ * is mostly type. A panel whose subject is an object wants an edge you could
+ * run a thumbnail along, and that needs two surfaces at two depths — shadows
+ * on one box cannot do it. .forge is the frame, .forge-face is what it holds;
+ * both are in globals.css with the reasoning.
  *
- * Given an `href` it becomes one link. Without one it is a static panel — a
- * card that does not go anywhere should not answer when you point at it.
+ * Given an `href` it becomes one link, tilts, and takes a highlight that
+ * tracks the pointer. Without one it is a static panel and none of that
+ * applies — a card that does not go anywhere should not lift when you point
+ * at it, which is the entire vocabulary of "this is clickable".
  *
- * `className` goes on the outermost element, so a grid class lands on the
- * grid item and not on a child of it.
+ * `className` goes on the OUTERMOST element, not on the frame. With an href
+ * the frame is wrapped by PointerLight, so a grid class landing on the frame
+ * is a class on a child of the grid item and does nothing — which is exactly
+ * what happened to the fleet card on the front page: lg:col-span-3 was
+ * swallowed, the card took one column of twelve, and its heading wrapped to
+ * one word a line. Layout belongs to whatever the parent grid can see.
  */
 export default function ForgedPanel({
   href,
@@ -27,18 +34,22 @@ export default function ForgedPanel({
   faceClassName?: string;
 }) {
   const face = (
-    <span className={`forge-face flex h-full flex-col ${faceClassName}`}>{children}</span>
+    <span className={`forge-face flex h-full flex-col rounded-[8px] ${faceClassName}`}>
+      {children}
+    </span>
   );
 
-  const frame = "forge relative flex h-full flex-col rounded-xl";
+  const frame = "forge forge-rim relative flex h-full flex-col rounded-xl p-[5px] sm:p-[6px]";
 
   if (!href) {
     return <div className={`${frame} ${className}`}>{face}</div>;
   }
 
   return (
-    <Link href={href} className={`${frame} tile group ${className}`}>
-      {face}
-    </Link>
+    <PointerLight className={className}>
+      <Link href={href} className={`${frame} tile tile-sheen group`}>
+        {face}
+      </Link>
+    </PointerLight>
   );
 }

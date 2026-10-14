@@ -93,7 +93,7 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
 
   return (
     <div className={className}>
-      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
         {c.title}
       </h2>
 
@@ -103,14 +103,17 @@ export default function WhatIsFixed({ lang, className = "" }: { lang: Lang; clas
             {/* Mark and heading on one line, like the site's other cards. */}
             <div className="flex items-center gap-3">
               <MarkTile name={column.mark} size="sm" className="flex-none" />
-              <h3 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+              <h3 className="font-display t-h3 font-bold tracking-tight text-paper">
                 {column.heading}
               </h3>
             </div>
             <ul className="mt-3 space-y-2">
               {column.points.map((point) => (
-                <li key={point} className="flex gap-2 text-sm leading-6 text-ink-700">
-                  <span aria-hidden="true" className="mt-2.5 h-px w-3 flex-shrink-0 bg-brand-100" />
+                <li key={point} className="flex gap-2 text-sm leading-6 text-paper/75">
+                  <span
+                    aria-hidden="true"
+                    className="mt-2.5 h-px w-3 flex-shrink-0 bg-brand-400/70"
+                  />
                   {point}
                 </li>
               ))}

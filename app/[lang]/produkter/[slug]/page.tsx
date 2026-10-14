@@ -215,12 +215,26 @@ export default async function CategoryPage(props: {
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
-      <section className="overflow-hidden border-b border-ink-200 bg-white py-12 text-ink-900 sm:py-20">
+      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          generic glow every generated page has. */}
+      <section
+        className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
+          CATEGORY_ART[category.slug] ? "max-md:-mt-[65px] max-md:pt-0" : ""
+        }`}
+      >
         <Container className="relative">
           {/* Text in the left seven columns, the category's picture in the
-              right five from lg; on a phone the picture follows the lead. */}
+              right five from lg. On a phone the picture is the header's
+              ground, from under the glass bar, and the trail, title and lead
+              sit on glass over its foot, as the front page's words sit over
+              the room. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="max-w-3xl lg:col-span-7">
+            <div
+              className={`max-w-3xl lg:col-span-7 ${
+                CATEGORY_ART[category.slug] ? "glass-card relative z-10 max-md:-mt-14" : ""
+              }`}
+            >
               {/* The shared trail: "Forside / Produkter / Bærbare
                 computere", visible and marked up from one list. The schema
                 here already began at Forside while the visible trail did not,
@@ -246,11 +260,11 @@ export default async function CategoryPage(props: {
                 scale every other page title is on. */}
               <div className="mt-5 flex items-center gap-4 sm:gap-5">
                 <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
-                <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
+                <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
                   {(category.h1 ?? category.name)[lang]}
                 </h1>
               </div>
-              <p className="mt-5 text-base leading-[1.65] text-ink-800 sm:text-lg">
+              <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
                 {categoryLead(category, lang)}
               </p>
             </div>
@@ -262,16 +276,17 @@ export default async function CategoryPage(props: {
                 height={675}
                 alt={CATEGORY_ART[category.slug].alt[lang]}
                 className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
+                bleed
               />
             )}
 
             <div className="max-w-3xl lg:col-span-7">
-              <p className="mt-8 text-base leading-[1.75] text-ink-700">{category.intro[lang]}</p>
-              <p className="label mt-6 text-ink-600">
+              <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
+              <p className="label mt-6 text-paper/65">
                 {lang === "da" ? "Opdateret" : "Updated"}{" "}
                 <time
                   dateTime={pageUpdated("/produkter/[slug]")}
-                  className="tabular-nums text-ink-800"
+                  className="tabular-nums text-paper/85"
                 >
                   {formatDate(pageUpdated("/produkter/[slug]"), lang)}
                 </time>
@@ -281,13 +296,13 @@ export default async function CategoryPage(props: {
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-10 sm:py-20">
+      <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.brandsTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-ink-700">
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">
               {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
             </p>
 
@@ -295,14 +310,14 @@ export default async function CategoryPage(props: {
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-ink-800"
+                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
                 >
                   {brand}
                 </li>
               ))}
             </ul>
 
-            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-ink-600">{c.brandsNote}</p>
+            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
           </div>
         </Container>
       </section>
@@ -315,18 +330,18 @@ export default async function CategoryPage(props: {
                 the window empty. */}
             <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12 xl:max-w-none">
               <div className="lg:col-span-6">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {exampleModel.name}
                 </h2>
-                <p className="mt-3 text-base leading-[1.75] text-ink-700">
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">
                   {exampleModel.intro[lang]}
                 </p>
 
-                <p className="mt-5 text-sm leading-[1.6] text-ink-600">{c.imageNote}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
 
                 <Link
                   href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                  className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-700 transition hover:text-ink-900"
+                  className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
                 >
                   {/* The model without its brand: with "Lenovo" in it the label
                       ran to two lines at 375px, and the brand is in the heading
@@ -349,7 +364,7 @@ export default async function CategoryPage(props: {
                     white tile was the brightest thing on screen; on the brand's light
                     neutral, with the photo multiplied in, the studio white becomes
                     the paper the site's answers already sit on. */}
-                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-ink-200 shadow-lg shadow-ink-900/10">
+                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
                   <Image
                     src={exampleModel.images[0].src}
                     quality={90}
@@ -365,7 +380,7 @@ export default async function CategoryPage(props: {
                   {exampleModel.images.slice(1).map((img) => (
                     <div
                       key={img.src}
-                      className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-ink-200 shadow-md shadow-ink-900/10"
+                      className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
                     >
                       <Image
                         src={img.src}
@@ -386,14 +401,14 @@ export default async function CategoryPage(props: {
       )}
 
       {categoryModels.length > 0 && (
-        <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
+        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
             <div className="split max-w-3xl">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.modelsBody}</p>
-              <p className="mt-1.5 text-sm leading-[1.6] text-ink-600">{c.priceNote}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
             </div>
 
             {/* A shelf to swipe on a phone (.rail), two columns from md, three
@@ -407,20 +422,20 @@ export default async function CategoryPage(props: {
                       href={localePath(`/modeller/${model.slug}`, lang)}
                       className="plate plate-lift group flex h-full flex-col p-5"
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-ink-600">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                         {model.format[lang]}
                       </span>
-                      <span className="mt-1.5 text-base font-semibold text-ink-900 group-hover:text-ink-900">
+                      <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
                         {model.name}
                       </span>
-                      <span className="mt-1.5 text-sm leading-6 text-ink-700">
+                      <span className="mt-1.5 text-sm leading-6 text-paper/75">
                         {model.tagline[lang]}
                       </span>
                       <SpecChips model={model} lang={lang} />
                       <span className="flex-1" />
                       {/* What tapping the card does. It said "Få et tilbud" here,
                           as plain text on a card that opens the model page. */}
-                      <span className="mt-3 inline-flex items-center gap-1.5 border-t border-ink-200 pt-3 text-sm font-semibold text-brand-700">
+                      <span className="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
                         {c.cardAction}
                         <span aria-hidden="true">&rarr;</span>
                       </span>
@@ -431,7 +446,7 @@ export default async function CategoryPage(props: {
 
               <Link
                 href={localePath("/modeller", lang)}
-                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-ink-900"
+                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
               >
                 {c.allModels}
                 <span aria-hidden="true">&rarr;</span>
@@ -441,10 +456,10 @@ export default async function CategoryPage(props: {
         </section>
       )}
 
-      <section className="border-t border-ink-200 py-10 sm:py-20">
+      <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.useCases}
             </h2>
 
@@ -453,15 +468,15 @@ export default async function CategoryPage(props: {
             <dl className="mt-8 space-y-6">
               {category.useCases.map((useCase) => (
                 <div key={useCase.title.da} className="relative pl-8">
-                  <dt className="text-base font-semibold leading-6 text-ink-900">
+                  <dt className="text-base font-semibold leading-6 text-paper">
                     <Check
                       aria-hidden="true"
-                      className="absolute left-0 top-1 h-4 w-4 text-brand-700"
+                      className="absolute left-0 top-1 h-4 w-4 text-brand-300"
                       strokeWidth={2}
                     />
                     {useCase.title[lang]}
                   </dt>
-                  <dd className="mt-1 text-base leading-7 text-ink-700">
+                  <dd className="mt-1 text-base leading-7 text-paper/75">
                     {useCase.description[lang]}
                   </dd>
                 </div>
@@ -469,8 +484,8 @@ export default async function CategoryPage(props: {
             </dl>
 
             <div className="plate mt-10 p-6">
-              <h3 className="text-base font-semibold text-ink-900">{c.specs}</h3>
-              <p className="mt-2 text-base leading-[1.75] text-ink-700">
+              <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">
                 {category.specNote[lang]}
               </p>
             </div>
@@ -478,17 +493,17 @@ export default async function CategoryPage(props: {
         </Container>
       </section>
 
-      <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">{c.other}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {
                 return (
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/produkter/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-ink-800 transition-colors hover:text-brand-700"
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full pl-2 pr-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
                     >
                       <CraftMark name={getCategoryMark(other.slug)} className="h-5 w-5" />
                       {other.name[lang]}
@@ -504,13 +519,13 @@ export default async function CategoryPage(props: {
                 two sections, each with its own heading and padding. */}
             {category.guides && category.guides.length > 0 && (
               <>
-                <p className="eyebrow mt-10 text-brand-700">{c.readMore}</p>
+                <p className="eyebrow mt-10 text-brand-300">{c.readMore}</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {category.guides.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={localePath(link.href, lang)}
-                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                       >
                         {link.label[lang]}
                         <span aria-hidden="true">&rarr;</span>

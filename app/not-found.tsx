@@ -59,7 +59,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <html lang="da">
-      <body className={`${jakarta.variable} min-h-dvh bg-white font-sans text-ink-900 antialiased`}>
+      <body
+        className={`${jakarta.variable} min-h-dvh bg-brand-950 font-sans text-paper antialiased`}
+      >
         <NotFoundPanel />
       </body>
     </html>

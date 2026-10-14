@@ -76,14 +76,14 @@ function dramChip(x: number, y: number, key: string) {
       />
 
       {/* Marking: manufacturer, part number, lot. */}
-      <rect x={x + 8} y={y + 12} width={22} height={2.8} rx={1} className="fill-ink-300" />
-      <rect x={x + 8} y={y + 21} width={44} height={3.2} rx={1} className="fill-ink-500" />
-      <rect x={x + 8} y={y + 30} width={17} height={2.8} rx={1} className="fill-ink-300" />
+      <rect x={x + 8} y={y + 12} width={22} height={2.8} rx={1} className="fill-white/55" />
+      <rect x={x + 8} y={y + 21} width={44} height={3.2} rx={1} className="fill-white/80" />
+      <rect x={x + 8} y={y + 30} width={17} height={2.8} rx={1} className="fill-white/45" />
 
       {/* Data-matrix, bottom right, clear of the printing. */}
       <rect x={x + 40} y={y + 41} width={14} height={14} fill="url(#spec-code)" />
       {/* Pin one. */}
-      <circle cx={x + 7} cy={y + h - 7} r={2.2} className="fill-ink-300" />
+      <circle cx={x + 7} cy={y + h - 7} r={2.2} className="fill-white/45" />
     </g>
   );
 }
@@ -103,10 +103,10 @@ function chip(kind: SpecKind, x: number, y: number, key: string) {
         className="fill-none stroke-[#2c3345]"
         strokeWidth={1}
       />
-      <rect x={x + 8} y={y + 24} width={44} height={2.4} rx={1} className="fill-ink-200" />
-      <rect x={x + 8} y={y + 31} width={54} height={2.4} rx={1} className="fill-ink-100" />
-      <rect x={x + 8} y={y + 38} width={30} height={2.4} rx={1} className="fill-ink-100" />
-      <circle cx={x + 66} cy={y + 50} r={2.4} className="fill-ink-200" />
+      <rect x={x + 8} y={y + 24} width={44} height={2.4} rx={1} className="fill-white/25" />
+      <rect x={x + 8} y={y + 31} width={54} height={2.4} rx={1} className="fill-white/[0.14]" />
+      <rect x={x + 8} y={y + 38} width={30} height={2.4} rx={1} className="fill-white/[0.14]" />
+      <circle cx={x + 66} cy={y + 50} r={2.4} className="fill-white/25" />
     </g>
   );
 }
@@ -115,7 +115,7 @@ function chip(kind: SpecKind, x: number, y: number, key: string) {
    stroke-dashoffset animation on a copy of the path, so nothing moves layout. */
 function traces(paths: string[]) {
   return (
-    <g className="stroke-brand-600" fill="none" strokeWidth={1.6} strokeLinecap="round">
+    <g className="stroke-brand-400" fill="none" strokeWidth={1.6} strokeLinecap="round">
       {paths.map((d) => (
         <path key={d} d={d} className="opacity-40" />
       ))}
@@ -135,8 +135,8 @@ function traces(paths: string[]) {
 function node(cx: number, cy: number) {
   return (
     <g key={`${cx}-${cy}`}>
-      <circle cx={cx} cy={cy} r={9} className="fill-brand-600" />
-      <circle cx={cx} cy={cy} r={3.4} className="fill-brand-500" />
+      <circle cx={cx} cy={cy} r={9} className="fill-brand-400/15" />
+      <circle cx={cx} cy={cy} r={3.4} className="fill-brand-300" />
     </g>
   );
 }
@@ -168,7 +168,7 @@ function figure(kind: SpecKind) {
               strokeWidth={1.2}
             />
             {/* Lit top edge, one light source, upper left. */}
-            <path d="M66 196h728" className="stroke-ink-300" strokeWidth={1.4} fill="none" />
+            <path d="M66 196h728" className="stroke-white/25" strokeWidth={1.4} fill="none" />
 
             {/* Trace fan running from the packages down to the contacts, and the
                 row of plated vias above them. Both are under the solder mask,
@@ -177,15 +177,15 @@ function figure(kind: SpecKind) {
             <rect x={106} y={302} width={644} height={12} fill="url(#spec-fan)" />
 
             {/* The two mounting holes at the ends. */}
-            <circle cx={76} cy={208} r={4.5} className="fill-white" />
-            <circle cx={784} cy={208} r={4.5} className="fill-white" />
+            <circle cx={76} cy={208} r={4.5} className="fill-brand-950" />
+            <circle cx={784} cy={208} r={4.5} className="fill-brand-950" />
 
             {/* 56 fingers on a 12.6 pitch, tiled rather than enumerated. The last
             tile ends exactly at the last finger's right edge, and the keying
             notch below is drawn over the two it interrupts, as before. */}
             <rect x={78} y={318} width={700.4} height={26} fill="url(#spec-fingers-dimm)" />
             {/* Keying notch — off centre, the way the real one is keyed. */}
-            <rect x={355} y={310} width={26} height={34} rx={2} className="fill-white" />
+            <rect x={355} y={310} width={26} height={34} rx={2} className="fill-brand-950" />
 
             {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => dramChip(106 + i * 82, 222, `c${i}`))}
 
@@ -230,13 +230,13 @@ function figure(kind: SpecKind) {
               className="fill-none stroke-[#39415a]"
               strokeWidth={1.2}
             />
-            <path d="M154 214h592" className="stroke-ink-300" strokeWidth={1.4} fill="none" />
+            <path d="M154 214h592" className="stroke-white/25" strokeWidth={1.4} fill="none" />
             {/* Contact edge and M-key notch — same tiling as the DIMM, on the
                 M.2 pitch. The notch rect below covers the first tab, as before. */}
             <rect x={160} y={214} width={181} height={22} fill="url(#spec-fingers-m2)" />
-            <rect x={160} y={214} width={9} height={96} className="fill-white" />
+            <rect x={160} y={214} width={9} height={96} className="fill-brand-950" />
             {/* Mounting cutout. */}
-            <circle cx={742} cy={262} r={13} className="fill-white" />
+            <circle cx={742} cy={262} r={13} className="fill-brand-950" />
             <circle
               cx={742}
               cy={262}
@@ -281,7 +281,7 @@ function figure(kind: SpecKind) {
               className="fill-none stroke-[#39415a]"
               strokeWidth={1.2}
             />
-            <path d="M130 168h640" className="stroke-ink-300" strokeWidth={1.4} fill="none" />
+            <path d="M130 168h640" className="stroke-white/25" strokeWidth={1.4} fill="none" />
             {[0, 1, 2, 3].map((row) =>
               Array.from({ length: 13 }, (_, col) => {
                 const nordic = row === 1 && col > 9;
@@ -293,7 +293,7 @@ function figure(kind: SpecKind) {
                       width={40}
                       height={40}
                       rx={5}
-                      className={nordic ? "fill-brand-500/35 stroke-brand-600" : "fill-[#171b26]"}
+                      className={nordic ? "fill-brand-500/35 stroke-brand-300" : "fill-[#171b26]"}
                       strokeWidth={nordic ? 1.4 : 0}
                     />
                     {/* The lit top face of the keycap, so the row reads as
@@ -380,8 +380,8 @@ function figure(kind: SpecKind) {
               className="fill-none stroke-[#39415a]"
               strokeWidth={1.2}
             />
-            <path d="M190 150h504" className="stroke-ink-300" strokeWidth={1.4} fill="none" />
-            <rect x={210} y={178} width={180} height={9} rx={4} className="fill-ink-200" />
+            <path d="M190 150h504" className="stroke-white/25" strokeWidth={1.4} fill="none" />
+            <rect x={210} y={178} width={180} height={9} rx={4} className="fill-white/35" />
             {[0, 1, 2, 3, 4, 5].map((i) => (
               <g key={`l${i}`}>
                 <rect
@@ -390,12 +390,12 @@ function figure(kind: SpecKind) {
                   width={26}
                   height={20}
                   rx={4}
-                  className="fill-brand-500/25 stroke-brand-600"
+                  className="fill-brand-500/25 stroke-brand-300"
                   strokeWidth={1.2}
                 />
                 <path
                   d={`M216 ${224 + i * 32}l5 5 9-11`}
-                  className="stroke-brand-600"
+                  className="stroke-brand-200"
                   strokeWidth={1.8}
                   fill="none"
                 />
@@ -405,7 +405,7 @@ function figure(kind: SpecKind) {
                   width={i % 2 ? 300 : 388}
                   height={6}
                   rx={3}
-                  className="fill-ink-100"
+                  className="fill-white/[0.16]"
                 />
               </g>
             ))}
@@ -431,8 +431,8 @@ function figure(kind: SpecKind) {
               className="fill-none stroke-[#39415a]"
               strokeWidth={1.2}
             />
-            <path d="M204 140h474" className="stroke-ink-300" strokeWidth={1.4} fill="none" />
-            <rect x={224} y={170} width={150} height={9} rx={4} className="fill-ink-200" />
+            <path d="M204 140h474" className="stroke-white/25" strokeWidth={1.4} fill="none" />
+            <rect x={224} y={170} width={150} height={9} rx={4} className="fill-white/35" />
             {[0, 1, 2, 3, 4].map((i) => (
               <rect
                 key={`t${i}`}
@@ -441,7 +441,7 @@ function figure(kind: SpecKind) {
                 width={i === 4 ? 240 : 434}
                 height={6}
                 rx={3}
-                className="fill-ink-100"
+                className="fill-white/[0.14]"
               />
             ))}
             {/* The line that matters, drawn as the one that is filled in. */}
@@ -451,12 +451,12 @@ function figure(kind: SpecKind) {
               width={434}
               height={44}
               rx={5}
-              className="fill-brand-500/20 stroke-brand-600"
+              className="fill-brand-500/20 stroke-brand-300"
               strokeWidth={1.3}
             />
             <rect x={242} y={347} width={126} height={8} rx={4} className="fill-brand-100/80" />
             <rect x={392} y={347} width={72} height={8} rx={4} className="fill-brand-100/45" />
-            <rect x={224} y={392} width={300} height={6} rx={3} className="fill-ink-100" />
+            <rect x={224} y={392} width={300} height={6} rx={3} className="fill-white/[0.14]" />
           </g>
         </>
       );
@@ -630,17 +630,17 @@ export default function SpecFigure({ kind, lang }: { kind: SpecKind; lang: Lang 
           width="864"
           height="324"
           rx="14"
-          className="fill-white/95 stroke-brand-600/30"
+          className="fill-brand-950/95 stroke-brand-400/30"
           strokeWidth="1.4"
         />
         <rect x="18" y="118" width="864" height="324" rx="14" fill="url(#spec-glow)" />
 
         {/* Concentric rings, the way a service diagram frames the part it is
             calling out. */}
-        <g className="stroke-brand-600/20" fill="none">
+        <g className="stroke-brand-400/20" fill="none">
           <circle cx="450" cy="272" r="132" />
           <circle cx="450" cy="272" r="172" strokeDasharray="3 9" />
-          <circle cx="450" cy="272" r="210" className="stroke-brand-600/10" />
+          <circle cx="450" cy="272" r="210" className="stroke-brand-400/10" />
         </g>
         {figure(kind)}
         <text

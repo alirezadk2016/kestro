@@ -43,19 +43,19 @@ export default function PageHeader({
       {lang && href && (
         <Breadcrumbs lang={lang} trail={[{ name: crumb ?? title, href }]} className="mb-5" />
       )}
-      <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
+      <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
         {title}
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-ink-800 sm:text-lg sm:leading-[1.65]">
+      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
         {description}
       </p>
       {updated && (
         /* The same meta line as the guides index: label case, one weight up on
            the value. It printed the raw ISO date at 12px roman, which is the
            data rather than a date. */
-        <p className="label mt-6 text-ink-600">
+        <p className="label mt-6 text-paper/65">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
-          <time dateTime={pageUpdated(updated)} className="tabular-nums text-ink-800">
+          <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/85">
             {formatDate(pageUpdated(updated), lang ?? "da")}
           </time>
         </p>

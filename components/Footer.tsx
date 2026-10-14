@@ -123,7 +123,7 @@ export default function Footer({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-brand-950 text-paper/75">
+    <footer className="lit border-t border-white/10 bg-brand-950 text-paper/75">
       <Container className="pb-10 pt-14 sm:pt-20">
         {/* From xl, the brand on the left and four link columns on the right,
             Products in two, so every column is about five links tall. On a

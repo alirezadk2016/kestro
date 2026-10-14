@@ -35,15 +35,15 @@ type Intent = "primary" | "secondary" | "quiet";
 type Size = "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+  "group inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition duration-200 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950";
 
 const intents: Record<Intent, string> = {
-  primary: "rounded-lg bg-brand-600 text-white hover:bg-brand-700",
+  primary: "rounded-lg bg-brand-600 text-white hover:bg-brand-500",
   secondary:
-    "rounded-lg border border-ink-300 bg-white text-ink-900 hover:border-ink-400 hover:bg-ink-50",
+    "rounded-lg border border-white/15 bg-white/[0.04] text-paper hover:border-white/35 hover:bg-white/[0.08]",
   /* No box, so no padding either — a quiet action sits on the baseline of the
      text around it rather than floating in its own rectangle. */
-  quiet: "text-brand-700 hover:text-brand-900",
+  quiet: "text-brand-300 hover:text-paper",
 };
 
 const sizes: Record<Size, string> = {

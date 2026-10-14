@@ -96,7 +96,7 @@ export default function LanguageHint() {
   }
 
   return (
-    <div className="lang-hint border-b border-ink-200 bg-ink-100">
+    <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
       <Container
         /* One row on a phone.
          *
@@ -106,20 +106,20 @@ export default function LanguageHint() {
          * said, so below sm the sentence goes and the row is 46px. */
         className="flex items-center gap-x-4 py-1 sm:flex-wrap sm:gap-x-4 sm:gap-y-2 sm:py-2.5"
       >
-        <p className="hidden text-sm leading-[1.6] text-ink-700 sm:block">
+        <p className="hidden text-sm leading-[1.6] text-paper/75 sm:block">
           This page is also available in English.
         </p>
         <Link
           href={href}
           onClick={dismiss}
-          className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/60 underline-offset-4 transition hover:text-ink-900"
+          className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 transition hover:text-paper"
         >
           Read in English
         </Link>
         <button
           type="button"
           onClick={dismiss}
-          className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-ink-600 transition hover:text-ink-900"
+          className="ml-auto inline-flex min-h-[44px] items-center px-1 text-sm text-paper/65 transition hover:text-paper"
         >
           Dismiss
         </button>

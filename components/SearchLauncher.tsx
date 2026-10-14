@@ -23,7 +23,7 @@ export default function SearchLauncher({ lang, label }: { lang: Lang; label: str
           setLoaded(true);
           setOpen(true);
         }}
-        className="flex min-h-[52px] w-full items-center gap-3 rounded-xl border border-ink-300 bg-ink-50 px-4 text-left text-base text-ink-700 transition-colors hover:border-ink-300 hover:text-ink-900"
+        className="flex min-h-[52px] w-full items-center gap-3 rounded-xl border border-white/15 bg-white/[0.04] px-4 text-left text-base text-paper/75 transition-colors hover:border-white/25 hover:text-paper"
       >
         <Search aria-hidden="true" className="h-5 w-5 flex-none" strokeWidth={1.9} />
         {label}

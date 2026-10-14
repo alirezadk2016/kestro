@@ -357,11 +357,14 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           was the one page with a centred hero, a pill badge and its own
           h1 sizes (3xl/4xl/5xl), so it read as a landing page bolted onto
           the site rather than a page of it. */}
-      <section className="border-b border-ink-200 bg-white py-12 text-ink-900 sm:py-16">
+      <section className="bg-brand-950 py-12 text-white max-md:-mt-[65px] max-md:pt-0 sm:py-16">
         <Container>
-          {/* The fleet room beside the text from lg, after it on a phone. */}
+          {/* The fleet room beside the text from lg. On a phone it is the
+              header's ground under the glass bar, and the trail, title, lead
+              and both actions sit on glass over its foot. The trail lives in
+              the text column so that the room can come first on a phone. */}
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
-            <div className="max-w-3xl lg:col-span-7">
+            <div className="glass-card relative z-10 max-w-3xl max-md:-mt-14 lg:col-span-7">
               <Breadcrumbs
                 lang={lang}
                 trail={[
@@ -372,11 +375,11 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                 ]}
                 className="mb-6 sm:mb-8"
               />
-              <p className="label text-brand-700">{c.badge}</p>
-              <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
+              <p className="label text-brand-300">{c.badge}</p>
+              <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
                 {c.title}
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-[1.65] text-ink-800 sm:text-lg sm:leading-[1.65]">
+              <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
                 {c.intro}
               </p>
 
@@ -393,11 +396,11 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                 )}
               </div>
 
-              <div className="mt-8 flex items-center gap-3 text-sm text-ink-700">
+              <div className="mt-8 flex items-center gap-3 text-sm text-paper/75">
                 <TeamAvatar member={salesContact} lang={lang} size={40} className="h-10 w-10" />
                 <span>
-                  {c.talkTo} <span className="font-semibold text-ink-900">{salesContact.name}</span>
-                  , {salesContact.role[lang].toLowerCase()}
+                  {c.talkTo} <span className="font-semibold text-white">{salesContact.name}</span>,{" "}
+                  {salesContact.role[lang].toLowerCase()}
                 </span>
               </div>
             </div>
@@ -412,6 +415,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                   : "A room of identical prepared laptops set out on desks"
               }
               className="mt-10 aspect-[3/2] lg:col-span-5 lg:mt-12 lg:self-center"
+              bleed
             />
           </div>
         </Container>
@@ -420,7 +424,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-2xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.capabilitiesTitle}
             </h2>
           </div>
@@ -438,10 +442,10 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                 <div className="flex items-start gap-4">
                   <MarkTile name={item.mark} size="md" className="flex-none" />
                   <div className="min-w-0">
-                    <h3 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                    <h3 className="font-display t-h3 font-bold tracking-tight text-paper">
                       {item.title[lang]}
                     </h3>
-                    <p className="mt-2 text-sm leading-[1.65] text-ink-700">
+                    <p className="mt-2 text-sm leading-[1.65] text-paper/75">
                       {item.description[lang]}
                     </p>
                   </div>
@@ -452,29 +456,29 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
         </Container>
       </section>
 
-      <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-2xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.scaleTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.scaleLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.scaleLead}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
             {scaleTiers.map((tier) => (
               <div key={tier.range.da} className="plate p-5 sm:p-8">
-                <h3 className="text-base font-semibold text-ink-900">{tier.range[lang]}</h3>
-                <p className="mt-2 text-sm leading-[1.6] text-ink-700">{tier.body[lang]}</p>
+                <h3 className="text-base font-semibold text-paper">{tier.range[lang]}</h3>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{tier.body[lang]}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-8 max-w-2xl">
-            <p className="text-base leading-[1.75] text-ink-700">{c.scaleClose}</p>
+            <p className="text-base leading-[1.75] text-paper/75">{c.scaleClose}</p>
             <Link
               href={localePath("/priser", lang)}
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
             >
               {c.scaleCloseLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -486,10 +490,10 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       <section className="py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.rolloutTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.rolloutLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.rolloutLead}</p>
 
             <ol className="mt-10 space-y-6">
               {rolloutPhases.map((phase, i) => (
@@ -497,19 +501,21 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                   {i < rolloutPhases.length - 1 && (
                     <span
                       aria-hidden="true"
-                      className="absolute left-[18px] top-11 h-[calc(100%-1.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-600/50 via-ink-200 to-ink-200"
+                      className="absolute left-[18px] top-11 h-[calc(100%-1.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5"
                     />
                   )}
-                  <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-ink-900 ring-1 ring-brand-200">
+                  <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-950 text-sm font-bold text-white ring-1 ring-brand-400/40">
                     {i + 1}
                   </span>
                   <div>
-                    <h3 className="text-base font-semibold text-ink-900">{phase.when[lang]}</h3>
-                    <p className="mt-1 text-base leading-[1.75] text-ink-700">{phase.body[lang]}</p>
+                    <h3 className="text-base font-semibold text-paper">{phase.when[lang]}</h3>
+                    <p className="mt-1 text-base leading-[1.75] text-paper/75">
+                      {phase.body[lang]}
+                    </p>
                     {phase.link && (
                       <Link
                         href={localePath(phase.link.href, lang)}
-                        className="mt-2 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900"
+                        className="mt-2 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
                       >
                         {phase.link.label[lang]}
                         <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -523,14 +529,14 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             {/* Trade-in in one sentence. Its four steps were a full band of
               their own, repeating step 5 above and the question below; the
               process lives on /saelg-til-os. */}
-            <div className="mt-12 max-w-3xl rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8">
-              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-ink-900">
+            <div className="mt-12 max-w-3xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
+              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-paper">
                 {c.tradeTitle}
               </h2>
-              <p className="mt-2 text-base leading-[1.75] text-ink-700">{c.tradeBody}</p>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.tradeBody}</p>
               <Link
                 href={localePath("/saelg-til-os", lang)}
-                className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900"
+                className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
               >
                 {c.tradeLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -540,7 +546,7 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
         </Container>
       </section>
 
-      <div className="border-t border-ink-200">
+      <div className="border-t border-white/10">
         <Faq
           lang={lang}
           items={enterpriseFaqs}
@@ -572,16 +578,16 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
       />
 
       {/* Lit by the site's own wash rather than a blurred orb, which was
-          bg-white on bg-white and drew nothing. */}
-      <section className="overflow-hidden bg-white py-10 sm:py-20">
+          bg-brand-950 on bg-brand-950 and drew nothing. */}
+      <section className="lit overflow-hidden bg-brand-950 py-10 sm:py-20">
         {/* Left-aligned like the closing band on every other page, and
             without the centred icon tile on top — that one tile was the
             only centred mark-over-heading left on the site. */}
         <Container className="relative flex flex-col items-start gap-5">
-          <h2 className="max-w-2xl text-balance font-display t-display font-extrabold tracking-display text-ink-900">
+          <h2 className="max-w-2xl text-balance font-display t-display font-extrabold tracking-display text-paper">
             {c.ctaTitle}
           </h2>
-          <p className="max-w-xl text-base leading-[1.75] text-ink-700">{c.ctaBody}</p>
+          <p className="max-w-xl text-base leading-[1.75] text-paper/75">{c.ctaBody}</p>
           <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
             {/* Only when there is a number. Without the guard this rendered a
                 filled blue pill with a phone icon, no label and href="tel:" —

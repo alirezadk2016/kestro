@@ -85,13 +85,13 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
         </Container>
       </section>
 
-      <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.outsideTitle}
             </h2>
-            <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.outsideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.outsideBody}</p>
           </div>
 
           <div className="mt-12">
@@ -103,21 +103,21 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
       <section className="py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.insideTitle}
             </h2>
-            <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.insideBody}</p>
+            <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.insideBody}</p>
           </div>
 
           <div className="mt-12">
             <MachineInside lang={lang} />
           </div>
 
-          <p className="mt-12 max-w-2xl text-sm leading-[1.6] text-ink-600">
+          <p className="mt-12 max-w-2xl text-sm leading-[1.6] text-paper/65">
             {c.guidesPre}{" "}
             <Link
               href={localePath("/vejledninger", lang)}
-              className="font-semibold text-brand-700 underline decoration-brand-600 decoration-2 underline-offset-4 hover:text-ink-900"
+              className="font-semibold text-brand-300 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-paper"
             >
               {c.guidesLink}
             </Link>{" "}

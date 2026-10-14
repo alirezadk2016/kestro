@@ -223,10 +223,10 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
           />
 
           <div className="split mt-12 max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.gradingTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.gradingBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.gradingBody}</p>
           </div>
 
           {/* Three grades are three parallel things: a row of plates from lg,
@@ -236,16 +236,16 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
               {grades.map((grade) => (
                 <div key={grade.grade.da} className="plate p-5 sm:p-6">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-bold text-ink-900">{grade.grade[lang]}</h3>
-                    <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-700">
+                    <h3 className="text-lg font-bold text-paper">{grade.grade[lang]}</h3>
+                    <span className="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-300">
                       {grade.label[lang]}
                     </span>
                   </div>
-                  <p className="mt-3 text-base leading-[1.75] text-ink-700">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {grade.description[lang]}
                   </p>
-                  <p className="mt-3 text-sm leading-[1.6] text-ink-600">
-                    <span className="font-semibold text-ink-800">{c.suits}</span>{" "}
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/65">
+                    <span className="font-semibold text-paper/85">{c.suits}</span>{" "}
                     {grade.suits[lang]}
                   </p>
                 </div>
@@ -253,27 +253,27 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             </div>
 
             <div className="plate mt-6 flex max-w-3xl gap-3 p-5">
-              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink-800" strokeWidth={2} />
-              <p className="text-sm leading-[1.6] text-ink-800">{c.warning}</p>
+              <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
+              <p className="text-sm leading-[1.6] text-paper/85">{c.warning}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.testTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.testBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.testBody}</p>
 
             <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {testPoints.map((point) => (
-                <li key={point.da} className="flex gap-3 text-sm leading-6 text-ink-700">
+                <li key={point.da} className="flex gap-3 text-sm leading-6 text-paper/75">
                   <Check
                     aria-hidden="true"
-                    className="mt-1 h-4 w-4 flex-none text-brand-700"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
                     strokeWidth={2}
                   />
                   {point[lang]}
@@ -281,7 +281,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
               ))}
             </ul>
 
-            <p className="mt-8 max-w-2xl text-sm leading-[1.6] text-ink-700">{c.testNote}</p>
+            <p className="mt-8 max-w-2xl text-sm leading-[1.6] text-paper/75">{c.testNote}</p>
           </div>
         </Container>
       </section>
@@ -290,37 +290,37 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
         <Container>
           <div className="grid max-w-3xl gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.dataTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.dataBody1}</p>
-              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.dataBody2}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody2}</p>
             </div>
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.warrantyTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.warrantyBody1}</p>
-              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.warrantyBody2}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody2}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.disclosureTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.disclosureBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.disclosureBody}</p>
 
             <ul className="mt-8 space-y-3">
               {disclosure.map((item) => (
-                <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-700">
+                <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
                   <Check
                     aria-hidden="true"
-                    className="mt-1.5 h-4 w-4 flex-none text-brand-700"
+                    className="mt-1.5 h-4 w-4 flex-none text-brand-300"
                     strokeWidth={2}
                   />
                   {item[lang]}
@@ -329,8 +329,8 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             </ul>
 
             <div className="mt-10 plate p-6 sm:p-8">
-              <h3 className="text-base font-semibold text-ink-900">{c.notIncludedTitle}</h3>
-              <p className="mt-2 text-base leading-[1.75] text-ink-700">{c.notIncludedBody}</p>
+              <h3 className="text-base font-semibold text-paper">{c.notIncludedTitle}</h3>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">{c.notIncludedBody}</p>
               <Link
                 href={localePath("/kontakt", lang)}
                 className={`${buttonClass("primary")} mt-5`}

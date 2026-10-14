@@ -18,8 +18,7 @@ const copy = {
     title: "Modeller vi ofte skaffer",
     /* Answer first, with the counts the page actually shows. */
     description: `Her er ${models.length} erhvervsmodeller, vi kender godt, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
-    noStockLine:
-      "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
@@ -85,11 +84,11 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
               were also the answers to two of the questions at the foot of
               this page, so they were on it twice; the full reasoning lives
               on /priser and in those answers. */}
-          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-ink-600">
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
             {c.noStockLine}{" "}
             <Link
               href={localePath("/priser", lang)}
-              className="font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 transition-colors hover:text-ink-900"
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
             >
               {c.noStockLink}
             </Link>
@@ -101,10 +100,10 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
 
             return (
               <div key={group.id} className="mt-14">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-ink-700">
+                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
                   {group.description[lang]}
                 </p>
 
@@ -116,13 +115,13 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                         href={localePath(`/modeller/${model.slug}`, lang)}
                         className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
                       >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-ink-600">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                           {model.brand} · {model.format[lang]}
                         </span>
-                        <h3 className="mt-2 text-base font-semibold text-ink-900 group-hover:text-ink-900 sm:text-lg">
+                        <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 text-sm leading-[1.6] text-ink-700">
+                        <p className="mt-2 text-sm leading-[1.6] text-paper/75">
                           {model.tagline[lang]}
                         </p>
                         <SpecChips model={model} lang={lang} />
@@ -132,7 +131,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                         {/* The card's one action, which is what tapping it does. It
                             also said "Få et tilbud" in white beside it: not a
                             link, on every card, five groups down the page. */}
-                        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-ink-200 pt-3 text-sm font-semibold text-brand-700">
+                        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
                           {c.seeSpecs}
                           <span aria-hidden="true">&rarr;</span>
                         </span>

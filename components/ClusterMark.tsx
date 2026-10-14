@@ -21,14 +21,14 @@ const marks: Record<Cluster, React.ReactNode> = {
   /* Memory: two boards, one behind the other, notch and contacts implied. */
   "memory-storage": (
     <>
-      <rect x="10" y="30" width="76" height="20" className="fill-brand-600" />
+      <rect x="10" y="30" width="76" height="20" className="fill-brand-400/5" />
       <rect x="10" y="30" width="76" height="20" />
       <path d="M44 50v4M52 50v4" />
       <rect x="16" y="35" width="12" height="10" />
       <rect x="34" y="35" width="12" height="10" />
       <rect x="52" y="35" width="12" height="10" />
       <rect x="70" y="35" width="10" height="10" />
-      <rect x="18" y="54" width="76" height="20" className="fill-brand-600" />
+      <rect x="18" y="54" width="76" height="20" className="fill-brand-400/10" />
       <rect x="18" y="54" width="76" height="20" />
       <path d="M24 74v3M32 74v3M40 74v3M48 74v3M56 74v3M64 74v3M72 74v3M80 74v3" />
     </>
@@ -38,38 +38,38 @@ const marks: Record<Cluster, React.ReactNode> = {
     <>
       <path d="M8 68h88" />
       <path d="M8 62v12M96 62v12" />
-      <rect x="8" y="44" width="40" height="18" className="fill-brand-600" />
+      <rect x="8" y="44" width="40" height="18" className="fill-brand-400/10" />
       <rect x="8" y="44" width="40" height="18" />
-      <path d="M56 26v42" className="stroke-brand-600" />
-      <path d="M52 30l4-6 4 6" className="stroke-brand-600" />
+      <path d="M56 26v42" className="stroke-brand-300" />
+      <path d="M52 30l4-6 4 6" className="stroke-brand-300" />
       <rect x="64" y="44" width="32" height="18" strokeDasharray="3 3" />
-      <circle cx="56" cy="68" r="3" className="fill-brand-500 stroke-brand-600" />
+      <circle cx="56" cy="68" r="3" className="fill-brand-300 stroke-brand-300" />
     </>
   ),
   /* Workplace: one machine feeding two panels and a line out. */
   "workplace-hardware": (
     <>
-      <rect x="10" y="52" width="30" height="18" className="fill-brand-600" />
+      <rect x="10" y="52" width="30" height="18" className="fill-brand-400/5" />
       <rect x="10" y="52" width="30" height="18" />
       <path d="M6 70h38" />
-      <rect x="52" y="24" width="40" height="26" className="fill-brand-600" />
+      <rect x="52" y="24" width="40" height="26" className="fill-brand-400/10" />
       <rect x="52" y="24" width="40" height="26" />
       <path d="M72 50v8M62 58h20" />
       <rect x="52" y="62" width="18" height="12" strokeDasharray="3 3" />
-      <path d="M40 60h12" className="stroke-brand-600" />
-      <path d="M46 44h6a4 4 0 014 4v8" className="stroke-brand-600" />
+      <path d="M40 60h12" className="stroke-brand-300" />
+      <path d="M46 44h6a4 4 0 014 4v8" className="stroke-brand-300" />
     </>
   ),
   /* Buying and condition: an object under inspection, one detail enlarged. */
   "buying-condition": (
     <>
-      <rect x="12" y="34" width="46" height="32" className="fill-brand-600" />
+      <rect x="12" y="34" width="46" height="32" className="fill-brand-400/5" />
       <rect x="12" y="34" width="46" height="32" />
       <path d="M12 58h46" />
-      <circle cx="70" cy="42" r="16" className="fill-brand-600" />
-      <circle cx="70" cy="42" r="16" className="stroke-brand-600" />
-      <path d="M82 54l10 12" className="stroke-brand-600" />
-      <path d="M63 42l5 5 9-10" className="stroke-brand-600" />
+      <circle cx="70" cy="42" r="16" className="fill-brand-400/10" />
+      <circle cx="70" cy="42" r="16" className="stroke-brand-300" />
+      <path d="M82 54l10 12" className="stroke-brand-300" />
+      <path d="M63 42l5 5 9-10" className="stroke-brand-300" />
     </>
   ),
   /* Outside the clusters: an object set aside. */

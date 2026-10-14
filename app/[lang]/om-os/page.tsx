@@ -145,10 +145,10 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
                     pill around a technical drawing fights it. */}
                 <MarkTile name={section.mark} size="md" />
                 <div>
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {section.title[lang]}
                   </h2>
-                  <p className="mt-3 text-base leading-[1.75] text-ink-700">
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
                     {section.description[lang]}
                   </p>
                 </div>
@@ -158,16 +158,16 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
         </Container>
       </section>
 
-      <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <figure className="max-w-3xl">
-            <blockquote className="text-xl font-medium leading-9 text-ink-900 sm:text-2xl sm:leading-10">
+            <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
               &ldquo;{c.quote}&rdquo;
             </blockquote>
             {/* The words are the company's, so the caption says so. It used to
                 name the market's sales contact, which put the same sentence in
                 Mehdi's mouth in Danish and Ismail's in English. */}
-            <figcaption className="mt-6 text-sm font-semibold text-ink-900">Kestro</figcaption>
+            <figcaption className="mt-6 text-sm font-semibold text-paper">Kestro</figcaption>
           </figure>
         </Container>
       </section>

@@ -58,14 +58,7 @@ const copy = {
 };
 
 /* The places most visits are looking for, shown before anything is typed. */
-const SHORTCUTS = [
-  "/produkter",
-  "/priser",
-  "/tilbud",
-  "/flaadeloesninger",
-  "/reparation",
-  "/kontakt",
-];
+const SHORTCUTS = ["/produkter", "/priser", "/tilbud", "/flaadeloesninger", "/reparation", "/kontakt"];
 
 const fold = (s: string) =>
   s
@@ -116,9 +109,7 @@ function oneEdit(x: string, y: string) {
 /* A typed word is a near-prefix of a word in the index: "thinkapd" finds
    ThinkPad, "kontkat" Kontakt, "optiplx" OptiPlex. */
 const nearly = (word: string, token: string) =>
-  [token.length - 1, token.length, token.length + 1].some(
-    (n) => n > 0 && oneEdit(word.slice(0, n), token),
-  );
+  [token.length - 1, token.length, token.length + 1].some((n) => n > 0 && oneEdit(word.slice(0, n), token));
 
 function rank(entries: Prepared[], query: string): Prepared[] {
   const strict = rankWith(entries, query, false);
@@ -128,9 +119,7 @@ function rank(entries: Prepared[], query: string): Prepared[] {
 }
 
 function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[] {
-  const tokens = fold(query)
-    .split(/[^a-z0-9]+/)
-    .filter(Boolean);
+  const tokens = fold(query).split(/[^a-z0-9]+/).filter(Boolean);
   if (!tokens.length) return [];
   const scored: [number, Prepared][] = [];
   for (const e of entries) {
@@ -141,16 +130,16 @@ function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[
           ? 2
           : 0
         : e.ft.startsWith(token)
-          ? 8
-          : e.fw.some((w) => w.startsWith(token))
-            ? 6
-            : e.ft.includes(token)
-              ? 4
-              : e.fk.includes(token)
-                ? 3
-                : e.fd.includes(token)
-                  ? 1
-                  : 0;
+        ? 8
+        : e.fw.some((w) => w.startsWith(token))
+          ? 6
+          : e.ft.includes(token)
+            ? 4
+            : e.fk.includes(token)
+              ? 3
+              : e.fd.includes(token)
+                ? 1
+                : 0;
       if (!s) {
         score = 0;
         break;
@@ -159,10 +148,7 @@ function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[
     }
     if (score) scored.push([score, e]);
   }
-  return scored
-    .sort((a, b) => b[0] - a[0])
-    .slice(0, 12)
-    .map(([, e]) => e);
+  return scored.sort((a, b) => b[0] - a[0]).slice(0, 12).map(([, e]) => e);
 }
 
 export default function SiteSearch({
@@ -231,8 +217,7 @@ export default function SiteSearch({
     return order.map((g) => ({ g, items: by.get(g)! }));
   }, [shown]);
 
-  const links = () =>
-    Array.from(list.current?.querySelectorAll<HTMLAnchorElement>("a[data-result]") ?? []);
+  const links = () => Array.from(list.current?.querySelectorAll<HTMLAnchorElement>("a[data-result]") ?? []);
   const move = (from: HTMLElement, step: 1 | -1) => {
     const all = links();
     const i = all.indexOf(from as HTMLAnchorElement);
@@ -252,7 +237,7 @@ export default function SiteSearch({
       onClick={(event) => {
         if (event.target === event.currentTarget) event.currentTarget.close();
       }}
-      className="mx-auto mb-auto mt-3 max-h-[calc(100svh-1.5rem)] w-[min(94vw,640px)] max-w-none overflow-hidden rounded-2xl border border-ink-300 bg-white p-0 text-ink-900 shadow-2xl shadow-ink-900/15 backdrop:bg-ink-900/40 sm:mt-[10vh] sm:max-h-[80vh]"
+      className="mx-auto mb-auto mt-3 max-h-[calc(100svh-1.5rem)] w-[min(94vw,640px)] max-w-none overflow-hidden rounded-2xl border border-white/15 bg-brand-950 p-0 text-paper shadow-2xl shadow-black/60 backdrop:bg-black/70 sm:mt-[10vh] sm:max-h-[80vh]"
     >
       {open && (
         <div className="flex max-h-[inherit] flex-col">
@@ -261,12 +246,8 @@ export default function SiteSearch({
           </h2>
           {/* The focus ring is the field's underline turning blue, not a box
               drawn through the middle of the panel. */}
-          <div className="flex items-center gap-2 border-b-2 border-ink-200 px-3 transition-colors focus-within:border-brand-500 sm:px-4">
-            <Search
-              aria-hidden="true"
-              className="h-5 w-5 flex-none text-ink-600"
-              strokeWidth={1.9}
-            />
+          <div className="flex items-center gap-2 border-b-2 border-white/10 px-3 transition-colors focus-within:border-brand-500 sm:px-4">
+            <Search aria-hidden="true" className="h-5 w-5 flex-none text-paper/65" strokeWidth={1.9} />
             <label htmlFor={inputId} className="sr-only">
               {c.title}
             </label>
@@ -293,41 +274,38 @@ export default function SiteSearch({
                 }
               }}
               placeholder={c.placeholder}
-              className="min-h-[56px] min-w-0 flex-1 bg-transparent text-base text-ink-900 outline-none placeholder:text-ink-500 focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
+              className="min-h-[56px] min-w-0 flex-1 bg-transparent text-base text-paper outline-none placeholder:text-paper/65 focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
             />
             <button
               type="button"
               onClick={() => dialog.current?.close()}
               aria-label={c.close}
-              className="-mr-1 inline-flex h-11 w-11 flex-none items-center justify-center rounded-lg text-ink-700 transition hover:bg-ink-100 hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-600"
+              className="-mr-1 inline-flex h-11 w-11 flex-none items-center justify-center rounded-lg text-paper/75 transition hover:bg-white/10 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-400"
             >
               <X aria-hidden="true" className="h-5 w-5" strokeWidth={1.9} />
             </button>
           </div>
 
-          <div
-            ref={list}
-            className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2 sm:px-3"
-          >
+          <div ref={list} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2 sm:px-3">
             <p role="status" className="sr-only">
               {typed && entries ? c.results(results.length) : ""}
             </p>
 
-            {failed && <p className="px-3 py-6 text-sm text-ink-700">{c.failed}</p>}
+            {failed && <p className="px-3 py-6 text-sm text-paper/75">{c.failed}</p>}
 
             {!typed && shortcuts.length > 0 && (
-              <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-ink-600">
+              <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-paper/65">
                 {c.shortcuts}
               </p>
             )}
 
             {typed && entries && results.length === 0 && (
-              <p className="px-3 py-6 text-sm leading-6 text-ink-700">
+              <p className="px-3 py-6 text-sm leading-6 text-paper/75">
                 {c.none} »{query.trim()}«. {c.noneHelp}{" "}
                 <Link
                   href={localePath("/kontakt", lang)}
                   onClick={() => dialog.current?.close()}
-                  className="font-semibold text-brand-700 underline underline-offset-4 hover:text-ink-900"
+                  className="font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
                 >
                   {c.write}
                 </Link>
@@ -338,7 +316,7 @@ export default function SiteSearch({
             {groups.map(({ g, items }) => (
               <div key={g} className="pb-1">
                 {typed && (
-                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-[0.12em] text-ink-600">
+                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-[0.12em] text-paper/65">
                     {groupLabel[g][lang]}
                   </p>
                 )}
@@ -359,12 +337,10 @@ export default function SiteSearch({
                             move(event.currentTarget, -1);
                           }
                         }}
-                        className="block min-h-[44px] rounded-lg px-3 py-2.5 transition-colors hover:bg-ink-100 focus-visible:bg-ink-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600"
+                        className="block min-h-[44px] rounded-lg px-3 py-2.5 transition-colors hover:bg-white/[0.07] focus-visible:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-400"
                       >
-                        <span className="block text-[0.9375rem] font-semibold leading-6 text-ink-900">
-                          {e.t}
-                        </span>
-                        <span className="block text-sm leading-5 text-ink-700">{e.d}</span>
+                        <span className="block text-[0.9375rem] font-semibold leading-6 text-paper">{e.t}</span>
+                        <span className="block text-sm leading-5 text-paper/75">{e.d}</span>
                       </Link>
                     </li>
                   ))}

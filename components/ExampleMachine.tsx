@@ -38,7 +38,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   if (!model?.images) return null;
 
   return (
-    <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-16">
+    <section className="stage py-10 sm:py-16">
       <Container>
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="relative aspect-square w-full min-w-0 max-lg:max-h-[55svh]">
@@ -60,21 +60,21 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
                 in it. With the model name as the h2, the front page's outline
                 had a product name standing level with "Hvad er refurbished
                 erhvervs-IT?" — a laptop as one of the page's topics. */}
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.title}
             </h2>
-            <p className="mt-2 font-display text-lg font-bold text-brand-700">{c.illustration}</p>
-            <p className="mt-4 text-base leading-[1.65] text-ink-700 sm:text-lg">{c.body}</p>
+            <p className="mt-2 font-display text-lg font-bold text-brand-300">{c.illustration}</p>
+            <p className="mt-4 text-base leading-[1.65] text-paper/75 sm:text-lg">{c.body}</p>
 
             {/* A checklist, not pills: a rounded plate-sm pill is the site's
                 onward-link shape, and on a phone four of them under a
                 picture read as four buttons that did nothing. */}
             <ul className="mt-6 space-y-2.5">
               {highlights.map((highlight) => (
-                <li key={highlight.da} className="flex gap-2.5 text-base leading-6 text-ink-800">
+                <li key={highlight.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
                   <Check
                     aria-hidden="true"
-                    className="mt-1 h-4 w-4 flex-none text-brand-700"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
                     strokeWidth={2}
                   />
                   {highlight[lang]}
@@ -84,7 +84,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
 
             <Link
               href={localePath(`/modeller/${model.slug}`, lang)}
-              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-ink-900"
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.link}
               <span className="sr-only">: {model.name}</span>

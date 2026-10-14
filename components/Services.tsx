@@ -41,11 +41,13 @@ const copy = {
     title: "Fra brugt til klar til brug",
     sub: "Fra maskinen står i Sydeuropa, til den er sat op på et skrivebord i Danmark eller Norge.",
     link: "Se hele processen",
+    step: "Trin",
   },
   en: {
     title: "From used to ready to use",
     sub: "From the machine sitting in southern Europe to it being set up on a desk in Denmark or Norway.",
     link: "See the whole process",
+    step: "Step",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -58,129 +60,73 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="bg-white py-12 sm:py-20">
+    <section className="stage py-12 sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
         {/*
-         * A spine with a station at each step, not four columns in a fence.
+         * One route, four stations, and the station is the mark.
          *
-         * This used to divide the four steps with vertical rules. Two things
-         * were wrong with that. A rule between two things says they are
-         * separate, and these are the opposite — they are one sequence, and
-         * the only thing saying so was the numerals. And because the four
-         * texts are different lengths, the rules ran on past the shortest
-         * column and the row ended ragged.
+         * The first spine drew the route as a hairline with a 7px diamond at
+         * each step, a tick dropping from it to a mark tile that floated
+         * below the line, and a monospace "01" set beside the tile: three
+         * markers for one step, none of them touching the line, so the line
+         * read as a rule over four unrelated columns. Seen at 1920 the owner
+         * called it amateur, and it was.
          *
-         * So the rules are gone and the line that was already across the top
-         * does the work: it runs unbroken through all four, and each step
-         * marks its place on it with a node and a drop tick. The eye reads
-         * left to right along a route, which is what the section is about.
+         * Now the mark tile sits on the route itself: one line through the
+         * middle of the four tiles, broken only where a tile stands on it,
+         * brighter as it leaves a station and fading as it reaches the next.
+         * The step number is a word, "Trin 1", in the label style the rest
+         * of the site uses, over the step's name.
          *
-         * Below lg the steps stack, and a stack is already a sequence — there
-         * the horizontal dividers stay and the nodes are not drawn.
+         * Below lg the same route runs down the left edge of the stack.
          */}
-        <ol className="relative mt-12 grid grid-cols-1 gap-x-6 lg:grid-cols-4 lg:gap-x-0">
-          {/*
-           * The rail, and it stops at the fourth station.
-           *
-           * It was a `border-t` on this list, so it ran the full width of the
-           * grid — a quarter of the page past the last node, ending in mid-air
-           * on the right. The vertical version of this same idea already knew
-           * better and says so in the note below: it stops at the last station
-           * because the process does. Four equal columns with no gap put that
-           * node at 75% plus the column's own left padding.
-           */}
-          <span
-            aria-hidden="true"
-            className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-ink-100 lg:block"
-          />
-          {services.map((service, i) => (
-            <li
-              key={service.title.da}
-              className="relative flex gap-5 pb-9 last:pb-0 lg:block lg:gap-0 lg:py-9 lg:pb-9 lg:pl-8 lg:pr-8 lg:first:pl-0"
-            >
-              {/*
-               * The rail, on the screens the spine used to skip.
-               *
-               * The horizontal version of this idea has existed since the
-               * four columns were built, and it was drawn `hidden lg:flex` —
-               * so the whole graphic argument of the section lived on the
-               * desktop and a phone got four rows separated by hairlines,
-               * which reads as a table. A stack is not automatically a
-               * sequence; a rule between two rows says they are separate,
-               * which is the opposite of what four steps are.
-               *
-               * Same idea, turned ninety degrees: one line running down
-               * through all four, each step a station on it, the mark saying
-               * what happens there. It stops at the last station rather than
-               * running off the end, because the process does.
-               */}
-              <div aria-hidden="true" className="relative w-11 flex-none lg:hidden">
-                {i < services.length - 1 && (
-                  <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-600/50 via-ink-200 to-ink-200" />
-                )}
-                <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="md" className="relative" />
-              </div>
-
-              <span
-                aria-hidden="true"
-                /* Unfilled, so the spine shows through it rather than being
-                   painted over with a background that would have to match a
-                   gradient. */
-                className={`pointer-events-none absolute top-0 hidden flex-col items-start lg:flex ${
-                  i === 0 ? "left-0" : "left-8"
-                }`}
+        <ol className="mt-10 grid grid-cols-1 sm:mt-12 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-12">
+          {services.map((service, i) => {
+            const last = i === services.length - 1;
+            return (
+              <li
+                key={service.title.da}
+                className="relative flex gap-5 pb-10 last:pb-0 lg:block lg:pb-0"
               >
-                <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-600" />
-                {/* h-9, which is the list's own lg:py-9 — the tick has to reach
-                    the plate. At h-5 it stopped twelve pixels short, so the
-                    node floated above a gap and the station read as two
-                    unrelated things stacked rather than one. */}
-                <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-ink-300 to-transparent" />
-              </span>
+                <div aria-hidden="true" className="relative flex-none lg:mb-6">
+                  <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="lg" className="relative z-10" />
+                  {!last && (
+                    <>
+                      {/* Down the stack, from under this tile to the next. */}
+                      <span className="absolute left-7 top-[68px] h-[calc(100%-40px)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/60 to-paper/10 lg:hidden" />
+                      {/* Across the row, from this tile's edge to the next
+                          one's, leaving 12px of air at both ends. */}
+                      <span className="absolute left-[68px] top-7 hidden h-px w-[calc(100%+var(--gap)-80px)] bg-gradient-to-r from-brand-400/70 to-paper/15 lg:block [--gap:2rem] xl:[--gap:3rem]" />
+                    </>
+                  )}
+                </div>
 
-              <div className="min-w-0 flex-1 lg:flex-none">
-                {/*
-                  The step drawn as well as numbered.
-
-                  Four numerals over four paragraphs is a sequence a reader has
-                  to take on trust: nothing about "02" says testing. The mark
-                  says what happens at the station — the suppliers reached, the
-                  lens over the work, the Nordic key, the van — so the route can
-                  be read at a glance and the numeral goes back to doing what a
-                  numeral is for, which is order.
-
-                  Below lg the mark is the station on the rail, so it is not
-                  drawn twice.
-                */}
-                <MarkTile
-                  name={STEP_MARKS[i] ?? "adjust"}
-                  size="md"
-                  className="mb-5 !hidden lg:!inline-flex"
-                />
-                <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-700">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-2 font-display text-base font-bold tracking-tight text-ink-900 lg:text-lg">
-                  {service.title[lang]}
-                </h3>
-                <p className="mt-2 text-sm leading-[1.6] text-ink-700">
-                  {service.description[lang]}
-                </p>
-              </div>
-            </li>
-          ))}
+                <div className="min-w-0 flex-1 pt-1 lg:pt-0">
+                  <p className="eyebrow text-brand-300">
+                    {c.step} {i + 1}
+                  </p>
+                  <h3 className="mt-2 font-display text-lg font-bold tracking-tight text-paper">
+                    {service.title[lang]}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.65] text-paper/75 lg:pr-2">
+                    {service.description[lang]}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
 
         <Link
           href={localePath("/ydelser", lang)}
-          className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+          className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
         >
           {c.link}
           <ArrowRight

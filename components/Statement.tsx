@@ -78,7 +78,7 @@ export default function Statement({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="bg-white py-12 sm:py-24">
+    <section className="stage py-12 sm:py-24">
       <Container>
         {/*
          * The statement on the left, the promises it buys on the right.
@@ -92,13 +92,13 @@ export default function Statement({ lang }: { lang: Lang }) {
          */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-6">
-            <h2 className="text-balance font-display t-display font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-display font-extrabold tracking-display text-paper">
               {c.lead}
             </h2>
-            <p className="mt-6 text-base leading-[1.65] text-ink-700 sm:text-lg sm:leading-[1.65]">
+            <p className="mt-6 text-base leading-[1.65] text-paper/75 sm:text-lg sm:leading-[1.65]">
               {c.body}
             </p>
-            <p className="mt-6 text-base leading-[1.75] text-ink-800">{c.kicker}</p>
+            <p className="mt-6 text-base leading-[1.75] text-paper/85">{c.kicker}</p>
 
             {/* The machine opened up, beside the promise that it is tested
                 unit by unit. The left column ended a third of the way down
@@ -112,13 +112,13 @@ export default function Statement({ lang }: { lang: Lang }) {
                 fill
                 quality={88}
                 sizes="(min-width: 1024px) 560px, 92vw"
-                className="object-cover"
+                className="object-contain"
               />
             </div>
           </div>
 
           <div className="lg:col-span-6 lg:pt-3">
-            <h3 className="label text-ink-700">{c.promisesLabel}</h3>
+            <h3 className="label text-paper/75">{c.promisesLabel}</h3>
             {/* Each title is written once. The title used to be an sr-only
                 copy in the <dt> and an aria-hidden copy in the <dd>, which a
                 screen reader handled but a crawler and every text extractor
@@ -129,16 +129,16 @@ export default function Statement({ lang }: { lang: Lang }) {
             <dl className="mt-4 space-y-3">
               {promises.map((promise) => (
                 <div key={promise.href} className="plate p-5 sm:p-6">
-                  <dt className="flex items-center gap-4 font-display text-base font-bold leading-snug tracking-tight text-ink-900">
+                  <dt className="flex items-center gap-4 font-display text-base font-bold leading-snug tracking-tight text-paper">
                     <MarkTile name={promise.mark} size="md" className="flex-none" />
                     {promise.term[lang]}
                   </dt>
                   <dd className="mt-2 sm:pl-[60px]">
-                    <p className="text-sm leading-6 text-ink-700">{promise.body[lang]}</p>
+                    <p className="text-sm leading-6 text-paper/75">{promise.body[lang]}</p>
                     <Link
                       href={localePath(promise.href, lang)}
                       rel={promise.href === "/handelsbetingelser" ? "terms-of-service" : undefined}
-                      className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/60 decoration-2 underline-offset-4 hover:text-ink-900"
+                      className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
                     >
                       {promise.link[lang]}
                     </Link>

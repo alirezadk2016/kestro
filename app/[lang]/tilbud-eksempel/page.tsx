@@ -243,7 +243,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
         />
       </Container>
 
-      <section className="bg-white py-10 sm:py-20">
+      <section className="lit bg-brand-950 py-10 sm:py-20">
         <Container>
           {/*
             Styled as a document rather than as a web section: a buyer is being
@@ -252,7 +252,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             the corner is not decoration — nothing on this page may be
             mistaken for a live offer.
           */}
-          <article className="max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-ink-900/10">
+          <article className="max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20">
             <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/10 p-6 sm:p-8">
               <div>
                 <p className="label text-brand-700">{company.name}</p>
@@ -364,11 +364,11 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             </div>
           </article>
 
-          <div className="mt-12 max-w-3xl border-t border-ink-300 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.whyTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-ink-700">
+            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
               {c.whyBody}
             </p>
 
@@ -378,7 +378,7 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />

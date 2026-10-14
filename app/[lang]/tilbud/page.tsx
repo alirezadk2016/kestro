@@ -43,7 +43,8 @@ const copy = {
       "Eksemplet viser et tilbud på enhedsniveau – model, specifikation, kosmetisk stand, batteri, tastaturlayout og styresystem – så I ved, hvad der kommer retur, inden I udfylder noget.",
     exampleLink: "Se eksemplet",
     needTitle: "Hvad har vi brug for at vide?",
-    needLead: "Jo mere I kan sige om de fire ting her, jo færre spørgsmål skal vi stille bagefter.",
+    needLead:
+      "Jo mere I kan sige om de fire ting her, jo færre spørgsmål skal vi stille bagefter.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",
@@ -212,7 +213,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
     <>
       <PageSchema lang={lang} type="ContactPage" route="/tilbud" />
 
-      <section className="py-10 sm:py-20">
+      <section className="lit lit-paper py-10 sm:py-20">
         <Container>
           <div className="max-w-5xl xl:max-w-none">
             <Breadcrumbs
@@ -220,22 +221,22 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
               trail={[{ name: lang === "da" ? "Få et tilbud" : "Get a quote", href: "/tilbud" }]}
               className="mb-5"
             />
-            <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
+            <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
               {c.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-ink-800">
+            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {c.lead}
             </p>
-            <p className="label mt-6 text-ink-600">
+            <p className="label mt-6 text-paper/65">
               {lang === "da" ? "Opdateret" : "Updated"}{" "}
-              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-ink-800">
+              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/85">
                 {formatDate(pageUpdated("/tilbud"), lang)}
               </time>
             </p>
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {c.formTitle}
                 </h2>
                 <div className="mt-6">
@@ -247,15 +248,15 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
 
               <div className="space-y-8">
                 <div className="plate p-6">
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.nextTitle}
                   </h2>
                   <ol className="mt-4 space-y-3">
                     {c.nextSteps.map((step, i) => (
-                      <li key={step} className="flex gap-3 text-sm leading-6 text-ink-700">
+                      <li key={step} className="flex gap-3 text-sm leading-6 text-paper/75">
                         <span
                           aria-hidden="true"
-                          className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-800"
+                          className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
                         >
                           {i + 1}
                         </span>
@@ -268,22 +269,22 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                 {/* The strongest thing we can show someone who has not written
                   yet is the document they would get back. It was one link in a
                   list of four; here it is the thing you cannot miss. */}
-                <div className="border border-brand-200 bg-brand-50 p-6">
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                <div className="border border-brand-400/40 bg-brand-600/10 p-6">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.exampleTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-[1.6] text-ink-700">{c.exampleBody}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.exampleBody}</p>
                   <Link
                     href={localePath("/tilbud-eksempel", lang)}
-                    className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+                    className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                   >
                     {c.exampleLink}
                     <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
 
-                <div className="border-t border-ink-200 pt-6">
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                <div className="border-t border-white/10 pt-6">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.trustTitle}
                   </h2>
                   <ul className="mt-4 space-y-2.5">
@@ -291,7 +292,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                       <li key={link.href}>
                         <Link
                           href={localePath(link.href, lang)}
-                          className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+                          className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                         >
                           {link.label}
                           <span aria-hidden="true">&rarr;</span>
@@ -301,14 +302,14 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                   </ul>
                 </div>
 
-                <div className="border-t border-ink-200 pt-6">
-                  <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                <div className="border-t border-white/10 pt-6">
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                     {c.otherTitle}
                   </h2>
-                  <p className="mt-3 text-sm leading-[1.6] text-ink-700">{c.otherBody}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.otherBody}</p>
                   <Link
                     href={localePath("/kontakt", lang)}
-                    className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+                    className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                   >
                     {c.otherLink}
                     <span aria-hidden="true">&rarr;</span>
@@ -320,34 +321,34 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
         </Container>
       </section>
 
-      <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.needTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.needLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.needLead}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2">
             {c.needItems.map((item) => (
               <div key={item.title} className="plate p-5 sm:p-8">
-                <h3 className="flex gap-2.5 text-base font-semibold text-ink-900">
+                <h3 className="flex gap-2.5 text-base font-semibold text-paper">
                   <Check
                     aria-hidden="true"
-                    className="mt-1 h-4 w-4 flex-none text-brand-700"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
                     strokeWidth={2}
                   />
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-[1.6] text-ink-700">{item.body}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{item.body}</p>
               </div>
             ))}
           </div>
 
           <Link
             href={localePath("/saelg-til-os", lang)}
-            className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+            className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
           >
             {c.needLinkLabel}
             <span aria-hidden="true">&rarr;</span>
@@ -355,7 +356,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
         </Container>
       </section>
 
-      <div className="border-t border-ink-200">
+      <div className="border-t border-white/10">
         <Faq lang={lang} items={quoteFaqs} title={{ da: copy.da.faqTitle, en: copy.en.faqTitle }} />
       </div>
     </>

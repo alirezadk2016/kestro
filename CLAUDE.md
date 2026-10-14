@@ -107,17 +107,14 @@ playbook are checked against it in the same change.
 
 ### Accessibility, because it is scored with SEO
 
-- **Text colour: nothing below `text-ink-600` on the light ground, nothing
-  below `text-paper/65` on navy.** The site is white and light grey
-  (`bg-paper-dim`, #F3F4F6); only the closing call-to-action band and the
-  footer are navy. ink-500 is 4.8:1 on white but 4.4:1 on the grey bands,
-  under the 4.5 body text needs, so the floor is ink-600 (7.6:1 and 6.9:1).
-  On navy, white at 40% is 3.81:1; /55 passed AA but a review on a phone
-  called the small grey text hard to read, so that floor went up to /65. The
-  content gate fails the build on anything fainter on either ground; a
-  placeholder may use ink-500. `aria-hidden` decoration is exempt — a "/"
-  between two crumbs is not text anybody reads, and forcing it up makes a
-  separator louder than the words it separates.
+- **Text colour: nothing below `text-paper/65`.** White at 40% on the site's
+  navy is 3.81:1 and at 30% it is 2.9:1, both under the 4.5 body text needs;
+  /55 passed AA but a review on a phone called the small grey text under the
+  cards hard to read, so the floor went up. The content gate fails the build
+  on anything fainter. On the light sections, text is `text-ink-600` or
+  darker — ink-500 on `#F3F4F6` is 4.4:1. `aria-hidden`
+  decoration is exempt — a "/" between two crumbs is not text anybody reads,
+  and forcing it up makes a separator louder than the words it separates.
 - **Every tap target is at least 44px.** Bare text links in navigation need
   `min-h-[44px] inline-flex items-center`.
 - **A `<div>` inside a `<dl>` may contain only `<dt>` and `<dd>`.** Icons and
@@ -157,24 +154,15 @@ bodies.
 
 ## Design
 
-- **Light, calm, Scandinavian.** The owner's verdict on the dark-navy site
-  with glass, glow and tilting cards was "too dark and fancy" for a Danish
-  B2B buyer, whose other suppliers are white pages with plain cards. So: the
-  page is white, sections alternate white and `bg-paper-dim` so that two
-  neighbours never share a ground, text is ink, the accent is brand-600/700,
-  and the only navy is the closing band (`CtaSection`) and the footer under
-  it. No glass, no glow, no grain, no 3D tilt, no pointer-following light; a
-  clickable card says so with a blue ring and its prompt line, not motion.
-  Do not bring a dark section back into the middle of a page.
-- **One panel.** `.sheet`, `.plate` and `.forge` are the same white card
-  with a hairline ring (globals.css); `.plate-lift` is the clickable one,
-  `.plate-sm` the control-size one, `.plate-well` the frame a picture sits in,
-  `.plate-edge` the ring as an overlay. Not `border border-ink-200 bg-white`
-  hand-rolled per page.
-- **A picture is framed, never the page's ground.** The hero's room and the
-  interior pages' artwork sit in a `.plate-well` beside the words (after them
-  on a phone). Text over a photograph, under a scrim or on glass, is gone and
-  stays gone.
+- **Two light sections on the front page, on purpose.** The answer block and
+  the written-quote section sit on `bg-paper-dim` (the brand board's
+  #F3F4F6); everything else is navy. That is the page's rhythm — eight navy
+  bands in a row read as one. A panel on a light section is `.sheet`, never
+  `.plate`.
+- **`.plate` is the panel.** Not `border border-white/10 bg-white/[0.04]`,
+  which is a rectangle lit by nothing. `.plate-lift` is the clickable version,
+  `.plate-sm` the control-size one, `.plate-well` the recess a picture sits
+  in, `.plate-edge` for panels whose content covers their own background.
 - **One type scale**: `t-display`, `t-h1`, `t-h2`, `t-h3` in
   `app/globals.css`. Do not add a new `text-[clamp(...)]`; there were eight of
   them once and the interior pages shouted louder than the front page.
@@ -185,8 +173,7 @@ bodies.
   md 44, lg 56). There were seven hand-rolled wrappers once and the set read
   as collected rather than drawn. New marks follow the language in
   `components/CraftMark.tsx`: 1.5 stroke, round caps, one `km-body` surface,
-  one brand-600 accent on the part that carries the meaning. The tile is pale
-  brand-50 with the mark in deep navy.
+  one brand-300 accent on the part that carries the meaning.
 - **Design for 1920 too.** The container is about 1600px wide there. A
   section that is one `max-w-3xl` column on the left leaves half the screen
   empty, page after page; give it `split` (globals.css: heading left, the rest

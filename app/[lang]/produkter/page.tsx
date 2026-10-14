@@ -21,8 +21,7 @@ const copy = {
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
     /* Answer first, with the counts the page and /modeller actually show. */
     description: `Kestro er leverandør, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
-    noStockLine:
-      "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
     noPrices1:
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
@@ -98,17 +97,17 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               were also the answers to two of the questions at the foot of
               this page, so they were on it twice; the full reasoning lives
               on /priser and in those answers. */}
-          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-ink-600">
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
             {c.noStockLine}{" "}
             <Link
               href={localePath("/priser", lang)}
-              className="font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 transition-colors hover:text-ink-900"
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
             >
               {c.noStockLink}
             </Link>
           </p>
 
-          <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+          <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.categories}
           </h2>
 
@@ -128,13 +127,13 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                       it — the stacked icon tile is the template card. */}
                   <MarkTile name={getCategoryMark(category.slug)} size="md" className="flex-none" />
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <h3 className="text-base font-semibold leading-snug text-ink-900">
+                    <h3 className="text-base font-semibold leading-snug text-paper">
                       {category.name[lang]}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-[1.6] text-ink-700">
+                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">
                       {category.tagline[lang]}
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
                       {c.seeCategory}
                       <span aria-hidden="true">&rarr;</span>
                     </span>
@@ -149,10 +148,10 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               floating in the middle of a left-aligned column. */}
           <div className="plate mt-14 flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
             <div className="max-w-2xl">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.modelsTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.modelsBody}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
             </div>
             <Link
               href={localePath("/modeller", lang)}

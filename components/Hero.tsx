@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { LayoutGrid } from "lucide-react";
 import Container from "./Container";
@@ -13,6 +12,7 @@ import artworkPlaceholders from "@/lib/artwork-placeholders.json";
  * and two links — it renders on the server and ships no JavaScript of its own.
  * The entrance is the .rise utility in globals.css.
  */
+
 
 const copy = {
   da: {
@@ -40,8 +40,7 @@ const copy = {
     /* The project's status on the first screen, once, in small type. A buyer
        who learns it three screens down, after reading "supplier" and "get a
        quote", has reason to feel misled. */
-    status:
-      "Under etablering – endnu ikke en registreret virksomhed. Vi tager imod forespørgsler, ikke ordrer.",
+    status: "Under etablering – endnu ikke en registreret virksomhed. Vi tager imod forespørgsler, ikke ordrer.",
     statusLink: "Status og vilkår",
     /* How buying works, on the first screen. It was one sentence ("we
        source per order, and price, condition and warranty are in writing")
@@ -54,7 +53,6 @@ const copy = {
       "Beslut jer – en forespørgsel binder ikke",
     ],
     secondary: "Se produkterne",
-    alt: "En bærbar erhvervscomputer på et stenbord ved et vindue ud mod havnen i skumringen",
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
@@ -70,7 +68,6 @@ const copy = {
       "Decide — an enquiry commits you to nothing",
     ],
     secondary: "See the products",
-    alt: "A business laptop on a stone desk by a window over the harbour at dusk",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
 
@@ -112,114 +109,277 @@ export default function Hero({ lang }: { lang: Lang }) {
 
   return (
     /*
-     * Words on paper, the picture beside them.
+     * Sized to the photograph from md up.
      *
-     * It was the room at full bleed with the words on dark glass over it, the
-     * bar running up into the ceiling: a tech launch, not a supplier. A
-     * Danish buyer's other suppliers open with a plain statement of what they
-     * sell on white, and so does this. The photograph is still the room —
-     * the machine on the stone desk at blue hour — but framed, as a picture
-     * in the page rather than the page's ground.
+     * The scene fills the section with background-size: cover, and cover
+     * crops whichever axis is proportionally longer. A section whose height
+     * came from its copy was 2.06:1 against a 2.70:1 plate, so cover scaled to
+     * the height and cropped the architectural setting. Giving the section the plate's own ratio
+     * means nothing is cropped and the composition arrives as it was framed.
      *
-     * On a phone the words come first, so the first screen says what Kestro
-     * is and how buying works, and the picture follows the buttons.
+     * w-full is not decorative: without it the ratio drives the width as well
+     * as the height, and at 1440 the section measured 1456px inside a 1440px
+     * viewport.
+     *
+     * 1460px is where the ratio starts being affordable. An aspect-ratio is a
+     * height, not a minimum, so below that width it asks for a box shorter
+     * than the copy needs and the copy is simply clipped — at 1024 the ratio
+     * wanted 422px against the 622px the words, the padding and the trust bar
+     * actually occupy. Under 1460 the section is as tall as its contents and
+     * cover crops the sides instead, which is the ordinary trade; over it,
+     * nothing is cropped and the composition arrives as it was framed.
+     *
+     * The negative top margin is the header's own height, so the photograph
+     * runs up behind it the way the reference does — the nav is 82% glass, and
+     * a dark ceiling reading faintly through it is the difference between a
+     * picture that starts under a bar and a room the bar is standing in. The
+     * matching padding puts the copy back below it. 81px is what the header
+     * measures at every width from 768 up; verify's overflow pass is what
+     * catches it if that ever stops being true.
      */
-    <section className="border-b border-ink-200 bg-white">
-      <Container className="grid items-center gap-8 pb-10 pt-8 sm:pb-14 sm:pt-12 lg:grid-cols-12 lg:gap-12 lg:py-16 xl:gap-16 2xl:py-20">
-        <div className="lg:col-span-6">
-          <div className="rise">
-            {/* The trailing spaces are for everything that reads the text
-                rather than the layout: without them the h1's textContent was
-                "Businesscomputers.Ready for the Nordics." — which is what a
-                crawler, a screen reader's text mode and an audit all quoted
-                back. */}
-            <h1 className="hero-title font-display font-extrabold leading-[1.04] tracking-display text-ink-900">
-              {c.headlineTop.map((line) => (
-                <span key={line} className="block">
-                  {tuckStop(line)}{" "}
-                </span>
-              ))}
-              <span className="block text-brand-600">{tuckStop(c.headlineAccent)}</span>
-            </h1>
+    <section className="under-bar grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
+      {/*
+       * The scene.
+       *
+       * The room the product stands in: the glazing, the blue-hour waterfront,
+       * the machine on dark stone. It
+       * carries what three separate decorations used to be asked to carry —
+       * the K watermark, the world map, the cut-out laptop — so all three are
+       * gone. One picture, one story.
+       *
+       * The artwork contains no text or branding. Real headings, actions and
+       * the Kestro logo remain in HTML. scripts/build-artwork.mjs exports the
+       * desktop plate and a separate mobile crop from the same master.
+       */}
+      {/*
+        Told to the browser before the stylesheet is parsed.
 
-            {/* One sentence on a phone, two lines from md. "erhvervs-IT" is
-                kept whole, because a line that ends on "erhvervs-" splits the
-                one term a buyer searches. */}
-            <p className="mt-5 max-w-xl text-base leading-[1.6] text-ink-700 max-md:text-balance md:text-lg md:leading-[1.65]">
-              <span className="md:block md:text-ink-900">{keepTerm(c.subLead)} </span>
-              <span className="md:block">{c.sub}</span>
-            </p>
+        The scene is a CSS background, which is the right call — it is
+        decoration with no alt text to argue about, and it has to behave like
+        cover/center, which an <img> does not do for free. The cost is that the
+        preload scanner cannot see it: it is the largest element on the page,
+        and the browser only learns the URL exists once two stylesheets have
+        downloaded and parsed. Measured on the live site: 910ms of resource
+        load delay against 240ms of actual download.
 
-            <ol
-              aria-label={c.stepsLabel}
-              className="mt-5 max-w-xl space-y-1.5 text-[0.9375rem] leading-[1.55] text-ink-800 md:text-base"
-            >
-              {(c.steps as string[]).map((step, i) => (
-                <li key={step} className="flex items-baseline gap-2.5">
-                  <span
-                    aria-hidden="true"
-                    className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full bg-brand-50 text-[0.6875rem] font-bold tabular-nums text-brand-800 ring-1 ring-inset ring-brand-600/20"
-                  >
-                    {i + 1}
+        This link is in the markup from the first byte, so the fetch starts
+        with the CSS rather than after it. media, because the layer it belongs
+        to is hidden below md — a phone should not spend its first connection
+        on 85kB it will never draw.
+      */}
+      <link
+        rel="preload"
+        as="image"
+        href="/hero/scene.avif"
+        type="image/avif"
+        media="(min-width: 768px)"
+        fetchPriority="high"
+      />
+      {/* AVIF on a phone: 24kB against the WebP's 40kB for the same picture,
+          and it is the Largest Contentful Paint. Browsers without AVIF skip
+          this preload and take the WebP from the stylesheet's image-set(). */}
+      <link
+        rel="preload"
+        as="image"
+        href="/hero/scene-mobile.avif"
+        type="image/avif"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
+
+      <div
+        aria-hidden="true"
+        className="hero-scene pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
+      />
+
+      {/*
+       * The scrim, over the photograph and under the words.
+       *
+       * Not a taste decision. Verify measures the headline against whatever
+       * the picture is doing behind it, and a photograph has no obligation to
+       * be dark where a sentence lands. The left third of this plate is
+       * already near-black, so this only has to hold that and let go early —
+       * by 66% the window and the machine are untouched.
+       */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(4,7,17,0.82) 0%, rgba(4,7,17,0.90) 11%, rgba(4,7,17,0.88) 34%, rgba(4,7,17,0.60) 45%, rgba(4,7,17,0.20) 55%, rgba(4,7,17,0) 66%)",
+        }}
+      />
+
+      {/*
+       * No words in the room. There were two English stanzas ("People /
+       * Technology / A cleaner tomorrow", "IT today / A brighter tomorrow")
+       * and a "Scroll" cue set into the photograph as HTML, and a book on
+       * the desk with "Circular IT / Stronger businesses" on its spine. On a
+       * Danish page they were the first text a crawler met after the
+       * navigation and they said nothing a buyer could use, so the stanzas
+       * are gone and the book's spine was cleaned out of the plate.
+       */}
+
+      {/*
+        The phone's first screen: the room behind everything, the words on
+        glass at the bottom.
+
+        It used to be words first and the picture after them as a band, and
+        on an iPhone the band started under the buttons, so the first screen
+        was navy with type on it and a strip of room at the foot. Now the
+        room fills the screen from under the bar down, and the headline, the
+        sentence and both actions sit together in one glass panel at the
+        bottom, under the thumb, with the facts running beneath it.
+
+        A 2.7:1 photograph still cannot fill a 0.6 screen without losing the
+        machine, so it is not stretched to: the phone's own right-hand crop
+        keeps the whole machine and stands sharp at the top at its
+        own ratio, and the same file, blurred and enlarged, fills whatever
+        height the phone has below it. One download, any screen. The dark
+        stone of the desk is what the glass sits on.
+
+        From md up the wrapper is display: contents, so the wide layout is
+        exactly what it was.
+      */}
+      <div className="relative flex min-h-[100svh] flex-col justify-end md:contents">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 md:hidden">
+          {/* The blurred fill is a 32-pixel copy of the scene, blurred when it
+              was made and stretched by the browser, rather than the full
+              picture under a 40px CSS blur. The filter was the page's most
+              expensive paint and this layer is the largest thing on a phone's
+              first screen, so it held up Largest Contentful Paint; 188 bytes
+              in the markup need no request and no filter. */}
+          <div className="absolute inset-0 bg-cover bg-top opacity-60" style={{ backgroundImage: `url(${artworkPlaceholders.heroMobile})` }} />
+          <div
+            className="hero-scene-mobile absolute inset-x-0 top-0 aspect-[1000/971] bg-cover bg-top"
+            style={{
+              WebkitMaskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
+              maskImage: "linear-gradient(180deg, #000 70%, transparent 100%)",
+            }}
+          />
+          {/* Enough shade under the glass bar for the logo, no more. */}
+          <div
+            className="absolute inset-x-0 top-0 h-28"
+            style={{ background: "linear-gradient(180deg, rgba(4,8,18,0.5) 0%, rgba(4,8,18,0) 100%)" }}
+          />
+        </div>
+
+      <div /* Centred, but not in the middle. The reference sets the block
+                  high in the frame — 87px of air above the eyebrow against 259
+                  below the buttons — because the machine and the waterfront
+                  need the lower half. A heavier bottom padding does that
+                  without pinning the block to a pixel offset, and it is held
+                  back until 2xl: below that the frame has no spare height to
+                  give, and asking for it only makes the box taller than the
+                  photograph's own ratio, which is paid for in cropped sides. */
+        className="relative z-10 flex items-center pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-24 md:flex-1 md:pb-14 md:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
+      >
+        <Container>
+          <div className="glass-card max-w-2xl max-md:pb-2 lg:max-w-[54%]">
+            <div className="rise">
+              {/* Sized for the longest word it has to hold rather than for
+                  the English: "Erhvervscomputere." is one 18-character word
+                  that cannot break, and at too large a cap it runs straight
+                  out of this column and into the machine beside it. */}
+              <h1 className="hero-title font-display font-extrabold leading-[1.02] tracking-display">
+                {/* w-fit, not just block. A block span fills the column, and
+                    the contrast check samples the whole box it is given — so
+                    the blue line was being measured against the lit stone 150px
+                    past its last glyph and failing at 1.57:1, while the ground
+                    the letters actually sit on is the near-black wall. Shrink
+                    the box to the words and the reading is the real one. */}
+                {/* The trailing spaces are for everything that reads the text
+                    rather than the layout: without them the h1's textContent
+                    was "Businesscomputers.Ready for the Nordics." — which is
+                    what a crawler, a screen reader's text mode and an audit
+                    all quoted back. */}
+                {c.headlineTop.map((line) => (
+                  <span key={line} className="block w-fit text-paper">
+                    {tuckStop(line)}{" "}
                   </span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-          </div>
+                ))}
+                <span className="block w-fit text-brand-500">{tuckStop(c.headlineAccent)}</span>
+              </h1>
 
-          {/* One primary action. On a phone the second one is a quiet link
-              under it rather than a second full-width box of the same height,
-              which made two equal bars compete for the thumb. The words are
-              the header's and the closing band's, from lib/nav.ts. */}
-          <div className="rise rise-1 mt-7 flex flex-col gap-1 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
-            <Button href={localePath("/tilbud", lang)} size="lg">
-              {ui.bookCall[lang]}
-            </Button>
-            <Button
-              href={localePath("/produkter", lang)}
-              intent="secondary"
-              size="lg"
-              icon={<LayoutGrid className="h-4 w-4 text-ink-600" strokeWidth={2} />}
-              className="max-sm:min-h-[48px] max-sm:border-transparent max-sm:bg-transparent"
-            >
-              {c.secondary}
-            </Button>
-          </div>
+              {/* One sentence on a phone, two lines from md. As two block
+                  spans on a phone it broke into a long line, a short line and
+                  a dimmer third — "…erhvervs-" / "IT til virksomheder" / "i
+                  Danmark…" on an iPhone, which read as three fragments in two
+                  colours. Inline below md it flows as the sentence it is, in
+                  one colour; "erhvervs-IT" is kept whole, because a line that
+                  ends on "erhvervs-" splits the one term a buyer searches. */}
+              <p className="mt-4 max-w-xl text-base leading-[1.6] text-paper/85 max-md:text-balance md:mt-5 md:text-[clamp(0.95rem,0.98vw,1.2rem)] md:leading-[1.72]">
+                <span className="md:block md:text-paper">{keepTerm(c.subLead)} </span>
+                <span className="md:block md:text-paper/75">{c.sub}</span>
+              </p>
+              {/* On a short phone screen (an SE-size Safari window, 548px tall) the
+                  steps pushed the glass up over the whole picture, so there
+                  they give way; every taller screen has them. */}
+              <ol
+                aria-label={c.stepsLabel}
+                className="mt-3 max-w-xl space-y-1 text-[0.9375rem] leading-[1.55] text-paper/85 md:mt-4 md:space-y-1.5 md:text-[clamp(0.9rem,0.9vw,1.1rem)] max-md:[@media(max-height:600px)]:hidden"
+              >
+                {(c.steps as string[]).map((step, i) => (
+                  <li key={step} className="flex items-baseline gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      /* A solid disc, not a ring over the glass: where the
+                         English lines wrap, the numerals sat on the lit part of
+                         the photograph and brand-200 measured 4.0:1. */
+                      className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full border border-brand-400/70 bg-brand-950 text-[0.6875rem] font-bold tabular-nums text-paper"
+                    >
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
 
-          {/* The project's status on the first screen, once, in small type. */}
-          <p className="rise rise-1 mt-5 max-w-xl text-[0.8125rem] leading-[1.55] text-ink-600">
-            {c.status}{" "}
-            <Link
-              href={localePath("/handelsbetingelser", lang)}
-              rel="terms-of-service"
-              className="font-semibold text-ink-800 underline decoration-ink-300 underline-offset-4 hover:text-brand-700 hover:decoration-brand-600"
-            >
-              {c.statusLink}
-            </Link>
-          </p>
-        </div>
+              {/* No row of facts here any more. It said "Testet · Nordisk
+                  tastatur · Levering" in the panel while the strip a thumb's
+                  width below ran the same three with their reasons, so the
+                  first screen said them twice; the panel keeps to the claim
+                  and the action. */}
+            </div>
 
-        {/* The room, framed. The phone's own near-square crop of the scene
-            keeps the whole machine and the waterfront behind it, and it is
-            the same file at every width, so there is one download. */}
-        <div className="settle lg:col-span-6">
-          <div className="plate-well overflow-hidden rounded-2xl">
-            <Image
-              src="/hero/scene-mobile.webp"
-              alt={c.alt}
-              width={820}
-              height={796}
-              priority
-              quality={85}
-              placeholder="blur"
-              blurDataURL={artworkPlaceholders.heroMobile}
-              sizes="(min-width: 1024px) 46vw, 100vw"
-              className="aspect-[4/3] h-auto w-full object-cover lg:aspect-[820/796]"
-            />
+            {/* One primary action. On a phone the second one is a quiet link
+                under it rather than a second full-width box of the same
+                height, which made two equal bars compete for the thumb. */}
+            <div className="rise rise-1 mt-6 flex flex-col gap-1 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
+              {/*
+                The same words as the header's button and the closing one,
+                from lib/nav.ts. There is one primary action on this site and
+                it is worded in one place.
+              */}
+              <Button href={localePath("/tilbud", lang)} size="lg">
+                {ui.bookCall[lang]}
+              </Button>
+              <Button
+                href={localePath("/produkter", lang)}
+                intent="secondary"
+                size="lg"
+                icon={<LayoutGrid className="h-4 w-4 text-paper/65" strokeWidth={2} />}
+                className="max-sm:min-h-[44px] max-sm:border-transparent max-sm:bg-transparent max-sm:text-paper/85"
+              >
+                {c.secondary}
+              </Button>
+            </div>
+
+            <p className="rise rise-1 mt-4 max-w-xl text-[0.8125rem] leading-[1.55] text-paper/75 sm:mt-5 max-md:[@media(max-height:600px)]:hidden">
+              {c.status}{" "}
+              <Link
+                href={localePath("/handelsbetingelser", lang)}
+                rel="terms-of-service"
+                className="font-semibold text-paper/85 underline decoration-paper/40 underline-offset-4 hover:text-paper"
+              >
+                {c.statusLink}
+              </Link>
+            </p>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
+
+      </div>
 
       <FeatureStrip lang={lang} />
     </section>

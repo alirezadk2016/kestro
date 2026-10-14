@@ -26,16 +26,16 @@ export default function RelatedLinks({
   const heading = title ?? { da: "Videre herfra", en: "Where to go next" };
 
   return (
-    <section className="border-t border-ink-200 py-10 sm:py-20">
+    <section className="border-t border-white/10 py-10 sm:py-20">
       <Container>
         <div className="max-w-6xl">
-          <p className="eyebrow text-brand-700">{heading[lang]}</p>
+          <p className="eyebrow text-brand-300">{heading[lang]}</p>
           <ul className="mt-5 flex flex-wrap gap-2">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={localePath(link.href, lang)}
-                  className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
+                  className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                 >
                   {link.label[lang]}
                   <span aria-hidden="true">&rarr;</span>

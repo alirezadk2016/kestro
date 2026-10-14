@@ -230,13 +230,6 @@ for (const da of fromConfig.keys()) {
  * Everything from /05 to /60 is barred.
  */
 const FAINT = /\btext-paper\/(?:0?5|[1-5][05]|60)\b/;
-/*
- * The same floor on the light ground, which is most of the site now. ink-500
- * is 4.8:1 on white and 4.4:1 on the light grey bands (#F3F4F6), under the
- * 4.5 body text needs there; ink-600 is 7.6:1 and 6.9:1. A placeholder is
- * not text a reader has to read, and keeps ink-500.
- */
-const FAINT_INK = /(?<!placeholder:)(?<![\w-])text-ink-(?:50|[1-5]00)(?![\w/-])/;
 const walk = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = join(dir, entry.name);
@@ -256,11 +249,6 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
         const where = `${file.slice(root.length)}:${i + 1}`;
         fail(
           `${where}: faint text-paper alpha — the floor is /65 (small grey text under /65 reads poorly on a phone); use /65 or above`,
-        );
-      }
-      if (FAINT_INK.test(line) && !/aria-hidden/.test(line)) {
-        fail(
-          `${file.slice(root.length)}:${i + 1}: faint text on the light ground — the floor is text-ink-600 (ink-500 is 4.4:1 on the grey bands)`,
         );
       }
     });

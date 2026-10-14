@@ -182,15 +182,15 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
             />
 
             <div className="mt-8 max-w-3xl lg:col-span-6 lg:mt-10">
-              <p className="text-base leading-[1.75] text-ink-700">{c.intro}</p>
+              <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-10 sm:py-20">
+      <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.whatWeDo}
           </h2>
 
@@ -216,7 +216,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
         <Container>
           <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 xl:max-w-none">
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.howTitle}
               </h2>
               {/* A sequence, so a spine: the numbers sit on a rail that runs
@@ -225,39 +225,39 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               <ol className="relative mt-6 space-y-6">
                 <span
                   aria-hidden="true"
-                  className="absolute bottom-3 left-[15px] top-3 w-px bg-gradient-to-b from-brand-600/60 via-ink-200 to-ink-200"
+                  className="absolute bottom-3 left-[15px] top-3 w-px bg-gradient-to-b from-brand-400/60 via-paper/15 to-paper/5"
                 />
                 {[c.step1, c.step2, c.step3, c.step4].map((step, i) => (
                   <li key={step} className="relative flex gap-4">
-                    <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white font-display text-xs font-bold tabular-nums text-brand-700">
+                    <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-950 font-display text-xs font-bold tabular-nums text-brand-300">
                       {i + 1}
                     </span>
-                    <span className="pt-1 text-base leading-7 text-ink-700">{step}</span>
+                    <span className="pt-1 text-base leading-7 text-paper/75">{step}</span>
                   </li>
                 ))}
               </ol>
             </div>
 
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.pricesTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.pricesBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.pricesBody}</p>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="bg-paper-dim py-10 sm:py-20">
+      <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="split max-w-3xl">
             <h2
               id="reparation-formular"
-              className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900"
+              className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"
             >
               {c.formTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.formBody}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
 
             <div className="mt-8 plate p-6 sm:p-8">
               <ContactForm
