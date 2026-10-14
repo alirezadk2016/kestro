@@ -18,7 +18,7 @@ const copy = {
     metaTitle: "Reparation af computer og bærbar – også for private | Kestro",
     metaDescription:
       "Batteri, skærm, RAM, SSD, tastatur og Windows på bærbare og stationære. Pris, før vi går i gang – og et ærligt svar, hvis det ikke kan betale sig.",
-    title: "Reparation og opgradering",
+    title: "Reparation og opgradering af computere",
     description:
       "Et lille værksted til computere, der ikke skal skiftes ud endnu. Kestro sælger og skaffer IT til virksomheder – værkstedet er den ene undtagelse, hvor private også er velkomne.",
     intro:
@@ -41,7 +41,7 @@ const copy = {
     metaTitle: "Computer repairs and upgrades — individuals welcome | Kestro",
     metaDescription:
       "Battery, screen, memory, SSD, keyboard and Windows on laptops and desktops. A price before we start, and an honest answer if it is not worth it.",
-    title: "Repairs and upgrades",
+    title: "Computer repairs and upgrades",
     description:
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
     intro:

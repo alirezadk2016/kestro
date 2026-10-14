@@ -44,7 +44,7 @@ const copy = {
     metaTitle: "Sell used IT equipment — collection and data erasure | Kestro",
     metaDescription:
       "Replacing company IT? Kestro buys used business computers, phones and tablets in Denmark and Norway, collects them and erases the storage.",
-    title: "Sell us your used IT equipment",
+    title: "Sell your company's used IT equipment to us",
     description:
       "We buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",
     howTitle: "How does a sale work?",

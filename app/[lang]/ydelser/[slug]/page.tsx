@@ -142,7 +142,7 @@ export default async function ServicePage(props: {
             <Breadcrumbs lang={lang} trail={trail} />
 
             <h1 className="mt-5 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-              {service.name[lang]}
+              {(service.h1 ?? service.name)[lang]}
             </h1>
             {/* The answer first. The card one-liner is `summary`; the page opens
                 with what the service is, with the figure in it. */}

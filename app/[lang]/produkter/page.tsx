@@ -18,7 +18,7 @@ const copy = {
     metaTitle: "Brugt IT-udstyr til virksomheder: pc, skærm og dock | Kestro",
     metaDescription:
       "Refurbished bærbare, stationære, mini-pc'er, skærme, tablets og docks til virksomheder i Danmark og Norge – skaffet til ordren, med vilkår på skrift.",
-    title: "Hvad vi skaffer",
+    title: "Brugt IT-udstyr, vi skaffer til virksomheder",
     /* Answer first, with the counts the page and /modeller actually show. */
     description: `Kestro er leverandør, ikke webshop: vi skaffer brugt erhvervs-IT i ${categories.length} kategorier, og ${models.length} af de modeller, vi oftest skaffer, er beskrevet i detaljer. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.`,
     noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
@@ -38,7 +38,7 @@ const copy = {
     metaTitle: "Used and refurbished business computers and IT | Kestro",
     metaDescription:
       "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
-    title: "What we source",
+    title: "Used business computers we source",
     description: `Kestro is a supplier, not a web shop: we source used business IT in ${categories.length} categories, and ${models.length} of the models we source most often are described in detail. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",

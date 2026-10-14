@@ -195,7 +195,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     className="flex-none"
                   />
                   <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                    {model.name}
+                    {lang === "da" ? "Brugt" : "Refurbished"} {model.name}
                   </h1>
                 </div>
                 {/* The tagline, then the answer: what the machine is, with

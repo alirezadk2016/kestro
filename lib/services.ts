@@ -23,6 +23,11 @@ export type ServiceSection = {
 export type Service = {
   slug: string;
   name: Localized;
+  /**
+   * The page's heading, when it should carry the search phrase and the
+   * short `name` (menus, cards, breadcrumbs) should not. Mak rule 5.
+   */
+  h1?: Localized;
   metaTitle: Localized;
   metaDescription: Localized;
   /** One line under the heading. */
@@ -37,6 +42,7 @@ export const services: Service[] = [
   {
     slug: "sourcing-og-indkoeb",
     name: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
+    h1: { da: "Sourcing og IT-indkøb til erhverv", en: "Sourcing and IT purchasing for business" },
     metaTitle: {
       da: "IT-indkøb til erhverv – vi skaffer modellen | Kestro",
       en: "IT purchasing for business — we source the model | Kestro",
@@ -180,6 +186,7 @@ export const services: Service[] = [
   {
     slug: "klargoering-og-test",
     name: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
+    h1: { da: "Klargøring og test af computere til medarbejdere", en: "Preparing and testing computers for employees" },
     metaTitle: {
       da: "Klargøring og test af computere til medarbejdere | Kestro",
       en: "Preparing computers for employees — tested and set up | Kestro",
@@ -243,6 +250,7 @@ export const services: Service[] = [
   {
     slug: "nordisk-tilpasning",
     name: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
+    h1: { da: "Nordisk tilpasning: dansk tastatur på importerede computere", en: "Nordic preparation: Danish keyboards on imported laptops" },
     metaTitle: {
       da: "Dansk tastatur og opsætning på importerede pc'er | Kestro",
       en: "Danish and Norwegian keyboards on used computers | Kestro",
@@ -292,6 +300,7 @@ export const services: Service[] = [
   {
     slug: "levering",
     name: { da: "Levering til virksomheden", en: "Delivery to the company" },
+    h1: { da: "Levering af IT-udstyr til virksomheden", en: "Delivering IT equipment to your company" },
     metaTitle: {
       da: "Levering af IT-udstyr til virksomheder i DK og Norge | Kestro",
       en: "Delivery of business IT in Denmark and Norway | Kestro",
@@ -346,6 +355,7 @@ export const services: Service[] = [
   {
     slug: "overskudslager-og-returvarer",
     name: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
+    h1: { da: "Overskudslager og returvarer af IT-udstyr", en: "IT overstock and returned equipment" },
     metaTitle: {
       da: "Sælg IT-overskudslager, returvarer og demoenheder | Kestro",
       en: "Sell IT overstock, returned stock and demo units | Kestro",
@@ -385,6 +395,7 @@ export const services: Service[] = [
   {
     slug: "opstart-af-arbejdspladser",
     name: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
+    h1: { da: "IT-udstyr til nye medarbejdere: opstart af arbejdspladser", en: "IT equipment for new starters: workstation setup" },
     metaTitle: {
       da: "IT-udstyr til nye medarbejdere – klar fra dag ét | Kestro",
       en: "IT equipment for new employees — ready on day one | Kestro",

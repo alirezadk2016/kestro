@@ -63,7 +63,7 @@ const copy = {
     metaTitle: "Hvad koster brugte computere til virksomheder? | Kestro",
     metaDescription:
       "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se hvad prisen afhænger af, og kontakt os om en konkret pris og muligheder til jer.",
-    title: "Hvad koster det?",
+    title: "Hvad koster brugte computere?",
     description:
       "Se daterede budgeteksempler på bærbare, stationære og skærme. Det er eksterne detailreferencer, ikke Kestros salgspriser. Projektet er under etablering; kontakt os for en uforpligtende afklaring.",
     whyTitle: "Hvorfor er priserne vejledende?",
@@ -107,7 +107,7 @@ const copy = {
     metaTitle: "What do used business computers cost? Examples | Kestro",
     metaDescription:
       "Indicative budgets for used business IT, dated retail price examples and what affects the price. Contact us to discuss options and a specific price.",
-    title: "What does it cost?",
+    title: "What do used business computers cost?",
     description:
       "See dated budget examples for laptops, desktops and monitors. These are external retail references, not Kestro selling prices. The project is in preparation; contact us for a non-binding discussion.",
     whyTitle: "Why are the prices indicative?",

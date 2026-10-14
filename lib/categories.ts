@@ -3,6 +3,11 @@ import type { Localized } from "./i18n";
 export type Category = {
   slug: string;
   name: Localized;
+  /**
+   * The page's heading, when it should carry the search phrase and the
+   * short `name` (menus, cards, breadcrumbs) should not. Mak rule 5.
+   */
+  h1?: Localized;
   shortName: Localized;
   tagline: Localized;
   metaTitle: Localized;
@@ -29,6 +34,7 @@ export const categories: Category[] = [
   {
     slug: "baerbare-computere",
     name: { da: "Bærbare computere", en: "Business laptops" },
+    h1: { da: "Brugte bærbare computere", en: "Refurbished business laptops" },
     shortName: { da: "Bærbare", en: "Laptops" },
     tagline: {
       da: "Renoverede erhvervsbærbare til kontor og hybridarbejde",
@@ -108,6 +114,7 @@ export const categories: Category[] = [
   {
     slug: "stationaere-computere",
     name: { da: "Stationære computere", en: "Desktop computers" },
+    h1: { da: "Brugte stationære computere", en: "Refurbished business desktops" },
     shortName: { da: "Stationære", en: "Desktops" },
     tagline: {
       da: "Renoverede stationære pc'er og workstations til faste arbejdspladser",
@@ -173,6 +180,7 @@ export const categories: Category[] = [
   {
     slug: "skaerme",
     name: { da: "Skærme", en: "Monitors" },
+    h1: { da: "Brugte skærme til kontoret", en: "Refurbished monitors for the office" },
     shortName: { da: "Skærme", en: "Monitors" },
     tagline: {
       da: "Renoverede erhvervsskærme til faste arbejdspladser",
@@ -228,6 +236,7 @@ export const categories: Category[] = [
   {
     slug: "mini-pc",
     name: { da: "Mini-pc'er", en: "Mini PCs" },
+    h1: { da: "Brugte mini-pc'er", en: "Refurbished mini PCs" },
     shortName: { da: "Mini-pc", en: "Mini PCs" },
     tagline: {
       da: "Kompakte maskiner til steder, hvor pladsen er trang",
@@ -285,6 +294,7 @@ export const categories: Category[] = [
   {
     slug: "tablets",
     name: { da: "Tablets", en: "Tablets" },
+    h1: { da: "Brugte tablets til erhverv", en: "Refurbished business tablets" },
     shortName: { da: "Tablets", en: "Tablets" },
     tagline: {
       da: "Renoverede tablets til feltarbejde, butik og præsentationer",
@@ -342,6 +352,7 @@ export const categories: Category[] = [
   {
     slug: "smartphones",
     name: { da: "Smartphones", en: "Smartphones" },
+    h1: { da: "Brugte firmatelefoner og smartphones", en: "Refurbished company phones" },
     shortName: { da: "Smartphones", en: "Smartphones" },
     tagline: {
       da: "Renoverede telefoner og smartwatches til medarbejdere",
@@ -407,6 +418,7 @@ export const categories: Category[] = [
   {
     slug: "dockingstationer",
     name: { da: "Dockingstationer og tilbehør", en: "Docking stations and accessories" },
+    h1: { da: "Dockingstationer til bærbare og tilbehør", en: "Docking stations for business laptops and accessories" },
     shortName: { da: "Docking", en: "Docking" },
     tagline: {
       da: "Docks, kabler og tilbehør, der gør arbejdspladsen komplet",

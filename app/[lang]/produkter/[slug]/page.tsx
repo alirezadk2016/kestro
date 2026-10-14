@@ -263,7 +263,7 @@ export default async function CategoryPage(props: {
               <div className="mt-5 flex items-center gap-4 sm:gap-5">
                 <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
                 <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                  {category.name[lang]}
+                  {(category.h1 ?? category.name)[lang]}
                 </h1>
               </div>
               <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">

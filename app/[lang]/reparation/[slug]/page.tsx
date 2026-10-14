@@ -142,7 +142,7 @@ export default async function RepairPage(props: Params) {
             <MarkTile name={repair.mark} size="lg" />
             <div className="min-w-0">
               <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
-                {repair.name[lang]}
+                {(repair.h1 ?? repair.name)[lang]}
               </h1>
             </div>
           </div>

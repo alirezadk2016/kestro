@@ -28,7 +28,7 @@ const copy = {
     metaTitle: "Få et tilbud på brugte computere til virksomheden | Kestro",
     metaDescription:
       "Skriv antal, model og tidsramme for de brugte computere, I mangler. Vi afklarer det i en uforpligtende dialog; formularen er ikke en bestilling.",
-    title: "Få et tilbud",
+    title: "Få et tilbud på brugte computere",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
     lead: "Kestro er under etablering. Skriv antal, specifikation og ønsket tidsramme, så vi kan afklare de indledende muligheder. Forespørgslen er gratis og uforpligtende, ikke en bestilling eller reservation. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",
     formTitle: "Jeres forespørgsel",
@@ -101,7 +101,7 @@ const copy = {
     metaTitle: "Quote on used business computers, no obligation | Kestro",
     metaDescription:
       "Tell Kestro the quantity, specification and timing you need. We discuss the options in a non-binding conversation; submitting the form is not an order.",
-    title: "Get a quote",
+    title: "Get a quote on used business computers",
     lead: "Kestro is in preparation. Tell us the quantity, specification and timing you need so we can discuss initial options. The enquiry is free and non-binding, not an order or reservation. Fill in what you know; the rest can stay at “not sure yet”.",
     formTitle: "Your request",
     nextTitle: "What happens when you send it?",
