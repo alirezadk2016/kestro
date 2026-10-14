@@ -42,7 +42,9 @@ for (const [path, graph] of Object.entries(graphs)) {
     continue;
   }
   const { text, title, desc } = await page.evaluate(() => ({
-    text: (document.querySelector("main")?.innerText ?? document.body.innerText).toLowerCase(),
+    /* textContent, not innerText: a closed <details> answer is not rendered,
+       so innerText skips it, but a crawler reads the whole DOM. */
+    text: (document.querySelector("main") ?? document.body).textContent.replace(/\s+/g, " ").toLowerCase(),
     title: document.title.toLowerCase(),
     desc: (document.querySelector('meta[name="description"]')?.content ?? "").toLowerCase(),
   }));

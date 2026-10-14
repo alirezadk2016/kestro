@@ -262,3 +262,53 @@ in one go.
   `https://www.kestro.dk/sitemap.xml`, and add the same site to Bing
   Webmaster Tools (it can import from Search Console).
 
+### `mak run`, applied 14 October 2026
+
+The whole method run on the site, as far as the facts allow. Measured by
+`mak run` before and after, 136 pages:
+
+| Check | Before | After |
+| --- | --- | --- |
+| Titles 50–60 characters (all ≤ 580 px) | 91 | 131 (the five left: four legal pages, and the English tablets title at 61) |
+| Descriptions 145–160 characters (all ≤ 920 px) | 23 | 61; the rest sit at 850–920 px, a full snippet |
+| Primary keyword in the H1 | 5 of 77 | 67 of 77 |
+| Product categories linked from every page | 0 | 7 (footer) |
+| Repair pages with one link in | 8 | 0 (three to six each) |
+| Blog → commercial links | 42 | 52 |
+| Knowledge-graph coverage, categories | 35–76 % | 67–88 % |
+| Knowledge-graph coverage, repairs | 50–91 % | 75–100 % |
+| FAIL | 0 | 0 |
+
+What changed:
+- **Rule 5.** 61 descriptions lengthened with the main entity, its synonym
+  and a true call to action (pre-launch: a written quote, a price before
+  work, a non-binding enquiry; never an order). 40 titles moved into
+  50–60 characters. H1s carry the search phrase through an `h1` field on
+  categories, repairs and services, "Brugt <model>" on model pages, and new
+  headings on five hubs and five guides.
+- **Rule 9.** Each repair links four related repairs
+  (`relatedRepairs` in `lib/repairs.ts`); guides link the repair that does
+  what they explain, with anchors in the searcher's words; the footer has a
+  Products group.
+- **Rule 12.** Each category answers "Hvordan bliver … klargjort og
+  leveret?" with sentences the service pages already state.
+
+Kept on purpose:
+- The front page, fleet, quality, models and contact H1s, and the guide
+  "Refurbished eller brugt" (its question reads better than the keyword).
+- Danish URLs.
+- The legal pages' short titles.
+
+Waits on the owner:
+- **Search Console:** a Domain property for kestro.dk, its TXT record added
+  at one.com (the domain's DNS), and the sitemap submitted. Bing Webmaster
+  Tools can import it.
+- **Danish page-one evidence** for the 19 informational keywords on
+  commercial pages (rule 3) and for the brand, use and feature parents
+  (rule 2).
+- **Keyword Planner exports** for the seeds (rule 6).
+- **Knowledge-graph questions** (rule 12) that need Kestro's own answer:
+  warranty terms while pre-launch, swollen batteries, original or
+  compatible parts, which brands and models the repairs cover (rule 11's
+  model coverage), Microsoft 365 licences.
+

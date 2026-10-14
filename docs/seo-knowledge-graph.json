@@ -64,7 +64,8 @@
      "datasletning": [
       "sletning",
       "slettet",
-      "sletter"
+      "sletter",
+      "slettes"
      ],
      "genbrug": [
       "genbrug",
@@ -203,7 +204,8 @@
      "datasletning": [
       "sletning",
       "slettet",
-      "sletter"
+      "sletter",
+      "slettes"
      ],
      "genbrug": [
       "genbrug",
@@ -472,7 +474,8 @@
      "datasletning": [
       "sletning",
       "slettet",
-      "sletter"
+      "sletter",
+      "slettes"
      ],
      "genbrug": [
       "genbrug",
@@ -594,7 +597,8 @@
      "datasletning": [
       "sletning",
       "slettet",
-      "sletter"
+      "sletter",
+      "slettes"
      ],
      "genbrug": [
       "genbrug",
@@ -719,7 +723,8 @@
      "datasletning": [
       "sletning",
       "slettet",
-      "sletter"
+      "sletter",
+      "slettes"
      ],
      "genbrug": [
       "genbrug",
@@ -1623,7 +1628,8 @@
     },
     "Arbejde": {
      "datasletning": [
-      "slet"
+      "slet",
+      "slettes"
      ],
      "Windows": [
       "windows"
