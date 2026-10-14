@@ -204,8 +204,8 @@ export const guides: Guide[] = [
     primaryKeyword: "windows 10 support slut virksomhed",
     author: "alireza",
     title: {
-      da: "Windows 10: supporten er slut – hvad gør I nu?",
-      en: "Windows 10 support has ended — what now?",
+      da: "Windows 10: supporten er slut – hvad gør virksomheden nu?",
+      en: "Windows 10 support has ended — what now for your company?",
     },
     metaTitle: {
       da: "Windows 10-support slut: hvad gør virksomheden nu? | Kestro",
@@ -799,8 +799,8 @@ export const guides: Guide[] = [
     primaryKeyword: "reparere eller købe ny computer",
     author: "alireza",
     title: {
-      da: "Reparere eller købe ny? Sådan regner du på det",
-      en: "Repair or replace? How to work it out",
+      da: "Reparere eller købe ny computer? Sådan regner du på det",
+      en: "Repair or replace your computer? How to work it out",
     },
     metaTitle: {
       da: "Reparere eller købe ny computer? Sådan regner du | Kestro",
@@ -952,8 +952,8 @@ export const guides: Guide[] = [
     primaryKeyword: "opgradere ram i bærbar",
     author: "alireza",
     title: {
-      da: "Sådan opgraderer du hukommelsen i en bærbar",
-      en: "How to upgrade the memory in a laptop",
+      da: "Sådan opgraderer du RAM i en bærbar",
+      en: "How to upgrade the RAM in a laptop",
     },
     metaTitle: {
       da: "Opgrader RAM i bærbar: tjek, køb og skift selv | Kestro",
@@ -1463,8 +1463,8 @@ export const guides: Guide[] = [
     primaryKeyword: "windows 11 krav gammel computer",
     author: "alireza",
     title: {
-      da: "Windows 11 på en ældre maskine: hvad kræver det?",
-      en: "Windows 11 on an older machine: what does it take?",
+      da: "Windows 11 på en gammel computer: hvad er kravene?",
+      en: "Upgrading an older business PC to Windows 11: what it takes",
     },
     metaTitle: {
       da: "Windows 11 på ældre computer: krav og løsninger | Kestro",
@@ -1603,8 +1603,8 @@ export const guides: Guide[] = [
     primaryKeyword: "sikker datasletning",
     author: "alireza",
     title: {
-      da: "Sådan sletter du data, før du sælger eller kasserer en computer",
-      en: "How to erase data before selling or scrapping a computer",
+      da: "Sikker datasletning, før du sælger eller kasserer en computer",
+      en: "Secure data erasure for businesses selling or scrapping computers",
     },
     metaTitle: {
       da: "Sikker datasletning før salg eller kassering | Kestro",

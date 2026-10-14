@@ -33,6 +33,37 @@ export function categoryLead(category: Category, lang: Lang): string {
     : `${category.name.en} from Kestro are ${lc(category.tagline.en)}. We source from ${n} brands and ranges, including ${some}.`;
 }
 
+const PREPARED: Record<string, { da: string; en: string }> = {
+  "baerbare-computere": {
+    da: "Hver maskine funktionstestes, lagermediet slettes, og tastaturet skiftes til dansk eller norsk layout, før den sættes op. Stand og batteri står pr. enhed i tilbuddet.",
+    en: "Each machine is function-tested, its storage is erased and the keyboard is swapped to a Danish or Norwegian layout before it is set up. Condition and battery are stated per unit in the quote.",
+  },
+  "stationaere-computere": {
+    da: "Hver maskine funktionstestes, og lagermediet slettes, før den sættes op med Windows. Standen står pr. enhed i tilbuddet.",
+    en: "Each machine is function-tested and its storage erased before it is set up with Windows. The condition is stated per unit in the quote.",
+  },
+  "mini-pc": {
+    da: "Hver maskine funktionstestes, og lagermediet slettes, før den sættes op med Windows. Standen står pr. enhed i tilbuddet.",
+    en: "Each machine is function-tested and its storage erased before it is set up with Windows. The condition is stated per unit in the quote.",
+  },
+  skaerme: {
+    da: "Standen står pr. skærm i tilbuddet, og skærmene kan leveres sammen med maskiner og docks, så arbejdspladsen står komplet.",
+    en: "The condition is stated per monitor in the quote, and the monitors can be delivered with the machines and docks, so the workstation is complete.",
+  },
+  dockingstationer: {
+    da: "Standen står pr. enhed i tilbuddet, og kabler og tilbehør vælges, så de passer til maskinerne.",
+    en: "The condition is stated per unit in the quote, and cables and accessories are chosen to fit the machines.",
+  },
+  tablets: {
+    da: "Enhederne nulstilles, så de er klar til jeres MDM, og stand og batteritilstand oplyses pr. enhed, før I bestiller.",
+    en: "The devices are reset, ready for your MDM, and condition and battery health are stated per unit before you order.",
+  },
+  smartphones: {
+    da: "Telefonerne testes og nulstilles, og stand og batteri oplyses pr. enhed. De gamle telefoner kan hentes retur og slettes.",
+    en: "The phones are tested and reset, and condition and battery are stated per unit. The old phones can be collected and erased.",
+  },
+};
+
 export function categoryFaqs(category: Category): FaqItem[] {
   const name = { da: lc(category.name.da), en: lc(category.name.en) };
   const known = models.filter((m) => m.category === category.slug).map((m) => m.name);
@@ -73,6 +104,27 @@ export function categoryFaqs(category: Category): FaqItem[] {
       en: `Quantity, what the equipment is for, and when you need it. ${category.specNote.en}`,
     },
   });
+
+  /*
+   * How the equipment is prepared and delivered. Mak rule 12: the category
+   * pages' knowledge graph lacked the testing, erasure and delivery nodes,
+   * though the service pages state them. Each sentence here is one those
+   * pages already say (klargøring og test, nordisk tilpasning, levering), cut
+   * to what applies: no battery on a monitor, no storage on a dock.
+   */
+  const prepared = PREPARED[category.slug];
+  if (prepared) {
+    items.push({
+      question: {
+        da: `Hvordan bliver ${name.da} klargjort og leveret?`,
+        en: `How are the ${name.en} prepared and delivered?`,
+      },
+      answer: {
+        da: `${prepared.da} Vi leverer til én eller flere adresser i Danmark og Norge med en tidsramme, I får på skrift, før I bestiller.`,
+        en: `${prepared.en} We deliver to one or more addresses in Denmark and Norway, with a lead time you get in writing before you order.`,
+      },
+    });
+  }
 
   if (COMPUTERS.has(category.slug)) {
     items.push({
