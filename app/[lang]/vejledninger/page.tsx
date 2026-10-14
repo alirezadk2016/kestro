@@ -353,7 +353,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
              * it is a grid of four and wants the room — and everything meant to
              * be read sits in one narrower column beneath it.
              */}
-            <ol className="max-w-5xl">
+            {/* flex flex-col: a list of rows, not a list of text. The
+                reading measure in globals.css caps the li of any list that is
+                not a grid or a flex at 34em, and that cap squeezed each row —
+                picture and all — into 544px, so the titles broke after every
+                word. */}
+            <ol className="flex max-w-5xl flex-col">
               {articles.map((guide, index) => (
                 <li key={guide.slug} className="border-b border-white/[0.08] last:border-b-0">
                   {/*
@@ -409,7 +414,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       className="plate-well aspect-[3/2] w-full shrink-0 overflow-hidden sm:w-[17.5rem] lg:w-[20rem]"
                     />
 
-                    <div className="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
+                    {/* flex-1 and min-w-0 on this block, not only on the
+                        title inside it: with only the inner one set, its basis
+                        of 0 made this block's intrinsic width its longest
+                        word, and from sm the title broke after every word in
+                        a hundred-pixel column beside the picture. */}
+                    <div className="flex min-w-0 flex-1 flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
                       <div className="min-w-0 flex-1">
                         <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
                           {guide.title[lang]}

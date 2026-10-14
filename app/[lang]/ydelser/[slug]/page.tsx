@@ -12,6 +12,8 @@ import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
+import MarkTile from "@/components/MarkTile";
+import { type CraftMarkName } from "@/components/CraftMark";
 import { serviceAnswers } from "@/lib/service-answers";
 
 /*
@@ -48,6 +50,8 @@ const copy = {
     updated: "Opdateret",
     faq: "Spørgsmål om",
     cta: "Få et tilbud",
+    inShort: "Kort fortalt",
+    enquire: "Send en forespørgsel",
   },
   en: {
     breadcrumb: "Services",
@@ -56,8 +60,57 @@ const copy = {
     updated: "Updated",
     faq: "Questions about",
     cta: "Get a quote",
+    inShort: "In short",
+    enquire: "Send an enquiry",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+/*
+ * The mark each service already carries on the services hub, so the page's
+ * heading sits beside the same tile as a repair or a category does.
+ */
+const serviceMarks: Record<string, CraftMarkName> = {
+  "sourcing-og-indkoeb": "network",
+  "klargoering-og-test": "tested",
+  "nordisk-tilpasning": "nordic",
+  levering: "delivery",
+  "overskudslager-og-returvarer": "batch",
+  "opstart-af-arbejdspladser": "install",
+};
+
+/*
+ * "In short", beside the article on a wide screen. Most services have one or
+ * two sections, so the text ran down the left half of a 1440px page with the
+ * right half empty. Every line is one the site states elsewhere (delivery,
+ * the written time frame, the non-binding enquiry; for surplus stock, the
+ * valuation first and the erasure before resale).
+ */
+const inShort: Record<"supply" | "surplus", Record<Lang, string[]>> = {
+  supply: {
+    da: [
+      "Leveres til virksomheder i Danmark og Norge.",
+      "Tidsrammen får I på skrift, før I bestiller.",
+      "En forespørgsel er uforpligtende.",
+    ],
+    en: [
+      "Delivered to companies in Denmark and Norway.",
+      "You get the time frame in writing before you order.",
+      "An enquiry commits you to nothing.",
+    ],
+  },
+  surplus: {
+    da: [
+      "I får en vurdering, før I beslutter jer.",
+      "Lagermedier slettes før videresalg.",
+      "En forespørgsel er uforpligtende.",
+    ],
+    en: [
+      "You get a valuation before you decide.",
+      "Storage is erased before resale.",
+      "An enquiry commits you to nothing.",
+    ],
+  },
+};
 
 export async function generateMetadata(props: {
   params: Promise<{ lang: Lang; slug: string }>;
@@ -141,9 +194,17 @@ export default async function ServicePage(props: {
           <div className="max-w-3xl">
             <Breadcrumbs lang={lang} trail={trail} />
 
-            <h1 className="mt-5 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-              {(service.h1 ?? service.name)[lang]}
-            </h1>
+            {/* The tile above the heading on a phone, beside it from sm: the
+                service headings run to sixty characters, and beside a tile
+                they took five lines at 390px. */}
+            <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+              {serviceMarks[service.slug] && (
+                <MarkTile name={serviceMarks[service.slug]} size="lg" className="flex-none" />
+              )}
+              <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {(service.h1 ?? service.name)[lang]}
+              </h1>
+            </div>
             {/* The answer first. The card one-liner is `summary`; the page opens
                 with what the service is, with the figure in it. */}
             <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
@@ -161,7 +222,29 @@ export default async function ServicePage(props: {
 
       <section className="lit lit-paper pb-10 sm:pb-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-14">
+          <aside className="hidden lg:order-2 lg:col-span-4 lg:block">
+            <div className="plate p-6 lg:sticky lg:top-28">
+              <p className="text-sm font-semibold text-paper">{c.inShort}</p>
+              <p className="mt-2 text-sm leading-6 text-paper/75">{service.summary[lang]}</p>
+              <ul className="mt-5 space-y-3 border-t border-white/10 pt-5">
+                {inShort[service.slug === "overskudslager-og-returvarer" ? "surplus" : "supply"][lang].map((line) => (
+                  <li key={line} className="flex gap-3 text-sm leading-6 text-paper/75">
+                    <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
+                    {line}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={localePath("/tilbud", lang)}
+                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+              >
+                {c.enquire}
+                <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+              </Link>
+            </div>
+          </aside>
+          <div className="max-w-3xl lg:order-1 lg:col-span-8">
             {/* The answer above is the brighter line; this is the context
                 after it, as on the model pages. */}
             <p className="text-base leading-[1.75] text-paper/75 sm:text-lg sm:leading-[1.75]">
@@ -200,6 +283,7 @@ export default async function ServicePage(props: {
               </div>
             ))}
 
+          </div>
           </div>
         </Container>
       </section>

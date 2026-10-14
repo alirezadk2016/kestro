@@ -147,15 +147,17 @@ export default function Footer({ lang }: { lang: Lang }) {
             label-left, links-right row is the hanging-header pattern. */}
         <nav
           aria-label={c.pages}
-          className="mt-12 grid grid-cols-1 gap-8 border-t border-white/10 pt-8 lg:grid-cols-[1fr_2fr_1fr] lg:gap-14"
+          className="mt-12 grid grid-cols-1 gap-6 border-t border-white/10 pt-8"
         >
           {groups.map((group) => (
             <div key={group.label}>
               <h3 className="label text-brand-300">{group.label}</h3>
-              {/* Two aligned columns on a phone. Wrapped rows put "Priser"
-                  wherever the line before it happened to end, so the eye had
-                  no edge to run down; from sm there is room for one line. */}
-              <ul className="mt-2 grid grid-cols-2 gap-x-6 sm:flex sm:flex-wrap">
+              {/* One column track for every group, sized to the longest
+                  label: the groups stack, and their links line up in the
+                  same columns down the whole footer — two on a phone, seven
+                  on a desktop. Free wrapping put one link on a row, then
+                  two, then three, so the eye had no edge to run down. */}
+              <ul className="mt-2 grid gap-x-4 [grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))]">
                 {group.links.map((link) => (
                   <li key={link.href}>
                     <Link

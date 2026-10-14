@@ -111,13 +111,17 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             {c.categories}
           </h2>
 
-          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {categories.map((category) => {
+          {/* Seven categories: four across on a desktop, and the last one
+              two columns wide, so both rows are full. In three columns the
+              docks sat alone on a third row. */}
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+            {categories.map((category, i) => {
+              const last = i === categories.length - 1 && categories.length % 2 === 1;
               return (
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex items-start gap-4 plate plate-lift p-5 sm:p-6"
+                  className={`group flex items-start gap-4 plate plate-lift p-5 sm:p-6 ${last ? "sm:col-span-2" : ""}`}
                 >
                   {/* Mark inline with the heading rather than stacked above
                       it — the stacked icon tile is the template card. */}

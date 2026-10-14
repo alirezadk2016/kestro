@@ -134,9 +134,12 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
             updated="/om-os"
           />
 
-          <div className="mt-16 max-w-3xl space-y-10">
+          {/* Three statements side by side from lg, mark above the words so
+              the columns keep their width; a stack in the left half of a
+              wide page left the right half empty for a screen. */}
+          <div className="mt-16 grid max-w-3xl gap-10 lg:max-w-none lg:grid-cols-3 lg:gap-12">
             {sections.map((section) => (
-              <div key={section.title.da} className="flex gap-5">
+              <div key={section.title.da} className="flex gap-5 lg:flex-col lg:gap-4">
                 {/* Square plate and a hairline, the same as the feature row:
                     the mark inside is an orthographic drawing, and a rounded
                     pill around a technical drawing fights it. */}

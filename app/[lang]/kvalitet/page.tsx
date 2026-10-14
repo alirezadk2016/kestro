@@ -227,8 +227,12 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
               {c.gradingTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.gradingBody}</p>
+          </div>
 
-            <div className="mt-8 space-y-4">
+          {/* Three grades are three parallel things: a row of plates from lg,
+              not a stack in the left half of the page. */}
+          <div>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
               {grades.map((grade) => (
                 <div key={grade.grade.da} className="plate p-5 sm:p-6">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -248,7 +252,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
               ))}
             </div>
 
-            <div className="plate mt-6 flex gap-3 p-5">
+            <div className="plate mt-6 flex max-w-3xl gap-3 p-5">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
               <p className="text-sm leading-[1.6] text-paper/85">{c.warning}</p>
             </div>

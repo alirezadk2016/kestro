@@ -215,25 +215,30 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.whyTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-              {c.whyBody1}
-            </p>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-              {c.whyBody2}
-            </p>
-
-            <div className="mt-12 border-t border-white/15 pt-8">
+          {/* The page's two short questions side by side from lg. Each was a
+              600px column with the right half of the screen empty beside it,
+              and the second sat four sections further down. */}
+          <div className="grid max-w-3xl gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+            <div>
               <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                {c.driversTitle}
+                {c.whyTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-                {c.driversLead}
-              </p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody2}</p>
             </div>
+            <div className="border-t border-white/15 pt-8 lg:border-t-0 lg:pt-0">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.freeTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.freeBody}</p>
+            </div>
+          </div>
+
+          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {c.driversTitle}
+            </h2>
+            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.driversLead}</p>
           </div>
 
           {/*
@@ -271,49 +276,44 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             ))}
           </ol>
 
-          <div className="plate mt-12 max-w-3xl p-6 sm:p-8">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
-              {c.quoteTitle}
-            </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
-            <ul className="mt-5 space-y-3">
-              {c.quotePoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
-                  <Check
-                    aria-hidden="true"
-                    className="mt-1.5 h-4 w-4 flex-none text-brand-300"
-                    strokeWidth={2}
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* What the quote holds, and what to send to get it: the two halves
+              of one exchange, so they sit as a pair from lg. */}
+          <div className="mt-12 grid max-w-3xl items-start gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+            <div className="plate p-6 sm:p-8">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                {c.quoteTitle}
+              </h2>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
+              <ul className="mt-5 space-y-3">
+                {c.quotePoints.map((point) => (
+                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
+                    <Check
+                      aria-hidden="true"
+                      className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                      strokeWidth={2}
+                    />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.freeTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-              {c.freeBody}
-            </p>
-          </div>
-
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.fastTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-              {c.fastLead}
-            </p>
-            <ul className="mt-5 space-y-2.5">
-              {c.fastPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
-                  <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
-                  {point}
-                </li>
-              ))}
-            </ul>
+            {/* t-h3 like the plate beside it, and lg:pt-8 is the plate's own
+                padding, so the two headings sit on one line. */}
+            <div className="lg:pt-8">
+              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-paper">
+                {c.fastTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.fastLead}</p>
+              <ul className="mt-5 space-y-2.5">
+                {c.fastPoints.map((point) => (
+                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
+                    <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">

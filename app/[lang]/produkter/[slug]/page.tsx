@@ -411,9 +411,13 @@ export default async function CategoryPage(props: {
               </h2>
               <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
               <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+            </div>
 
-              {/* A shelf to swipe on a phone (.rail), two columns from md. */}
-              <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4">
+            {/* A shelf to swipe on a phone (.rail), two columns from md, three
+                from lg across the full container — nine laptops ran as one
+                long two-column list beside an empty half of the page. */}
+            <div>
+              <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
                 {categoryModels.map((model) => (
                   <li key={model.slug}>
                     <Link

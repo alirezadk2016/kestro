@@ -203,7 +203,7 @@ export default function Header({ lang }: { lang: Lang }) {
                 aria-expanded={productsOpen}
                 aria-controls="header-products"
                 aria-label={ui.showProducts[lang]}
-                className="-mx-2.5 inline-flex h-10 w-10 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+                className="-mx-3 inline-flex h-11 w-11 items-center justify-center text-paper/75 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
               >
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`}
@@ -489,7 +489,10 @@ function LanguageSwitcher({
        marks is simply where you already are. The reference underlines the
        current language and leaves the other quiet, which is what a state
        marker should look like. */
-    <div className="flex w-fit items-center gap-4" role="group" aria-label={ui.language[lang]}>
+    /* Each link is a 44px square; the underline sits on the two letters
+       inside it, so the pair looks as it did when the links were 19px wide
+       and too small to hit. */
+    <div className="-mx-3 flex w-fit items-center" role="group" aria-label={ui.language[lang]}>
       {langs.map((code) => (
         <Link
           key={code}
@@ -497,14 +500,17 @@ function LanguageSwitcher({
           onClick={onNavigate}
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}
-          className={`inline-flex min-h-[44px] items-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
-            code === lang
-              ? "border-b-2 border-paper pt-0.5 text-paper"
-              : "border-b-2 border-transparent pt-0.5 text-paper/65 hover:text-paper"
+          className={`group inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-xs font-semibold uppercase tracking-[0.08em] transition ${
+            code === lang ? "text-paper" : "text-paper/65 hover:text-paper"
           }`}
         >
           <span className="sr-only">{langLabel[code]}</span>
-          <span aria-hidden="true">{code}</span>
+          <span
+            aria-hidden="true"
+            className={`border-b-2 pb-0.5 pt-0.5 ${code === lang ? "border-paper" : "border-transparent"}`}
+          >
+            {code}
+          </span>
         </Link>
       ))}
     </div>
