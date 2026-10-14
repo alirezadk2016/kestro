@@ -401,6 +401,10 @@ export const guides: Guide[] = [
         href: "/tilbud",
         label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
       },
+      {
+        href: "/reparation/windows-installation",
+        label: { da: "Geninstaller Windows", en: "Reinstall Windows" },
+      },
     ],
     sources: [
       guideSource("windows10Servicing"),
@@ -734,6 +738,10 @@ export const guides: Guide[] = [
         href: "/tilbud",
         label: { da: "Få et tilbud på enhedsniveau", en: "Get a quote written per unit" },
       },
+      {
+        href: "/reparation/klargoering-af-brugt-udstyr",
+        label: { da: "Få tjekket en brugt computer", en: "Get a used computer checked" },
+      },
     ],
     sources: [guideSource("dkWarranty"), guideSource("ewasteMonitor")],
     faqs: [
@@ -883,6 +891,14 @@ export const guides: Guide[] = [
         label: { da: "Reparation og opgradering", en: "Repairs and upgrades" },
       },
       { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
+      {
+        href: "/reparation/fejlfinding",
+        label: { da: "Computeren starter ikke?", en: "Computer will not start?" },
+      },
+      {
+        href: "/reparation/reservedele-og-komponentskift",
+        label: { da: "Reservedele til bærbar", en: "Laptop spare parts" },
+      },
     ],
     sources: [guideSource("repairDirective"), guideSource("ewasteMonitor")],
     faqs: [
@@ -1041,6 +1057,10 @@ export const guides: Guide[] = [
       {
         href: "/modeller",
         label: { da: "Modeller, der er nemme at opgradere", en: "Models that are easy to upgrade" },
+      },
+      {
+        href: "/reparation/ram-og-ssd-opgradering",
+        label: { da: "Få opgraderet RAM og SSD", en: "Have the RAM and SSD upgraded" },
       },
     ],
     sources: [guideSource("repairDirective")],
@@ -1207,6 +1227,14 @@ export const guides: Guide[] = [
       {
         href: "/produkter/baerbare-computere",
         label: { da: "Brugte bærbare computere", en: "Used business laptops" },
+      },
+      {
+        href: "/reparation/batteriskift",
+        label: { da: "Batteriskift på bærbar", en: "Laptop battery replacement" },
+      },
+      {
+        href: "/reparation/klargoering-af-brugt-udstyr",
+        label: { da: "Tjek af brugt computer hos os", en: "A used-computer check by us" },
       },
     ],
     sources: [guideSource("dkWarranty")],
@@ -1378,6 +1406,10 @@ export const guides: Guide[] = [
         href: "/produkter/stationaere-computere",
         label: { da: "Brugte stationære computere", en: "Used desktop computers" },
       },
+      {
+        href: "/reparation/samling-af-pc",
+        label: { da: "Få samlet en pc af os", en: "Have us build the PC" },
+      },
     ],
     sources: [guideSource("windows11Requirements")],
     faqs: [
@@ -1514,6 +1546,10 @@ export const guides: Guide[] = [
         href: "/tilbud",
         label: { da: "Få et tilbud på udskiftningen", en: "Get a quote for the replacement" },
       },
+      {
+        href: "/reparation/windows-installation",
+        label: { da: "Ren installation af Windows", en: "A clean Windows installation" },
+      },
     ],
     sources: [guideSource("windows11Requirements"), guideSource("windows10Eol")],
     faqs: [
@@ -1645,6 +1681,10 @@ export const guides: Guide[] = [
       {
         href: "/ydelser/overskudslager-og-returvarer",
         label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
+      },
+      {
+        href: "/reparation/ny-opsaetning-og-dataflytning",
+        label: { da: "Flyt data til ny computer", en: "Move data to a new computer" },
       },
     ],
     sources: [guideSource("nistSanitization")],

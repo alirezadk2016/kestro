@@ -12,7 +12,7 @@ import Faq from "@/components/Faq";
 import { repairFaqs, repairFaqTitle, repairSources } from "@/lib/repair-answers";
 import ServiceTile from "@/components/ServiceTile";
 import FactNote from "@/components/FactNote";
-import { repairs, getRepair } from "@/lib/repairs";
+import { repairs, getRepair, relatedRepairs, type Repair } from "@/lib/repairs";
 import { formatDate, localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -86,7 +86,10 @@ export default async function RepairPage(props: Params) {
   const repair = getRepair(slug);
   if (!repair) notFound();
   const c = copy[lang];
-  const others = repairs.filter((r) => r.slug !== slug).slice(0, 4);
+  const related = relatedRepairs[slug] ?? [];
+  const others = related.length
+    ? related.map((r) => repairs.find((x) => x.slug === r)).filter((r): r is Repair => !!r)
+    : repairs.filter((r) => r.slug !== slug).slice(0, 4);
   const sources = repairSources(repair);
   const updated = pageUpdated("/reparation/[slug]");
   const pagePath = `/reparation/${repair.slug}`;

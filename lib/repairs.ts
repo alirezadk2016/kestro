@@ -667,4 +667,28 @@ export const repairs: Repair[] = [
   },
 ];
 
+/**
+ * The four repairs each repair page links to, by topic.
+ *
+ * Mak rule 9: link between related pages, and spread the links so every page
+ * that matters gets some. The page used to take the first four repairs in the
+ * list, so batteriskift, RAM/SSD, skærmskift and tastaturskift had twelve
+ * links each from the same card, and the other eight had one, from the hub.
+ * Each repair now appears in three to six of these lists.
+ */
+export const relatedRepairs: Record<string, string[]> = {
+  batteriskift: ["reservedele-og-komponentskift", "rens-og-koeling", "fejlfinding", "klargoering-af-brugt-udstyr"],
+  "ram-og-ssd-opgradering": ["windows-installation", "ny-opsaetning-og-dataflytning", "samling-af-pc", "fejlfinding"],
+  skaermskift: ["reservedele-og-komponentskift", "tastaturskift-og-nordisk-layout", "batteriskift", "fejlfinding"],
+  "tastaturskift-og-nordisk-layout": ["skaermskift", "reservedele-og-komponentskift", "klargoering-af-brugt-udstyr", "batteriskift"],
+  "reservedele-og-komponentskift": ["batteriskift", "skaermskift", "tastaturskift-og-nordisk-layout", "rens-og-koeling"],
+  "rens-og-koeling": ["fejlfinding", "reservedele-og-komponentskift", "ram-og-ssd-opgradering", "batteriskift"],
+  "windows-installation": ["software-og-licenser", "ny-opsaetning-og-dataflytning", "ram-og-ssd-opgradering", "fejlfinding"],
+  "software-og-licenser": ["windows-installation", "ny-opsaetning-og-dataflytning", "klargoering-af-brugt-udstyr", "samling-af-pc"],
+  "ny-opsaetning-og-dataflytning": ["windows-installation", "software-og-licenser", "samling-af-pc", "klargoering-af-brugt-udstyr"],
+  fejlfinding: ["rens-og-koeling", "windows-installation", "skaermskift", "ram-og-ssd-opgradering"],
+  "samling-af-pc": ["ram-og-ssd-opgradering", "windows-installation", "software-og-licenser", "rens-og-koeling"],
+  "klargoering-af-brugt-udstyr": ["batteriskift", "tastaturskift-og-nordisk-layout", "windows-installation", "software-og-licenser"],
+};
+
 export const getRepair = (slug: string) => repairs.find((r) => r.slug === slug);
