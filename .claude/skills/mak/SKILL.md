@@ -1,6 +1,6 @@
 ---
 name: mak
-description: "Mak (مک): the owner's SEO method for kestro.dk, built lesson by lesson from their SEO course. Search intent, read from the results page, decides how many pages a topic needs. Categories are cut the way buyers search, as a pillar cluster. Keyword research runs per page and leaves children's keywords alone. Every page gets a title, description and H1 measured to Google's pixel limits. Use it for ANY SEO work on this site: keywords / کلمه کلیدی / سئو, titles, meta descriptions, H1s, categories, new pages, blog topics, the keyword map, SERP snippets, click-through, pillar cluster, seed keywords, keyword pool, keyword research, competitor categories, Search Console data. Use it whenever the owner says mak, مک, /mak, \"apply mak\", \"سئو کن\", \"با مک\", or sends a new course lesson (audio, transcript, screenshots) to learn. Verbs: audit, apply, research, page, learn."
+description: "Mak (مک): the owner's SEO method for kestro.dk, built lesson by lesson from their SEO course (lessons 2-1 to 2-4), completed with standard technical SEO. Search intent read from the results page decides how many pages a topic needs; categories are cut the way buyers search, as a pillar cluster; keyword research runs per page; every page gets a title, description, URL and H1 measured to Google's limits; URLs are set once and never move; internal links carry value with varied anchors; every page has a content structure and a knowledge graph for AI search; Search Console is read daily. Use it for ANY SEO work on this site: keywords / کلمه کلیدی / سئو, titles, meta descriptions, H1/H2/H3, URLs and slugs, categories, new pages, blog topics, internal links, anchor text, content structure, knowledge graph, AI search (GEO), Search Console, the keyword map, pillar cluster, seed keywords, keyword pool, competitor categories. Use it whenever the owner says mak, مک, /mak, \"run mak\", \"مک رو ران کن\", \"apply mak\", \"سئو کن\", \"با مک\", or sends a new course lesson to learn. Verbs: run, audit, apply, research, page, learn."
 ---
 
 # Mak (مک)
@@ -16,6 +16,7 @@ Report to the owner in **Persian**. Site copy is Danish, mirrored in English.
 
 | Say | What happens |
 | --- | --- |
+| `mak run` ("مک رو ران کن", "run mak") | The whole method on the whole site. `scripts/run.mjs` runs every check and prints one ranked list; then work through it as `mak apply all` does, top first, as far as the facts allow; verify, commit, push, report. |
 | `mak audit [scope]` | Read-only. Run the scripts and read the results against the method. Return a ranked list of what breaks which rule, with evidence. No edits. |
 | `mak apply [scope]` | Audit, then fix what the method and the facts allow. Measure, run verify, commit, push, report. Scope is optional: a URL, a tree (`reparation`, `modeller`) or `all`. |
 | `mak research <page or keyword>` | Rule 4 for one page. Collect variants, sort them into its own / children's / other intent, and update the keyword map rows. |
@@ -54,7 +55,8 @@ Details and examples: `references/method.md`.
      characters, and binding ≤ 920 px. Danish lands at about 145–158.
    - Preview it as a snippet (`measure.mjs`), and check the tags the way an
      SEO extension does: canonical = the page, charset first.
-   - URL structure and the H2/H3 roles are the next session's subject.
+   - Headings: one H1 (the page's main title), H2 for sections, H3 under
+     an H2; never a level skipped.
 6. **Seeds first, then the keyword pool, then the structure.**
    - Ask an AI assistant what buyers search for, and take its answers as
      seeds.
@@ -70,8 +72,28 @@ Details and examples: `references/method.md`.
    5. Competitors.
    6. Continuous review.
 
-The work runs 6 → 7 → 2 → 1 → 3 → 4 → 5, then review. The full order is in
-`references/method.md`.
+8. **URLs are set once and never move.** Type prefix plus the page's own
+   name; no parent in the path; short, lowercase, hyphens, keyword in it;
+   no year on a page that will be refreshed; no URL shorteners.
+9. **Internal links carry value.** Link to the pages that matter, from
+   related pages, with anchor text that names the target and varies from
+   page to page; about seven or eight in running text; only the most
+   important pages in the menu and footer.
+10. **A category page ends in deep content:** FAQ, related categories with
+    precise anchors, the long-tail answers.
+11. **Every page type has a content structure:** the sections its reader
+    needs (contact, diagnosis, model coverage, cost transparency, process).
+12. **Every topic page has a knowledge graph:** the entities and
+    sub-entities an AI expects; write with it in hand. Missing nodes are
+    questions, never invented sentences.
+13. **Blog content is evergreen.**
+14. **Search Console from launch:** Domain property, read daily, shared with
+    nobody (restricted access for a consultant).
+
+The work runs 6 → 7 → 2 → 1 → 3 → 4 → 5/8 → 11 → 12 → 9/10 → 14, then
+review. The full order is in `references/method.md`. What the course did not
+cover (indexing, structured data, Core Web Vitals, trust, Bing, local) is in
+`references/beyond-course.md`, marked as not from the course.
 
 ## Ground rules
 
@@ -97,6 +119,14 @@ because the site's credibility rests on them.
 - **Preserve what works.** Keep canonical, hreflang, sitemap and internal
   links. Danish URLs do not move.
 
+## Workflow: run
+
+`node .claude/skills/mak/scripts/run.mjs --out <scratchpad>/mak-run` serves
+the current build (building first if needed), runs every script below, and
+prints the to-do list in Mak's order. Then follow "audit and apply" from
+step 3 on that list. Before the first fix, stop any server on 4173: verify
+needs the port.
+
 ## Workflow: audit and apply
 
 Paths, files and the ship steps in full: `references/kestro.md`.
@@ -110,6 +140,12 @@ Paths, files and the ship steps in full: `references/kestro.md`.
      duplicates, H1 count, the canonical and charset, skipped heading
      levels, URL shape, and whether the primary keyword is in the title, the
      H1 and the slug.
+   - `node .claude/skills/mak/scripts/links.mjs http://127.0.0.1:4411 --csv docs/seo-internal-links.csv`
+     sorts every internal link into menu, footer, breadcrumb and body, and
+     reports links in and out, anchors, orphans (rule 9).
+   - `node .claude/skills/mak/scripts/graph.mjs http://127.0.0.1:4411 --missing`
+     checks each page against its knowledge graph in
+     `docs/seo-knowledge-graph.json` (rule 12).
    - `python3 .claude/skills/mak/scripts/check-map.py --audit <scratchpad>/mak-audit.json`
      checks the keyword map:
      - two primaries on one URL;
@@ -151,3 +187,4 @@ Paths, files and the ship steps in full: `references/kestro.md`.
 | `references/sheets.md` | Building or reading the pillar sheet, a keyword pool, the keyword map or the category trees. |
 | `references/kestro.md` | Finding where a field lives, shipping a change, the constraints. |
 | `references/lessons.md` | Learning a new lesson, or checking which lessons are in. |
+| `references/beyond-course.md` | Technical SEO, structured data, speed, trust, AI search, Bing, local, reading Search Console: what the course did not cover. |

@@ -13,10 +13,13 @@ example.
 
 ---
 
-## The order of work  *(lessons 2-1, 2-2)*
+## The order of work  *(lessons 2-1 to 2-4)*
 
-The rules are numbered in the order they were taught. The work runs in this
-order:
+The rules are numbered in the order they were taught. The course sums the
+whole method up in one line: find what users search, cut the categories by
+their needs, give every category a title, a description and a URL, design
+each page's content structure, write the content, publish it, and read the
+result in Search Console. The work runs in this order:
 
 1. **Seeds, then the pool.** Find what people search, before any structure
    exists (rule 6).
@@ -26,9 +29,15 @@ order:
    (rule 2). Check every split against page one (rule 1).
 4. **The blog tree,** built after the commercial trees (rule 3).
 5. **Keyword research per page,** once the structure is final (rule 4).
-6. **Title, description and H1 for every row** (rule 5).
-7. **Review and correct, continuously.** That is the sixth pillar step in
-   rule 7, and it is what `mak audit` is for.
+6. **Title, description, URL and H1 for every row** (rules 5 and 8). The
+   URL rules are fixed before the first page is published.
+7. **Content structure, then knowledge graph, then the words** (rules 11
+   and 12). Blog content is evergreen (rule 13).
+8. **Internal links and deep content,** once the pages exist (rules 9
+   and 10).
+9. **Search Console from launch day,** read daily (rule 14).
+10. **Review and correct, continuously.** That is the sixth pillar step in
+    rule 7, and it is what `mak audit` is for.
 
 ---
 
@@ -233,12 +242,18 @@ tags, URL structure, and the roles of H1, H2 and H3.
   - The keywords used naturally, written for a person.
   - A call to action raises click-through.
   - Unique, and an accurate description of that page.
-- **The URL** is part of the snippet and a row in the homework. The course
-  details its structure in the next session; until then, rule 5 asks only
-  that every row has one.
-- **H1, H2, H3:** one H1 per page, and part of the homework. The roles of
-  each level are the next session's subject. When it is learned, extend this
-  rule. Until then, follow `references/snippets.md`.
+- **The URL** is part of the snippet and a column in the homework. How to
+  write it is rule 8.
+- **Headings, H1 to H6**  *(lesson 2-3)*. Each level has a role:
+  - H1 is the page's main title, one per page;
+  - H2s are its main sections;
+  - H3s are the subsections under an H2, and so on to H6, each level less
+    important than the one above.
+
+  The course's outline: H1 the title of the post; an introduction; H2 the
+  first point with its H3 subsections; H2 the second point with its H3s. A
+  level is never skipped. What words the H1 carries the course has not said;
+  `references/snippets.md` keeps the primary keyword in it, in natural form.
 - **Preview and check before it ships.**
   - A SERP simulator shows the snippet as Google would cut it. The course
     uses the free one at mangools.com.
@@ -345,3 +360,263 @@ a real answer Kestro can give:
 - **Error codes:** a repair business's natural second tree.
 - **Manuals and drivers.**
 - **A parts shop:** not a candidate, because Kestro does not sell parts.
+
+## 8. URLs are set once, before the site is built, and never move  *(lesson 2-3)*
+
+- **The URL matters more than the title and description.** A page's value
+  is tied to its URL. A changed title costs little; a changed URL takes
+  nearly all the value the page has earned. So the URL rules are fixed
+  before the first page is published, and a URL changes only if the domain
+  does. Even the largest shops have changed their URLs again and again, and
+  paid for it each time.
+- **The parts of a URL:**
+  - protocol (`https://`), then the domain;
+  - the slug: the path after the domain;
+  - `?` starts the query string;
+  - parameters as `name=value`, separated by `&`. UTM tags are parameters.
+
+  An SEO watches every parameter that can follow a URL. A site search
+  (`?s=…`) and tracking tags are parameters; some Google should read, most
+  not. Closing them in robots.txt is a later session.
+- **The optimal URL:**
+  1. Simple and readable: it says what the page is, to a person and to a
+     search engine.
+  2. It carries the keyword.
+  3. Hyphens between words, never spaces or underscores. A site should turn
+     a typed space or underscore into a hyphen by itself.
+  4. Short. If the name translates into eight words, cut it to four or
+     five.
+  5. No unnecessary characters: `_ & % $ #`.
+  6. All lowercase. Capitals cause problems in some systems, so the rule is
+     simply none.
+- **Language.** The course writes URLs as the English translation of the
+  page's name, and checks the translation: two words together can mean
+  something else in English. The reason is the Persian script: pasted into
+  a messenger or a social post, it turns into unreadable encoded
+  characters, and some platforms and link sites refuse it, which pushes you
+  to a URL shortener.
+- **Never a URL shortener.** A link must send its visitor, and its social
+  signal, straight to the site.
+- **Numbers:**
+  - Yes, when the number never changes: "10 best films", "5 ways to …".
+  - No year on a page you will refresh: "best products 2024" must be
+    renamed next year, and the page loses what it earned. A page that
+    belongs to one year for good, such as an annual report, may carry it.
+  - Pagination belongs in the query string, not in the path.
+- **A hierarchy without dependency.** The structure is logical, but a child
+  does not carry its parent's name. Not `/category/mobile/iphone` but
+  `/category/iphone`. If the parent's slug is ever corrected, every child's
+  URL would change with it. Each type gets one fixed prefix instead:
+  `/category/…`, `/blog/…`, `/product/…`, `/service/…`. On a new site, fix
+  a dependent structure before launch; once pages rank it is too late.
+
+**At Kestro:**
+- **The structure already follows the rule:** one fixed prefix per type,
+  then the page's own name. `/produkter/<kategori>`, `/modeller/<model>`,
+  `/ydelser/<ydelse>`, `/reparation/<reparation>`,
+  `/vejledninger/<vejledning>`. A model page is not nested under its
+  category, which is why the OptiPlex 5060 sits in two categories with one
+  URL.
+- **Danish, not English.** The course's reason for English is the Persian
+  script. Danish is Latin script, and æ, ø and å are written ae, oe and aa,
+  so nothing is percent-encoded when a link is shared, and the slug keeps
+  the Danish keyword. English pages have English slugs under `/en`.
+- **URLs never move** (CLAUDE.md). A new route follows this rule from the
+  start: type prefix, its own name in Danish ASCII, at most five words, no
+  year, lowercase, hyphens. It goes into `app/sitemap.ts`, `lib/routes.ts`
+  and `next.config.mjs` in the same change.
+- **`audit.mjs` checks it:** shape, length, years, nesting, and that a URL
+  with tracking parameters keeps the clean canonical.
+
+## 9. Internal links: to the pages that matter, in the right words, few per page  *(lesson 2-3)*
+
+- **What they are:** links from one page of the site to another. A page's
+  value is shared out across the links it gives: a home page linking to
+  three pages passes about a third to each.
+- **Why they matter:**
+  - search engines read the site's structure and the value of its pages
+    from them;
+  - visitors stay, because they find the next thing to read;
+  - related content is easy to reach.
+- **Link to the pages you want to rank.** A page you want seen more gets
+  links from other pages.
+- **The anchor text names the target.** The clickable words describe the
+  page they lead to, with its keyword: "wooden wall clock" links to the
+  wooden-wall-clock page.
+  - **Vary it.** From one page "buy a wooden wall clock", from another
+    "wooden wall clock", from a third "wooden clock price". The common
+    mistake is the same words on every link.
+  - **Match the intent.** "How to make a wooden clock" does not link to a
+    page about buying and prices.
+- **Few per page.** Some pages carry twenty-odd internal links. That splits
+  the page's value thin and tires the reader. The course keeps it to about
+  seven or eight, and never much past ten.
+- **Only between related pages.** A fridge page links to the washing
+  machine; a Facebook-management page may link to Instagram, never to logo
+  design. Clothing content does not link to mobile content.
+- **Menu and footer links are on every page.** A site of a thousand pages
+  gives every footer link a thousand internal links. Put only the most
+  important categories there, not fifty.
+- **Pillar and cluster link both ways** when they are related: an article
+  links to its category page, and the category to the article.
+
+**At Kestro:**
+- **`scripts/links.mjs` measures it** and writes
+  `docs/seo-internal-links.csv`. It separates the menu, the footer, the
+  breadcrumb and the page body, and inside the body, links in running text
+  from cards and lists.
+- **The limit is read for links in running text.** A category's list of its
+  own models, or a hub's list of its pages, is the structure itself. That
+  reading is ours, not the course's. Check it when the course says more.
+- **Anchors are Danish keywords from the map,** varied across pages, and
+  only ever words the target page itself uses.
+
+## 10. A category page ends in deep content  *(lesson 2-3)*
+
+Seen on one screen of the session: the course has an AI assistant (Gemini)
+draft the content structure of a category page. The page ends in a
+**content footer**: text at the very bottom that covers the hard and
+long-tail keywords, such as the product's history, the difference between
+grades, and the year's trends. It links to the related categories with
+precise anchor texts. Frequently asked questions sit above it.
+
+**At Kestro:**
+- **Category pages already end this way:** the other categories, the
+  guides that belong to the category, the FAQ, and the sources.
+- **Only what Kestro can stand behind.** "This year's trends" does not
+  become a paragraph without a source. A long-tail keyword gets an answer
+  only if the page has a true one.
+- **An assistant's draft is a lead, not copy.** Every claim in it is checked
+  as if it were an invented number, because it may be.
+
+## 11. Every page gets a content structure: the sections its reader needs  *(lesson 2-4)*
+
+- **A content structure is the set of sections a page is built from,** each
+  one answering a need the visitor has. The course asks an AI assistant for
+  it ("an SEO-centred content structure for a fridge-repair page") and gets
+  sections such as:
+  - a call button and a quick request form at the top;
+  - a diagnosis section: describe the symptom, get a first answer;
+  - a table of error codes, which links into the error-code tree. A visitor
+    who finds their own code there believes the page knows the brand;
+  - **model coverage:** an H2 listing the brand's model lines with small
+    pictures, so Google reads "specialist in this brand", not just "fridge
+    repair";
+  - a **cost-transparency** table (in home renovation as in repairs);
+  - **the service process**, step by step: what happens after the request,
+    who calls, the visit, the guarantee, what comes next.
+- **Write it section by section.** Take each section the assistant proposes,
+  have it written one at a time, put them together, then publish.
+- **Structures belong to page types, not pages.** Every page of one type in
+  a pillar shares a structure; a product page has one structure for every
+  product, however many there are. Categories are topic pages, so their
+  content gets the most care.
+- **A local page may need its own elements.** A page for one district can
+  carry a map that the city page does not need.
+
+**At Kestro:**
+- **Each page type has one template,** and so one structure: model,
+  category, service, repair, guide. The structure is in the template; a
+  section added there reaches every page of the type.
+- **Cost transparency without prices.** Kestro states no prices of its own,
+  so the honest version of the course's table is what decides the price
+  (model, condition, battery, quantity) and that the price is in writing
+  before work starts. `/priser` carries dated external examples, marked as
+  such.
+- **Model coverage is real here:** repair and category pages can name the
+  brands and model lines Kestro works on, because `lib/models.ts` lists
+  them.
+- **Error codes are a candidate tree** (rule 3), not a section to fill with
+  codes nobody at Kestro has verified.
+
+## 12. A knowledge graph per page, so AI search knows what the page is about  *(lesson 2-4)*
+
+- **A knowledge graph is a set of concepts joined to each other:** the
+  things a topic is made of. Since optimising for AI assistants became
+  important, it matters: an assistant decides what a page is about from the
+  concepts it finds there, and recommends the page that covers the one the
+  user asked for.
+- **The course's example, renovating an old house:**
+  - main entity: renovation, with its synonym (both words go in the title
+    and description);
+  - sub-entities: installations (plumbing, wiring); structure (demolition,
+    reinforcement, columns); finishing (plaster, paint, wallpaper); flooring
+    (parquet, ceramic, stone);
+  - styles: modern, classic, neoclassic, rustic;
+  - money: cost estimate, budgeting, material prices;
+  - legal steps: municipal permit, zoning rules;
+  - property type: house, apartment, villa.
+- **Why each node counts.** A user asks an assistant for "a renovator who
+  also handles the permits". The assistant recommends the site that wrote
+  about permits and passes over the others. An AI writer will not use the
+  nodes unless told to.
+- **The order:** content structure first, then the knowledge graph, then
+  the writing. Give the assistant the graph first, then ask for each
+  section "with this graph in mind". Draft in a document, then publish.
+- **One graph per page.** Fridge repair and washing-machine repair have
+  different graphs, though both are repairs. Structures follow the pillar;
+  graphs follow the page.
+- **The difference:** the structure is the sections (a phone number, a
+  licences section, past work); the graph is the related words that tell an
+  AI what the page is about.
+- **Products rarely need one;** categories do. A local page's graph holds
+  local entities: the district's streets and squares, because people search
+  "repair near <square>".
+
+**At Kestro:**
+- **The graphs live in `docs/seo-knowledge-graph.json`,** one per category,
+  service and repair hub, built only from what Kestro sells and states:
+  brands and lines from `lib/models.ts`, the checks the quote states, the
+  services that exist. `scripts/graph.mjs` reads each page as rendered and
+  reports which nodes it covers.
+- **A missing node is a question, not a gap to fill.** It goes on the page
+  only if Kestro can say something true about it.
+
+## 13. Blog content is evergreen  *(lesson 2-4)*
+
+- Write what people search all year, not what they search one week. A piece
+  about one holiday's hairstyle gets a week of traffic and gathers dust the
+  rest of the year, after the same effort as an evergreen piece.
+
+**At Kestro:** guides answer standing questions (RAM, battery, Windows,
+lifetime, data erasure). Where a date matters, such as the end of Windows 10
+support, the guide states it as a fact with its source and stays useful
+after the date. No year goes into a guide's URL (rule 8).
+
+## 14. Search Console is the mirror: set it up at launch, read it daily, share it with nobody  *(lesson 2-4)*
+
+- **What happens after publishing:** search engines crawl the page, judge
+  it by its content, keywords and internal links, and show it to a few
+  users to watch how they behave. If those users like it, the page gets a
+  better position and more users. None of this is visible from the site
+  itself; Search Console shows it: traffic, the pages it lands on, what
+  Google thinks of the site.
+- **Setting it up** (search.google.com/search-console) offers two property
+  types:
+
+  | | Domain | URL prefix |
+  | --- | --- | --- |
+  | Covers | every subdomain, http and https, with and without www | only the address entered, with its protocol |
+  | Verified by | a DNS record (TXT), set by whoever runs the DNS | an HTML file uploaded, or a meta tag in the site's head |
+
+  Use **Domain** unless parts of a site must not see each other's figures,
+  for example separate subdomains for separate teams. Copy the domain from
+  the address bar, never type it.
+- **Read it daily** from the first week, once content is live.
+- **Share it with nobody.** Search Console shows how many customers a
+  business gets and which pages win them, enough to copy the strategy. A
+  consultant who must see it gets **restricted** (view-only) access.
+
+**At Kestro:**
+- **Property:** a Domain property for `kestro.dk`, verified with a TXT
+  record. The owner creates the property and reads the TXT value off the
+  verification screen; the record goes wherever kestro.dk's DNS is managed.
+- **Sitemap:** submit `https://kestro.dk/sitemap.xml` once the property is
+  verified.
+- **Reading it, the Mak way:**
+  - queries with impressions but few clicks → rewrite that page's title
+    and description (rule 5);
+  - two URLs for one query → cannibalisation; decide by intent (rule 1);
+  - the volumes it shows become the keyword pool Kestro has been waiting
+    for (rule 6).
+- **Access:** the owner only. Anyone else gets restricted access.

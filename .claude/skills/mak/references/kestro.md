@@ -45,7 +45,9 @@ checks this.
 1. **Start the site.** `npm run build`, then `npx next start -p 4411`.
    Before re-running verify, stop the server: verify brings its own on
    4173, and refuses a port that is already taken.
-2. **Measure.** Run `node .claude/skills/mak/scripts/audit.mjs
+2. **Measure.** The quick way is `node .claude/skills/mak/scripts/run.mjs
+   --out <scratchpad>/mak-run`, which runs everything below and ranks it.
+   One by one: run `node .claude/skills/mak/scripts/audit.mjs
    http://127.0.0.1:4411 --out <scratchpad>/mak-audit.json`, then
    `python3 .claude/skills/mak/scripts/check-map.py --audit <that file>`.
 3. **Draft.** Put the new snippets in a drafts JSON and run

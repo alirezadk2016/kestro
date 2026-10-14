@@ -91,8 +91,27 @@ At Kestro each stage has a file:
 | Keyword pool | `docs/keyword-pool/` |
 | Status and working instructions | `docs/seo-playbook.md` |
 
-Internal links and social have no sheet yet. Internal links are the next one
-worth adding, because seven repair pages have few links pointing to them.
+| Internal links (rule 9) | `docs/seo-internal-links.csv` |
+
+Social has no sheet: Kestro has no social profiles to plan for yet.
+
+## Internal links  →  `docs/seo-internal-links.csv`  *(rule 9)*
+
+One row per page, rebuilt by
+`node .claude/skills/mak/scripts/links.mjs <base> --csv docs/seo-internal-links.csv`:
+
+| Column | Meaning |
+| --- | --- |
+| Links ind (sider) | how many other pages link to it from their body text or cards |
+| Ankertekster ind | how many different anchor texts those links use |
+| Mest brugte anker | the commonest one |
+| Links ud (indhold) | distinct pages it links to from its body |
+| Links ud (i tekst) | of those, links inside running text |
+| Menu, Footer | whether it is in the header menu or the footer, on every page |
+| Note | the script's flags: many, orphan, same, vague |
+
+A page that matters and has one link in, or one anchor from every page, is
+the first thing rule 9 fixes.
 
 ## Keyword research  →  `docs/seo-keyword-map.csv`
 

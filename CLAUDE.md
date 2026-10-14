@@ -23,7 +23,14 @@ method, taught lesson by lesson from their course:
 - categories cut the way buyers search;
 - the blog tree kept apart from the product tree;
 - per-page keyword research that leaves children's keywords alone;
-- a measured title, description and H1 for every page.
+- a measured title, description, URL and H1 for every page;
+- URLs set once and never moved;
+- internal links with varied anchors;
+- a content structure and a knowledge graph per page;
+- Search Console read from launch.
+
+"Run mak" (`mak run`) applies all of it to the site; what the course did not
+cover is in the skill's `references/beyond-course.md`.
 
 It also carries the scripts that audit the live site against those rules.
 `docs/seo-playbook.md` records where the site stands against them. When a

@@ -20,7 +20,10 @@
  *   WARN  title over 60 or under 30 characters, description under 145 or over
  *         160 characters, primary keyword missing from the <h1>, a heading
  *         level skipped, a URL that is not lowercase ASCII words joined by
- *         hyphens
+ *         hyphens, a slug of more than five words, a year in the path, a
+ *         path nested under a parent (rule 8: a child's URL carries only its
+ *         type and its own name, so renaming the parent moves nothing)
+ *   SITE  a URL with a tracking query keeps the clean canonical
  *   INFO  slug words that carry the primary keyword (Danish URLs never move,
  *         so this is recorded, not fixed), heading counts per level
  */
@@ -136,6 +139,11 @@ for (const r of rows) {
   if (skip > 0) warn.push(`heading h${r.headings[skip - 1]} → h${r.headings[skip]}`);
   delete r.headings;
   if (r.path !== "/" && !/^(\/[a-z0-9]+(-[a-z0-9]+)*)+$/.test(r.path)) warn.push(`url ${r.path} not lowercase-hyphen ASCII`);
+  const segs = r.path.split("/").filter(Boolean).filter((x, i) => !(i === 0 && x === "en"));
+  const longest = Math.max(0, ...segs.map((x) => x.split("-").length));
+  if (longest > 5) warn.push(`url slug of ${longest} words > 5`);
+  if (/(^|[^0-9])(19|20)\d\d([^0-9]|$)/.test(r.path)) warn.push(`url ${r.path} carries a year`);
+  if (segs.length > 2) warn.push(`url ${r.path} nested ${segs.length} deep`);
   if (r.title.length > 60) warn.push(`title ${r.title.length} chars > 60`);
   if (r.title.length < 30) warn.push(`title ${r.title.length} chars < 30`);
   if (r.desc.length < 145) warn.push(`description ${r.desc.length} chars < 145`);
@@ -166,6 +174,9 @@ console.log(`  h1       exactly one ${tally((r) => r.h1.length === 1)}/${rows.le
 const withKw = rows.filter((r) => r.primary);
 console.log(`  primary  ${withKw.length} pages have one · in title ${tally((r) => r.kwInTitle === "full")} · in h1 ${tally((r) => r.kwInH1 === "full")} · in url ${tally((r) => r.kwInUrl === "full")} (partly ${tally((r) => r.kwInUrl === "partial")})`);
 console.log(`  url      lowercase-hyphen ${tally((r) => !r.warn.some((w) => w.startsWith("url ")))}/${rows.length} · longest ${Math.max(...rows.map((r) => r.path.length))} chars · deepest ${Math.max(...rows.map((r) => r.path.split("/").length - 1))} levels`);
+const tracked = await (await fetch(`${base}/?utm_source=mak&utm_medium=audit`)).text();
+const trackedCanon = tracked.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/)?.[1] ?? "";
+console.log(`  url      query string: canonical of /?utm_source=… is ${trackedCanon ? new URL(trackedCanon).pathname + new URL(trackedCanon).search : "missing"} · slugs over 5 words ${tally((r) => r.warn.some((w) => w.startsWith("url slug")))} · years ${tally((r) => r.warn.some((w) => w.endsWith("carries a year")))} · nested ${tally((r) => r.warn.some((w) => w.includes(" nested ")))}`);
 console.log(`  outline  canonical = page ${tally((r) => !r.fail.some((f) => f.startsWith("canonical")))}/${rows.length} · charset in 1024 bytes ${tally((r) => r.charsetAt >= 0 && r.charsetAt <= 1024)}/${rows.length} · no skipped level ${tally((r) => !r.warn.some((w) => w.startsWith("heading")))}/${rows.length} · median h2 ${rows.map((r) => r.levels[1]).sort((a, b) => a - b)[rows.length >> 1]}`);
 console.log(`  FAIL ${failing.length} pages · WARN ${warning.length} pages`);
 for (const r of failing) console.log(`  FAIL ${r.path}: ${r.fail.join("; ")}`);

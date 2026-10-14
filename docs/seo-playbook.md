@@ -24,8 +24,9 @@ in every change that applies Mak or adds a lesson.
 | --- | --- | --- |
 | 2-1 | Rules 6–7, the order of work | 14 October 2026 |
 | 2-2 | Rules 1–5; URL, snippet preview and harvest sources added 14 October | 13 and 14 October 2026 |
-| 2-3 | Waiting | — |
-| 2-4 | Waiting | — |
+| 2-3 | Rules 8–10, heading roles in 5 | 14 October 2026 |
+| 2-4 | Rules 11–14 | 14 October 2026 |
+| — | Beyond the course (`references/beyond-course.md`) | 14 October 2026 |
 
 ---
 
@@ -218,4 +219,46 @@ search that names no first choice gets a general category beside them.
   examples on `/priser` are external retail references.
 - **One product in several categories: already true** where the facts allow
   it. The OptiPlex 5060 sits under both stationære and mini-pc'er.
+
+### Rules 8–14, checked 14 October 2026
+
+`mak run` (`.claude/skills/mak/scripts/run.mjs`) now runs every check below
+in one go.
+
+- **Rule 8, URLs: passes.** 136 of 136 are lowercase ASCII with hyphens; no
+  slug over five words; no year in a path; nothing nested under a parent
+  (each type has its own prefix, and model pages are not under their
+  category); longest path 50 characters. A URL with `?utm_…` keeps the
+  clean canonical. Danish URLs stay as they are.
+- **Rule 5, headings: passes.** One H1 on every page, no level skipped,
+  median seven H2s a page.
+- **Rule 9, internal links:** `docs/seo-internal-links.csv`.
+  - Menu: 9 links; footer: 18 (Danish). The footer links hubs, not the
+    seven product categories; the course would put the most important
+    categories there.
+  - In running text no page has more than five links: inside the course's
+    seven or eight.
+  - **The gap:** eight repair pages (rens og køling, Windows-installation,
+    software og licenser, dataflytning, fejlfinding, samling af pc,
+    klargøring af brugt udstyr; reservedele has five) are linked from one
+    page, `/reparation`, through one card. Four more are linked from twelve
+    pages, but every link is the same card with the same words. Rule 9 asks
+    for links from related pages with varied anchors.
+  - Blog → commercial: 42 links; commercial → blog: 11.
+- **Rule 10, deep content: in place on category pages.** Each ends with the
+  other categories, its guides, the FAQ and the sources.
+- **Rule 11, content structure:** one template per page type. Model
+  coverage exists on category pages (brand lines). No cost table: Kestro has
+  no prices, so the honest structure says what sets the price.
+- **Rule 12, knowledge graphs:** `docs/seo-knowledge-graph.json`, 19 pages
+  (7 categories, 12 repairs). Coverage 35–91 %. The common gaps on category
+  pages are the terms, delivery and data-erasure nodes that the site states
+  elsewhere but not on the category page. On `/reparation/fejlfinding` the
+  primary keyword's own words ("starter ikke") are not in the page body.
+- **Rule 13, evergreen:** guides answer standing questions; no year in any
+  URL.
+- **Rule 14, Search Console:** waits on the owner. Create a Domain property
+  for kestro.dk, add the TXT record where the DNS is managed, submit
+  `https://www.kestro.dk/sitemap.xml`, and add the same site to Bing
+  Webmaster Tools (it can import from Search Console).
 
