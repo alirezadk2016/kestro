@@ -64,6 +64,15 @@ playbook are checked against it in the same change.
   date, access date and the claim it supports. A page cites one only where it
   genuinely leans on it. `FactNote` states the fact in the source's own words
   and links the primary document; `SourceList` lists them.
+- **Say it once.** A notice — pre-launch, not an order, not our price, no
+  stock — appears once per page, where it matters. /priser said "these are
+  not our prices" five times and a model page's price box three times; that,
+  more than any one sentence, is what made the site read like a newspaper.
+- **A card is a title and one sentence; a step is a title and one or two.**
+  Detail lives on the page the card links to. A section is a heading and at
+  most a two-sentence lead.
+- **No claims about demand.** "The model we are asked about most" is a
+  customer statistic, and a project that is not trading yet has none.
 - **No universal claims about refurbished hardware,** and no claim that every
   device has been tested unless Kestro can actually guarantee it.
 - Prices: the site carries none until real ones exist. Do not add one.

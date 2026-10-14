@@ -130,3 +130,8 @@ moved, what was changed because of it.
   becomes the other's section, with a redirect if a URL must go.
 - **Pruning.** A page that answers nothing nobody searches is merged or
   removed, never left thin.
+- **One telling per page.** A disclaimer or a promise repeated in the lead,
+  the body and a box beside the button reads as small print and buries the
+  answer. Say it once, where it matters (CLAUDE.md, "Say it once"). Cutting
+  repetition is not cutting depth: re-run `graph.mjs` after a trim, and a
+  node that drops is put back as a fact, not as padding.
