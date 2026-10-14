@@ -418,7 +418,7 @@ export const categories: Category[] = [
   {
     slug: "dockingstationer",
     name: { da: "Dockingstationer og tilbehør", en: "Docking stations and accessories" },
-    h1: { da: "Dockingstationer til bærbare og tilbehør", en: "Docking stations for business laptops and accessories" },
+    h1: { da: "Dockingstationer til bærbare og tilbehør", en: "Docking stations for business laptops" },
     shortName: { da: "Docking", en: "Docking" },
     tagline: {
       da: "Docks, kabler og tilbehør, der gør arbejdspladsen komplet",
