@@ -41,18 +41,14 @@ const copy = {
   da: {
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
-      "Refurbished erhvervs-IT er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro har fokus på den slags maskiner til virksomheder i Danmark og Norge.",
-    who: "Kestro er under etablering og endnu ikke en registreret virksomhed. Siden modtager ikke ordrer eller betaling – skriv til os for en uforpligtende afklaring.",
-    terms: "Handelsbetingelserne",
+      "Refurbished erhvervs-IT – på dansk også kaldt renoveret – er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro har fokus på den slags maskiner til virksomheder i Danmark og Norge.",
     updated: "Opdateret",
     faqTitle: "Det spørger virksomheder også om",
   },
   en: {
     question: "What is refurbished business IT?",
     answer:
-      "Refurbished business IT is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro focuses on this equipment for companies in Denmark and Norway.",
-    who: "Kestro is in preparation and not yet a registered business. The site does not accept orders or payment — write to us for a non-binding discussion.",
-    terms: "Terms of sale",
+      "Refurbished business IT — also called renovated — is used business equipment that has been tested, repaired where it needed repairing and set up again before it is resold. Kestro focuses on this equipment for companies in Denmark and Norway.",
     updated: "Updated",
     faqTitle: "What companies also ask",
   },
@@ -70,9 +66,12 @@ const faqs: FaqEntry[] = [
       da: "Hvem køber vi af – Kestro eller en leverandør?",
       en: "Who are we buying from — Kestro or a supplier?",
     },
+    /* The question asks who the counterparty is, so the answer says that
+       first; the project's status, which is on the hero, follows in one
+       clause because it is part of the honest answer. */
     answer: {
-      da: copy.da.who,
-      en: copy.en.who,
+      da: "Fra Kestro: tilbud, faktura og reklamation går gennem os, ikke gennem leverandøren. Handel åbner, når Kestro er registreret som virksomhed.",
+      en: "From Kestro: the quote, the invoice and any complaint go through us, not the supplier. Trading opens once Kestro is registered as a business.",
     },
   },
   {
@@ -164,22 +163,6 @@ export default function AnswerBlock({ lang }: { lang: Lang }) {
             </h2>
             <p className="mt-5 text-base leading-[1.75] text-ink-700 sm:text-lg sm:leading-[1.7]">
               {c.answer}
-            </p>
-
-            {/* Who the buyer's contract is with. The site says "we source",
-                "we hold no stock" and "we test" in different places, and a
-                reader put those together as "a middleman — so whose warranty
-                is it?". This is the sentence that answers it, before the
-                question is even asked. */}
-            <p className="mt-6 border-l-2 border-brand-600 pl-4 text-base font-semibold leading-[1.65] text-ink-900">
-              {c.who}{" "}
-              <Link
-                href={localePath("/handelsbetingelser", lang)}
-                rel="terms-of-service"
-                className="font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
-              >
-                {c.terms}
-              </Link>
             </p>
 
             <p className="mt-6 text-sm text-ink-600">

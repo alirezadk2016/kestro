@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LayoutGrid } from "lucide-react";
 import Container from "./Container";
 import Button from "./Button";
@@ -30,8 +31,17 @@ const copy = {
        state the machines arrive. "Leverandør", not "indkøbspartner": the
        buyer's contract is with Kestro, and the first sentence on the site is
        where that has to be unambiguous. */
-    subLead: "Kestro er leverandør af brugt erhvervs-IT til virksomheder",
-    sub: "i Danmark og Norge – testet og klar til brug.",
+    /* "Brugt" is the machine's history and "refurbished" the work done to it
+       afterwards — the distinction the site's own guide draws. The headline
+       says refurbished, so the sentence under it says what that means here,
+       instead of using the two words as if they were one. */
+    subLead: "Kestro skaffer brugte erhvervscomputere til virksomheder",
+    sub: "i Danmark og Norge og gør dem klar – testet, med nordisk tastatur.",
+    /* The project's status on the first screen, once, in small type. A buyer
+       who learns it three screens down, after reading "supplier" and "get a
+       quote", has reason to feel misled. */
+    status: "Under etablering – endnu ikke en registreret virksomhed. Vi tager imod forespørgsler, ikke ordrer.",
+    statusLink: "Status og vilkår",
     /* How buying works, on the first screen. It was one sentence ("we
        source per order, and price, condition and warranty are in writing")
        that said what is true but not what to do; a visitor still had to
@@ -47,8 +57,10 @@ const copy = {
   en: {
     headlineTop: ["Refurbished", "business computers."],
     headlineAccent: "Ready for the Nordics.",
-    subLead: "Kestro is a supplier of used business IT to companies",
-    sub: "in Denmark and Norway — tested and ready to use.",
+    subLead: "Kestro sources used business computers for companies",
+    sub: "in Denmark and Norway and gets them ready — tested, with a Nordic keyboard.",
+    status: "In preparation — not yet a registered business. We take enquiries, not orders.",
+    statusLink: "Status and terms",
     stepsLabel: "How it works",
     steps: [
       "Tell us what you need",
@@ -352,6 +364,17 @@ export default function Hero({ lang }: { lang: Lang }) {
                 {c.secondary}
               </Button>
             </div>
+
+            <p className="rise rise-1 mt-4 max-w-xl text-[0.8125rem] leading-[1.55] text-paper/75 sm:mt-5 max-md:[@media(max-height:600px)]:hidden">
+              {c.status}{" "}
+              <Link
+                href={localePath("/handelsbetingelser", lang)}
+                rel="terms-of-service"
+                className="font-semibold text-paper/85 underline decoration-paper/40 underline-offset-4 hover:text-paper"
+              >
+                {c.statusLink}
+              </Link>
+            </p>
           </div>
         </Container>
       </div>
