@@ -154,45 +154,93 @@ Kestro can give, before it gets a page.
     - connecting words: *til, med, fra, i, for, uden, på*;
     - question words: *hvad, hvordan, hvorfor, hvilken, hvornår*.
   - Check every suggestion against the two exclusion rules above.
+- **Harvest from every place the buyer searches, not only Google.** The
+  course's keyword tool pulls suggestions from Google, an AI search engine,
+  the big marketplaces and price-comparison sites, long-tail lists, YouTube
+  and Instagram. Each source shows phrasings the others miss.
 - **When a modifier might change the intent, test it.** Search with and
   without it ("electric"). If page one is largely the same and most results
   do not use the modifier, it is the same intent and the same page.
 - **Keep a keyword pool per category:** keyword, search volume, difficulty.
   - The course exports these from Keywordchi, a Persian tool.
+  - **Seed it with one or two words,** as the course advises ("bærbar",
+    "brugt bærbar"). The tool returns the longer phrases itself.
   - For Danish, the volumes come from Google Keyword Planner or Search
     Console. Until the owner supplies them, they stay `unknown`, never
     estimated.
 
-## 5. Title, description and H1 for every row  *(lesson 2-2)*
+**At Kestro:** the Danish places to harvest are google.dk autocomplete,
+ChatGPT search, YouTube, and where Danes look for used IT, such as DBA and
+PriceRunner. Each needs the owner's browser: Google is blocked here, and
+autocomplete differs by country.
 
-The session's homework is three things in one sheet: the pillar cluster, the
-keyword research, and a title, description and H1 for every row.
+## 5. Title, description, URL and H1 for every row  *(lesson 2-2)*
 
+The session's homework is three tabs in one sheet: the pillar cluster, the
+keyword research, and "title, description, URL and H1" for every row. The
+session ends by opening the next one, on-page SEO: title and description
+tags, URL structure, and the roles of H1, H2 and H3.
+
+- **What a searcher sees is three things:** the title, the URL and the
+  description. All three are written per row; none is left to the CMS's
+  default.
 - **The pillar-cluster sheet:**
   - Columns: pillar, levels 1–5, SEO title, `=LEN(title)`, SEO description,
     `=LEN(description)`.
   - Each tree is a pillar.
   - Grouping rows ("by brand", "by city", "by neighbourhood") are not pages.
     The pages sit under them.
+- **The keyword-research sheet** carries, per category: name, keyword,
+  search volume, difficulty, SEO title. The title is written *from* the
+  research, so the keywords it packs in are the ones the pool showed.
 - **The title tag** shows in the browser tab and as the headline in search.
   It is the most important on-page element.
   - 50–60 characters.
   - The target keyword at the start.
   - Attractive enough to click.
   - Unique on the site.
+  - **Pack the same-intent variants, then a benefit in brackets.** One title
+    can carry the main phrase and two or three variants of it ("repair",
+    "repairs", "at home"), followed by a bracketed promise the business
+    really keeps. Only same-intent variants: a child's keyword or another
+    intent stays out of the title for the same reasons as rule 4.
 - **The meta description** is the summary under the title.
   - 150–160 characters.
   - The keywords used naturally, written for a person.
   - A call to action raises click-through.
   - Unique, and an accurate description of that page.
-- **H1:** one per page, and part of the homework. The course has not yet
-  said what goes in it. When it does, extend this rule. Until then, follow
-  `references/snippets.md`.
+- **The URL** is part of the snippet and a row in the homework. The course
+  details its structure in the next session; until then, rule 5 asks only
+  that every row has one.
+- **H1, H2, H3:** one H1 per page, and part of the homework. The roles of
+  each level are the next session's subject. When it is learned, extend this
+  rule. Until then, follow `references/snippets.md`.
+- **Preview and check before it ships.**
+  - A SERP simulator shows the snippet as Google would cut it. The course
+    uses the free one at mangools.com.
+  - An SEO-check browser extension reads any page's tags and warns about
+    them. The course opens large shops with it and finds titles over 65
+    characters, descriptions over 170, and a canonical that differs from
+    the page's URL. Big sites break the rules too: check a competitor's
+    tags before copying its pattern.
 
-**At Kestro the pixel limits bind:** 580 px for a title, 920 px for a
-description, as Google truncates them. Characters are the course's rule of
-thumb. Danish is wider than Persian, so a Danish description lands at about
-145–158 characters inside 920 px.
+**At Kestro:**
+- **The pixel limits bind:** 580 px for a title, 920 px for a description,
+  as Google truncates them. Characters are the course's rule of thumb.
+  Danish is wider than Persian, so a Danish description lands at about
+  145–158 characters inside 920 px. `scripts/measure.mjs` is the SERP
+  simulator here; it measures in the same font Google uses.
+- **The bracket holds a true benefit only:** "dansk tastatur", "skriftligt
+  tilbud", "pris før vi går i gang". Never a time, a number or a guarantee
+  the site does not state (the course's example promises a technician in
+  30 minutes; Kestro promises nothing it has not written down).
+- **The extension's checks are in `audit.mjs`:** canonical equal to the
+  page's own path, `<meta charset>` in the first 1024 bytes, and the length
+  warnings, which are stricter here (60 and 160) than the extension's (65
+  and 170).
+- **URLs are fixed.** Danish URLs never move (CLAUDE.md), so the URL rule
+  applies to new routes only. `audit.mjs` records whether a slug carries the
+  primary keyword; it is information, not a fault.
 
 ## 6. Seeds first, then a keyword pool, then the structure  *(lesson 2-1)*
 
