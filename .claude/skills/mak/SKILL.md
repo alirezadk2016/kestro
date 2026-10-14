@@ -1,6 +1,6 @@
 ---
 name: mak
-description: "Mak (مک): the owner's SEO method for kestro.dk, built lesson by lesson from their SEO course. Search intent, read from the results page, decides how many pages a topic needs. Categories are cut the way buyers search, as a pillar cluster. Keyword research runs per page and leaves children's keywords alone. Every page gets a title, description and H1 measured to Google's pixel limits. Use it for ANY SEO work on this site: keywords / کلمه کلیدی / سئو, titles, meta descriptions, H1s, categories, new pages, blog topics, the keyword map, SERP snippets, click-through, pillar cluster, keyword research, Search Console data. Use it whenever the owner says mak, مک, /mak, \"apply mak\", \"سئو کن\", \"با مک\", or sends a new course lesson (audio, transcript, screenshots) to learn. Verbs: audit, apply, research, page, learn."
+description: "Mak (مک): the owner's SEO method for kestro.dk, built lesson by lesson from their SEO course. Search intent, read from the results page, decides how many pages a topic needs. Categories are cut the way buyers search, as a pillar cluster. Keyword research runs per page and leaves children's keywords alone. Every page gets a title, description and H1 measured to Google's pixel limits. Use it for ANY SEO work on this site: keywords / کلمه کلیدی / سئو, titles, meta descriptions, H1s, categories, new pages, blog topics, the keyword map, SERP snippets, click-through, pillar cluster, seed keywords, keyword pool, keyword research, competitor categories, Search Console data. Use it whenever the owner says mak, مک, /mak, \"apply mak\", \"سئو کن\", \"با مک\", or sends a new course lesson (audio, transcript, screenshots) to learn. Verbs: audit, apply, research, page, learn."
 ---
 
 # Mak (مک)
@@ -48,6 +48,23 @@ Details and examples: `references/method.md`.
      ≤ 580 px.
    - Description: natural keywords plus a call to action, unique, 150–160
      characters, and binding ≤ 920 px. Danish lands at about 145–158.
+6. **Seeds first, then the keyword pool, then the structure.**
+   - Ask an AI assistant what buyers search for, and take its answers as
+     seeds.
+   - Run each seed through a keyword tool, exporting keyword, volume and
+     difficulty.
+   - Read the pillar cluster out of that pool.
+7. **Pillars are the separate jobs people come for:** buy, have it done,
+   repair, sell, learn, error codes. Build them in six steps:
+   1. User needs.
+   2. Keyword research.
+   3. Hierarchy.
+   4. Alignment with the products.
+   5. Competitors.
+   6. Continuous review.
+
+The work runs 6 → 7 → 2 → 1 → 3 → 4 → 5, then review. The full order is in
+`references/method.md`.
 
 ## Ground rules
 

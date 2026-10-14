@@ -13,6 +13,25 @@ example.
 
 ---
 
+## The order of work  *(lessons 2-1, 2-2)*
+
+The rules are numbered in the order they were taught. The work runs in this
+order:
+
+1. **Seeds, then the pool.** Find what people search, before any structure
+   exists (rule 6).
+2. **Pillars.** Decide the trees: the separate jobs users come to the site
+   for (rule 7).
+3. **Categories inside each pillar.** Cut them the way buyers decide
+   (rule 2). Check every split against page one (rule 1).
+4. **The blog tree,** built after the commercial trees (rule 3).
+5. **Keyword research per page,** once the structure is final (rule 4).
+6. **Title, description and H1 for every row** (rule 5).
+7. **Review and correct, continuously.** That is the sixth pillar step in
+   rule 7, and it is what `mak audit` is for.
+
+---
+
 ## 1. One page per search intent — the results page decides  *(lesson 2-2)*
 
 Before two keywords share a page, search each one and read page one.
@@ -62,6 +81,16 @@ out), or Search Console data. Until that evidence exists, mark the decision
   gift.
 - **A category gets a page only if the site has the products.** The course's
   product sheet has an "exists on the site" tick for exactly this.
+- **An accessories or parts tree runs: type, then brand.** In the course's
+  computer-parts example:
+  - level 1 is "laptop accessories";
+  - level 2 is each product type: drive caddy, LCD panel, thermal paste and
+    pads, charger cable, adapter plug, external drive box, SATA-to-USB,
+    speaker;
+  - level 3 splits a type by brand: "laptop speaker Lenovo", "… HP",
+    "… Dell", "… Asus", "… Acer".
+
+  Each level exists because people search that way.  *(lesson 2-1)*
 
 **At Kestro:** the first decision is the type of machine (bærbar, stationær,
 skærm …), then the model. Possible facets:
@@ -164,3 +193,83 @@ keyword research, and a title, description and H1 for every row.
 description, as Google truncates them. Characters are the course's rule of
 thumb. Danish is wider than Persian, so a Danish description lands at about
 145–158 characters inside 920 px.
+
+## 6. Seeds first, then a keyword pool, then the structure  *(lesson 2-1)*
+
+SEO starts from what the user searches. Every search a buyer makes should
+find a page or a section that answers it.
+
+- **Get seeds before you have any structure.** You may not know the trade at
+  all; the course's example is a client whose products the teacher had never
+  heard of.
+  - Ask an AI assistant: "what do people search on Google when they want to
+    buy X?"
+  - It returns the seed phrases and the trade's own groupings. For gold, it
+    gives bar, melted gold, necklace and ring. For insulation products, it
+    gives moisture, heat and industrial floors.
+  - The course prefers Gemini to ChatGPT for this. Any assistant works,
+    because the output is only a lead to check.
+- **Run every seed through a keyword tool and export it.** Each seed becomes
+  one column block in the pool sheet, with keyword, search volume and
+  difficulty.
+  - One block per seed: "Bosch repair", "Bosch fridge repair", "Bosch
+    washing-machine repair", "Bosch authorised service".
+  - A pool runs to hundreds or thousands of rows.
+- **Only then build the structure, from the pool.** Somebody with no
+  knowledge of the trade should be able to read the pillar cluster out of
+  the pool.
+- **Why this matters more now:**
+  - The pillar cluster is the site's foundation. If it is wrong from the
+    start, the site never gets the traffic.
+  - It mattered for Google before; now AI assistants read the structure as
+    well. They match the exact phrase a person asks to a page that answers
+    it, and recommend that page.
+  - A structured site with one page per real search is what gets surfaced.
+
+**At Kestro:**
+- **Seeds are written down.** They are in `references/sheets.md` under
+  "Kestro's seeds".
+- **The pool itself waits for real volumes.** The course's tool, Keywordchi,
+  is Persian-only. For Danish, the volumes come from Google Keyword Planner
+  or Search Console, run by the owner, because Google is blocked from this
+  environment.
+- **No volume is estimated.**
+
+## 7. Pillars are the separate jobs people come for — built in six steps  *(lesson 2-1)*
+
+A pillar is a top-level tree: one kind of reason to visit the site.
+
+- **The course's two examples:**
+
+  | Business | Pillars |
+  | --- | --- |
+  | Home-appliance business | services (repairs); appliance manuals; appliance error codes; repair training; a spare-parts shop; the blog |
+  | Gold business | gold products; melted gold; knowledge and blog; jewellery-design training; design and custom orders |
+- **Six steps to build the pillar cluster:**
+  1. Analyse the users' needs and the target audience.
+  2. Use SEO principles in the category design, which means keyword research
+     (rule 6, then rule 4).
+  3. Build a hierarchical structure: pillar, then levels 1–5 (rule 5's sheet).
+  4. Align it with the products the site really has (rule 2's "exists" tick).
+  5. Analyse competitors: how they categorise, and which keywords they rank
+     for.
+  6. Review and correct continuously.
+- **A full SEO project keeps one tab per stage.** The course's project sheet
+  has: categorisation, final categorisation, content, services, keyword
+  research, social, internal links, blog, and the working instructions.
+
+**At Kestro:** the jobs people come for, and where each one lives.
+
+| Job | Where it lives |
+| --- | --- |
+| Buy used business IT | `/produkter` and `/modeller` |
+| Have it done for a fleet | `/ydelser` and `/flaadeloesninger` |
+| Get a machine repaired | `/reparation` |
+| Sell old equipment | `/saelg-til-os` and `/ydelser/overskudslager-og-returvarer` |
+| Learn before deciding | `/vejledninger` |
+
+The course's other pillars are candidates. Each needs page-one evidence and
+a real answer Kestro can give:
+- **Error codes:** a repair business's natural second tree.
+- **Manuals and drivers.**
+- **A parts shop:** not a candidate, because Kestro does not sell parts.

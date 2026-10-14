@@ -4,7 +4,7 @@
 
 | Lesson | Status | Source material | Rules |
 | --- | --- | --- | --- |
-| 2-1 | Waiting | Audio received (30 min), not transcribed. The model host is blocked here. | — |
+| 2-1 | Learned 14 Oct 2026 | Owner's transcript (0:00–9:46 of a 63-minute session) and 10 screenshots up to 55:43: the pillar-cluster slides, the keyword-pool sheet, the pillar sheet, and a computer-parts category sheet | 6, 7; adds to 2; the order of work |
 | 2-2 | Learned 13 Oct 2026 | Owner's transcript (0:00–20:17 of a 30-minute audio cut of a ~55-minute session) and 11 screenshots of the session's sheets and slides | 1–5 |
 | 2-3 | Waiting | — | — |
 | 2-4 | Waiting | — | — |

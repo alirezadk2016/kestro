@@ -24,7 +24,7 @@ Kestro file that plays each part.
 
 ## Keyword pool  →  `docs/keyword-pool/<page>.csv` (when real data exists)
 
-The course exports one block per category from its keyword tool:
+The course exports one block per seed or category from its keyword tool, side by side in one sheet:
 
 | keyword | search volume | difficulty |
 | --- | --- | --- |
@@ -37,6 +37,52 @@ and other intents (method, rule 4).
 created only from an export the owner supplies, such as Google Keyword
 Planner or Search Console. Its columns are `keyword, volume, difficulty,
 source, date`. No numbers are estimated.
+
+### Kestro's seeds  *(rule 6)*
+
+These are the starting phrases to run through Google Keyword Planner, one
+export per seed. They are what a Danish buyer, seller or repair customer
+plausibly types. Volumes come only from the export, so these lines carry
+none. Store each export as `docs/keyword-pool/<seed>.csv` with the columns
+`keyword, volume, difficulty, source, date`.
+
+| Pillar | Seeds |
+| --- | --- |
+| Buy | brugt bærbar · refurbished bærbar · brugte computere · brugt stationær computer · brugt skærm · brugt dockingstation · brugt mini pc · brugte tablets · brugt iphone · refurbished computer erhverv · it-udstyr til virksomheder · firmacomputer |
+| Buy, by brand | brugt thinkpad · brugt lenovo · brugt dell latitude · brugt dell optiplex · brugt hp elitebook · brugt hp elitedesk · refurbished thinkpad |
+| Fleet and B2B | computere til medarbejdere · udskiftning af firmacomputere · it-indkøb virksomhed · klargøring af computere · leasing af computere (check the intent: Kestro does not lease) |
+| Sell | sælg brugt it-udstyr · opkøb af computere · sælg brugte bærbare · bortskaffelse af it-udstyr · datasletning |
+| Repair | computer reparation · pc reparation · batteriskift bærbar · skærmskift bærbar · rens bærbar · geninstallere windows · computer starter ikke · ram opgradering · tastatur bærbar |
+| Learn | windows 11 krav · windows 10 support · tjek brugt bærbar · refurbished eller brugt · hvor meget ram · lenovo fejlkode · dell blinkende lys · hp bip lyde |
+
+Norway is a market, but the site has no Norwegian pages. Norwegian seeds
+("brukt pc bedrift") wait until there is a Norwegian page plan.
+
+## A full SEO project, tab by tab  *(rule 7)*
+
+The course's project sheet keeps one tab per stage:
+
+1. Categorisation
+2. Final categorisation
+3. Content
+4. Services
+5. Keyword research
+6. Social
+7. Internal links
+8. Blog
+9. Working instructions
+
+At Kestro each stage has a file:
+
+| Stage | Kestro file |
+| --- | --- |
+| Categorisation and final categorisation | `docs/seo-pillar-cluster.csv` |
+| Keyword research | `docs/seo-keyword-map.csv` |
+| Keyword pool | `docs/keyword-pool/` |
+| Status and working instructions | `docs/seo-playbook.md` |
+
+Internal links and social have no sheet yet. Internal links are the next one
+worth adding, because seven repair pages have few links pointing to them.
 
 ## Keyword research  →  `docs/seo-keyword-map.csv`
 
