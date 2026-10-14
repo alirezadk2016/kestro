@@ -3,13 +3,15 @@ import Container from "./Container";
 import Logo from "./Logo";
 import ConsentReset from "./ConsentReset";
 import { company, postalAddress } from "@/lib/company";
-import { companyNav, serviceNav } from "@/lib/nav";
+import { companyNav, serviceNav, type NavLink } from "@/lib/nav";
+import { categories } from "@/lib/categories";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
   da: {
     blurb:
       "Kestro sælger refurbished erhvervs-IT til virksomheder i Danmark og Norge. Vi skaffer maskinerne hos leverandører i vores netværk, klargør dem til det nordiske marked og står selv for tilbud, faktura og reklamation.",
+    products: "Produkter",
     services: "Ydelser",
     company: "Virksomhed",
     delivers: "Leverer i",
@@ -23,6 +25,7 @@ const copy = {
   en: {
     blurb:
       "Kestro sells refurbished business IT to companies in Denmark and Norway. We source the machines from suppliers in our network, prepare them for the Nordic market and handle the quote, the invoice and any complaint ourselves.",
+    products: "Products",
     services: "Services",
     company: "Company",
     delivers: "Delivers in",
@@ -90,7 +93,21 @@ function SocialGlyph({ name }: { name: string }) {
  */
 export default function Footer({ lang }: { lang: Lang }) {
   const c = copy[lang];
+  /*
+   * The product categories, on every page. Mak rule 9: a footer link is an
+   * internal link from every page, so it is spent on the pages that matter
+   * most — the categories people buy from. "Dockingstationer og tilbehør" is
+   * cut to its first word so the link stays on one line in a phone column.
+   */
+  const productLinks: NavLink[] = categories.map((category) => ({
+    href: `/produkter/${category.slug}`,
+    label:
+      category.slug === "dockingstationer"
+        ? { da: "Dockingstationer", en: "Docking stations" }
+        : category.name,
+  }));
   const groups = [
+    { label: c.products, links: productLinks },
     { label: c.services, links: serviceNav },
     { label: c.company, links: companyNav },
   ];
@@ -130,7 +147,7 @@ export default function Footer({ lang }: { lang: Lang }) {
             label-left, links-right row is the hanging-header pattern. */}
         <nav
           aria-label={c.pages}
-          className="mt-12 grid grid-cols-1 gap-8 border-t border-white/10 pt-8 lg:grid-cols-[2fr_1fr] lg:gap-14"
+          className="mt-12 grid grid-cols-1 gap-8 border-t border-white/10 pt-8 lg:grid-cols-[1fr_2fr_1fr] lg:gap-14"
         >
           {groups.map((group) => (
             <div key={group.label}>
