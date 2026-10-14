@@ -20,12 +20,12 @@ in every change that applies Mak or adds a lesson.
 - `npm audit --omit=dev` reports zero findings after compatible patches. Nine development-tool dependency findings remain; no forced Tailwind major upgrade or unverified override is used to hide them.
 - Not resolved by wording: the real data controller's identity/contact details, processor agreements and legal review before trading; authentic photos for 17 model pages; actual customer evidence; stock, margins, repair handover and service policies. Catalogue comparison/filtering, broader visual simplification and new articles remain separate design/content work, not claims of defects already fixed.
 
-| Lesson | In Mak    | Checked here    |
-| ------ | --------- | --------------- |
-| 2-1    | Waiting   | —               |
-| 2-2    | Rules 1–5 | 13 October 2026 |
-| 2-3    | Waiting   | —               |
-| 2-4    | Waiting   | —               |
+| Lesson | In Mak | Checked here |
+| --- | --- | --- |
+| 2-1 | Rules 6–7, the order of work | 14 October 2026 |
+| 2-2 | Rules 1–5 | 13 October 2026 |
+| 2-3 | Waiting | — |
+| 2-4 | Waiting | — |
 
 ---
 
@@ -115,3 +115,44 @@ in every change that applies Mak or adds a lesson.
 - **Rule 4, `check-map.py`:** 0 failures, no parent holding a child's
   keyword, and 19 informational keywords on non-blog pages waiting for
   Danish page-one evidence.
+
+### Rules 6–7, checked 14 October 2026
+
+- **Rule 6, seeds and pool: half done.**
+  - The seeds are written: about fifty Danish phrases across six pillars, in
+    `.claude/skills/mak/references/sheets.md`.
+  - The pool does not exist, because there are no Danish volumes.
+  - **Waits on the owner:** one Google Keyword Planner export per seed, or a
+    Search Console export.
+  - The site's structure was built before the pool, the reverse of the
+    course's order. When the pool arrives, re-check every category and
+    proposed page against it.
+- **Rule 7, pillars:** five of the jobs people come for have a tree.
+
+  | Job | Tree |
+  | --- | --- |
+  | Buy | `/produkter`, `/modeller` |
+  | Have it done | `/ydelser`, `/flaadeloesninger` |
+  | Repair | `/reparation` |
+  | Sell | `/saelg-til-os` |
+  | Learn | `/vejledninger` |
+
+  Candidates from the course's repair example: error codes, and manuals or
+  drivers. Not candidates: training and a parts shop, which Kestro does not
+  sell.
+- **Rule 7, the six steps:**
+
+  | Step | Status |
+  | --- | --- |
+  | 1. User needs | Done: B2B buyers, sellers, and repair customers including private ones. |
+  | 2. Keyword research | Partial: the map exists, without volumes. |
+  | 3. Hierarchy | Done: the pillar sheet. |
+  | 4. Alignment with products | Done: no category without the things it names. Tablets and phones have no model pages, which is honest. |
+  | 5. Competitors | Started (see below). |
+  | 6. Review | Running: `mak audit` and this file. |
+
+  On step 5, Danish refurbished sellers seen in search results put brand
+  pages high in their structure: "Refurbished Lenovo ThinkPad", "Lenovo
+  ThinkPad bærbar PC", refurbished Lenovo and HP collections. That supports
+  the brand-level candidate under rule 2. A full competitor keyword analysis
+  needs a keyword tool or the owner's input.
