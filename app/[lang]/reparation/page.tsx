@@ -214,7 +214,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
       <section className="py-10 sm:py-20">
         <Container>
-          <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 xl:max-w-none">
             <div>
               <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.howTitle}
@@ -250,7 +250,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2
               id="reparation-formular"
               className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"

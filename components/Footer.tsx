@@ -125,64 +125,76 @@ export default function Footer({ lang }: { lang: Lang }) {
   return (
     <footer className="lit border-t border-white/10 bg-brand-950 text-paper/75">
       <Container className="pb-10 pt-14 sm:pt-20">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-          <div className="max-w-xl">
-            <Link
-              href={localePath("/", lang)}
-              className="inline-flex min-h-[44px] items-center gap-3 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl"
-            >
-              <Logo className="h-9 w-auto sm:h-10" idPrefix="footer" />
-              Kestro
-            </Link>
-            <p className="mt-4 text-base leading-[1.65] text-paper/65">{c.blurb}</p>
-          </div>
+        {/* From xl, the brand on the left and four link columns on the right,
+            Products in two, so every column is about five links tall. On a
+            1920 screen the stacked rows ran ten links wide for Products and
+            four for Services, and the right half of the footer was empty. */}
+        <div className="xl:grid xl:grid-cols-12 xl:gap-12">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16 xl:col-span-3 xl:flex-col xl:items-start xl:justify-start xl:gap-6">
+            <div className="max-w-xl">
+              <Link
+                href={localePath("/", lang)}
+                className="inline-flex min-h-[44px] items-center gap-3 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl"
+              >
+                <Logo className="h-9 w-auto sm:h-10" idPrefix="footer" />
+                Kestro
+              </Link>
+              <p className="mt-4 text-base leading-[1.65] text-paper/65">{c.blurb}</p>
+            </div>
 
-          <div className="flex flex-col items-start gap-2 lg:items-end">
-            {/* No button here. The band above every page already asks, and a
+            <div className="flex flex-col items-start gap-2 lg:items-end xl:items-start">
+              {/* No button here. The band above every page already asks, and a
                 second "talk to an adviser" a screen later read as the site
                 repeating itself; the footer keeps the address and the door. */}
-            <a
-              href={`mailto:${company.email}`}
-              className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper"
-            >
-              {company.email}
-            </a>
-            <p className="text-sm leading-[1.6] text-paper/65">
-              {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
-            </p>
+              <a
+                href={`mailto:${company.email}`}
+                className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper"
+              >
+                {company.email}
+              </a>
+              <p className="text-sm leading-[1.6] text-paper/65">
+                {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Each group's label sits above its links, never beside them: a
+          {/* Each group's label sits above its links, never beside them: a
             label-left, links-right row is the hanging-header pattern. */}
-        <nav
-          aria-label={c.pages}
-          className="mt-12 grid grid-cols-1 gap-6 border-t border-white/10 pt-8"
-        >
-          {groups.map((group) => (
-            <div key={group.label}>
-              <h3 className="label text-brand-300">{group.label}</h3>
-              {/* One column track for every group, sized to the longest
+          <nav
+            aria-label={c.pages}
+            className="mt-12 grid grid-cols-1 gap-6 border-t border-white/10 pt-8 xl:col-span-9 xl:mt-0 xl:grid-cols-[2fr_1fr_1fr_1fr] xl:gap-x-8 xl:border-t-0 xl:pt-0"
+          >
+            {groups.map((group, gi) => (
+              <div key={group.label}>
+                <h3 className="label text-brand-300">{group.label}</h3>
+                {/* One column track for every group, sized to the longest
                   label: the groups stack, and their links line up in the
                   same columns down the whole footer — two on a phone, seven
                   on a desktop. Free wrapping put one link on a row, then
                   two, then three, so the eye had no edge to run down. */}
-              <ul className="mt-2 grid gap-x-4 [grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))]">
-                {group.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={localePath(link.href, lang)}
-                      rel={link.rel}
-                      className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper sm:whitespace-nowrap"
-                    >
-                      {link.label[lang]}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
+                <ul
+                  className={`mt-2 grid gap-x-4 [grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))] ${
+                    gi === 0
+                      ? "xl:[grid-template-columns:repeat(2,minmax(0,1fr))]"
+                      : "xl:[grid-template-columns:minmax(0,1fr)]"
+                  }`}
+                >
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={localePath(link.href, lang)}
+                        rel={link.rel}
+                        className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper sm:whitespace-nowrap"
+                      >
+                        {link.label[lang]}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+        </div>
 
         {/* The legal band. A B2B buyer looks for the entity, the address and
             the CVR before ordering, and e-handelsloven §7 requires them; each

@@ -186,7 +186,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             updated="/kontakt"
           />
 
-          <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
+          <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16 xl:max-w-none">
             <div className="lg:col-span-3">
               {/* Two forms on the site, and a buyer on this page should not
                   have to guess which one asks the right questions. */}
@@ -278,7 +278,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.briefBody}</p>
           </div>
           {/* Parallel items, so plates rather than hairline rows. */}
-          <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:max-w-none xl:grid-cols-3">
             {[c.brief1, c.brief2, c.brief3, c.brief4, c.brief5, c.brief6].map((item) => (
               <li key={item} className="plate flex gap-3 p-5 text-base leading-7 text-paper/75">
                 <Check

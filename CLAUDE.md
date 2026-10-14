@@ -174,6 +174,11 @@ bodies.
   as collected rather than drawn. New marks follow the language in
   `components/CraftMark.tsx`: 1.5 stroke, round caps, one `km-body` surface,
   one brand-300 accent on the part that carries the meaning.
+- **Design for 1920 too.** The container is about 1600px wide there. A
+  section that is one `max-w-3xl` column on the left leaves half the screen
+  empty, page after page; give it `split` (globals.css: heading left, the rest
+  right, from lg) or a real second column. Text inside a card is not capped
+  at 34em — the card is the measure.
 - **Design for the phone.** Every graphic idea must exist at 390px. The
   process section had a spine on desktop and `hidden lg:flex`, so the whole
   argument of the section was invisible to most readers.

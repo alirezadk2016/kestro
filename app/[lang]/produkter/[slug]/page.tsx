@@ -55,8 +55,7 @@ const copy = {
       "Vi skaffer udstyret til hver ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
-    imageNote:
-      "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
+    imageNote: "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi ofte skaffer",
     modelsBody:
@@ -76,8 +75,7 @@ const copy = {
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
-    imageNote:
-      "The photos show the model type; condition and specification are agreed per order.",
+    imageNote: "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we often source",
     modelsBody:
@@ -300,7 +298,7 @@ export default async function CategoryPage(props: {
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.brandsTitle}
             </h2>
@@ -330,7 +328,7 @@ export default async function CategoryPage(props: {
             {/* Machine on one side, what it is on the other. Stacked, the
                 gallery alone was a screen and a half with the right half of
                 the window empty. */}
-            <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
+            <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12 xl:max-w-none">
               <div className="lg:col-span-6">
                 <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {exampleModel.name}
@@ -405,7 +403,7 @@ export default async function CategoryPage(props: {
       {categoryModels.length > 0 && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="max-w-3xl">
+            <div className="split max-w-3xl">
               <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.modelsTitle}
               </h2>
@@ -460,7 +458,7 @@ export default async function CategoryPage(props: {
 
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.useCases}
             </h2>
@@ -497,7 +495,7 @@ export default async function CategoryPage(props: {
 
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.other}</h2>
             <ul className="mt-6 flex flex-wrap gap-3">
               {others.map((other) => {

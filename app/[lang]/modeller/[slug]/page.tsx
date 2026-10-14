@@ -168,7 +168,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               same left edge. Inside it the machine and what we say about it sit
               side by side on a desktop: as stacked full-width blocks the photos
               alone were two screens of scrolling with half the window empty. */}
-          <div className="max-w-6xl">
+          <div className="max-w-6xl xl:max-w-none">
             {/* The shared trail, visible and marked up from one list. */}
             <Breadcrumbs
               lang={lang}
@@ -243,7 +243,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
-          <div className="max-w-6xl">
+          <div className="max-w-6xl xl:max-w-none">
             <div className="plate overflow-hidden">
               <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
                 <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
@@ -347,7 +347,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
       {related.length > 0 && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
           <Container>
-            <div className="max-w-6xl">
+            <div className="max-w-6xl xl:max-w-none">
               <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (

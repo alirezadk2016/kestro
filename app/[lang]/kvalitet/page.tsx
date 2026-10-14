@@ -222,7 +222,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             updated="/kvalitet"
           />
 
-          <div className="mt-12 max-w-3xl">
+          <div className="split mt-12 max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.gradingTitle}
             </h2>
@@ -262,7 +262,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
 
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.testTitle}
             </h2>
@@ -271,7 +271,11 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {testPoints.map((point) => (
                 <li key={point.da} className="flex gap-3 text-sm leading-6 text-paper/75">
-                  <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
+                  />
                   {point[lang]}
                 </li>
               ))}
@@ -284,25 +288,28 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
 
       <section className="py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.dataTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody1}</p>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody2}</p>
-
-            <h2 className="mt-12 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.warrantyTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody1}</p>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody2}</p>
+          <div className="grid max-w-3xl gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+            <div>
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.dataTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody2}</p>
+            </div>
+            <div>
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.warrantyTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.warrantyBody2}</p>
+            </div>
           </div>
         </Container>
       </section>
 
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
+          <div className="split max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.disclosureTitle}
             </h2>
@@ -311,7 +318,11 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             <ul className="mt-8 space-y-3">
               {disclosure.map((item) => (
                 <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
-                  <Check aria-hidden="true" className="mt-1.5 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
+                  />
                   {item[lang]}
                 </li>
               ))}

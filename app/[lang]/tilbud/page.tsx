@@ -215,7 +215,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>
-          <div className="max-w-5xl">
+          <div className="max-w-5xl xl:max-w-none">
             <Breadcrumbs
               lang={lang}
               trail={[{ name: lang === "da" ? "Få et tilbud" : "Get a quote", href: "/tilbud" }]}

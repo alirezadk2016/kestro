@@ -80,7 +80,15 @@ body {
    * grid or a flex row is a layout box (a card, a chip), and capping it would
    * shrink the card inside its track, so those lists are left alone.
    */
-  main p {
+  /*
+   * Not inside a card, where the copy is a sentence or two and the card is
+   * the measure: there the cap stopped the line at 476px of a 770px card on
+   * a 1920 screen, and every card on the front page carried an empty right
+   * half. FAQ answers sit in a .sheet <details> and are paragraphs, so they
+   * keep it. :where() holds the specificity where it was, so a page's own
+   * max-w-* class still wins.
+   */
+  main p:where(:not(:is(.plate, .plate-lift, .forge-face, .sheet:not(details)) p)) {
     /* In em, not ch: a ch is the width of "0", which in Plus Jakarta Sans is
        0.73em, so 70ch came out at 922px and capped nothing. Measured on the
        site's own text an average character is 0.49em, so 34em is about 69
@@ -88,8 +96,41 @@ body {
     max-width: 34em;
   }
 
-  main :is(ul, ol):not([class*="grid"]):not([class*="flex"]) > li {
+  main
+    :is(ul, ol):not([class*="grid"]):not([class*="flex"])
+    > li:where(:not(:is(.plate, .plate-lift, .forge-face, .sheet:not(details)) li)) {
     max-width: 34em;
+  }
+
+  /*
+   * A section's heading on the left, everything else on the right, from lg.
+   *
+   * Most interior sections were one 768px column on the left of a container
+   * that is 1600px wide on a 1920 screen, so the right half of page after
+   * page was empty. This keeps the same markup — the heading first, then the
+   * lead, the list, the panel — and on a wide screen gives the heading its
+   * own column, held in view while the right column scrolls past it.
+   */
+  @media (min-width: 1024px) {
+    main .split {
+      display: grid;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      column-gap: clamp(3rem, 5vw, 6rem);
+      align-items: start;
+      max-width: none;
+    }
+    main .split > * {
+      grid-column: 2;
+    }
+    main .split > :first-child {
+      grid-column: 1;
+      grid-row: 1 / span 40;
+      position: sticky;
+      top: 7rem;
+    }
+    main .split > :nth-child(2) {
+      margin-top: 0;
+    }
   }
 
   /*
