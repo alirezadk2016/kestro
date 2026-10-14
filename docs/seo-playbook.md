@@ -192,3 +192,30 @@ extension's checks. Results on 136 pages:
     transcribed here.
   - Autocomplete harvests from google.dk, YouTube, DBA and PriceRunner,
     which need a Danish browser.
+
+### Rule 2 corrected, checked 14 October 2026
+
+The owner's clean transcript of the second audio cut of 2-2 corrected one
+point. The watch shop's "gifts" category is a parent name over birthday
+and Valentine's, an example of grouping well, not of cutting too thin.
+Rule 2 now also says how categories are built: group the pool's keywords
+and give each group a parent name ("by brand", "by style", "gifts"). A
+search that names no first choice gets a general category beside them.
+
+- **General category: in place.** `/produkter` takes the searches that name
+  no type ("brugt it-udstyr", "brugte computere").
+- **Parents: one way of cutting today.** Every type in the pillar sheet has
+  a single parent, "Efter model". The course would cut more ways:
+  - "Efter mærke": Lenovo, Dell, HP;
+  - "Efter brug": kontor, CAD;
+  - "Efter funktion": dansk tastatur.
+
+  Each stays a candidate until three things hold: page one shows category
+  pages for it, Kestro sources enough of those machines to fill it, and the
+  page has a real answer. The keyword pool decides which parents exist, so
+  this waits on the Keyword Planner exports (rule 6).
+- **Not possible: a price band.** Kestro has no prices of its own. The
+  examples on `/priser` are external retail references.
+- **One product in several categories: already true** where the facts allow
+  it. The OptiPlex 5060 sits under both stationære and mini-pc'er.
+

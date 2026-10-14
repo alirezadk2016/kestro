@@ -66,19 +66,37 @@ out), or Search Console data. Until that evidence exists, mark the decision
 
 - **The first level is the first choice the buyer makes.**
   - In a pet shop that is the animal: dog, cat.
-  - Next to them goes a general category for what serves every animal.
+  - A search that names no animal ("pet toys", "pet food") fits under
+    neither, so it gets its own general category next to them. With more
+    animals than two, that general category becomes "pet supplies", and
+    "pet food" and "pet toys" sit under it.
   - "Pet food", "dog food" and "cat food" are three intents and get three
     pages.
-- **A product may sit in many categories.**
-  - Categories are cut along whatever people search by: price band, style,
-    colour, feature, occasion, recipient.
-  - A large shop can have more categories than products. One product may
-    appear in a hundred of them.
-- **Second-level groups take creativity.** Group them in the words searchers
-  use: for syrups, "nutty", "spiced", "sugar-free", not one long list.
-- **Thin categorisation leaves demand on the table.** A gift shop with only
-  "birthday" and "Valentine's" misses every other way people search for a
-  gift.
+- **A product may sit in many categories at once.**
+  - Categories are cut along whatever people search by. The course's watch
+    shop cuts by price band, style (minimal, sport), colour, feature (shows
+    messages), use (hiking, sport), band material (steel), the wearer (thin
+    wrist, formal) and occasion (birthday, Valentine's).
+  - One watch can be a smart watch that shows messages, a hiking watch, a
+    sport watch, under a price band and on a steel band, and it appears in
+    every one of those categories.
+  - The course's example shop has thousands of categories, at least as
+    many as products, and one product sits in a great many of them. Most
+    shops have far too few.
+- **Build the categories from the keyword pool.**
+  1. Go through the pool for the products or services.
+  2. Put the keywords that belong together into one group.
+  3. Give the group a parent name in the searcher's words.
+  4. Every group becomes a branch with its pages under it.
+
+  The watch shop puts birthday and Valentine's under the parent "gifts"
+  ("occasion gifts" would do as well), minimal and sport under "by style",
+  thin wrist and formal under "by wearer". A repair business puts each
+  neighbourhood under "by neighbourhood", each manufacturer under "by
+  brand", and each city under "by city".
+- **Second-level parents take creativity.** The course's syrup site runs
+  syrup, then nutty, spiced, caramel, sugar-free. "Spiced" is the teacher's
+  own name for that group; choosing such names is part of the work.
 - **A category gets a page only if the site has the products.** The course's
   product sheet has an "exists on the site" tick for exactly this.
 - **An accessories or parts tree runs: type, then brand.** In the course's
@@ -93,13 +111,19 @@ out), or Search Console data. Until that evidence exists, mark the decision
   Each level exists because people search that way.  *(lesson 2-1)*
 
 **At Kestro:** the first decision is the type of machine (bærbar, stationær,
-skærm …), then the model. Possible facets:
-- brand (Lenovo, Dell, HP);
-- use (office, CAD);
-- feature (dansk tastatur).
+skærm …), then the model.
+- **The general category** is `/produkter`: a search that names no type
+  ("brugt it-udstyr", "brugte computere") lands there, the way "pet toys"
+  lands in pet supplies.
+- **Possible parents, each a candidate only:**
+  - "Efter mærke": Lenovo, Dell, HP;
+  - "Efter brug": kontor, CAD;
+  - "Efter funktion": dansk tastatur.
 
-Each one is a candidate only. It needs a page-one check, and a real answer
-Kestro can give, before it gets a page.
+  Each needs a page-one check, the products to fill it, and a real answer
+  Kestro can give, before it gets a page.
+- **Not possible:** a price band. Kestro has no prices of its own, and the
+  examples on `/priser` are external retail references, not stock.
 
 ## 3. The blog has its own tree, and it comes second  *(lesson 2-2)*
 

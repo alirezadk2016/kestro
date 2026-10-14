@@ -33,7 +33,11 @@ Details and examples: `references/method.md`.
    one for two keywords means one page; different page ones mean separate
    pages. Videos and how-tos mean informational, which means the blog.
 2. **Categories follow the buyer's first decision.**
+   - A search that names no first choice gets a general category beside
+     them.
    - A product may sit in many categories, cut by what people search by.
+   - Group the pool's keywords and give each group a parent name ("by
+     brand", "gifts").
    - A category exists only if the site has the products for it.
 3. **The blog is its own tree, built after the product and service trees.**
    An informational search never sits on a commercial page. A repair business

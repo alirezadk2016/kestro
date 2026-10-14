@@ -5,7 +5,7 @@
 | Lesson | Status | Source material | Rules |
 | --- | --- | --- | --- |
 | 2-1 | Learned 14 Oct 2026 | Owner's transcript (0:00–9:46 of a 63-minute session) and 10 screenshots up to 55:43: the pillar-cluster slides, the keyword-pool sheet, the pillar sheet, and a computer-parts category sheet | 6, 7; adds to 2; the order of work |
-| 2-2 | Learned 13–14 Oct 2026 | Owner's transcript (0:00–20:17 of the first 30-minute audio cut of a ~55-minute session); 11 screenshots of the sheets and slides (13 Oct); 18 more screenshots up to ~55 min (14 Oct): the on-page slides 47–50, the SEO-check extension on large shops, the keyword-research and homework sheets, the keyword tool's sources. The second audio cut (`2-2_2`, 30 min) arrived 14 Oct and is **not transcribed**: Hugging Face still answers 403 | 1–5; 14 Oct adds URL and the snippet preview to 5, harvest sources and short seeds to 4 |
+| 2-2 | Learned 13–14 Oct 2026 | Owner's transcript (0:00–20:17 of the first 30-minute audio cut of a ~55-minute session); 11 screenshots of the sheets and slides (13 Oct); 18 more screenshots up to ~55 min (14 Oct): the on-page slides 47–50, the SEO-check extension on large shops, the keyword-research and homework sheets, the keyword tool's sources. The second audio cut (`2-2_2`) arrived 14 Oct; Hugging Face answers 403, so the owner sent a clean transcript of it (0:00–~10:00). It covers the same opening as the first cut, in better words, and corrected rule 2: the watch shop's "gifts" is a parent name over birthday and Valentine's, not an example of thin categories | 1–5; 14 Oct adds URL and the snippet preview to 5, harvest sources and short seeds to 4, and corrects and extends 2 |
 | 2-3 | Waiting | — | — |
 | 2-4 | Waiting | — | — |
 
