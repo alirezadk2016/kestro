@@ -47,13 +47,13 @@ export default function WhyUs({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
+    <section className="bg-white py-14 text-ink-900 sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.sub}</p>
         </div>
 
         {/* Parallel claims, not a sequence, so plates at every width. From
@@ -63,10 +63,10 @@ export default function WhyUs({ lang }: { lang: Lang }) {
         <dl className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {benefits.map((benefit) => (
             <div key={benefit.title.da} className="plate p-5 sm:p-6">
-              <dt className="font-display t-h3 font-bold tracking-tight text-paper">
+              <dt className="font-display t-h3 font-bold tracking-tight text-ink-900">
                 {benefit.title[lang]}
               </dt>
-              <dd className="mt-2 text-sm leading-6 text-paper/75 sm:text-base sm:leading-7">
+              <dd className="mt-2 text-sm leading-6 text-ink-700 sm:text-base sm:leading-7">
                 {benefit.description[lang]}
               </dd>
             </div>

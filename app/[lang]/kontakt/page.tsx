@@ -37,8 +37,7 @@ const copy = {
     fieldHours: "Åbningstider",
     at: "hos",
     briefTitle: "Hvad skal der stå i beskeden?",
-    briefBody:
-      "Antal, type og tidsramme er det vigtigste. Resten sparer en runde spørgsmål.",
+    briefBody: "Antal, type og tidsramme er det vigtigste. Resten sparer en runde spørgsmål.",
     brief1: "Antal enheder – også hvis det er et skøn.",
     brief2: "Type: bærbar, stationær, mini-pc, skærm, dockingstation eller andet.",
     brief3: "Krav til processor, hukommelse (RAM) og lagerplads, hvis I har dem.",
@@ -68,8 +67,7 @@ const copy = {
     fieldHours: "Opening hours",
     at: "at",
     briefTitle: "What should the message say?",
-    briefBody:
-      "Quantity, type and timing matter most. The rest saves a round of questions.",
+    briefBody: "Quantity, type and timing matter most. The rest saves a round of questions.",
     brief1: "Number of devices — an estimate is fine.",
     brief2: "Type: laptop, desktop, mini PC, monitor, docking station or something else.",
     brief3: "Requirements for processor, memory (RAM) and storage, if you have them.",
@@ -190,11 +188,11 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             <div className="lg:col-span-3">
               {/* Two forms on the site, and a buyer on this page should not
                   have to guess which one asks the right questions. */}
-              <p className="mb-4 text-sm leading-[1.6] text-paper/75">
+              <p className="mb-4 text-sm leading-[1.6] text-ink-700">
                 {c.quoteHint}{" "}
                 <Link
                   href={localePath("/tilbud", lang)}
-                  className="inline-flex min-h-[44px] items-center font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
+                  className="inline-flex min-h-[44px] items-center font-semibold text-brand-700 underline decoration-brand-600/60 underline-offset-4 hover:text-ink-900"
                 >
                   {c.quoteLink}
                 </Link>
@@ -208,47 +206,47 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
               <ContactFlipCard lang={lang} />
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {c.emailTitle}
                 </h2>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/75">{c.emailBody}</p>
+                <p className="mt-2 text-sm leading-[1.6] text-ink-700">{c.emailBody}</p>
                 <CopyEmailButton lang={lang} />
               </div>
 
               <div className="plate p-6 sm:p-8">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {c.companyTitle}
                 </h2>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/65">{c.fieldCompany}</dt>
-                    <dd className="font-medium text-paper">{company.name}</dd>
+                    <dt className="text-ink-600">{c.fieldCompany}</dt>
+                    <dd className="font-medium text-ink-900">{company.name}</dd>
                   </div>
                   {company.phoneDisplay && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/65">{c.fieldPhone}</dt>
-                      <dd className="font-medium text-paper">{company.phoneDisplay}</dd>
+                      <dt className="text-ink-600">{c.fieldPhone}</dt>
+                      <dd className="font-medium text-ink-900">{company.phoneDisplay}</dd>
                     </div>
                   )}
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/65">{c.fieldEmail}</dt>
-                    <dd className="font-medium text-paper">{company.email}</dd>
+                    <dt className="text-ink-600">{c.fieldEmail}</dt>
+                    <dd className="font-medium text-ink-900">{company.email}</dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/65">{c.fieldAddress}</dt>
-                    <dd className="text-right font-medium text-paper">{postalAddress(lang)}</dd>
+                    <dt className="text-ink-600">{c.fieldAddress}</dt>
+                    <dd className="text-right font-medium text-ink-900">{postalAddress(lang)}</dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-paper/65">{c.fieldServes}</dt>
-                    <dd className="font-medium text-paper">{company.serves[lang]}</dd>
+                    <dt className="text-ink-600">{c.fieldServes}</dt>
+                    <dd className="font-medium text-ink-900">{company.serves[lang]}</dd>
                   </div>
                   {/* Shown when there is one. "Tilføjes snarest" against a CVR
                       number reads, to somebody about to order 120 machines, as a
                       company that does not exist yet. */}
                   {company.cvr && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/65">{c.fieldCvr}</dt>
-                      <dd className="font-medium text-paper">
+                      <dt className="text-ink-600">{c.fieldCvr}</dt>
+                      <dd className="font-medium text-ink-900">
                         {company.cvr}
                         {company.legalForm ? ` · ${company.legalForm}` : ""}
                       </dd>
@@ -256,8 +254,8 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                   )}
                   {company.openingHours[lang] && (
                     <div className="flex justify-between gap-4">
-                      <dt className="text-paper/65">{c.fieldHours}</dt>
-                      <dd className="text-right font-medium text-paper">
+                      <dt className="text-ink-600">{c.fieldHours}</dt>
+                      <dd className="text-right font-medium text-ink-900">
                         {company.openingHours[lang]}
                       </dd>
                     </div>
@@ -269,21 +267,21 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-10 sm:py-20">
+      <section className="bg-paper-dim py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
               {c.briefTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.briefBody}</p>
+            <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.briefBody}</p>
           </div>
           {/* Parallel items, so plates rather than hairline rows. */}
           <ul className="mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:max-w-none xl:grid-cols-3">
             {[c.brief1, c.brief2, c.brief3, c.brief4, c.brief5, c.brief6].map((item) => (
-              <li key={item} className="plate flex gap-3 p-5 text-base leading-7 text-paper/75">
+              <li key={item} className="plate flex gap-3 p-5 text-base leading-7 text-ink-700">
                 <Check
                   aria-hidden="true"
-                  className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                  className="mt-1.5 h-4 w-4 flex-none text-brand-700"
                   strokeWidth={2}
                 />
                 <span>{item}</span>

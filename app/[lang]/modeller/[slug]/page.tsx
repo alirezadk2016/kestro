@@ -160,9 +160,9 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         }}
       />
       {/* Lit by the site's own wash. Two blurred orbs sat here: one was
-          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
+          bg-white on bg-white and drew nothing, the other was the
           generic glow every generated page has. */}
-      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
+      <section className="overflow-hidden bg-white py-12 text-ink-900 sm:py-20">
         <Container className="relative">
           {/* One shell width for the whole page, so every section starts at the
               same left edge. Inside it the machine and what we say about it sit
@@ -185,7 +185,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               <div className="lg:col-span-7">
                 {/* Brand and format as the page's one label, then mark and
                     title on one row, on the type scale like every page title. */}
-                <p className="label mt-2 text-paper/75">
+                <p className="label mt-2 text-ink-700">
                   {model.brand} · {model.format[lang]}
                 </p>
                 <div className="mt-3 flex items-center gap-4 sm:gap-5">
@@ -194,13 +194,13 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     size="lg"
                     className="flex-none"
                   />
-                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
                     {lang === "da" ? "Brugt" : "Refurbished"} {model.name}
                   </h1>
                 </div>
                 {/* The tagline, then the answer: what the machine is, with
                     the figures from its own spec table. */}
-                <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
+                <p className="mt-5 text-base leading-[1.65] text-ink-800 sm:text-lg">
                   {model.tagline[lang]} {modelLead(model, lang)}
                 </p>
               </div>
@@ -217,12 +217,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               )}
 
               <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
-                <p className="text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
-                <p className="label mt-6 text-paper/65">
+                <p className="text-base leading-[1.75] text-ink-700">{model.intro[lang]}</p>
+                <p className="label mt-6 text-ink-600">
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
                   <time
                     dateTime={pageUpdated("/modeller/[slug]")}
-                    className="tabular-nums text-paper/85"
+                    className="tabular-nums text-ink-800"
                   >
                     {formatDate(pageUpdated("/modeller/[slug]"), lang)}
                   </time>
@@ -241,25 +241,25 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         </Container>
       </section>
 
-      <section className="border-t border-white/10 py-10 sm:py-20">
+      <section className="border-t border-ink-200 py-10 sm:py-20">
         <Container>
           <div className="max-w-6xl xl:max-w-none">
             <div className="plate overflow-hidden">
-              <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              <div className="border-b border-ink-200 bg-paper-dim px-5 py-4 sm:px-6">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {c.configTitle}
                 </h2>
-                <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
+                <p className="mt-1 text-sm leading-[1.6] text-ink-700">{c.configBody}</p>
               </div>
 
               <dl className="lg:grid lg:grid-cols-2">
                 {model.specs.map((spec) => (
                   <div
                     key={spec.label.da}
-                    className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
+                    className="border-b border-ink-200 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-ink-200"
                   >
-                    <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-paper/75 sm:col-span-2 sm:mt-0">
+                    <dt className="text-sm font-semibold text-ink-900">{spec.label[lang]}</dt>
+                    <dd className="mt-1 text-sm leading-6 text-ink-700 sm:col-span-2 sm:mt-0">
                       {spec.value[lang]}
                     </dd>
                   </div>
@@ -271,15 +271,15 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
               <div>
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                   {c.goodFor}
                 </h2>
                 <ul className="mt-5 space-y-3">
                   {model.goodFor.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
+                    <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-700">
                       <Check
                         aria-hidden="true"
-                        className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                        className="mt-1.5 h-4 w-4 flex-none text-brand-700"
                         strokeWidth={2}
                       />
                       {item[lang]}
@@ -289,13 +289,13 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               </div>
 
               <div className="plate p-5 sm:p-6">
-                <h2 className="flex items-center gap-2 font-display t-h3 font-bold tracking-tight text-paper">
-                  <Info className="h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
+                <h2 className="flex items-center gap-2 font-display t-h3 font-bold tracking-tight text-ink-900">
+                  <Info className="h-5 w-5 flex-shrink-0 text-ink-800" strokeWidth={2} />
                   {c.watchOut}
                 </h2>
                 <ul className="mt-3 space-y-2.5">
                   {model.notes.map((note) => (
-                    <li key={note.da} className="text-sm leading-6 text-paper/85">
+                    <li key={note.da} className="text-sm leading-6 text-ink-800">
                       {note[lang]}
                     </li>
                   ))}
@@ -305,21 +305,21 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
 
             {model.why && (
               <>
-                <h2 className="mt-12 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                <h2 className="mt-12 text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                   {c.whyTitle}
                 </h2>
                 <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                   {model.why.map((reason) => (
                     <div key={reason.title.da}>
-                      <dt className="flex gap-3 text-base font-semibold text-paper">
+                      <dt className="flex gap-3 text-base font-semibold text-ink-900">
                         <Check
                           aria-hidden="true"
-                          className="mt-1 h-4 w-4 flex-none text-brand-300"
+                          className="mt-1 h-4 w-4 flex-none text-brand-700"
                           strokeWidth={2}
                         />
                         {reason.title[lang]}
                       </dt>
-                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-paper/75">
+                      <dd className="mt-1.5 pl-8 text-sm leading-6 text-ink-700">
                         {reason.description[lang]}
                       </dd>
                     </div>
@@ -329,11 +329,11 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
             )}
 
             {category && (
-              <p className="mt-8 text-sm leading-[1.6] text-paper/65">
+              <p className="mt-8 text-sm leading-[1.6] text-ink-600">
                 {c.seeAlsoPre}{" "}
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="font-semibold text-brand-300 hover:text-paper"
+                  className="font-semibold text-brand-700 hover:text-ink-900"
                 >
                   {lowerFirst(category.name[lang])}
                 </Link>
@@ -345,16 +345,18 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
+        <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
           <Container>
             <div className="max-w-6xl xl:max-w-none">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
+              <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                {c.related}
+              </h2>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {related.map((other) => (
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-ink-800 transition-colors hover:text-brand-700"
                     >
                       {other.name}
                     </Link>

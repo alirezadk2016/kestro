@@ -35,18 +35,18 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
   const publishers = [...new Set(items.map((s) => s.publisher.replace(/\s*\(.*\)$/, "")))];
 
   return (
-    <section className="border-t border-white/10 bg-brand-950">
+    <section className="border-t border-ink-200 bg-white">
       <Container>
         <details className="group">
           <summary className="flex min-h-[56px] cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
-            <h2 className="label flex-none text-brand-300">
+            <h2 className="label flex-none text-brand-700">
               <span className="sr-only">{c.title}: </span>
               {c.label}
             </h2>
-            <span className="min-w-0 truncate text-sm text-paper/65">{publishers.join(" · ")}</span>
+            <span className="min-w-0 truncate text-sm text-ink-600">{publishers.join(" · ")}</span>
             <ChevronDown
               aria-hidden="true"
-              className="ml-auto h-4 w-4 flex-none text-paper/65 transition-transform duration-200 group-open:rotate-180"
+              className="ml-auto h-4 w-4 flex-none text-ink-600 transition-transform duration-200 group-open:rotate-180"
               strokeWidth={2}
             />
           </summary>
@@ -54,8 +54,8 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
             <ul className="space-y-3 lg:col-span-7">
               {items.map((source) => (
                 <li key={source.id} className="plate p-4 sm:p-5">
-                  <p className="text-sm leading-[1.6] text-paper/75">{source.claim[lang]}</p>
-                  <p className="mt-1 text-xs leading-[1.45] text-paper/65">
+                  <p className="text-sm leading-[1.6] text-ink-700">{source.claim[lang]}</p>
+                  <p className="mt-1 text-xs leading-[1.45] text-ink-600">
                     {source.publisher}
                     {source.published ? `, ${source.published}` : ""}
                   </p>

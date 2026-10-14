@@ -389,7 +389,7 @@ export default function ContactForm({
    * people.
    */
   const inputClasses =
-    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40 [&:user-invalid]:border-red-300/80 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-400/25";
+    "w-full min-h-11 rounded-lg border border-ink-300 bg-white px-4 py-2.5 text-base sm:text-sm text-ink-900 placeholder:text-ink-500 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/25 [&:user-invalid]:border-red-600 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-600/20";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -403,17 +403,17 @@ export default function ContactForm({
         role="alert"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 sm:p-8"
       >
         <h3
           id="kontakt-udfald"
-          className="font-display text-xl font-bold tracking-tight text-paper"
+          className="font-display text-xl font-bold tracking-tight text-ink-900"
         >
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.unavailableBody}</p>
 
-        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
+        <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-ink-200 bg-ink-50 p-4 font-mono text-xs leading-6 text-ink-700">
           {body}
         </pre>
 
@@ -423,18 +423,18 @@ export default function ContactForm({
           </button>
           <a
             href={mailHref}
-            className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-ink-300 bg-ink-50 px-6 text-sm font-semibold text-ink-700 transition hover:border-ink-400 hover:text-ink-900"
           >
             {c.openMail}
           </a>
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-[1.6] text-paper/65">
+          <p className="mt-5 text-sm leading-[1.6] text-ink-600">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
-              className="font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
+              className="font-semibold text-brand-700 underline decoration-brand-600/60 decoration-2 underline-offset-4 hover:text-ink-900"
             >
               {company.phoneDisplay}
             </a>
@@ -445,7 +445,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/65 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-ink-600 underline decoration-ink-300 underline-offset-4 hover:text-ink-900"
         >
           {c.back}
         </button>
@@ -460,25 +460,25 @@ export default function ContactForm({
         role="status"
         tabIndex={-1}
         aria-labelledby="kontakt-udfald"
-        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 sm:p-8"
       >
         <h3
           id="kontakt-udfald"
-          className="font-display text-xl font-bold tracking-tight text-paper"
+          className="font-display text-xl font-bold tracking-tight text-ink-900"
         >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-[1.75] text-paper/75">
+        <p className="mt-3 text-base leading-[1.75] text-ink-700">
           {quote ? c.quoteThanksBody : c.thanksBody}
         </p>
 
         {quote && (
-          <ol className="mt-6 space-y-3 border-t border-white/10 pt-5">
+          <ol className="mt-6 space-y-3 border-t border-ink-200 pt-5">
             {nextSteps[lang].map((step, i) => (
-              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/75">
+              <li key={step} className="flex gap-3 text-sm leading-6 text-ink-700">
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
+                  className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-800"
                 >
                   {i + 1}
                 </span>
@@ -494,7 +494,7 @@ export default function ContactForm({
             started.current = false;
             setStatus("idle");
           }}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/60 decoration-2 underline-offset-4 hover:text-ink-900"
         >
           {c.thanksAgain}
         </button>
@@ -514,17 +514,17 @@ export default function ContactForm({
       }}
       className="relative space-y-5"
     >
-      <p className="border-l-2 border-brand-400 pl-4 text-sm leading-6 text-paper/85">
+      <p className="border-l-2 border-brand-600 pl-4 text-sm leading-6 text-ink-800">
         {projectNotice[lang].body}
       </p>
       <noscript>
-        <p className="text-sm leading-6 text-paper/85">
+        <p className="text-sm leading-6 text-ink-800">
           {lang === "da"
             ? "Formularen kræver JavaScript. Skriv i stedet til "
             : "This form requires JavaScript. Please email "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline"
+            className="inline-flex min-h-11 items-center font-semibold text-brand-700 underline"
           >
             {CONTACT_EMAIL}
           </a>
@@ -538,17 +538,17 @@ export default function ContactForm({
       >
         {quote && (
           <fieldset>
-            <legend className="mb-2 text-sm font-medium text-paper/85">
-              {c.quantityLegend} <span className="text-brand-400">*</span>
+            <legend className="mb-2 text-sm font-medium text-ink-800">
+              {c.quantityLegend} <span className="text-brand-600">*</span>
             </legend>
             <div className="flex flex-wrap gap-2">
               {quantities.map((band) => (
                 <label
                   key={band}
-                  className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 ${
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-600 ${
                     values.antal === band
-                      ? "border-brand-400 bg-brand-600/20 text-paper"
-                      : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
+                      ? "border-brand-600 bg-brand-100 text-ink-900"
+                      : "border-ink-300 bg-ink-50 text-ink-700 hover:border-ink-400 hover:text-ink-900"
                   }`}
                 >
                   <input
@@ -563,14 +563,14 @@ export default function ContactForm({
                 </label>
               ))}
             </div>
-            <p className="mt-2 text-sm leading-[1.5] text-paper/75">{c.quantityHelp}</p>
+            <p className="mt-2 text-sm leading-[1.5] text-ink-700">{c.quantityHelp}</p>
           </fieldset>
         )}
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.name} <span className="text-brand-400">*</span>
+            <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-ink-800">
+              {c.name} <span className="text-brand-600">*</span>
             </label>
             <input
               id="navn"
@@ -586,12 +586,12 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/85">
+            <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-ink-800">
               {c.company}{" "}
               {companyRequired ? (
-                <span className="text-brand-400">*</span>
+                <span className="text-brand-600">*</span>
               ) : (
-                <span className="text-paper/65">{c.optional}</span>
+                <span className="text-ink-600">{c.optional}</span>
               )}
             </label>
             <input
@@ -608,8 +608,8 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/85">
-              {c.email} <span className="text-brand-400">*</span>
+            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-ink-800">
+              {c.email} <span className="text-brand-600">*</span>
             </label>
             <input
               id="email"
@@ -625,7 +625,7 @@ export default function ContactForm({
           </div>
 
           <div>
-            <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/85">
+            <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-ink-800">
               {c.phone}
             </label>
             <input
@@ -644,7 +644,7 @@ export default function ContactForm({
         {quote && (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/85">
+              <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-ink-800">
                 {c.equipment}
               </label>
               <input
@@ -663,17 +663,17 @@ export default function ContactForm({
               onToggle={(event) => setMoreOpen(event.currentTarget.open)}
               className="group sm:col-span-2"
             >
-              <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900 [&::-webkit-details-marker]:hidden">
                 <ChevronDown
                   aria-hidden="true"
                   className="h-4 w-4 transition-transform group-open:rotate-180"
                   strokeWidth={2}
                 />
-                {c.moreDetails} <span className="font-normal text-paper/65">{c.optional}</span>
+                {c.moreDetails} <span className="font-normal text-ink-600">{c.optional}</span>
               </summary>
               <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-ink-800">
                     {c.ram}
                   </label>
                   <select
@@ -691,7 +691,7 @@ export default function ContactForm({
                 </div>
 
                 <div>
-                  <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-ink-800">
                     {c.storage}
                   </label>
                   <select
@@ -709,7 +709,10 @@ export default function ContactForm({
                 </div>
 
                 <div>
-                  <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label
+                    htmlFor="tastatur"
+                    className="mb-1.5 block text-sm font-medium text-ink-800"
+                  >
                     {c.keyboard}
                   </label>
                   <select
@@ -729,7 +732,10 @@ export default function ContactForm({
                 </div>
 
                 <div>
-                  <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label
+                    htmlFor="hvornaar"
+                    className="mb-1.5 block text-sm font-medium text-ink-800"
+                  >
                     {c.deadline}
                   </label>
                   <input
@@ -748,12 +754,12 @@ export default function ContactForm({
         )}
 
         <div>
-          <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/85">
+          <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-ink-800">
             {quote ? c.quoteMessage : c.message}{" "}
             {quote ? (
-              <span className="text-paper/65">{c.optional}</span>
+              <span className="text-ink-600">{c.optional}</span>
             ) : (
-              <span className="text-brand-400">*</span>
+              <span className="text-brand-600">*</span>
             )}
           </label>
           <textarea
@@ -799,11 +805,11 @@ export default function ContactForm({
             {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
           </button>
 
-          <p className="mt-3 text-sm leading-[1.5] text-paper/75">
+          <p className="mt-3 text-sm leading-[1.5] text-ink-700">
             {c.privacy}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}
-              className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
+              className="underline decoration-ink-300 underline-offset-2 hover:text-ink-900"
             >
               {c.privacyLink}
             </Link>

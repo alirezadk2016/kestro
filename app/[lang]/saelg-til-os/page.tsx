@@ -165,7 +165,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             {c.formTitle}
           </Button>
 
-          <h2 className="mt-14 max-w-3xl text-balance font-display t-h2 font-extrabold tracking-display text-paper sm:mt-16">
+          <h2 className="mt-14 max-w-3xl text-balance font-display t-h2 font-extrabold tracking-display text-ink-900 sm:mt-16">
             {c.howTitle}
           </h2>
 
@@ -176,7 +176,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           <ol className="relative mt-8 grid grid-cols-1 lg:mt-10 lg:grid-cols-4">
             <span
               aria-hidden="true"
-              className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-paper/15 lg:block"
+              className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-ink-100 lg:block"
             />
             {steps.map((step, i) => (
               <li
@@ -185,7 +185,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
               >
                 <div aria-hidden="true" className="relative w-11 flex-none lg:hidden">
                   {i < steps.length - 1 && (
-                    <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5" />
+                    <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-600/50 via-ink-200 to-ink-200" />
                   )}
                   <MarkTile name={step.mark} size="md" className="relative" />
                 </div>
@@ -195,13 +195,15 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
                     i === 0 ? "left-0" : "left-8"
                   }`}
                 >
-                  <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
-                  <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-paper/25 to-transparent" />
+                  <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-600" />
+                  <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-ink-300 to-transparent" />
                 </span>
                 <div className="min-w-0 flex-1 lg:flex-none">
                   <MarkTile name={step.mark} size="md" className="mb-5 !hidden lg:!inline-flex" />
-                  <h3 className="text-base font-semibold text-paper lg:text-lg">{step.title[lang]}</h3>
-                  <p className="mt-1.5 text-base leading-[1.75] text-paper/75 lg:text-sm lg:leading-[1.6]">
+                  <h3 className="text-base font-semibold text-ink-900 lg:text-lg">
+                    {step.title[lang]}
+                  </h3>
+                  <p className="mt-1.5 text-base leading-[1.75] text-ink-700 lg:text-sm lg:leading-[1.6]">
                     {step.description[lang]}
                   </p>
                 </div>
@@ -211,44 +213,46 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-10 sm:py-20">
+      <section className="bg-paper-dim py-10 sm:py-20">
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {c.buyTitle}
               </h2>
               {/* A checklist, not pills: rounded plate-sm pills are the
                   site's onward links, and these went nowhere when tapped. */}
               <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 min-[400px]:grid-cols-2">
                 {accepted.map((item) => (
-                  <li key={item.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
+                  <li key={item.da} className="flex gap-2.5 text-base leading-6 text-ink-800">
                     <Check
                       aria-hidden="true"
-                      className="mt-1 h-4 w-4 flex-none text-brand-300"
+                      className="mt-1 h-4 w-4 flex-none text-brand-700"
                       strokeWidth={2}
                     />
                     {item[lang]}
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.buyNote}</p>
+              <p className="mt-5 text-sm leading-[1.6] text-ink-600">{c.buyNote}</p>
             </div>
 
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {c.dataTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.dataBody}</p>
             </div>
           </div>
 
-          <div className="mt-12 rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.fleetTitle}</h2>
-            <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.fleetBody}</p>
+          <div className="mt-12 rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8">
+            <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+              {c.fleetTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-base leading-[1.75] text-ink-700">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
-              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900"
             >
               {c.fleetLink}
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -264,21 +268,21 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
               both. On a phone the order is the same as before. */}
           <div className="grid max-w-3xl gap-14 lg:max-w-none lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {c.overstockTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody1}</p>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody2}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.overstockBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.overstockBody2}</p>
             </div>
 
             <div className="lg:col-span-7">
               <h2
                 id="saelg-formular"
-                className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"
+                className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900"
               >
                 {c.formTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
+              <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.formBody}</p>
 
               <div className="mt-8 plate p-6 sm:p-8">
                 <ContactForm

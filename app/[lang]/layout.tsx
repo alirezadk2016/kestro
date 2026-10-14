@@ -234,7 +234,7 @@ export default async function RootLayout({
 
   return (
     <html lang={htmlLang[lang]}>
-      <body className={`${jakarta.variable} bg-brand-950 font-sans text-paper antialiased`}>
+      <body className={`${jakarta.variable} bg-white font-sans text-ink-900 antialiased`}>
         {/* The gradients every mark fills from, once per document. */}
         <CraftMarkDefs />
         <script

@@ -23,7 +23,7 @@ type Assembly = {
 };
 
 const buttonClass =
-  "flex h-11 w-11 flex-none items-center justify-center rounded border border-transparent text-paper/80 transition-colors hover:bg-paper/5 hover:text-paper aria-pressed:border-brand-300/40 aria-pressed:bg-brand-400/10 aria-pressed:text-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
+  "flex h-11 w-11 flex-none items-center justify-center rounded border border-transparent text-ink-700 transition-colors hover:bg-ink-50 hover:text-ink-900 aria-pressed:border-brand-200 aria-pressed:bg-brand-50 aria-pressed:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900";
 
 /** The workshop's interactive product view; the homepage uses a server-rendered still. */
 export default function LaptopAssembly({
@@ -357,7 +357,7 @@ export default function LaptopAssembly({
       </span>
       <div
         ref={viewport}
-        className={`repair-laptop-viewport relative aspect-square max-h-[min(540px,65svh)] w-full min-w-0 ${state === "ready" ? "cursor-grab touch-pan-y select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper/70 data-[dragging=true]:cursor-grabbing motion-reduce:cursor-default" : ""}`}
+        className={`repair-laptop-viewport relative aspect-square max-h-[min(540px,65svh)] w-full min-w-0 ${state === "ready" ? "cursor-grab touch-pan-y select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink-900 data-[dragging=true]:cursor-grabbing motion-reduce:cursor-default" : ""}`}
         role={state === "ready" ? "group" : undefined}
         tabIndex={state === "ready" ? 0 : undefined}
         aria-label={state === "ready" ? labels.model : undefined}
@@ -392,7 +392,7 @@ export default function LaptopAssembly({
             disabled={state === "loading"}
             aria-label={state === "loading" ? labels.loading : labels.activate}
             title={state === "loading" ? labels.loading : labels.activate}
-            className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded border border-white/25 bg-brand-950/95 text-paper shadow-lg transition-colors hover:border-brand-300 hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper disabled:cursor-wait motion-reduce:hidden"
+            className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded border border-ink-300 bg-white/95 text-ink-900 shadow-lg transition-colors hover:border-brand-600 hover:text-brand-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink-900 disabled:cursor-wait motion-reduce:hidden"
           >
             {state === "loading" ? (
               <LoaderCircle aria-hidden="true" size={23} className="animate-spin" />
@@ -403,7 +403,7 @@ export default function LaptopAssembly({
         )}
       </div>
       <div
-        className={`mt-2 flex items-center gap-2 border-t border-paper/10 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none ${state === "ready" ? "" : "invisible pointer-events-none"}`}
+        className={`mt-2 flex items-center gap-2 border-t border-ink-200 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none ${state === "ready" ? "" : "invisible pointer-events-none"}`}
         aria-hidden={state !== "ready"}
       >
         <button
@@ -427,7 +427,7 @@ export default function LaptopAssembly({
           disabled={state !== "ready"}
           aria-label={labels.separation}
           title={labels.separation}
-          className="h-11 min-w-0 flex-1 cursor-ew-resize accent-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          className="h-11 min-w-0 flex-1 cursor-ew-resize accent-brand-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
           onChange={(event) => choose(Number(event.currentTarget.value) / 100, true)}
         />
         <button

@@ -58,13 +58,13 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-12 sm:py-20">
+    <section className="bg-white py-12 sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.sub}</p>
         </div>
 
         {/*
@@ -98,7 +98,7 @@ export default function Services({ lang }: { lang: Lang }) {
            */}
           <span
             aria-hidden="true"
-            className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-paper/15 lg:block"
+            className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-ink-100 lg:block"
           />
           {services.map((service, i) => (
             <li
@@ -123,7 +123,7 @@ export default function Services({ lang }: { lang: Lang }) {
                */}
               <div aria-hidden="true" className="relative w-11 flex-none lg:hidden">
                 {i < services.length - 1 && (
-                  <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5" />
+                  <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-600/50 via-ink-200 to-ink-200" />
                 )}
                 <MarkTile name={STEP_MARKS[i] ?? "adjust"} size="md" className="relative" />
               </div>
@@ -137,12 +137,12 @@ export default function Services({ lang }: { lang: Lang }) {
                   i === 0 ? "left-0" : "left-8"
                 }`}
               >
-                <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
+                <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-600" />
                 {/* h-9, which is the list's own lg:py-9 — the tick has to reach
                     the plate. At h-5 it stopped twelve pixels short, so the
                     node floated above a gap and the station read as two
                     unrelated things stacked rather than one. */}
-                <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-paper/25 to-transparent" />
+                <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-ink-300 to-transparent" />
               </span>
 
               <div className="min-w-0 flex-1 lg:flex-none">
@@ -164,13 +164,13 @@ export default function Services({ lang }: { lang: Lang }) {
                   size="md"
                   className="mb-5 !hidden lg:!inline-flex"
                 />
-                <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-300">
+                <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.2em] text-brand-700">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-2 font-display text-base font-bold tracking-tight text-paper lg:text-lg">
+                <h3 className="mt-2 font-display text-base font-bold tracking-tight text-ink-900 lg:text-lg">
                   {service.title[lang]}
                 </h3>
-                <p className="mt-2 text-sm leading-[1.6] text-paper/75">
+                <p className="mt-2 text-sm leading-[1.6] text-ink-700">
                   {service.description[lang]}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function Services({ lang }: { lang: Lang }) {
 
         <Link
           href={localePath("/ydelser", lang)}
-          className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+          className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
         >
           {c.link}
           <ArrowRight

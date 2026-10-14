@@ -24,7 +24,8 @@ const copy = {
     /* Answer first, with the two counts the page actually lists. */
     description: `Kestro er leverandør af brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     processTitle: "Sådan foregår en leverance",
-    processSub: "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
+    processSub:
+      "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
       "Stand, batteritilstand, konfiguration og garantivilkår står skriftligt, før I bestiller. Vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren.",
@@ -207,30 +208,30 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
+      <section className="border-y border-ink-200 bg-paper-dim py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
               {c.processTitle}
             </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
+            <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.processSub}</p>
 
             <div className="mt-10 space-y-10">
               {steps.map((step) => (
                 <Link
                   key={step.title.da}
                   href={localePath(`/ydelser/${step.slug}`, lang)}
-                  className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
+                  className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-ink-50 sm:gap-6"
                 >
                   <MarkTile name={step.mark} size="md" />
                   <div>
-                    <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
+                    <h3 className="text-lg font-semibold text-ink-900 transition-colors group-hover:text-brand-700">
                       {step.title[lang]}
                     </h3>
-                    <p className="mt-2 text-base leading-[1.75] text-paper/75">
+                    <p className="mt-2 text-base leading-[1.75] text-ink-700">
                       {step.description[lang]}
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
                       {c.stepLink}
                       <ArrowRight
                         className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -243,11 +244,11 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
             </div>
 
             <div className="mt-12 plate p-6 sm:p-8">
-              <h3 className="text-lg font-semibold text-paper">{c.qualityTitle}</h3>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.qualityBody}</p>
+              <h3 className="text-lg font-semibold text-ink-900">{c.qualityTitle}</h3>
+              <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.qualityBody}</p>
               <Link
                 href={localePath("/kvalitet", lang)}
-                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-700 transition hover:text-ink-900"
               >
                 {c.qualityLink}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />

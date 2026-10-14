@@ -34,11 +34,11 @@ export default function NotFoundPanel() {
           no language to draw it in. Without it the page carried no name at
           all, and a visitor from a stale link could not tell whose 404 it
           was. */}
-      <header className="border-b border-white/10">
+      <header className="border-b border-ink-200">
         <Container className="flex h-16 items-center sm:h-20">
           <Link
             href="/"
-            className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
+            className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-ink-900"
           >
             <Logo className="h-7 w-auto" idPrefix="notfound" />
             Kestro
@@ -49,22 +49,22 @@ export default function NotFoundPanel() {
         <section className="flex min-h-[70vh] items-center py-10 sm:py-20">
           <Container>
             <div className="mx-auto max-w-2xl text-center">
-              <p className="mx-auto font-mono text-sm font-semibold tracking-[0.3em] text-brand-300 leading-[1.6]">
+              <p className="mx-auto font-mono text-sm font-semibold tracking-[0.3em] text-brand-700 leading-[1.6]">
                 404
               </p>
 
-              <h1 className="mt-5 font-display text-3xl font-extrabold tracking-display text-paper sm:text-4xl">
+              <h1 className="mt-5 font-display text-3xl font-extrabold tracking-display text-ink-900 sm:text-4xl">
                 Siden blev ikke fundet
               </h1>
-              <p className="mx-auto mt-4 text-base leading-[1.75] text-paper/75">
+              <p className="mx-auto mt-4 text-base leading-[1.75] text-ink-700">
                 Siden findes ikke, eller den er flyttet. Prøv et af links herunder, eller skriv til
                 os — så finder vi det, I leder efter.
               </p>
 
-              <p className="mx-auto mt-7 font-display text-xl font-bold tracking-display text-paper/85">
+              <p className="mx-auto mt-7 font-display text-xl font-bold tracking-display text-ink-800">
                 This page could not be found
               </p>
-              <p className="mx-auto mt-3 text-base leading-[1.75] text-paper/75">
+              <p className="mx-auto mt-3 text-base leading-[1.75] text-ink-700">
                 The page does not exist or has moved. Try one of the links below, or write to us and
                 we will point you to it.
               </p>
@@ -83,15 +83,15 @@ export default function NotFoundPanel() {
                 </Link>
               </div>
 
-              <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 border-t border-white/10 pt-7">
+              <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 border-t border-ink-200 pt-7">
                 {ways.map((way) => (
                   <li key={way.href}>
                     <Link
                       href={way.href}
-                      className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
+                      className="inline-flex min-h-[44px] items-center text-sm font-medium text-ink-700 transition hover:text-ink-900"
                     >
                       {way.da}
-                      <span aria-hidden="true" className="px-1.5 text-paper/55">
+                      <span aria-hidden="true" className="px-1.5 text-ink-600">
                         /
                       </span>
                       {way.en}

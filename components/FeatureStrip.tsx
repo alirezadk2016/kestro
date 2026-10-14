@@ -25,7 +25,10 @@ const features = [
   {
     mark: "nordic",
     title: { da: "Nordisk klar", en: "Nordic ready" },
-    sub: { da: "Dansk eller norsk tastatur og sprog", en: "Danish or Norwegian keyboard and language" },
+    sub: {
+      da: "Dansk eller norsk tastatur og sprog",
+      en: "Danish or Norwegian keyboard and language",
+    },
   },
   {
     mark: "business",
@@ -67,20 +70,20 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
       className="flex items-center gap-3.5 max-md:plate max-md:mr-3 max-md:shrink-0 max-md:rounded-2xl max-md:py-2.5 max-md:pl-2.5 max-md:pr-5"
     >
       {/* In the site's one mark tile. Bare on the bar, the five marks
-          were line drawings floating on a strip of navy — the row a
-          buyer sees first, reading as a system icon font. The tile is
-          lit from the top left and has no hard border, so five of
-          them read as a set of facts rather than as five buttons. */}
+          were line drawings floating on a strip — the row a buyer sees
+          first, reading as a system icon font. The tile is a pale blue
+          square with no hard border, so five of them read as a set of
+          facts rather than as five buttons. */}
       <MarkTile name={feature.mark} size="md" />
       <div className="min-w-0 max-md:whitespace-nowrap">
-        <p className="text-[13px] font-semibold leading-5 text-paper">{feature.title[lang]}</p>
-        <p className="mt-0.5 text-[13px] leading-[1.35] text-paper/75">{feature.sub[lang]}</p>
+        <p className="text-[13px] font-semibold leading-5 text-ink-900">{feature.title[lang]}</p>
+        <p className="mt-0.5 text-[13px] leading-[1.35] text-ink-700">{feature.sub[lang]}</p>
       </div>
     </li>
   ));
 
   return (
-    <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
+    <div className="border-t border-ink-200 bg-paper-dim">
       <Container className="max-md:px-0">
         <Ticker>
           <ul className="flex py-4 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-6 md:py-8 lg:grid-cols-5 lg:gap-x-7">

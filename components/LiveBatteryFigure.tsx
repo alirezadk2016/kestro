@@ -146,7 +146,7 @@ export default function LiveBatteryFigure() {
         textAnchor="middle"
         fontSize="14"
         fontWeight="500"
-        className="fill-paper/55"
+        className="fill-ink-400"
       >
         {band.range}
       </text>

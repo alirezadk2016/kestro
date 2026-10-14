@@ -75,7 +75,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-16">
+    <section className="border-b border-ink-200 bg-white py-10 sm:py-16">
       <Container>
         {/* A heading that reads as one. It was an h2 set as a tracked-caps
             label ("HVAD VI SKAFFER") with a rule beside it — a heading in the
@@ -83,7 +83,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
             page's h2s found a row of labels among them. Now it is set on the
             type scale like every other section heading, and it says what the
             cards are in the words a buyer searches with. */}
-        <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+        <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
           {c.title}
         </h2>
 
@@ -94,7 +94,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
           {cards.map((card) => (
             <li key={card.href}>
               <ForgedPanel href={localePath(card.href, lang)} faceClassName="p-0 overflow-hidden">
-                <div className="plate-well tile-z tile-z-near aspect-[16/9] overflow-hidden rounded-t-[7px] bg-ink-950/50">
+                <div className="plate-well aspect-[16/9] overflow-hidden rounded-t-[7px] bg-ink-50">
                   <Image
                     src={card.image}
                     alt={card.alt[lang]}
@@ -106,12 +106,12 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                   />
                 </div>
 
-                <div className="tile-z tile-z-far flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
+                <div className="flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
                   <div className="min-w-0">
-                    <h3 className="text-sm font-bold leading-snug text-paper sm:text-base">
+                    <h3 className="text-sm font-bold leading-snug text-ink-900 sm:text-base">
                       {card.title[lang]}
                     </h3>
-                    <p className="mt-0.5 text-xs text-paper/65 leading-[1.45]">
+                    <p className="mt-0.5 text-xs text-ink-600 leading-[1.45]">
                       {typeof card.brands === "string" ? card.brands : card.brands[lang]}
                     </p>
                   </div>
@@ -132,7 +132,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                     Hovering the card lights the ring — plate-sm already does
                     that — and walks the arrow a pixel to the right.
                   */}
-                  <span className="plate-sm hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-brand-300 transition-colors duration-200 group-hover:text-paper sm:flex">
+                  <span className="plate-sm hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-brand-700 transition-colors duration-200 group-hover:text-ink-900 sm:flex">
                     <ArrowRight
                       className="h-[14px] w-[14px] transition-transform duration-200 group-hover:translate-x-px"
                       strokeWidth={1.75}

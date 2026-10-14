@@ -144,7 +144,7 @@ export default async function RepairPage(props: Params) {
           <div className="mt-6 flex items-start gap-5">
             <MarkTile name={repair.mark} size="lg" />
             <div className="min-w-0">
-              <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
+              <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-ink-900">
                 {(repair.h1 ?? repair.name)[lang]}
               </h1>
             </div>
@@ -155,15 +155,15 @@ export default async function RepairPage(props: Params) {
            * Both paragraphs were already written; they were in the wrong
            * order. A reader skimming and a model quoting both take the first
            * one, and the first one used to be the throat-clearing. */}
-          <p className="mt-6 max-w-2xl text-base leading-[1.7] text-paper/85 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-[1.7] text-ink-800 sm:text-lg">
             {repair.answer[lang]}
           </p>
-          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
+          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-ink-700">
             {repair.intro[lang]}
           </p>
-          <p className="label mt-6 text-paper/65">
+          <p className="label mt-6 text-ink-600">
             {c.updated}{" "}
-            <time dateTime={updated} className="tabular-nums text-paper/85">
+            <time dateTime={updated} className="tabular-nums text-ink-800">
               {formatDate(updated, lang)}
             </time>
           </p>
@@ -174,9 +174,11 @@ export default async function RepairPage(props: Params) {
           that owes the reader a way to read that number and a way to find it
           without asking anybody. */}
       {repair.bands && (
-        <section className="bg-ink-900 py-10 sm:py-20">
+        <section className="bg-paper-dim py-10 sm:py-20">
           <Container>
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.bands}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              {c.bands}
+            </h2>
             <ul className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
               {repair.bands.map((band) => (
                 <li key={band.range} className="plate flex items-baseline gap-4 p-4 sm:p-5">
@@ -185,16 +187,16 @@ export default async function RepairPage(props: Params) {
                       one: "Under 70%" is wider than 5.5rem at text-xl, and a
                       fixed box let it run into the sentence beside it —
                       "Under 70%Skift det." on the live page. */}
-                  <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-300 sm:text-xl">
+                  <span className="min-w-[6.75rem] flex-shrink-0 whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-tight text-brand-700 sm:text-xl">
                     {/* Danish writes a space before the per cent sign. */}
                     {lang === "da" ? band.range.replace(/(\d)%/g, "$1 %") : band.range}
                   </span>
-                  <span className="text-sm leading-[1.6] text-paper/75">{band.reading[lang]}</span>
+                  <span className="text-sm leading-[1.6] text-ink-700">{band.reading[lang]}</span>
                 </li>
               ))}
             </ul>
             {repair.bandsNote && (
-              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">
+              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-ink-600">
                 {repair.bandsNote[lang]}
               </p>
             )}
@@ -205,17 +207,19 @@ export default async function RepairPage(props: Params) {
       {repair.howTo && (
         <section className="py-10 sm:py-20">
           <Container>
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.howTo}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              {c.howTo}
+            </h2>
             <div className="mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 sm:gap-6">
               {repair.howTo.map((block) => (
                 <div key={block.heading.da} className="plate p-5 sm:p-6">
-                  <h3 className="font-display text-lg font-bold tracking-tight text-paper">
+                  <h3 className="font-display text-lg font-bold tracking-tight text-ink-900">
                     {block.heading[lang]}
                   </h3>
                   <ol className="mt-4 space-y-3">
                     {block.steps.map((step, i) => (
-                      <li key={step.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
-                        <span className="font-display text-xs font-bold tabular-nums text-brand-300">
+                      <li key={step.da} className="flex gap-3 text-sm leading-[1.6] text-ink-700">
+                        <span className="font-display text-xs font-bold tabular-nums text-brand-700">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <span className="min-w-0">{step[lang]}</span>
@@ -229,7 +233,7 @@ export default async function RepairPage(props: Params) {
         </section>
       )}
 
-      <section className="border-t border-white/10 py-10 sm:py-20">
+      <section className="border-t border-ink-200 py-10 sm:py-20">
         <Container>
           <div className="grid max-w-4xl gap-10 sm:grid-cols-2 sm:gap-14">
             {(
@@ -239,13 +243,15 @@ export default async function RepairPage(props: Params) {
               ] as const
             ).map(([heading, items]) => (
               <div key={heading}>
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{heading}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                  {heading}
+                </h2>
                 <ul className="mt-5 space-y-3">
                   {items.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
+                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-ink-700">
                       <Check
                         aria-hidden="true"
-                        className="mt-[3px] h-4 w-4 flex-none text-brand-300"
+                        className="mt-[3px] h-4 w-4 flex-none text-brand-700"
                         strokeWidth={2}
                       />
                       <span className="min-w-0">{item[lang]}</span>
@@ -258,16 +264,18 @@ export default async function RepairPage(props: Params) {
         </Container>
       </section>
 
-      <section className="bg-ink-900 py-10 sm:py-20">
+      <section className="bg-paper-dim py-10 sm:py-20">
         <Container>
           {/* Wraps as a whole rather than breaking the link: at 375px the
               heading and "Alle reparationer" did not fit one row, and the
               link went to two lines beside it. */}
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.more}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+              {c.more}
+            </h2>
             <Link
               href={localePath("/reparation", lang)}
-              className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"
+              className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-700 transition hover:text-ink-900"
             >
               {c.back}
               <ArrowRight

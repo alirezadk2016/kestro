@@ -10,30 +10,30 @@ import Container from "./Container";
 export default function BudgetExamples({ lang }: { lang: Lang }) {
   const da = lang === "da";
   return (
-    <section className="border-y border-white/10 py-10 sm:py-16" aria-labelledby="budget-heading">
+    <section className="border-y border-ink-200 py-10 sm:py-16" aria-labelledby="budget-heading">
       <Container>
         <div className="max-w-3xl">
-          <h2 id="budget-heading" className="t-h2 font-display font-extrabold text-paper">
+          <h2 id="budget-heading" className="t-h2 font-display font-extrabold text-ink-900">
             {da ? "Et konkret udgangspunkt" : "A concrete starting point"}
           </h2>
-          <p className="mt-4 text-base leading-7 text-paper/85">{priceDisclaimer[lang]}</p>
+          <p className="mt-4 text-base leading-7 text-ink-800">{priceDisclaimer[lang]}</p>
         </div>
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
           {budgetExamples.map((item) => (
             <li key={item.model} className="plate flex flex-col p-6 sm:p-7">
-              <h3 className="font-display text-lg font-bold text-paper">{item.name}</h3>
-              <p className="mt-2 text-sm leading-6 text-paper/75">{item.configuration[lang]}</p>
-              <p className="my-5 font-display text-3xl font-bold tabular-nums text-paper">
+              <h3 className="font-display text-lg font-bold text-ink-900">{item.name}</h3>
+              <p className="mt-2 text-sm leading-6 text-ink-700">{item.configuration[lang]}</p>
+              <p className="my-5 font-display text-3xl font-bold tabular-nums text-ink-900">
                 {da ? "Ca." : "Approx."} {formatDkk(budgetAmount(item), lang)}
               </p>
-              <p className="text-sm leading-6 text-paper/75">
+              <p className="text-sm leading-6 text-ink-700">
                 {da ? "Reference:" : "Reference:"} {formatDkk(item.observed, lang)} +{" "}
                 {formatDkk(item.fee, lang)} {da ? "servicegebyr." : "service fee."}
               </p>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-white/10 pt-3">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-ink-200 pt-3">
                 <Link
                   href={localePath(`/modeller/${item.model}`, lang)}
-                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
+                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-700 hover:text-ink-900"
                 >
                   {da ? "Se modellen" : "View model"}
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
@@ -42,7 +42,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
                   href={budgetSource(item).url}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className="inline-flex min-h-11 items-center text-sm text-paper/75 underline underline-offset-4 hover:text-paper"
+                  className="inline-flex min-h-11 items-center text-sm text-ink-700 underline underline-offset-4 hover:text-ink-900"
                 >
                   {da ? "Prisgrundlag" : "Price reference"}
                 </a>
@@ -50,23 +50,23 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-sm leading-6 text-paper/85">
+        <p className="mt-6 text-sm leading-6 text-ink-800">
           {da ? "Spørg om muligheder og konkret pris:" : "Ask about options and a specific price:"}{" "}
           <a
             href={`mailto:${company.email}`}
-            className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4"
+            className="inline-flex min-h-11 items-center font-semibold text-brand-700 underline underline-offset-4"
           >
             {company.email}
           </a>
         </p>
-        <details className="mt-4 max-w-3xl border-t border-white/10 pt-2">
-          <summary className="cursor-pointer py-3 text-sm font-semibold text-paper/85">
+        <details className="mt-4 max-w-3xl border-t border-ink-200 pt-2">
+          <summary className="cursor-pointer py-3 text-sm font-semibold text-ink-800">
             {da ? "Kilder og beregningsgrundlag" : "Sources and calculation"}
           </summary>
           {/* How the figures were reached, folded with the sources it rests
               on. It was a six-line paragraph of small print above the cards,
               the third telling of "not our prices" before a single figure. */}
-          <p className="pt-2 text-sm leading-6 text-paper/75">
+          <p className="pt-2 text-sm leading-6 text-ink-700">
             {da
               ? "Per enhed i DKK, afrundet op til nærmeste 100 kr. fra de angivne eksterne detailpriser inklusive forhandlerens moms og oplyste servicegebyr. Referencer læst "
               : "Per unit in DKK, rounded up to the nearest DKK 100 from the external retail prices, including the retailer's VAT and stated service fee. References read "}

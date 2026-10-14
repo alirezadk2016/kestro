@@ -93,13 +93,13 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   const rest = situations.filter((item) => item !== featured);
 
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-28">
+    <section className="border-y border-ink-200 bg-paper-dim py-14 sm:py-28">
       <Container>
         <div className="max-w-3xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-ink-700">{c.sub}</p>
         </div>
 
         {/*
@@ -137,24 +137,24 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                 faceClassName="h-full justify-between p-7 sm:p-9"
               >
                 <div>
-                  <MarkTile name={item.mark} size="lg" className="tile-z tile-z-near" />
-                  <h3 className="mt-8 text-balance font-display text-2xl font-extrabold leading-tight tracking-display text-paper transition-colors group-hover:text-brand-100 sm:text-3xl">
+                  <MarkTile name={item.mark} size="lg" />
+                  <h3 className="mt-8 text-balance font-display text-2xl font-extrabold leading-tight tracking-display text-ink-900 transition-colors group-hover:text-brand-900 sm:text-3xl">
                     {item.question[lang]}
                   </h3>
                   {item.points ? (
                     <>
-                      <p className="mt-4 text-base leading-[1.75] text-paper/75">
+                      <p className="mt-4 text-base leading-[1.75] text-ink-700">
                         {item.lead?.[lang]}
                       </p>
-                      <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
+                      <ul className="mt-6 space-y-3 border-t border-ink-200 pt-6">
                         {item.points.map((point) => (
                           <li
                             key={point.da}
-                            className="flex items-start gap-3 text-base leading-[1.6] text-paper/85"
+                            className="flex items-start gap-3 text-base leading-[1.6] text-ink-800"
                           >
                             <Check
                               aria-hidden="true"
-                              className="mt-1 h-4 w-4 flex-none text-brand-300"
+                              className="mt-1 h-4 w-4 flex-none text-brand-700"
                               strokeWidth={2}
                             />
                             {point[lang]}
@@ -163,10 +163,12 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                       </ul>
                     </>
                   ) : (
-                    <p className="mt-4 text-base leading-[1.75] text-paper/75">{item.answer[lang]}</p>
+                    <p className="mt-4 text-base leading-[1.75] text-ink-700">
+                      {item.answer[lang]}
+                    </p>
                   )}
                 </div>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
                   {item.linkLabel[lang]}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -182,19 +184,15 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                 <li key={item.href}>
                   <ForgedPanel href={localePath(item.href, lang)} faceClassName="h-full p-5 sm:p-6">
                     <div className="flex items-start gap-4 sm:gap-5">
-                      <MarkTile
-                        name={item.mark}
-                        size="md"
-                        className="tile-z tile-z-near flex-none"
-                      />
+                      <MarkTile name={item.mark} size="md" className="flex-none" />
                       <div className="min-w-0">
-                        <h3 className="font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-100 sm:text-lg">
+                        <h3 className="font-display text-base font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-900 sm:text-lg">
                           {item.question[lang]}
                         </h3>
-                        <p className="mt-1.5 text-sm leading-[1.7] text-paper/75">
+                        <p className="mt-1.5 text-sm leading-[1.7] text-ink-700">
                           {item.answer[lang]}
                         </p>
-                        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
                           {item.linkLabel[lang]}
                           <ArrowRight
                             className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -210,11 +208,11 @@ export default function QualifySection({ lang }: { lang: Lang }) {
           </li>
         </ul>
 
-        <p className="mt-10 max-w-2xl text-sm leading-[1.6] text-paper/75">
+        <p className="mt-10 max-w-2xl text-sm leading-[1.6] text-ink-700">
           {c.footPre}{" "}
           <Link
             href={localePath("/kontakt", lang)}
-            className="font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
+            className="font-semibold text-brand-700 underline decoration-brand-600/60 decoration-2 underline-offset-4 hover:text-ink-900"
           >
             {c.footLink}
           </Link>{" "}

@@ -7,7 +7,15 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
 import { services, getService } from "@/lib/services";
-import { formatDate, localePath, metaFor, langs, htmlLang, type Lang, lowerFirst } from "@/lib/i18n";
+import {
+  formatDate,
+  localePath,
+  metaFor,
+  langs,
+  htmlLang,
+  type Lang,
+  lowerFirst,
+} from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
@@ -189,7 +197,7 @@ export default async function ServicePage(props: {
           the date and the first paragraph of the body were 96px apart on a
           phone, which read as the page ending. The header now closes short
           and the body opens without its own top padding. */}
-      <section className="lit bg-brand-950 pb-8 pt-14 text-paper sm:pb-12 sm:pt-20">
+      <section className="bg-white pb-8 pt-14 text-ink-900 sm:pb-12 sm:pt-20">
         <Container>
           <div className="max-w-3xl">
             <Breadcrumbs lang={lang} trail={trail} />
@@ -201,18 +209,18 @@ export default async function ServicePage(props: {
               {serviceMarks[service.slug] && (
                 <MarkTile name={serviceMarks[service.slug]} size="lg" className="flex-none" />
               )}
-              <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+              <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-ink-900">
                 {(service.h1 ?? service.name)[lang]}
               </h1>
             </div>
             {/* The answer first. The card one-liner is `summary`; the page opens
                 with what the service is, with the figure in it. */}
-            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
+            <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-ink-800">
               {(answers?.lead ?? service.summary)[lang]}
             </p>
-            <p className="label mt-6 text-paper/65">
+            <p className="label mt-6 text-ink-600">
               {c.updated}{" "}
-              <time dateTime={updated} className="tabular-nums text-paper/85">
+              <time dateTime={updated} className="tabular-nums text-ink-800">
                 {formatDate(updated, lang)}
               </time>
             </p>
@@ -220,70 +228,75 @@ export default async function ServicePage(props: {
         </Container>
       </section>
 
-      <section className="lit lit-paper pb-10 sm:pb-20">
+      <section className="pb-10 sm:pb-20">
         <Container>
           <div className="lg:grid lg:grid-cols-12 lg:gap-14">
-          <aside className="hidden lg:order-2 lg:col-span-4 lg:block">
-            <div className="plate p-6 lg:sticky lg:top-28">
-              <p className="text-sm font-semibold text-paper">{c.inShort}</p>
-              <p className="mt-2 text-sm leading-6 text-paper/75">{service.summary[lang]}</p>
-              <ul className="mt-5 space-y-3 border-t border-white/10 pt-5">
-                {inShort[service.slug === "overskudslager-og-returvarer" ? "surplus" : "supply"][lang].map((line) => (
-                  <li key={line} className="flex gap-3 text-sm leading-6 text-paper/75">
-                    <Check aria-hidden="true" className="mt-1 h-4 w-4 flex-none text-brand-300" strokeWidth={2} />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={localePath("/tilbud", lang)}
-                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
-              >
-                {c.enquire}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
-              </Link>
-            </div>
-          </aside>
-          <div className="max-w-3xl lg:order-1 lg:col-span-8">
-            {/* The answer above is the brighter line; this is the context
-                after it, as on the model pages. */}
-            <p className="text-base leading-[1.75] text-paper/75 sm:text-lg sm:leading-[1.75]">
-              {service.intro[lang]}
-            </p>
-
-            {service.sections.map((section) => (
-              <div key={section.heading.da} className="mt-12 border-t border-white/15 pt-8">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {section.heading[lang]}
-                </h2>
-
-                {section.body.map((paragraph) => (
-                  <p
-                    key={paragraph.da}
-                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75"
-                  >
-                    {paragraph[lang]}
-                  </p>
-                ))}
-
-                {section.list && (
-                  <ul className="mt-6 space-y-3.5">
-                    {section.list.map((item) => (
-                      <li key={item.da} className="flex gap-3 text-base leading-7 text-paper/75">
-                        <Check
-                          aria-hidden="true"
-                          className="mt-1.5 h-4 w-4 flex-none text-brand-300"
-                          strokeWidth={2}
-                        />
-                        {item[lang]}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+            <aside className="hidden lg:order-2 lg:col-span-4 lg:block">
+              <div className="plate p-6 lg:sticky lg:top-28">
+                <p className="text-sm font-semibold text-ink-900">{c.inShort}</p>
+                <p className="mt-2 text-sm leading-6 text-ink-700">{service.summary[lang]}</p>
+                <ul className="mt-5 space-y-3 border-t border-ink-200 pt-5">
+                  {inShort[service.slug === "overskudslager-og-returvarer" ? "surplus" : "supply"][
+                    lang
+                  ].map((line) => (
+                    <li key={line} className="flex gap-3 text-sm leading-6 text-ink-700">
+                      <Check
+                        aria-hidden="true"
+                        className="mt-1 h-4 w-4 flex-none text-brand-700"
+                        strokeWidth={2}
+                      />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={localePath("/tilbud", lang)}
+                  className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-ink-900"
+                >
+                  {c.enquire}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+                </Link>
               </div>
-            ))}
+            </aside>
+            <div className="max-w-3xl lg:order-1 lg:col-span-8">
+              {/* The answer above is the brighter line; this is the context
+                after it, as on the model pages. */}
+              <p className="text-base leading-[1.75] text-ink-700 sm:text-lg sm:leading-[1.75]">
+                {service.intro[lang]}
+              </p>
 
-          </div>
+              {service.sections.map((section) => (
+                <div key={section.heading.da} className="mt-12 border-t border-ink-300 pt-8">
+                  <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+                    {section.heading[lang]}
+                  </h2>
+
+                  {section.body.map((paragraph) => (
+                    <p
+                      key={paragraph.da}
+                      className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-ink-700"
+                    >
+                      {paragraph[lang]}
+                    </p>
+                  ))}
+
+                  {section.list && (
+                    <ul className="mt-6 space-y-3.5">
+                      {section.list.map((item) => (
+                        <li key={item.da} className="flex gap-3 text-base leading-7 text-ink-700">
+                          <Check
+                            aria-hidden="true"
+                            className="mt-1.5 h-4 w-4 flex-none text-brand-700"
+                            strokeWidth={2}
+                          />
+                          {item[lang]}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
@@ -294,11 +307,13 @@ export default async function ServicePage(props: {
           section after it, hairline rows that read as a table; and one chip
           was "Få et tilbud", which the closing band says a screen later. */}
       {(others.length > 0 || onward.length > 0) && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
+        <section className="border-t border-ink-200 bg-paper-dim py-10 sm:py-20">
           <Container>
             {others.length > 0 && (
               <>
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.more}</h2>
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                  {c.more}
+                </h2>
                 <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
                   {others.map((other) => (
                     <li key={other.slug}>
@@ -306,16 +321,16 @@ export default async function ServicePage(props: {
                         href={localePath(`/ydelser/${other.slug}`, lang)}
                         className="plate plate-lift group flex h-full flex-col p-5"
                       >
-                        <span className="font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                        <span className="font-display text-base font-bold tracking-tight text-ink-900 transition-colors group-hover:text-brand-700">
                           {other.name[lang]}
                         </span>
-                        <span className="mt-1.5 text-sm leading-6 text-paper/75">
+                        <span className="mt-1.5 text-sm leading-6 text-ink-700">
                           {other.summary[lang]}
                         </span>
                         <span className="flex-1" />
                         <ArrowRight
                           aria-hidden="true"
-                          className="mt-4 h-4 w-4 text-brand-300 transition-transform group-hover:translate-x-1"
+                          className="mt-4 h-4 w-4 text-brand-700 transition-transform group-hover:translate-x-1"
                           strokeWidth={2}
                         />
                       </Link>
@@ -326,13 +341,15 @@ export default async function ServicePage(props: {
             )}
             {onward.length > 0 && (
               <>
-                <p className={`eyebrow text-brand-300 ${others.length > 0 ? "mt-10" : ""}`}>{c.next}</p>
+                <p className={`eyebrow text-brand-700 ${others.length > 0 ? "mt-10" : ""}`}>
+                  {c.next}
+                </p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {onward.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={localePath(link.href, lang)}
-                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                        className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
                       >
                         {link.label[lang]}
                         <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />

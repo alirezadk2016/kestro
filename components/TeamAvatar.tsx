@@ -60,7 +60,7 @@ export default function TeamAvatar({
       style={{ fontSize: Math.round(size * 0.36) }}
       className={`flex flex-shrink-0 items-center justify-center font-display font-extrabold tracking-display ${
         tone === "quiet"
-          ? "bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-200"
+          ? "bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-600"
           : "bg-brand-600 text-white"
       } ${rounded} ${className}`}
     >

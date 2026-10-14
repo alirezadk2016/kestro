@@ -36,19 +36,19 @@ export default function AuthorByline({
   const c = copy[lang];
 
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-white/10 pt-6">
+    <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-ink-200 pt-6">
       <TeamAvatar member={author} lang={lang} size={40} className="h-10 w-10 flex-shrink-0" />
-      <p className="text-sm leading-[1.6] text-paper/75">
+      <p className="text-sm leading-[1.6] text-ink-700">
         <span className="sr-only">{c.by} </span>
         <Link
           href={`${localePath("/om-os", lang)}#${author.id}`}
-          className="font-semibold text-paper underline decoration-white/20 underline-offset-4 transition hover:decoration-brand-300"
+          className="font-semibold text-ink-900 underline decoration-ink-300 underline-offset-4 transition hover:decoration-brand-600"
         >
           {author.name}
         </Link>
-        <span className="text-paper/65"> · {author.role[lang]}</span>
+        <span className="text-ink-600"> · {author.role[lang]}</span>
       </p>
-      <p className="label ml-auto text-paper/65">
+      <p className="label ml-auto text-ink-600">
         <time dateTime={updated}>
           {c.updated} {formatDate(updated, lang)}
         </time>

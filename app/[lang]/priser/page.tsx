@@ -220,32 +220,32 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
 
       <BudgetExamples lang={lang} />
 
-      <section className="lit lit-paper py-10 sm:py-20">
+      <section className="py-10 sm:py-20">
         <Container>
           {/* The page's two short questions side by side from lg. Each was a
               600px column with the right half of the screen empty beside it,
               and the second sat four sections further down. */}
           <div className="grid max-w-3xl gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {c.whyTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody1}</p>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody2}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.whyBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.whyBody2}</p>
             </div>
-            <div className="border-t border-white/15 pt-8 lg:border-t-0 lg:pt-0">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <div className="border-t border-ink-300 pt-8 lg:border-t-0 lg:pt-0">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {c.freeTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.freeBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.freeBody}</p>
             </div>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <div className="mt-12 max-w-3xl border-t border-ink-300 pt-8">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
               {c.driversTitle}
             </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.driversLead}</p>
+            <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.driversLead}</p>
           </div>
 
           {/*
@@ -259,25 +259,25 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
            * exist, so it stops there and the numerals go back to being
            * numerals.
            */}
-          <ol className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2 md:border-t md:border-white/15">
+          <ol className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2 md:border-t md:border-ink-300">
             {drivers.map((driver, i) => (
               <li
                 key={driver.heading.da}
-                className="relative flex gap-5 pb-8 last:pb-0 md:border-b md:border-white/10 md:py-6 md:last:pb-6"
+                className="relative flex gap-5 pb-8 last:pb-0 md:border-b md:border-ink-200 md:py-6 md:last:pb-6"
               >
                 <div aria-hidden="true" className="relative w-10 flex-none">
                   {i < drivers.length - 1 && (
-                    <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/45 via-paper/12 to-paper/5 md:hidden" />
+                    <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-600/45 via-ink-200 to-ink-200 md:hidden" />
                   )}
-                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/65 md:shadow-none">
+                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 font-display text-sm font-bold tabular-nums text-brand-800 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-ink-600 md:shadow-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-base font-bold tracking-tight text-paper">
+                  <h3 className="font-display text-base font-bold tracking-tight text-ink-900">
                     {driver.heading[lang]}
                   </h3>
-                  <p className="mt-2 text-sm leading-[1.6] text-paper/75">{driver.body[lang]}</p>
+                  <p className="mt-2 text-sm leading-[1.6] text-ink-700">{driver.body[lang]}</p>
                 </div>
               </li>
             ))}
@@ -287,16 +287,16 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
               of one exchange, so they sit as a pair from lg. */}
           <div className="mt-12 grid max-w-3xl items-start gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
             <div className="plate p-6 sm:p-8">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                 {c.quoteTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
+              <p className="mt-3 text-base leading-[1.75] text-ink-700">{c.quoteLead}</p>
               <ul className="mt-5 space-y-3">
                 {c.quotePoints.map((point) => (
-                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
+                  <li key={point} className="flex gap-3 text-sm leading-7 text-ink-800">
                     <Check
                       aria-hidden="true"
-                      className="mt-1.5 h-4 w-4 flex-none text-brand-300"
+                      className="mt-1.5 h-4 w-4 flex-none text-brand-700"
                       strokeWidth={2}
                     />
                     {point}
@@ -308,14 +308,14 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             {/* t-h3 like the plate beside it, and lg:pt-8 is the plate's own
                 padding, so the two headings sit on one line. */}
             <div className="lg:pt-8">
-              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-paper">
+              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-ink-900">
                 {c.fastTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.fastLead}</p>
+              <p className="mt-4 text-base leading-[1.75] text-ink-700">{c.fastLead}</p>
               <ul className="mt-5 space-y-2.5">
                 {c.fastPoints.map((point) => (
-                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
-                    <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
+                  <li key={point} className="flex gap-3 text-sm leading-7 text-ink-700">
+                    <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-600" />
                     {point}
                   </li>
                 ))}
@@ -323,14 +323,14 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             </div>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <p className="eyebrow text-brand-300">{c.relatedTitle}</p>
+          <div className="mt-12 max-w-3xl border-t border-ink-300 pt-8">
+            <p className="eyebrow text-brand-700">{c.relatedTitle}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {c.related.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-ink-800 transition hover:text-ink-900"
                   >
                     {link.label}
                     <ArrowRight className="h-4 w-4" strokeWidth={2} />

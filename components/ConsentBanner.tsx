@@ -69,15 +69,15 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     <div
       role="dialog"
       aria-label={c.label}
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-ink-200 bg-white shadow-[0_-8px_24px_-12px_rgb(11_20_38_/_0.18)]"
     >
       <Container className="flex flex-col gap-3 py-3 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
-          <p className="text-sm leading-[1.55] text-paper/75">
-            <span className="font-semibold text-paper">{c.title}</span> {c.body}{" "}
+          <p className="text-sm leading-[1.55] text-ink-700">
+            <span className="font-semibold text-ink-900">{c.title}</span> {c.body}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}
-              className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
+              className="font-semibold text-brand-700 underline decoration-brand-600/60 underline-offset-4 hover:text-ink-900"
             >
               {c.more}
             </Link>
@@ -89,14 +89,14 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-ink-300 bg-white px-3 text-sm font-semibold text-ink-900 transition hover:border-ink-400 hover:bg-ink-50 sm:px-6"
           >
             {c.accept}
           </button>
           <button
             type="button"
             onClick={() => writeConsent("denied")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-ink-300 bg-white px-3 text-sm font-semibold text-ink-900 transition hover:border-ink-400 hover:bg-ink-50 sm:px-6"
           >
             {c.reject}
           </button>

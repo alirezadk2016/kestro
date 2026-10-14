@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
-import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
+import { VidenClusterPlate } from "@/components/VidenPlate";
 import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
@@ -125,38 +125,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           thirty kilobytes of HTML saying one thing eight times. */}
       {guides.some((guide) => needsPanelChrome(guide.slug, lang)) && <GuidePanelStyles />}
 
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 max-md:-mt-[65px]">
-        {/* The plate sits behind the type and is clipped by the section, so it
-            reads as a drawing the page is laid on rather than an illustration
-            dropped into it. Fixed aspect, so nothing shifts as it paints. */}
-        {/* Committed to, rather than left at a quarter opacity under a wash
-            where it read as a smudge. It is the only drawing in the hero, so
-            it either carries the space on the right or should not be there. */}
-        {/* The colour classes here used to set the drawing's stroke, and with
-            it how present it was: dimmer on a phone where it crowds the type,
-            stronger on a wide screen where it has the room. The plate is a
-            render now and takes no colour from CSS, so the same intent is
-            carried by opacity. */}
-        {/* Not on a phone. At 390px this is bg-contain inside a mask that
-            removes three quarters of it, so what arrived was a few diagonal
-            lines behind the heading — dirt rather than a graphic, and it took
-            contrast off the type it lay under. The phone gets the same
-            artwork as an actual picture further down instead. */}
-        <VidenHeroPlate className="pointer-events-none absolute hidden opacity-60 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] md:block lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
-        {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
-            has to stay legible on the right where there is room, and stay out
-            of the way of the type where there is not. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950 max-md:hidden lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/70 lg:to-transparent"
-        />
-
-        {/* On a phone the plate is the masthead's ground, from under the
-            glass bar, and the words sit on glass over its foot, as on the
-            front page and the category pages. From md the wrapper is
-            display: contents and the masthead is what it was. */}
-        <Container className="relative flex flex-col py-6 max-md:pt-0 md:block md:py-16 lg:py-20">
-          <div className="glass-card relative z-10 max-md:-mt-14 md:contents">
+      {/* Words only. There was a render behind them — four glass panes with
+          blue light along their edges on a dark plinth — and a white wash
+          over it so the type could be read: the most "tech launch" picture
+          on the site, on the page whose job is to read like a reference. */}
+      <section className="border-b border-ink-200 bg-white">
+        <Container className="py-10 md:py-16 lg:py-20">
           <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
 
           {/* w-fit so the box is the width of the label.
@@ -167,11 +141,11 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               of the render as this text's background and called 3.11:1 on
               type that actually sits on 8.48:1. The label is a label; its box
               should say so. */}
-          <p className="eyebrow mt-6 w-fit text-brand-300 sm:mt-8">{c.eyebrow}</p>
-          <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
+          <p className="eyebrow mt-6 w-fit text-brand-700 sm:mt-8">{c.eyebrow}</p>
+          <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-ink-900">
             {c.title}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+          <p className="mt-6 max-w-xl text-base leading-[1.65] text-ink-800 sm:text-lg sm:leading-[1.65]">
             {c.description}
           </p>
 
@@ -190,42 +164,28 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
            * their own: whichever item wraps leaves a "·" hanging at the end
            * of the line above it. Space separates these perfectly well, and
            * space cannot orphan. */}
-          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
+          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-ink-600 sm:mt-8">
             <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/85">{guides.length}</span> {c.statGuides}
+              <span className="tabular-nums text-ink-800">{guides.length}</span> {c.statGuides}
             </span>
             <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/85">{groups.length}</span> {c.statClusters}
+              <span className="tabular-nums text-ink-800">{groups.length}</span> {c.statClusters}
             </span>
             <span className="whitespace-nowrap">
               {c.statUpdated}{" "}
-              <time dateTime={lastUpdated} className="tabular-nums text-paper/85">
+              <time dateTime={lastUpdated} className="tabular-nums text-ink-800">
                 {updatedLabel}
               </time>
             </span>
           </p>
-
-          {/* The first screen needs a picture on it.
-           *
-           * Measured on a 390px phone: the first image on this page sat at
-           * y=1387 — most of two screens of breadcrumb, heading, paragraph
-           * and counts before anything was drawn. The plate behind the
-           * masthead does not count: at that width it is bg-contain inside a
-           * mask that removes three quarters of it. Here it is a picture. */}
-          </div>
-
-          <VidenHeroPlate
-            variant="band"
-            className="under-bar art-bleed order-first -mx-4 aspect-[4/3] sm:-mx-6 md:hidden"
-          />
         </Container>
       </section>
 
       {/* The index: four plates in a folder. Each is a real link to the anchor
           its section carries, which is also what an article links back to. */}
-      <section className="border-b border-white/10 py-10 sm:py-20">
+      <section className="border-b border-ink-200 py-10 sm:py-20">
         <Container>
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
             {c.indexTitle}
           </h2>
           <nav aria-label={c.jump}>
@@ -267,10 +227,10 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       className="plate-well hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-90"
                     />
                     <div className="flex flex-1 flex-col px-5 py-4 sm:p-5">
-                      <h3 className="text-balance font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-lg">
+                      <h3 className="text-balance font-display text-base font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-lg">
                         {cluster.name[lang]}
                       </h3>
-                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/65 sm:block">
+                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-ink-600 sm:block">
                         {cluster.description[lang]}
                       </p>
                       {/* On its own rule at the foot of the card, so four cards
@@ -279,7 +239,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                           than running the full width at one value — a hairline
                           that stops dead is the loudest thing on a quiet
                           card. */}
-                      <p className="label relative mt-2 text-paper/65 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
+                      <p className="label relative mt-2 text-ink-600 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-ink-300 sm:before:to-transparent">
                         {articles.length} {articles.length === 1 ? c.article : c.articles}
                       </p>
                     </div>
@@ -295,7 +255,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
         <section
           key={cluster.id}
           id={cluster.anchor}
-          className="scroll-mt-20 border-b border-white/10 py-10 sm:py-20"
+          className="scroll-mt-20 border-b border-ink-200 py-10 sm:py-20"
         >
           <Container>
             {/*
@@ -322,24 +282,24 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
              * already clamped to something that fitted, so a paragraph ended up
              * set as a caption against the right margin of the heading.
              */}
-            <header className="max-w-5xl border-b border-white/20 pb-7">
+            <header className="max-w-5xl border-b border-ink-300 pb-7">
               {/* Position in the folder, not the name of the folder. It read
                   "01 / EMNER" on every section — the label of the index above,
                   repeated four times, saying the same thing about four
                   different topics. A chapter marker says something. */}
-              <p className="eyebrow text-paper/65">
-                <span className="tabular-nums text-brand-300">
+              <p className="eyebrow text-ink-600">
+                <span className="tabular-nums text-brand-700">
                   {String(groupIndex + 1).padStart(2, "0")}
                 </span>
-                <span aria-hidden="true" className="mx-2.5 text-paper/25">
+                <span aria-hidden="true" className="mx-2.5 text-ink-500">
                   /
                 </span>
                 <span className="tabular-nums">{String(groups.length).padStart(2, "0")}</span>
               </p>
-              <h2 className="mt-3 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="mt-3 text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
                 {cluster.name[lang]}
               </h2>
-              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-paper/75">
+              <p className="mt-3 max-w-2xl text-[0.9375rem] leading-7 text-ink-700">
                 {cluster.description[lang]}
               </p>
             </header>
@@ -360,7 +320,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                 word. */}
             <ol className="flex max-w-5xl flex-col">
               {articles.map((guide, index) => (
-                <li key={guide.slug} className="border-b border-white/[0.08] last:border-b-0">
+                <li key={guide.slug} className="border-b border-ink-200 last:border-b-0">
                   {/*
                    * No number on the guide.
                    *
@@ -382,7 +342,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                        pulled 20px out of a 16px inset and the whole page
                        scrolled 4px sideways — measured: scrollWidth 394 in a
                        390 viewport. */
-                    className="group relative -mx-4 flex flex-col gap-5 py-7 pl-4 pr-4 transition-colors before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-brand-400 before:to-brand-400/0 before:opacity-0 before:transition-opacity hover:bg-white/[0.03] hover:before:opacity-100 sm:-mx-5 sm:flex-row sm:items-center sm:gap-7 sm:py-7 sm:pl-5 sm:pr-5"
+                    className="group relative -mx-4 flex flex-col gap-5 py-7 pl-4 pr-4 transition-colors before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-brand-600 before:to-brand-600/0 before:opacity-0 before:transition-opacity hover:bg-ink-50 hover:before:opacity-100 sm:-mx-5 sm:flex-row sm:items-center sm:gap-7 sm:py-7 sm:pl-5 sm:pr-5"
                   >
                     {/*
                      * The guide's own panel.
@@ -421,14 +381,14 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         a hundred-pixel column beside the picture. */}
                     <div className="flex min-w-0 flex-1 flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
                       <div className="min-w-0 flex-1">
-                        <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
+                        <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-ink-900 transition-colors group-hover:text-brand-700 sm:text-[1.4375rem]">
                           {guide.title[lang]}
                         </h3>
                         {/* One measure for the whole block: the heading used to
                           run to the column edge while the summary stopped two
                           thirds of the way, which left a ragged right side and
                           a void before the minutes. */}
-                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/75">
+                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-ink-700">
                           {guide.summary[lang]}
                         </p>
                       </div>
@@ -437,12 +397,12 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         case as everything else, not "7 MIN." letterspaced like
                         a category tag. */}
                       <span className="flex flex-none items-center gap-3.5 sm:w-24 sm:justify-end">
-                        <span className="whitespace-nowrap text-sm tabular-nums text-paper/65">
+                        <span className="whitespace-nowrap text-sm tabular-nums text-ink-600">
                           {guide.readingMinutes} {c.readingSuffix}
                         </span>
                         <ArrowRight
                           aria-hidden="true"
-                          className="h-4 w-4 flex-none text-paper/65 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-300"
+                          className="h-4 w-4 flex-none text-ink-600 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-700"
                           strokeWidth={2}
                         />
                       </span>

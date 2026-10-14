@@ -276,7 +276,7 @@ export default function TestedFigure() {
                   <text
                     x={ROW.left + 38}
                     y={mid + 6}
-                    className="fill-paper/85"
+                    className="fill-ink-700"
                     fontSize="19"
                     fontWeight="500"
                   >

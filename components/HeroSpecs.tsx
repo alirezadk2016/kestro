@@ -169,7 +169,7 @@ function Stats({ items, kind }: { items: string[]; kind: string }) {
     <span
       data-stat={kind}
       aria-hidden="true"
-      className="spec-stat absolute inset-x-0 top-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium leading-4 text-paper/75"
+      className="spec-stat absolute inset-x-0 top-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium leading-4 text-ink-700"
     >
       {items.map((item, i) => (
         /* The separator trails the item it follows rather than leading the
@@ -177,7 +177,7 @@ function Stats({ items, kind }: { items: string[]; kind: string }) {
            a wrapped line must not start with a stray dot. */
         <span key={item} className="flex items-center gap-2">
           {item}
-          {i < items.length - 1 && <span className="h-1 w-1 rounded-full bg-brand-400/60" />}
+          {i < items.length - 1 && <span className="h-1 w-1 rounded-full bg-brand-100" />}
         </span>
       ))}
     </span>
@@ -206,18 +206,18 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
              the scene has to show through, but the readings on it are the only
              thing a buyer is meant to take away, and they have to stay above
              AA on whatever the photograph happens to be doing behind them. */
-        className="spec-panel relative rounded-2xl border border-brand-400/30 bg-brand-950/85 backdrop-blur-md px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5"
+        className="spec-panel relative rounded-2xl border border-brand-200 bg-white/95 backdrop-blur-md px-4 pb-3 pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_28px_-6px_rgba(60,110,255,0.35),0_24px_70px_-30px_rgba(0,0,0,0.9)] sm:px-5 xl:pt-5"
       >
         {/* The label cut into the top border, from xl only. It is 28
             characters of tracked uppercase and the column is three of twelve:
             below that width it wraps, and a wrapped label cannot cut a border
             cleanly, so there it simply sits inside the panel above the list.
             brand-200 rather than 300: at 300 it measured 3.84:1 here. */}
-        <p className="label mb-3 text-brand-200 xl:absolute xl:-top-[7px] xl:left-5 xl:mb-0 xl:whitespace-nowrap xl:bg-brand-950 xl:px-2 xl:leading-[14px]">
+        <p className="label mb-3 text-brand-800 xl:absolute xl:-top-[7px] xl:left-5 xl:mb-0 xl:whitespace-nowrap xl:bg-white xl:px-2 xl:leading-[14px]">
           {c.label}
         </p>
 
-        <dl className="divide-y divide-white/10">
+        <dl className="divide-y divide-ink-200">
           {list.map((row) => (
             /* The row is the positioned ancestor, so the ring, the lead and
                the figure all land against this line. <dt> and <dd> stay
@@ -233,13 +233,13 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                   rather than as a box drawn inside it. */}
               <span
                 aria-hidden="true"
-                className="spec-ring pointer-events-none absolute -inset-x-2 inset-y-0.5 rounded-lg border border-brand-300/70 bg-brand-500/[0.07] shadow-[0_0_18px_-2px_rgba(60,110,255,0.55),inset_0_0_18px_-8px_rgba(147,174,251,0.9)]"
+                className="spec-ring pointer-events-none absolute -inset-x-2 inset-y-0.5 rounded-lg border border-brand-600 bg-brand-50 shadow-[0_0_18px_-2px_rgba(60,110,255,0.55),inset_0_0_18px_-8px_rgba(147,174,251,0.9)]"
               />
 
               {/* The lead running left out of the row, to the figure. */}
               <span
                 aria-hidden="true"
-                className="spec-lead pointer-events-none absolute right-full top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-l from-brand-300 to-brand-300/0 lg:block"
+                className="spec-lead pointer-events-none absolute right-full top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-l from-brand-500 to-brand-500/0 lg:block"
               >
                 <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand-200 shadow-[0_0_10px_2px_rgba(147,174,251,0.7)]" />
               </span>
@@ -250,15 +250,15 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
                 className="transition-[filter] duration-200 [.spec-row:hover_&]:brightness-125"
               />
               <div className="relative min-w-0">
-                <dt className="text-sm font-semibold leading-snug text-paper transition-colors [.spec-row:hover_&]:text-brand-100">
+                <dt className="text-sm font-semibold leading-snug text-ink-900 transition-colors [.spec-row:hover_&]:text-brand-900">
                   <Link
                     href={localePath(row.href, lang)}
-                    className="rounded-sm after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
+                    className="rounded-sm after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
                   >
                     {row.live ? <LiveBatteryValue label={row.live} /> : row.value}
                   </Link>
                 </dt>
-                <dd className="mt-0.5 text-xs leading-5 text-paper/65">{row.note}</dd>
+                <dd className="mt-0.5 text-xs leading-5 text-ink-600">{row.note}</dd>
               </div>
 
               {/* Placed entirely from globals.css: beside the machine on a
@@ -275,10 +275,10 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
             accessibility tree — the six others say the same thing the row
             above them already says. Hidden below lg, where the row it belongs
             to can never be pointed at. */}
-        <div className="relative mt-3 hidden h-10 border-t border-white/10 pt-3 lg:block">
+        <div className="relative mt-3 hidden h-10 border-t border-ink-200 pt-3 lg:block">
           <span
             data-stat="rest"
-            className="spec-stat spec-stat-rest absolute inset-x-0 top-3 text-[11px] font-medium leading-4 text-paper/75"
+            className="spec-stat spec-stat-rest absolute inset-x-0 top-3 text-[11px] font-medium leading-4 text-ink-700"
           >
             {c.rest}
           </span>
@@ -297,7 +297,7 @@ export default function HeroSpecs({ lang, className }: { lang: Lang; className?:
            to be doing there — verify measured it at 2.24:1 on mid-grey stone
            against the 4.5 it needs. The panel above it is glass for a reason;
            this is the same glass, sized to the words. */
-        className="mt-4 inline-flex min-h-[44px] items-center rounded-lg bg-brand-950/85 px-3 text-sm font-semibold text-brand-300 backdrop-blur-md transition hover:bg-brand-950/95 hover:text-paper"
+        className="mt-4 inline-flex min-h-[44px] items-center rounded-lg bg-white/95 px-3 text-sm font-semibold text-brand-700 backdrop-blur-md transition hover:bg-white/95 hover:text-ink-900"
       >
         {c.link}
       </Link>

@@ -42,23 +42,23 @@ export default function PriceOnRequest({
 
   return (
     <div className={`plate p-6 sm:p-7 ${className}`}>
-      <p className="font-display text-2xl font-extrabold tracking-display text-paper">
+      <p className="font-display text-2xl font-extrabold tracking-display text-ink-900">
         {c.heading}
       </p>
       {/* "Not our price" once, where the figure is. The box said it three
           times: the general disclaimer, the small print under the figure,
           and the pre-launch line above the button. */}
-      {!example && <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>}
+      {!example && <p className="mt-3 text-sm leading-[1.6] text-ink-700">{c.body}</p>}
       {example && (
-        <div className="mt-4 border-y border-white/10 py-4">
-          <p className="font-display text-2xl font-bold tabular-nums text-paper">
+        <div className="mt-4 border-y border-ink-200 py-4">
+          <p className="font-display text-2xl font-bold tabular-nums text-ink-900">
             {lang === "da" ? "Budget ca." : "Budget approx."}{" "}
             {formatDkk(budgetAmount(example), lang)}
           </p>
-          <p className="mt-2 text-sm leading-6 text-paper/75">
+          <p className="mt-2 text-sm leading-6 text-ink-700">
             {example.name} · {example.configuration[lang]}
           </p>
-          <p className="mt-2 text-sm leading-6 text-paper/75">
+          <p className="mt-2 text-sm leading-6 text-ink-700">
             {lang === "da"
               ? "Ekstern detailreference inkl. moms og servicegebyr – ikke Kestros salgspris."
               : "External retail reference incl. VAT and service fee — not a Kestro selling price."}
@@ -66,8 +66,8 @@ export default function PriceOnRequest({
         </div>
       )}
 
-      <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">
-        <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={1.75} />
+      <p className="mt-4 flex items-start gap-2.5 border-t border-ink-200 pt-4 text-sm leading-[1.6] text-ink-700">
+        <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-700" strokeWidth={1.75} />
         {c.volume}
       </p>
 
@@ -81,7 +81,7 @@ export default function PriceOnRequest({
         </Link>
         <Link
           href={localePath("/priser", lang)}
-          className="inline-flex min-h-[48px] items-center text-sm font-semibold text-brand-300 transition hover:text-paper"
+          className="inline-flex min-h-[48px] items-center text-sm font-semibold text-brand-700 transition hover:text-ink-900"
         >
           {c.secondary}
         </Link>
