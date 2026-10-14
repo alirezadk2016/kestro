@@ -43,11 +43,14 @@ Details and examples: `references/method.md`.
    - Leave children's keywords (brand, model, city) to the children.
    - Leave other intents ("in English", "book") out.
    - Harvest autocomplete by letter and by connecting word.
-5. **Every row gets a title, description and H1.**
-   - Title: keyword first, attractive, unique, 50–60 characters, and binding
-     ≤ 580 px.
+5. **Every row gets a title, description, URL and H1.**
+   - Title: keyword first, then its same-intent variants and a true
+     benefit; attractive, unique, 50–60 characters, and binding ≤ 580 px.
    - Description: natural keywords plus a call to action, unique, 150–160
      characters, and binding ≤ 920 px. Danish lands at about 145–158.
+   - Preview it as a snippet (`measure.mjs`), and check the tags the way an
+     SEO extension does: canonical = the page, charset first.
+   - URL structure and the H2/H3 roles are the next session's subject.
 6. **Seeds first, then the keyword pool, then the structure.**
    - Ask an AI assistant what buyers search for, and take its answers as
      seeds.
@@ -100,8 +103,9 @@ Paths, files and the ship steps in full: `references/kestro.md`.
 2. **Measure the live site.**
    - `node .claude/skills/mak/scripts/audit.mjs http://127.0.0.1:4411 --out <scratchpad>/mak-audit.json [--warn]`
      reads every sitemap page. It reports pixel and character lengths,
-     duplicates, H1 count, and whether the primary keyword is in the title
-     and in the H1.
+     duplicates, H1 count, the canonical and charset, skipped heading
+     levels, URL shape, and whether the primary keyword is in the title, the
+     H1 and the slug.
    - `python3 .claude/skills/mak/scripts/check-map.py --audit <scratchpad>/mak-audit.json`
      checks the keyword map:
      - two primaries on one URL;

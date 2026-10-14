@@ -23,7 +23,7 @@ in every change that applies Mak or adds a lesson.
 | Lesson | In Mak | Checked here |
 | --- | --- | --- |
 | 2-1 | Rules 6–7, the order of work | 14 October 2026 |
-| 2-2 | Rules 1–5 | 13 October 2026 |
+| 2-2 | Rules 1–5; URL, snippet preview and harvest sources added 14 October | 13 and 14 October 2026 |
 | 2-3 | Waiting | — |
 | 2-4 | Waiting | — |
 
@@ -156,3 +156,39 @@ in every change that applies Mak or adds a lesson.
   ThinkPad bærbar PC", refurbished Lenovo and HP collections. That supports
   the brand-level candidate under rule 2. A full competitor keyword analysis
   needs a keyword tool or the owner's input.
+
+### Rule 5 additions, checked 14 October 2026
+
+The rest of lesson 2-2's slides open the on-page session: what a searcher
+sees (title, URL, description), the tag checks an SEO extension makes, and
+the URL as a column in the homework sheet. `audit.mjs` now makes the
+extension's checks. Results on 136 pages:
+
+| Check | Result |
+| --- | --- |
+| Canonical is the page's own path | 136 / 136 |
+| `<meta charset>` in the first 1024 bytes | 136 / 136 |
+| No heading level skipped | 136 / 136 (median seven H2s a page) |
+| Title over 65 characters (the extension's warning) | 0 |
+| Description over 170 characters (the extension's warning) | 0 |
+| URL is lowercase ASCII words joined by hyphens | 136 / 136; longest 50 characters, deepest 3 levels |
+| Slug carries the whole primary keyword | 4 of 77; partly 58; none 15 |
+
+- **The slug numbers are information, not faults.** Most "partly" rows are
+  model and category pages whose slug drops "brugt" (`/modeller/lenovo-thinkpad-t480`
+  for "brugt thinkpad t480"), which is right. The 15 with none are hubs
+  (`/`, `/produkter`, `/modeller`, `/kontakt`) and pages whose primary is a
+  phrase people type rather than the page's name (`/reparation/fejlfinding`
+  for "computer starter ikke"). Danish URLs do not move, so nothing changes;
+  the URL lesson in session 3 applies to new routes.
+- **The pillar sheet already has a URL column,** so the homework's third tab
+  (title, description, URL, H1) is complete per row.
+- **Title packing is in use:** category titles carry the type and the
+  brands, model titles the model and what the page settles. The benefit
+  after the colon is always one the page states.
+- **Waits on the owner:**
+  - The second audio cut of 2-2 (`2-2_2`): a transcript, or allowing
+    `huggingface.co`, `cdn-lfs.huggingface.co` and `*.hf.co` so it can be
+    transcribed here.
+  - Autocomplete harvests from google.dk, YouTube, DBA and PriceRunner,
+    which need a Danish browser.

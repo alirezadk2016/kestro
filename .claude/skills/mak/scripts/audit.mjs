@@ -14,9 +14,15 @@
  * Checks (rule numbers are the ones in references/method.md):
  *   FAIL  title over 580 px, description over 920 px, duplicate title or
  *         description, not exactly one <h1>, no title/description/canonical,
- *         the page's primary keyword (from the keyword map) missing from the title
+ *         canonical pointing at another path, <meta charset> not in the first
+ *         1024 bytes, the page's primary keyword (from the keyword map)
+ *         missing from the title
  *   WARN  title over 60 or under 30 characters, description under 145 or over
- *         160 characters, primary keyword missing from the <h1>
+ *         160 characters, primary keyword missing from the <h1>, a heading
+ *         level skipped, a URL that is not lowercase ASCII words joined by
+ *         hyphens
+ *   INFO  slug words that carry the primary keyword (Danish URLs never move,
+ *         so this is recorded, not fixed), heading counts per level
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
@@ -85,6 +91,10 @@ const browser = await chromium.launch({
 const page = await browser.newPage();
 const rows = [];
 for (const path of paths) {
+  /* The browser has already parsed the head by the time we read it, so the
+     charset position comes from the raw bytes. */
+  const raw = Buffer.from(await (await fetch(base + path)).arrayBuffer());
+  const charsetAt = raw.subarray(0, 4096).toString("latin1").search(/<meta[^>]+charset/i);
   await page.goto(base + path, { waitUntil: "domcontentloaded" });
   const r = await page.evaluate(() => {
     const c = document.createElement("canvas").getContext("2d");
@@ -96,9 +106,10 @@ for (const path of paths) {
       desc, descPx: w(desc, "14px 'Liberation Sans'"),
       h1: [...document.querySelectorAll("h1")].map((h) => h.textContent.trim().replace(/\s+/g, " ")),
       canonical: document.querySelector('link[rel="canonical"]')?.href ?? "",
+      headings: [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => +h.tagName[1]),
     };
   });
-  rows.push({ path, ...r });
+  rows.push({ path, charsetAt, ...r });
 }
 await browser.close();
 
@@ -115,6 +126,16 @@ for (const r of rows) {
   if (titles.get(r.title) > 1) fail.push("duplicate title");
   if (descs.get(r.desc) > 1) fail.push("duplicate description");
   if (r.h1.length !== 1) fail.push(`${r.h1.length} h1`);
+  if (r.canonical) {
+    const canonPath = new URL(r.canonical).pathname.replace(/(.)\/$/, "$1");
+    if (canonPath !== r.path) fail.push(`canonical ${canonPath} ≠ page ${r.path}`);
+  }
+  if (r.charsetAt < 0 || r.charsetAt > 1024) fail.push(`charset at byte ${r.charsetAt}`);
+  r.levels = [1, 2, 3, 4, 5, 6].map((n) => r.headings.filter((h) => h === n).length);
+  const skip = r.headings.findIndex((h, i) => i > 0 && h > r.headings[i - 1] + 1);
+  if (skip > 0) warn.push(`heading h${r.headings[skip - 1]} → h${r.headings[skip]}`);
+  delete r.headings;
+  if (r.path !== "/" && !/^(\/[a-z0-9]+(-[a-z0-9]+)*)+$/.test(r.path)) warn.push(`url ${r.path} not lowercase-hyphen ASCII`);
   if (r.title.length > 60) warn.push(`title ${r.title.length} chars > 60`);
   if (r.title.length < 30) warn.push(`title ${r.title.length} chars < 30`);
   if (r.desc.length < 145) warn.push(`description ${r.desc.length} chars < 145`);
@@ -127,6 +148,9 @@ for (const r of rows) {
     if (r.kwInTitle === "none") fail.push(`primary "${kw}" not in title`);
     else if (r.kwInTitle === "partial") warn.push(`primary "${kw}" only partly in title`);
     if (r.kwInH1 !== "full") warn.push(`primary "${kw}" ${r.kwInH1 === "none" ? "not" : "only partly"} in h1`);
+    /* Slugs transliterate æ ø å (ae oe aa), so compare the same way. */
+    const ascii = (t) => t.toLowerCase().replace(/æ/g, "ae").replace(/ø/g, "oe").replace(/å/g, "aa");
+    r.kwInUrl = covers(ascii(r.path).replace(/[/-]/g, " "), ascii(kw));
   }
   r.fail = fail;
   r.warn = warn;
@@ -140,7 +164,9 @@ console.log(`  titles   ≤580px ${tally((r) => r.titlePx <= 580)}/${rows.length
 console.log(`  descs    ≤920px ${tally((r) => r.descPx <= 920)}/${rows.length} · 145–160 chars ${tally((r) => r.desc.length >= 145 && r.desc.length <= 160)} · unique ${descs.size}`);
 console.log(`  h1       exactly one ${tally((r) => r.h1.length === 1)}/${rows.length}`);
 const withKw = rows.filter((r) => r.primary);
-console.log(`  primary  ${withKw.length} pages have one · in title ${tally((r) => r.kwInTitle === "full")} · in h1 ${tally((r) => r.kwInH1 === "full")}`);
+console.log(`  primary  ${withKw.length} pages have one · in title ${tally((r) => r.kwInTitle === "full")} · in h1 ${tally((r) => r.kwInH1 === "full")} · in url ${tally((r) => r.kwInUrl === "full")} (partly ${tally((r) => r.kwInUrl === "partial")})`);
+console.log(`  url      lowercase-hyphen ${tally((r) => !r.warn.some((w) => w.startsWith("url ")))}/${rows.length} · longest ${Math.max(...rows.map((r) => r.path.length))} chars · deepest ${Math.max(...rows.map((r) => r.path.split("/").length - 1))} levels`);
+console.log(`  outline  canonical = page ${tally((r) => !r.fail.some((f) => f.startsWith("canonical")))}/${rows.length} · charset in 1024 bytes ${tally((r) => r.charsetAt >= 0 && r.charsetAt <= 1024)}/${rows.length} · no skipped level ${tally((r) => !r.warn.some((w) => w.startsWith("heading")))}/${rows.length} · median h2 ${rows.map((r) => r.levels[1]).sort((a, b) => a - b)[rows.length >> 1]}`);
 console.log(`  FAIL ${failing.length} pages · WARN ${warning.length} pages`);
 for (const r of failing) console.log(`  FAIL ${r.path}: ${r.fail.join("; ")}`);
 if (args.includes("--warn")) for (const r of warning) console.log(`  warn ${r.path}: ${r.warn.join("; ")}`);

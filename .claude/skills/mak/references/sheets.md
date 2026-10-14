@@ -12,7 +12,7 @@ Kestro file that plays each part.
 | — | URL, Findes (ja/nej/—), Primært søgeord |
 | SEO title, `=LEN(title)` | SEO-title, Title-tegn, Title-px |
 | SEO description, `=LEN(description)` | Meta description, Description-tegn, Description-px |
-| (H1, part of the homework) | H1 |
+| (title, description, URL and H1: the homework's third tab) | URL, H1 |
 
 - **Grouping rows** such as "by brand", "by city" or "Efter model" are not
   pages. They have no URL and `Findes = —`.
@@ -55,6 +55,16 @@ none. Store each export as `docs/keyword-pool/<seed>.csv` with the columns
 | Repair | computer reparation · pc reparation · batteriskift bærbar · skærmskift bærbar · rens bærbar · geninstallere windows · computer starter ikke · ram opgradering · tastatur bærbar |
 | Learn | windows 11 krav · windows 10 support · tjek brugt bærbar · refurbished eller brugt · hvor meget ram · lenovo fejlkode · dell blinkende lys · hp bip lyde |
 
+**Run the short seeds first.** The course advises one or two words per seed,
+so the tool returns the long phrases itself:
+
+`brugt bærbar` · `brugt computer` · `refurbished computer` · `brugt skærm` ·
+`dockingstation` · `mini pc` · `thinkpad` · `elitebook` · `latitude` ·
+`optiplex` · `pc reparation` · `computer reparation` · `sælg computer`
+
+The longer seeds in the table are checks: if a short seed's export does not
+bring them back, run them on their own.
+
 Norway is a market, but the site has no Norwegian pages. Norwegian seeds
 ("brukt pc bedrift") wait until there is a Norwegian page plan.
 
@@ -85,6 +95,12 @@ Internal links and social have no sheet yet. Internal links are the next one
 worth adding, because seven repair pages have few links pointing to them.
 
 ## Keyword research  →  `docs/seo-keyword-map.csv`
+
+The course's sheet has one row per category: category name, keyword, search
+volume, difficulty, SEO title. The title is written from the row's own
+research, packing the same-intent variants and a bracketed benefit (rule 5).
+
+At Kestro the map is keyword-first instead:
 
 - **One row per keyword.** Columns: language, intent, category, primary
   URL, primary or secondary, priority, existing or new page, cannibalisation,

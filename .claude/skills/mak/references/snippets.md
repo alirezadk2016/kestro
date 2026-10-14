@@ -11,6 +11,10 @@ goes into the code. Nothing is right until it fits.
 | Description | ≤ 920 px at 14px Arial | 145–158 characters | Course: 150–160. Danish runs wide, so 160 often overflows |
 | H1 | exactly one | carries the primary keyword in natural form | Checked by `npm run verify` and `audit.mjs` |
 
+SEO-check browser extensions flag a title over 65 characters and a
+description over 170. Ours stay inside 60 and 160 by target, and inside the
+pixel limits by rule, so a competitor's extension finds nothing to flag.
+
 Every title and every description is unique across all 136 URLs, in both
 languages. `audit.mjs` fails on a duplicate.
 
@@ -26,6 +30,11 @@ languages. `audit.mjs` fails on a duplicate.
   - "Pris, før vi går i gang", "dansk tastatur", "skriftligt tilbud".
 - **For a symptom search, use the searcher's question:** "Computer starter
   ikke eller går ned?", "Varm og larmende bærbar?".
+- **Pack same-intent variants, then the benefit** (the course's pattern:
+  keyword, variants, a benefit in brackets). Kestro writes the benefit after
+  a colon or dash rather than in brackets, and it is always one the page
+  states. A variant that belongs to a child page or another intent stays
+  out.
 - **"Kestro" appears once.** Where it is already in the title (kontakt, om
   os), there is no suffix.
 
