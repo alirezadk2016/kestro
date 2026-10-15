@@ -25,7 +25,10 @@ const features = [
   {
     mark: "nordic",
     title: { da: "Nordisk klar", en: "Nordic ready" },
-    sub: { da: "Dansk eller norsk tastatur og sprog", en: "Danish or Norwegian keyboard and language" },
+    sub: {
+      da: "Dansk eller norsk tastatur og sprog",
+      en: "Danish or Norwegian keyboard and language",
+    },
   },
   {
     mark: "business",
@@ -80,7 +83,7 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
   ));
 
   return (
-    <div className="relative z-10 border-y border-white/10 bg-ink-950/70">
+    <div className="relative z-10 shrink-0 border-y border-white/10 bg-ink-950/70">
       <Container className="max-md:px-0">
         <Ticker>
           <ul className="flex py-4 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-6 md:py-8 lg:grid-cols-5 lg:gap-x-7">

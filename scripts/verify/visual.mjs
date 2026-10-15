@@ -35,6 +35,44 @@ export async function verifyVisualPolish(browser, base, fail) {
     }
   }
 
+  // A wide fixed-ratio hero once clipped all five labels below its own box.
+  for (const path of ["/", "/en"]) {
+    const context = await browser.newContext({
+      viewport: { width: 1920, height: 1080 },
+      reducedMotion: "reduce",
+    });
+    const page = await visit(context, path);
+    for (const width of [1920, 1785, 1536, 1460, 1440]) {
+      await page.setViewportSize({ width, height: 1080 });
+      await page.evaluate(() => document.fonts.ready);
+      const clipped = await page.locator(".home-hero").evaluate((hero) => {
+        const strip = hero.lastElementChild;
+        const items = [...strip.querySelectorAll("ul:first-child > li")];
+        const bottom = hero.getBoundingClientRect().bottom;
+        return (
+          items.length !== 5 ||
+          strip.getBoundingClientRect().bottom > bottom + 1 ||
+          items.some((item) => item.getBoundingClientRect().bottom > bottom + 1) ||
+          hero.nextElementSibling.getBoundingClientRect().top <
+            strip.getBoundingClientRect().bottom - 1
+        );
+      });
+      if (clipped) fail(`${path} ${width}`, "homepage feature labels clipped or covered");
+    }
+    await page.evaluate(() => {
+      document.documentElement.style.fontSize = "200%";
+    });
+    const enlargedClipped = await page
+      .locator(".home-hero")
+      .evaluate(
+        (hero) =>
+          hero.lastElementChild.getBoundingClientRect().bottom >
+          hero.getBoundingClientRect().bottom + 1,
+      );
+    if (enlargedClipped) fail(path, "enlarged text clips homepage feature strip");
+    await context.close();
+  }
+
   for (const path of ["/kvalitet", "/en/condition-and-quality"]) {
     console.log(`verify: grade comparison ${path}`);
     for (const [width, height] of [

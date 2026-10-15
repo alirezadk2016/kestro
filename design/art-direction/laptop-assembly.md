@@ -12,7 +12,9 @@ including poster and controls, is absent from the layout. A media-scoped
 picture source prevents mobile poster downloads, even without JavaScript;
 the renderer's media-query guard prevents Three.js and texture downloads.
 Resizing below the breakpoint disposes an active renderer.
-Its initial service view shows the hardware from the underside. Pointer hover
+Its initial poster and interactive state show the assembled laptop from the
+front. Teardown starts only when the visitor selects service mode or moves
+the range input; activating 3D does not jump straight to loose components. Pointer hover
 adds a restrained, damped response; dragging or arrow keys rotates the camera.
 The assembled/service icon buttons and native range input control teardown.
 The page's wheel scrolling is never captured. The reset icon restores the
@@ -27,7 +29,8 @@ with a thinner enclosure and keycaps. The lid pivots around the hinge; the
 intact device lifts clear of the surface and turns to its service side before
 any parts are removed. Captive
 screws loosen along their own axes and remain with the bottom cover. The cover
-first lifts clear, then moves behind the device before tilting out of the way.
+first lifts clear, then parks nearly flat behind the device. It does not stand
+upright like a detached display or obscure the service area.
 
 Memory modules tilt around their connector edges before being extracted.
 Storage slides out of its connector before lifting. The internal battery and
@@ -51,7 +54,7 @@ and 120fps, including continuous retargeting.
 reflections and adaptive-resolution shadows, updated only when hardware moves.
 The renderer loads near the
 workshop header, pauses offscreen/when hidden and sleeps when settled.
-Reduced motion, data saving, missing WebGL and context loss retain the service
+Reduced motion, data saving, missing WebGL and context loss retain the assembled
 poster. The control row reserves its space but is invisible and disabled when
 the renderer is unavailable. The static homepage always works without JS.
 
@@ -61,6 +64,9 @@ at eleven phases, invariant part scales/lens distance, 84 keycaps and 32 camera
 framing cases. Set `ASSEMBLY_PREVIEW_DIR` to export the reviewed poses. The
 renderer requires Playwright and Chromium, with the existing environment
 variable overrides. `--check` verifies without writing assets.
+`--repair-only` exports only `public/models/laptop-repair.webp`, the workshop's
+assembled initial view. This matches the viewer's lens and lighting without
+changing the homepage still or re-exporting shared textures.
 
 ## Artwork and Hardware References
 

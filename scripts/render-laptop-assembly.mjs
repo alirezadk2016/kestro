@@ -23,7 +23,8 @@ for (const fps of [15, 30, 60, 120]) {
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const home = process.env.USERPROFILE ?? process.env.HOME ?? "";
-if (!process.argv.includes("--check")) {
+const repairOnly = process.argv.includes("--repair-only");
+if (!process.argv.includes("--check") && !repairOnly) {
   await sharp(join(root, "assets/artwork/laptop-wallpaper.png"))
     .resize(1536, 960, { fit: "cover" })
     .webp({ quality: 80, effort: 6 })
@@ -167,10 +168,13 @@ try {
     .webp({ quality: 86, effort: 6 })
     .toBuffer();
   if (!process.argv.includes("--check")) {
-    await writeFile(join(root, "public/models/laptop-assembly.webp"), data);
-    await sharp(Buffer.from(result.service.split(",")[1], "base64"))
-      .webp({ quality: 86, effort: 6 })
-      .toFile(join(root, "public/models/laptop-service.webp"));
+    await writeFile(join(root, "public/models/laptop-repair.webp"), data);
+    if (!repairOnly) {
+      await writeFile(join(root, "public/models/laptop-assembly.webp"), data);
+      await sharp(Buffer.from(result.service.split(",")[1], "base64"))
+        .webp({ quality: 86, effort: 6 })
+        .toFile(join(root, "public/models/laptop-service.webp"));
+    }
   }
   console.log(
     `Assembly and service posters: 1200x1200; ${Math.round(data.length / 1024)} kB assembled; 11 phases, fixed scale/lens, 84 keycaps and 32 framing checks passed`,

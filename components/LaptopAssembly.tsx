@@ -41,10 +41,10 @@ export default function LaptopAssembly({
     target: (value: number, scrub: boolean) => void;
     reset: () => void;
   } | null>(null);
-  const requested = useRef(1);
+  const requested = useRef(0);
   const activate = useRef<() => void>(() => {});
   const [state, setState] = useState("static");
-  const [target, setTarget] = useState(1);
+  const [target, setTarget] = useState(0);
   const instructionsId = useId();
   const labels =
     lang === "da"
@@ -364,15 +364,15 @@ export default function LaptopAssembly({
         aria-describedby={state === "ready" ? instructionsId : undefined}
       >
         <picture>
-          <source media="(min-width: 1024px)" srcSet="/models/laptop-service.webp" />
+          <source media="(min-width: 1024px)" srcSet="/models/laptop-repair.webp" />
           {/* A media-scoped source keeps the desktop poster off mobile networks, even without JS. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
             alt={
               lang === "da"
-                ? "Illustreret bærbar i servicevisning med bundplade, RAM, SSD og batteri"
-                : "Illustrated laptop in service view with base cover, memory, SSD and battery"
+                ? "Illustreret samlet bærbar med åbent display og tastatur"
+                : "Illustrated assembled laptop with an open display and keyboard"
             }
             width={1200}
             height={1200}
@@ -423,7 +423,7 @@ export default function LaptopAssembly({
           min={0}
           max={100}
           step={1}
-          defaultValue={100}
+          defaultValue={0}
           disabled={state !== "ready"}
           aria-label={labels.separation}
           title={labels.separation}

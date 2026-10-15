@@ -120,13 +120,10 @@ export default function Hero({ lang }: { lang: Lang }) {
      * as the height, and at 1440 the section measured 1456px inside a 1440px
      * viewport.
      *
-     * 1460px is where the ratio starts being affordable. An aspect-ratio is a
-     * height, not a minimum, so below that width it asks for a box shorter
-     * than the copy needs and the copy is simply clipped — at 1024 the ratio
-     * wanted 422px against the 622px the words, the padding and the trust bar
-     * actually occupy. Under 1460 the section is as tall as its contents and
-     * cover crops the sides instead, which is the ordinary trade; over it,
-     * nothing is cropped and the composition arrives as it was framed.
+     * From 1460px the photograph's ratio is a minimum height, not a fixed
+     * aspect-ratio. Longer copy, wrapping translations and larger text must
+     * be able to grow the section; otherwise overflow-hidden clips the
+     * feature strip and the next section appears to cover its labels.
      *
      * The negative top margin is the header's own height, so the photograph
      * runs up behind it the way the reference does — the nav is 82% glass, and
@@ -136,7 +133,7 @@ export default function Hero({ lang }: { lang: Lang }) {
      * measures at every width from 768 up; verify's overflow pass is what
      * catches it if that ever stops being true.
      */
-    <section className="home-hero under-bar grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:aspect-[1942/800]">
+    <section className="home-hero under-bar grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:min-h-[calc(100vw*800/1942)]">
       {/*
        * The scene.
        *

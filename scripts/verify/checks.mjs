@@ -609,7 +609,11 @@ for (const path of ["/reparation", "/en/repairs"]) {
     const page = await context.newPage();
     const requests = [];
     page.on("request", (request) => {
-      if (/models\/(laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp/.test(request.url()))
+      if (
+        /models\/(laptop-repair|laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp/.test(
+          request.url(),
+        )
+      )
         requests.push(request.url());
     });
     await page.goto(BASE + path, { waitUntil: "networkidle" });
@@ -874,12 +878,40 @@ for (const [width, height] of [
   await page.waitForTimeout(500);
   if ((await figure.getAttribute("data-scene-state")) !== "poster" || textures.length)
     fail("3D activation", "model loaded before user intent");
+  const poster = figure.locator("img");
+  await poster.evaluate((image) => image.decode());
+  if (!(await poster.evaluate((image) => image.currentSrc.includes("/models/laptop-repair.webp"))))
+    fail("repair initial view", "first view is not the assembled laptop");
   await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
   await page.getByRole("button", { name: "Åbn 3D-visning", exact: true }).click();
   await page.waitForFunction(
-    () => document.querySelector(".repair-laptop").dataset.sceneState === "ready",
+    () => {
+      const node = document.querySelector(".repair-laptop");
+      return node.dataset.sceneState === "ready" && node.dataset.assemblyProgress !== undefined;
+    },
     null,
     { timeout: 60000 },
+  );
+  if (Number(await figure.getAttribute("data-assembly-progress")) !== 0)
+    fail("repair initial view", "3D activation disassembled the laptop without user intent");
+  const assembled = figure.getByRole("button", { name: "Samlet computer", exact: true });
+  const service = figure.getByRole("button", { name: "Servicedele", exact: true });
+  if (
+    (await assembled.getAttribute("aria-pressed")) !== "true" ||
+    (await figure.locator("input").inputValue()) !== "0"
+  )
+    fail("repair initial view", "initial controls disagree with the assembled model");
+  await service.click();
+  await page.waitForFunction(
+    () => Number(document.querySelector(".repair-laptop").dataset.assemblyProgress) > 0.9998,
+    null,
+    { timeout: 15000 },
+  );
+  await assembled.click();
+  await page.waitForFunction(
+    () => Number(document.querySelector(".repair-laptop").dataset.assemblyProgress) < 0.0002,
+    null,
+    { timeout: 15000 },
   );
   await context.close();
 }
