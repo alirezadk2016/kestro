@@ -188,26 +188,29 @@ export default async function CategoryPage(props: {
    * models block is not broken — and an empty ItemList would be markup
    * describing nothing.
    */
+  /*
+   * The list of models, as the page's main entity.
+   *
+   * This was a second CollectionPage with its own @id, holding the list as
+   * its mainEntity — while PageSchema already describes this URL as a
+   * CollectionPage (#webpage) and points its mainEntity here. Two page
+   * entities for one URL, one of them the main entity of the other: a
+   * validator reads it as two pages. The thing the page is about is the list,
+   * so the node is the list.
+   */
   const collectionJsonLd = categoryModels.length
     ? {
         "@context": "https://schema.org",
-        "@type": "CollectionPage",
+        "@type": "ItemList",
         "@id": collectionId,
         name: category.name[lang],
-        description: category.metaDescription[lang],
-        url: pageUrl,
-        isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
-        about: { "@id": `${SITE_ORIGIN}/#organization` },
-        mainEntity: {
-          "@type": "ItemList",
-          numberOfItems: categoryModels.length,
-          itemListElement: categoryModels.map((model, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            name: model.name,
-            url: `${SITE_ORIGIN}${localePath(`/modeller/${model.slug}`, lang)}`,
-          })),
-        },
+        numberOfItems: categoryModels.length,
+        itemListElement: categoryModels.map((model, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: model.name,
+          url: `${SITE_ORIGIN}${localePath(`/modeller/${model.slug}`, lang)}`,
+        })),
       }
     : null;
 

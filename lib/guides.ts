@@ -899,6 +899,14 @@ export const guides: Guide[] = [
         href: "/reparation/reservedele-og-komponentskift",
         label: { da: "Reservedele til bærbar", en: "Laptop spare parts" },
       },
+      {
+        href: "/reparation/rens-og-koeling",
+        label: { da: "Larmer den eller bliver varm?", en: "Running loud or hot?" },
+      },
+      {
+        href: "/reparation/skaermskift",
+        label: { da: "En revnet skærm", en: "A cracked screen" },
+      },
     ],
     sources: [guideSource("repairDirective"), guideSource("ewasteMonitor")],
     faqs: [
@@ -1061,6 +1069,10 @@ export const guides: Guide[] = [
       {
         href: "/reparation/ram-og-ssd-opgradering",
         label: { da: "Få opgraderet RAM og SSD", en: "Have the RAM and SSD upgraded" },
+      },
+      {
+        href: "/maskinen",
+        label: { da: "Se, hvor RAM og SSD sidder", en: "See where the RAM and SSD sit" },
       },
     ],
     sources: [guideSource("repairDirective")],
@@ -1235,6 +1247,10 @@ export const guides: Guide[] = [
       {
         href: "/reparation/klargoering-af-brugt-udstyr",
         label: { da: "Tjek af brugt computer hos os", en: "A used-computer check by us" },
+      },
+      {
+        href: "/reparation/tastaturskift-og-nordisk-layout",
+        label: { da: "Slidt eller forkert tastatur", en: "A worn or wrong keyboard" },
       },
     ],
     sources: [guideSource("dkWarranty")],
@@ -1549,6 +1565,10 @@ export const guides: Guide[] = [
       {
         href: "/reparation/windows-installation",
         label: { da: "Ren installation af Windows", en: "A clean Windows installation" },
+      },
+      {
+        href: "/reparation/software-og-licenser",
+        label: { da: "Licenser til firmacomputere", en: "Licences for company computers" },
       },
     ],
     sources: [guideSource("windows11Requirements"), guideSource("windows10Eol")],

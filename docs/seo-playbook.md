@@ -312,3 +312,58 @@ Waits on the owner:
   compatible parts, which brands and models the repairs cover (rule 11's
   model coverage), Microsoft 365 licences.
 
+
+### Audit, 15 October 2026
+
+A bug crawl and `mak run` on the build of `5535e39` (with the mobile hero,
+fleet scene, grade comparison and repair viewer that landed the same day).
+
+Bug crawl: all 136 sitemap pages, at 1440 px and on a 390 px phone, read in
+a real browser.
+
+| Check | Result |
+| --- | --- |
+| Page errors, console errors | 0 (WebGL notices from the software renderer only) |
+| Broken internal links, of 202 distinct targets | 0 |
+| In-page anchors pointing at a missing id | 0 |
+| hreflang alternates answering anything but 200 | 0 |
+| Broken images, images without `alt` | 0 |
+| Horizontal overflow, elements wider than the screen | 0 |
+| Duplicate ids, controls without a name | 0 |
+| Production runtime errors (Vercel, last 7 days) | 0 |
+| `npm audit --omit=dev` (what ships) | 0 |
+
+Fixed:
+- **Two page entities on one URL.** The five category pages with models
+  described themselves twice in JSON-LD: PageSchema's CollectionPage
+  (`#webpage`) pointing its `mainEntity` at a second CollectionPage
+  (`#collection`) that held the model list. The second node is now the
+  `ItemList` it always described.
+- **Favicon too small for search.** The only icon was 32 px; Google shows a
+  site icon beside results only at a multiple of 48 px, so every result
+  showed the generic globe. `app/icon.tsx` now renders 32, 48 and 192 px,
+  and `/favicon.ico`, which answered 404, serves the 48.
+- **The grade dialog on /kvalitet** gave the page back (scrolling, and
+  focus on the button that opened it) only when its `close` event landed,
+  a task after the dialog had shut; verify caught it once in two runs. It
+  now restores on `cancel` and in the close buttons, before it shuts.
+- **Rule 9.** `/maskinen` and `/ydelser` had one page linking in. Both now
+  have three (quality, the RAM guide; the fleet and sell-to-us pages). Four
+  repair pages whose every link in carried the same card text now also get
+  a guide link in the searcher's words ("Larmer den eller bliver varm?",
+  "En revnet skærm", "Slidt eller forkert tastatur", "Licenser til
+  firmacomputere").
+
+Kept on purpose:
+- **Product without `offers`** on the 36 model pages. Search Console will
+  list them as invalid product snippets; that is the price of not
+  publishing a price Kestro does not have (see the note in
+  `app/[lang]/modeller/[slug]/page.tsx`).
+- **Descriptions 133–144 characters** on about 70 pages: all inside the
+  binding 920 px, a few characters under the 145–160 guide.
+
+Waits on the owner, as before, plus:
+- **Build-time advisories.** `npm audit` reports 9 (7 high, 2 moderate), all
+  in Tailwind 3's file watcher and `eslint-config-next`, which run on the
+  build machine and are not shipped. `braces` has no patched release; the
+  only fix is Tailwind 4, a migration of the whole stylesheet set-up.

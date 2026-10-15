@@ -546,6 +546,13 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             href: "/kvalitet",
             label: { da: "Stand, test og garanti", en: "Condition, testing and warranty" },
           },
+          {
+            href: "/ydelser",
+            label: {
+              da: "Alle ydelser fra indkøb til opstart",
+              en: "Every service, from sourcing to setup",
+            },
+          },
         ]}
       />
 

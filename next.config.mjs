@@ -170,7 +170,10 @@ const englishRoutes = [
   ["/reparation/batteriskift", "/repairs/battery-replacement"],
   ["/reparation/ram-og-ssd-opgradering", "/repairs/memory-and-ssd-upgrade"],
   ["/reparation/skaermskift", "/repairs/screen-replacement"],
-  ["/reparation/tastaturskift-og-nordisk-layout", "/repairs/keyboard-replacement-and-nordic-layout"],
+  [
+    "/reparation/tastaturskift-og-nordisk-layout",
+    "/repairs/keyboard-replacement-and-nordic-layout",
+  ],
   ["/reparation/reservedele-og-komponentskift", "/repairs/spare-parts-and-components"],
   ["/reparation/rens-og-koeling", "/repairs/cleaning-and-cooling"],
   ["/reparation/windows-installation", "/repairs/windows-installation"],
@@ -260,10 +263,16 @@ const nextConfig = {
     /* The English address serves the Danish route folder. A rewrite, not a
        redirect: the address in the bar stays English, which is the whole
        point, while Next resolves it against app/[lang]/<danish>/. */
-    return englishRoutes.flatMap(([da, en]) => [
-      { source: `/en${en}`, destination: `/en${da}` },
-      { source: `/en${en}/:path*`, destination: `/en${da}/:path*` },
-    ]);
+    return [
+      ...englishRoutes.flatMap(([da, en]) => [
+        { source: `/en${en}`, destination: `/en${da}` },
+        { source: `/en${en}/:path*`, destination: `/en${da}/:path*` },
+      ]),
+      /* Asked for by crawlers and older browsers without reading the page's
+         <link rel="icon">, and a 404 until now. The 48 px one: the smallest
+         size Google will show beside a search result (app/icon.tsx). */
+      { source: "/favicon.ico", destination: "/icon/48" },
+    ];
   },
   async redirects() {
     return [

@@ -310,6 +310,10 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             href: "/ydelser/overskudslager-og-returvarer",
             label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
           },
+          {
+            href: "/ydelser",
+            label: { da: "Det, vi ellers hjælper med", en: "What else we help with" },
+          },
         ]}
       />
 

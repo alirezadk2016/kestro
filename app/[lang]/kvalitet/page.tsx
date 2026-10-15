@@ -346,6 +346,10 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             label: { da: "Sådan klargør og tester vi", en: "How we prepare and test" },
           },
           {
+            href: "/maskinen",
+            label: { da: "Delene i en erhvervsbærbar", en: "The parts inside a business laptop" },
+          },
+          {
             href: "/vejledninger/slet-data-foer-du-saelger",
             label: { da: "Sikker datasletning", en: "Secure data erasure" },
           },

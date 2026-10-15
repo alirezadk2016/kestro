@@ -34,9 +34,19 @@ export default function GradeComparison({
       ? `Illustration af et lukket laptoplåg: ${grade.label.toLowerCase()}`
       : `Illustrative closed laptop lid: ${grade.label.toLowerCase()}`;
   const closeLabel = lang === "da" ? "Luk billede" : "Close image";
-  function close() {
+  /* Put the page back the moment the dialog starts to close, not when its
+     close event lands: that event is queued after `open` has already gone
+     false, so for a moment the dialog was shut while the page still could
+     not scroll. Escape fires `cancel` synchronously, and the two buttons
+     restore before they close; `close` stays as the backstop for anything
+     else that shuts it. Running twice is harmless. */
+  function restore() {
     document.body.style.overflow = oldOverflow.current;
     trigger.current?.focus();
+  }
+  function shut() {
+    restore();
+    dialog.current?.close();
   }
   useEffect(() => {
     const modal = dialog.current;
@@ -133,9 +143,10 @@ export default function GradeComparison({
         ref={dialog}
         className="grade-lightbox"
         aria-label={label}
-        onClose={close}
+        onCancel={restore}
+        onClose={restore}
         onClick={(event) => {
-          if (event.target === event.currentTarget) dialog.current?.close();
+          if (event.target === event.currentTarget) shut();
         }}
       >
         <button
@@ -143,7 +154,7 @@ export default function GradeComparison({
           className="grade-lightbox-close"
           aria-label={closeLabel}
           title={closeLabel}
-          onClick={() => dialog.current?.close()}
+          onClick={shut}
         >
           <X size={22} aria-hidden="true" />
         </button>
