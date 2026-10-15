@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check, Smartphone, Watch, ArrowUpRight } from "lucide-react";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import HeaderArt from "@/components/HeaderArt";
@@ -147,6 +148,13 @@ const CATEGORY_ART: Record<string, { src: string; alt: { da: string; en: string 
       en: "A widescreen monitor with a keyboard and a docking station",
     },
   },
+  smartphones: {
+    src: "/graphics/smartphones.webp",
+    alt: {
+      da: "Illustration af smartphones og et smartwatch på et arbejdsbord",
+      en: "Illustrative smartphones and a smartwatch on a workbench",
+    },
+  },
 };
 
 export default async function CategoryPage(props: {
@@ -157,6 +165,7 @@ export default async function CategoryPage(props: {
   const c = copy[lang];
   const category = getCategory(params.slug);
   if (!category) notFound();
+  const isPhones = category.slug === "smartphones";
 
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
@@ -220,19 +229,40 @@ export default async function CategoryPage(props: {
           generic glow every generated page has. */}
       <section
         className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
-          CATEGORY_ART[category.slug] ? "max-md:-mt-[65px] max-md:pt-0" : ""
+          isPhones
+            ? "product-phone-hero"
+            : CATEGORY_ART[category.slug]
+              ? "max-md:-mt-[65px] max-md:pt-0"
+              : ""
         }`}
       >
+        {isPhones && (
+          <Image
+            src={CATEGORY_ART.smartphones.src}
+            width={1440}
+            height={960}
+            priority
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            alt={CATEGORY_ART.smartphones.alt[lang]}
+            className="product-phone-image"
+          />
+        )}
         <Container className="relative">
           {/* Text in the left seven columns, the category's picture in the
               right five from lg. On a phone the picture is the header's
               ground, from under the glass bar, and the trail, title and lead
               sit on glass over its foot, as the front page's words sit over
               the room. */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14">
+          <div
+            className={
+              isPhones ? "product-phone-copy" : "grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14"
+            }
+          >
             <div
               className={`max-w-3xl lg:col-span-7 ${
-                CATEGORY_ART[category.slug] ? "glass-card relative z-10 max-md:-mt-14" : ""
+                CATEGORY_ART[category.slug] && !isPhones
+                  ? "glass-card relative z-10 max-md:-mt-14"
+                  : ""
               }`}
             >
               {/* The shared trail: "Forside / Produkter / Bærbare
@@ -269,7 +299,7 @@ export default async function CategoryPage(props: {
               </p>
             </div>
 
-            {CATEGORY_ART[category.slug] && (
+            {CATEGORY_ART[category.slug] && !isPhones && (
               <HeaderArt
                 src={CATEGORY_ART[category.slug].src}
                 width={1200}
@@ -281,7 +311,11 @@ export default async function CategoryPage(props: {
             )}
 
             <div className="max-w-3xl lg:col-span-7">
-              <p className="mt-8 text-base leading-[1.75] text-paper/75">{category.intro[lang]}</p>
+              {!isPhones && (
+                <p className="mt-8 text-base leading-[1.75] text-paper/75">
+                  {category.intro[lang]}
+                </p>
+              )}
               <p className="label mt-6 text-paper/65">
                 {lang === "da" ? "Opdateret" : "Updated"}{" "}
                 <time
@@ -291,6 +325,14 @@ export default async function CategoryPage(props: {
                   {formatDate(pageUpdated("/produkter/[slug]"), lang)}
                 </time>
               </p>
+              {isPhones && (
+                <Button
+                  href={localePath("/tilbud?model=Smartphones", lang)}
+                  className="mt-7 w-full sm:w-auto"
+                >
+                  {lang === "da" ? "Få et tilbud på firmatelefoner" : "Ask about business phones"}
+                </Button>
+              )}
             </div>
           </div>
         </Container>
@@ -298,7 +340,12 @@ export default async function CategoryPage(props: {
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="split max-w-3xl">
+          {isPhones && (
+            <p className="mb-8 max-w-3xl text-base leading-[1.75] text-paper/75">
+              {category.intro[lang]}
+            </p>
+          )}
+          <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.brandsTitle}
             </h2>
@@ -306,13 +353,30 @@ export default async function CategoryPage(props: {
               {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
             </p>
 
-            <ul className="mt-6 flex flex-wrap gap-2">
+            <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
               {category.brands.map((brand) => (
                 <li
                   key={brand}
-                  className="plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
+                  className={
+                    isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
+                  }
                 >
-                  {brand}
+                  {isPhones ? (
+                    <Link
+                      href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
+                      aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}
+                    >
+                      {brand.includes("Watch") ? (
+                        <Watch size={22} strokeWidth={1.6} aria-hidden="true" />
+                      ) : (
+                        <Smartphone size={22} strokeWidth={1.6} aria-hidden="true" />
+                      )}
+                      <span>{brand}</span>
+                      <ArrowUpRight size={18} aria-hidden="true" />
+                    </Link>
+                  ) : (
+                    brand
+                  )}
                 </li>
               ))}
             </ul>

@@ -4,6 +4,14 @@
   "generator": "Built-in image_gen",
   "direction": "Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign.",
   "masters": [
+    { "id": "buyback", "file": "buyback.png", "prompt": "Scandinavian blue-hour used-business-equipment buyback photograph: two closed graphite laptops, a tablet and smartphone on dark stone, fully visible, natural lighting, no branding or baked-in UI. Built-in image_gen; style reference public/hero/scene-mobile.webp." },
+    { "id": "smartphones", "file": "smartphones.png", "prompt": "Premium 3:2 editorial photograph of three physically plausible unbranded smartphones and a smartwatch on graphite stone, controlled blue window light and warm natural grazing light, no fake UI, text, logos or inventory claims. Built-in image_gen; style reference public/hero/scene-mobile.webp." },
+    { "id": "grades", "file": "grades.png", "prompt": "Three equal square photographs in a 3:1 strip showing exactly the same closed graphite laptop in identical lighting and perspective: pristine, light cosmetic scratches, clear cosmetic scratches with a shallow dent. No functionality difference, labels, logos or text. Educational illustrations, not actual stock. Built-in image_gen." },
+    {
+      "id": "hero-mobile-portrait",
+      "prompt": "Portrait 9:16 adaptation of the existing Kestro blue-hour waterfront office. Quiet dark architectural upper half for real HTML copy, a fully visible and physically plausible business laptop at x=12%-88%, y=56%-83%, detailed keyboard, realistic hinges and ports, one blue screen ribbon, natural warm reflections and stone desk. No baked-in text, UI, logos, floating parts or neon effects. Full generation prompt and mobile-only layout constraints: design/art-direction/mobile-hero-brief.md.",
+      "file": "hero-mobile-portrait.png"
+    },
     {
       "id": "hero",
       "prompt": "Use case: product-mockup. Asset type: KESTRO homepage full-width photographic background, wide 2.43:1 landscape, at least 2560 pixels across. Premium Scandinavian technology art direction for KESTRO, a Nordic refurbished business IT supplier. Precise photographic realism, charcoal-black anodized metal, graphite work surfaces, controlled electric-blue accent light with neutral soft key light, visible fine details, restrained reflections, no excessive neon, no particles, no stars, no sci-fi floating interfaces, no text, numbers, logos, watermark or baked-in UI. Devices are unbranded illustrative hardware, not a specific catalog model. Cohesive premium commissioned product campaign.\nScene: A believable contemporary Copenhagen waterfront office at blue hour, dark architectural stone, full-height glazing with the actual-looking roofs and waterfront receding beyond. A single beautifully detailed black business laptop open on a honed dark stone desk at the RIGHT 72 percent of the image, front three-quarter view, sharp raised keys, realistic ports and hinge, display with one quiet abstract blue light ribbon. Soft neutral-to-warm architectural grazing light, electric-blue window fill, restrained filmic exposure. The LEFT 55 percent is an exceptionally calm near-black interior wall and shadowed desk, intended for white HTML headline copy with excellent contrast. Keep all bright edges and product to the right. Top 15 percent dark ceiling for navigation. No painted text anywhere, no K logo (real logo is separate in UI), no people, no chairs blocking desk. Actual hardware must be clearly inspectable, not blurry or hidden. Designed composition, high-end commercial camera, no generic neon grid, no beams or haze. Leave the laptop fully within the rightmost 40 percent so mobile art crop can show it.",
@@ -87,6 +95,27 @@
     }
   ],
   "exports": [
+    { "source": "buyback", "group": "visual-ui", "output": "graphics/buyback.webp", "width": 1440, "height": 960, "quality": 82 },
+    { "source": "smartphones", "group": "visual-ui", "output": "graphics/smartphones.webp", "width": 1440, "height": 960, "quality": 82 },
+    { "source": "grades", "group": "visual-ui", "output": "graphics/grade-a.webp", "width": 720, "height": 720, "quality": 82, "crop": [0, 0, 0.3333333333333333, 1] },
+    { "source": "grades", "group": "visual-ui", "output": "graphics/grade-b.webp", "width": 720, "height": 720, "quality": 82, "crop": [0.3333333333333333, 0, 0.3333333333333333, 1] },
+    { "source": "grades", "group": "visual-ui", "output": "graphics/grade-c.webp", "width": 720, "height": 720, "quality": 82, "crop": [0.6666666666666666, 0, 0.3333333333333333, 1] },
+    {
+      "source": "hero-mobile-portrait",
+      "group": "hero-mobile",
+      "output": "hero/scene-mobile-portrait.avif",
+      "width": 820,
+      "height": 1458,
+      "avifQuality": 55
+    },
+    {
+      "source": "hero-mobile-portrait",
+      "group": "hero-mobile",
+      "output": "hero/scene-mobile-portrait.webp",
+      "width": 820,
+      "height": 1458,
+      "quality": 80
+    },
     {
       "source": "hero",
       "group": "hero",

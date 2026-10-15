@@ -14,6 +14,7 @@ import { primaryContact } from "@/lib/company";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import { buttonClass } from "@/components/Button";
+import FleetRollout from "@/components/FleetRollout";
 
 const copy = {
   da: {
@@ -487,45 +488,16 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
         </Container>
       </section>
 
-      <section className="py-10 sm:py-20">
+      <FleetRollout
+        lang={lang}
+        title={c.rolloutTitle}
+        lead={c.rolloutLead}
+        phases={rolloutPhases}
+      />
+
+      <section className="pb-10 sm:pb-20">
         <Container>
-          <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.rolloutTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.rolloutLead}</p>
-
-            <ol className="mt-10 space-y-6">
-              {rolloutPhases.map((phase, i) => (
-                <li key={phase.when.da} className="relative flex gap-5">
-                  {i < rolloutPhases.length - 1 && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute left-[18px] top-11 h-[calc(100%-1.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5"
-                    />
-                  )}
-                  <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-950 text-sm font-bold text-white ring-1 ring-brand-400/40">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="text-base font-semibold text-paper">{phase.when[lang]}</h3>
-                    <p className="mt-1 text-base leading-[1.75] text-paper/75">
-                      {phase.body[lang]}
-                    </p>
-                    {phase.link && (
-                      <Link
-                        href={localePath(phase.link.href, lang)}
-                        className="mt-2 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
-                      >
-                        {phase.link.label[lang]}
-                        <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                      </Link>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ol>
-
+          <div className="max-w-3xl">
             {/* Trade-in in one sentence. Its four steps were a full band of
               their own, repeating step 5 above and the question below; the
               process lives on /saelg-til-os. */}

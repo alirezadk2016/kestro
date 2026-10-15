@@ -30,7 +30,7 @@ for (const asset of manifest.exports.filter((asset) => !group || asset.group ===
     withoutEnlargement: true,
   });
   const encoded = asset.output.endsWith(".avif")
-    ? image.avif({ quality: 65, effort: 6, chromaSubsampling: "4:4:4" })
+    ? image.avif({ quality: asset.avifQuality ?? 65, effort: 6, chromaSubsampling: "4:4:4" })
     : image.webp({ quality: asset.quality ?? 88, effort: 6, smartSubsample: true });
 
   await mkdir(path.dirname(target), { recursive: true });

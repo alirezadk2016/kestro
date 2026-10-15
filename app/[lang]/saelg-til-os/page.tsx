@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
-import MarkTile from "@/components/MarkTile";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Check } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  Check,
+  ClipboardList,
+  BadgeCheck,
+  Truck,
+  Wallet,
+} from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import { type CraftMarkName } from "@/components/CraftMark";
@@ -134,6 +142,8 @@ const accepted = [
   { da: "Serverudstyr (efter aftale)", en: "Server equipment (by arrangement)" },
 ];
 
+const stepIcons = [ClipboardList, BadgeCheck, Truck, Wallet];
+
 export default async function SaelgTilOsPage(props: { params: Promise<{ lang: Lang }> }) {
   const params = await props.params;
   const { lang } = params;
@@ -142,7 +152,20 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/saelg-til-os" name={c.title} description={c.description} />
 
-      <section className="py-10 sm:py-20">
+      <section className="buyback-hero">
+        <Image
+          src="/graphics/buyback.webp"
+          width={1440}
+          height={960}
+          priority
+          sizes="(min-width: 1024px) 65vw, 100vw"
+          className="buyback-hero-image"
+          alt={
+            lang === "da"
+              ? "Illustration af brugte bærbare computere, en tablet og en smartphone på et arbejdsbord"
+              : "Illustrative used laptops, a tablet and smartphone on a workbench"
+          }
+        />
         <Container>
           <PageHeader
             title={c.title}
@@ -164,49 +187,31 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           >
             {c.formTitle}
           </Button>
+        </Container>
+      </section>
 
-          <h2 className="mt-14 max-w-3xl text-balance font-display t-h2 font-extrabold tracking-display text-paper sm:mt-16">
+      <section className="buyback-process">
+        <Container>
+          <h2 className="max-w-3xl text-balance font-display t-h2 font-extrabold text-paper">
             {c.howTitle}
           </h2>
 
-          {/* The same route as the front page's process: a spine down a
-              phone, a rail across a desktop with a station per step. The four
-              steps were a stack in the left third of a wide screen, with the
-              other two thirds empty for a screen and a half. */}
-          <ol className="relative mt-8 grid grid-cols-1 lg:mt-10 lg:grid-cols-4">
-            <span
-              aria-hidden="true"
-              className="absolute left-0 top-0 hidden h-px w-[calc(75%+2rem)] bg-paper/15 lg:block"
-            />
-            {steps.map((step, i) => (
-              <li
-                key={step.title.da}
-                className="relative flex gap-5 pb-8 last:pb-0 lg:block lg:py-9 lg:pl-8 lg:pr-8 lg:first:pl-0"
-              >
-                <div aria-hidden="true" className="relative w-11 flex-none lg:hidden">
-                  {i < steps.length - 1 && (
-                    <span className="absolute left-1/2 top-12 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/50 via-paper/14 to-paper/5" />
-                  )}
-                  <MarkTile name={step.mark} size="md" className="relative" />
-                </div>
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute top-0 hidden flex-col items-start lg:flex ${
-                    i === 0 ? "left-0" : "left-8"
-                  }`}
-                >
-                  <span className="-mt-[4px] h-[7px] w-[7px] rotate-45 border border-brand-300" />
-                  <span className="ml-[3px] h-9 w-px bg-gradient-to-b from-paper/25 to-transparent" />
-                </span>
-                <div className="min-w-0 flex-1 lg:flex-none">
-                  <MarkTile name={step.mark} size="md" className="mb-5 !hidden lg:!inline-flex" />
-                  <h3 className="text-base font-semibold text-paper lg:text-lg">{step.title[lang]}</h3>
-                  <p className="mt-1.5 text-base leading-[1.75] text-paper/75 lg:text-sm lg:leading-[1.6]">
+          <ol className="buyback-steps">
+            {steps.map((step, index) => {
+              const Icon = stepIcons[index];
+              return (
+                <li key={step.title.da}>
+                  <div className="buyback-step-heading" aria-hidden="true">
+                    <Icon size={30} strokeWidth={1.5} />
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                  </div>
+                  <h3 className="mt-6 text-lg font-semibold text-paper">{step.title[lang]}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-paper/75">
                     {step.description[lang]}
                   </p>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ol>
         </Container>
       </section>
@@ -244,7 +249,9 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           </div>
 
           <div className="mt-12 rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
-            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.fleetTitle}</h2>
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              {c.fleetTitle}
+            </h2>
             <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}

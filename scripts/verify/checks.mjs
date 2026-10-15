@@ -27,6 +27,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
+import { verifyVisualPolish } from "./visual.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -82,6 +83,14 @@ const PAGES = [
   "/tilbud-eksempel",
   "/om-os",
   "/privatlivspolitik",
+  "/flaadeloesninger",
+  "/en/fleet-solutions",
+  "/saelg-til-os",
+  "/en/sell-to-us",
+  "/kvalitet",
+  "/en/condition-and-quality",
+  "/produkter/smartphones",
+  "/en/products/smartphones",
 ];
 
 const failures = [];
@@ -364,7 +373,17 @@ for (const [name, viewport] of [
   /* /vejledninger joins the list because the Viden hub now sets type over a
      drawing, and a drawing behind text is exactly what a computed style cannot
      see and this check can. */
-  for (const path of ["/", "/en", "/ydelser/levering", "/kontakt", "/vejledninger"]) {
+  for (const path of [
+    "/",
+    "/en",
+    "/ydelser/levering",
+    "/kontakt",
+    "/vejledninger",
+    "/flaadeloesninger",
+    "/saelg-til-os",
+    "/kvalitet",
+    "/produkter/smartphones",
+  ]) {
     const page = await browser.newPage({ viewport });
     await page.goto(BASE + path, { waitUntil: "networkidle" });
 
@@ -740,8 +759,7 @@ for (const { home, pricing, terms, label, refuse } of [
       const where = `project notice (${pricing}, ${width}px, JS ${javaScriptEnabled})`;
       await page.goto(BASE + home, { waitUntil: "networkidle" });
       if (await notice.count()) fail(where, "notice appeared on the homepage");
-      if (javaScriptEnabled)
-        await page.getByRole("button", { name: refuse, exact: true }).click();
+      if (javaScriptEnabled) await page.getByRole("button", { name: refuse, exact: true }).click();
 
       await page.locator(`footer a[href='${pricing}']`).first().click();
       await page.waitForURL(BASE + pricing, { waitUntil: "networkidle" });
@@ -881,6 +899,11 @@ for (const [width, height] of [
   for (const message of messages) fail("console", message);
 }
 
+try {
+  await verifyVisualPolish(browser, BASE, fail);
+} catch (error) {
+  fail("visual interactions", error.stack ?? error.message);
+}
 await browser.close();
 
 if (failures.length) {

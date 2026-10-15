@@ -594,28 +594,146 @@ body {
     line-height: 1.35;
   }
 
-  /*
-   * The front page's h1, the one heading sized to its own longest word.
-   *
-   * "erhvervscomputere." is 18 characters that cannot break, about 9.5em
-   * wide. On a phone the column is the viewport less two 16px gutters, so
-   * 9.2vw is the size at which that word fills it without overflowing — 36px
-   * at 390, 29px at 320 — where the old floor of 1.85rem left a 30px
-   * headline in a 358px column. From md the words sit beside the photograph,
-   * and the old desktop sizing applies.
-   */
-  /* On a phone the headline sits inside the hero's glass panel, 40px
-     narrower than the page, and "erhvervscomputere." is one 18-character word
-     that cannot break: 8.2vw holds it inside the panel from 360 to 430. */
   .hero-title {
-    font-size: clamp(1.65rem, 8.2vw, 2.2rem);
+    font-size: 1.625rem;
   }
 
-  /* The English accent line, "Ready for the Nordics.", is 22 characters to
-     the Danish 16, and at the Danish size it breaks onto a fourth line. */
+  /* Portrait art direction is isolated from the desktop hero and other pages.
+     Fixed type steps accommodate the long Danish word without viewport scaling. */
   @media (max-width: 767px) {
-    :lang(en) .hero-title {
-      font-size: clamp(1.5rem, 7vw, 2rem);
+    .home-hero {
+      --hero-hint-height: 0px;
+      --hero-header-height: 65px;
+      margin-top: calc(-1 * var(--hero-header-height));
+      background-color: #060b16;
+    }
+
+    html[data-lang-hint="on"] .home-hero {
+      --hero-hint-height: 53px;
+    }
+
+    .home-hero-frame {
+      min-height: max(
+        700px,
+        calc(100svh - 52px - var(--hero-hint-height)),
+        calc(min(100vw, 480px) * 1.778)
+      );
+      justify-content: flex-start;
+    }
+
+    .home-hero .hero-scene-mobile {
+      background-size: min(100%, 480px) auto;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+
+    .home-hero .home-hero-copy-wrap {
+      position: static;
+      padding-top: calc(var(--hero-header-height) + 28px);
+      padding-bottom: 24px;
+      align-items: flex-start;
+    }
+
+    .home-hero-copy-container {
+      padding-inline: 20px;
+    }
+
+    .home-hero-copy {
+      max-width: 24rem;
+    }
+
+    .home-hero .hero-title {
+      font-size: 1.625rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.5rem;
+    }
+
+    .home-hero .home-hero-lead {
+      margin-top: 14px;
+      font-size: 1rem;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .home-hero-detail {
+      display: none;
+    }
+
+    .home-hero .home-hero-status {
+      position: absolute;
+      inset-inline: 20px;
+      bottom: 14px;
+      margin: 0;
+      max-width: 24rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+
+    .home-hero .hero-scene-mobile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgb(6 11 22 / 0.95), transparent 26%);
+    }
+
+    .home-hero .home-hero-actions {
+      margin-top: 20px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+    }
+
+    .home-hero-actions > a {
+      letter-spacing: 0;
+    }
+
+    .home-hero-actions > a:first-child {
+      justify-content: space-between;
+      padding-inline: 20px;
+    }
+
+    .home-hero-actions > a:nth-child(2) {
+      align-self: flex-start;
+      color: #fff;
+      min-height: 44px;
+      justify-content: flex-start;
+      border-color: transparent;
+      background: none;
+      padding-inline: 0;
+    }
+
+    .home-hero .rise {
+      animation: none;
+    }
+  }
+
+  @media (min-width: 360px) and (max-width: 767px) {
+    .home-hero .hero-title {
+      font-size: 1.875rem;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.75rem;
+    }
+  }
+
+  @media (min-width: 390px) and (max-width: 767px) {
+    .home-hero .hero-title {
+      font-size: 2rem;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.875rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    .home-hero {
+      --hero-header-height: 81px;
     }
   }
 
@@ -1691,17 +1809,569 @@ html[data-lang-hint="on"] .lang-hint {
   }
 }
 
-/*
- * The phone hero's sharp layer. AVIF where the browser takes it (24kB),
- * the WebP everywhere else (40kB); a browser that does not understand
- * image-set() with type() drops the second declaration and keeps the first.
- */
+/* The portrait uses the same format fallback as the unchanged wide hero. */
 .hero-scene-mobile {
-  background-image: url(/hero/scene-mobile.webp);
+  background-image: url(/hero/scene-mobile-portrait.webp);
   background-image: image-set(
-    url(/hero/scene-mobile.avif) type("image/avif"),
-    url(/hero/scene-mobile.webp) type("image/webp")
+    url(/hero/scene-mobile-portrait.avif) type("image/avif"),
+    url(/hero/scene-mobile-portrait.webp) type("image/webp")
   );
+}
+
+.fleet-rollout {
+  padding-block: 72px 24px;
+  background: #060b16;
+  overflow: clip;
+}
+.fleet-rollout-heading {
+  max-width: 800px;
+}
+.fleet-rollout-heading > p {
+  margin-top: 20px;
+}
+.fleet-rollout-body {
+  display: grid;
+  gap: 40px;
+  margin-top: 36px;
+}
+.fleet-journey-visual {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+}
+.fleet-journey-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+.fleet-journey-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fleet-journey-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.fleet-journey-visual[data-scene-state="ready"] .fleet-journey-canvas {
+  opacity: 1;
+}
+.fleet-journey-visual[data-scene-state="ready"] .fleet-journey-poster {
+  opacity: 0;
+}
+.fleet-journey-caption {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  padding-block: 16px;
+  color: #becffd;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.fleet-journey-current {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.fleet-journey-nav {
+  display: flex;
+  gap: 12px;
+  padding-top: 4px;
+}
+.fleet-journey-nav a {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #becffd;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.fleet-journey-nav a:hover,
+.fleet-journey-nav a[aria-current="step"] {
+  background: #1e40ff;
+  border-color: #6690f9;
+  color: #fff;
+}
+.fleet-rollout-steps {
+  list-style: none;
+  padding: 0;
+}
+main .fleet-rollout-steps > li {
+  max-width: none;
+}
+.fleet-rollout-steps > li {
+  position: relative;
+  padding-block: 28px;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  scroll-margin-top: 130px;
+}
+.fleet-phase-marker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #becffd;
+  margin-bottom: 18px;
+}
+.fleet-phase-marker span {
+  color: #fff;
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.fleet-phase-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  margin-top: 16px;
+  color: #becffd;
+  font-size: 14px;
+  font-weight: 600;
+}
+.fleet-phase-link:hover {
+  color: #fff;
+}
+.fleet-rollout a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+@media (min-width: 1024px) {
+  .fleet-rollout-body {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+    gap: 72px;
+    align-items: start;
+  }
+  .fleet-journey-visual {
+    position: sticky;
+    top: 112px;
+  }
+  .fleet-journey-stage {
+    height: min(62svh, 620px);
+    min-height: 380px;
+    aspect-ratio: auto;
+  }
+  .fleet-rollout-steps > li {
+    min-height: min(48svh, 440px);
+    padding: 44px 0 48px 28px;
+    border-top: none;
+    border-left: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .fleet-rollout-steps > li::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 44px;
+    width: 3px;
+    height: 60px;
+    background: #6690f9;
+    opacity: 0;
+    transition: opacity 220ms;
+  }
+  .fleet-rollout-steps > li[data-active="true"]::before {
+    opacity: 1;
+  }
+  .fleet-rollout-steps > li[data-active="true"] .fleet-phase-marker {
+    color: #6690f9;
+  }
+}
+@media (max-width: 767px) {
+  .fleet-rollout {
+    padding-top: 40px;
+  }
+  .fleet-journey-nav {
+    display: none;
+  }
+  .fleet-journey-caption {
+    padding-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fleet-rollout *,
+  .fleet-rollout *::before {
+    transition: none !important;
+  }
+}
+
+.buyback-hero,
+.product-phone-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 640px;
+  padding-block: 72px;
+  background-color: #060b16;
+}
+.buyback-hero-image,
+.product-phone-image {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 auto;
+  width: 64%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right center;
+  mask-image: linear-gradient(90deg, transparent 10%, #000 40%);
+}
+.product-phone-copy {
+  position: relative;
+  max-width: 600px;
+  margin-left: 0;
+}
+.buyback-hero > div {
+  position: relative;
+}
+.buyback-hero > div > div {
+  max-width: 600px;
+}
+.buyback-hero p {
+  max-width: 540px;
+}
+.buyback-process {
+  padding-block: 64px;
+}
+.buyback-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+  padding: 0;
+  list-style: none;
+}
+.buyback-steps > li {
+  padding: 26px 24px;
+  background: rgb(255 255 255 / 0.035);
+  border: 1px solid rgb(255 255 255 / 0.13);
+  border-radius: 8px;
+}
+.buyback-step-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #93aefb;
+}
+.buyback-step-heading span {
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 600;
+  color: #becffd;
+  font-variant-numeric: tabular-nums;
+}
+.buyback-steps > li:nth-child(3) .buyback-step-heading {
+  color: #7ed8db;
+}
+.phone-brands {
+  max-width: none;
+}
+.phone-brands > p {
+  max-width: 720px;
+}
+.phone-brand-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+  padding: 0;
+  list-style: none;
+}
+.phone-brand-links a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 84px;
+  height: 100%;
+  padding: 18px;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgb(255 255 255 / 0.025);
+  transition:
+    border-color 180ms,
+    background-color 180ms;
+}
+.phone-brand-links a > svg:first-child {
+  flex: none;
+  color: #93aefb;
+}
+.phone-brand-links a > svg:last-child {
+  flex: none;
+  margin-left: auto;
+  color: #becffd;
+}
+.phone-brand-links a:hover {
+  border-color: #6690f9;
+  background: rgb(59 130 246 / 0.12);
+}
+.phone-brand-links a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+.quality-grading-heading {
+  max-width: 800px;
+}
+.grade-comparison {
+  margin-top: 32px;
+}
+.grade-selector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+.grade-choice {
+  position: relative;
+  min-width: 0;
+  --grade-accent: #93aefb;
+}
+.grade-choice-1 {
+  --grade-accent: #7ed8db;
+}
+.grade-choice-2 {
+  --grade-accent: #d5d9e2;
+}
+.grade-choice input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.grade-choice-face {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 104px;
+  padding: 20px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 8px;
+  color: #fff;
+  transition:
+    border-color 180ms,
+    background-color 180ms;
+}
+.grade-choice input:checked + .grade-choice-face {
+  border-color: var(--grade-accent);
+  background: rgb(255 255 255 / 0.05);
+}
+.grade-choice input:focus-visible + .grade-choice-face {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+.grade-letter {
+  color: var(--grade-accent);
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 600;
+}
+.grade-choice-face > svg {
+  color: var(--grade-accent);
+  flex: none;
+  margin-left: auto;
+}
+.grade-choice-label {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #c6cbd4;
+  margin-top: 4px;
+}
+.grade-panels {
+  margin-top: 20px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.grade-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: #060b16;
+}
+.grade-photo {
+  position: relative;
+  min-width: 0;
+}
+.grade-photo > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+.grade-description {
+  padding: 48px 40px;
+  align-self: center;
+}
+.grade-suits {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+.grade-suits > svg {
+  flex: none;
+  color: #93aefb;
+  margin-top: 3px;
+}
+.grade-image-note {
+  margin-top: 16px;
+}
+.grade-zoom,
+.grade-lightbox-close {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 6px;
+  color: #fff;
+  background: #060b16;
+}
+.grade-zoom {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}
+.grade-zoom:focus-visible,
+.grade-lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+.grade-lightbox {
+  width: min(900px, calc(100vw - 24px));
+  max-height: calc(100svh - 24px);
+  padding: 48px 16px 16px;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 8px;
+  color: #fff;
+  background: #060b16;
+}
+.grade-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grade-lightbox::backdrop {
+  background: rgb(0 0 0 / 0.85);
+}
+.grade-lightbox > img {
+  min-height: 0;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100svh - 140px);
+  object-fit: contain;
+}
+.grade-lightbox-close {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+}
+@supports selector(:has(*)) {
+  .grade-comparison:has(input[value="0"]:checked) .grade-panel:not([data-grade="0"]),
+  .grade-comparison:has(input[value="1"]:checked) .grade-panel:not([data-grade="1"]),
+  .grade-comparison:has(input[value="2"]:checked) .grade-panel:not([data-grade="2"]) {
+    display: none;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .product-phone-copy,
+  .buyback-hero > div > div {
+    max-width: 460px;
+  }
+}
+@media (max-width: 1023px) {
+  .buyback-hero,
+  .product-phone-hero {
+    min-height: 0;
+    padding-top: 36px;
+    padding-bottom: 340px;
+  }
+  .buyback-hero-image,
+  .product-phone-image {
+    inset: auto 0 0;
+    width: 100%;
+    height: 320px;
+    object-position: center;
+    mask-image: linear-gradient(180deg, transparent, #000 14%);
+  }
+  .buyback-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .phone-brand-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grade-choice-face {
+    gap: 12px;
+    padding: 16px;
+  }
+  .grade-description {
+    padding: 28px;
+  }
+}
+@media (max-width: 639px) {
+  .buyback-process {
+    padding-block: 40px;
+  }
+  .buyback-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .phone-brand-links a {
+    gap: 10px;
+    padding: 14px 12px;
+    min-height: 88px;
+  }
+  .phone-brand-links a > svg:last-child {
+    display: none;
+  }
+  .phone-brand-links a > span {
+    overflow-wrap: anywhere;
+  }
+  .grade-selector {
+    gap: 8px;
+  }
+  .grade-choice-face {
+    justify-content: space-between;
+    min-height: 76px;
+    gap: 8px;
+    padding: 14px;
+  }
+  .grade-choice-face > span:nth-child(2) {
+    display: none;
+  }
+  .grade-letter {
+    font-size: 30px;
+  }
+  .grade-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grade-photo > img {
+    min-height: 0;
+    max-height: 420px;
+  }
+  .grade-description {
+    padding: 26px 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grade-comparison *,
+  .phone-brand-links a {
+    transition: none !important;
+  }
 }
 
 /* The same for the wide hero. */

@@ -9,6 +9,7 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import { buttonClass } from "@/components/Button";
+import GradeComparison from "@/components/GradeComparison";
 
 const copy = {
   da: {
@@ -222,7 +223,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             updated="/kvalitet"
           />
 
-          <div className="split mt-12 max-w-3xl">
+          <div className="quality-grading-heading mt-12 max-w-3xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.gradingTitle}
             </h2>
@@ -232,25 +233,16 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
           {/* Three grades are three parallel things: a row of plates from lg,
               not a stack in the left half of the page. */}
           <div>
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
-              {grades.map((grade) => (
-                <div key={grade.grade.da} className="plate p-5 sm:p-6">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-bold text-paper">{grade.grade[lang]}</h3>
-                    <span className="rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-300">
-                      {grade.label[lang]}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                    {grade.description[lang]}
-                  </p>
-                  <p className="mt-3 text-sm leading-[1.6] text-paper/65">
-                    <span className="font-semibold text-paper/85">{c.suits}</span>{" "}
-                    {grade.suits[lang]}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <GradeComparison
+              lang={lang}
+              suitsLabel={c.suits}
+              grades={grades.map((grade) => ({
+                grade: grade.grade[lang],
+                label: grade.label[lang],
+                description: grade.description[lang],
+                suits: grade.suits[lang],
+              }))}
+            />
 
             <div className="plate mt-6 flex max-w-3xl gap-3 p-5">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
