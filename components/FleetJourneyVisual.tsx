@@ -31,6 +31,9 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
     const steps = [...section.querySelectorAll<HTMLElement>("[data-journey-step]")];
     const desktop = matchMedia("(min-width: 1024px)");
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    // Rendering uses event values rather than polling media-query getters each frame.
+    let isDesktop = desktop.matches,
+      reduceMotion = reduced.matches;
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
       .connection;
     let disposed = false,
@@ -43,7 +46,7 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
       last = 0;
 
     function schedule() {
-      if (!frame && scene && visible && !document.hidden && desktop.matches && !reduced.matches)
+      if (!frame && scene && visible && !document.hidden && isDesktop && !reduceMotion)
         frame = requestAnimationFrame(draw);
     }
     function draw(time: number) {
@@ -92,8 +95,8 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
         loading ||
         scene ||
         !visible ||
-        !desktop.matches ||
-        reduced.matches ||
+        !isDesktop ||
+        reduceMotion ||
         connection?.saveData
       )
         return;
@@ -105,11 +108,11 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
           import("three"),
           import("@/lib/fleet-journey-scene.mjs"),
         ]);
-        if (disposed || token !== generation || !desktop.matches || reduced.matches) return;
+        if (disposed || token !== generation || !isDesktop || reduceMotion) return;
         nextEngine = new THREE.WebGLRenderer({ canvas: element!, antialias: true, alpha: true });
         nextEngine.setClearAlpha(0);
         nextScene = (await createFleetJourneyScene(nextEngine)) as unknown as FleetScene;
-        if (disposed || token !== generation || !desktop.matches || reduced.matches) {
+        if (disposed || token !== generation || !isDesktop || reduceMotion) {
           nextScene.dispose();
           nextEngine.dispose();
           return;
@@ -130,14 +133,25 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
       }
     }
     function preferenceChanged() {
-      if (!desktop.matches || reduced.matches || connection?.saveData) stop();
+      if (!isDesktop || reduceMotion || connection?.saveData) stop();
       else void start();
+    }
+    function desktopChanged(event: MediaQueryListEvent) {
+      isDesktop = event.matches;
+      preferenceChanged();
+    }
+    function motionChanged(event: MediaQueryListEvent) {
+      reduceMotion = event.matches;
+      preferenceChanged();
     }
     function visibilityChanged() {
       if (document.hidden) {
         cancelAnimationFrame(frame);
         frame = 0;
       } else {
+        isDesktop = desktop.matches;
+        reduceMotion = reduced.matches;
+        preferenceChanged();
         last = 0;
         schedule();
       }
@@ -154,11 +168,11 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
     }
     function contextLost(event: Event) {
       event.preventDefault();
+      isDesktop = desktop.matches;
+      reduceMotion = reduced.matches;
       stop();
       if (!disposed)
-        setState(
-          !desktop.matches || reduced.matches || connection?.saveData ? "poster" : "fallback",
-        );
+        setState(!isDesktop || reduceMotion || connection?.saveData ? "poster" : "fallback");
     }
     const sectionObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -182,8 +196,8 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
     steps.forEach((step) => stepObserver.observe(step));
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(figure);
-    desktop.addEventListener("change", preferenceChanged);
-    reduced.addEventListener("change", preferenceChanged);
+    desktop.addEventListener("change", desktopChanged);
+    reduced.addEventListener("change", motionChanged);
     document.addEventListener("visibilitychange", visibilityChanged);
     figure.addEventListener("pointermove", pointerMoved);
     figure.addEventListener("pointerleave", pointerLeft);
@@ -194,8 +208,8 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
       sectionObserver.disconnect();
       stepObserver.disconnect();
       resizeObserver.disconnect();
-      desktop.removeEventListener("change", preferenceChanged);
-      reduced.removeEventListener("change", preferenceChanged);
+      desktop.removeEventListener("change", desktopChanged);
+      reduced.removeEventListener("change", motionChanged);
       document.removeEventListener("visibilitychange", visibilityChanged);
       figure.removeEventListener("pointermove", pointerMoved);
       figure.removeEventListener("pointerleave", pointerLeft);

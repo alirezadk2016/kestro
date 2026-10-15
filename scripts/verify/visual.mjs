@@ -166,6 +166,9 @@ export async function verifyVisualPolish(browser, base, fail) {
   if (pixels.channels.slice(0, 3).every((channel) => channel.stdev < 3))
     fail("fleet desktop", "3D canvas is blank");
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.evaluate(
+    () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+  );
   await page.waitForFunction(
     () =>
       matchMedia("(prefers-reduced-motion: reduce)").matches &&
@@ -180,6 +183,9 @@ export async function verifyVisualPolish(browser, base, fail) {
   )
     fail("fleet reduced", "canvas remains visible after changing motion preference");
   await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.evaluate(
+    () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+  );
   await page.waitForFunction(
     () =>
       !matchMedia("(prefers-reduced-motion: reduce)").matches &&

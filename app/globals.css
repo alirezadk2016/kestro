@@ -1995,6 +1995,12 @@ main .fleet-rollout-steps > li {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .fleet-journey-visual[data-scene-state="ready"] .fleet-journey-canvas {
+    opacity: 0;
+  }
+  .fleet-journey-visual[data-scene-state="ready"] .fleet-journey-poster {
+    opacity: 1;
+  }
   .fleet-rollout *,
   .fleet-rollout *::before {
     transition: none !important;
