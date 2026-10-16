@@ -3,53 +3,173 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
-import QualifySection from "@/components/QualifySection";
 import { categories } from "@/lib/categories";
-import { getCategoryIcon } from "@/lib/category-icons";
+import { getCategoryMark } from "@/lib/category-marks";
+import MarkTile from "@/components/MarkTile";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import { buttonClass } from "@/components/Button";
 
 const copy = {
   da: {
-    metaTitle: "Brugt IT-udstyr til virksomheder – hvad vi skaffer | Kestro",
+    metaTitle: "Brugt IT-udstyr til virksomheder: pc, skærm og dock | Kestro",
     metaDescription:
-      "Bærbare, stationære, skærme, docking og tilbehør som brugt erhvervs-IT. Vi sourcer per ordre, så specifikationen følger opgaven og ikke et lager.",
-    title: "Hvad vi skaffer",
-    description:
-      "Kestro er indkøbspartner, ikke webshop. I fortæller, hvad I har brug for – vi finder det i vores leverandørnetværk, tester det og leverer det klar til brug.",
-    noPricesTitle: "Derfor finder I ingen priser eller lagerstatus her",
+      "Refurbished bærbare, stationære, mini-pc'er, skærme, tablets og docks til virksomheder i Danmark og Norge – skaffet til ordren, med vilkår på skrift.",
+    title: "Brugt IT-udstyr, vi skaffer til virksomheder",
+    description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Start med opgaver, programmer og budget; afklar derefter skærme, dansk eller norsk tastatur og om den gamle computer kan opgraderes.`,
+    noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
+    noStockLink: "Se budgeteksempler og prisgrundlag",
     noPrices1:
-      "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet sourcer vi til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at I ikke betaler for et lager, andre skal have afsat.",
+      "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
     noPrices2:
-      "Kategorierne nedenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
+      "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
     categories: "Kategorier",
     seeCategory: "Se kategori",
-    modelsTitle: "Vil I se konkrete modeller?",
+    modelsTitle: "Sammenlign specifikationer",
     modelsBody:
-      "Vi har samlet de maskiner, vi oftest bliver bedt om at skaffe – ThinkPad, EliteBook, Latitude, EliteDesk og flere – med specifikationer og hvad de hver især egner sig til. Ingen priser og ingen lagerstatus: det er en oversigt, ikke en butik.",
+      "Se forskelle i hukommelse, lager, skærm og muligheder for opgradering. Brug eksemplerne, når I afklarer kravene til jeres næste computer.",
     modelsButton: "Se modeloversigten",
+    choiceTitle: "Hvilken computer passer til mit behov?",
+    choiceLead:
+      "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
+    requirementsTitle: "Det bør være afklaret før et køb",
+    requirementsLead:
+      "Bed om disse oplysninger for den konkrete leverance. En modelbeskrivelse er ikke dokumentation for en bestemt brugt enheds stand.",
+    enquiry: "Beskriv jeres behov",
   },
   en: {
-    metaTitle: "What we source | Refurbished business IT | Kestro",
+    metaTitle: "Used and refurbished business computers and IT | Kestro",
     metaDescription:
-      "Sourcing partner for refurbished IT: laptops, desktops, mini PCs, monitors, tablets, smartphones, docking and gaming — sourced for your order.",
-    title: "What we source",
-    description:
-      "Kestro is a sourcing partner, not a web shop. You tell us what you need — we find it in our supplier network, test it and deliver it ready to use.",
-    noPricesTitle: "Why there are no prices or stock levels here",
+      "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
+    title: "Used business computers we source",
+    description: `Find used IT equipment in ${categories.length} categories for office work, home working or a startup. Start with tasks, software and budget; then clarify monitors, a Danish or Norwegian keyboard and whether the old computer can be upgraded.`,
+    noStockLine: "An equipment budget needs more than the price of the computer itself.",
+    noStockLink: "See budget examples and their basis",
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
-      "The categories below show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
+      "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
     categories: "Categories",
     seeCategory: "See category",
-    modelsTitle: "Want to see specific models?",
+    modelsTitle: "Compare specifications",
     modelsBody:
-      "We have collected the machines we are asked for most often — ThinkPad, EliteBook, Latitude, EliteDesk and more — with specifications and what each one suits. No prices and no stock levels: it is an overview, not a shop.",
+      "Compare memory, storage, display and upgrade options. Use the examples when clarifying requirements for your next computer.",
     modelsButton: "See the model overview",
+    choiceTitle: "Which computer fits my needs?",
+    choiceLead:
+      "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
+    requirementsTitle: "What to clarify before buying",
+    requirementsLead:
+      "Ask for these details for the specific delivery. A model description is not evidence of the condition of an individual used device.",
+    enquiry: "Describe your requirements",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+const buyingChoices = [
+  {
+    title: { da: "Kontor, hjemmearbejde og startup", en: "Office, home working and startups" },
+    body: {
+      da: "Hvilken computer passer til din nystartede virksomhed? Oplys programmer, mobilitet og et samlet budget per arbejdsplads med skærm, dock og licenser.",
+      en: "Which computer fits your new business? List applications, mobility needs and a total budget per desk that includes monitor, dock and licences.",
+    },
+    links: [
+      {
+        href: "/produkter/baerbare-computere",
+        da: "Bærbar til arbejde og startup",
+        en: "Laptops for work and startups",
+      },
+      {
+        href: "/produkter/mini-pc",
+        da: "Mini-pc'er til faste skriveborde",
+        en: "Mini PCs for fixed desks",
+      },
+    ],
+  },
+  {
+    title: { da: "CAD og krævende programmer", en: "CAD and demanding software" },
+    body: {
+      da: "Start med programmets krav, projekternes størrelse og behovet for grafik. Sammenlign en workstation med en almindelig erhvervscomputer, før I vælger processor og hukommelse.",
+      en: "Start with the software requirements, project sizes and graphics needs. Compare a workstation with a standard business computer before choosing the processor and memory.",
+    },
+    links: [
+      {
+        href: "/produkter/baerbare-computere",
+        da: "Bærbare efter programmets krav",
+        en: "Laptops around software requirements",
+      },
+      {
+        href: "/produkter/stationaere-computere",
+        da: "Stationære til virksomheden",
+        en: "Desktops for your business",
+      },
+    ],
+  },
+  {
+    title: { da: "Nordisk tastatur og tilbehør", en: "Nordic keyboards and accessories" },
+    body: {
+      da: "Skal I købe en bærbar med dansk eller norsk tastatur, så afklar det fysiske layout og Windows-sprog. Kontrollér også, om jeres skærme og dock kan bruges igen.",
+      en: "If you need a laptop with a Danish or Norwegian keyboard, clarify the physical layout and Windows language. Also check whether your monitors and dock can be reused.",
+    },
+    links: [
+      {
+        href: "/produkter/dockingstationer",
+        da: "Docking og kompatibilitet",
+        en: "Docking and compatibility",
+      },
+      {
+        href: "/ydelser/nordisk-tilpasning",
+        da: "Dansk eller norsk tastatur",
+        en: "Danish or Norwegian keyboards",
+      },
+    ],
+  },
+];
+
+const purchaseChecks = [
+  {
+    title: { da: "Konfiguration og tilbehør", en: "Configuration and accessories" },
+    body: {
+      da: "Præcis model og generation, processor, RAM, SSD, skærm og tastatur. Afklar også oplader, kabler og dockingstation.",
+      en: "Exact model and generation, processor, RAM, SSD, display and keyboard. Clarify the charger, cables and docking station too.",
+    },
+    href: "/modeller",
+    link: { da: "Sammenlign modeltyper", en: "Compare model types" },
+  },
+  {
+    title: { da: "Stand og batteri", en: "Condition and battery" },
+    body: {
+      da: "Kosmetisk grad er ikke en batteritest. Bed om batteriets målte kapacitet og beskrivelsen af eventuelle brugsspor.",
+      en: "A cosmetic grade is not a battery test. Ask for the measured battery capacity and a description of any wear.",
+    },
+    href: "/kvalitet",
+    link: { da: "Forstå stand og funktionstest", en: "Understand condition and testing" },
+  },
+  {
+    title: { da: "Software og licenser", en: "Software and licences" },
+    body: {
+      da: "En installeret Windows-version siger ikke, hvilken licens der følger med. Afklar udgave, aktivering og om jeres egne licensaftaler skal bruges.",
+      en: "An installed Windows version does not tell you which licence is included. Clarify the edition, activation and whether your own licensing agreements will be used.",
+    },
+    href: "/ydelser/nordisk-tilpasning",
+    link: { da: "Tastatur, sprog og opsætning", en: "Keyboard, language and setup" },
+  },
+  {
+    title: { da: "Samlet pris og ansvar", en: "Total cost and responsibility" },
+    body: {
+      da: "Prisgrundlag, fragt, levering, sælger og eventuelle garantivilkår skal stå klart, før en aftale indgås. Afklar også retur af gammelt udstyr og datasletning.",
+      en: "The pricing basis, shipping, delivery, seller and any warranty terms need to be clear before an agreement. Clarify the return of old equipment and data erasure too.",
+    },
+    href: "/saelg-til-os",
+    link: { da: "Vurdering af jeres gamle IT-udstyr", en: "Assessment of your old IT equipment" },
+  },
+];
+
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -58,11 +178,20 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
+export default async function ProdukterPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/produkter"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -70,56 +199,125 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
             description={c.description}
             lang={lang}
             href="/produkter"
-            crumb={lang === "da" ? "Hvad vi skaffer" : "What we source"}
+            crumb={lang === "da" ? "Produkter" : "Products"}
+
+            updated="/produkter"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-paper">{c.noPricesTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noPrices1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noPrices2}</p>
-          </div>
+          {/* One line, where there was a panel. The panel's two paragraphs
+              were also the answers to two of the questions at the foot of
+              this page, so they were on it twice; the full reasoning lives
+              on /priser and in those answers. */}
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
+            {c.noStockLine}{" "}
+            <Link
+              href={localePath("/priser", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
+            >
+              {c.noStockLink}
+            </Link>
+          </p>
 
-          <h2 className="mt-14 text-center text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+          <h2 className="mt-14 text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.categories}
           </h2>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
-            {categories.map((category) => {
-              const Icon = getCategoryIcon(category.slug);
+          {/* Seven categories: four across on a desktop, and the last one
+              two columns wide, so both rows are full. In three columns the
+              docks sat alone on a third row. */}
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+            {categories.map((category, i) => {
+              const last = i === categories.length - 1 && categories.length % 2 === 1;
               return (
                 <Link
                   key={category.slug}
                   href={localePath(`/produkter/${category.slug}`, lang)}
-                  className="group flex flex-col border border-white/10 bg-white/[0.04] p-4 transition hover:border-white/35 sm:p-6"
+                  className={`group flex items-start gap-4 plate plate-lift p-5 sm:p-6 ${last ? "sm:col-span-2" : ""}`}
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-brand-300 sm:h-10 sm:w-10">
-                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
-                  </span>
-                  <h3 className="mt-3 text-sm font-semibold text-paper group-hover:text-paper sm:mt-4 sm:text-base">
-                    {category.name[lang]}
-                  </h3>
-                  <p className="mt-1.5 flex-1 text-xs leading-5 text-paper/65 sm:mt-2 sm:text-sm sm:leading-6">
-                    {category.tagline[lang]}
-                  </p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300 sm:mt-4 sm:text-sm">
-                    {c.seeCategory}
-                    <span aria-hidden="true">&rarr;</span>
-                  </span>
+                  {/* Mark inline with the heading rather than stacked above
+                      it — the stacked icon tile is the template card. */}
+                  <MarkTile name={getCategoryMark(category.slug)} size="md" className="flex-none" />
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <h3 className="text-base font-semibold leading-snug text-paper">
+                      {category.name[lang]}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">
+                      {category.tagline[lang]}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
+                      {c.seeCategory}
+                      <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
                 </Link>
               );
             })}
           </div>
 
-          <div className="mx-auto mt-14 max-w-3xl border border-white/10 bg-white/[0.04] p-6 text-center shadow-sm sm:p-8">
-            <h2 className="text-xl font-bold tracking-tight text-paper sm:text-2xl">
-              {c.modelsTitle}
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-paper/65">
-              {c.modelsBody}
+          <div className="mt-16 border-t border-white/10 pt-12">
+            <h2 className="font-display t-h2 font-extrabold text-paper">{c.choiceTitle}</h2>
+            <p className="mt-4 max-w-3xl text-base leading-[1.75] text-paper/75">{c.choiceLead}</p>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {buyingChoices.map((choice) => (
+                <article key={choice.title.da} className="plate flex flex-col p-5 sm:p-6">
+                  <h3 className="font-display t-h3 font-bold text-paper">{choice.title[lang]}</h3>
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">{choice.body[lang]}</p>
+                  <ul className="mt-auto pt-4">
+                    {choice.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={localePath(link.href, lang)}
+                          className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 hover:text-paper"
+                        >
+                          {link[lang]}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-16 border-t border-white/10 pt-12">
+            <h2 className="font-display t-h2 font-extrabold text-paper">{c.requirementsTitle}</h2>
+            <p className="mt-4 max-w-3xl text-base leading-[1.75] text-paper/75">
+              {c.requirementsLead}
             </p>
+            <dl className="mt-8 grid gap-x-12 gap-y-8 lg:grid-cols-2">
+              {purchaseChecks.map((check) => (
+                <div key={check.href}>
+                  <dt className="text-base font-semibold text-paper">{check.title[lang]}</dt>
+                  <dd className="mt-2 text-base leading-[1.75] text-paper/75">
+                    {check.body[lang]}
+                    <Link
+                      href={localePath(check.href, lang)}
+                      className="mt-2 flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 hover:text-paper"
+                    >
+                      {check.link[lang]}
+                    </Link>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <Link href={localePath("/tilbud", lang)} className={`${buttonClass("primary")} mt-8`}>
+              {c.enquiry}
+            </Link>
+          </div>
+
+          {/* Left-aligned with the grid above it, heading and button on one
+              line on a wide screen. It was the one centred panel on the page,
+              floating in the middle of a left-aligned column. */}
+          <div className="mt-14 flex flex-col gap-6 border-y border-white/10 py-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+            <div className="max-w-2xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.modelsTitle}
+              </h2>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+            </div>
             <Link
               href={localePath("/modeller", lang)}
-              className="mt-6 inline-flex min-h-[48px] items-center justify-center bg-brand-600 px-7 text-base font-semibold tracking-tight text-paper transition hover:bg-brand-700"
+              className={`${buttonClass("primary")} flex-none self-start lg:self-center`}
             >
               {c.modelsButton}
             </Link>
@@ -127,7 +325,39 @@ export default function ProdukterPage({ params }: { params: { lang: Lang } }) {
         </Container>
       </section>
 
-      <QualifySection lang={lang} />
+      {/* "Genkender I én af disse?" lives on the front page only. It stood here
+          as well, the same four situations at the same 1,670px, so anyone who
+          came from the front page met it twice in two clicks. */}
+
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om udvalget", en: "Questions about the range" }}
+        items={[
+          {
+            question: { da: "Har I udstyret på lager?", en: "Do you have the equipment in stock?" },
+            answer: { da: copy.da.noPrices1, en: copy.en.noPrices1 },
+          },
+          {
+            question: {
+              da: "Kan I skaffe noget, der ikke står her?",
+              en: "Can you source something that is not listed here?",
+            },
+            answer: { da: copy.da.noPrices2, en: copy.en.noPrices2 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Aftal version, udgave og licens for den konkrete konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
+            },
+          },
+        ]}
+      />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
 
       <CtaSection lang={lang} />
     </>

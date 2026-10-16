@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
+import { isSameSite } from "@/lib/same-site";
+import { noteMailFailure, saveEnquiry } from "@/lib/db";
+import { displayName, looksLikeEmail, oneLine } from "@/lib/mail-safe";
 
 /**
  * The contact form's actual destination.
@@ -18,16 +21,21 @@ import { company } from "@/lib/company";
  * accepts an inbound JSON hook. It runs alongside the mail and is never
  * allowed to fail the visitor's request: the inbox is the source of truth.
  *
- * Until RESEND_API_KEY and CONTACT_FROM are set the route answers 503, and the
- * form tells the visitor plainly and hands them the finished message to copy
- * or mail. It does not redirect the browser and it does not pretend the
- * message arrived.
+ * The enquiry is written to our own database before any of that is attempted,
+ * so it is readable and answerable in /admin whatever the mail provider does.
+ * Only when neither the database nor the mail took it does the route answer
+ * 503 — and then the form tells the visitor plainly and hands them the
+ * finished message to copy or send themselves. It does not redirect the
+ * browser and it never pretends the message arrived.
  */
 
 const RESEND_ENDPOINT = process.env.RESEND_ENDPOINT ?? "https://api.resend.com/emails";
 
 /** Long enough for anything real, short enough to bound what we forward. */
 const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 };
+
+/* Comfortably above the sum of LIMITS, far below anything worth abusing. */
+const MAX_BODY_BYTES = 64 * 1024;
 
 /*
  * Rate limiting, such as it is.
@@ -39,6 +47,37 @@ const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 }
  */
 const RATE_LIMIT = { max: 5, windowMs: 10 * 60 * 1000 };
 const seen = new Map<string, number[]>();
+
+/*
+ * Whose address to count against.
+ *
+ * Not the left-most x-forwarded-for. That is the value the *client* sent, and
+ * anything upstream only appends to it — so a caller who rotates the header
+ * gets a fresh bucket on every request and the limit stops existing. Measured:
+ * five requests from one spoofed address hit 429, and eight requests with the
+ * header rotated all returned 200.
+ *
+ * Vercel sets x-vercel-forwarded-for itself and overwrites whatever arrived,
+ * so it is the trustworthy one here. Failing that, the right hop is the
+ * right-most entry — the one our own proxy appended — never the left-most.
+ */
+function clientKey(request: Request): string {
+  const vercel = request.headers.get("x-vercel-forwarded-for")?.trim();
+  if (vercel) return vercel;
+
+  const real = request.headers.get("x-real-ip")?.trim();
+  if (real) return real;
+
+  const chain = request.headers.get("x-forwarded-for");
+  if (chain) {
+    const hops = chain
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean);
+    if (hops.length) return hops[hops.length - 1];
+  }
+  return "unknown";
+}
 
 function tooManyFrom(ip: string): boolean {
   const now = Date.now();
@@ -60,36 +99,55 @@ function clean(value: unknown, max: number): string {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
-/** Deliberately loose. Rejecting valid addresses costs more than a bounce. */
-function looksLikeEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-/** Header injection: a newline in the reply-to would let a sender add headers. */
-function safeHeaderValue(value: string): string {
-  return value.replace(/[\r\n]/g, " ");
-}
 
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM;
-
-  if (!apiKey || !from) {
-    return NextResponse.json({ ok: false, configured: false }, { status: 503 });
+  if (!isSameSite(request)) {
+    return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
   }
 
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown";
+  /* Our own form always sends JSON. Anything else is a cross-site form post
+     dressed up as one — see isSameSite in lib/same-site.ts. */
+  if (!(request.headers.get("content-type") ?? "").toLowerCase().includes("application/json")) {
+    return NextResponse.json({ ok: false, error: "bad_request" }, { status: 415 });
+  }
 
-  if (tooManyFrom(ip)) {
+  if (tooManyFrom(clientKey(request))) {
     return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
   }
 
+  /*
+   * Read the body with a ceiling on it.
+   *
+   * Nothing bounded the request before: an 8 MB body was read, parsed and
+   * answered 200, and the fields were only truncated afterwards — so the
+   * memory had already been spent. Every field this route keeps is capped in
+   * LIMITS below and the largest is 5000 characters, so 64 KB is far more than
+   * an honest submission needs and far less than a cheap way to make the
+   * function work.
+   */
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (declared > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "too_large" }, { status: 413 });
+  }
+
+  const raw = await request.text();
+  if (raw.length > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "too_large" }, { status: 413 });
+  }
+
+  /*
+   * `null`, `[]` and `"string"` are all valid JSON, so parsing succeeding says
+   * nothing about the shape. Reading .website off a parsed `null` threw, and
+   * the request came back 500 — a 500 anyone could produce with four
+   * characters, and one Google reads as the host being unwell.
+   */
   let payload: Record<string, unknown>;
   try {
-    payload = await request.json();
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
+    }
+    payload = parsed as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }
@@ -99,13 +157,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, configured: true });
   }
 
-  const name = clean(payload.name, LIMITS.name);
-  const organisation = clean(payload.company, LIMITS.company);
+  const name = oneLine(clean(payload.name, LIMITS.name));
+  const organisation = oneLine(clean(payload.company, LIMITS.company));
   const email = clean(payload.email, LIMITS.email);
-  const phone = clean(payload.phone, LIMITS.phone);
+  const phone = oneLine(clean(payload.phone, LIMITS.phone));
   const message = clean(payload.message, LIMITS.message);
-  const subject = clean(payload.subject, 160) || "Henvendelse via kestro.dk";
-  const page = clean(payload.page, 200);
+  const subject = oneLine(clean(payload.subject, 160)) || "Henvendelse via kestro.dk";
+  const page = oneLine(clean(payload.page, 200));
 
   if (!name || !message || !looksLikeEmail(email)) {
     return NextResponse.json({ ok: false, error: "invalid" }, { status: 422 });
@@ -121,33 +179,119 @@ export async function POST(request: Request) {
     message,
   ].filter((line): line is string => line !== null);
 
-  const response = await fetch(RESEND_ENDPOINT, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [process.env.CONTACT_TO ?? company.email],
-      /* So hitting reply in the inbox answers the customer, not ourselves. */
-      reply_to: safeHeaderValue(`${name} <${email}>`),
-      subject: safeHeaderValue(
-        organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
-      ),
-      text: lines.join("\n"),
-    }),
+  /*
+   * Store it first, then try to mail it.
+   *
+   * This used to be the other way round, and worse: the route returned 503
+   * before reading the body at all if RESEND_API_KEY or CONTACT_FROM was
+   * missing, and returned 502 without storing anything if the send failed. So
+   * on a deployment where the mail provider was not configured — or was having
+   * an afternoon — a visitor wrote a message, was told it could not be sent,
+   * and nothing anywhere kept a copy. There was nowhere to keep one at the
+   * time. There is now.
+   *
+   * The order follows from which of the two can lose the enquiry. A write to
+   * our own database either succeeds or reports that it did not; a mail
+   * provider can accept a request and drop the message later. Whichever
+   * happens to the mail, the message is already somewhere a person can read
+   * and answer it.
+   */
+  const id = crypto.randomUUID();
+  const stored = await saveEnquiry({
+    id,
+    name,
+    company: organisation || null,
+    email,
+    phone: phone || null,
+    subject: subject || null,
+    message,
+    page: page || null,
+    source: subject.toLowerCase().includes("tilbud") ? "quote" : "contact",
   });
 
-  if (!response.ok) {
-    /* The body can carry the key back in an error echo, so it is not logged. */
-    console.error(`Contact form: Resend returned ${response.status}`);
-    return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
+  const apiKey = process.env.RESEND_API_KEY;
+  /*
+   * Resend's own test sender when nothing else is configured.
+   *
+   * It is not a secret and it is the same string for everybody, so making it
+   * an environment variable only meant one more thing to get right before any
+   * mail could be sent at all. Note that Resend will only deliver from this
+   * address to the address the Resend account was opened with, so CONTACT_TO
+   * has to be that address until a real domain is verified — and when it is
+   * not, the refusal is now written onto the enquiry rather than swallowed.
+   */
+  const from = process.env.CONTACT_FROM || "Kestro <onboarding@resend.dev>";
+  let mailed = false;
+  let mailError: string | null = null;
+
+  if (apiKey) {
+    try {
+      const response = await fetch(RESEND_ENDPOINT, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${apiKey}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          from,
+          to: [process.env.CONTACT_TO ?? company.email],
+          /* So hitting reply in the inbox answers the customer, not ourselves. */
+          reply_to: oneLine(`${displayName(name)} <${email}>`),
+          subject: oneLine(
+            organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
+          ),
+          text: lines.join("\n"),
+        }),
+        signal: AbortSignal.timeout(10000),
+      });
+      mailed = response.ok;
+      if (!response.ok) {
+        /*
+         * The provider's own reason, kept.
+         *
+         * "Resend returned 403" is not something anybody can act on. "You can
+         * only send testing emails to your own email address" is — it names
+         * the exact thing to change. It is scrubbed of anything key-shaped
+         * before it is stored, and it is only ever shown behind the panel's
+         * password.
+         */
+        const detail = await response.text().catch(() => "");
+        let reason = `HTTP ${response.status}`;
+        try {
+          const parsed = JSON.parse(detail) as { message?: unknown };
+          if (typeof parsed.message === "string") reason = parsed.message;
+        } catch {
+          if (detail) reason = detail.slice(0, 300);
+        }
+        mailError = reason;
+        console.error(`Contact form: Resend returned ${response.status}`);
+      }
+    } catch {
+      mailError = "Kunne ikke få forbindelse til mailudbyderen.";
+      console.error("Contact form: Resend request failed");
+    }
+  } else {
+    mailError = "RESEND_API_KEY er ikke sat på denne deployment.";
+  }
+
+  /* Attached to the message it belongs to, so the panel can say of this
+     enquiry that no mail copy left the building, and why. */
+  if (stored && !mailed && mailError) await noteMailFailure(id, mailError);
+
+  /*
+   * Nothing kept it. Only now is this a failure the visitor has to be told
+   * about, and the form falls back to handing them the finished message so
+   * their work is not lost.
+   */
+  if (!stored && !mailed) {
+    return NextResponse.json({ ok: false, configured: false }, { status: 503 });
   }
 
   await forwardToCrm({ name, organisation, email, phone, message, subject, page });
 
-  return NextResponse.json({ ok: true, configured: true });
+  /* `mailed` so the panel's own copy is not silently the only one: a message
+     that reached the archive but not the inbox is worth knowing about. */
+  return NextResponse.json({ ok: true, configured: true, mailed });
 }
 
 /**

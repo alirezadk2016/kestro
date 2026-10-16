@@ -1,25 +1,39 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ClipboardList, Handshake, ShieldCheck, Banknote, ArrowRight } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  Check,
+  ClipboardList,
+  BadgeCheck,
+  Truck,
+  Wallet,
+} from "lucide-react";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
+import { type CraftMarkName } from "@/components/CraftMark";
 import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
 
 const copy = {
   da: {
-    metaTitle: "Sælg jeres brugte IT-udstyr | Kestro",
+    metaTitle: "Sælg brugt IT-udstyr – vi henter og sletter data | Kestro",
     metaDescription:
-      "Vi køber brugte erhvervsmaskiner, henter dem og sletter lagermedierne, før de får et nyt liv. I får en vurdering, før I beslutter jer.",
+      "Vi køber brugte computere, telefoner og tablets fra virksomheder i Danmark og Norge, henter dem og sletter lagermedierne. I får en vurdering først.",
     title: "Sælg jeres brugte IT-udstyr",
+    /* Answer first: yes, what, and what happens to the data. */
     description:
-      "Skal I udskifte medarbejdernes computere eller rydde op efter en flytning? Vi køber brugt erhvervsudstyr og giver det et nyt liv.",
-    howTitle: "Sådan foregår det",
-    buyTitle: "Hvad vi køber",
+      "Vi køber brugte erhvervscomputere, telefoner og tablets fra virksomheder i Danmark og Norge. Vi henter dem, sletter lagermedierne og giver dem et nyt liv – og I får en vurdering, før I beslutter jer.",
+    howTitle: "Hvordan foregår et salg?",
+    buyTitle: "Hvad køber I?",
     buyNote: "Er I i tvivl, om jeres udstyr er relevant? Spørg os – vi kigger gerne på det.",
-    dataTitle: "Datasikkerhed",
+    dataTitle: "Hvad sker der med vores data?",
     dataBody:
       "Enhederne får slettet lagermedierne, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – f.eks. i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
     fleetTitle: "Skal hele flåden skiftes ud på én gang?",
@@ -35,16 +49,16 @@ const copy = {
     formBody: "Udfyld formularen, så vender vi tilbage med en vurdering.",
   },
   en: {
-    metaTitle: "Sell us your used IT equipment | Kestro",
+    metaTitle: "Sell used IT equipment — collection, data erasure | Kestro",
     metaDescription:
-      "Replacing your company's IT equipment? Kestro buys used business computers, phones and tablets — with secure data erasure and collection in Denmark and Norway.",
-    title: "Sell us your used IT equipment",
+      "Replacing company IT? Kestro buys used business computers, phones and tablets in Denmark and Norway, collects them and erases the storage.",
+    title: "Sell your company's used IT equipment to us",
     description:
-      "Replacing your staff computers, or clearing out after a move? We buy used business equipment and give it a second life.",
-    howTitle: "How it works",
-    buyTitle: "What we buy",
+      "We buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",
+    howTitle: "How does a sale work?",
+    buyTitle: "What do you buy?",
     buyNote: "Not sure whether your equipment is relevant? Ask us — we are happy to look at it.",
-    dataTitle: "Data security",
+    dataTitle: "What happens to our data?",
     dataBody:
       "Machines have their storage media erased before they are prepared for resale. If you have specific requirements for erasure documentation — for your GDPR procedures, for instance — say so when you contact us and we agree how it is handled.",
     fleetTitle: "Replacing the whole fleet at once?",
@@ -69,7 +83,10 @@ const formCopy = {
   },
 };
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -80,15 +97,15 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const steps = [
   {
-    icon: ClipboardList,
+    mark: "written" as CraftMarkName,
     title: { da: "1. Send os en liste", en: "1. Send us a list" },
     description: {
-      da: "Fortæl os hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
+      da: "Fortæl os, hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
       en: "Tell us what you have — quantity, models and rough age. The more precise, the faster we can assess it.",
     },
   },
   {
-    icon: Handshake,
+    mark: "network" as CraftMarkName,
     title: { da: "2. I får et tilbud", en: "2. You get an offer" },
     description: {
       da: "Vi vurderer udstyret og vender tilbage med et bud. I er ikke bundet af noget, før I siger ja.",
@@ -96,7 +113,7 @@ const steps = [
     },
   },
   {
-    icon: ShieldCheck,
+    mark: "tested" as CraftMarkName,
     title: { da: "3. Afhentning og datasletning", en: "3. Collection and data erasure" },
     description: {
       da: "Vi aftaler afhentning, og er der data på enhederne, slettes lagermedierne, før de klargøres til videresalg.",
@@ -104,7 +121,7 @@ const steps = [
     },
   },
   {
-    icon: Banknote,
+    mark: "who" as CraftMarkName,
     title: { da: "4. Betaling", en: "4. Payment" },
     description: {
       da: "Betaling sker efter den aftale, vi indgår – vi gennemgår vilkårene på forhånd.",
@@ -125,12 +142,30 @@ const accepted = [
   { da: "Serverudstyr (efter aftale)", en: "Server equipment (by arrangement)" },
 ];
 
-export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
+const stepIcons = [ClipboardList, BadgeCheck, Truck, Wallet];
+
+export default async function SaelgTilOsPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
-      <section className="py-10 sm:py-20">
+      <PageSchema lang={lang} route="/saelg-til-os" name={c.title} description={c.description} />
+
+      <section className="buyback-hero">
+        <Image
+          src="/graphics/buyback.webp"
+          width={1440}
+          height={960}
+          priority
+          sizes="(min-width: 1024px) 65vw, 100vw"
+          className="buyback-hero-image"
+          alt={
+            lang === "da"
+              ? "Illustration af brugte bærbare computere, en tablet og en smartphone på et arbejdsbord"
+              : "Illustrative used laptops, a tablet and smartphone on a workbench"
+          }
+        />
         <Container>
           <PageHeader
             title={c.title}
@@ -138,63 +173,86 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/saelg-til-os"
             crumb={lang === "da" ? "Sælg til os" : "Sell to us"}
+            updated="/saelg-til-os"
           />
 
-          <div className="mt-16 max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-              {c.howTitle}
-            </h2>
+          {/* The form is the page's one action and sits 2,700px down a phone,
+              under the steps, the list and the data answer. The header's
+              quote button is for buying, so this page had no way to its own
+              form above the fold. */}
+          <Button
+            href="#saelg-formular"
+            className="mt-8 w-full sm:w-auto"
+            icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
+          >
+            {c.formTitle}
+          </Button>
+        </Container>
+      </section>
 
-            <div className="mt-8 space-y-8">
-              {steps.map((step) => (
-                <div key={step.title.da} className="flex gap-5">
-                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300">
-                    <step.icon className="h-5 w-5" strokeWidth={1.75} />
-                  </span>
-                  <div>
-                    <h3 className="text-base font-semibold text-paper">{step.title[lang]}</h3>
-                    <p className="mt-1.5 text-base leading-7 text-paper/65">
-                      {step.description[lang]}
-                    </p>
+      <section className="buyback-process">
+        <Container>
+          <h2 className="max-w-3xl text-balance font-display t-h2 font-extrabold text-paper">
+            {c.howTitle}
+          </h2>
+
+          <ol className="buyback-steps">
+            {steps.map((step, index) => {
+              const Icon = stepIcons[index];
+              return (
+                <li key={step.title.da}>
+                  <div className="buyback-step-heading" aria-hidden="true">
+                    <Icon size={30} strokeWidth={1.5} />
+                    <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  <h3 className="mt-6 text-lg font-semibold text-paper">{step.title[lang]}</h3>
+                  <p className="mt-3 text-sm leading-[1.75] text-paper/75">
+                    {step.description[lang]}
+                  </p>
+                </li>
+              );
+            })}
+          </ol>
         </Container>
       </section>
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.buyTitle}
               </h2>
-              <ul className="mt-6 flex flex-wrap gap-2">
+              {/* A checklist, not pills: rounded plate-sm pills are the
+                  site's onward links, and these went nowhere when tapped. */}
+              <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 min-[400px]:grid-cols-2">
                 {accepted.map((item) => (
-                  <li
-                    key={item.da}
-                    className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/80"
-                  >
+                  <li key={item.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
+                    <Check
+                      aria-hidden="true"
+                      className="mt-1 h-4 w-4 flex-none text-brand-300"
+                      strokeWidth={2}
+                    />
                     {item[lang]}
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-sm leading-6 text-paper/55">{c.buyNote}</p>
+              <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.buyNote}</p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                 {c.dataTitle}
               </h2>
-              <p className="mt-4 text-base leading-7 text-paper/65">{c.dataBody}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.dataBody}</p>
             </div>
           </div>
 
-          <div className="mt-12 max-w-5xl rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
-            <h2 className="text-lg font-semibold text-paper">{c.fleetTitle}</h2>
-            <p className="mt-2 max-w-2xl text-base leading-7 text-paper/65">{c.fleetBody}</p>
+          <div className="mt-12 rounded-2xl border border-brand-400/25 bg-brand-500/10 p-6 sm:p-8">
+            <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+              {c.fleetTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-base leading-[1.75] text-paper/75">{c.fleetBody}</p>
             <Link
               href={localePath("/flaadeloesninger", lang)}
               className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
@@ -208,24 +266,34 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
 
       <section className="py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-              {c.overstockTitle}
-            </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.overstockBody1}</p>
-            <p className="mt-4 text-base leading-7 text-paper/65">{c.overstockBody2}</p>
+          {/* Text and form side by side from lg: the form was a 600px column
+              under the text with the right half of the screen empty beside
+              both. On a phone the order is the same as before. */}
+          <div className="grid max-w-3xl gap-14 lg:max-w-none lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.overstockTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody1}</p>
+              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.overstockBody2}</p>
+            </div>
 
-            <h2 className="mt-14 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-              {c.formTitle}
-            </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.formBody}</p>
+            <div className="lg:col-span-7">
+              <h2
+                id="saelg-formular"
+                className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"
+              >
+                {c.formTitle}
+              </h2>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.formBody}</p>
 
-            <div className="mt-8 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
-              <ContactForm
-                lang={lang}
-                subjectPrefix={formCopy.subjectPrefix}
-                messagePlaceholder={formCopy.messagePlaceholder}
-              />
+              <div className="mt-8 plate p-6 sm:p-8">
+                <ContactForm
+                  lang={lang}
+                  subjectPrefix={formCopy.subjectPrefix}
+                  messagePlaceholder={formCopy.messagePlaceholder}
+                />
+              </div>
             </div>
           </div>
         </Container>
@@ -242,8 +310,14 @@ export default function SaelgTilOsPage({ params }: { params: { lang: Lang } }) {
             href: "/ydelser/overskudslager-og-returvarer",
             label: { da: "Overskudslager og returvarer", en: "Surplus stock and returns" },
           },
+          {
+            href: "/ydelser",
+            label: { da: "Det, vi ellers hjælper med", en: "What else we help with" },
+          },
         ]}
       />
+
+      <FactNote lang={lang} ids={["nistSanitization"]} />
 
       <CtaSection lang={lang} />
     </>

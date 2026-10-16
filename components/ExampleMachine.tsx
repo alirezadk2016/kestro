@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import Container from "./Container";
 import { getModel } from "@/lib/models";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -19,14 +19,16 @@ const highlights = [
 
 const copy = {
   da: {
-    eyebrow: "Et konkret eksempel",
-    body: "Sådan ser en typisk maskine ud, når vi skaffer bærbare til en virksomhed: en erhvervsmodel, der kan repareres og opgraderes, med nordisk tastatur og Windows sat op. Vi har den ikke på lager – vi finder den, når I har brug for den.",
+    title: "Sådan ser en typisk maskine ud",
+    body: "Typisk en erhvervsmodel som denne: den kan repareres og opgraderes og får nordisk tastatur og Windows sat op. Vi finder den, når I har brug for den.",
     link: "Se specifikationer og flere billeder",
+    illustration: "Erhvervsbærbar – illustreret",
   },
   en: {
-    eyebrow: "One concrete example",
-    body: "This is what a typical machine looks like when we source laptops for a company: a business model that can be repaired and upgraded, with a Nordic keyboard and Windows set up. We do not hold it in stock — we find it when you need it.",
+    title: "What a typical machine looks like",
+    body: "Typically a business model like this one: it can be repaired and upgraded, and gets a Nordic keyboard and Windows set up. We find it when you need it.",
     link: "See specifications and more photos",
+    illustration: "Business laptop — illustrated",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -35,64 +37,46 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
   const model = getModel("lenovo-thinkpad-t480");
   if (!model?.images) return null;
 
-  const image = model.images[0];
-
   return (
-    <section className="stage py-10 sm:py-20">
+    <section className="stage py-10 sm:py-16">
       <Container>
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16" data-reveal>
-          {/*
-            The machine on a dark ground with a light behind it, rather than
-            centred on a white card.
-
-            The source photograph is a black laptop shot on white. On a white
-            card it is a catalogue thumbnail — the one image on the page with
-            no depth at all, on a page whose whole visual argument is lit
-            hardware against dark. scripts/build-cutout.mjs removes the white
-            so the machine can stand in the same light as the hero, which costs
-            one gradient and a shadow and makes it the same object as the ones
-            turning at the top of the page.
-          */}
-          <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-ink-950/40">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(52% 46% at 50% 42%, rgba(84,116,236,0.32) 0%, rgba(66,92,200,0.12) 46%, transparent 74%)",
-              }}
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-[14%] bottom-[10%] h-[12%]"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(2,5,14,0.6) 0%, rgba(2,5,14,0) 70%)",
-              }}
-            />
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="relative aspect-square w-full min-w-0 max-lg:max-h-[55svh]">
             <Image
-              src="/thinkpad-t480-6-cutout.webp"
-              alt={image.alt[lang]}
-              width={1179}
-              height={1115}
-              className="absolute inset-0 h-full w-full object-contain p-6 sm:p-10"
-              sizes="(max-width: 1024px) 92vw, 560px"
+              src="/models/laptop-assembly.webp?v=service-v2"
+              fill
+              quality={88}
+              alt={
+                lang === "da"
+                  ? "Illustreret sort erhvervsbærbar med individuelle taster og rød TrackPoint"
+                  : "Illustrated black business laptop with individual keys and red TrackPoint"
+              }
+              sizes="(min-width: 1536px) 40vw, (min-width: 1024px) 560px, 92vw"
+              className="object-contain"
             />
           </div>
-
           <div>
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.05] tracking-display text-paper">
-              {model.name}
+            {/* The heading says what the section is; the model is the example
+                in it. With the model name as the h2, the front page's outline
+                had a product name standing level with "Hvad er refurbished
+                erhvervs-IT?" — a laptop as one of the page's topics. */}
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {c.title}
             </h2>
-            <p className="mt-4 text-base leading-7 text-paper/65 sm:text-lg">{c.body}</p>
+            <p className="mt-2 font-display text-lg font-bold text-brand-300">{c.illustration}</p>
+            <p className="mt-4 text-base leading-[1.65] text-paper/75 sm:text-lg">{c.body}</p>
 
-            <ul className="mt-6 flex flex-wrap gap-2">
+            {/* A checklist, not pills: a rounded plate-sm pill is the site's
+                onward-link shape, and on a phone four of them under a
+                picture read as four buttons that did nothing. */}
+            <ul className="mt-6 space-y-2.5">
               {highlights.map((highlight) => (
-                <li
-                  key={highlight.da}
-                  className="border border-white/15 px-3.5 py-1.5 text-sm text-paper/75"
-                >
+                <li key={highlight.da} className="flex gap-2.5 text-base leading-6 text-paper/85">
+                  <Check
+                    aria-hidden="true"
+                    className="mt-1 h-4 w-4 flex-none text-brand-300"
+                    strokeWidth={2}
+                  />
                   {highlight[lang]}
                 </li>
               ))}
@@ -103,6 +87,7 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.link}
+              <span className="sr-only">: {model.name}</span>
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>

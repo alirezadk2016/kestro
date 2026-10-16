@@ -5,45 +5,48 @@ import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import { models, modelGroups } from "@/lib/models";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import Faq from "@/components/Faq";
+import FactNote from "@/components/FactNote";
+import SpecChips from "@/components/SpecChips";
 
 const copy = {
   da: {
-    metaTitle: "Modeller vi ofte skaffer til erhverv | Kestro",
+    metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     metaDescription:
-      "De erhvervsmodeller vi oftest bliver bedt om at finde, med specifikationer og hvad de egner sig til. Ingen lager, ingen listepriser – vi sourcer per ordre.",
-    title: "Modeller vi ofte skaffer",
-    description:
-      "En oversigt over de maskiner, vi kender godt og oftest bliver bedt om at finde. Brug den til at blive klogere på, hvad der findes – og til at pege på noget konkret, når I skriver til os.",
-    noShopTitle: "Det her er ikke en webshop",
+      "18 brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.",
+    title: "Brugte erhvervsmodeller: specifikationer og forskelle",
+    /* Answer first, with the counts the page actually shows. */
+    description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konkret konfiguration bekræftet.`,
+    noStockLine:
+      "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    noStockLink: "Sådan bliver prisen til",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
-      "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
-    qualityLink: "Sådan vurderer vi stand og kvalitet",
+      "Send det præcise modelnummer, antal og de vigtigste krav. Vi kan undersøge mulighederne og relevante alternativer; listen er ikke en garanti for, hvad der er tilgængeligt.",
     seeSpecs: "Se specifikationer",
-    priceLabel: "Få et tilbud",
-    priceNote: "Prisen afhænger af konfiguration, stand og antal.",
   },
   en: {
-    metaTitle: "Models we often source for business | Kestro",
+    metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
     metaDescription:
-      "The models we are most often asked to source — ThinkPad, EliteBook, Latitude, EliteDesk and more. Specifications and what they suit. Not stock items.",
-    title: "Models we often source",
-    description:
-      "An overview of the machines we know well and are most often asked to find. Use it to get a feel for what exists — and to point at something concrete when you write to us.",
-    noShopTitle: "This is not a web shop",
+      "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
+    title: "Used business models: specifications and differences",
+    description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and actual configuration.`,
+    noStockLine: "No prices or stock levels here, because we source the machines for each order.",
+    noStockLink: "How the price is set",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
-      "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
-    qualityLink: "How we assess condition and quality",
+      "Send the exact model number, quantity and main requirements. We can investigate options and relevant alternatives; the list does not guarantee availability.",
     seeSpecs: "See specifications",
-    priceLabel: "Get a quote",
-    priceNote: "The price depends on configuration, condition and quantity.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -52,11 +55,20 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function ModellerPage({ params }: { params: { lang: Lang } }) {
+export default async function ModellerPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/modeller"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -65,20 +77,23 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/modeller"
             crumb={lang === "da" ? "Modeller" : "Models"}
+
+            updated="/modeller"
           />
 
-          <div className="mt-10 max-w-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
-            <h2 className="text-base font-semibold text-paper">{c.noShopTitle}</h2>
-            <p className="mt-2 text-base leading-7 text-paper/65">{c.noShopBody1}</p>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.noShopBody2}</p>
+          {/* One line, where there was a panel. The panel's two paragraphs
+              were also the answers to two of the questions at the foot of
+              this page, so they were on it twice; the full reasoning lives
+              on /priser and in those answers. */}
+          <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">
+            {c.noStockLine}{" "}
             <Link
-              href={localePath("/kvalitet", lang)}
-              className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+              href={localePath("/priser", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
             >
-              {c.qualityLink}
-              <span aria-hidden="true">&rarr;</span>
+              {c.noStockLink}
             </Link>
-          </div>
+          </p>
 
           {modelGroups.map((group) => {
             const groupModels = models.filter((model) => model.group === group.id);
@@ -86,36 +101,40 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
 
             return (
               <div key={group.id} className="mt-14">
-                <h2 className="text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {group.name[lang]}
                 </h2>
-                <p className="mt-2 max-w-3xl text-base leading-7 text-paper/65">
+                <p className="mt-2 max-w-3xl text-base leading-[1.75] text-paper/75">
                   {group.description[lang]}
                 </p>
-                <p className="mt-1 max-w-3xl text-sm leading-6 text-paper/55">{c.priceNote}</p>
 
-                <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                {/* A shelf to swipe on a phone (.rail), the grid from md. */}
+                <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
                   {groupModels.map((model) => (
                     <li key={model.slug}>
                       <Link
                         href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
+                        className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
                       >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/55">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
                           {model.brand} · {model.format[lang]}
                         </span>
                         <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
                           {model.name}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
+                        <p className="mt-2 text-sm leading-[1.6] text-paper/75">
                           {model.tagline[lang]}
                         </p>
-                        <span className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3">
-                          <span className="text-sm font-semibold text-paper">{c.priceLabel}</span>
-                          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
-                            {c.seeSpecs}
-                            <span aria-hidden="true">&rarr;</span>
-                          </span>
+                        <SpecChips model={model} lang={lang} />
+                        {/* Pushes the footer row down so every card in a row ends
+                            level, whether it got three chips, two or none. */}
+                        <span className="flex-1" />
+                        {/* The card's one action, which is what tapping it does. It
+                            also said "Få et tilbud" in white beside it: not a
+                            link, on every card, five groups down the page. */}
+                        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
+                          {c.seeSpecs}
+                          <span aria-hidden="true">&rarr;</span>
                         </span>
                       </Link>
                     </li>
@@ -126,6 +145,36 @@ export default function ModellerPage({ params }: { params: { lang: Lang } }) {
           })}
         </Container>
       </section>
+
+      <Faq
+        lang={lang}
+        title={{ da: "Spørgsmål om modellerne", en: "Questions about the models" }}
+        items={[
+          {
+            question: {
+              da: "Kan I skaffe en model, der ikke står på listen?",
+              en: "Can you source a model that is not on the list?",
+            },
+            answer: { da: copy.da.noShopBody2, en: copy.en.noShopBody2 },
+          },
+          {
+            question: { da: "Har I modellerne på lager?", en: "Do you have the models in stock?" },
+            answer: { da: copy.da.noShopBody1, en: copy.en.noShopBody1 },
+          },
+          {
+            question: {
+              da: "Hvilken Windows-version kommer computerne med?",
+              en: "Which version of Windows do the computers come with?",
+            },
+            answer: {
+              da: "Aftal version, udgave og licens for den konkrete konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
+            },
+          },
+        ]}
+      />
+
+      <FactNote lang={lang} ids={["windows11Requirements", "windows10Eol"]} />
 
       <CtaSection lang={lang} />
     </>

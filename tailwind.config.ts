@@ -73,8 +73,24 @@ const config: Config = {
       /* One family, as the brand board specifies. It carries the wordmark
          too, so headings set in it match the logo beside them. */
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        /* "Jakarta Fallback" is the metric-matched stand-in defined in
+           globals.css. It has to sit between the real face and system-ui in
+           every stack, or the page renders in un-adjusted metrics until the
+           font loads and then reflows. */
+        /* The fallback goes inside the var(), not only after it. A var() that
+           names an undefined property does not fall through to the next family
+           in the list — it invalidates the whole declaration, and the element
+           renders in the browser's default serif. That is what /admin did
+           before it loaded the font: the list below was never consulted. With
+           a default inside the var(), a layout that forgets the font gets the
+           metric-matched face instead of Times. */
+        sans: ['var(--font-sans, "Jakarta Fallback")', "Jakarta Fallback", "system-ui", "sans-serif"],
+        display: [
+          'var(--font-sans, "Jakarta Fallback")',
+          "Jakarta Fallback",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       letterSpacing: {
         display: "-0.035em",
