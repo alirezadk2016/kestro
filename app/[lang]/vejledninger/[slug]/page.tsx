@@ -196,6 +196,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         name={guide.title[lang]}
         description={guide.metaDescription[lang]}
         primaryEntityId={articleId}
+        contentDates={{ published: guide.published ?? guide.updated, modified: guide.updated }}
       />
 
       <script
@@ -515,7 +516,9 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                     <span className="mt-1.5 font-display text-base font-bold tracking-tight text-paper transition-colors group-hover:text-brand-300">
                       {other.title[lang]}
                     </span>
-                    <span className="mt-1.5 text-sm leading-6 text-paper/75">{other.summary[lang]}</span>
+                    <span className="mt-1.5 text-sm leading-6 text-paper/75">
+                      {other.summary[lang]}
+                    </span>
                     <span className="flex-1" />
                     <span className="mt-4 text-sm tabular-nums text-paper/65">
                       {other.readingMinutes} min.

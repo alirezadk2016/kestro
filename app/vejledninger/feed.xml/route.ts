@@ -59,7 +59,7 @@ export function GET() {
     <link rel="alternate" type="text/html" href="${xml(url)}"/>
     <id>${xml(url)}</id>
     <updated>${stamp(guide.updated)}</updated>
-    <published>${stamp(guide.updated)}</published>
+    <published>${stamp(guide.published ?? guide.updated)}</published>
     <author><name>${xml(author.name)}</name></author>
     <summary type="text">${xml(guide.metaDescription.da)}</summary>
   </entry>`;
@@ -68,8 +68,8 @@ export function GET() {
 
   const body = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="da">
-  <title>Viden – ${xml(company.name)}</title>
-  <subtitle>Vejledninger om refurbished erhvervs-IT, hukommelse, levetid og stand.</subtitle>
+  <title>Artikler og guides – ${xml(company.name)}</title>
+  <subtitle>Viden om køb, priser, RAM, SSD, Windows og opgradering af computere.</subtitle>
   <link rel="self" type="application/atom+xml" href="${xml(self)}"/>
   <link rel="alternate" type="text/html" href="${xml(index)}"/>
   <id>${xml(index)}</id>

@@ -185,18 +185,736 @@ export type Guide = {
 };
 
 export const guides: Guide[] = [
-  /*
-   * First in the array on purpose.
-   *
-   * The hub lists guides in this order, and every other guide's "flere
-   * vejledninger" block takes the first three that are not itself — so
-   * position one is the only position that earns this page inbound links from
-   * across the section. Step 3, rule 1: no page under three inbound links.
-   *
-   * Every date and requirement below comes from Microsoft and can be changed
-   * by Microsoft. That is why the page carries its edit date and says out loud
-   * that the terms should be checked rather than trusted from a web page.
-   */
+  {
+    slug: "hvorfor-er-ram-blevet-dyrere",
+    cluster: "memory-storage",
+    type: "grundviden",
+    intent: "informational",
+    primaryKeyword: "hvorfor er ram blevet dyrere",
+    author: "alireza",
+    title: {
+      da: "Hvorfor er RAM blevet dyrere, og hvad betyder det for din bærbar?",
+      en: "Why has RAM become more expensive, and what does it mean for your laptop?",
+    },
+    metaTitle: {
+      da: "Hvorfor er RAM blevet dyrere? Priser i 2026 | Kestro",
+      en: "Why is RAM more expensive? Memory prices in 2026 | Kestro",
+    },
+    metaDescription: {
+      da: "Hvorfor er RAM dyrere? Se hvad der presser prisen, og få hjælp til at vælge mere RAM, en brugt pc eller nyt. Med daterede kilder og råd før dit køb.",
+      en: "RAM prices in 2026: AI, chip supply and retail prices explained. Is it still wise to upgrade? Get tips for comparing a used laptop with a new PC.",
+    },
+    summary: {
+      da: "AI, servere og begrænset udbud presser hukommelsesmarkedet. Men en chipprognose er ikke en dansk butikspris.",
+      en: "AI, servers and limited supply put pressure on memory. But a chip forecast is not a local retail price.",
+    },
+    audience: {
+      da: "Dig, der sammenligner køb og opgradering",
+      en: "Anyone comparing a purchase with an upgrade",
+    },
+    readingMinutes: 6,
+    published: "2026-10-16",
+    updated: "2026-10-16",
+    tldr: {
+      da: "RAM-priser afhænger af udbud, efterspørgsel og hukommelsestype. TrendForces offentlige september-resuméer beskriver pres fra servere og AI, men ikke ens prisstigninger på alle varer. Sammenlign derfor aktuelle tilbud på samme modul og hele computerens konfiguration. Køb RAM, hvis målinger viser en flaskehals, ikke alene fordi en prognose varsler dyrere chips.",
+      en: "RAM prices depend on supply, demand and memory type. TrendForce's public September summaries describe pressure from servers and AI, not uniform increases on every product. Compare current quotes for the same module and complete computer configuration. Buy memory when measurements show a bottleneck, not simply because a forecast predicts more expensive chips.",
+    },
+    intro: {
+      da: "Prisstatus undersøgt 16. oktober 2026. Denne artikel forklarer markedet ud fra offentlige resuméer, ikke en købt markedsrapport eller et indeks over danske butikker. Rådene om køb er vores vurdering; prognoserne tilhører den navngivne kilde.",
+      en: "Price context checked on 16 October 2026. This article uses public summaries, not a purchased market report or an index of Danish retailers. The buying advice is our assessment; forecasts belong to the named source.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Hvad ved vi faktisk om priserne?",
+          en: "What do we actually know about prices?",
+        },
+        body: [
+          {
+            da: "TrendForces resumé af DRAM Contract Price fra 30. september 2026 beskriver stabile kontraktpriser i perioden, samtidig med et stramt PC DRAM-udbud og producentkapacitet flyttet mod servere. Stabile priser i én periode og risiko for senere stigninger kan altså godt optræde samtidig.",
+            en: "TrendForce's September 30, 2026 DRAM Contract Price summary describes stable contract prices during that period, alongside constrained PC DRAM supply and manufacturing capacity shifting to servers. Stable prices in one period and a risk of later increases can coexist.",
+          },
+          {
+            da: "I prognoseresuméet fra 24. september for fjerde kvartal peger TrendForce på AI- og serverefterspørgsel, men forskellige forløb for server- og forbrugerprodukter. Det er en forventning, ikke dokumentation for, at din næste RAM-klods eller alle bærbare er steget med en bestemt procent.",
+            en: "In its September 24 fourth-quarter forecast summary, TrendForce points to AI and server demand but different trends for server and consumer products. This is an outlook, not proof that your next memory module or every laptop has increased by a particular percentage.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvorfor spiller AI og servere en rolle?",
+          en: "Why do AI and servers matter?",
+        },
+        body: [
+          {
+            da: "HBM til AI, server-RAM og hukommelse til almindelige pc'er er ikke samme produkt. TrendForces resuméer beskriver, at kapacitet prioriteres mod serverprodukter. Det kan begrænse udbuddet til pc'er; det betyder ikke, at et HBM-modul kan sættes i din bærbar.",
+            en: "HBM for AI, server RAM and ordinary PC memory are not the same product. TrendForce's summaries describe capacity being prioritised towards server products. This can constrain PC supply; it does not mean an HBM module can be installed in your laptop.",
+          },
+          {
+            da: "DDR4, DDR5 og fastloddet LPDDR skal vurderes hver for sig. En gammel standard er ikke automatisk billigere eller et bedre køb. Brug kun den type, producenten angiver til din præcise computer.",
+            en: "DDR4, DDR5 and soldered LPDDR must be assessed separately. An older standard is not automatically cheaper or a better purchase. Use only the type specified for your exact computer.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Chippris, modulpris og computerpris er tre ting",
+          en: "Chip, module and computer prices are different",
+        },
+        body: [
+          {
+            da: "En færdig RAM-klods har flere omkostninger end chips alene. Og en computer indeholder langt mere end RAM. Tabellen er en sammenligningshjælp, ikke en prisprognose.",
+            en: "A finished memory module has costs beyond the chips. A computer contains much more than RAM. This table helps you compare; it is not a price forecast.",
+          },
+        ],
+        table: {
+          caption: { da: "Hvad prisen faktisk beskriver", en: "What each price describes" },
+          head: [
+            { da: "Prisniveau", en: "Price level" },
+            { da: "Hvad du kan bruge det til", en: "How to use it" },
+          ],
+          rows: [
+            [
+              { da: "DRAM-kontraktpris", en: "DRAM contract price" },
+              {
+                da: "Markedsretning ved større aftaler; ikke en pris på et SO-DIMM i Danmark.",
+                en: "Market direction for large contracts; not a Danish SO-DIMM retail price.",
+              },
+            ],
+            [
+              { da: "RAM-modul i en butik", en: "Retail memory module" },
+              {
+                da: "Sammenlign samme varenummer, kapacitet, type, fragt og dato.",
+                en: "Compare the same part number, capacity, type, shipping and date.",
+              },
+            ],
+            [
+              { da: "Færdig bærbar", en: "Complete laptop" },
+              {
+                da: "Sammenlign CPU, RAM, SSD, skærm, batteri, tastatur, stand og aftalevilkår.",
+                en: "Compare CPU, RAM, SSD, screen, battery, keyboard, condition and terms.",
+              },
+            ],
+          ],
+        },
+      },
+      {
+        heading: {
+          da: "Hvorfor kan en bærbar blive dyrere?",
+          en: "Why might a laptop become more expensive?",
+        },
+        body: [
+          {
+            da: "Dyrere komponenter kan lægge pres på en ny computers samlede pris. Vores vurdering er, at lager, kampagner, modelskifte, valutakurser og sælgerens vilkår også skal med i en konkret sammenligning. Et lavere RAM-niveau kan desuden skjule en ændring i værdi, selv når prisskiltet er uændret.",
+            en: "More expensive components can put pressure on a new computer's total price. In our assessment, stock, promotions, model changes, exchange rates and seller terms also belong in an actual comparison. A lower memory specification can hide a change in value even when the price tag stays the same.",
+          },
+          {
+            da: "Vi dokumenterer ikke, at alle bærbare stiger i pris. Bed om et dateret tilbud på den konfiguration, du skal bruge, og undersøg et refurbished alternativ med samme opgavekrav. En brugt maskine er heller ikke garanteret billigst, når nyt batteri, opgradering og opsætning lægges til.",
+            en: "We are not documenting a price increase for every laptop. Ask for a dated quote for the configuration you need and examine a refurbished alternative with the same workload requirements. A used machine is not guaranteed to be cheapest after battery replacement, upgrading and setup.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sådan undgår du et panikkøb", en: "How to avoid a panic purchase" },
+        body: [
+          {
+            da: "Tag beslutningen ud fra behov og samlet pris, ikke en overskrift om mangel. Denne rækkefølge kan bruges af både en privat køber og en virksomhed:",
+            en: "Decide using your needs and total cost, not a shortage headline. Individuals and companies can use the same sequence:",
+          },
+        ],
+        list: [
+          {
+            da: "Mål hukommelse, CPU og disk under dit normale arbejde. Mere RAM hjælper kun, hvis hukommelsen er en del af problemet.",
+            en: "Measure memory, CPU and disk during your normal work. More RAM helps only if memory is part of the problem.",
+          },
+          {
+            da: "Kontrollér sokler og producentens kompatibilitetsliste, før du bestiller. En billig DDR5-klods hjælper ikke en DDR4-maskine.",
+            en: "Check slots and manufacturer compatibility before ordering. A cheap DDR5 module does not help a DDR4 machine.",
+          },
+          {
+            da: "Sammenlign opgradering, refurbished og nyt med samme nødvendige specifikationer, levering og vilkår.",
+            en: "Compare upgrading, refurbished and new with the same necessary specifications, delivery and terms.",
+          },
+          {
+            da: "Få prisens gyldighed og eventuelle alternativer oplyst. Til en virksomhed: afprøv en repræsentativ konfiguration før et større indkøb.",
+            en: "Ask how long the price is valid and which alternatives exist. For a company: trial a representative configuration before a larger purchase.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Send model, nuværende RAM og arbejdsopgaver, hvis du vil sammenligne mulighederne. En forespørgsel er uforpligtende; aktuel pris og tilgængelighed skal bekræftes.",
+      en: "Send your model, current memory and workloads to compare the options. An enquiry is non-binding; current price and availability need confirmation.",
+    },
+    related: [
+      {
+        href: "/vejledninger/opgrader-ram-i-baerbar",
+        label: { da: "Kan du selv opgradere RAM?", en: "Can you upgrade memory yourself?" },
+      },
+      {
+        href: "/vejledninger/refurbished-eller-ny-baerbar",
+        label: { da: "Refurbished eller ny bærbar?", en: "Refurbished or new laptop?" },
+      },
+      {
+        href: "/priser",
+        label: { da: "Sammenlign konfiguration og pris", en: "Compare configuration and price" },
+      },
+    ],
+    sources: [guideSource("memoryMarketSeptember2026"), guideSource("memoryOutlookQ42026")],
+    faqs: [
+      {
+        question: {
+          da: "Betyder dyrere chips, at alle bærbare bliver dyrere?",
+          en: "Do higher chip prices make every laptop more expensive?",
+        },
+        answer: {
+          da: "Nej. Det kan give prispres, men en konkret pris afhænger også af konfiguration, lager, kampagner og vilkår. Sammenlign aktuelle tilbud på samme specifikationer; en global prognose er ikke et dansk detailprisindeks.",
+          en: "No. It can create price pressure, but an actual price also depends on configuration, stock, promotions and terms. Compare current quotes for equivalent specifications; a global forecast is not a Danish retail price index.",
+        },
+      },
+      {
+        question: {
+          da: "Skal jeg købe RAM nu, før det bliver dyrere?",
+          en: "Should I buy RAM now before it becomes more expensive?",
+        },
+        answer: {
+          da: "Kun hvis der er et dokumenteret behov, delen er kompatibel, og den samlede opgradering giver mening. Vi kan ikke love et fremtidigt prisniveau. Unødvendig RAM er stadig en udgift, også på tilbud.",
+          en: "Only if there is a demonstrated need, the part is compatible and the total upgrade makes sense. We cannot promise a future price level. Unnecessary memory still costs money, even on sale.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "refurbished-eller-ny-baerbar",
+    cluster: "buying-condition",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "refurbished eller ny bærbar",
+    author: "alireza",
+    title: {
+      da: "Refurbished eller ny bærbar: hvad er det bedste køb?",
+      en: "Refurbished or new laptop: which is the better purchase?",
+    },
+    metaTitle: {
+      da: "Refurbished eller ny bærbar? Sammenlign før køb | Kestro",
+      en: "Refurbished or new laptop? Compare before buying | Kestro",
+    },
+    metaDescription: {
+      da: "Refurbished eller ny bærbar? Find det rette valg til dig eller dit team. Se på behov, batteri, stand og Windows, og regn hele prisen ud, før du køber.",
+      en: "Refurbished or new laptop? Find the right fit for you or a team. Check tasks, battery, condition and Windows, then compare the cost before buying.",
+    },
+    summary: {
+      da: "Et lavere prisskilt er ikke hele regnestykket. Vælg efter opgaven, batteriet, supporten og den samlede pris.",
+      en: "A lower price tag is not the whole calculation. Choose by workload, battery, support and total cost.",
+    },
+    audience: { da: "Private, startups og indkøbere", en: "Individuals, startups and buyers" },
+    readingMinutes: 7,
+    published: "2026-10-16",
+    updated: "2026-10-16",
+    tldr: {
+      da: "En refurbished erhvervsbærbar kan være et godt køb, når den løser dine opgaver, har dokumenteret stand og batteri og kan bruge et understøttet styresystem. Nyt kan være bedre ved særlige ydelseskrav eller lang planlagt brugstid. Sammenlign hele pakken, ikke kun processorens navn eller prisskiltet. Der findes ikke ét rigtigt valg til alle.",
+      en: "A refurbished business laptop can be good value when it handles your work, has documented condition and battery health and can run a supported operating system. New may be better for specific performance requirements or a long planned service life. Compare the entire package, not just the processor name or price tag. There is no single right choice for everyone.",
+    },
+    intro: {
+      da: "Spørgsmålet er ikke, om alle skal købe brugt. Det er, hvilken løsning der opfylder dit behov med færrest samlede omkostninger og acceptable risici. Her er en beslutningsramme til både hjemmearbejde og en virksomheds næste arbejdspladser.",
+      en: "The question is not whether everyone should buy used. It is which solution meets your needs with the lowest total cost and acceptable risks. Here is a decision framework for home working and a company's next workstations.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Hvornår giver refurbished mening?",
+          en: "When does refurbished make sense?",
+        },
+        body: [
+          {
+            da: "Til mail, dokumenter, browserbaserede systemer og videomøder kan en passende ældre erhvervsmaskine være tilstrækkelig. Det er vores vurdering, ikke et løfte om alle modeller: afprøv dine programmer, skærme og mødeopsætning på den konkrete konfiguration.",
+            en: "For email, documents, browser-based systems and video calls, a suitable older business machine may be sufficient. That is our assessment, not a promise about every model: test your applications, monitors and meeting setup on the actual configuration.",
+          },
+        ],
+        list: [
+          {
+            da: "Du prioriterer arbejdsfunktion frem for den nyeste generation og kan acceptere dokumenterede kosmetiske brugsspor.",
+            en: "You prioritise work capability over the latest generation and can accept documented cosmetic wear.",
+          },
+          {
+            da: "RAM, SSD, batteri og fysisk dansk eller norsk tastatur er specificeret, ikke blot beskrevet som »god stand«.",
+            en: "RAM, SSD, battery and physical Danish or Norwegian keyboard are specified, not merely described as good condition.",
+          },
+          {
+            da: "Operativsystem, drivere, licenser og eventuel virksomhedsadministration kan understøttes i den planlagte periode.",
+            en: "The operating system, drivers, licences and any company management can be supported for the intended period.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvornår er en ny bærbar det bedre valg?",
+          en: "When is a new laptop the better choice?",
+        },
+        body: [
+          {
+            da: "Krav til en bestemt GPU, specialsoftware, batteritid, skærmkvalitet eller dokumenteret producentservice kan gøre en nyere model nødvendig. En ny maskine er ikke automatisk hurtigere i alle opgaver, men en ældre billig konfiguration bør heller ikke presses ind i et arbejde, den ikke kan løse.",
+            en: "Requirements for a particular GPU, specialist software, battery runtime, screen quality or documented manufacturer service may require a newer model. A new computer is not automatically faster at every task, but a cheap older configuration should not be forced into work it cannot handle.",
+          },
+          {
+            da: "Hvis computeren skal bruges længe, skal du undersøge support for operativsystem, drivere og de programmer, du er afhængig af. Fremtidig kompatibilitet kan ikke garanteres ud fra et generationsnummer alene.",
+            en: "For a long planned service life, investigate support for the operating system, drivers and applications you depend on. Future compatibility cannot be guaranteed from a generation number alone.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Sammenlign det samme behov, ikke samme reklame",
+          en: "Compare the same needs, not the same advertising",
+        },
+        body: [
+          {
+            da: "Brug tabellen som en indkøbsliste til begge tilbud. »Refurbished« siger ikke i sig selv, hvilke dele der er udskiftet eller testet.",
+            en: "Use this table as a checklist for both quotes. Refurbished does not, by itself, identify which parts were replaced or tested.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "Oplysninger du bør have før valget",
+            en: "Information to obtain before choosing",
+          },
+          head: [
+            { da: "Kontrolpunkt", en: "Check" },
+            { da: "Refurbished", en: "Refurbished" },
+            { da: "Ny", en: "New" },
+          ],
+          rows: [
+            [
+              { da: "Ydelse", en: "Performance" },
+              {
+                da: "Test dine opgaver på den tilbudte konfiguration.",
+                en: "Test your workload on the quoted configuration.",
+              },
+              {
+                da: "Kontrollér faktisk CPU, GPU, RAM og køling; ikke kun modelåret.",
+                en: "Check the actual CPU, GPU, RAM and cooling, not just the model year.",
+              },
+            ],
+            [
+              { da: "Batteri", en: "Battery" },
+              {
+                da: "Bed om målt kapacitet og eventuel udskiftningspris.",
+                en: "Ask for measured capacity and any replacement cost.",
+              },
+              {
+                da: "Undersøg kapacitet og relevante runtime-tests; reklamen er ikke din arbejdsdag.",
+                en: "Check capacity and relevant runtime tests; advertising is not your working day.",
+              },
+            ],
+            [
+              { da: "Opgradering", en: "Upgrading" },
+              {
+                da: "Slå sokler, lagerinterface og maksimum op.",
+                en: "Look up slots, storage interface and maximum capacity.",
+              },
+              {
+                da: "Tjek også her: nyt udstyr kan have fastloddet RAM.",
+                en: "Check here too: new hardware can have soldered RAM.",
+              },
+            ],
+            [
+              { da: "Support og aftale", en: "Support and terms" },
+              {
+                da: "Få testomfang, stand, licens og aftalevilkår skriftligt.",
+                en: "Get testing scope, condition, licence and terms in writing.",
+              },
+              {
+                da: "Kontrollér de konkrete servicevilkår, ikke en antaget garanti.",
+                en: "Verify the specific service terms, not an assumed warranty.",
+              },
+            ],
+          ],
+        },
+      },
+      {
+        heading: { da: "Regn på den samlede pris", en: "Calculate the total cost" },
+        body: [
+          {
+            da: "Sammenlign køb + nødvendige dele + arbejde + dataflytning + tilbehør + forventet nedetid. Hold momsgrundlaget ens i tilbuddene, og afklar om eventuelle gebyrer og fragt er med. Vi angiver ikke en universel besparelsesprocent.",
+            en: "Compare purchase + necessary parts + labour + data migration + accessories + expected downtime. Keep the VAT basis consistent between quotes and establish whether fees and shipping are included. We do not claim a universal saving percentage.",
+          },
+          {
+            da: "En billig maskine med for lidt fastloddet RAM kan være et dyrere valg end et dyrere tilbud med den rigtige mængde fra starten. Omvendt er mere RAM eller en dyr workstation spild, hvis dine programmer ikke har brug for det.",
+            en: "A cheap laptop with too little soldered RAM can be worse value than a higher-priced quote with the right capacity from the start. Conversely, more RAM or an expensive workstation is wasteful if your applications do not need it.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Til startups og virksomheder med flere medarbejdere",
+          en: "For startups and teams",
+        },
+        body: [
+          {
+            da: "Start med roller, programmer og tilbehør, ikke et bestemt modelnavn. Notér hvor mange der arbejder stationært, rejser eller bruger tunge programmer. Et enkelt fælles minimum kan være lettere at administrere, men en udvikler og en receptionist har ikke nødvendigvis samme behov.",
+            en: "Start with roles, applications and accessories, not a particular model name. Record how many people work at a desk, travel or use demanding applications. One shared minimum specification may simplify management, but a developer and a receptionist do not necessarily have the same needs.",
+          },
+          {
+            da: "Afprøv en repræsentativ maskine med jeres dockingstation, skærme, VPN og styringsværktøjer. Bed om alternativer, hvis den samme konfiguration ikke kan skaffes senere. Vurder også om gammelt udstyr kan opgraderes, før alle arbejdspladser udskiftes.",
+            en: "Trial a representative machine with your dock, monitors, VPN and management tools. Ask about alternatives if the same configuration cannot be sourced later. Also assess whether existing equipment can be upgraded before replacing every workstation.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Windows og genbrug skal også passe", en: "Windows and reuse must fit too" },
+        body: [
+          {
+            da: "Microsofts PC Health Check er udgangspunktet for en eksisterende Windows-pc. En RAM- eller SSD-opgradering fjerner ikke et problem med en ikke-understøttet processor. Windows 10 22H2 er ude af almindelig support; særskilt ESU og LTSC skal vurderes efter deres egne vilkår.",
+            en: "Microsoft's PC Health Check is the starting point for an existing Windows PC. Upgrading RAM or SSD does not solve an unsupported processor. Windows 10 22H2 is out of general support; separate ESU and LTSC options must be assessed under their own terms.",
+          },
+          {
+            da: "At beholde brugbart udstyr længere kan undgå en unødvendig udskiftning. Det er ikke det samme som en dokumenteret CO₂-besparelse for et bestemt køb; transport, klargøring, strømforbrug og faktisk forlænget brugstid skal indgå i sådan et regnestykke.",
+            en: "Keeping useful equipment longer can avoid an unnecessary replacement. That is not the same as a verified carbon saving for a particular purchase; transport, preparation, power use and actual extended service life belong in that calculation.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Beskriv opgaver, antal og budget, så mulighederne kan sammenlignes på samme grundlag. Pris og tilgængelighed bekræftes ved en konkret forespørgsel.",
+      en: "Describe workloads, quantity and budget so the options can be compared on the same basis. Price and availability are confirmed for a specific enquiry.",
+    },
+    related: [
+      {
+        href: "/vejledninger/refurbished-eller-brugt",
+        label: {
+          da: "Hvad betyder refurbished og brugt?",
+          en: "What do refurbished and used mean?",
+        },
+      },
+      {
+        href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        label: { da: "Tjeklisten før køb", en: "The pre-purchase checklist" },
+      },
+      {
+        href: "/vejledninger/reparere-eller-koebe-ny",
+        label: {
+          da: "Kan den gamle computer beholdes?",
+          en: "Can you keep the existing computer?",
+        },
+      },
+      {
+        href: "/produkter/baerbare-computere",
+        label: { da: "Bærbare efter arbejdsbehov", en: "Laptops by workload" },
+      },
+      {
+        href: "/flaadeloesninger",
+        label: { da: "Planlæg flere arbejdspladser", en: "Plan multiple workstations" },
+      },
+    ],
+    sources: [
+      guideSource("pcHealthCheck"),
+      guideSource("windows10Servicing"),
+      guideSource("thinkpadX1CarbonGen7"),
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Er refurbished altid billigere end nyt?",
+          en: "Is refurbished always cheaper than new?",
+        },
+        answer: {
+          da: "Nej. Sammenlign den nødvendige konfiguration, batteri, dele, opsætning, tilbehør og vilkår. En billigere købspris kan blive spist op af manglende dele eller en maskine, der ikke løser opgaven.",
+          en: "No. Compare the required configuration, battery, parts, setup, accessories and terms. A lower purchase price can be outweighed by missing parts or a machine that cannot do the work.",
+        },
+      },
+      {
+        question: {
+          da: "Er en refurbished bærbar god til en startup?",
+          en: "Is a refurbished laptop suitable for a startup?",
+        },
+        answer: {
+          da: "Det kan den være, hvis den passer til programmerne, har et understøttet styresystem og er prissat med nødvendig opsætning. Definér først arbejdsopgaver og budget; brug ikke alle pengene på en modelbetegnelse.",
+          en: "It can be, if it suits the applications, has a supported operating system and is priced with the necessary setup. Define workloads and budget first; do not spend everything on a model name.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "hvor-meget-kan-en-baerbar-opgraderes",
+    cluster: "memory-storage",
+    type: "grundviden",
+    intent: "informational-commercial",
+    primaryKeyword: "hvor meget kan en bærbar opgraderes",
+    author: "alireza",
+    title: {
+      da: "Hvor meget kan en bærbar opgraderes? RAM, SSD og Windows",
+      en: "How far can you upgrade a laptop? RAM, SSD and Windows",
+    },
+    metaTitle: {
+      da: "Hvor meget kan en bærbar opgraderes? RAM og SSD | Kestro",
+      en: "Laptop upgrade limits: RAM, SSD and Windows | Kestro",
+    },
+    metaDescription: {
+      da: "Kan din bærbar få mere RAM, SSD eller Windows 11? Tjek model, sokler og krav, og se hvad du selv kan gøre. Med kilder og råd til et sikkert skift.",
+      en: "Is your laptop fit for a RAM or SSD upgrade? Check model, slots and Windows 11 eligibility. See real limits and safety tips before you fit a new part.",
+    },
+    summary: {
+      da: "8. eller 9. generation er ikke nok at vide. Model, sokler, BIOS og lagerinterface afgør grænsen.",
+      en: "Knowing 8th or 9th generation is not enough. Model, slots, BIOS and storage interface determine the limits.",
+    },
+    audience: {
+      da: "Ejere af ældre bærbare og IT-ansvarlige",
+      en: "Owners of older laptops and IT managers",
+    },
+    readingMinutes: 8,
+    published: "2026-10-16",
+    updated: "2026-10-16",
+    tldr: {
+      da: "Den præcise model bestemmer, hvad der kan opgraderes. To bærbare med en 8. generations processor kan have henholdsvis udskiftelig DDR4 og fastloddet LPDDR3. Find producentens manual, kontrollér RAM-sokler og SSD-interface, og vurder Windows med PC Health Check. Maksimal understøttet kapacitet er ikke nødvendigvis det, du har brug for eller bør betale for.",
+      en: "The exact model determines upgrade options. Two laptops with an 8th-generation processor can have replaceable DDR4 or soldered LPDDR3. Find the manufacturer manual, check memory slots and SSD interface, and assess Windows with PC Health Check. Maximum supported capacity is not necessarily the amount you need or should pay for.",
+    },
+    intro: {
+      da: "En generation beskriver en produktfamilie, ikke hele computeren. Denne guide viser, hvordan du finder grænsen uden at købe en del på gæt. Modelnavnene nedenfor er tekniske eksempler, ikke en anbefaling om at købe en bestemt maskine.",
+      en: "A generation describes a product family, not the entire computer. This guide shows how to find the limit without guessing which part to buy. The model names below are technical examples, not recommendations to buy a specific machine.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Find modellen før du finder delen",
+          en: "Find the model before finding the part",
+        },
+        body: [
+          {
+            da: "Notér producent, fuldt modelnavn, generation og maskintype eller produktnummer fra mærkaten eller systemoplysningerne. Slå den variant op hos producenten. Et familienavn som ThinkPad eller Latitude er ikke tilstrækkeligt.",
+            en: "Record manufacturer, full model name, generation and machine type or product number from the label or system information. Look up that variant with its manufacturer. A family name such as ThinkPad or Latitude is not enough.",
+          },
+          {
+            da: "Find både specifikationsarket og servicemanualen: det første beskriver understøttede dele, det andet adgangen og sikkerhedsproceduren. CPU-producentens maksimum er ikke automatisk det maksimum, den færdige bærbar understøtter.",
+            en: "Find both the specification sheet and service manual: the first describes supported parts, the second access and safety procedures. The CPU manufacturer's maximum is not automatically the maximum supported by the finished laptop.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "8., 9. eller 11. generation: konkrete forskelle",
+          en: "8th, 9th or 11th generation: real differences",
+        },
+        body: [
+          {
+            da: "Tabellen gengiver Lenovos angivne konfigurationer og testede RAM-maksima. Det er ikke en garanti for alle varianter eller en påstand om den absolutte elektriske grænse. Kontrollér altid det konkrete produktnummer før køb.",
+            en: "This table follows Lenovo's listed configurations and tested RAM maxima. It is not a guarantee for every variant or a claim about the absolute electrical limit. Always check the exact product number before buying.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "Eksempler fra producentens PSREF",
+            en: "Examples from manufacturer PSREF specifications",
+          },
+          head: [
+            { da: "Eksempel", en: "Example" },
+            { da: "RAM og angivet maksimum", en: "RAM and listed maximum" },
+            { da: "Lager: hvad skal kontrolleres?", en: "Storage: what needs checking?" },
+          ],
+          rows: [
+            [
+              {
+                da: "T480 med 8. gen. Core; findes også med 7. gen.",
+                en: "T480 with 8th-gen Core; 7th-gen variants also exist",
+              },
+              {
+                da: "To DDR4 SO-DIMM-sokler. Lenovo angiver 32 GB.",
+                en: "Two DDR4 SO-DIMM slots. Lenovo lists 32 GB.",
+              },
+              {
+                da: "Primært 2,5-tommer SATA eller M.2 NVMe med passende adapter; ikke to frie primære pladser.",
+                en: "Primary 2.5-inch SATA or M.2 NVMe with the appropriate adapter; not two free primary bays.",
+              },
+            ],
+            [
+              { da: "X1 Carbon Gen 7 med 8. gen. Core", en: "X1 Carbon Gen 7 with 8th-gen Core" },
+              {
+                da: "8 eller 16 GB LPDDR3, fastloddet. Ingen RAM-sokkel.",
+                en: "8 or 16 GB soldered LPDDR3. No memory slot.",
+              },
+              {
+                da: "Én M.2 2280 SSD. PSREF angiver SATA- og NVMe-varianter; kontrollér den konkrete del.",
+                en: "One M.2 2280 SSD. PSREF lists SATA and NVMe variants; verify the actual part.",
+              },
+            ],
+            [
+              { da: "P53 med 9. gen. Core", en: "P53 with 9th-gen Core" },
+              {
+                da: "Fire DDR4 SO-DIMM-sokler, op til 128 GB. ECC kræver særskilt Xeon-konfiguration.",
+                en: "Four DDR4 SO-DIMM slots, up to 128 GB. ECC needs a separate Xeon configuration.",
+              },
+              {
+                da: "Flere drev er mulige; 2,5-tommer- og M.2-layout afhænger af konfigurationen.",
+                en: "Multiple drives are possible; 2.5-inch and M.2 layout depends on configuration.",
+              },
+            ],
+            [
+              { da: "T14 Gen 2 Intel med 11. gen. Core", en: "T14 Gen 2 Intel with 11th-gen Core" },
+              {
+                da: "8/16 GB fastloddet + én DDR4-sokkel. Angivet maksimum 40/48 GB.",
+                en: "8/16 GB soldered + one DDR4 slot. Listed maximum 40/48 GB.",
+              },
+              {
+                da: "Én M.2 PCIe-plads. RAM- og lageroplysninger gælder Intel-varianten, ikke alle T14.",
+                en: "One M.2 PCIe slot. Memory and storage details concern the Intel variant, not every T14.",
+              },
+            ],
+          ],
+        },
+      },
+      {
+        heading: { da: "Hvilken RAM kan du sætte i?", en: "Which memory can you install?" },
+        body: [
+          {
+            da: "Kontrollér om RAM er fastloddet, sidder i sokler eller er en blanding. Dernæst skal type, formfaktor, kapacitet pr. sokkel, samlet kapacitet og producentens hastighedskrav passe. DDR4 og DDR5 er ikke udskiftelige; køb ikke efter GB alene.",
+            en: "Check whether memory is soldered, socketed or a mixture. Then match type, form factor, capacity per slot, total capacity and manufacturer speed requirements. DDR4 and DDR5 are not interchangeable; do not buy by gigabytes alone.",
+          },
+          {
+            da: "Mere RAM gør ikke automatisk processoren hurtigere. Mål forbruget under dine normale programmer. Hvis maskinen mangler hukommelse, kan mere hjælpe; hvis CPU, varme eller netværk er flaskehalsen, skal problemet findes dér.",
+            en: "More memory does not automatically make the processor faster. Measure usage in your normal applications. More can help a memory-constrained machine; if CPU, heat or networking is the bottleneck, investigate that instead.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Hvilken harddisk eller SSD passer?", en: "Which hard drive or SSD fits?" },
+        body: [
+          {
+            da: "M.2 beskriver en formfaktor, ikke i sig selv SATA eller PCIe NVMe. Kontrollér interface, længde, tykkelse, stik, beslag, køling og producentens understøttelse. En ledig sokkel til mobilnet er ikke automatisk en ekstra SSD-plads.",
+            en: "M.2 describes a form factor, not SATA or PCIe NVMe by itself. Check interface, length, thickness, connector, mounting hardware, cooling and manufacturer support. An empty mobile-network slot is not automatically an extra SSD slot.",
+          },
+          {
+            da: "T480 er et godt eksempel: den primære lagerplads kan være sat op til 2,5-tommer SATA eller NVMe med en adapter. Du kan ikke konkludere ud fra kabinetnavnet, at et vilkårligt M.2-drev passer. Et skift af systemdrev kræver også en plan for dataflytning eller geninstallation.",
+            en: "T480 is a useful example: the primary storage bay may be configured for 2.5-inch SATA or NVMe through an adapter. The chassis name does not tell you that an arbitrary M.2 drive fits. Replacing a system drive also requires a migration or reinstallation plan.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvilken Windows kan en ældre bærbar bruge?",
+          en: "Which Windows can an older laptop use?",
+        },
+        body: [
+          {
+            da: "Svar ikke kun »8. generation eller nyere«. Kontrollér den præcise processor, TPM 2.0, UEFI/Secure Boot-egnethed og de øvrige krav med Microsofts PC Health Check. Resultatet og producentens drivere er vigtigere end sælgerens generationsmærkat. En T480 kan for eksempel have enten 7. eller 8. generations CPU.",
+            en: "Do not answer simply 8th generation or newer. Check the exact processor, TPM 2.0, UEFI/Secure Boot capability and other requirements with Microsoft's PC Health Check. Its result and manufacturer drivers matter more than a seller's generation label. A T480, for example, can have a 7th- or 8th-generation CPU.",
+          },
+          {
+            da: "At Windows kan installeres, betyder ikke, at kombinationen er understøttet. Microsoft fraråder Windows 11 på hardware, der ikke opfylder kravene. Windows 10 22H2 mistede almindelig support 14. oktober 2025; ESU og LTSC er særskilte ordninger med egne krav og datoer, ikke en permanent løsning til alle.",
+            en: "Being able to install Windows does not make the combination supported. Microsoft advises against Windows 11 on hardware that fails the requirements. Windows 10 22H2 lost general support on 14 October 2025; ESU and LTSC are separate arrangements with their own requirements and dates, not permanent options for everyone.",
+          },
+          {
+            da: "På en administreret firmacomputer skal IT-ansvarlige godkende ændringen. Et andet understøttet styresystem kan være en mulighed, men kontrollér programmer, printere, dockingstation og sikkerhedsstyring først.",
+            en: "For a managed company computer, IT must approve the change. Another supported operating system may be an option, but check applications, printers, docking and security management first.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Kan en almindelig bruger gøre det hjemme?",
+          en: "Can an ordinary user do it at home?",
+        },
+        body: [
+          {
+            da: "Nogle RAM- og SSD-skift er egnede til en omhyggelig bruger med korrekt værktøj og en modelspecifik manual. Andre kræver omfattende adskillelse, specialdele eller professionel service. Der er ingen generel ti-minutters garanti.",
+            en: "Some memory and SSD replacements suit a careful user with the right tools and model-specific manual. Others require extensive disassembly, specialist parts or professional service. There is no universal ten-minute guarantee.",
+          },
+        ],
+        list: [
+          {
+            da: "Tag en kontrolleret sikkerhedskopi, og find BitLocker-genoprettelsesnøglen før hardware- eller BIOS-ændringer. Del ikke nøglen offentligt.",
+            en: "Make a verified backup and locate the BitLocker recovery key before hardware or BIOS changes. Do not share the key publicly.",
+          },
+          {
+            da: "Følg manualens rækkefølge for nedlukning, frakobling af strøm og isolering af batteriet. Brug ESD-beskyttelse; rør ikke kontakter.",
+            en: "Follow the manual's sequence for shutdown, disconnecting power and isolating the battery. Use ESD protection and avoid touching contacts.",
+          },
+          {
+            da: "Stop ved opsvulmet batteri, væskeskade, fastloddet komponent eller noget, der skal tvinges fri. Batterier må ikke punkteres eller bøjes.",
+            en: "Stop for a swollen battery, liquid damage, a soldered component or anything that needs forcing. Never puncture or bend batteries.",
+          },
+          {
+            da: "Saml alle dæksler og skruer korrekt, kontrollér registreret RAM og lager, og kør producentens diagnosticering efter arbejdet.",
+            en: "Refit covers and screws correctly, verify detected memory and storage, and run manufacturer diagnostics afterwards.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Hvornår er opgraderingen pengene værd?",
+          en: "When is the upgrade worth paying for?",
+        },
+        body: [
+          {
+            da: "Sammenlign dele, arbejdstid, dataflytning og eventuelt batteri med en passende erstatning. Behold helst den nuværende maskine, hvis en dokumenteret flaskehals kan løses, kabinettet er sundt, og software kan understøttes. Overvej udskiftning, hvis begrænsningen er fastloddet RAM, utilstrækkelig CPU/GPU eller manglende support.",
+            en: "Compare parts, labour, migration and any battery with a suitable replacement. Keeping the existing machine makes sense when a demonstrated bottleneck can be fixed, the chassis is sound and software can be supported. Consider replacement for insufficient soldered RAM, inadequate CPU/GPU or missing support.",
+          },
+          {
+            da: "Producentens maksimum er et loft for en bestemt konfiguration, ikke en indkøbsliste. Køb den kapacitet, arbejdsopgaven har brug for, med en rimelig margin og en pris, du har fået bekræftet.",
+            en: "The manufacturer maximum is a ceiling for a particular configuration, not a shopping list. Buy the capacity your workload needs, with reasonable headroom and a confirmed price.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Send det fulde modelnavn og den nuværende konfiguration, hvis du ønsker en vurdering. Undlad at sende adgangskoder eller genoprettelsesnøgler.",
+      en: "Send the full model name and current configuration for an assessment. Do not send passwords or recovery keys.",
+    },
+    related: [
+      {
+        href: "/vejledninger/opgrader-ram-i-baerbar",
+        label: { da: "RAM: kontrol og sikkert skift", en: "Memory: checks and safe replacement" },
+      },
+      {
+        href: "/vejledninger/windows-11-paa-aeldre-maskine",
+        label: { da: "Windows 11 på ældre hardware", en: "Windows 11 on older hardware" },
+      },
+      {
+        href: "/vejledninger/reparere-eller-koebe-ny",
+        label: {
+          da: "Regnestykket: reparere eller udskifte",
+          en: "The calculation: repair or replace",
+        },
+      },
+      {
+        href: "/reparation/ram-og-ssd-opgradering",
+        label: { da: "Få vurderet RAM og SSD", en: "Have memory and storage assessed" },
+      },
+    ],
+    sources: [
+      guideSource("thinkpadT480Specs"),
+      guideSource("thinkpadX1CarbonGen7"),
+      guideSource("thinkpadP53Specs"),
+      guideSource("thinkpadT14Gen2Intel"),
+      guideSource("memoryGenerations"),
+      guideSource("pcHealthCheck"),
+      guideSource("unsupportedWindows11"),
+      guideSource("windows10Servicing"),
+      guideSource("laptopServiceSafety"),
+      guideSource("swollenBatterySafety"),
+      guideSource("bitlockerRecovery"),
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Kan alle bærbare med 8. generation få 32 GB RAM?",
+          en: "Can every 8th-generation laptop take 32 GB RAM?",
+        },
+        answer: {
+          da: "Nej. Som konkrete eksempler har T480 to DDR4-sokler og et Lenovo-angivet maksimum på 32 GB, mens X1 Carbon Gen 7 har 8 eller 16 GB fastloddet LPDDR3 uden RAM-sokler. Den præcise model er afgørende.",
+          en: "No. As concrete examples, T480 has two DDR4 slots and a Lenovo-listed 32 GB maximum, whereas X1 Carbon Gen 7 has 8 or 16 GB soldered LPDDR3 without memory slots. The exact model is decisive.",
+        },
+      },
+      {
+        question: {
+          da: "Kan CPU eller grafikkort opgraderes ligesom RAM?",
+          en: "Can CPU or graphics be upgraded like RAM?",
+        },
+        answer: {
+          da: "Det skal undersøges i servicemanualen. I mange bærbare er CPU og GPU integreret eller fastloddet, og køling, strøm og BIOS begrænser mulighederne. Antag ikke et enkelt modulswap, bare fordi en stationær pc kan opgraderes sådan.",
+          en: "Check the service manual. In many laptops the CPU and GPU are integrated or soldered, and cooling, power and BIOS constrain the options. Do not assume a simple module swap just because a desktop can be upgraded that way.",
+        },
+      },
+    ],
+  },
   {
     slug: "windows-10-support-slutter",
     cluster: "lifecycle",
@@ -217,18 +935,19 @@ export const guides: Guide[] = [
       en: "Windows 10 support ended 14 October 2025: what it means for a company, which machines can take Windows 11, and what to do with the rest.",
     },
     summary: {
-      da: "Maskinerne holder ikke op med at virke – men sikkerhedsopdateringerne er stoppet. Sådan finder I ud af, hvad der skal ske med hver enkelt maskine.",
-      en: "The machines do not stop working — but the security updates have stopped. How to work out what should happen to each machine.",
+      da: "Almindelig support er slut; ESU og LTSC har særskilte vilkår. Kontrollér hver maskines udgave, dækning og næste skridt.",
+      en: "General support has ended; ESU and LTSC have separate terms. Check each device's edition, coverage and next step.",
     },
     audience: {
       da: "Virksomheder med maskiner på Windows 10",
       en: "Companies with machines still on Windows 10",
     },
     readingMinutes: 7,
-    updated: "2026-08-31",
+    published: "2026-08-31",
+    updated: "2026-10-16",
     tldr: {
-      da: "Supporten sluttede 14. oktober 2025. Maskinerne virker stadig, men de får ikke længere sikkerhedsopdateringer. Opgørelsen afgør resten: en del af flåden kan opgraderes til Windows 11, en del skal skiftes, og en del kan vente. Som regel er alle tre i spil på én gang.",
-      en: "Support ended on 14 October 2025. The machines still run, but they no longer receive security updates. The inventory decides the rest: part of the fleet can be upgraded to Windows 11, part needs replacing, and part can wait. Usually all three are in play at once.",
+      da: "Den almindelige support til Windows 10 22H2 sluttede 14. oktober 2025. ESU og LTSC har særskilte vilkår og datoer. Kontrollér derfor udgave, faktisk opdateringsdækning og Windows 11-egnethed pr. maskine. Planlæg derefter opgradering, understøttet midlertidig drift eller udskiftning med ansvar og frist; en supportdato er ikke i sig selv en ordre om nyt udstyr.",
+      en: "General Windows 10 22H2 support ended on 14 October 2025. ESU and LTSC have separate terms and dates. Check edition, actual update coverage and Windows 11 eligibility per device. Then plan upgrading, supported temporary operation or replacement with an owner and deadline; a support date does not itself require buying new hardware.",
     },
     intro: {
       da: "Den almindelige support til Windows 10 version 22H2 sluttede 14. oktober 2025. Maskiner tilmeldt Extended Security Updates (ESU) kan fortsat få sikkerhedsrettelser; LTSC-udgaver har særskilte livscyklusser. Denne vejledning hjælper jer med at afklare opdateringer, Windows 11 og udskiftning – uden at skifte maskiner unødigt.",
@@ -246,8 +965,8 @@ export const guides: Guide[] = [
             en: "Microsoft ended general updates and technical support for Windows 10 version 22H2. ESU provides separate access to security fixes, and LTSC has different support dates. The end date did not switch machines off, invalidate licences or remove files.",
           },
           {
-            da: "Det, der stoppede, er strømmen af rettelser til sårbarheder, der bliver fundet efter den dato. Forskellen viser sig ikke med det samme. Den viser sig, når der bliver fundet noget nyt, og rettelsen kommer til Windows 11 og ikke til jer.",
-            en: "What stopped is the flow of fixes for vulnerabilities found after that date. The difference does not show up immediately. It shows up when something new is found, and the fix ships for Windows 11 and not for you.",
+            da: "Uden relevant ESU-dækning eller en fortsat understøttet LTSC-udgave kan I ikke regne med fortsatte sikkerhedsrettelser. Kontrollér den konkrete udgave og tilmelding; en computer, der starter normalt, dokumenterer ikke, at den er dækket.",
+            en: "Without relevant ESU coverage or a still-supported LTSC edition, you cannot rely on continued security fixes. Check the actual edition and enrolment; a computer starting normally does not demonstrate coverage.",
           },
           {
             da: "Datoer og vilkår herunder kommer fra Microsoft, og det er Microsoft, der kan ændre dem. Siden her bærer sin redigeringsdato øverst – brug den til at vurdere, hvor gammel informationen er, og slå det aktuelle op hos Microsoft, før I træffer en beslutning, der koster penge.",
@@ -352,8 +1071,8 @@ export const guides: Guide[] = [
             en: "Upgrade. If the machine meets the requirements and is otherwise good enough for the job, upgrading to Windows 11 is the cheapest route. Microsoft has so far made the upgrade available at no charge for machines with a valid Windows 10 licence that meet the requirements — confirm the current terms before planning around it. For many fleets this is where most machines end up.",
           },
           {
-            da: "Udskift. Maskiner, der ikke opfylder kravene, og maskiner, der kan opgraderes, men er slidte, skal skiftes. Det betyder ikke nødvendigvis nyt: en brugt erhvervsmaskine, der opfylder kravene, gør det samme arbejde. Der er usædvanligt mange af dem på markedet netop nu, fordi andre virksomheder skiftede flåde af nøjagtig samme grund.",
-            en: "Replace. Machines that do not meet the requirements, and machines that do but are worn out, need replacing. That does not have to mean new: a used business machine that meets the requirements does the same work. There are unusually many of them about right now, precisely because other companies changed fleets for exactly the same reason.",
+            da: "Udskift. Undersøg erstatning, når nødvendig software ikke kan understøttes, eller maskinen ikke kan løse opgaven efter en rimelig forbedring. Det behøver ikke være nyt udstyr: en egnet refurbished konfiguration kan også vurderes. Bekræft kompatibilitet, stand og tilgængelighed konkret.",
+            en: "Replace. Investigate replacement when necessary software cannot be supported or the computer cannot do the job after a reasonable improvement. Replacement need not be new: a suitable refurbished configuration can also be assessed. Confirm compatibility, condition and availability specifically.",
           },
           {
             da: "Planlæg. Nogle maskiner kan vente: dem uden netværk, dem uden personoplysninger, dem, der er bundet til software, som ikke kan flytte endnu. At vente er et fint valg, når det er truffet med en dato og en begrundelse. Det er et dårligt valg, når det bare er det, der sker.",
@@ -816,23 +1535,24 @@ export const guides: Guide[] = [
       en: "The calculation that decides whether a slow or broken machine gets repaired or replaced.",
     },
     audience: { da: "Private og mindre virksomheder", en: "Individuals and small businesses" },
-    readingMinutes: 4,
-    updated: "2026-08-23",
+    readingMinutes: 6,
+    published: "2026-08-23",
+    updated: "2026-10-16",
     tldr: {
-      da: "Regn på det i stedet for at gætte. Er reparationen under en tredjedel af, hvad en tilsvarende brugt maskine koster, og har maskinen mere end et par år tilbage i sig, er reparation som regel det billigste. Hvis ikke, køber man tid frem for en løsning.",
-      en: "Do the arithmetic instead of guessing. If the repair costs less than a third of an equivalent used machine and the machine has more than a couple of years left in it, repairing is usually cheapest. If not, you are buying time rather than a solution.",
+      da: "Sammenlign reparation eller opgradering med en passende erstatning, inklusive dele, arbejde, dataflytning og nedetid. Behold maskinen, hvis en konkret fejl kan løses, og den fortsat passer til opgaver og understøttet software. Vælg udskiftning, når nødvendige forbedringer ikke er mulige eller samlet er et dårligere køb. Der findes ingen universel procentgrænse.",
+      en: "Compare repair or upgrading with a suitable replacement, including parts, labour, migration and downtime. Keep the machine when a specific fault can be fixed and it still suits your work and supported software. Replace it when necessary improvements are impossible or worse value overall. There is no universal percentage threshold.",
     },
     intro: {
-      da: "De fleste maskiner bliver skiftet ud, længe før de er slidt op. Spørgsmålet er ikke, om en computer kan repareres – det kan næsten alle – men om det kan betale sig. Her er den måde, vi selv regner på, når nogen spørger.",
-      en: "Most machines get replaced long before they are worn out. The question is not whether a computer can be repaired — almost all of them can — but whether it is worth it. Here is how we work it out when someone asks.",
+      da: "En langsom bærbar behøver ikke være færdig, men en reparation er heller ikke altid det rigtige valg. Start med en diagnose og et sammenligneligt alternativ. Vores beslutningsramme handler om, hvad computeren skal kunne efter arbejdet, ikke blot hvad den kan sælges for i dag.",
+      en: "A slow laptop may still be useful, but repairing is not always the right choice either. Start with a diagnosis and a comparable alternative. Our decision framework focuses on what the computer must do after the work, not just its resale value today.",
     },
     sections: [
       {
         heading: { da: "Start med maskinens værdi", en: "Start with what the machine is worth" },
         body: [
           {
-            da: "Slå op, hvad den samme model koster brugt i dag. Det tal er loftet. Som tommelfingerregel: koster reparationen mere end halvdelen af, hvad maskinen er værd, skal du tænke dig om. Koster den mere end maskinen er værd, er svaret nej.",
-            en: "Look up what the same model costs used today. That figure is your ceiling. As a rule of thumb: if the repair costs more than half of what the machine is worth, think twice. If it costs more than the machine is worth, the answer is no.",
+            da: "Find et aktuelt tilbud på en erstatning, der løser samme arbejde med passende batteri, tastatur, licens og tilbehør. En lav gensalgspris på den gamle maskine er et nyttigt pejlemærke, men ikke et absolut loft: opsætning, dataflytning og særlige programmer kan ændre regnestykket.",
+            en: "Find a current quote for a replacement that handles the same work with a suitable battery, keyboard, licence and accessories. Low resale value is a useful reference, not an absolute ceiling: setup, migration and specialist applications can change the calculation.",
           },
         ],
       },
@@ -840,26 +1560,26 @@ export const guides: Guide[] = [
         heading: { da: "De billige fejl", en: "The cheap faults" },
         body: [
           {
-            da: "Fire ting står bag langt de fleste henvendelser, og alle fire er billige at rette i forhold til en ny maskine:",
-            en: "Four things are behind the large majority of enquiries, and all four are cheap to fix compared with a new machine:",
+            da: "Disse forhold er værd at undersøge. Pris og effekt afhænger af model og diagnose; listen er ikke en garanti for en billig løsning:",
+            en: "These issues are worth checking. Cost and benefit depend on model and diagnosis; the list does not guarantee a cheap solution:",
           },
         ],
         list: [
           {
-            da: "Batteriet holder ikke en arbejdsdag. Et batteri er en sliddel – det skal skiftes efter nogle år, præcis som dæk på en bil.",
-            en: "The battery no longer lasts a working day. A battery is a wear part — it gets replaced after a few years, like tyres on a car.",
+            da: "Kort batteritid: vurder målt kapacitet, opladning og den arbejdstid, du faktisk behøver, før et kompatibelt batteri bestilles.",
+            en: "Short battery runtime: assess measured capacity, charging and the working time you actually need before ordering a compatible battery.",
           },
           {
-            da: "For lidt hukommelse. En maskine med 4 GB føles død i dag; med 8 eller 16 GB føles den som en anden computer.",
-            en: "Too little memory. A machine with 4 GB feels dead today; at 8 or 16 GB it feels like a different computer.",
+            da: "Hukommelsespresset arbejde: mål RAM-forbruget og kontrollér, om hukommelsen kan udvides. Mere RAM løser ikke en utilstrækkelig CPU.",
+            en: "Memory-constrained work: measure RAM usage and check expansion options. More RAM does not fix an inadequate CPU.",
           },
           {
-            da: "En gammel harddisk i stedet for SSD. Det er den enkeltdel, der gør mest forskel på hverdagsfornemmelsen.",
-            en: "An old hard disk instead of an SSD. That single part makes the biggest difference to how the machine feels day to day.",
+            da: "Langsomt eller defekt lager: en kompatibel SSD kan være relevant. Medregn sikkerhedskopi, dataflytning og eventuel geninstallation.",
+            en: "Slow or faulty storage: a compatible SSD may be relevant. Include backup, migration and any reinstallation.",
           },
           {
-            da: "Støv og gammel kølepasta. Maskinen bliver varm, blæseren larmer, og ydelsen skrues ned automatisk.",
-            en: "Dust and old thermal paste. The machine runs hot, the fan gets loud, and performance is throttled automatically.",
+            da: "Varme og støj: undersøg ventilation, blæser og temperaturer. Lad diagnosen afgøre, om rens eller kølerarbejde er nødvendigt.",
+            en: "Heat and noise: investigate ventilation, fan and temperatures. Let diagnosis determine whether cleaning or cooling work is needed.",
           },
         ],
       },
@@ -867,8 +1587,8 @@ export const guides: Guide[] = [
         heading: { da: "De dyre fejl", en: "The expensive faults" },
         body: [
           {
-            da: "Bundkort, hængsler, der har revet kabinettet i stykker, og væskeskader ligger i den anden ende. På en ældre maskine overstiger de næsten altid værdien. Skærme ligger midt imellem: prisen svinger meget efter model, så få den oplyst, før du beslutter dig.",
-            en: "Motherboards, hinges that have torn the chassis apart, and liquid damage sit at the other end. On an older machine they almost always exceed its value. Screens sit in between: the price varies a lot by model, so get it quoted before you decide.",
+            da: "Bundkort, væskeskade og ødelagte hængselfæster kan kræve omfattende arbejde og have usikker prognose. Skærm- og tastaturskift varierer meget efter konstruktion. Få diagnose, omfang og pris oplyst; antag ikke på forhånd, at en bestemt fejl altid er billig eller urentabel.",
+            en: "Motherboard faults, liquid damage and damaged hinge mounts can need extensive work with uncertain outcomes. Screen and keyboard replacements vary significantly by construction. Obtain diagnosis, scope and price; do not assume a particular fault is always cheap or uneconomic.",
           },
         ],
       },
@@ -876,8 +1596,8 @@ export const guides: Guide[] = [
         heading: { da: "Regn også tiden med", en: "Count the time too" },
         body: [
           {
-            da: "En ny maskine skal sættes op, programmer skal installeres, og filer skal flyttes. For en virksomhed er det ofte en halv arbejdsdag per medarbejder. Den tid koster også noget, og den udgift forsvinder, hvis den gamle maskine bare kører videre.",
-            en: "A new machine has to be set up, software installed and files moved. For a company that is often half a working day per employee. That time costs money too, and the cost disappears if the old machine simply keeps running.",
+            da: "Både reparation og udskiftning kan give nedetid, opsætning og dataflytning. Brug jeres egen tidsvurdering, ikke en fast antagelse om timer pr. medarbejder. Vurder også software- og driversupport: en vellykket hardwareopgradering er ikke nok, hvis arbejdsprogrammerne eller styresystemet ikke kan understøttes.",
+            en: "Both repair and replacement can involve downtime, setup and migration. Use your own time estimate, not a fixed assumption about hours per employee. Also assess software and driver support: a successful hardware upgrade is insufficient if applications or the operating system cannot be supported.",
           },
         ],
       },
@@ -890,6 +1610,17 @@ export const guides: Guide[] = [
       {
         href: "/reparation",
         label: { da: "Reparation og opgradering", en: "Repairs and upgrades" },
+      },
+      {
+        href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
+        label: { da: "Find maskinens opgraderingsgrænse", en: "Find your machine's upgrade limit" },
+      },
+      {
+        href: "/vejledninger/refurbished-eller-ny-baerbar",
+        label: {
+          da: "Hvis du skal købe: refurbished eller nyt?",
+          en: "If replacing: refurbished or new?",
+        },
       },
       { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
       {
@@ -909,7 +1640,7 @@ export const guides: Guide[] = [
         label: { da: "En revnet skærm", en: "A cracked screen" },
       },
     ],
-    sources: [guideSource("repairDirective"), guideSource("ewasteMonitor")],
+    sources: [guideSource("pcHealthCheck"), guideSource("thinkpadX1CarbonGen7")],
     faqs: [
       {
         question: {
@@ -917,8 +1648,8 @@ export const guides: Guide[] = [
           en: "When is a computer not worth repairing?",
         },
         answer: {
-          da: "Slå op, hvad den samme model koster brugt i dag – det tal er loftet. Koster reparationen mere end halvdelen af det, skal du tænke dig om. Koster den mere end maskinen er værd, er svaret nej.",
-          en: "Look up what the same model costs used today — that figure is the ceiling. If the repair costs more than half of it, think twice. If it costs more than the machine is worth, the answer is no.",
+          da: "Når den nødvendige forbedring ikke er mulig, software ikke kan understøttes, eller samlet reparation, risiko og nedetid er et dårligere valg end en passende erstatning. Sammenlign konkrete tilbud; brug ikke en fast procent af gensalgsværdien som eneste beslutning.",
+          en: "When the necessary improvement is impossible, software cannot be supported, or total repair cost, risk and downtime are worse than a suitable replacement. Compare actual quotes; do not decide solely by a fixed percentage of resale value.",
         },
       },
       {
@@ -927,8 +1658,8 @@ export const guides: Guide[] = [
           en: "Why does my old computer feel slow?",
         },
         answer: {
-          da: "Fire ting står bag langt de fleste henvendelser: et batteri, der ikke holder en arbejdsdag, for lidt hukommelse, en gammeldags harddisk i stedet for SSD, og støv og gammel kølepasta, der får maskinen til at skrue ydelsen ned. Alle fire er billige at rette i forhold til en ny maskine.",
-          en: "Four things are behind the large majority of enquiries: a battery that no longer lasts a working day, too little memory, an old hard disk instead of an SSD, and dust and old thermal paste making the machine throttle itself. All four are cheap to fix compared with a new machine.",
+          da: "Mulige årsager er hukommelsespres, langsomt lager, baggrundsprogrammer, varme eller begrænsninger i CPU og netværk. Mål under det arbejde, der føles langsomt, før du køber dele. Et slidt batteri og lav ydelse er ikke automatisk samme problem.",
+          en: "Possible causes include memory pressure, slow storage, background software, heat or CPU and network limits. Measure during the work that feels slow before buying parts. A worn battery and poor performance are not automatically the same problem.",
         },
       },
       {
@@ -937,8 +1668,8 @@ export const guides: Guide[] = [
           en: "Which repairs are the expensive ones?",
         },
         answer: {
-          da: "Bundkort, hængsler, der har revet kabinettet i stykker, og væskeskader. På en ældre maskine overstiger de næsten altid maskinens værdi. Skærme ligger midt imellem – prisen svinger meget efter model, så få den oplyst, før du beslutter dig.",
-          en: "Motherboards, hinges that have torn the chassis apart, and liquid damage. On an older machine they almost always exceed what the machine is worth. Screens sit in between — the price varies a lot by model, so get it quoted before you decide.",
+          da: "Bundkort, væskeskade og kabinetskade kan kræve meget arbejde, men prisen er modelspecifik. Få et afgrænset tilbud og oplysning om usikkerheder før en beslutning.",
+          en: "Motherboard faults, liquid damage and chassis damage can require substantial work, but cost is model-specific. Obtain a scoped quote and an explanation of uncertainties before deciding.",
         },
       },
       {
@@ -947,8 +1678,8 @@ export const guides: Guide[] = [
           en: "Should the setup time be counted?",
         },
         answer: {
-          da: "Ja. En ny maskine skal sættes op, programmer installeres og filer flyttes. For en virksomhed er det ofte en halv arbejdsdag per medarbejder, og den udgift forsvinder, hvis den gamle maskine bare kører videre.",
-          en: "Yes. A new machine has to be set up, software installed and files moved. For a company that is often half a working day per employee, and the cost disappears if the old machine simply keeps running.",
+          da: "Ja. Regn opsætning, backup, dataflytning og nedetid med for begge alternativer. Tidsforbruget afhænger af jeres programmer og administration; det er ikke et fast antal timer pr. maskine.",
+          en: "Yes. Include setup, backup, migration and downtime for both options. The time depends on your applications and management; it is not a fixed number of hours per computer.",
         },
       },
     ],
@@ -973,19 +1704,20 @@ export const guides: Guide[] = [
       en: "How to upgrade the RAM in a laptop: whether it can take more, which type to buy, and how to fit it — including the traps people most often fall into.",
     },
     summary: {
-      da: "Den billigste opgradering, der findes – hvis maskinen overhovedet kan tage imod den.",
-      en: "The cheapest upgrade there is — if the machine can take it at all.",
+      da: "Find den rigtige RAM, kontrollér om den kan skiftes, og vurder om opgaven er egnet til gør-det-selv.",
+      en: "Find compatible memory, check whether it is replaceable and assess whether the job is suitable for DIY.",
     },
     audience: { da: "Private der selv vil prøve", en: "People who want to do it themselves" },
-    readingMinutes: 5,
-    updated: "2026-08-23",
+    readingMinutes: 7,
+    published: "2026-08-23",
+    updated: "2026-10-16",
     tldr: {
-      da: "På de fleste erhvervsbærbare kan RAM skiftes med en skruetrækker på ti minutter. Det, der afgør det, er ikke dit håndelag, men typen: et udskifteligt modul (SO-DIMM) eller loddet fast, DDR3, DDR4 eller DDR5, og hvor meget bundkortet overhovedet kan tage. Tjek de tre ting først.",
-      en: "Most business laptops take a memory change with a screwdriver and ten minutes. What decides it is not skill but type: a removable module (SO-DIMM) or soldered down, DDR3, DDR4 or DDR5, and how much the board supports at all. Check those three first.",
+      da: "RAM kan kun opgraderes, hvis den konkrete bærbar har en understøttet udvidelsesmulighed. Kontrollér sokler, type og maksimum i producentens dokumentation, og mål først, om hukommelsen er flaskehalsen. Før åbning: sikkerhedskopi, BitLocker-nøgle, korrekt strømafbrydelse og ESD-beskyttelse. Følg servicemanualen, og stop ved batteriskade eller en del, der ikke passer uden kraft.",
+      en: "Memory can only be upgraded if the exact laptop has a supported expansion option. Check slots, type and maximum capacity in manufacturer documentation, and first measure whether memory is the bottleneck. Before opening: backup, BitLocker key, correct power isolation and ESD protection. Follow the service manual and stop for battery damage or a part that needs forcing.",
     },
     intro: {
-      da: "Mere hukommelse er som regel den billigste vej til en mærkbart hurtigere maskine. Men det virker kun, hvis maskinen kan udvides, og hvis du køber den rigtige type. Her er rækkefølgen.",
-      en: "More memory is usually the cheapest route to a noticeably faster machine. But it only works if the machine can be expanded, and if you buy the right type. Here is the order to do it in.",
+      da: "Mere RAM kan hjælpe, når de programmer, du bruger, løber tør for hukommelse. Det løser ikke alle langsomme computere. Denne guide er en kontrolrækkefølge, ikke en universel adskillelsesmanual; brug altid dokumentationen til din præcise variant.",
+      en: "More RAM can help when your applications run out of memory. It does not fix every slow computer. This guide provides a sequence of checks, not a universal disassembly manual; always use documentation for your exact variant.",
     },
     sections: [
       {
@@ -995,8 +1727,8 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Mange tynde maskiner har hukommelsen loddet fast på bundkortet. Så kan den ikke skiftes – uanset hvad. ThinkPad X1 Carbon er et typisk eksempel. Slå din præcise model op hos producenten, eller kig i servicemanualen, som Lenovo, HP og Dell udgiver frit.",
-            en: "Many thin machines have the memory soldered to the motherboard. Then it cannot be changed — whatever you do. The ThinkPad X1 Carbon is a typical example. Look up your exact model with the manufacturer, or check the service manual that Lenovo, HP and Dell publish freely.",
+            da: "Fastloddet RAM er ikke en almindelig modulopgradering. X1 Carbon Gen 7 har eksempelvis 8 eller 16 GB uden sokler ifølge Lenovo; T14 Gen 2 Intel har derimod både fastloddet RAM og én DDR4-sokkel. Kontrollér generation og variant frem for at generalisere ud fra et familienavn.",
+            en: "Soldered memory is not a normal module upgrade. For example, Lenovo lists X1 Carbon Gen 7 with 8 or 16 GB and no slots; T14 Gen 2 Intel instead has soldered memory plus one DDR4 slot. Check generation and variant instead of generalising from a family name.",
           },
           {
             da: "Er der sokler, står der som regel også, hvor mange der er, og hvad maskinen maksimalt understøtter. Begge dele skal du bruge.",
@@ -1008,39 +1740,81 @@ export const guides: Guide[] = [
         heading: { da: "Køb den rigtige type", en: "Buy the right type" },
         body: [
           {
-            da: "Fire ting skal passe, og de står alle sammen på modulet:",
-            en: "Four things have to match, and all of them are printed on the module:",
+            da: "Sammenhold producentens specifikation og modulnummeret. Disse forhold skal passe:",
+            en: "Compare the manufacturer specification with the module part number. These details must match:",
           },
         ],
         list: [
           {
-            da: "Generation: DDR3, DDR4 eller DDR5. De passer ikke i hinandens sokler, og der er ingen adapter.",
-            en: "Generation: DDR3, DDR4 or DDR5. They do not fit each other's slots, and there is no adapter.",
+            da: "Hukommelsestype og elektriske krav. DDR4 og DDR5 er ikke udskiftelige; et matchende antal GB er ikke nok.",
+            en: "Memory type and electrical requirements. DDR4 and DDR5 are not interchangeable; matching gigabytes are not enough.",
           },
           {
-            da: "Formfaktor: bærbare bruger SO-DIMM, stationære bruger de lange DIMM-moduler.",
-            en: "Form factor: laptops use SO-DIMM, desktops use the long DIMM modules.",
+            da: "Formfaktor og kapacitet: brug kun det modulformat og den kapacitet pr. sokkel, manualen understøtter. Bærbare med udskiftelig RAM bruger ofte SO-DIMM, men ikke alle gør.",
+            en: "Form factor and capacity: use only the module format and capacity per slot supported by the manual. Laptops with replaceable memory often use SO-DIMM, but not all do.",
           },
           {
-            da: "Hastighed i MHz. Et hurtigere modul kører ned til maskinens hastighed – det virker, men du betaler for noget, du ikke får.",
-            en: "Speed in MHz. A faster module runs down at the machine's speed — it works, but you pay for something you do not get.",
+            da: "Understøttet datahastighed og modulprofil. Et hurtigere modul kan i nogle kombinationer køre langsommere, men det er ikke en generel kompatibilitetsgaranti.",
+            en: "Supported data rate and module profile. A faster module may run at a lower rate in some combinations, but that is not a general compatibility guarantee.",
           },
           {
-            da: "To ens moduler frem for ét stort, hvis der er to sokler. Det giver dobbelt båndbredde og kan mærkes på grafikken i maskiner uden grafikkort.",
-            en: "Two matching modules rather than one large one, if there are two slots. That doubles the bandwidth and is noticeable on graphics in machines without a graphics card.",
+            da: "Kanalopsætning: følg producentens anbefaling. Dual-channel kan påvirke båndbredde og integreret grafik; det betyder ikke dobbelt ydelse i alle programmer.",
+            en: "Channel configuration: follow manufacturer recommendations. Dual-channel can affect bandwidth and integrated graphics; it does not double performance in every application.",
           },
         ],
+      },
+      {
+        heading: { da: "Hvor meget RAM har du brug for?", en: "How much RAM do you need?" },
+        body: [
+          {
+            da: "Nedenstående er vores praktiske udgangspunkter, ikke systemkrav eller løfter om ydelse. Mål dine programmer under almindeligt arbejde og spidsbelastning, og kontrollér maskinens maksimum. En maskine med fastloddet RAM skal vælges med den nødvendige kapacitet fra starten.",
+            en: "These are our practical starting points, not system requirements or performance promises. Measure your applications during ordinary work and peak use, and check the machine's maximum. A laptop with soldered memory needs the required capacity from the start.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "Kapacitet som vurderingspunkt, ikke universel anbefaling",
+            en: "Capacity as an assessment point, not a universal recommendation",
+          },
+          head: [
+            { da: "Kapacitet", en: "Capacity" },
+            { da: "Vurdering før køb", en: "Assessment before buying" },
+          ],
+          rows: [
+            [
+              { da: "8 GB", en: "8 GB" },
+              {
+                da: "Kan være nok til begrænset brug. Afprøv browser, møder og øvrige programmer samtidig.",
+                en: "May suffice for limited use. Trial the browser, meetings and other applications together.",
+              },
+            ],
+            [
+              { da: "16 GB", en: "16 GB" },
+              {
+                da: "Et relevant udgangspunkt for almindeligt kontorarbejde; mål om dine programmer kræver mere.",
+                en: "A useful starting point for ordinary office work; measure whether your applications need more.",
+              },
+            ],
+            [
+              { da: "32 GB eller mere", en: "32 GB or more" },
+              {
+                da: "Undersøg ved tunge projekter, virtuelle maskiner eller stort samtidighedsbehov. Køb efter måling og softwarekrav.",
+                en: "Investigate for demanding projects, virtual machines or heavy concurrent use. Buy based on measurements and software requirements.",
+              },
+            ],
+          ],
+        },
       },
       {
         heading: { da: "Selve skiftet", en: "The swap itself" },
         body: [
           {
-            da: "Sluk maskinen, tag strømmen ud, og tag det eksterne batteri af, hvis der er et. Skru bunden af, og rør ved noget metal på kabinettet, før du rører modulet – statisk elektricitet er den eneste reelle risiko.",
-            en: "Shut the machine down, unplug it, and remove the external battery if there is one. Take the bottom cover off, and touch bare metal on the chassis before you touch the module — static is the only real risk.",
+            da: "Tag sikkerhedskopi og find BitLocker-genoprettelsesnøglen først. Sluk, frakobl oplader og tilbehør, og følg den konkrete manuals procedure for at deaktivere eller frakoble både internt og eventuelt eksternt batteri. Brug korrekt ESD-beskyttelse og værktøj; en slukket computer er ikke nødvendigvis strømløs.",
+            en: "Back up and locate the BitLocker recovery key first. Shut down, disconnect the charger and peripherals, and follow the exact manual for disabling or disconnecting the internal and any external battery. Use proper ESD protection and tools; a shut-down computer is not necessarily without power.",
           },
           {
-            da: "Skub klemmerne i hver side af soklen udad, så vipper modulet op. Det nye sættes i skråt og trykkes ned, til klemmerne klikker. Det skal ikke tvinges: passer det ikke, er det den forkerte type.",
-            en: "Push the clips on each side of the slot outwards, and the module tilts up. The new one goes in at an angle and is pressed down until the clips click. It should not be forced: if it does not fit, it is the wrong type.",
+            da: "Ved en almindelig SO-DIMM-sokkel frigøres sideklemmerne, og modulet tages i kanterne. Ret hakket ind og følg manualens vinkel og rækkefølge ved montering. Tving aldrig modulet i. Stop og søg faglig hjælp ved opsvulmet batteri, væskeskade eller uklar adgang; et batteri må ikke bøjes, punkteres eller vrides fri.",
+            en: "For a conventional SO-DIMM slot, release the side clips and hold the module by its edges. Align the notch and follow the manual's insertion angle and sequence. Never force it. Stop and seek professional help for a swollen battery, liquid damage or unclear access; never bend, puncture or pry out a battery.",
           },
         ],
       },
@@ -1048,8 +1822,17 @@ export const guides: Guide[] = [
         heading: { da: "Bagefter", en: "Afterwards" },
         body: [
           {
-            da: "Tænd maskinen, og tjek, at den ser hele mængden. I Windows står det under Indstillinger → System → Om. Ser den kun halvdelen, sidder det ene modul ikke ordentligt – tag det ud og sæt det i igen.",
-            en: "Power up and check that the machine sees all of it. In Windows that is under Settings → System → About. If it only sees half, one module is not seated properly — take it out and refit it.",
+            da: "Saml computerens dæksler og skruer efter manualen, før strømmen tilsluttes igen. Kontrollér registreret RAM i BIOS og Windows, og kør producentens hukommelsesdiagnostik. Manglende RAM kan skyldes montering, kompatibilitet eller en defekt del; åbn ikke maskinen igen uden først at følge strømafbrydelsen.",
+            en: "Refit covers and screws according to the manual before reconnecting power. Check detected memory in BIOS and Windows and run manufacturer memory diagnostics. Missing memory may reflect installation, compatibility or a faulty part; do not reopen without first repeating power isolation.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Er gør-det-selv den rigtige løsning?", en: "Is DIY the right choice?" },
+        body: [
+          {
+            da: "Hvis manualen beskriver delen som brugerskiftbar, du har korrekt værktøj og kan følge sikkerhedsproceduren, kan opgaven være egnet hjemme. På en firmamaskine skal ejeren eller IT-ansvarlige godkende ændringen. Fastloddet RAM, limet adgang eller en usikker batteriprocedure er gode grunde til at stoppe. Sammenlign også dele og arbejdstid med maskinens værdi og softwarelevetid.",
+            en: "If the manual identifies the part as user-replaceable, you have the right tools and can follow the safety procedure, the job may suit home servicing. On a company machine, the owner or IT must approve the change. Soldered memory, glued access or an uncertain battery procedure are good reasons to stop. Also compare parts and labour with the machine's value and software lifetime.",
           },
         ],
       },
@@ -1062,6 +1845,14 @@ export const guides: Guide[] = [
       {
         href: "/reparation",
         label: { da: "Få os til at opgradere den", en: "Have us do the upgrade" },
+      },
+      {
+        href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
+        label: { da: "Sammenlign RAM- og SSD-grænser", en: "Compare memory and storage limits" },
+      },
+      {
+        href: "/vejledninger/hvorfor-er-ram-blevet-dyrere",
+        label: { da: "Hvad påvirker RAM-prisen?", en: "What affects memory prices?" },
       },
       {
         href: "/modeller/lenovo-thinkpad-t14",
@@ -1086,7 +1877,14 @@ export const guides: Guide[] = [
         label: { da: "Se, hvor RAM og SSD sidder", en: "See where the RAM and SSD sit" },
       },
     ],
-    sources: [guideSource("repairDirective")],
+    sources: [
+      guideSource("thinkpadX1CarbonGen7"),
+      guideSource("thinkpadT14Gen2Intel"),
+      guideSource("memoryGenerations"),
+      guideSource("laptopServiceSafety"),
+      guideSource("swollenBatterySafety"),
+      guideSource("bitlockerRecovery"),
+    ],
     faqs: [
       {
         question: {
@@ -1104,8 +1902,8 @@ export const guides: Guide[] = [
           en: "Which kind of RAM should I buy?",
         },
         answer: {
-          da: "Generationen skal passe – DDR3, DDR4 eller DDR5 passer ikke i hinandens sokler, og der findes ingen adapter. Formfaktoren skal passe: bærbare bruger SO-DIMM, stationære de lange DIMM-moduler. Et hurtigere modul kører ned til maskinens hastighed – det virker, men du betaler for noget, du ikke får.",
-          en: "The generation has to match — DDR3, DDR4 and DDR5 do not fit each other's sockets, and there is no adapter. The form factor has to match: laptops use SO-DIMM, desktops the long DIMM modules. A faster module runs down to the machine's speed — it works, but you pay for something you do not get.",
+          da: "Brug producentens specifikation til den præcise variant: hukommelsestype, formfaktor, datahastighed, kapacitet pr. sokkel og samlet maksimum skal passe. Et hurtigere modul eller samme antal GB er ikke i sig selv bevis på kompatibilitet.",
+          en: "Use the manufacturer specification for the exact variant: memory type, form factor, data rate, capacity per slot and total maximum must match. A faster module or matching gigabytes alone is not proof of compatibility.",
         },
       },
       {
@@ -1114,8 +1912,8 @@ export const guides: Guide[] = [
           en: "Are two modules better than one large one?",
         },
         answer: {
-          da: "Hvis der er to sokler, ja. To ens moduler giver dobbelt båndbredde, og det kan mærkes på grafikken i maskiner uden grafikkort.",
-          en: "If there are two sockets, yes. Two matching modules give double the bandwidth, and that is noticeable on graphics in machines without a graphics card.",
+          da: "Det afhænger af platformen og den samlede kapacitet. Dual-channel kan være nyttigt, især for integreret grafik, men er ikke et løfte om dobbelt ydelse. Følg producentens understøttede kombinationer.",
+          en: "It depends on the platform and total capacity. Dual-channel can be useful, particularly for integrated graphics, but does not promise double performance. Follow the manufacturer's supported combinations.",
         },
       },
       {
@@ -1124,8 +1922,8 @@ export const guides: Guide[] = [
           en: "The machine only sees half the memory — what is wrong?",
         },
         answer: {
-          da: "Så sidder det ene modul ikke ordentligt. Tag det ud og sæt det i igen. Du kan se, hvor meget maskinen faktisk ser, under Indstillinger → System → Om i Windows.",
-          en: "One of the modules is not seated properly. Take it out and put it back in. You can see how much the machine actually sees under Settings → System → About in Windows.",
+          da: "Mulige årsager er montering, inkompatibelt modul, kapacitetsgrænse eller defekt del. Kontrollér BIOS og producentens diagnostik. Sluk og følg manualens fulde strømafbrydelse, før et modul berøres igen; tving ikke delen i.",
+          en: "Possible causes include installation, an incompatible module, a capacity limit or a faulty part. Check BIOS and manufacturer diagnostics. Shut down and follow the manual's full power-isolation procedure before touching a module again; never force the part.",
         },
       },
     ],
@@ -1544,27 +2342,28 @@ export const guides: Guide[] = [
       en: "Why a machine that works fine cannot get Windows 11 — and what the options are.",
     },
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
-    readingMinutes: 4,
-    updated: "2026-08-23",
+    readingMinutes: 6,
+    published: "2026-08-23",
+    updated: "2026-10-16",
     tldr: {
-      da: "Tre ting afgør det: TPM 2.0, Secure Boot i UEFI-tilstand, og om processoren står på Microsofts liste. De to første er ofte kun en indstilling i BIOS. Den tredje kan ikke ændres – og det er derfor, en maskine, der kører helt fint, alligevel kan være nødt til at blive skiftet.",
-      en: "Three things decide it: TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The first two are often just a BIOS setting. The third cannot be changed — which is why a machine running perfectly well may still have to be replaced.",
+      da: "Brug Microsofts PC Health Check til den konkrete computer. Processoren, TPM 2.0, UEFI/Secure Boot og de øvrige krav skal passe; generationen alene afgør det ikke. Kontrollér også drivere og arbejdsprogrammer. Tag backup og find BitLocker-nøglen før firmwareændringer. En installation, der omgår kravene, er ikke en understøttet løsning.",
+      en: "Use Microsoft's PC Health Check for the actual computer. The processor, TPM 2.0, UEFI/Secure Boot and other requirements must match; generation alone does not decide it. Also check drivers and work applications. Back up and locate the BitLocker key before firmware changes. Bypassing the requirements does not produce a supported installation.",
     },
     intro: {
-      da: "Mange maskiner, der kører helt fint, får at vide, at de ikke kan opdatere til Windows 11. Det handler sjældent om ydelse og næsten altid om tre krav, der kan tjekkes på et par minutter.",
-      en: "Plenty of machines that run perfectly well are told they cannot update to Windows 11. That is rarely about performance and almost always about three requirements you can check in a couple of minutes.",
+      da: "En fungerende computer er ikke nødvendigvis egnet til Windows 11. Her skelner vi mellem at kunne installere systemet, at opfylde kravene og at have en brugbar, understøttet arbejdsplads bagefter.",
+      en: "A working computer is not necessarily eligible for Windows 11. Here we distinguish being able to install the system, meeting its requirements and having a useful, supported workstation afterwards.",
     },
     sections: [
       {
         heading: { da: "De tre krav", en: "The three requirements" },
         body: [
           {
-            da: "TPM 2.0 er en sikkerhedschip. De fleste erhvervsmaskiner fra 2016 og frem har den, men den er nogle gange slået fra i BIOS fra fabrikken. Secure Boot skal være slået til, og maskinen skal starte i UEFI-tilstand, ikke i den gamle Legacy-tilstand.",
-            en: "TPM 2.0 is a security chip. Most business machines from 2016 onwards have it, but it is sometimes switched off in the BIOS from the factory. Secure Boot must be enabled, and the machine has to boot in UEFI mode rather than the old Legacy mode.",
+            da: "Windows 11 kræver blandt andet TPM 2.0, UEFI med Secure Boot-egnethed og en kompatibel processor. Microsoft angiver også krav til RAM, lager, grafik og skærm. Minimumskrav er ikke en anbefalet konfiguration til alle arbejdsopgaver.",
+            en: "Windows 11 requires, among other things, TPM 2.0, UEFI with Secure Boot capability and a compatible processor. Microsoft also specifies memory, storage, graphics and display requirements. Minimum requirements are not a recommended configuration for every workload.",
           },
           {
-            da: "Processoren skal desuden stå på Microsofts liste. Det er den grænse, der rammer hårdest, og den kan ikke omgås ved at ændre en indstilling.",
-            en: "The processor also has to be on Microsoft's list. That is the limit that bites hardest, and it cannot be worked around by changing a setting.",
+            da: "Et Intel-generationsnummer er ikke en komplet kompatibilitetskontrol. T480 findes eksempelvis med både 7. og 8. generations CPU, mens andre modelnavnes »Gen 7« beskriver produktgenerationen og ikke processoren. Mere RAM eller en ny SSD ændrer ikke CPU'ens supportstatus.",
+            en: "An Intel generation number is not a complete compatibility check. T480, for example, has both 7th- and 8th-generation CPU variants, while Gen 7 in another model name may describe its product generation, not its processor. More memory or a new SSD does not change CPU support status.",
           },
         ],
       },
@@ -1572,12 +2371,12 @@ export const guides: Guide[] = [
         heading: { da: "Tjek det selv", en: "Check it yourself" },
         body: [
           {
-            da: "Tryk Windows-tasten og R, skriv tpm.msc, og tryk Enter. Vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
-            en: "Press the Windows key and R, type tpm.msc and press Enter. The window tells you whether there is a TPM and which version. Type msinfo32 in the same place: it shows both BIOS mode, which should be UEFI, and Secure Boot state.",
+            da: "Kør først Microsofts PC Health Check på en eksisterende Windows-pc. Det giver en samlet vurdering og forklarer krav, der ikke er opfyldt. På administreret udstyr skal IT-ansvarlige vurdere kompatibiliteten og godkende ændringer.",
+            en: "Start with Microsoft's PC Health Check on an existing Windows PC. It provides an overall assessment and explains unmet requirements. On managed equipment, IT must assess compatibility and approve changes.",
           },
           {
-            da: "Står TPM som slået fra, er det ofte bare en indstilling i BIOS – den hedder typisk PTT på Intel og fTPM på AMD.",
-            en: "If the TPM shows as disabled, that is often just a BIOS setting — usually called PTT on Intel and fTPM on AMD.",
+            da: "tpm.msc kan vise TPM-versionen, og msinfo32 viser blandt andet BIOS- og Secure Boot-status. Brug producentens vejledning ved ændringer. Tag sikkerhedskopi og find BitLocker-genoprettelsesnøglen først; ryd ikke TPM og skift ikke fra Legacy til UEFI på gæt.",
+            en: "tpm.msc can show the TPM version, and msinfo32 shows BIOS and Secure Boot status among other details. Use manufacturer instructions for changes. Back up and locate the BitLocker recovery key first; do not clear TPM or switch from Legacy to UEFI by guesswork.",
           },
         ],
       },
@@ -1592,8 +2391,8 @@ export const guides: Guide[] = [
             en: "There are guides to bypassing the requirements. We do not recommend it on a machine used in a company: Microsoft gives no guarantee of updates afterwards, and a machine without security updates is a problem, not a saving.",
           },
           {
-            da: "Det fornuftige alternativ er en brugt erhvervsmaskine, der opfylder kravene. De findes i mængder, netop fordi virksomheder skiftede flåde af samme grund.",
-            en: "The sensible alternative is a used business machine that meets the requirements. There are plenty about, precisely because companies changed fleets for the same reason.",
+            da: "Windows 10 22H2 mistede almindelig support 14. oktober 2025. Kontrollér særskilt ESU-berettigelse og slutdato eller en eksisterende LTSC-udgaves vilkår; de er ikke automatisk tilgængelige til enhver maskine. Alternativer er understøttet erstatningshardware eller et andet understøttet styresystem, hvis programmer og udstyr passer.",
+            en: "Windows 10 22H2 lost general support on 14 October 2025. Check separate ESU eligibility and expiry, or the terms of an existing LTSC edition; these are not automatically available for every machine. Alternatives include supported replacement hardware or another supported operating system if applications and peripherals are compatible.",
           },
         ],
       },
@@ -1620,7 +2419,14 @@ export const guides: Guide[] = [
         label: { da: "Licenser til firmacomputere", en: "Licences for company computers" },
       },
     ],
-    sources: [guideSource("windows11Requirements"), guideSource("windows10Eol")],
+    sources: [
+      guideSource("windows11Requirements"),
+      guideSource("pcHealthCheck"),
+      guideSource("unsupportedWindows11"),
+      guideSource("windows10Servicing"),
+      guideSource("thinkpadT480Specs"),
+      guideSource("bitlockerRecovery"),
+    ],
     faqs: [
       {
         question: {
@@ -1628,8 +2434,8 @@ export const guides: Guide[] = [
           en: "What does Windows 11 require of the machine?",
         },
         answer: {
-          da: "TPM 2.0, Secure Boot slået til, og at maskinen starter i UEFI-tilstand frem for den gamle Legacy-tilstand. Derudover skal processoren stå på Microsofts liste, og det er den grænse, der rammer hårdest – den kan ikke omgås ved at ændre en indstilling.",
-          en: "TPM 2.0, Secure Boot switched on, and the machine booting in UEFI mode rather than the old legacy mode. On top of that the processor has to be on Microsoft's list, and that is the limit that bites hardest — it cannot be got round by changing a setting.",
+          da: "Blandt andet en kompatibel processor, TPM 2.0, UEFI/Secure Boot-egnethed samt Microsofts krav til RAM, lager, grafik og skærm. Brug PC Health Check til vurdering af den konkrete pc; et enkelt generationsnummer er ikke nok.",
+          en: "Among other requirements, a compatible processor, TPM 2.0, UEFI/Secure Boot capability and Microsoft's memory, storage, graphics and display requirements. Use PC Health Check to assess the actual PC; a generation number alone is not enough.",
         },
       },
       {
@@ -1638,8 +2444,8 @@ export const guides: Guide[] = [
           en: "How do I check whether my machine meets the requirements?",
         },
         answer: {
-          da: "Tryk Windows-tasten og R, skriv tpm.msc, og tryk Enter – vinduet fortæller, om der er en TPM, og hvilken version. Skriv msinfo32 samme sted: der står både BIOS-tilstand, som skal være UEFI, og Secure Boot-tilstand.",
-          en: "Press the Windows key and R, type tpm.msc and press Enter — the window says whether there is a TPM and which version. Type msinfo32 in the same place: it shows both the BIOS mode, which has to be UEFI, and the Secure Boot state.",
+          da: "Kør PC Health Check fra Microsoft. Brug tpm.msc og msinfo32 til supplerende oplysninger, ikke som erstatning for den samlede kompatibilitetskontrol. Afklar også drivere, programmer og eventuelle blokeringer i Windows Update.",
+          en: "Run Microsoft's PC Health Check. Use tpm.msc and msinfo32 for additional information, not as substitutes for the complete compatibility assessment. Also check drivers, applications and any Windows Update safeguards.",
         },
       },
       {
@@ -1648,8 +2454,18 @@ export const guides: Guide[] = [
           en: "TPM shows as switched off — can that be changed?",
         },
         answer: {
-          da: "Ofte ja. Det er tit bare en indstilling i BIOS, og den hedder typisk PTT på Intel og fTPM på AMD.",
-          en: "Often yes. It is frequently just a setting in the BIOS, usually called PTT on Intel and fTPM on AMD.",
+          da: "Nogle maskiner har en indstilling til at aktivere TPM. Følg producentens modelspecifikke vejledning, tag sikkerhedskopi og find BitLocker-nøglen først. Ryd ikke TPM som forsøg på at løse kompatibilitet.",
+          en: "Some machines have a setting to enable TPM. Follow model-specific manufacturer guidance, back up and locate the BitLocker key first. Do not clear TPM as an attempt to fix compatibility.",
+        },
+      },
+      {
+        question: {
+          da: "Kan en bærbar med 8. eller 9. generations Intel få Windows 11?",
+          en: "Can an 8th- or 9th-generation Intel laptop run Windows 11?",
+        },
+        answer: {
+          da: "Vurder den præcise pc med PC Health Check. Generationsnummeret alene er ikke et ja: processor, firmware, TPM og de øvrige krav samt relevante drivere skal passe. Mere RAM eller en SSD gør ikke en ikke-understøttet CPU understøttet.",
+          en: "Assess the exact PC with PC Health Check. The generation number alone is not a yes: processor, firmware, TPM, other requirements and relevant drivers must match. More memory or an SSD does not make an unsupported CPU supported.",
         },
       },
       {

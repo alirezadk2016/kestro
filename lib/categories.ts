@@ -106,6 +106,14 @@ export const categories: Category[] = [
     exampleModel: "lenovo-thinkpad-t480",
     guides: [
       {
+        href: "/vejledninger/refurbished-eller-ny-baerbar",
+        label: { da: "Refurbished eller ny bærbar?", en: "Refurbished or new laptop?" },
+      },
+      {
+        href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
+        label: { da: "Kan den gamle bærbar opgraderes?", en: "Can the old laptop be upgraded?" },
+      },
+      {
         href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
         label: { da: "Hvilken bærbar passer til mit behov?", en: "Which laptop fits my needs?" },
       },

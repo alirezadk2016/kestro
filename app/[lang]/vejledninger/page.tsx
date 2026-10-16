@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeEuro, BookOpen, MemoryStick, Scale } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
@@ -28,14 +28,14 @@ import PageSchema from "@/components/PageSchema";
 
 const copy = {
   da: {
-    metaTitle: "Vejledninger om køb, tjek og udskiftning af IT | Kestro",
+    metaTitle: "Artikler og guides: bærbare, RAM og Windows | Kestro",
     metaDescription:
-      "Vejledninger om at købe, tjekke og udskifte computere i virksomheden: Windows 11, datasletning, RAM og brugt mod refurbished, konkret forklaret.",
+      "Artikler og guides til dit næste køb eller en opgradering: RAM, SSD, Windows og refurbished eller nyt. Find svar, kilder og tips til at vælge rigtigt.",
     eyebrow: "Kestro Viden",
-    title: "Viden om erhvervs-IT",
+    title: "Artikler og guides om computere",
     description:
-      "Vi tjener penge på at skaffe og klargøre udstyr – ikke på at holde på viden. Her er det, vi selv ville have fortalt dig, hvis du spurgte os.",
-    statGuides: "vejledninger",
+      "Hvad skal du købe, hvad kan du opgradere, og hvad kan du gøre selv? Konkrete svar til private og virksomheder, med kilder og tydelige begrænsninger.",
+    statGuides: "artikler og guides",
     statClusters: "emner",
     statUpdated: "senest opdateret",
     indexTitle: "Emner",
@@ -45,16 +45,19 @@ const copy = {
     readingSuffix: "min.",
     read: "Læs vejledningen",
     crumb: "Viden",
+    start: "Start med dit spørgsmål",
+    editorial:
+      "Kildebaserede artikler, udarbejdet med AI-assistance. Tekniske eksempler er ikke individuelle kompatibilitetsgarantier. Markedsartikler angiver dato og skelner mellem prognoser og aktuelle priser.",
   },
   en: {
-    metaTitle: "Guides: buying, checking and replacing business IT | Kestro",
+    metaTitle: "Articles and guides: laptops, RAM and Windows | Kestro",
     metaDescription:
-      "Guides on buying, checking and replacing company computers: Windows 11, data erasure, RAM, and refurbished versus used — explained plainly.",
+      "Articles and guides: RAM, SSD, Windows and refurbished or new laptops. Find the right fit for your needs, with clear tips, limits and links to sources.",
     eyebrow: "Kestro Knowledge",
-    title: "Knowledge for business IT",
+    title: "Computer articles and guides",
     description:
-      "We make our money sourcing and preparing equipment, not hoarding knowledge. This is what we would have told you if you had phoned.",
-    statGuides: "guides",
+      "What should you buy, what can you upgrade and what can you do yourself? Practical answers for individuals and companies, with sources and clear limits.",
+    statGuides: "articles and guides",
     statClusters: "topics",
     statUpdated: "last updated",
     indexTitle: "Topics",
@@ -64,8 +67,35 @@ const copy = {
     readingSuffix: "min",
     read: "Read the guide",
     crumb: "Knowledge",
+    start: "Start with your question",
+    editorial:
+      "Source-based articles prepared with AI assistance. Hardware examples are not individual compatibility guarantees. Market articles state their date and distinguish forecasts from current prices.",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+const startingPoints = [
+  {
+    slug: "hvorfor-er-ram-blevet-dyrere",
+    icon: BadgeEuro,
+    question: { da: "Hvorfor er RAM blevet dyrere?", en: "Why is memory more expensive?" },
+  },
+  {
+    slug: "refurbished-eller-ny-baerbar",
+    icon: Scale,
+    question: {
+      da: "Skal jeg købe refurbished eller nyt?",
+      en: "Should I buy refurbished or new?",
+    },
+  },
+  {
+    slug: "hvor-meget-kan-en-baerbar-opgraderes",
+    icon: MemoryStick,
+    question: {
+      da: "Hvor meget kan min bærbar opgraderes?",
+      en: "How far can I upgrade my laptop?",
+    },
+  },
+];
 
 export async function generateMetadata(props: {
   params: Promise<{ lang: Lang }>;
@@ -157,9 +187,9 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
             display: contents and the masthead is what it was. */}
         <Container className="relative flex flex-col py-6 max-md:pt-0 md:block md:py-16 lg:py-20">
           <div className="glass-card relative z-10 max-md:-mt-14 md:contents">
-          <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
+            <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
 
-          {/* w-fit so the box is the width of the label.
+            {/* w-fit so the box is the width of the label.
               As a block <p> it measured 1216px across — twelve characters of
               text claiming the full content column, most of it lying over the
               plate on the right. Nothing renders there, but a box is what an
@@ -167,57 +197,96 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
               of the render as this text's background and called 3.11:1 on
               type that actually sits on 8.48:1. The label is a label; its box
               should say so. */}
-          <p className="eyebrow mt-6 w-fit text-brand-300 sm:mt-8">{c.eyebrow}</p>
-          <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
-            {c.title}
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
-            {c.description}
-          </p>
+            <p className="eyebrow mt-6 w-fit text-brand-300 sm:mt-8">{c.eyebrow}</p>
+            <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
+              {c.title}
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+              {c.description}
+            </p>
 
-          {/* A meta line, not a dashboard.
-           *
-           * These were three tiles with the counts set at 24px over 12px
-           * labels. On a phone the third wrapped to its own row and the group
-           * came out ragged, and the counts — the least interesting thing on
-           * the page — carried the most weight on the first screen. What they
-           * are is the page's metadata, so they are set like metadata. */}
-          {/* Each item whole, and no separators.
-           *
-           * Set as one run of text it broke as "SENEST / OPDATERET 31. AUG.
-           * 2026", and a label split across two lines is the loudest thing
-           * on an otherwise quiet screen. Middots fixed that and introduced
-           * their own: whichever item wraps leaves a "·" hanging at the end
-           * of the line above it. Space separates these perfectly well, and
-           * space cannot orphan. */}
-          <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
-            <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/85">{guides.length}</span> {c.statGuides}
-            </span>
-            <span className="whitespace-nowrap">
-              <span className="tabular-nums text-paper/85">{groups.length}</span> {c.statClusters}
-            </span>
-            <span className="whitespace-nowrap">
-              {c.statUpdated}{" "}
-              <time dateTime={lastUpdated} className="tabular-nums text-paper/85">
-                {updatedLabel}
-              </time>
-            </span>
-          </p>
+            {/* A meta line, not a dashboard.
+             *
+             * These were three tiles with the counts set at 24px over 12px
+             * labels. On a phone the third wrapped to its own row and the group
+             * came out ragged, and the counts — the least interesting thing on
+             * the page — carried the most weight on the first screen. What they
+             * are is the page's metadata, so they are set like metadata. */}
+            {/* Each item whole, and no separators.
+             *
+             * Set as one run of text it broke as "SENEST / OPDATERET 31. AUG.
+             * 2026", and a label split across two lines is the loudest thing
+             * on an otherwise quiet screen. Middots fixed that and introduced
+             * their own: whichever item wraps leaves a "·" hanging at the end
+             * of the line above it. Space separates these perfectly well, and
+             * space cannot orphan. */}
+            <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
+              <span className="whitespace-nowrap">
+                <span className="tabular-nums text-paper/85">{guides.length}</span> {c.statGuides}
+              </span>
+              <span className="whitespace-nowrap">
+                <span className="tabular-nums text-paper/85">{groups.length}</span> {c.statClusters}
+              </span>
+              <span className="whitespace-nowrap">
+                {c.statUpdated}{" "}
+                <time dateTime={lastUpdated} className="tabular-nums text-paper/85">
+                  {updatedLabel}
+                </time>
+              </span>
+            </p>
 
-          {/* The first screen needs a picture on it.
-           *
-           * Measured on a 390px phone: the first image on this page sat at
-           * y=1387 — most of two screens of breadcrumb, heading, paragraph
-           * and counts before anything was drawn. The plate behind the
-           * masthead does not count: at that width it is bg-contain inside a
-           * mask that removes three quarters of it. Here it is a picture. */}
+            {/* The first screen needs a picture on it.
+             *
+             * Measured on a 390px phone: the first image on this page sat at
+             * y=1387 — most of two screens of breadcrumb, heading, paragraph
+             * and counts before anything was drawn. The plate behind the
+             * masthead does not count: at that width it is bg-contain inside a
+             * mask that removes three quarters of it. Here it is a picture. */}
           </div>
 
           <VidenHeroPlate
             variant="band"
             className="under-bar art-bleed order-first -mx-4 aspect-[4/3] sm:-mx-6 md:hidden"
           />
+        </Container>
+      </section>
+
+      <section aria-labelledby="start-reading" className="border-b border-white/10 py-10 sm:py-14">
+        <Container>
+          <div className="flex items-center gap-3">
+            <BookOpen aria-hidden="true" className="h-5 w-5 shrink-0 text-brand-300" />
+            <h2 id="start-reading" className="font-display t-h3 font-bold text-paper">
+              {c.start}
+            </h2>
+          </div>
+          <ul className="mt-6 grid gap-4 lg:grid-cols-3">
+            {startingPoints.map(({ slug, icon: Icon, question }) => {
+              const guide = guides.find((item) => item.slug === slug);
+              if (!guide) return null;
+              return (
+                <li key={slug}>
+                  <Link
+                    href={localePath(`/vejledninger/${slug}`, lang)}
+                    className="plate plate-lift group flex h-full flex-col gap-4 p-5 sm:p-6"
+                  >
+                    <Icon aria-hidden="true" className="h-6 w-6 text-brand-300" />
+                    <h3 className="font-display text-lg font-bold leading-snug text-paper group-hover:text-brand-300">
+                      {question[lang]}
+                    </h3>
+                    <p className="flex-1 text-sm leading-6 text-paper/75">{guide.summary[lang]}</p>
+                    <span className="flex items-center justify-between gap-3 text-sm text-brand-300">
+                      {c.read}
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
+                      />
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mt-6 max-w-4xl text-sm leading-6 text-paper/65">{c.editorial}</p>
         </Container>
       </section>
 

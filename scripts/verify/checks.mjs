@@ -687,10 +687,8 @@ for (const path of ["/reparation", "/en/repairs"]) {
 
   await readThrough("direct load of /");
 
-  /* Labels, not hrefs, because what is being checked is that a visitor can
-     click the thing they can see. "Viden" was "Vejledninger" until the section
-     was renamed — the URL did not move, only the word on the link. */
-  for (const label of ["Reparation", "Om os", "Viden"]) {
+  /* Check the visible labels; the knowledge URL is unchanged. */
+  for (const label of ["Reparation", "Om os", "Artikler"]) {
     await page.click(`header nav a:has-text("${label}")`);
     await page.waitForTimeout(1100);
     await readThrough(`after clicking ${label}`);
@@ -1057,6 +1055,86 @@ for (const width of [320, 390, 1440]) {
 }
 
 /* ------------------------------------------------------------------ console */
+
+/* The education hub and articles must be readable and linked without client JS. */
+for (const [hub, title, articlePaths] of [
+  [
+    "/vejledninger",
+    "Artikler og guides om computere",
+    [
+      "/vejledninger/hvorfor-er-ram-blevet-dyrere",
+      "/vejledninger/refurbished-eller-ny-baerbar",
+      "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
+    ],
+  ],
+  [
+    "/en/knowledge",
+    "Computer articles and guides",
+    [
+      "/en/knowledge/why-memory-prices-rise",
+      "/en/knowledge/refurbished-or-new-laptop",
+      "/en/knowledge/laptop-upgrade-limits",
+    ],
+  ],
+]) {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 390, height: 844 },
+  });
+  const page = await context.newPage();
+  await page.goto(BASE + hub, { waitUntil: "networkidle" });
+  if (!(await page.getByRole("heading", { level: 1, name: title, exact: true }).count()))
+    fail("education hub", `missing clear article heading on ${hub}`);
+  for (const path of articlePaths) {
+    if (!(await page.locator(`main a[href='${path}']`).count()))
+      fail("education hub", `missing article link ${path}`);
+    const response = await page.goto(BASE + path, { waitUntil: "networkidle" });
+    if (response?.status() !== 200)
+      fail("education route", `${path} returned ${response?.status()}`);
+    const article = await page
+      .locator("script[type='application/ld+json']")
+      .evaluateAll((nodes) =>
+        nodes
+          .map((node) => JSON.parse(node.textContent))
+          .find((schema) => schema["@type"] === "Article"),
+      );
+    if (article?.datePublished !== "2026-10-16" || article?.dateModified !== "2026-10-16")
+      fail("education dates", `incorrect new-article dates on ${path}`);
+    const webpageDates = await page
+      .locator("script[type='application/ld+json']")
+      .evaluateAll((nodes) =>
+        nodes
+          .map((node) => JSON.parse(node.textContent))
+          .find((schema) => schema["@type"] === "WebPage"),
+      );
+    if (
+      webpageDates?.datePublished !== article?.datePublished ||
+      webpageDates?.dateModified !== article?.dateModified
+    )
+      fail("education dates", `WebPage and Article disagree on ${path}`);
+    if (
+      !(await page
+        .locator("main img")
+        .evaluateAll((images) => images.some((img) => img.complete && img.naturalWidth > 0)))
+    )
+      fail("education artwork", `missing article illustration on ${path}`);
+    if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1))
+      fail("education layout", `horizontal overflow on ${path}`);
+    await page.goto(BASE + hub, { waitUntil: "networkidle" });
+  }
+  await page.goto(BASE + articlePaths[2], { waitUntil: "networkidle" });
+  const text = await page.locator("main").innerText();
+  if (
+    !text.includes("128 GB") ||
+    !text.includes("40/48 GB") ||
+    !text.includes("BitLocker") ||
+    !text.includes("PC Health Check")
+  )
+    fail("upgrade education", `missing documented limits or safety advice on ${articlePaths[2]}`);
+  if ((await page.locator("main table tbody tr").count()) !== 4)
+    fail("upgrade education", "hardware comparison must retain four documented examples");
+  await context.close();
+}
 
 {
   const messages = [];

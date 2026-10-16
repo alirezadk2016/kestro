@@ -35,6 +35,136 @@ export type Source = {
 };
 
 export const sources = {
+  memoryGenerations: {
+    id: "memoryGenerations",
+    publisher: "Kingston",
+    title: { da: "DDR4 og DDR5: kompatibilitet", en: "DDR4 and DDR5: compatibility" },
+    url: "https://www.kingston.com/en/blog/pc-performance/ddr-memory-generation-differences",
+    accessed: "2026-10-16",
+    claim: {
+      da: "DDR4 og DDR5 har forskellige elektriske krav og fysisk kodning og er ikke indbyrdes udskiftelige.",
+      en: "DDR4 and DDR5 have different electrical requirements and physical keying and are not interchangeable.",
+    },
+  },
+  memoryMarketSeptember2026: {
+    id: "memoryMarketSeptember2026",
+    publisher: "TrendForce",
+    title: {
+      da: "DRAM Contract Price Sep. 2026: offentligt resumé",
+      en: "DRAM Contract Price Sep. 2026: public summary",
+    },
+    url: "https://www.trendforce.com/research/download/RP260930SN",
+    published: "2026",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Resuméet fra 30. september beskriver stabile kontraktpriser, pres på PC DRAM-udbuddet og kapacitet flyttet mod servere. Det er ikke danske detailpriser.",
+      en: "The September 30 summary describes stable contract prices, constrained PC DRAM supply and capacity shifting to servers. These are not Danish retail prices.",
+    },
+  },
+  memoryOutlookQ42026: {
+    id: "memoryOutlookQ42026",
+    publisher: "TrendForce",
+    title: {
+      da: "4Q26 Memory Price Forecast: offentligt resumé",
+      en: "4Q26 Memory Price Forecast: public summary",
+    },
+    url: "https://www.trendforce.com/research/download/RP260924PL",
+    published: "2026",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Prognosen fra 24. september beskriver AI- og serverdrevet prispres med forskellige forløb for server- og forbrugerhukommelse. Kun det offentlige resumé er anvendt.",
+      en: "The September 24 forecast describes AI- and server-led price pressure with different trends for server and consumer memory. Only the public summary was used.",
+    },
+  },
+  thinkpadT480Specs: {
+    id: "thinkpadT480Specs",
+    publisher: "Lenovo",
+    title: { da: "ThinkPad T480: PSREF", en: "ThinkPad T480: PSREF" },
+    url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T480/ThinkPad_T480_Spec.PDF",
+    accessed: "2026-10-16",
+    claim: {
+      da: "T480 findes med 7. og 8. generations Intel Core. Lenovo angiver to DDR4 SO-DIMM-sokler og 32 GB maksimum; det primære lager er 2,5-tommer SATA eller M.2 NVMe afhængigt af konfiguration.",
+      en: "T480 has 7th- and 8th-generation Intel Core variants. Lenovo lists two DDR4 SO-DIMM slots and a 32 GB maximum; primary storage is 2.5-inch SATA or M.2 NVMe depending on configuration.",
+    },
+  },
+  thinkpadP53Specs: {
+    id: "thinkpadP53Specs",
+    publisher: "Lenovo",
+    title: { da: "ThinkPad P53: PSREF", en: "ThinkPad P53: PSREF" },
+    url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_P53/ThinkPad_P53_Spec.html",
+    accessed: "2026-10-16",
+    claim: {
+      da: "P53 har bl.a. 9. generations Core-processorer, fire DDR4 SO-DIMM-sokler og op til 128 GB. ECC kræver Xeon og ECC-moduler. Lageropsætningen afhænger af konfigurationen.",
+      en: "P53 includes 9th-generation Core processor options, four DDR4 SO-DIMM slots and up to 128 GB. ECC requires Xeon and ECC modules. Storage layout depends on configuration.",
+    },
+  },
+  laptopServiceSafety: {
+    id: "laptopServiceSafety",
+    publisher: "Dell",
+    title: {
+      da: "XPS 13 7390 2-in-1: sikkerhed ved service",
+      en: "XPS 13 7390 2-in-1: service safety",
+    },
+    url: "https://www.dell.com/support/manuals/en-ca/xps-13-7390-2-in-1-laptop/xps-13-7390-2-in-1-servicemanual/safety-instructions?guid=guid-71128823-ce64-4e17-9439-dee95af668c4&lang=en-us",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Servicevejledningen kræver frakobling af strømkilder før åbning, ESD-beskyttelse og forsigtig håndtering af stik og komponenter. Den konkrete models egen manual bestemmer proceduren.",
+      en: "The service instructions require disconnecting power sources before opening, ESD protection and careful handling of connectors and components. The exact model's own manual determines the procedure.",
+    },
+  },
+  swollenBatterySafety: {
+    id: "swollenBatterySafety",
+    publisher: "Dell",
+    title: {
+      da: "Sikker håndtering af opsvulmede lithium-ion-batterier",
+      en: "Handling swollen lithium-ion batteries",
+    },
+    url: "https://dl.dell.com/topicspdf/swollenbattery-3_en-us.pdf",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Et opsvulmet batteri må ikke bøjes, punkteres eller presses fri med værktøj; Dell anbefaler kontakt til support om sikker udskiftning.",
+      en: "A swollen battery must not be bent, punctured or pried out with tools; Dell recommends contacting support about safe replacement.",
+    },
+  },
+  bitlockerRecovery: {
+    id: "bitlockerRecovery",
+    publisher: "Microsoft",
+    title: { da: "Find din BitLocker-genoprettelsesnøgle", en: "Find your BitLocker recovery key" },
+    url: "https://support.microsoft.com/en-us/windows/security/encryption/find-your-bitlocker-recovery-key",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Hardware- eller sikkerhedsændringer kan udløse BitLocker-genoprettelse. Microsoft kan ikke genskabe en mistet genoprettelsesnøgle.",
+      en: "Hardware or security changes can trigger BitLocker recovery. Microsoft cannot recreate a lost recovery key.",
+    },
+  },
+  pcHealthCheck: {
+    id: "pcHealthCheck",
+    publisher: "Microsoft",
+    title: {
+      da: "Kontrollér Windows 11 med PC Health Check",
+      en: "Check Windows 11 with PC Health Check",
+    },
+    url: "https://support.microsoft.com/en-us/windows/experience/compatibility/how-to-use-the-pc-health-check-app",
+    accessed: "2026-10-16",
+    claim: {
+      da: "PC Health Check vurderer Windows 11-egnethed og forklarer manglende krav. En kompatibilitetsblokering kan stadig forsinke opgraderingen.",
+      en: "PC Health Check assesses Windows 11 eligibility and explains unmet requirements. A compatibility safeguard can still delay the upgrade.",
+    },
+  },
+  unsupportedWindows11: {
+    id: "unsupportedWindows11",
+    publisher: "Microsoft",
+    title: {
+      da: "Windows 11 på hardware uden de krævede specifikationer",
+      en: "Windows 11 on devices that do not meet minimum requirements",
+    },
+    url: "https://support.microsoft.com/en-gb/windows/experience/compatibility/windows-11-on-devices-that-don-t-meet-minimum-system-requirements",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Microsoft fraråder installation på ikke-understøttet hardware; support og opdateringer, herunder sikkerhedsopdateringer, er ikke garanteret.",
+      en: "Microsoft advises against installing on unsupported hardware; support and updates, including security updates, are not guaranteed.",
+    },
+  },
   thinkpadX1CarbonGen7: {
     id: "thinkpadX1CarbonGen7",
     publisher: "Lenovo",

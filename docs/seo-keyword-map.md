@@ -1,6 +1,6 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 201 i alt, 180 danske, 20 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 213 i alt, 189 danske, 23 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
@@ -16,7 +16,7 @@ rådata opbevares uden for dette offentlige repository.
 De tre forældede `New`-markeringer for refurbished-definitionen,
 sammenligningen og Windows 10-guiden er rettet til `Existing`. Startup-behov
 dækkes nu på produktoversigten; valg af bærbar i den eksisterende købsguide.
-Ti rækker peger stadig på seks ikke-udgivne guideforslag: `New` er en idé,
+Ni rækker peger stadig på fem ikke-udgivne guideforslag: `New` er en idé,
 ikke en offentlig URL, en brudt intern henvisning eller en godkendelse til at oprette en side.
 Undersøg dansk SERP og reelt indhold før oprettelse. Udokumenterede påstande
 om konkurrenter og efterspørgsel er fjernet fra de berørte noter.
@@ -37,10 +37,26 @@ Listen så grundig ud, men den gav ikke klik. Seks konkrete fejl:
 
 Før: af de primære søgeord, der pegede på en side, der findes, stod 37 helt i sidens title, 10 delvist og 1 slet ikke. 21 primære søgeord pegede enten på en guide, der ikke er skrevet, eller på en engelsk adresse, der viderestiller.
 
-Nu: 83 primære søgeordsrækker. 77 peger på eksisterende sider, seks på
-foreslåede guides. Ti nye behovsvarianter er tilføjet som sekundære, ikke som
+Nu: 88 primære søgeordsrækker. 83 peger på eksisterende sider, fem på
+foreslåede guides. Tolv artikelvarianter er tilføjet i denne udvidelse;
+spørgsmålet om RAM-mængde dækkes nu på den eksisterende RAM-guide, ikke en ny side.
+Ti tidligere behovsvarianter er tilføjet som sekundære, ikke som
 parallelle sider. Se `docs/seo-needs-research.md` for konkurrentobservationer,
 intent og afgrænsning; det er ikke en måling af volumen eller Google.dk-rangering.
+
+### Artikler og undervisning
+
+Tre nye, tosprogede artikler supplerer de otte eksisterende:
+
+| Dansk URL | Ejet spørgsmål | Afgrænsning |
+| --- | --- | --- |
+| `/vejledninger/hvorfor-er-ram-blevet-dyrere` | Hvorfor er RAM blevet dyrere? | Daterede markedsresuméer, ikke et dansk detailprisindeks eller en købsprognose. |
+| `/vejledninger/refurbished-eller-ny-baerbar` | Refurbished eller nyt? | Købsbeslutning; definitionen af refurbished/brugt bliver på sin eksisterende URL. |
+| `/vejledninger/hvor-meget-kan-en-baerbar-opgraderes` | Hvor går opgraderingsgrænsen? | Producenteksempler og kompatibilitet; RAM-skifteproceduren bliver på RAM-guiden. |
+
+RAM-, Windows- og reparationsvejledninger er opdateret med sikkerhed,
+modelspecifikke begrænsninger og en sammenligning af samlede omkostninger.
+Se `docs/seo-education.md` for kildevalg og måling af effekten.
 
 ## Reglerne for en title
 

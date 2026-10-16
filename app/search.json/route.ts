@@ -99,8 +99,8 @@ const pages: { href: string; t: Localized; d: Localized; k?: string }[] = [
   },
   {
     href: "/vejledninger",
-    t: { da: "Viden", en: "Knowledge" },
-    d: { da: "Vejledninger om brugt IT, Windows og data", en: "Guides on used IT, Windows and data" },
+    t: { da: "Artikler og guides", en: "Articles and guides" },
+    d: { da: "Køb, priser, RAM, SSD, Windows og sikre opgraderinger", en: "Buying, prices, RAM, SSD, Windows and safe upgrades" },
     k: "vejledninger guides artikler articles",
   },
   {

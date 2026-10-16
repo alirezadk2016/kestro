@@ -50,6 +50,7 @@ export default function PageSchema({
   /** Set on pages whose main content is a typed node published separately
       (Article, Product, Service), so the WebPage points at it instead of repeating it. */
   primaryEntityId,
+  contentDates,
 }: {
   lang: Lang;
   route: Route;
@@ -59,8 +60,10 @@ export default function PageSchema({
   sources?: readonly SourceId[];
   pagePath?: string;
   primaryEntityId?: string;
+  /** Dynamic articles own their dates; a template's creation is not publication. */
+  contentDates?: { published: string; modified: string };
 }) {
-  const dates = pageDates[route];
+  const dates = contentDates ?? pageDates[route];
   const url = `${SITE_ORIGIN}${localePath(pagePath ?? route.replace(/\/\[slug\]$/, ""), lang)}`;
 
   const json = {

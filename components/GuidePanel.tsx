@@ -1931,6 +1931,30 @@ export function GuidePanelStyles() {
 type Art = { src: string; alt: Localized; neutral?: boolean };
 
 const artwork: Record<string, Art> = {
+  "hvorfor-er-ram-blevet-dyrere": {
+    src: "/viden/ydelse.webp",
+    neutral: true,
+    alt: {
+      da: "RAM og NVMe SSD på et arbejdsbord, illustreret til artiklen om hukommelsespriser.",
+      en: "Memory and an NVMe SSD on a workbench, illustrating the memory-pricing article.",
+    },
+  },
+  "refurbished-eller-ny-baerbar": {
+    src: "/viden/stand.webp",
+    neutral: true,
+    alt: {
+      da: "To bærbare med forskellig kosmetisk stand, illustration til sammenligning af købsvalg.",
+      en: "Two laptops with different cosmetic condition, illustrating a comparison of buying options.",
+    },
+  },
+  "hvor-meget-kan-en-baerbar-opgraderes": {
+    src: "/viden/beslutning.webp",
+    neutral: true,
+    alt: {
+      da: "En åbnet bærbar og udskiftelige dele på et arbejdsbord, illustration til opgraderingsguiden.",
+      en: "An opened laptop and replaceable parts on a workbench, illustrating the upgrade guide.",
+    },
+  },
   "tjek-brugt-baerbar-foer-koeb": {
     src: "/viden/inspektion.webp",
     neutral: true,
@@ -1998,7 +2022,7 @@ const artwork: Record<string, Art> = {
   },
 };
 
-export const hasGuidePanel = (slug: string) => slug in panels;
+export const hasGuidePanel = (slug: string) => slug in panels || slug in artwork;
 
 /**
  * Whether a page showing this guide needs the drawn panels' chrome at all.
@@ -2050,9 +2074,6 @@ export default function GuidePanel({
   priority?: boolean;
   sizes?: string;
 }) {
-  const def = panels[slug];
-  if (!def) return null;
-
   /* A rendered plate where one exists and the reader can read it. */
   const art = plateFor(slug, lang);
   if (art) {
@@ -2071,6 +2092,9 @@ export default function GuidePanel({
       </div>
     );
   }
+
+  const def = panels[slug];
+  if (!def) return null;
 
   /* One gradient and filter namespace per panel: eight of these share a
      document, and the second would silently take the first one's ids. */
