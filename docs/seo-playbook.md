@@ -416,3 +416,31 @@ Waits on the owner, as before, plus:
   in Tailwind 3's file watcher and `eslint-config-next`, which run on the
   build machine and are not shipped. `braces` has no patched release; the
   only fix is Tailwind 4, a migration of the whole stylesheet set-up.
+
+### Education Expansion, 16 October 2026
+
+The existing knowledge section now has eleven Danish articles and eleven
+English mirrors. Three new articles cover memory-price context, refurbished
+versus new laptops, and model-specific upgrade limits. Four existing guides
+(RAM, Windows 11, repair decisions and Windows 10 servicing) were refreshed.
+The homepage hero, graphics pipeline, commercial routing and dependencies
+were not redesigned or replaced.
+
+- `npm run verify`: content gates, production build and browser checks passed;
+  all 65 security cases held.
+- Independent sitemap crawl: 142 URLs, no response, canonical, hreflang,
+  heading, metadata, image-alt or internal-link issues.
+- Focused education QA: 20 route/viewport combinations at 320, 390, 768,
+  1440 and 1920 pixels, no horizontal overflow or missing visible images.
+  Desktop/mobile screenshots and upgrade tables were visually inspected.
+- New articles are in site search and the Danish Atom feed. Feed publication
+  dates match Article dates; refreshed articles retain their original dates.
+- The six new-language snippets fit the 580/920-pixel title/description
+  budget. All six descriptions are 145–160 characters.
+- Article and WebPage publication/modification dates agree. Per-article
+  dates override the age of the shared route template.
+
+Keyword map: 213 rows; demand, CPC and difficulty remain unknown.
+No paid market report, media generation or advertising was purchased.
+See `docs/seo-education.md` for source boundaries and outcome measurement.
+Search Console traffic and indexing improvement are not yet measured.

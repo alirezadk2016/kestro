@@ -94,7 +94,7 @@ Primært søgeord og title for hver dansk side. De engelske sider følger samme 
 | `/modeller` | brugt thinkpad | Brugte ThinkPad, EliteBook, Latitude og OptiPlex \| Kestro | Modeller vi ofte skaffer til erhverv \| Kestro |
 | `/reparation` | computer reparation | Reparation af computer og bærbar – også for private \| Kestro | Reparation og opgradering af firmacomputere \| Kestro |
 | `/ydelser` | — | Ydelser: indkøb, klargøring, levering og opkøb af IT \| Kestro | Ydelser: indkøb, flåder, opgradering og opkøb \| Kestro |
-| `/vejledninger` | — | Vejledninger: køb, tjek og udskiftning af erhvervs-IT \| Kestro | Viden om erhvervs-IT: køb og udskiftning \| Kestro |
+| `/vejledninger` | — | Artikler og guides: bærbare, RAM og Windows \| Kestro | Viden om erhvervs-IT: køb og udskiftning \| Kestro |
 | `/flaadeloesninger` | computere til medarbejdere | Computere til alle medarbejdere – én model, én levering \| Kestro | Computere til flere medarbejdere – flådeløsninger \| Kestro |
 | `/kvalitet` | garanti på refurbished computere | Refurbished computere: grad A, B og C og garanti \| Kestro | Garanti og stand på refurbished erhvervs-IT \| Kestro |
 | `/priser` | hvad koster brugte computere | Hvad koster brugte computere til virksomheder? \| Kestro | Hvad koster brugte erhvervscomputere? \| Kestro |
