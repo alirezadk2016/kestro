@@ -31,6 +31,10 @@ in every change that applies Mak or adds a lesson.
   keyword map distinguishes existing guides from unapproved proposals.
 - Canonicals, hreflang, sitemap membership, redirects, homepage artwork and
   the Danish/English route structure are unchanged.
+- Model-hub descriptions were measured at 146/147 characters and 905/917 px
+  in Danish/English. The content-date generator normalises Windows paths so
+  shared components and per-file presentation exclusions work on both hosts.
+  Related-link edits do not refresh every guide's visible date.
 - Next review: compare equivalent completed Search Console windows for
   non-brand queries and relevant landing pages. Do not confuse anonymised
   queries with zero clicks, impressions with market volume, or indexing with
