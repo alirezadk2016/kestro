@@ -35,6 +35,20 @@ export type Source = {
 };
 
 export const sources = {
+  windowsResetErasure: {
+    id: "windowsResetErasure",
+    publisher: "Microsoft",
+    title: {
+      da: "Nulstil pc: muligheder og sletningsbegrænsninger",
+      en: "Reset your PC: options and erasure limitations",
+    },
+    url: "https://support.microsoft.com/en-us/windows/experience/backup-recovery/reset-your-pc",
+    accessed: "2026-10-16",
+    claim: {
+      da: "Microsoft beskriver Rens data som en forbrugerfunktion, der gør gendannelse sværere, men ikke opfylder statslige eller branchespecifikke datasletningsstandarder.",
+      en: "Microsoft describes Clean data as a consumer function that makes recovery harder but does not meet government or industry data-erasure standards.",
+    },
+  },
   memoryGenerations: {
     id: "memoryGenerations",
     publisher: "Kingston",

@@ -1136,6 +1136,110 @@ for (const [hub, title, articlePaths] of [
   await context.close();
 }
 
+/* Every article language variant must be indexable and describe its own illustration. */
+const articleVariants = new Map();
+for (const [hub, prefix, language] of [
+  ["/vejledninger", "/vejledninger/", "da-DK"],
+  ["/en/knowledge", "/en/knowledge/", "en"],
+]) {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(BASE + hub, { waitUntil: "networkidle" });
+  const hubInfo = await page.evaluate((prefix) => {
+    const schemas = [...document.querySelectorAll("script[type='application/ld+json']")].map(
+      (node) => JSON.parse(node.textContent),
+    );
+    return {
+      list: schemas.find((schema) => schema["@type"] === "ItemList"),
+      collection: schemas.find((schema) => schema["@type"] === "CollectionPage"),
+      hrefs: [
+        ...new Set(
+          [...document.querySelectorAll("main a[href]")]
+            .map((a) => a.getAttribute("href"))
+            .filter((href) => href.startsWith(prefix)),
+        ),
+      ],
+    };
+  }, prefix);
+  const items = hubInfo.list?.itemListElement ?? [];
+  if (
+    items.length !== hubInfo.hrefs.length ||
+    hubInfo.list?.numberOfItems !== items.length ||
+    !items.length
+  )
+    fail("bilingual article index", `missing or mismatched article list on ${hub}`);
+  if (hubInfo.collection?.mainEntity?.["@id"] !== hubInfo.list?.["@id"])
+    fail("bilingual article index", `collection does not reference its reading list on ${hub}`);
+  for (const [index, item] of items.entries()) {
+    const path = new URL(item.url).pathname;
+    if (item.position !== index + 1 || !hubInfo.hrefs.includes(path))
+      fail("bilingual article index", `invalid position or invisible item ${path}`);
+    const response = await page.goto(BASE + path, { waitUntil: "networkidle" });
+    if (response?.status() !== 200 || /noindex/i.test(response?.headers()["x-robots-tag"] ?? ""))
+      fail("bilingual article response", `not indexable: ${path}`);
+    const info = await page.evaluate(() => {
+      const schemas = [...document.querySelectorAll("script[type='application/ld+json']")].map(
+        (node) => JSON.parse(node.textContent),
+      );
+      const meta = (key) =>
+        document.querySelector(`meta[property='${key}'],meta[name='${key}']`)?.content;
+      const imageSources = [...document.querySelectorAll("main img")].map((img) => {
+        const src = new URL(img.src);
+        return src.searchParams.get("url") ?? src.pathname;
+      });
+      return {
+        lang: document.documentElement.lang,
+        title: document.title,
+        description: meta("description"),
+        robots: meta("robots"),
+        canonical: document.querySelector("link[rel='canonical']")?.href,
+        alternates: Object.fromEntries(
+          [...document.querySelectorAll("link[hreflang]")].map((link) => [
+            link.hreflang,
+            link.href,
+          ]),
+        ),
+        article: schemas.find((schema) => schema["@type"] === "Article"),
+        ogType: meta("og:type"),
+        ogTitle: meta("og:title"),
+        ogDescription: meta("og:description"),
+        ogImage: meta("og:image"),
+        twitterImage: meta("twitter:image"),
+        imageSources,
+      };
+    });
+    if (
+      info.lang !== language ||
+      new URL(info.canonical).pathname !== path ||
+      /noindex|nofollow/.test(info.robots ?? "")
+    )
+      fail("bilingual article language", `incorrect language, canonical or robots on ${path}`);
+    if (!info.robots?.includes("max-image-preview:large") || info.ogType !== "article")
+      fail("bilingual article metadata", `missing article type or preview permission on ${path}`);
+    if (info.ogTitle !== info.title || info.ogDescription !== info.description)
+      fail("bilingual article metadata", `mixed or stale snippet on ${path}`);
+    if (info.article?.inLanguage !== language || info.article?.url !== info.canonical)
+      fail("bilingual article schema", `incorrect language or URL on ${path}`);
+    if (
+      !info.article?.image?.url ||
+      info.article.image.url !== info.ogImage ||
+      info.ogImage !== info.twitterImage
+    )
+      fail("bilingual article image", `schema and preview disagree on ${path}`);
+    else if (!info.imageSources.includes(new URL(info.article.image.url).pathname))
+      fail("bilingual article image", `schema does not describe visible artwork on ${path}`);
+    articleVariants.set(info.canonical, info);
+  }
+  await context.close();
+}
+for (const [url, info] of articleVariants) {
+  for (const language of ["da", "en"]) {
+    const other = articleVariants.get(info.alternates[language]);
+    if (!other || other.alternates[info.lang === "en" ? "en" : "da"] !== url)
+      fail("bilingual article pairing", `missing reciprocal ${language} variant of ${url}`);
+  }
+}
+
 {
   const messages = [];
   for (const path of ["/", "/en", "/kontakt", "/maskinen"]) {

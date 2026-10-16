@@ -1,6 +1,6 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 213 i alt, 189 danske, 23 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 218 i alt, 189 danske, 28 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
@@ -37,7 +37,7 @@ Listen så grundig ud, men den gav ikke klik. Seks konkrete fejl:
 
 Før: af de primære søgeord, der pegede på en side, der findes, stod 37 helt i sidens title, 10 delvist og 1 slet ikke. 21 primære søgeord pegede enten på en guide, der ikke er skrevet, eller på en engelsk adresse, der viderestiller.
 
-Nu: 88 primære søgeordsrækker. 83 peger på eksisterende sider, fem på
+Nu: 93 primære søgeordsrækker. 88 peger på eksisterende sider, fem på
 foreslåede guides. Tolv artikelvarianter er tilføjet i denne udvidelse;
 spørgsmålet om RAM-mængde dækkes nu på den eksisterende RAM-guide, ikke en ny side.
 Ti tidligere behovsvarianter er tilføjet som sekundære, ikke som
@@ -57,6 +57,13 @@ Tre nye, tosprogede artikler supplerer de otte eksisterende:
 RAM-, Windows- og reparationsvejledninger er opdateret med sikkerhed,
 modelspecifikke begrænsninger og en sammenligning af samlede omkostninger.
 Se `docs/seo-education.md` for kildevalg og måling af effekten.
+
+De ti målrettede artikler har nu et engelsk primærmål i CSV'en, ikke kun
+en dansk frase. Eksempelvis `upgrade laptop ram`, `refurbished vs used laptops`
+og `used laptop buying checklist`. PC-byggesiden beholder sin bevidste
+afgrænsning uden primært mål. Dette er redaktionelle søgeord, ikke målte
+Google-positioner. Vi bruger ikke en meta-keywords-liste som erstatning for
+oversatte titler, indhold og korrekte sprogversioner.
 
 ## Reglerne for en title
 
@@ -175,7 +182,7 @@ Primært søgeord og title for hver dansk side. De engelske sider følger samme 
 | URL | Primært søgeord | Title nu | Title før |
 | --- | --- | --- | --- |
 | `/vejledninger/opgrader-ram-i-baerbar` | opgradere ram i bærbar | Opgrader RAM i bærbar: tjek, køb og skift selv \| Kestro | Sådan opgraderer du RAM i en bærbar computer \| Kestro |
-| `/vejledninger/refurbished-eller-brugt` | refurbished vs brugt | Refurbished vs. brugt: hvad er forskellen? \| Kestro | uændret |
+| `/vejledninger/refurbished-eller-brugt` | refurbished vs brugt | Refurbished vs. brugt computer: forskellen \| Kestro | Refurbished vs. brugt: hvad er forskellen? \| Kestro |
 | `/vejledninger/reparere-eller-koebe-ny` | reparere eller købe ny computer | Reparere eller købe ny computer? Sådan regner du \| Kestro | uændret |
 | `/vejledninger/samle-din-egen-pc` | — | Byg din egen pc: dele, rækkefølge og typiske fejl \| Kestro | Samle sin egen pc: rækkefølge, dele og fejl \| Kestro |
 | `/vejledninger/slet-data-foer-du-saelger` | sikker datasletning | Sikker datasletning før salg eller kassering \| Kestro | uændret |

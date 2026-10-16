@@ -444,3 +444,40 @@ Keyword map: 213 rows; demand, CPC and difficulty remain unknown.
 No paid market report, media generation or advertising was purchased.
 See `docs/seo-education.md` for source boundaries and outcome measurement.
 Search Console traffic and indexing improvement are not yet measured.
+
+### Bilingual Education SEO, 16 October 2026
+
+Scoped to the existing eleven articles in Danish and their eleven English
+translations. Existing URLs, self-canonicals, reciprocal language alternates
+and sitemap entries were already correct and remain in place.
+
+- Localized the remaining older article snippets around the question each
+  article answers. All 22 title/description pairs fit the 580/920-pixel budget.
+- Article, Open Graph and Twitter metadata now identify the illustration
+  actually shown on the article, with its localized alt text and dimensions.
+  Article pages allow large image previews; this is permission, not a promise
+  of a rich result or ranking improvement.
+- Each language's knowledge hub has an ItemList matching its visible reading
+  list, referenced by its CollectionPage.
+- Corrected data-erasure advice against Microsoft and NIST: a consumer reset
+  or deletion of one encryption-key copy does not prove verified sanitization.
+  Original publication dates remain; the revised guide has a real update date.
+- The keyword map has 218 rows and ten explicit English article primary
+  targets. The PC-building guide remains deliberately untargeted. Unknown
+  search volume, CPC and difficulty remain unknown.
+
+Verification of this change:
+
+- `npm run verify`: content, production build and browser checks passed;
+  all 65 security cases held. Persistent checks now cover all 22 article
+  language variants and both hub reading lists.
+- Independent rendered-HTML audit: 22 article variants passed language,
+  metadata, canonical, reciprocal hreflang, article dates, actual-cover and
+  language-switch checks; all eight referenced cover assets returned 200.
+- Independent full sitemap crawl: 142 URLs, no detected response, canonical,
+  hreflang, heading, metadata, image-alt or internal-link issues.
+- The revised English guide was visually inspected at 390 and 1440 pixels.
+
+No homepage redesign, new routes, dependencies, paid media or advertising.
+Google indexing and post-release search traffic are not yet verified; the
+connector does not provide URL Inspection or request-indexing capabilities.

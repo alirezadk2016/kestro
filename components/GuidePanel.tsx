@@ -2029,7 +2029,7 @@ export const hasGuidePanel = (slug: string) => slug in panels || slug in artwork
  *
  * Image-only pages need neither the fallback keyframes nor its shared SVG defs.
  */
-export const needsPanelChrome = (slug: string, lang: Lang) => !plateFor(slug, lang);
+export const needsPanelChrome = (slug: string, lang: Lang) => !guideArtwork(slug, lang);
 
 /**
  * The plate to show this reader, or nothing if they should get the drawing.
@@ -2039,7 +2039,7 @@ export const needsPanelChrome = (slug: string, lang: Lang) => !plateFor(slug, la
  * anybody. Both the renderer and the chrome check go through here so they can
  * never disagree about which a page is getting.
  */
-function plateFor(slug: string, lang: Lang): Art | undefined {
+export function guideArtwork(slug: string, lang: Lang): Art | undefined {
   const art = artwork[slug];
   if (!art) return undefined;
   return art.neutral || lang === "da" ? art : undefined;
@@ -2075,7 +2075,7 @@ export default function GuidePanel({
   sizes?: string;
 }) {
   /* A rendered plate where one exists and the reader can read it. */
-  const art = plateFor(slug, lang);
+  const art = guideArtwork(slug, lang);
   if (art) {
     return (
       <div className={className} style={style}>

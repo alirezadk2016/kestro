@@ -145,10 +145,40 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
     .at(-1);
 
   const updatedLabel = lastUpdated ? formatDate(lastUpdated, lang) : "";
+  const hubUrl = `${SITE_ORIGIN}${localePath("/vejledninger", lang)}`;
+  const listId = `${hubUrl}#articles`;
+  const articleList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": listId,
+    name: c.title,
+    numberOfItems: guides.length,
+    itemListElement: groups
+      .flatMap(({ articles }) => articles)
+      .map((guide, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: guide.title[lang],
+        url: `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`,
+      })),
+  };
 
   return (
     <>
-      <PageSchema lang={lang} type="CollectionPage" route="/vejledninger" />
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/vejledninger"
+        name={c.title}
+        description={c.metaDescription}
+        primaryEntityId={listId}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleList).replace(/</g, "\\u003c"),
+        }}
+      />
 
       {/* One stylesheet for all eight guide panels. Rendered here rather than
           inside each panel: eight identical copies of the same keyframes is

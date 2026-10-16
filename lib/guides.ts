@@ -931,8 +931,8 @@ export const guides: Guide[] = [
       en: "Windows 10 end of support: what companies do now | Kestro",
     },
     metaDescription: {
-      da: "Windows 10 mistede support 14. oktober 2025: hvad det betyder for virksomheden, hvilke maskiner kan få Windows 11, og hvad I gør med resten.",
-      en: "Windows 10 support ended 14 October 2025: what it means for a company, which machines can take Windows 11, and what to do with the rest.",
+      da: "Windows 10-support er slut. Se dine valg med ESU, LTSC og Windows 11, og hvad du bør tjekke, før du opgraderer eller udskifter din pc.",
+      en: "Windows 10 support has ended. Check ESU, LTSC and Windows 11 options for PCs, with a checklist for deciding what to upgrade, keep or replace.",
     },
     summary: {
       da: "Almindelig support er slut; ESU og LTSC har særskilte vilkår. Kontrollér hver maskines udgave, dækning og næste skridt.",
@@ -1204,12 +1204,12 @@ export const guides: Guide[] = [
       en: "Refurbished or used: what is the difference?",
     },
     metaTitle: {
-      da: "Refurbished vs. brugt: hvad er forskellen? | Kestro",
-      en: "Refurbished vs. used: what is the difference? | Kestro",
+      da: "Refurbished vs. brugt computer: forskellen | Kestro",
+      en: "Refurbished vs used laptops: the difference | Kestro",
     },
     metaDescription: {
-      da: "Brugt beskriver maskinens historie, refurbished et arbejde, nogen har udført på den. Forskellen – og hvad en virksomhed bør spørge sælgeren om.",
-      en: "Used describes the machine's history; refurbished describes work somebody did to it. The difference — and what a company should ask the seller.",
+      da: "Refurbished eller brugt computer? Se hvad ordene betyder, og hvad du skal tjekke om stand, batteri og test. Få en tjekliste til dit næste køb.",
+      en: "Refurbished or used laptop? Learn what each term means and what to ask about condition, testing and battery health before choosing a computer.",
     },
     summary: {
       da: "To ord, der bruges i flæng, og en forskel, der afgør, hvad I får. Sådan finder I ud af, hvad der faktisk er lavet ved maskinen.",
@@ -1697,11 +1697,11 @@ export const guides: Guide[] = [
     },
     metaTitle: {
       da: "Opgrader RAM i bærbar: tjek, køb og skift selv | Kestro",
-      en: "How to upgrade RAM in a laptop — step by step | Kestro",
+      en: "Upgrade laptop RAM safely: checks and fitting | Kestro",
     },
     metaDescription: {
-      da: "Sådan opgraderer du RAM i en bærbar: om den kan få mere, hvilken type du skal købe, og hvordan du skifter den. Med de fælder, folk falder i.",
-      en: "How to upgrade the RAM in a laptop: whether it can take more, which type to buy, and how to fit it — including the traps people most often fall into.",
+      da: "Kan du opgradere RAM i din bærbar? Tjek type, sokler og kapacitet før køb. Læs om sikkert skift, batteri og backup, og hvornår du bør få hjælp.",
+      en: "Upgrade laptop RAM safely: check slots, type and capacity before buying. Get backup and battery precautions, fitting advice and reasons to stop.",
     },
     summary: {
       da: "Find den rigtige RAM, kontrollér om den kan skiftes, og vurder om opgaven er egnet til gør-det-selv.",
@@ -2334,8 +2334,8 @@ export const guides: Guide[] = [
       en: "Windows 11 on an older PC: requirements and options | Kestro",
     },
     metaDescription: {
-      da: "Kan en gammel computer få Windows 11? Kravene – TPM 2.0, Secure Boot og processor – forklaret, og hvad I gør med de maskiner, der ikke kan.",
-      en: "TPM 2.0, Secure Boot and the processor list explained — and what to do with the machines in the fleet that cannot be upgraded to Windows 11.",
+      da: "Kan din pc få Windows 11? Tjek CPU, TPM og Secure Boot med PC Health Check. Læs om dine muligheder, hvis maskinen ikke opfylder kravene.",
+      en: "Can an old PC run Windows 11? Use PC Health Check to check CPU, TPM and Secure Boot. Find out what to do next if the device is not supported.",
     },
     summary: {
       da: "Hvorfor en maskine, der virker fint, ikke kan få Windows 11 – og hvad mulighederne så er.",
@@ -2496,8 +2496,8 @@ export const guides: Guide[] = [
       en: "Secure data erasure before selling or scrapping PCs | Kestro",
     },
     metaDescription: {
-      da: "Sikker datasletning: en formateret disk er ikke slettet. Sådan sletter I data forsvarligt, og hvad en sletterapport med serienummer skal indeholde.",
-      en: "Secure data erasure: formatting is not erasing. How to properly remove data from an SSD or hard disk, and what a company must document.",
+      da: "Sikker datasletning før salg: se forskellen på SSD, harddisk og Windows-nulstilling. Få råd om backup, valg af metode og sletterapporter.",
+      en: "Erase PC data before selling: compare reset, SSD and hard drive sanitisation. See backups, choosing a method and records for company PCs.",
     },
     summary: {
       da: "Formatering er ikke sletning. Forskellen kan koste dyrt, hvis det er en firmamaskine.",
@@ -2505,26 +2505,27 @@ export const guides: Guide[] = [
     },
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
     readingMinutes: 4,
-    updated: "2026-08-23",
+    published: "2026-08-23",
+    updated: "2026-10-16",
     tldr: {
-      da: "At slette filer og tømme papirkurven fjerner ikke data. På en SSD skal du bruge diskens indbyggede sletning (Secure Erase) – eller kryptere disken og derefter slette nøglen. Skal udstyret ud af en virksomhed, er dokumentationen for sletningen lige så vigtig som sletningen selv.",
-      en: "Deleting files and emptying the recycle bin does not remove data. On an SSD, use the drive's built-in erase (Secure Erase) — or encrypt the drive and then destroy the key. If the equipment is leaving a company, the documentation of the erasure matters as much as the erasure itself.",
+      da: "Sikker datasletning kræver en metode, der passer til drevet og dataenes følsomhed. Tag en kontrolleret backup først. Windows-nulstilling med Rens data er beregnet til forbrugere, ikke dokumenteret branchesletning. Til virksomhedsudstyr skal metode, resultat og ansvar afklares; en slettet fil, en glemt adgangskode eller ét fjernet nøgleeksemplar er ikke i sig selv bevis på sletning.",
+      en: "Secure data erasure requires a method suited to the drive and sensitivity of its data. Make a verified backup first. Windows reset with Clean data is intended for consumers, not documented industry sanitisation. For company equipment, establish the method, result and responsibility; a deleted file, forgotten password or one removed key copy does not itself prove erasure.",
     },
     intro: {
-      da: "Når en maskine skifter hænder, følger data med, hvis man ikke gør noget aktivt. En hurtig formatering fjerner kun indholdsfortegnelsen – filerne ligger der stadig og kan hentes frem med gratis værktøjer.",
-      en: "When a machine changes hands, the data goes with it unless you actively do something. A quick format only removes the index — the files are still there and can be recovered with free tools.",
+      da: "Før en computer sælges eller afleveres, skal der være en plan for data og konti. Denne guide skelner mellem en forbrugernulstilling og en dokumenteret sletningsproces; den er ikke en modelspecifik slettekommando eller en certificering af et drev.",
+      en: "Before selling or handing over a computer, plan what happens to its data and accounts. This guide distinguishes a consumer reset from a documented sanitisation process; it is not a model-specific erase command or certification of a drive.",
     },
     sections: [
       {
         heading: { da: "For en privat maskine", en: "For a personal machine" },
         body: [
           {
-            da: "Log først ud af alle konti: Microsoft-konto, Google og iCloud. Nulstil derefter maskinen med Windows' egen funktion, og vælg at fjerne alt og rense drevet. Det overskriver data i stedet for bare at slette henvisningerne.",
-            en: "Sign out of every account first: Microsoft account, Google and iCloud. Then reset the machine with Windows' own reset, choosing to remove everything and clean the drive. That overwrites the data rather than simply deleting the references.",
+            da: "Kontrollér først en sikkerhedskopi, og afklar konti, licenser og eventuelle enhedslåse. Microsoft beskriver Fjern alt med Rens data som en mulighed ved almindelig privat overdragelse: den gør gendannelse sværere. Microsoft understreger samtidig, at funktionen ikke opfylder statslige eller branchespecifikke datasletningsstandarder.",
+            en: "First verify a backup and establish what happens to accounts, licences and device locks. Microsoft describes Remove everything with Clean data as an option for an ordinary private handover: it makes recovery harder. Microsoft also states that this function does not meet government or industry data-erasure standards.",
           },
           {
-            da: "Har maskinen allerede kørt med BitLocker eller FileVault slået til, er sagen enklere: slettes nøglen, er data i praksis uigenkaldelige.",
-            en: "If the machine has been running with BitLocker or FileVault enabled, it is simpler: delete the key and the data is effectively unrecoverable.",
+            da: "Antag ikke, at BitLocker eller FileVault alene dokumenterer sletning. Kryptografisk sletning kræver kontrol over kryptering og de relevante nøgler og nøglekopier. Er data følsomme, eller er opsætningen ukendt, så få metoden vurderet af en fagperson frem for blot at slette en gemt genoprettelsesnøgle.",
+            en: "Do not assume BitLocker or FileVault alone proves erasure. Cryptographic erasure requires control over encryption and the relevant keys and key copies. For sensitive data or an unknown configuration, have a specialist assess the method instead of merely deleting a saved recovery key.",
           },
         ],
       },
@@ -2532,8 +2533,8 @@ export const guides: Guide[] = [
         heading: { da: "SSD og harddisk er ikke ens", en: "SSDs and hard disks are not the same" },
         body: [
           {
-            da: "På en gammeldags harddisk med plader virker overskrivning. På en SSD flytter controlleren data rundt, så en overskrivning ikke nødvendigvis rammer alle celler. Til SSD bruger man producentens Secure Erase, som findes i deres eget værktøj, eller man destruerer drevet fysisk.",
-            en: "On an old-fashioned platter hard disk, overwriting works. On an SSD the controller moves data around, so an overwrite does not necessarily reach every cell. For SSDs, you use the manufacturer's Secure Erase, found in their own tool, or you destroy the drive physically.",
+            da: "Valget afhænger af mediet, den konkrete enhed, dens tilstand og den nødvendige sikkerhed. NIST skelner mellem Clear, Purge og Destroy; det er ikke tre udskiftelige knapper. Følg drevproducentens dokumentation for en understøttet metode og kontrollér resultatet. Et værktøj med navnet Secure Erase er ikke i sig selv en certificering. Fysisk destruktion bør overlades til en egnet faglig proces, ikke improviseres derhjemme.",
+            en: "The choice depends on the medium, exact device, its condition and required assurance. NIST distinguishes Clear, Purge and Destroy; these are not three interchangeable buttons. Follow drive-manufacturer documentation for a supported method and verify the result. A tool labelled Secure Erase is not itself certification. Physical destruction should use a suitable professional process, not an improvised home method.",
           },
         ],
       },
@@ -2544,8 +2545,8 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Har maskinen indeholdt personoplysninger, skal I kunne dokumentere, at de er væk – ikke bare vide det. Forlang en sletterapport med serienummer for hver enkelt enhed fra den, der håndterer udstyret. Det er det dokument, I skal kunne lægge frem, hvis nogen spørger.",
-            en: "If the machine has held personal data, you have to be able to document that it is gone — not merely know it. Require an erasure report with a serial number for each individual device from whoever handles the equipment. That is the document you need to be able to produce if anyone asks.",
+            da: "Aftal omfang, ansvar og dokumentation med den, der håndterer udstyret. Bed om identifikation af drev og enhed, valgt metode, udførelsesdato og kontrollens resultat. Afklar undtagelser og fejl; en rapport bør beskrive, hvad der faktisk er udført, ikke blot love, at alle data er væk.",
+            en: "Agree scope, responsibility and documentation with the equipment handler. Ask for drive and device identification, selected method, execution date and verification result. Establish how exceptions and failures are handled; a report should describe what was actually done, not simply promise that all data is gone.",
           },
           {
             da: "Husk også BIOS-adgangskoder og enhedslåse. En maskine, der stadig er bundet til jeres administration, kan ikke bruges af den næste ejer.",
@@ -2572,7 +2573,7 @@ export const guides: Guide[] = [
         label: { da: "Flyt data til ny computer", en: "Move data to a new computer" },
       },
     ],
-    sources: [guideSource("nistSanitization")],
+    sources: [guideSource("nistSanitization"), guideSource("windowsResetErasure")],
     faqs: [
       {
         question: {
@@ -2580,8 +2581,8 @@ export const guides: Guide[] = [
           en: "Is deleting the files and emptying the recycle bin enough?",
         },
         answer: {
-          da: "Nej. Det fjerner ikke data. Brug Windows' egen nulstilling med indstillingen, der fjerner alt og renser drevet – den overskriver i stedet for bare at slette.",
-          en: "No. That does not remove the data. Use Windows' own reset with the option that removes everything and cleans the drive — it overwrites rather than just deleting.",
+          da: "Nej, det er ikke dokumentation for sikker datasletning. Windows' Fjern alt med Rens data er en forbrugermulighed med begrænsninger. Vælg og kontrollér en passende metode ud fra mediet og dataenes følsomhed.",
+          en: "No, it does not demonstrate secure sanitisation. Windows Remove everything with Clean data is a consumer option with limitations. Select and verify an appropriate method based on the medium and data sensitivity.",
         },
       },
       {
@@ -2590,8 +2591,8 @@ export const guides: Guide[] = [
           en: "How is data erased on an SSD?",
         },
         answer: {
-          da: "På en SSD flytter controlleren data rundt, så en overskrivning ikke nødvendigvis rammer alle celler. Brug producentens Secure Erase. Har maskinen allerede kørt med diskkryptering slået til, er sagen enklere: slettes nøglen, er data i praksis uigenkaldelige.",
-          en: "On an SSD the controller moves data around, so overwriting does not necessarily reach every cell. Use the manufacturer's Secure Erase. If the machine has already been running with drive encryption switched on it is simpler: delete the key and the data is in practice unrecoverable.",
+          da: "Brug drevproducentens understøttede metode til den konkrete SSD og det krævede sikkerhedsniveau, og kontrollér resultatet. Antag ikke, at en almindelig overskrivning eller sletning af en BitLocker-nøgle er tilstrækkelig.",
+          en: "Use the drive manufacturer's supported method for the exact SSD and required assurance, and verify the result. Do not assume ordinary overwriting or deleting a BitLocker key is sufficient.",
         },
       },
       {
@@ -2600,8 +2601,8 @@ export const guides: Guide[] = [
           en: "What does a company have to do beyond erasing?",
         },
         answer: {
-          da: "Har maskinen indeholdt personoplysninger, skal I kunne dokumentere, at de er væk – ikke bare vide det. Forlang en sletterapport med serienummer for hver enkelt enhed fra den, der håndterer udstyret.",
-          en: "If the machine has held personal data, you have to be able to document that it is gone — not merely know it. Demand an erasure report with a serial number for each individual device from whoever handles the equipment.",
+          da: "Afklar ansvar, omfang og dokumentation. En rapport bør identificere enhed og drev og angive metode, dato, kontrolresultat og eventuelle fejl eller undtagelser.",
+          en: "Establish responsibility, scope and documentation. A report should identify the device and drive and record method, date, verification result and any failures or exceptions.",
         },
       },
       {

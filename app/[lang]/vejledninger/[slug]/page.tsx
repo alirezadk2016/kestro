@@ -7,7 +7,11 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
-import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
+import GuidePanel, {
+  GuidePanelStyles,
+  needsPanelChrome,
+  guideArtwork,
+} from "@/components/GuidePanel";
 import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -74,11 +78,43 @@ export async function generateMetadata(props: {
   const params = await props.params;
   const guide = getGuide(params.slug);
   if (!guide) return {};
+  const lang = params.lang;
+  const base = metaFor(`/vejledninger/${guide.slug}`, lang);
+  const art = guideArtwork(guide.slug, lang);
+  const images = art
+    ? [
+        {
+          url: `${SITE_ORIGIN}${art.src}`,
+          width: 1536,
+          height: 1024,
+          type: "image/webp",
+          alt: art.alt[lang],
+        },
+      ]
+    : base.openGraph.images;
 
   return {
-    title: guide.metaTitle[params.lang],
-    description: guide.metaDescription[params.lang],
-    ...metaFor(`/vejledninger/${guide.slug}`, params.lang),
+    title: guide.metaTitle[lang],
+    description: guide.metaDescription[lang],
+    ...base,
+    robots: { index: true, follow: true, "max-image-preview": "large" },
+    openGraph: {
+      ...base.openGraph,
+      type: "article",
+      title: guide.metaTitle[lang],
+      description: guide.metaDescription[lang],
+      publishedTime: guide.published ?? guide.updated,
+      modifiedTime: guide.updated,
+      section: getCluster(guide.cluster).name[lang],
+      authors: [`${SITE_ORIGIN}${localePath("/om-os", lang)}#${guide.author}`],
+      images,
+    },
+    twitter: {
+      ...base.twitter,
+      title: guide.metaTitle[lang],
+      description: guide.metaDescription[lang],
+      images,
+    },
   };
 }
 
@@ -139,6 +175,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
   const pagePath = `/vejledninger/${guide.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const articleId = `${pageUrl}#article`;
+  const art = guideArtwork(guide.slug, lang);
 
   /* Article schema so the guide can win a rich result rather than a bare link. */
   const articleJsonLd = {
@@ -150,16 +187,20 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
     inLanguage: htmlLang[lang],
     dateModified: guide.updated,
     datePublished: guide.published ?? guide.updated,
-    /* Article rich results want an image, and this is the one the article
-       actually has: the same 1200×630 card the page already gives Open Graph
-       and Twitter. Claiming a photograph the guide does not contain would win
-       the same badge dishonestly. */
-    image: {
-      "@type": "ImageObject",
-      url: `${SITE_ORIGIN}/opengraph-image`,
-      width: 1200,
-      height: 630,
-    },
+    /* The same illustration the reader sees, not the site's generic logo card. */
+    ...(art
+      ? {
+          image: {
+            "@type": "ImageObject",
+            url: `${SITE_ORIGIN}${art.src}`,
+            width: 1536,
+            height: 1024,
+            caption: art.alt[lang],
+          },
+        }
+      : {}),
+    url: pageUrl,
+    isPartOf: { "@id": `${SITE_ORIGIN}${localePath("/vejledninger", lang)}#webpage` },
     /* A named person with a real role, from lib/company.ts. Organization said
        nothing a reader or a search engine could weigh. */
     author: {

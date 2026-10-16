@@ -49,10 +49,46 @@ provide crawlable links. New routes use both language mappings, reciprocal
 hreflang, self-canonicals, the generated sitemap, Article schema, search
 index and the Danish feed.
 
-The 213 keyword-map rows are editorial targets, not proven demand. Search
+The 218 keyword-map rows are editorial targets, not proven demand. Search
 volume, difficulty and CPC remain unknown. No traffic uplift or score is
 promised. The existing 56 unindexed-page report cannot be resolved from its
 aggregate screenshot; this content work is not proof those URLs are fixed.
+
+## Danish and English Search Readiness
+
+The follow-up SEO pass checks all 22 article URLs and both hubs. Existing
+self-canonicals, reciprocal da/en/x-default annotations, translated main
+content and sitemap membership were already correct; they were preserved,
+not presented as previously blocked pages.
+
+- Five older guides have more precise localized snippets. English targets
+  now cover the ten intentionally targeted guides; the PC-assembly page
+  keeps its existing no-primary-target editorial decision.
+- Each article's structured data names its actual, language-neutral cover
+  illustration instead of the generic site card. The same existing
+  1536 by 1024 WebP is used in Article, Open Graph and Twitter metadata;
+  captions and snippets follow the page language.
+- Articles declare their type and allow large search image previews.
+  Open Graph helps sharing; it is not a promise of Google ranking or a
+  guarantee that an image will appear in search.
+- Both hubs describe their visible reading list with an ItemList linked
+  from CollectionPage. No fabricated FAQ-rich-result eligibility is claimed.
+- The data-erasure guide distinguishes consumer Windows reset from
+  documented sanitisation, with Microsoft and NIST sources and no claim
+  that deleting one recovery-key copy proves erasure.
+- No URLs, design, dependencies, paid services, hidden keyword blocks or
+  meta-keywords lists were added. Metadata edits alone do not reset an
+  article's visible update date.
+
+Google decides crawling, indexing and result selection. A request for
+indexing or a valid sitemap is not proof that a URL has been indexed.
+Use Search Console URL Inspection to verify Google's selected canonical
+and index status; these cannot be inferred from a successful local crawl.
+
+References: [localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions),
+[article images](https://developers.google.com/search/docs/appearance/structured-data/article),
+[preview controls](https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag),
+[recrawling](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl).
 
 ## Measuring Results
 
