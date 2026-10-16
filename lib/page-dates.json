@@ -57,7 +57,7 @@
   "/produkter": {
     "published": "2026-08-23",
     "modified": "2026-10-16",
-    "files": 9
+    "files": 8
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
@@ -66,12 +66,12 @@
   },
   "/reparation": {
     "published": "2026-08-23",
-    "modified": "2026-10-14",
+    "modified": "2026-10-16",
     "files": 9
   },
   "/reparation/[slug]": {
     "published": "2026-09-14",
-    "modified": "2026-10-14",
+    "modified": "2026-10-16",
     "files": 7
   },
   "/saelg-til-os": {
@@ -91,22 +91,22 @@
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-15",
+    "modified": "2026-10-16",
     "files": 4
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-15",
+    "modified": "2026-10-16",
     "files": 7
   },
   "/ydelser": {
     "published": "2026-08-23",
-    "modified": "2026-10-14",
+    "modified": "2026-10-16",
     "files": 9
   },
   "/ydelser/[slug]": {
     "published": "2026-08-25",
-    "modified": "2026-10-14",
+    "modified": "2026-10-16",
     "files": 7
   }
 }
