@@ -120,8 +120,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "nordisk-tilpasning": {
     lead: {
-      da: "Nordisk tilpasning er to ting: et fysisk skift af tastaturet til dansk eller norsk layout, så æ, ø og å sidder rigtigt, og Windows sat op med drivere og sprog, så maskinen er klar fra første dag.",
-      en: "Nordic preparation is two things: a physical keyboard swap to a Danish or Norwegian layout, so æ, ø and å are where they belong, and Windows set up with drivers and language, so the machine is ready from day one.",
+      da: "Dansk eller norsk tastatur på en bærbar handler både om de fysiske taster og indtastningssproget. Afklar layout, eventuelt tastaturskift og opsætning af Windows for den konkrete computer.",
+      en: "A Danish or Norwegian laptop keyboard involves both the physical keys and the input language. Clarify the layout, any keyboard replacement and Windows setup for the specific computer.",
     },
     faqs: [
       {
@@ -130,8 +130,8 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
           en: "Is it a physical keyboard swap or a setting?",
         },
         answer: {
-          da: "Et fysisk skift. Maskiner fra Sydeuropa har spansk eller italiensk layout, så tastaturet skiftes til dansk eller norsk, og tasterne har de rigtige tegn trykt på.",
-          en: "A physical swap. Machines from southern Europe have a Spanish or Italian layout, so the keyboard is replaced with a Danish or Norwegian one, and the keys have the right characters printed on them.",
+          da: "Et fysisk skift ændrer de trykte tegn på tasterne. En indstilling ændrer indtastningssproget, men ikke selve tastaturet. Angiv, hvilken løsning du ønsker, og få bekræftet kompatibilitet og pris, før der aftales et skift.",
+          en: "A physical replacement changes the printed key labels. A setting changes the input language, not the keyboard itself. Specify the solution you want and confirm compatibility and price before agreeing a replacement.",
         },
       },
       {
@@ -139,6 +139,16 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
         answer: {
           da: "Baggrundslys er ikke standard på alle modeller. Skal I bruge det, så sig til, når vi taler om specifikationerne.",
           en: "A backlight is not standard on every model. If you need one, say so when we talk about the specification.",
+        },
+      },
+      {
+        question: {
+          da: "Hvordan bestiller vi det rigtige danske eller norske layout?",
+          en: "How do we request the correct Danish or Norwegian layout?",
+        },
+        answer: {
+          da: "Send computerens præcise model, et billede af det nuværende tastatur og ønsket layout. Oplys også antal, baggrundslys og Windows-sprog. Et nordisk produktnavn er ikke alene dokumentation for netop det fysiske layout, I ønsker.",
+          en: "Send the exact computer model, a photo of the current keyboard and the required layout. Also state quantity, backlighting and Windows language. A Nordic product name alone does not establish the particular physical layout you want.",
         },
       },
       windows,

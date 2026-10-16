@@ -250,30 +250,33 @@ export const services: Service[] = [
   {
     slug: "nordisk-tilpasning",
     name: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
-    h1: { da: "Nordisk tilpasning: dansk tastatur på importerede computere", en: "Nordic preparation: Danish keyboards on imported laptops" },
+    h1: {
+      da: "Dansk eller norsk tastatur på din bærbare",
+      en: "A Danish or Norwegian keyboard for your laptop",
+    },
     metaTitle: {
-      da: "Dansk tastatur og opsætning på importerede pc'er | Kestro",
-      en: "Danish and Norwegian keyboards on used computers | Kestro",
+      da: "Dansk og norsk tastatur til bærbare computere | Kestro",
+      en: "Danish and Norwegian laptop keyboards and setup | Kestro",
     },
     metaDescription: {
-      da: "Dansk tastatur på importerede computere: tasterne skiftes fysisk til dansk eller norsk layout, og Windows sættes op med sprog, så maskinen er klar.",
-      en: "Machines from southern Europe arrive with Spanish or Italian layouts. We fit Danish or Norwegian keyboards and set Windows up to match.",
+      da: "Dansk eller norsk tastatur til din bærbare: afklar fysisk layout, taster og sprog i Windows. Send dine krav og få svar om tilpasning af den konkrete pc.",
+      en: "Need Danish or Norwegian keys on your laptop? Check the printed layout and Windows options. Send us your details to discuss a keyboard that fits.",
     },
     summary: {
       da: "Æ, ø og å, hvor de skal være – og et styresystem, der taler dansk.",
       en: "Æ, ø and å where they belong — and an operating system that speaks the language.",
     },
     intro: {
-      da: "Det her er grunden til, at brugte maskiner fra Sydeuropa ikke bare kan sendes videre til en dansk arbejdsplads. Layoutet er forkert, sproget er forkert, og en medarbejder, der skal lede efter æ hver gang, holder op med at bruge maskinen ordentligt.",
-      en: "This is why used machines from southern Europe cannot simply be forwarded to a Danish workplace. The layout is wrong, the language is wrong, and an employee who has to hunt for æ every time stops using the machine properly.",
+      da: "Ved køb af en bærbar med dansk tastatur skal både de trykte tegn og den valgte indtastning passe. Det samme gælder norsk tastatur. Angiv land, ønsket fysisk layout og eventuelt baggrundslys; mulighederne afhænger af maskinen og det tastatur, der kan skaffes.",
+      en: "When buying a laptop with a Danish keyboard, both the printed keys and the selected input layout need to match. The same applies to a Norwegian keyboard. Specify country, physical layout and any backlight; options depend on the machine and the keyboard that can be sourced.",
     },
     sections: [
       {
         heading: { da: "Tastaturet", en: "The keyboard" },
         body: [
           {
-            da: "Maskiner fra Sydeuropa har spansk eller italiensk layout. Vi skifter til dansk eller norsk, før de leveres, så æ, ø og å sidder korrekt. Det er et fysisk skift af tastaturet, ikke en indstilling i Windows – tasterne har de rigtige tegn trykt på.",
-            en: "Machines from southern Europe come with Spanish or Italian layouts. We change them to Danish or Norwegian before delivery, so æ, ø and å sit where they should. It is a physical keyboard swap, not a Windows setting — the keys have the right characters printed on them.",
+            da: "En bærbar med udenlandsk tastatur kan kræve et fysisk tastaturskift for at få danske eller norske tegn. Afklar, om løsningen er et dansk, norsk eller kombineret nordisk layout. Bed om et billede af tasterne; klistermærker, et udskiftet tastatur og en sprogindstilling er ikke det samme.",
+            en: "A laptop with a foreign keyboard may need a physical replacement for Danish or Norwegian key labels. Clarify whether the solution is a Danish, Norwegian or combined Nordic layout. Request a photo of the keys; stickers, a replacement keyboard and a language setting are not the same thing.",
           },
           {
             da: "Baggrundsbelysning er ikke standard på alle modeller. Skal I bruge det, så sig til, når vi taler om specifikationerne.",

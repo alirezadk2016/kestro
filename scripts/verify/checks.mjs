@@ -84,6 +84,12 @@ const PAGES = [
   "/reparation",
   "/kontakt",
   "/vejledninger",
+  "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+  "/en/knowledge/check-a-used-laptop",
+  "/ydelser/nordisk-tilpasning",
+  "/en/services/nordic-preparation",
+  "/reparation/ram-og-ssd-opgradering",
+  "/en/repairs/memory-and-ssd-upgrade",
   "/priser",
   "/tilbud-eksempel",
   "/om-os",
@@ -918,6 +924,73 @@ for (const [width, height] of [
     null,
     { timeout: 15000 },
   );
+  await context.close();
+}
+
+/* ----------------------------------------------------- needs-led buying paths */
+
+for (const [path, needs, brands, budget, guidePath] of [
+  [
+    "/produkter/baerbare-computere",
+    "Hvilken firmabærbar passer til arbejdet?",
+    "Mærker vi typisk arbejder med",
+    "Hvordan vælger jeg en billig bærbar til arbejde?",
+    "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+  ],
+  [
+    "/en/products/business-laptops",
+    "Which company laptop fits the work?",
+    "Brands we usually work with",
+    "How do I choose a low-cost laptop for work?",
+    "/en/knowledge/check-a-used-laptop",
+  ],
+]) {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+  const titles = await page.locator("main h2").allTextContents();
+  const needsIndex = titles.findIndex((text) => text.trim() === needs);
+  const brandIndex = titles.findIndex((text) => text.trim() === brands);
+  if (needsIndex < 0 || brandIndex < 0 || needsIndex >= brandIndex)
+    fail("needs-led category", `buying needs do not precede brands on ${path}`);
+  if (!(await page.getByRole("heading", { name: budget, exact: true }).count()))
+    fail("needs-led category", `missing budget answer on ${path}`);
+  if (!(await page.locator(`main a[href='${guidePath}']`).count()))
+    fail("needs-led category", `missing buying guide link on ${path}`);
+  await page.goto(BASE + guidePath, { waitUntil: "networkidle" });
+  const articleDates = await page
+    .locator("script[type='application/ld+json']")
+    .evaluateAll((nodes) => {
+      const schemas = nodes.map((node) => JSON.parse(node.textContent));
+      const article = schemas.find((schema) => schema["@type"] === "Article");
+      return { published: article?.datePublished, modified: article?.dateModified };
+    });
+  if (
+    articleDates.published !== "2026-08-23" ||
+    !articleDates.modified ||
+    articleDates.modified <= articleDates.published
+  )
+    fail("needs-led guide", `publication date reset or update missing on ${guidePath}`);
+  await context.close();
+}
+
+for (const [path, question] of [
+  [
+    "/reparation/ram-og-ssd-opgradering",
+    "Hvad er forskellen på opgradering og opdatering af en bærbar?",
+  ],
+  [
+    "/en/repairs/memory-and-ssd-upgrade",
+    "What is the difference between upgrading and updating a laptop?",
+  ],
+  ["/ydelser/nordisk-tilpasning", "Hvordan bestiller vi det rigtige danske eller norske layout?"],
+  ["/en/services/nordic-preparation", "How do we request the correct Danish or Norwegian layout?"],
+]) {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+  if (!(await page.getByRole("heading", { name: question, exact: true }).count()))
+    fail("needs-led service", `missing server-rendered distinction on ${path}`);
   await context.close();
 }
 

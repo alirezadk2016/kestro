@@ -149,7 +149,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
     description: guide.metaDescription[lang],
     inLanguage: htmlLang[lang],
     dateModified: guide.updated,
-    datePublished: guide.updated,
+    datePublished: guide.published ?? guide.updated,
     /* Article rich results want an image, and this is the one the article
        actually has: the same 1200×630 card the page already gives Open Graph
        and Twitter. Claiming a photograph the guide does not contain would win

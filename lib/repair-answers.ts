@@ -76,8 +76,28 @@ const specific: Record<string, Extra> = {
           en: "How much memory can my machine take?",
         },
         answer: {
-          da: "Det afhænger af modellen. En ThinkPad T480 leveres typisk med 8 GB og kan udvides til 32 GB, mens en X1 Carbon har hukommelsen loddet fast fra fabrikken. Vi oplyser, hvor meget netop din maskine maksimalt kan tage, før vi bestiller noget.",
-          en: "It depends on the model. A ThinkPad T480 typically comes with 8 GB and can be expanded to 32 GB, while an X1 Carbon has its memory soldered at the factory. We tell you the most your machine can take before we order anything.",
+          da: "Det afhænger af den præcise maskine, dens sokler og om hukommelsen er fastloddet. Slå producentens specifikation op, og kontrollér også, hvad der allerede er installeret. Få maksimal kapacitet, kompatible dele og pris afklaret, før du køber en opgradering.",
+          en: "It depends on the exact machine, its slots and whether memory is soldered. Check the manufacturer's specification and what is already installed. Confirm maximum capacity, compatible parts and price before buying an upgrade.",
+        },
+      },
+      {
+        question: {
+          da: "Kan det betale sig at opgradere en gammel bærbar?",
+          en: "Is upgrading an old laptop worthwhile?",
+        },
+        answer: {
+          da: "Sammenhold pris på dele og arbejde med batteri, skærm, hængsler og understøttelse af styresystemet. Hvis flere dele er slidte, bør du også sammenligne med en anden computer. En opgradering giver kun mening, hvis den løser den konkrete begrænsning; der loves ikke en bestemt hastighedsforbedring.",
+          en: "Compare parts and labour cost against the battery, screen, hinges and operating system support. If several parts are worn, compare a replacement computer too. An upgrade only makes sense if it addresses the actual limitation; no particular speed improvement is promised.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad er forskellen på opgradering og opdatering af en bærbar?",
+          en: "What is the difference between upgrading and updating a laptop?",
+        },
+        answer: {
+          da: "Her betyder opgradering ændringer i hardware, eksempelvis RAM eller SSD. Opdatering handler om Windows, drivere eller programmer. En langsom maskine skal undersøges, før man vælger mellem de to. Tag backup af vigtige filer før ændringer, især hvis lageret skal skiftes.",
+          en: "Here, upgrading means hardware changes such as RAM or an SSD. Updating concerns Windows, drivers or applications. Investigate a slow machine before choosing between the two. Back up important files before changes, especially when replacing storage.",
         },
       },
       windowsMinimum,

@@ -1,6 +1,6 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 191 i alt, 170 danske og 20 engelske – og for hver række den title, siden har i dag, og om søgeordet står i den.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 201 i alt, 180 danske, 20 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
@@ -14,9 +14,10 @@ Volumen, CPC og difficulty forbliver derfor `unknown` i CSV'en. Private
 rådata opbevares uden for dette offentlige repository.
 
 De tre forældede `New`-markeringer for refurbished-definitionen,
-sammenligningen og Windows 10-guiden er rettet til `Existing`. De syv andre
-guideforslag er stadig ikke udgivet: `New` er en idé, ikke en offentlig URL,
-en brudt intern henvisning eller en godkendelse til at oprette en side.
+sammenligningen og Windows 10-guiden er rettet til `Existing`. Startup-behov
+dækkes nu på produktoversigten; valg af bærbar i den eksisterende købsguide.
+Ti rækker peger stadig på seks ikke-udgivne guideforslag: `New` er en idé,
+ikke en offentlig URL, en brudt intern henvisning eller en godkendelse til at oprette en side.
 Undersøg dansk SERP og reelt indhold før oprettelse. Udokumenterede påstande
 om konkurrenter og efterspørgsel er fjernet fra de berørte noter.
 
@@ -36,9 +37,17 @@ Listen så grundig ud, men den gav ikke klik. Seks konkrete fejl:
 
 Før: af de primære søgeord, der pegede på en side, der findes, stod 37 helt i sidens title, 10 delvist og 1 slet ikke. 21 primære søgeord pegede enten på en guide, der ikke er skrevet, eller på en engelsk adresse, der viderestiller.
 
-Nu: 84 primære søgeord. 68 står helt i title, 9 delvist (et synonym som »ældre« for »gammel« eller et småord), 0 slet ikke. 7 peger på foreslåede guides, der ikke er skrevet endnu, og er markeret som det.
+Nu: 83 primære søgeordsrækker. 77 peger på eksisterende sider, seks på
+foreslåede guides. Ti nye behovsvarianter er tilføjet som sekundære, ikke som
+parallelle sider. Se `docs/seo-needs-research.md` for konkurrentobservationer,
+intent og afgrænsning; det er ikke en måling af volumen eller Google.dk-rangering.
 
 ## Reglerne for en title
+
+Den aktuelle laptop-title er behovsorienteret: `Brugte bærbare computere med
+dansk tastatur | Kestro`. Modelnavne bevares på deres egne eksisterende
+sider, men er ikke hovedbudskabet på laptopkategorien. Hardwareopgradering
+og fysisk tastaturlayout har hver sin relevante ydelses-/reparationsside.
 
 **Det, folk skriver, først. Hvad de får, bagefter. »| Kestro« til sidst. Højst 580 px.**
 

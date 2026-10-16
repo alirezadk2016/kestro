@@ -41,16 +41,16 @@ export const categories: Category[] = [
       en: "Refurbished business laptops for office and hybrid work",
     },
     metaTitle: {
-      da: "Brugte bærbare computere – ThinkPad og EliteBook | Kestro",
-      en: "Refurbished business laptops — ThinkPad, EliteBook | Kestro",
+      da: "Brugte bærbare computere med dansk tastatur | Kestro",
+      en: "Refurbished business laptops with Nordic keyboards | Kestro",
     },
     metaDescription: {
-      da: "Brugte bærbare til erhverv: refurbished ThinkPad, EliteBook og Latitude med dansk eller norsk tastatur, målt batteri og skriftlige vilkår før bestilling.",
-      en: "Refurbished ThinkPad, EliteBook and Latitude laptops for companies — Danish or Norwegian keyboard, measured battery and terms in writing.",
+      da: "Vælg brugt bærbar til kontor, startup eller hjemmearbejde. Afklar budget, batteri og dansk eller norsk tastatur. Få råd om pris og valg til dit behov.",
+      en: "Find a used laptop for work, a startup or home office. Check budget, battery and Danish or Norwegian keys. Ask for advice before choosing a laptop.",
     },
     intro: {
-      da: "Vi skaffer brugte erhvervsbærbare – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk eller norsk tastatur, så de er klar til udlevering til medarbejderen.",
-      en: "We source used business laptops — built for daily office work rather than consumer use — function-test them and prepare them with a Danish or Norwegian keyboard, so they are ready to hand to the employee.",
+      da: "Den rigtige firmabærbare afhænger af opgaven. Til kontor, hjemmearbejde eller en nystartet virksomhed skal programmer, batteri, skærm og tastatur passe til hverdagen. Fortæl os jeres behov og budget, og om I ønsker dansk eller norsk tastatur; pris og muligheder afklares for den konkrete konfiguration.",
+      en: "The right company laptop depends on the work. For an office, home working or a startup, software, battery, display and keyboard need to fit the day. Tell us your requirements and budget, including a Danish or Norwegian keyboard; price and options are checked for the actual configuration.",
     },
     brands: [
       "Lenovo ThinkPad",
@@ -67,6 +67,16 @@ export const categories: Category[] = [
       "Fujitsu Lifebook",
     ],
     useCases: [
+      {
+        title: {
+          da: "Bærbar til startup og iværksættere",
+          en: "Laptops for startups and founders",
+        },
+        description: {
+          da: "Start med de programmer, I skal bruge nu, og plads til næste medarbejder. Oplys budget per arbejdsplads med skærm, dock, licenser og tilbehør.",
+          en: "Start with the applications you need now and room for the next employee. State a budget per desk that includes monitor, dock, licences and accessories.",
+        },
+      },
       {
         title: { da: "Kontor og administration", en: "Office and administration" },
         description: {
@@ -96,6 +106,10 @@ export const categories: Category[] = [
     exampleModel: "lenovo-thinkpad-t480",
     guides: [
       {
+        href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        label: { da: "Hvilken bærbar passer til mit behov?", en: "Which laptop fits my needs?" },
+      },
+      {
         href: "/vejledninger/windows-11-paa-aeldre-maskine",
         label: {
           da: "Windows 11 på ældre maskiner",
@@ -103,11 +117,15 @@ export const categories: Category[] = [
         },
       },
       {
-        href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        href: "/ydelser/nordisk-tilpasning",
         label: {
-          da: "Ti ting du skal tjekke på en brugt bærbar",
-          en: "Ten things to check on a used laptop",
+          da: "Dansk eller norsk tastatur på bærbar",
+          en: "Danish or Norwegian laptop keyboard",
         },
+      },
+      {
+        href: "/reparation/ram-og-ssd-opgradering",
+        label: { da: "Kan den gamle bærbare opgraderes?", en: "Can the old laptop be upgraded?" },
       },
     ],
   },
@@ -418,7 +436,10 @@ export const categories: Category[] = [
   {
     slug: "dockingstationer",
     name: { da: "Dockingstationer og tilbehør", en: "Docking stations and accessories" },
-    h1: { da: "Dockingstationer til bærbare og tilbehør", en: "Docking stations for business laptops" },
+    h1: {
+      da: "Dockingstationer til bærbare og tilbehør",
+      en: "Docking stations for business laptops",
+    },
     shortName: { da: "Docking", en: "Docking" },
     tagline: {
       da: "Docks, kabler og tilbehør, der gør arbejdspladsen komplet",

@@ -58,9 +58,9 @@ const copy = {
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     imageNote: "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
-    modelsTitle: "Modeller vi ofte skaffer",
+    modelsTitle: "Eksempler på konfigurationer",
     modelsBody:
-      "Erhvervsmodeller, vi kender godt. Klik ind for specifikationer og hvad de egner sig til.",
+      "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne. Eksemplerne er ikke en lagerliste.",
     allModels: "Se hele modeloversigten",
     cardAction: "Se specifikationer",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -78,9 +78,9 @@ const copy = {
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     imageNote: "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",
-    modelsTitle: "Models we often source",
+    modelsTitle: "Example configurations",
     modelsBody:
-      "Business models we know well. Click through for specifications and what they suit.",
+      "Compare specifications and limitations once the work requirements are clear. These examples are not a stock list.",
     allModels: "See the full model overview",
     cardAction: "See specifications",
     priceNote: "The price depends on configuration, condition and quantity.",
@@ -166,6 +166,7 @@ export default async function CategoryPage(props: {
   const category = getCategory(params.slug);
   if (!category) notFound();
   const isPhones = category.slug === "smartphones";
+  const isLaptops = category.slug === "baerbare-computere";
 
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
@@ -213,6 +214,53 @@ export default async function CategoryPage(props: {
         })),
       }
     : null;
+
+  const useCasesSection = (
+    <section className="border-t border-white/10 py-10 sm:py-20">
+      <Container>
+        <div className="split max-w-3xl">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            {isLaptops
+              ? lang === "da"
+                ? "Hvilken firmabærbar passer til arbejdet?"
+                : "Which company laptop fits the work?"
+              : c.useCases}
+          </h2>
+          <dl className="mt-8 space-y-6">
+            {category.useCases.map((useCase) => (
+              <div key={useCase.title.da} className="relative pl-8">
+                <dt className="text-base font-semibold leading-6 text-paper">
+                  <Check
+                    aria-hidden="true"
+                    className="absolute left-0 top-1 h-4 w-4 text-brand-300"
+                    strokeWidth={2}
+                  />
+                  {useCase.title[lang]}
+                </dt>
+                <dd className="mt-1 text-base leading-7 text-paper/75">
+                  {useCase.description[lang]}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <div className="plate mt-10 p-6">
+            <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
+            <p className="mt-2 text-base leading-[1.75] text-paper/75">{category.specNote[lang]}</p>
+          </div>
+          {isLaptops && (
+            <Link
+              href={localePath("/vejledninger/tjek-brugt-baerbar-foer-koeb", lang)}
+              className="mt-5 inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+            >
+              {lang === "da"
+                ? "Vælg efter behov og budget: læs købsguiden"
+                : "Choose around needs and budget: read the buying guide"}
+            </Link>
+          )}
+        </div>
+      </Container>
+    </section>
+  );
 
   return (
     <>
@@ -340,6 +388,8 @@ export default async function CategoryPage(props: {
           </div>
         </Container>
       </section>
+
+      {isLaptops && useCasesSection}
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>
@@ -523,42 +573,7 @@ export default async function CategoryPage(props: {
         </section>
       )}
 
-      <section className="border-t border-white/10 py-10 sm:py-20">
-        <Container>
-          <div className="split max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.useCases}
-            </h2>
-
-            {/* A <div> in a <dl> holds only <dt> and <dd>; the mark goes in the
-                term, hung in the row's left gutter. */}
-            <dl className="mt-8 space-y-6">
-              {category.useCases.map((useCase) => (
-                <div key={useCase.title.da} className="relative pl-8">
-                  <dt className="text-base font-semibold leading-6 text-paper">
-                    <Check
-                      aria-hidden="true"
-                      className="absolute left-0 top-1 h-4 w-4 text-brand-300"
-                      strokeWidth={2}
-                    />
-                    {useCase.title[lang]}
-                  </dt>
-                  <dd className="mt-1 text-base leading-7 text-paper/75">
-                    {useCase.description[lang]}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="plate mt-10 p-6">
-              <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
-              <p className="mt-2 text-base leading-[1.75] text-paper/75">
-                {category.specNote[lang]}
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
+      {!isLaptops && useCasesSection}
 
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>

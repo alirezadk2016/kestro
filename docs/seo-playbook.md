@@ -9,6 +9,24 @@ This file is the other half: where kestro.dk stands against those rules. It
 records what passes, what is pending, and what waits on the owner. Update it
 in every change that applies Mak or adds a lesson.
 
+## Needs-Led Targeting — 16 October 2026
+
+- The owner prioritised selection, budget, company use, startup equipment,
+  old-laptop upgrades and Danish/Norwegian keyboards over model names.
+  `docs/seo-needs-research.md` records public competitor observations and
+  their limits. No competitor traffic, volume or ranking figures are claimed.
+- Laptop titles, lead and use-case order now start with buying requirements.
+  Model URLs and specifications remain available as supporting references.
+- The existing buying checklist now explains task selection and total budget.
+  Its original publication date is retained separately from its update date.
+- Physical keyboard preparation and hardware upgrades have distinct copy;
+  software updates are not presented as RAM or SSD upgrades.
+- The keyword map contains 201 rows. Ten needs-led variants are secondary
+  targets; startup equipment and laptop choice use existing pages. No new
+  price-band, city or thin keyword pages have been created.
+- Existing external budget references remain unchanged. No lowest-price,
+  availability, warranty, performance or registration claim has been added.
+
 ## Search Visibility Fixes — 16 October 2026
 
 - Search Console is connected for the Kestro domain property. The current

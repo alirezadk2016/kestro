@@ -25,6 +25,11 @@ const list = (items: string[], and: string) =>
     : `${items.slice(0, -1).join(", ")} ${and} ${items[items.length - 1]}`;
 
 export function categoryLead(category: Category, lang: Lang): string {
+  if (category.slug === "baerbare-computere") {
+    return lang === "da"
+      ? "Find en brugt bærbar til erhverv efter dit behov: kontor, hjemmearbejde eller startup. Afklar opgaver, budget og dansk eller norsk tastatur, før du vælger computer."
+      : "Find a used business laptop around your needs: office work, home working or a startup. Clarify tasks, budget and a Danish or Norwegian keyboard before choosing a computer.";
+  }
   const n = category.brands.length;
   const some = list(category.brands.slice(0, 3), lang === "da" ? "og" : "and");
   /* A definition, then the count: "X from Kestro are <tagline>." */
@@ -67,8 +72,8 @@ const PREPARED: Record<string, { da: string; en: string }> = {
 const BUYING_QUESTIONS: Record<string, FaqItem> = {
   "baerbare-computere": {
     question: {
-      da: "Hvordan vælger vi en brugt erhvervsbærbar?",
-      en: "How do we choose a used business laptop?",
+      da: "Hvilken bærbar passer til mit behov?",
+      en: "Which laptop fits my needs?",
     },
     answer: {
       da: "Start med de programmer, medarbejderne bruger, og om maskinen skal med på farten. Sammenlign derefter præcis processor, RAM, skærm, vægt og batteritilstand. Kontrollér, om RAM kan udvides, og om jeres eksisterende dock kan oplade maskinen og drive de ønskede skærme.",
@@ -180,6 +185,40 @@ export function categoryFaqs(category: Category): FaqItem[] {
 
   const buyingQuestion = BUYING_QUESTIONS[category.slug];
   if (buyingQuestion) items.push(buyingQuestion);
+  if (category.slug === "baerbare-computere") {
+    items.push(
+      {
+        question: {
+          da: "Hvordan vælger jeg en billig bærbar til arbejde?",
+          en: "How do I choose a low-cost laptop for work?",
+        },
+        answer: {
+          da: "Sæt et samlet budget, og vælg efter de programmer, du faktisk bruger. Sammenlign batteritilstand, skærm, tastatur, medfølgende oplader og muligheder for opgradering. En lav købspris er ikke nødvendigvis en lav samlet pris, hvis der mangler tilbehør eller skal skiftes batteri. Bed om pris på den konkrete løsning.",
+          en: "Set a total budget and choose around the applications you actually use. Compare battery health, display, keyboard, included charger and upgrade options. A low purchase price is not necessarily a low total cost if accessories or a battery replacement are needed. Ask for a price for the specific setup.",
+        },
+      },
+      {
+        question: {
+          da: "Hvilken bærbar passer til en startup eller nystartet virksomhed?",
+          en: "Which laptop suits a startup or new business?",
+        },
+        answer: {
+          da: "Skriv de første arbejdsopgaver ned: mail, regnskab, videomøder, udvikling eller design. Afklar derefter mobilitet, RAM, skærme, licenser og budget per medarbejder. Til en startup er det nyttigt at kunne genbruge skærme og docks og udvide løsningen, når næste medarbejder starter; dyrere hardware er ikke automatisk det rigtige valg.",
+          en: "List the initial tasks: email, accounting, video calls, development or design. Then clarify mobility, RAM, monitors, licences and budget per employee. A startup benefits from reusing monitors and docks and expanding the setup as staff join; more expensive hardware is not automatically the right choice.",
+        },
+      },
+      {
+        question: {
+          da: "Kan jeg få en bærbar med dansk eller norsk tastatur?",
+          en: "Can I request a laptop with a Danish or Norwegian keyboard?",
+        },
+        answer: {
+          da: "Angiv dansk eller norsk fysisk tastaturlayout i forespørgslen, og bed om et billede af tasterne. Et nordisk kombinationslayout, et udskiftet tastatur og klistermærker er forskellige løsninger. Muligheden for et fysisk skift og eventuelt baggrundslys skal afklares for den konkrete maskine; Windows-sprog ændrer ikke tegnene på tasterne.",
+          en: "Specify a Danish or Norwegian physical keyboard layout in the enquiry and request a photo of the keys. A combined Nordic layout, replacement keyboard and stickers are different solutions. A physical swap and any backlight must be checked for the exact machine; changing Windows language does not change the printed keys.",
+        },
+      },
+    );
+  }
 
   const prepared = PREPARED[category.slug];
   if (prepared) {

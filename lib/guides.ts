@@ -142,6 +142,7 @@ export type Guide = {
   readingMinutes: number;
   /** ISO date. Shown, and used for the article schema. */
   updated: string;
+  published?: string;
   /**
    * The answer, before the reader scrolls. 40-60 words.
    *
@@ -1145,27 +1146,57 @@ export const guides: Guide[] = [
       en: "Buying a used laptop? Ten things to check first | Kestro",
     },
     metaDescription: {
-      da: "Batteri, skærm, taster, porte, disk og hængsler: tjeklisten, der på ti minutter afslører, om en brugt bærbar holder et par år mere – før du køber den.",
-      en: "Battery, screen, keys, ports, disk and hinges: a ten-minute check that shows whether a used laptop has a few good years left in it — before you buy.",
+      da: "Hvilken brugt bærbar passer til dit behov? Vælg efter opgaver og budget, og tjek batteri, skærm, tastatur og porte. Brug tjeklisten, før du vælger.",
+      en: "Which used laptop fits your needs? Start with tasks and budget, then check battery, screen, keyboard and ports. Use the checklist before you buy.",
     },
     summary: {
-      da: "En gennemgang på ti minutter, der afslører det, sælgeren ikke skrev i annoncen.",
-      en: "A ten-minute check that reveals what the seller left out of the listing.",
+      da: "Vælg efter opgaver og budget, og kontrollér derefter den brugte bærbares stand og tilbehør.",
+      en: "Choose around tasks and budget, then check the used laptop's condition and accessories.",
     },
     audience: { da: "Alle der køber brugt", en: "Anyone buying second-hand" },
-    readingMinutes: 5,
-    updated: "2026-08-23",
+    readingMinutes: 6,
+    published: "2026-08-23",
+    updated: "2026-10-16",
     tldr: {
-      da: "Kosmetisk stand er det, man ser først, og det, der betyder mindst. Det, der afgør købet, er batteriets faktiske tilstand, om lagermediet har været brugt hårdt, om alle porte virker, og om maskinen kan komme med over på et understøttet styresystem.",
-      en: "Cosmetic condition is what you see first and what matters least. What decides the purchase is the real state of the battery, whether the drive has had a hard life, whether every port works, and whether the machine can come along to a supported operating system.",
+      da: "Vælg en brugt bærbar efter arbejdsopgaver, mobilitet og samlet budget, før du vælger mærke. Kontrollér derefter batteri, skærm, tastatur, porte og lager samt understøttelse af styresystemet. Afklar dansk eller norsk tastatur, oplader, licenser og eventuelle fejl på den konkrete enhed; en kosmetisk grad erstatter ikke disse oplysninger.",
+      en: "Choose a used laptop around tasks, mobility and total budget before picking a brand. Then check battery, display, keyboard, ports, storage and operating system support. Clarify a Danish or Norwegian keyboard, charger, licences and any faults on the actual device; a cosmetic grade does not replace these details.",
     },
     intro: {
-      da: "Brugt udstyr er en god handel, når du ved, hvad du får. Listen her er den samme, vi selv går igennem, før noget bliver sendt videre – og du kan lave det meste af den, mens sælgeren står ved siden af.",
-      en: "Used equipment is a good deal when you know what you are getting. This list is the same one we go through before anything is passed on — and you can do most of it while the seller is standing next to you.",
+      da: "Spørgsmålet er først: hvilken bærbar passer til mit behov? Når kravene er afklaret, hjælper tjeklisten dig med at vurdere den konkrete brugte computer. Den erstatter ikke en diagnose eller skriftlige oplysninger fra sælgeren.",
+      en: "First ask: which laptop fits my needs? Once the requirements are clear, the checklist helps you assess the actual used computer. It does not replace a diagnosis or written details from the seller.",
     },
     sections: [
       {
-        heading: { da: "Det, du kan se på ti minutter", en: "What you can see in ten minutes" },
+        heading: { da: "Hvilken bærbar skal jeg vælge?", en: "Which laptop should I choose?" },
+        body: [
+          {
+            da: "Skriv de programmer og opgaver ned, du skal bruge computeren til. Mail, regnskab og videomøder stiller ikke nødvendigvis de samme krav som udvikling, CAD eller video. Brug programmernes krav som udgangspunkt for processor, RAM og lager, og kontrollér også behovet for flere skærme.",
+            en: "List the applications and tasks the computer needs to handle. Email, accounting and video calls do not necessarily have the same requirements as development, CAD or video work. Use application requirements as the starting point for processor, RAM and storage, and check multiple-monitor needs too.",
+          },
+          {
+            da: "Skal den med hver dag, så sammenlign vægt, skærmstørrelse og målt batteritilstand. Står den mest ved et skrivebord, er dock, skærme og tilslutninger en større del af valget. Til en startup skal løsningen også kunne passe til næste medarbejder uden unødvendigt ekstra tilbehør.",
+            en: "If you carry it daily, compare weight, screen size and measured battery health. At a fixed desk, the dock, monitors and connections become a larger part of the decision. For a startup, the setup should also accommodate the next employee without unnecessary accessories.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "En billig bærbar: sammenlign hele budgettet",
+          en: "A low-cost laptop: compare the whole budget",
+        },
+        body: [
+          {
+            da: "Læg computer, oplader, ønsket dansk eller norsk tastatur, licenser og eventuel dock og skærm sammen. Spørg også til batteri og kendte fejl, så en lav købspris ikke skjuler nødvendige udgifter. En højere kosmetisk grad er ikke i sig selv bedre ydelse.",
+            en: "Add the computer, charger, required Danish or Norwegian keyboard, licences and any dock and monitor. Also ask about the battery and known faults so a low purchase price does not hide necessary costs. A higher cosmetic grade does not by itself mean higher performance.",
+          },
+          {
+            da: "Har du allerede en gammel bærbar, bør du undersøge, om en relevant RAM- eller SSD-opgradering kan løse problemet, før du erstatter den. Sammenlign de konkrete muligheder og priser; budgeteksempler er ikke dokumentation for lager eller en aktuel salgspris.",
+            en: "If you already have an old laptop, check whether a relevant RAM or SSD upgrade could solve the problem before replacing it. Compare actual options and prices; budget examples are not evidence of stock or a current selling price.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Det, du skal undersøge på maskinen", en: "What to inspect on the machine" },
         body: [
           {
             da: "Tag maskinen i hånden og gå listen igennem i rækkefølge. Hvert punkt tager under et minut.",
@@ -1261,6 +1292,14 @@ export const guides: Guide[] = [
       {
         href: "/reparation/tastaturskift-og-nordisk-layout",
         label: { da: "Slidt eller forkert tastatur", en: "A worn or wrong keyboard" },
+      },
+      {
+        href: "/priser",
+        label: { da: "Budgeteksempler og prisgrundlag", en: "Budget examples and pricing basis" },
+      },
+      {
+        href: "/reparation/ram-og-ssd-opgradering",
+        label: { da: "Opgradering af den gamle bærbare", en: "Upgrading the old laptop" },
       },
     ],
     sources: [guideSource("dkWarranty")],

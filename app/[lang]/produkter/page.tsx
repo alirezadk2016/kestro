@@ -10,7 +10,6 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
-import { models } from "@/lib/models";
 import { buttonClass } from "@/components/Button";
 
 const copy = {
@@ -19,8 +18,7 @@ const copy = {
     metaDescription:
       "Refurbished bærbare, stationære, mini-pc'er, skærme, tablets og docks til virksomheder i Danmark og Norge – skaffet til ordren, med vilkår på skrift.",
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
-    /* Answer first, with the counts the page and /modeller actually show. */
-    description: `Sammenlign brugt IT-udstyr til virksomheder i ${categories.length} kategorier og ${models.length} beskrevne modeller. Start med medarbejdernes opgaver, programmer og eksisterende skærme – så kan en forespørgsel handle om den rigtige konfiguration, ikke kun et modelnavn.`,
+    description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Start med opgaver, programmer og budget; afklar derefter skærme, dansk eller norsk tastatur og om den gamle computer kan opgraderes.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
     noStockLink: "Se budgeteksempler og prisgrundlag",
     noPrices1:
@@ -29,11 +27,11 @@ const copy = {
       "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
     categories: "Kategorier",
     seeCategory: "Se kategori",
-    modelsTitle: "Vil I se konkrete modeller?",
+    modelsTitle: "Sammenlign specifikationer",
     modelsBody:
-      "ThinkPad, EliteBook, Latitude, EliteDesk og flere – med specifikationer og hvad de hver især egner sig til.",
+      "Se forskelle i hukommelse, lager, skærm og muligheder for opgradering. Brug eksemplerne, når I afklarer kravene til jeres næste computer.",
     modelsButton: "Se modeloversigten",
-    choiceTitle: "Hvilket IT-udstyr passer til arbejdspladsen?",
+    choiceTitle: "Hvilken computer passer til mit behov?",
     choiceLead:
       "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
     requirementsTitle: "Det bør være afklaret før et køb",
@@ -46,7 +44,7 @@ const copy = {
     metaDescription:
       "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
     title: "Used business computers we source",
-    description: `Compare used business IT across ${categories.length} categories and ${models.length} described models. Start with the team's tasks, software and existing monitors, so an enquiry identifies the right configuration rather than just a model name.`,
+    description: `Find used IT equipment in ${categories.length} categories for office work, home working or a startup. Start with tasks, software and budget; then clarify monitors, a Danish or Norwegian keyboard and whether the old computer can be upgraded.`,
     noStockLine: "An equipment budget needs more than the price of the computer itself.",
     noStockLink: "See budget examples and their basis",
     noPrices1:
@@ -55,11 +53,11 @@ const copy = {
       "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
     categories: "Categories",
     seeCategory: "See category",
-    modelsTitle: "Want to see specific models?",
+    modelsTitle: "Compare specifications",
     modelsBody:
-      "ThinkPad, EliteBook, Latitude, EliteDesk and more — with specifications and what each one suits.",
+      "Compare memory, storage, display and upgrade options. Use the examples when clarifying requirements for your next computer.",
     modelsButton: "See the model overview",
-    choiceTitle: "Which IT equipment fits the workplace?",
+    choiceTitle: "Which computer fits my needs?",
     choiceLead:
       "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
     requirementsTitle: "What to clarify before buying",
@@ -71,16 +69,16 @@ const copy = {
 
 const buyingChoices = [
   {
-    title: { da: "Kontor og hybridarbejde", en: "Office and hybrid work" },
+    title: { da: "Kontor, hjemmearbejde og startup", en: "Office, home working and startups" },
     body: {
-      da: "Oplys programmer, hvor meget maskinen skal transporteres, og om den skal køre flere skærme. Sammenlign hukommelse, skærm, batteritilstand og mulighed for opgradering.",
-      en: "List the software, how often the machine travels and whether it needs multiple monitors. Compare memory, display, battery condition and upgrade options.",
+      da: "Hvilken computer passer til din nystartede virksomhed? Oplys programmer, mobilitet og et samlet budget per arbejdsplads med skærm, dock og licenser.",
+      en: "Which computer fits your new business? List applications, mobility needs and a total budget per desk that includes monitor, dock and licences.",
     },
     links: [
       {
         href: "/produkter/baerbare-computere",
-        da: "Bærbare til medarbejdere",
-        en: "Laptops for your team",
+        da: "Bærbar til arbejde og startup",
+        en: "Laptops for work and startups",
       },
       {
         href: "/produkter/mini-pc",
@@ -97,9 +95,9 @@ const buyingChoices = [
     },
     links: [
       {
-        href: "/modeller/hp-zbook-15",
-        da: "Se en mobil workstation",
-        en: "Explore a mobile workstation",
+        href: "/produkter/baerbare-computere",
+        da: "Bærbare efter programmets krav",
+        en: "Laptops around software requirements",
       },
       {
         href: "/produkter/stationaere-computere",
@@ -109,10 +107,10 @@ const buyingChoices = [
     ],
   },
   {
-    title: { da: "Skærme, docks og mobil adgang", en: "Monitors, docks and mobile access" },
+    title: { da: "Nordisk tastatur og tilbehør", en: "Nordic keyboards and accessories" },
     body: {
-      da: "Notér skærmenes tilslutninger og dockens model. For firmatelefoner og tablets er apps, opdateringer og jeres enhedsstyring også en del af valget.",
-      en: "Note the monitor connections and dock model. For company phones and tablets, apps, updates and your device management are also part of the choice.",
+      da: "Skal I købe en bærbar med dansk eller norsk tastatur, så afklar det fysiske layout og Windows-sprog. Kontrollér også, om jeres skærme og dock kan bruges igen.",
+      en: "If you need a laptop with a Danish or Norwegian keyboard, clarify the physical layout and Windows language. Also check whether your monitors and dock can be reused.",
     },
     links: [
       {
@@ -121,9 +119,9 @@ const buyingChoices = [
         en: "Docking and compatibility",
       },
       {
-        href: "/produkter/smartphones",
-        da: "Firmatelefoner til teams",
-        en: "Company phones for teams",
+        href: "/ydelser/nordisk-tilpasning",
+        da: "Dansk eller norsk tastatur",
+        en: "Danish or Norwegian keyboards",
       },
     ],
   },

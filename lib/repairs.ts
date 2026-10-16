@@ -188,20 +188,20 @@ export const repairs: Repair[] = [
     mark: "memory",
     name: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
     metaTitle: {
-      da: "RAM- og SSD-opgradering af bærbar og stationær | Kestro",
-      en: "RAM and SSD upgrades for laptops and desktops | Kestro",
+      da: "RAM og SSD: opgradering af din gamle bærbar | Kestro",
+      en: "Upgrade an old laptop: RAM and SSD options | Kestro",
     },
     metaDescription: {
-      da: "RAM- og SSD-opgradering: ofte den billigste vej til en mærkbart hurtigere computer. Sådan finder vi ud af, om det kan betale sig – med pris først.",
-      en: "Memory and SSD upgrades: often the cheapest route to a noticeably quicker computer. How we work out whether it is worth it — with a price first.",
+      da: "Opgradering af gammel bærbar: tjek RAM, SSD og flaskehalse, før du køber nyt. Få afklaret kompatibilitet og pris, før du vælger den rette løsning.",
+      en: "Upgrade an old laptop: check RAM, SSD and the real bottleneck before replacing it. Discuss compatibility and price before choosing the next step.",
     },
     summary: {
-      da: "Mere hukommelse og hurtigere lagring er ofte den billigste vej til en mærkbart hurtigere maskine.",
-      en: "More memory and faster storage is often the cheapest route to a noticeably quicker machine.",
+      da: "Undersøg, om den gamle bærbare kan få mere RAM eller en SSD, før du vælger en ny computer.",
+      en: "Check whether the old laptop can take more RAM or an SSD before choosing a new computer.",
     },
     answer: {
-      da: "Mere RAM eller en SSD er som regel billigere end en ny maskine og gør større forskel. Hvilken af dem der hjælper, afhænger af, hvad maskinen venter på. En langsom disk mærkes, når maskinen starter, og når programmer åbner. For lidt hukommelse mærkes, når mange ting er åbne på én gang.",
-      en: "More memory or an SSD is usually cheaper than a new machine and makes more difference. Which of the two helps depends on what the machine is waiting for. A slow disk shows at startup and when programs open; too little memory shows when a lot is open at once.",
+      da: "Opgradering af en gammel bærbar kan være relevant, hvis RAM eller lager er flaskehalsen, og delene kan skiftes. Afklar først symptomer, kompatibilitet og maskinens øvrige stand. En Windows-opdatering er en softwareændring; den giver ikke i sig selv mere fysisk hukommelse eller en større SSD.",
+      en: "Upgrading an old laptop may help if memory or storage is the bottleneck and the parts can be replaced. First clarify symptoms, compatibility and the rest of the machine's condition. A Windows update is a software change; it does not by itself add physical memory or a larger SSD.",
     },
     intro: {
       da: "En maskine, der føles langsom, er sjældent langsom af samme grund hver gang. Skal den vente på disken, eller er den løbet tør for hukommelse? De to problemer føles ens og koster ikke det samme at løse, så vi kigger efter, hvad der faktisk er flaskehalsen, før vi foreslår en del.",
