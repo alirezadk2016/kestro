@@ -9,7 +9,8 @@ import { whyUsed } from "./category-copy";
  *
  * Generated rather than written per model for one reason: every figure in them
  * is a field in lib/models.ts, so the lead and the answers cannot drift from
- * the specification table on the same page. Nothing here adds a fact. If a
+ * the specification table on the same page. Generation-specific questions
+ * cite the relevant manufacturer document. If a
  * model lacks a field, the sentence that would use it is not written.
  *
  * The opening paragraph answers "what is this machine" with the numbers in it,
@@ -120,8 +121,8 @@ export function modelFaqs(model: Model): FaqItem[] {
     items.push({
       question: { da: `Kan ${n} køre Windows 11?`, en: `Can the ${n} run Windows 11?` },
       answer: {
-        da: "Ja. Den leveres med Windows 11 installeret med drivere. Ifølge Microsoft kræver Windows 11 blandt andet TPM 2.0 og Secure Boot, og supporten for Windows 10 sluttede 14. oktober 2025.",
-        en: "Yes. It is delivered with Windows 11 installed with drivers. According to Microsoft, Windows 11 requires TPM 2.0 and Secure Boot among other things, and Windows 10 support ended on 14 October 2025.",
+        da: "Kontrollér den præcise processor og konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Aftal udgave og licens særskilt; Microsofts almindelige support for Windows 10 sluttede 14. oktober 2025.",
+        en: "Check the exact processor and configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Agree the edition and licence separately; Microsoft's general Windows 10 support ended on 14 October 2025.",
       },
     });
     const ram = f("Hukommelse");
@@ -207,6 +208,55 @@ export function modelFaqs(model: Model): FaqItem[] {
     });
   }
 
+  if (model.slug === "lenovo-thinkpad-x1-carbon") {
+    items.push(
+      {
+        question: {
+          da: "Kan RAM opgraderes i en X1 Carbon Gen 7?",
+          en: "Can RAM be upgraded in an X1 Carbon Gen 7?",
+        },
+        answer: {
+          da: "Nej. Lenovo angiver 8 eller 16 GB fastloddet RAM uden sokler i Gen 7. Vælg derfor hukommelse ved køb; en større SSD ændrer ikke RAM-kapaciteten. Siden omfatter flere generationer, så få den konkrete generation og hukommelse bekræftet.",
+          en: "No. Lenovo specifies 8 or 16 GB of soldered RAM without slots in Gen 7. Choose memory when buying; a larger SSD does not increase RAM. This page covers several generations, so confirm the exact generation and installed memory.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad skal vi kontrollere til dock og netværk på X1 Carbon?",
+          en: "What should we check for an X1 Carbon dock and network?",
+        },
+        answer: {
+          da: "Gen 7 har to Thunderbolt 3-porte, men kablet Ethernet kræver en separat adapter. Send dockens modelnummer samt skærmenes opløsning og kabler, så kompatibilitet kan afklares. Antag ikke, at tilbehør eller porte er ens på tværs af generationer.",
+          en: "Gen 7 has two Thunderbolt 3 ports, but wired Ethernet needs a separate adapter. Send the dock model number and monitor resolutions and cables so compatibility can be checked. Do not assume accessories or ports are identical across generations.",
+        },
+      },
+    );
+  }
+  if (model.slug === "lenovo-thinkpad-t14") {
+    items.push(
+      {
+        question: {
+          da: "Kan RAM udvides i en T14 Gen 2 Intel?",
+          en: "Can RAM be expanded in a T14 Gen 2 Intel?",
+        },
+        answer: {
+          da: "Ja. Gen 2 Intel har fastloddet RAM og én DDR4 SO-DIMM-sokkel ifølge Lenovo. Kontrollér, hvad der allerede sidder i soklen, før I aftaler en opgradering. Det er en oplysning om Gen 2 Intel, ikke alle T14-generationer og platforme.",
+          en: "Yes. Lenovo lists soldered RAM and one DDR4 SO-DIMM slot for Gen 2 Intel. Check what is already in the slot before agreeing an upgrade. This describes Gen 2 Intel, not every T14 generation and platform.",
+        },
+      },
+      {
+        question: {
+          da: "Har alle T14 Gen 2 Intel Iris Xe-grafik?",
+          en: "Does every T14 Gen 2 Intel have Iris Xe graphics?",
+        },
+        answer: {
+          da: "Iris Xe-funktionalitet kræver dual-channel-hukommelse. Lenovo oplyser, at grafikken fungerer som Intel UHD med single-channel. Bed derfor om både processor og RAM-konfiguration, hvis grafikken er vigtig for jeres programmer; navnet T14 Gen 2 alene er ikke tilstrækkeligt.",
+          en: "Iris Xe capability requires dual-channel memory. Lenovo states that the graphics function as Intel UHD with single-channel memory. Ask for both processor and RAM configuration if graphics matter to your applications; the T14 Gen 2 name alone is not sufficient.",
+        },
+      },
+    );
+  }
+
   /* Monitors and docks have no Windows answer to cite; the reason to buy
      them used is the one source that applies to them. */
   if (!isComputer(model)) items.push(whyUsed);
@@ -227,4 +277,6 @@ export const modelSources = (model: Model): SourceId[] => [
     ? (["latitudeProcessors", "latitudeMemory", "latitudePorts"] as const)
     : []),
   ...(model.slug === "dell-optiplex-5060" ? (["optiplexSpecs"] as const) : []),
+  ...(model.slug === "lenovo-thinkpad-x1-carbon" ? (["thinkpadX1CarbonGen7"] as const) : []),
+  ...(model.slug === "lenovo-thinkpad-t14" ? (["thinkpadT14Gen2Intel"] as const) : []),
 ];

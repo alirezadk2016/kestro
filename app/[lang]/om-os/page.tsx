@@ -21,7 +21,7 @@ const copy = {
     description:
       "Kestro er en leverandør af brugt erhvervshardware i Aarhus. Vi finder maskinerne i et netværk af leverandører i Sydeuropa og leverer dem til virksomheder i to lande, Danmark og Norge – en testet maskine til opgaven frem for en ny til listepris.",
     quote:
-      "De fleste skriver til os, fordi de er trætte af at lede. De ved godt, hvad de skal bruge – de vil bare ikke bruge tre uger på at finde ud af, hvem der har det til den rigtige pris. Det er dét, vi laver.",
+      "Idéen med Kestro er enkel: I skal kunne beskrive opgaven og få et forståeligt grundlag for at vælge udstyr. Model, stand, konfiguration og vilkår skal kunne sammenlignes, før I beslutter jer.",
   },
   en: {
     metaTitle: "About Kestro — used business IT from southern Europe",
@@ -31,7 +31,7 @@ const copy = {
     description:
       "Kestro is a supplier of used business hardware in Aarhus. We find the machines through a network of suppliers in southern Europe and deliver them to companies in two countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",
     quote:
-      "Most people write to us because they are tired of searching. They know what they need — they just do not want to spend three weeks working out who has it at the right price. That is what we do.",
+      "The idea behind Kestro is simple: describe the work and get a clear basis for choosing equipment. Model, condition, configuration and terms should be comparable before you decide.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

@@ -1,7 +1,7 @@
 import type { Lang, Localized } from "./i18n";
 
 /**
- * Machine models we are most often asked to source.
+ * Reference models for comparing business hardware.
  *
  * This is a reference catalogue, not stock and not a shop: no prices, no
  * availability, no basket. We buy per order, so a model here means "this is
@@ -34,7 +34,12 @@ export type Model = {
   notes: Localized[];
   /** Longer argument for the model. Only where we have something to add. */
   why?: { title: Localized; description: Localized }[];
-  images?: { src: string; alt: Localized }[];
+  images?: {
+    src: string;
+    alt: Localized;
+    photographic?: boolean;
+    credit?: { author: string; source: string; licence: string; licenceUrl: string };
+  }[];
 };
 
 export const modelGroups: { id: ModelGroup; name: Localized; description: Localized }[] = [
@@ -313,6 +318,22 @@ export const models: Model[] = [
     slug: "lenovo-thinkpad-t14",
     name: "Lenovo ThinkPad T14",
     brand: "Lenovo",
+    images: [
+      {
+        src: "/models/t14/gen2-intel-reference.webp",
+        alt: {
+          da: "Lenovo ThinkPad T14 Gen 2 Intel set forfra med åben skærm og tastatur; referencefoto, ikke en lagerført enhed",
+          en: "Lenovo ThinkPad T14 Gen 2 Intel viewed from the front with its screen open and keyboard visible; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Edvard10",
+          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T14.jpg",
+          licence: "CC0",
+          licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+        },
+      },
+    ],
     format: { da: '14" bærbar', en: '14" laptop' },
     group: "baerbare",
     category: "baerbare-computere",
@@ -421,8 +442,8 @@ export const models: Model[] = [
         en: "The AMD models give you more cores for the money. The Intel models have Thunderbolt and therefore more docking options — choose based on the docks you already own.",
       },
       {
-        da: "Gen 1 og Gen 2 ligner hinanden udvendigt. Skal maskinerne kunne mere end kontorarbejde, så bed om Gen 2 med Iris Xe-grafik.",
-        en: "Gen 1 and Gen 2 look alike from the outside. If the machines need to do more than office work, ask for Gen 2 with Iris Xe graphics.",
+        da: "Gen 1 og Gen 2 ligner hinanden udvendigt. På Gen 2 Intel kræver Iris Xe dual-channel-RAM; med single-channel fungerer grafikken som UHD. Få processor og RAM-konfiguration bekræftet til jeres programmer.",
+        en: "Gen 1 and Gen 2 look alike from the outside. On Gen 2 Intel, Iris Xe requires dual-channel RAM; with single-channel it functions as UHD. Confirm the processor and RAM configuration for your applications.",
       },
     ],
   },

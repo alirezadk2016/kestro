@@ -72,9 +72,14 @@ const PAGES = [
   "/ydelser",
   "/ydelser/levering",
   "/produkter",
+  "/en/products",
   "/produkter/baerbare-computere",
   "/modeller",
+  "/en/models",
   "/modeller/lenovo-thinkpad-t480",
+  "/modeller/lenovo-thinkpad-t14",
+  "/en/models/lenovo-thinkpad-t14",
+  "/modeller/lenovo-thinkpad-x1-carbon",
   "/maskinen",
   "/reparation",
   "/kontakt",
@@ -913,6 +918,68 @@ for (const [width, height] of [
     null,
     { timeout: 15000 },
   );
+  await context.close();
+}
+
+/* ----------------------------------------------------- buying content / photo */
+
+for (const [prefix, productPath, memoryQuestion] of [
+  ["", "/produkter", "Kan RAM udvides i en T14 Gen 2 Intel?"],
+  ["/en", "/en/products", "Can RAM be expanded in a T14 Gen 2 Intel?"],
+]) {
+  const modelPath = `${prefix}/${prefix ? "models" : "modeller"}/lenovo-thinkpad-t14`;
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(BASE + productPath, { waitUntil: "networkidle" });
+  for (const href of [
+    `${prefix}/${prefix ? "models" : "modeller"}`,
+    `${prefix}/${prefix ? "condition-and-quality" : "kvalitet"}`,
+    `${prefix}/${prefix ? "contact" : "kontakt"}`,
+  ]) {
+    if (!(await page.locator(`main a[href='${href}']`).count()))
+      fail("buying content", `missing server-rendered decision link ${href}`);
+  }
+  await page.goto(BASE + modelPath, { waitUntil: "networkidle" });
+  if (!(await page.getByRole("heading", { name: memoryQuestion, exact: true }).count()))
+    fail("buying content", `missing server-rendered generation answer ${modelPath}`);
+  if (!(await page.locator("main a[href*='ThinkPad_T14_Gen_2_Intel_Spec.pdf']").count()))
+    fail("buying content", `missing manufacturer citation ${modelPath}`);
+  await context.close();
+}
+
+for (const width of [320, 390, 1440]) {
+  const context = await browser.newContext({ viewport: { width, height: 900 } });
+  const page = await context.newPage();
+  await page.goto(BASE + "/modeller/lenovo-thinkpad-t14", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
+  const enlarge = page.getByRole("button", {
+    name: "Forstør billede af Lenovo ThinkPad T14",
+    exact: true,
+  });
+  if (
+    !(await enlarge
+      .locator("img")
+      .evaluate(
+        (img) =>
+          img.complete && img.naturalWidth > 0 && getComputedStyle(img).mixBlendMode === "normal",
+      ))
+  )
+    fail("reference photo", `missing image or photographic blend regression at ${width}`);
+  if (await page.getByRole("group", { name: "Produktbilleder", exact: true }).count())
+    fail("reference photo", "single photograph has redundant thumbnail controls");
+  if (!(await page.locator("a[rel='license']").count()))
+    fail("reference photo", "missing visible licence credit");
+  await enlarge.click();
+  await page.locator("dialog[open]").waitFor();
+  const box = await page.locator("dialog[open]").boundingBox();
+  if (!box || box.x < 0 || box.x + box.width > width + 1)
+    fail("reference photo", `zoom overflows at ${width}`);
+  await page.keyboard.press("Escape");
+  await page.waitForFunction(
+    () => !document.querySelector("dialog").open && document.body.style.overflow !== "hidden",
+  );
+  if (!(await enlarge.evaluate((el) => el === document.activeElement)))
+    fail("reference photo", `focus did not return at ${width}`);
   await context.close();
 }
 

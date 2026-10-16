@@ -35,6 +35,28 @@ export type Source = {
 };
 
 export const sources = {
+  thinkpadX1CarbonGen7: {
+    id: "thinkpadX1CarbonGen7",
+    publisher: "Lenovo",
+    title: { da: "ThinkPad X1 Carbon Gen 7: PSREF", en: "ThinkPad X1 Carbon Gen 7: PSREF" },
+    url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_X1_Carbon_7th_Gen/ThinkPad_X1_Carbon_7th_Gen_Spec.pdf",
+    accessed: "2026-10-16",
+    claim: {
+      da: "X1 Carbon Gen 7 har 8 eller 16 GB fastloddet RAM uden sokler. Lenovo angiver to Thunderbolt 3-porte; kablet Ethernet kræver en separat adapter.",
+      en: "X1 Carbon Gen 7 has 8 or 16 GB of soldered RAM without slots. Lenovo lists two Thunderbolt 3 ports; wired Ethernet requires a separate adapter.",
+    },
+  },
+  thinkpadT14Gen2Intel: {
+    id: "thinkpadT14Gen2Intel",
+    publisher: "Lenovo",
+    title: { da: "ThinkPad T14 Gen 2 Intel: PSREF", en: "ThinkPad T14 Gen 2 Intel: PSREF" },
+    url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_2_Intel/ThinkPad_T14_Gen_2_Intel_Spec.pdf",
+    accessed: "2026-10-16",
+    claim: {
+      da: "T14 Gen 2 Intel har fastloddet RAM og én DDR4 SO-DIMM-sokkel. Iris Xe kræver dual-channel-hukommelse; med single-channel fungerer grafikken som Intel UHD.",
+      en: "T14 Gen 2 Intel has soldered RAM and one DDR4 SO-DIMM slot. Iris Xe requires dual-channel memory; with single-channel memory the graphics function as Intel UHD.",
+    },
+  },
   latitudeMemory: {
     id: "latitudeMemory",
     publisher: "Dell",

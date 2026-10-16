@@ -6,6 +6,25 @@ Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 m
 
 ## Hvad der var galt
 
+### Status 16. oktober 2026
+
+Search Console er nu forbundet for `sc-domain:kestro.dk`. Impressions og
+positioner er observationer for dette site, ikke søgevolumen for markedet.
+Volumen, CPC og difficulty forbliver derfor `unknown` i CSV'en. Private
+rådata opbevares uden for dette offentlige repository.
+
+De tre forældede `New`-markeringer for refurbished-definitionen,
+sammenligningen og Windows 10-guiden er rettet til `Existing`. De syv andre
+guideforslag er stadig ikke udgivet: `New` er en idé, ikke en offentlig URL,
+en brudt intern henvisning eller en godkendelse til at oprette en side.
+Undersøg dansk SERP og reelt indhold før oprettelse. Udokumenterede påstande
+om konkurrenter og efterspørgsel er fjernet fra de berørte noter.
+
+Første indsats er indhold på de eksisterende produkt- og modelsider: konkrete
+købsvalg, konfiguration, kompatibilitet og begrænsninger. URLs og ejerskab af
+søgeord flyttes ikke. Oversigten nedenfor beskriver tidligere metadataarbejde;
+den er ikke dokumentation for, at de ændringer gav trafik.
+
 Listen så grundig ud, men den gav ikke klik. Seks konkrete fejl:
 
 1. **Reparationssiderne manglede helt.** 24 URL'er – 12 danske og 12 engelske – havde ikke et eneste søgeord. Det er netop de sider, hvor folk søger med et akut problem: »batteriskift bærbar«, »computer starter ikke«, »skærmskift bærbar«. Deres titles havde heller ikke brandet med: »Klargøring af brugt udstyr«, »Reservedele og komponentskift«.

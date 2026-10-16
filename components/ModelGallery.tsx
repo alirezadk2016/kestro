@@ -55,39 +55,58 @@ export default function ModelGallery({
           quality={85}
           sizes="(max-width: 1024px) 92vw, 460px"
           priority={selected === 0}
-          className="h-full w-full object-contain p-3 mix-blend-multiply sm:p-6"
+          className={`h-full w-full object-contain ${item.photographic ? "" : "p-3 mix-blend-multiply sm:p-6"}`}
         />
         <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded border border-ink-200 bg-paper text-ink-800">
           <ZoomIn size={20} aria-hidden="true" />
         </span>
       </button>
-      <div
-        className="grid grid-cols-4 gap-2 sm:gap-3"
-        role="group"
-        aria-label={da ? "Produktbilleder" : "Product photos"}
-      >
-        {images.map((image, index) => (
-          <button
-            key={image.src}
-            type="button"
-            onClick={() => setSelected(index)}
-            aria-pressed={selected === index}
-            aria-label={`${index + 1}: ${image.alt[lang]}`}
-            className={`aspect-[4/3] min-h-11 overflow-hidden rounded border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${selected === index ? "border-brand-300" : "border-transparent hover:border-ink-400"}`}
-          >
-            <Image
-              src={image.src}
-              alt=""
-              width={295}
-              height={280}
-              quality={75}
-              sizes="(max-width: 640px) 22vw, 110px"
-              className="h-full w-full object-contain p-2 mix-blend-multiply"
-            />
-          </button>
-        ))}
-      </div>
+      {images.length > 1 && (
+        <div
+          className="grid grid-cols-4 gap-2 sm:gap-3"
+          role="group"
+          aria-label={da ? "Produktbilleder" : "Product photos"}
+        >
+          {images.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              onClick={() => setSelected(index)}
+              aria-pressed={selected === index}
+              aria-label={`${index + 1}: ${image.alt[lang]}`}
+              className={`aspect-[4/3] min-h-11 overflow-hidden rounded border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${selected === index ? "border-brand-300" : "border-transparent hover:border-ink-400"}`}
+            >
+              <Image
+                src={image.src}
+                alt=""
+                width={295}
+                height={280}
+                quality={75}
+                sizes="(max-width: 640px) 22vw, 110px"
+                className={`h-full w-full object-contain ${image.photographic ? "" : "p-2 mix-blend-multiply"}`}
+              />
+            </button>
+          ))}
+        </div>
+      )}
       <p className="pt-1 text-sm leading-[1.6] text-paper/65">{note}</p>
+      {item.credit && (
+        <p className="flex flex-wrap items-center gap-x-3 text-sm text-paper/75">
+          <a
+            href={item.credit.source}
+            className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
+          >
+            {da ? "Referencefoto" : "Reference photo"}: {item.credit.author}
+          </a>
+          <a
+            href={item.credit.licenceUrl}
+            rel="license"
+            className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
+          >
+            {item.credit.licence}
+          </a>
+        </p>
+      )}
       <dialog
         ref={dialog}
         aria-labelledby={titleId}
@@ -134,31 +153,35 @@ export default function ModelGallery({
                 fill
                 quality={90}
                 sizes="(max-width: 1100px) 94vw, 1060px"
-                className="object-contain p-4 mix-blend-multiply sm:p-8"
+                className={`object-contain ${item.photographic ? "" : "p-4 mix-blend-multiply sm:p-8"}`}
               />
             </div>
             <div className="mt-3 flex items-center justify-between gap-4">
-              <button
-                type="button"
-                onClick={() => step(-1)}
-                aria-label={da ? "Forrige billede" : "Previous photo"}
-                title={da ? "Forrige billede" : "Previous photo"}
-                className={iconClass}
-              >
-                <ChevronLeft aria-hidden="true" size={24} />
-              </button>
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  aria-label={da ? "Forrige billede" : "Previous photo"}
+                  title={da ? "Forrige billede" : "Previous photo"}
+                  className={iconClass}
+                >
+                  <ChevronLeft aria-hidden="true" size={24} />
+                </button>
+              )}
               <p className="text-center text-sm leading-6 text-paper/85" aria-live="polite">
                 {item.alt[lang]}
               </p>
-              <button
-                type="button"
-                onClick={() => step(1)}
-                aria-label={da ? "Næste billede" : "Next photo"}
-                title={da ? "Næste billede" : "Next photo"}
-                className={iconClass}
-              >
-                <ChevronRight aria-hidden="true" size={24} />
-              </button>
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  aria-label={da ? "Næste billede" : "Next photo"}
+                  title={da ? "Næste billede" : "Next photo"}
+                  className={iconClass}
+                >
+                  <ChevronRight aria-hidden="true" size={24} />
+                </button>
+              )}
             </div>
           </div>
         )}

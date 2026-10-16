@@ -1063,8 +1063,18 @@ export const guides: Guide[] = [
         label: { da: "Få os til at opgradere den", en: "Have us do the upgrade" },
       },
       {
-        href: "/modeller",
-        label: { da: "Modeller, der er nemme at opgradere", en: "Models that are easy to upgrade" },
+        href: "/modeller/lenovo-thinkpad-t14",
+        label: {
+          da: "ThinkPad T14: kontrollér generation og RAM-sokkel",
+          en: "ThinkPad T14: check the generation and RAM slot",
+        },
+      },
+      {
+        href: "/modeller/lenovo-thinkpad-x1-carbon",
+        label: {
+          da: "X1 Carbon: vær opmærksom på fastloddet RAM",
+          en: "X1 Carbon: watch for soldered RAM",
+        },
       },
       {
         href: "/reparation/ram-og-ssd-opgradering",

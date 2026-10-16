@@ -9,6 +9,33 @@ This file is the other half: where kestro.dk stands against those rules. It
 records what passes, what is pending, and what waits on the owner. Update it
 in every change that applies Mak or adds a lesson.
 
+## Search Visibility Fixes — 16 October 2026
+
+- Search Console is connected for the Kestro domain property. The current
+  connector supplies performance and sitemap data, not the six Page Indexing
+  exclusion reasons or URL Inspection. Do not claim these unknown exclusions
+  are fixed. Raw account data stays outside the public repository.
+- Existing product pages now answer category-specific buying questions and
+  link configuration, quality, software and total-cost decisions to relevant
+  pages. No new thin guides, city pages, URLs or speculative stock offers.
+- T14 Gen 2 Intel and X1 Carbon Gen 7 buying answers cite Lenovo PSREF.
+  Soldered memory, RAM slots and the Iris Xe dual-channel requirement are
+  explicitly generation-specific. Windows compatibility and licensing must be
+  checked for the actual configuration, not promised from a model name.
+- The models hub no longer claims customer demand. The About quote describes
+  the project's purpose rather than invented enquiry history.
+- A CC0 T14 Gen 2 Intel reference photograph is credited and compressed to
+  WebP. T480 photographs remain unchanged. Sixteen model pages still need
+  suitable authentic photographs; do not substitute the wrong generation.
+- The RAM guide now links directly to the T14 and X1 Carbon checks. The
+  keyword map distinguishes existing guides from unapproved proposals.
+- Canonicals, hreflang, sitemap membership, redirects, homepage artwork and
+  the Danish/English route structure are unchanged.
+- Next review: compare equivalent completed Search Console windows for
+  non-brand queries and relevant landing pages. Do not confuse anonymised
+  queries with zero clicks, impressions with market volume, or indexing with
+  first-page ranking. No ranking, traffic or rich-result guarantee is made.
+
 ## Pre-launch Audit Fixes — 14 October 2026
 
 - The owner has explicitly requested indicative pricing during the preparation phase. `/priser` now shows four dated external retail examples, with configurations, VAT context, fees and sources. These are budget references, not Kestro offers or stock claims. No `Product.offers` markup is created.

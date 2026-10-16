@@ -14,30 +14,31 @@ const copy = {
   da: {
     metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     metaDescription:
-      "Specifikationer, fordele og ulemper for de brugte erhvervsmodeller, vi oftest skaffer: ThinkPad, EliteBook, Latitude, OptiPlex, skærme og docks.",
-    title: "Modeller vi ofte skaffer",
+      "18 brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.",
+    title: "Brugte erhvervsmodeller: specifikationer og forskelle",
     /* Answer first, with the counts the page actually shows. */
-    description: `Her er ${models.length} erhvervsmodeller, vi kender godt, fordelt på ${modelGroups.length} grupper fra bærbare til dockingstationer. Brug listen til at pege på noget konkret, når I skriver til os.`,
-    noStockLine: "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+    description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konkret konfiguration bekræftet.`,
+    noStockLine:
+      "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
-      "Står jeres model ikke på listen, betyder det ikke, at vi ikke kan skaffe den. Spørg – det er som regel muligt.",
+      "Send det præcise modelnummer, antal og de vigtigste krav. Vi kan undersøge mulighederne og relevante alternativer; listen er ikke en garanti for, hvad der er tilgængeligt.",
     seeSpecs: "Se specifikationer",
   },
   en: {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
     metaDescription:
-      "Specifications, pros and cons for the refurbished models we source most often: ThinkPad, EliteBook, Latitude, OptiPlex, monitors and docks.",
-    title: "Models we often source",
-    description: `Here are ${models.length} business models we know well, across ${modelGroups.length} groups from laptops to docking stations. Use the list to point at something concrete when you write to us.`,
+      "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
+    title: "Used business models: specifications and differences",
+    description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and actual configuration.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
-      "If your model is not on the list, that does not mean we cannot get it. Ask — usually we can.",
+      "Send the exact model number, quantity and main requirements. We can investigate options and relevant alternatives; the list does not guarantee availability.",
     seeSpecs: "See specifications",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -166,8 +167,8 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
               en: "Which version of Windows do the computers come with?",
             },
             answer: {
-              da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
-              en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+              da: "Aftal version, udgave og licens for den konkrete konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },
         ]}

@@ -35,32 +35,105 @@ export function categoryLead(category: Category, lang: Lang): string {
 
 const PREPARED: Record<string, { da: string; en: string }> = {
   "baerbare-computere": {
-    da: "Hver maskine funktionstestes, lagermediet slettes, og tastaturet skiftes til dansk eller norsk layout, før den sættes op. Stand og batteri står pr. enhed i tilbuddet.",
-    en: "Each machine is function-tested, its storage is erased and the keyboard is swapped to a Danish or Norwegian layout before it is set up. Condition and battery are stated per unit in the quote.",
+    da: "Bed om testresultat, dokumentation for sletning, dansk eller norsk tastatur og en beskrivelse af stand og batteri. Aftal, hvad der skal klargøres, og hvad der følger med.",
+    en: "Ask for test results, erasure documentation, a Danish or Norwegian keyboard, and a description of condition and battery health. Agree what preparation is needed and what is included.",
   },
   "stationaere-computere": {
-    da: "Hver maskine funktionstestes, og lagermediet slettes, før den sættes op med Windows. Standen står pr. enhed i tilbuddet.",
-    en: "Each machine is function-tested and its storage erased before it is set up with Windows. The condition is stated per unit in the quote.",
+    da: "Bed om testresultat, dokumentation for sletning og oplysninger om Windows-licens. Aftal også tastatur, mus og skærmkabler, hvis de skal med.",
+    en: "Ask for test results, erasure documentation and Windows licence details. Also agree on a keyboard, mouse and monitor cables if needed.",
   },
   "mini-pc": {
-    da: "Hver maskine funktionstestes, og lagermediet slettes, før den sættes op med Windows. Standen står pr. enhed i tilbuddet.",
-    en: "Each machine is function-tested and its storage erased before it is set up with Windows. The condition is stated per unit in the quote.",
+    da: "Bed om testresultat, dokumentation for sletning og oplysninger om Windows-licens. Kontrollér, at den rigtige strømforsyning og eventuelt VESA-beslag er med.",
+    en: "Ask for test results, erasure documentation and Windows licence details. Check that the correct power supply and any required VESA mount are included.",
   },
   skaerme: {
-    da: "Standen står pr. skærm i tilbuddet, og skærmene kan leveres sammen med maskiner og docks, så arbejdspladsen står komplet.",
-    en: "The condition is stated per monitor in the quote, and the monitors can be delivered with the machines and docks, so the workstation is complete.",
+    da: "Bed om oplysninger om pixel- og panelskader, fodens justering og de medfølgende kabler. En skærm uden fod eller det rigtige kabel kræver ekstra tilbehør.",
+    en: "Ask about pixel and panel defects, stand adjustment and included cables. A monitor without a stand or the right cable needs extra accessories.",
   },
   dockingstationer: {
-    da: "Standen står pr. enhed i tilbuddet, og kabler og tilbehør vælges, så de passer til maskinerne.",
-    en: "The condition is stated per unit in the quote, and cables and accessories are chosen to fit the machines.",
+    da: "Få oplyst det præcise dock-modelnummer, strømforsyning, værtskabel og eventuelt behov for firmware eller drivere. Samme stikform betyder ikke nødvendigvis samme funktion.",
+    en: "Confirm the exact dock model number, power supply, host cable and any firmware or driver requirements. The same connector shape does not necessarily mean the same functionality.",
   },
   tablets: {
-    da: "Enhederne nulstilles, så de er klar til jeres MDM, og stand og batteritilstand oplyses pr. enhed, før I bestiller.",
-    en: "The devices are reset, ready for your MDM, and condition and battery health are stated per unit before you order.",
+    da: "Bed om batteritilstand, test af touchskærm og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
+    en: "Ask for battery health, touchscreen test results and confirmation that the device has been released from its previous owner and management. A reset alone does not establish that a tablet can enrol in your MDM.",
   },
   smartphones: {
-    da: "Telefonerne testes og nulstilles, og stand og batteri oplyses pr. enhed. De gamle telefoner kan hentes retur og slettes.",
-    en: "The phones are tested and reset, and condition and battery are stated per unit. The old phones can be collected and erased.",
+    da: "Bed om batteritilstand, test af skærm, kamera og opladning samt bekræftelse på, at telefonen er frigivet fra tidligere ejer og administration. Aftal tilbehør og eventuel håndtering af de gamle telefoner særskilt.",
+    en: "Ask for battery health, screen, camera and charging test results, and confirmation that the phone has been released from its previous owner and management. Agree accessories and any handling of old phones separately.",
+  },
+};
+
+const BUYING_QUESTIONS: Record<string, FaqItem> = {
+  "baerbare-computere": {
+    question: {
+      da: "Hvordan vælger vi en brugt erhvervsbærbar?",
+      en: "How do we choose a used business laptop?",
+    },
+    answer: {
+      da: "Start med de programmer, medarbejderne bruger, og om maskinen skal med på farten. Sammenlign derefter præcis processor, RAM, skærm, vægt og batteritilstand. Kontrollér, om RAM kan udvides, og om jeres eksisterende dock kan oplade maskinen og drive de ønskede skærme.",
+      en: "Start with the applications staff use and whether the laptop will travel. Then compare the exact processor, RAM, display, weight and battery health. Check whether RAM is upgradeable and whether your existing dock can charge the laptop and drive the required monitors.",
+    },
+  },
+  "stationaere-computere": {
+    question: {
+      da: "Skal vi vælge en tower, SFF eller mini-pc?",
+      en: "Should we choose a tower, SFF or mini PC?",
+    },
+    answer: {
+      da: "En tower giver typisk mest plads til udvidelser, mens SFF fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads og skærmudgange på den konkrete model, især til CAD eller flere skærme.",
+      en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the actual chassis, power supply, card clearance and display outputs, especially for CAD or multiple monitors.",
+    },
+  },
+  "mini-pc": {
+    question: {
+      da: "Hvad skal vi kontrollere på en mini-pc til kontoret?",
+      en: "What should we check on an office mini PC?",
+    },
+    answer: {
+      da: "Se på antal skærmudgange, netværk, støjkrav og plads til RAM og lager. Et modelnavn kan dække flere kabinetter og valgfrie porte, så bed om billeder af de faktiske tilslutninger. Aftal strømforsyning og beslag, hvis pc'en skal monteres bag en skærm.",
+      en: "Check display outputs, networking, noise requirements and room for RAM and storage. A model name can cover different chassis and optional ports, so request photos of the actual connectors. Agree on the power supply and mount if the PC will sit behind a monitor.",
+    },
+  },
+  skaerme: {
+    question: {
+      da: "Hvordan passer en brugt skærm til vores arbejdsplads?",
+      en: "How do we match a used monitor to our workstation?",
+    },
+    answer: {
+      da: "Vælg størrelse og opløsning efter arbejdsopgaven og pladsen på bordet. Kontrollér derefter pc'ens eller dockens udgang, skærmens indgang og det nødvendige kabel. USB-C er ikke i sig selv en garanti for opladning eller billedsignal; få den konkrete models funktioner bekræftet.",
+      en: "Choose size and resolution around the work and desk space. Then check the PC or dock output, monitor input and required cable. USB-C alone does not guarantee charging or a video signal; confirm the capabilities of the exact model.",
+    },
+  },
+  dockingstationer: {
+    question: {
+      da: "Hvordan ved vi, om en dock passer til vores bærbare?",
+      en: "How do we know whether a dock fits our laptops?",
+    },
+    answer: {
+      da: "Send laptop-model, dock-model og skærmenes opløsning og tilslutninger. USB-C, Thunderbolt og USB-docks med DisplayLink stiller forskellige krav. Kontrollér både billedsignal, nødvendig opladningseffekt og eventuelle drivere; et USB-C-stik alene er ikke nok til at afgøre kompatibilitet.",
+      en: "Send the laptop model, dock model, and monitor resolutions and connections. USB-C, Thunderbolt and USB docks using DisplayLink have different requirements. Check video support, required charging power and any drivers; a USB-C connector alone cannot establish compatibility.",
+    },
+  },
+  tablets: {
+    question: {
+      da: "Hvad bør vi tjekke på tablets til medarbejdere?",
+      en: "What should we check on tablets for staff?",
+    },
+    answer: {
+      da: "Få det præcise modelnummer, lagerplads, Wi-Fi- eller mobilnetvariant og status for sikkerhedsopdateringer. Kontrollér også jeres apps og MDM, samt om tastatur eller pen passer til generationen. Tilbehør fra én generation passer ikke nødvendigvis til den næste.",
+      en: "Confirm the exact model number, storage, Wi-Fi or cellular variant, and security update status. Also check your apps and MDM, and whether the keyboard or pen fits that generation. Accessories for one generation do not necessarily fit the next.",
+    },
+  },
+  smartphones: {
+    question: {
+      da: "Hvad er vigtigt ved brugte firmatelefoner?",
+      en: "What matters when choosing used business phones?",
+    },
+    answer: {
+      da: "Sammenlign præcis model, resterende sikkerhedsopdateringer, batteritilstand og lagerplads. Kontrollér jeres apps, MDM og behov for fysisk SIM eller eSIM på den konkrete variant. Bed om enheder uden tidligere ejers konto- eller administrationslås; en kosmetisk grad siger ikke noget om disse forhold.",
+      en: "Compare the exact model, remaining security updates, battery health and storage. Check your apps, MDM, and physical SIM or eSIM requirements against the specific variant. Request devices without a previous owner's account or management lock; a cosmetic grade does not establish any of these details.",
+    },
   },
 };
 
@@ -105,23 +178,19 @@ export function categoryFaqs(category: Category): FaqItem[] {
     },
   });
 
-  /*
-   * How the equipment is prepared and delivered. Mak rule 12: the category
-   * pages' knowledge graph lacked the testing, erasure and delivery nodes,
-   * though the service pages state them. Each sentence here is one those
-   * pages already say (klargøring og test, nordisk tilpasning, levering), cut
-   * to what applies: no battery on a monitor, no storage on a dock.
-   */
+  const buyingQuestion = BUYING_QUESTIONS[category.slug];
+  if (buyingQuestion) items.push(buyingQuestion);
+
   const prepared = PREPARED[category.slug];
   if (prepared) {
     items.push({
       question: {
-        da: `Hvordan bliver ${name.da} klargjort og leveret?`,
-        en: `How are the ${name.en} prepared and delivered?`,
+        da: `Hvad skal være aftalt om klargøring af ${name.da}?`,
+        en: `What should be agreed about preparing ${name.en}?`,
       },
       answer: {
-        da: `${prepared.da} Vi leverer til én eller flere adresser i Danmark og Norge med en tidsramme, I får på skrift, før I bestiller.`,
-        en: `${prepared.en} We deliver to one or more addresses in Denmark and Norway, with a lead time you get in writing before you order.`,
+        da: `${prepared.da} Få også leveringsadresse, fragt og tidsramme bekræftet skriftligt.`,
+        en: `${prepared.en} Also get the delivery address, shipping cost and lead time confirmed in writing.`,
       },
     });
   }
@@ -133,8 +202,8 @@ export function categoryFaqs(category: Category): FaqItem[] {
         en: "Which version of Windows do the machines come with?",
       },
       answer: {
-        da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
-        en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+        da: "Aftal version, udgave og licens for den konkrete maskine. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot; et modelnavn alene er ikke nok. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+        en: "Agree the version, edition and licence for the specific machine. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things; a model name alone is not enough. Microsoft's general Windows 10 support ended on 14 October 2025.",
       },
     });
   }

@@ -72,7 +72,7 @@ const skipList = existsSync(SKIP_FILE)
   : [];
 const skipped = (hash, trailer, file) => {
   if (/\bskip\b/i.test(trailer)) return true;
-  const rel = file.slice(ROOT.length + 1);
+  const rel = file.slice(ROOT.length + 1).replaceAll("\\", "/");
   return skipList.some(
     ({ prefix, paths }) => hash.startsWith(prefix) && (paths.length === 0 || paths.includes(rel)),
   );
@@ -91,7 +91,12 @@ function commitDate(file, which) {
   }
   const out = execFileSync(
     "git",
-    ["log", "--format=%H%x09%cI%x09%(trailers:key=Page-Dates,valueonly,separator=%x2C)", "--", file],
+    [
+      "log",
+      "--format=%H%x09%cI%x09%(trailers:key=Page-Dates,valueonly,separator=%x2C)",
+      "--",
+      file,
+    ],
     { cwd: ROOT, encoding: "utf8" },
   ).trim();
   for (const line of out.split("\n")) {
@@ -150,7 +155,10 @@ const SHARED = [
 ];
 
 const isShared = (file) => {
-  const rel = file.slice(ROOT.length + 1).replace(/\.(tsx?|mjs|json)$/, "");
+  const rel = file
+    .slice(ROOT.length + 1)
+    .replaceAll("\\", "/")
+    .replace(/\.(tsx?|mjs|json)$/, "");
   return SHARED.includes(rel);
 };
 
