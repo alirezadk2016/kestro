@@ -44,8 +44,8 @@ const promises = [
     mark: "written" as CraftMarkName,
     term: { da: "I køber hos Kestro", en: "You buy from Kestro" },
     body: {
-      da: "Tilbud, faktura og reklamation går gennem os, ikke gennem leverandøren. Én modpart, ét sæt betingelser.",
-      en: "The quote, the invoice and any complaint go through us, not the supplier. One counterparty, one set of terms.",
+      da: "Ved et fremtidigt køb skal Kestro stå for tilbud, faktura og reklamation. Sælger og vilkår skal fremgå skriftligt, før I bestiller.",
+      en: "For a future purchase, Kestro is intended to handle the quote, invoice and complaints. The seller and terms must be stated in writing before you order.",
     },
     link: { da: "Handelsbetingelserne", en: "Terms of sale" },
   },

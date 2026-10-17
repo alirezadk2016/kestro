@@ -52,7 +52,10 @@ const lines = [
   },
   {
     label: { da: "Batteri", en: "Battery" },
-    value: { da: "87 % af oprindelig kapacitet, målt", en: "87 % of original capacity, measured" },
+    value: {
+      da: "Målt kapacitet i procent oplyses for den konkrete enhed",
+      en: "Measured capacity as a percentage is stated for the specific unit",
+    },
   },
   {
     label: { da: "Tastatur", en: "Keyboard" },
@@ -82,7 +85,7 @@ const copy = {
     metaRows: [
       { k: "Tilbudsnummer", v: "K-0000 (eksempel)" },
       { k: "Dato", v: "Udfyldes ved afsendelse" },
-      { k: "Gyldigt til", v: "14 dage fra dato" },
+      { k: "Gyldigt til", v: "Dato oplyses i det konkrete tilbud" },
       { k: "Antal", v: "40 stk." },
     ],
     specTitle: "Per enhed",
@@ -148,7 +151,7 @@ const copy = {
     metaRows: [
       { k: "Quote number", v: "K-0000 (example)" },
       { k: "Date", v: "Filled in when sent" },
-      { k: "Valid until", v: "14 days from date" },
+      { k: "Valid until", v: "Date stated in the actual quote" },
       { k: "Quantity", v: "40 units" },
     ],
     specTitle: "Per unit",

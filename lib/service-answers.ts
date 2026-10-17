@@ -45,8 +45,8 @@ const windows: FaqItem = {
     en: "Which version of Windows do the machines come with?",
   },
   answer: {
-    da: "Windows 11, installeret med drivere. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og Windows 11 kræver blandt andet TPM 2.0 og Secure Boot.",
-    en: "Windows 11, installed with drivers. According to Microsoft, Windows 10 support ended on 14 October 2025, and Windows 11 requires TPM 2.0 and Secure Boot among other things.",
+    da: "Windows 11 er udgangspunktet, hvis den konkrete konfiguration opfylder kravene. Version, udgave, licens og drivere skal aftales for den enkelte leverance; et modelnavn alene bekræfter ikke kompatibiliteten.",
+    en: "Windows 11 is the starting point if the actual configuration meets the requirements. Agree the version, edition, licence and drivers for each delivery; a model name alone does not confirm compatibility.",
   },
 };
 

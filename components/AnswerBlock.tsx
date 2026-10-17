@@ -70,8 +70,8 @@ const faqs: FaqEntry[] = [
        first; the project's status, which is on the hero, follows in one
        clause because it is part of the honest answer. */
     answer: {
-      da: "Fra Kestro: tilbud, faktura og reklamation går gennem os, ikke gennem leverandøren. Handel åbner, når Kestro er registreret som virksomhed.",
-      en: "From Kestro: the quote, the invoice and any complaint go through us, not the supplier. Trading opens once Kestro is registered as a business.",
+      da: "Kestro er tænkt som sælger ved et fremtidigt køb, med ansvar for tilbud, faktura og reklamation. Den ansvarlige sælger og vilkårene skal fremgå skriftligt, før I bestiller.",
+      en: "Kestro is intended to be the seller for a future purchase, responsible for the quote, invoice and complaints. The responsible seller and terms must be stated in writing before you order.",
     },
   },
   {

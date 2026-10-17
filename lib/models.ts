@@ -192,8 +192,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -431,8 +431,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -531,8 +531,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -628,8 +628,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -728,8 +728,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -825,8 +825,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -922,8 +922,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -1016,8 +1016,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -1110,8 +1110,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -1207,8 +1207,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -1307,8 +1307,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],
@@ -1406,8 +1406,8 @@ export const models: Model[] = [
       {
         label: { da: "Styresystem", en: "Operating system" },
         value: {
-          da: "Windows 11 installeret med drivere",
-          en: "Windows 11 installed with drivers",
+          da: "Windows-version, licens og drivere efter aftale",
+          en: "Windows version, licence and drivers as agreed",
         },
       },
     ],

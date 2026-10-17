@@ -42,7 +42,7 @@ const copy = {
   da: {
     title: "Alt står skriftligt, mens I stadig kan sige nej",
     sub: "Et fremtidigt tilbud skal vise alt herunder, og pris og vilkår skal være afklaret, før I bestiller.",
-    cta: "Se et rigtigt tilbud",
+    cta: "Se et eksempel på et tilbud",
     points: [
       "Pris per enhed og samlet – ikke kun en totalsum",
       "Stand og batterikapacitet per enhed",
@@ -64,7 +64,7 @@ const copy = {
   en: {
     title: "It is all in writing while you can still say no",
     sub: "A future quote must show everything below, and the price and terms must be settled before you order.",
-    cta: "See a real quote",
+    cta: "See an example quote",
     points: [
       "Price per unit and in total — not just a lump sum",
       "Condition and battery capacity per unit",

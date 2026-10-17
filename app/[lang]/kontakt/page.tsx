@@ -112,8 +112,8 @@ const contactFaqs: FaqItem[] = [
       en: "We still run Windows 10 — what should we write?",
     },
     answer: {
-      da: "Antal maskiner og modelnavne. Ifølge Microsoft sluttede supporten for Windows 10 den 14. oktober 2025, og om en maskine kan opgraderes til Windows 11, afgøres bl.a. af TPM 2.0 og Secure Boot. Med listen kan vi sige, hvilke maskiner der kan opgraderes, og hvilke det bedre kan betale sig at skifte. Computerne på vores modelsider leveres med Windows 11 installeret.",
-      en: "The number of machines and their model names. According to Microsoft, Windows 10 support ended on 14 October 2025, and whether a machine can move to Windows 11 is decided by TPM 2.0 and Secure Boot among other things. With the list we can tell you which machines can be upgraded and which are better replaced. The computers on our model pages are delivered with Windows 11 installed.",
+      da: "Skriv antal, modelnavne og den præcise konfiguration, hvis I kender den. Windows 11-egnethed skal kontrolleres per maskine; modelnavnet alene er ikke nok. Vi kan gennemgå mulighederne med jer. Ved et fremtidigt køb skal Windows-version, udgave og licens aftales skriftligt.",
+      en: "Send the quantity, model names and exact configuration if you know it. Windows 11 eligibility must be checked per machine; the model name alone is not enough. We can discuss the options with you. For a future purchase, the Windows version, edition and licence must be agreed in writing.",
     },
   },
   {
