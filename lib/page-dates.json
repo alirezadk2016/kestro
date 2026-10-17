@@ -1,7 +1,7 @@
 {
   "/": {
     "published": "2026-08-23",
-    "modified": "2026-10-14",
+    "modified": "2026-10-17",
     "files": 10
   },
   "/flaadeloesninger": {
@@ -16,7 +16,7 @@
   },
   "/kontakt": {
     "published": "2026-08-23",
-    "modified": "2026-10-14",
+    "modified": "2026-10-17",
     "files": 8
   },
   "/kvalitet": {
@@ -31,12 +31,12 @@
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-17",
     "files": 6
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-17",
     "files": 11
   },
   "/om-os": {
@@ -61,7 +61,7 @@
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-17",
     "files": 12
   },
   "/reparation": {
@@ -86,7 +86,7 @@
   },
   "/tilbud-eksempel": {
     "published": "2026-08-29",
-    "modified": "2026-10-14",
+    "modified": "2026-10-17",
     "files": 3
   },
   "/vejledninger": {
@@ -106,7 +106,7 @@
   },
   "/ydelser/[slug]": {
     "published": "2026-08-25",
-    "modified": "2026-10-16",
+    "modified": "2026-10-17",
     "files": 7
   }
 }
