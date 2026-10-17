@@ -481,3 +481,37 @@ Verification of this change:
 No homepage redesign, new routes, dependencies, paid media or advertising.
 Google indexing and post-release search traffic are not yet verified; the
 connector does not provide URL Inspection or request-indexing capabilities.
+
+### Practical guides, 17 October 2026 — release checks pending
+
+The owner approved four task guides in the existing knowledge tree:
+checking reported battery capacity, checking RAM usage, identifying HDD or
+SSD storage, and investigating a slow computer. Each has a Danish route
+and an English mirror. The keyword map records their distinct informational
+intents, with unknown volume, CPC and difficulty. Danish and English SERP
+evidence remains pending; no ranking or traffic improvement is claimed.
+
+Two manual calculators support the guides. The battery calculation divides
+reported Full Charge Capacity by Design Capacity; it is separate from
+current charge and does not diagnose safety or predict runtime. The RAM
+calculation uses user-entered usable and used memory, checks their
+consistency and reports a snapshot. It does not measure RAM frequency,
+memory errors or a need to upgrade. Values are calculated locally and are
+not uploaded. The performance guide teaches Task Manager observations;
+browser measurements cannot isolate physical CPU or RAM speed. Storage
+identification does not certify drive health.
+
+Four new knowledge graphs record those task entities and limits. The slow
+computer secondary query now points to the diagnostic guide; the existing
+repair-versus-replace guide keeps its economic decision intent. Existing
+commercial repair URLs and model-upgrade guides remain separate. The task
+photographs are illustrations, not model-specific service instructions.
+
+Release validation: `npm run verify` passed against a clean production build,
+including structure, metadata, rendered contrast, navigation, motion,
+calculator interactions, responsive layouts and the security checks. Eight
+bilingual practical-tool scenarios and eight article/image metadata variants
+also passed targeted checks. Production delivery uses the existing
+`claude/nextjs-14-scaffold-qycd1n` branch and Vercel integration. The deployed
+commit is checked separately through `/api/version`; Search Console indexing
+and traffic require post-release observation.

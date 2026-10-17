@@ -3,6 +3,7 @@ import { models } from "@/lib/models";
 import { repairs } from "@/lib/repairs";
 import { services } from "@/lib/services";
 import { guides } from "@/lib/guides";
+import { practicalGuides } from "@/lib/practical-guides";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 
 /*
@@ -34,13 +35,19 @@ const pages: { href: string; t: Localized; d: Localized; k?: string }[] = [
   {
     href: "/produkter",
     t: { da: "Produkter", en: "Products" },
-    d: { da: "Alle kategorier: bærbare, stationære, skærme, mini-pc'er og mere", en: "All categories: laptops, desktops, monitors, mini PCs and more" },
+    d: {
+      da: "Alle kategorier: bærbare, stationære, skærme, mini-pc'er og mere",
+      en: "All categories: laptops, desktops, monitors, mini PCs and more",
+    },
     k: "hvad vi skaffer what we source computere computers kategorier categories udstyr equipment",
   },
   {
     href: "/priser",
     t: { da: "Priser", en: "Pricing" },
-    d: { da: "Budgeteksempler og hvad der afgør prisen", en: "Budget examples and what decides the price" },
+    d: {
+      da: "Budgeteksempler og hvad der afgør prisen",
+      en: "Budget examples and what decides the price",
+    },
     k: "pris prisliste koster kr dkk budget price cost costs",
   },
   {
@@ -58,49 +65,73 @@ const pages: { href: string; t: Localized; d: Localized; k?: string }[] = [
   {
     href: "/flaadeloesninger",
     t: { da: "Flådeløsninger", en: "Fleet solutions" },
-    d: { da: "Computere til hele virksomheden – én model, én levering", en: "Computers for the whole company — one model, one delivery" },
+    d: {
+      da: "Computere til hele virksomheden – én model, én levering",
+      en: "Computers for the whole company — one model, one delivery",
+    },
     k: "flåde fleet mange many medarbejdere employees virksomhed company bulk",
   },
   {
     href: "/saelg-til-os",
     t: { da: "Sælg jeres udstyr", en: "Sell your equipment" },
-    d: { da: "Vi køber brugt IT, henter det og sletter data", en: "We buy used IT, collect it and erase the data" },
+    d: {
+      da: "Vi køber brugt IT, henter det og sletter data",
+      en: "We buy used IT, collect it and erase the data",
+    },
     k: "sælg sælge sell opkøb byt bytte trade gamle old datasletning",
   },
   {
     href: "/reparation",
     t: { da: "Reparation og opgradering", en: "Repairs and upgrades" },
-    d: { da: "Værksted for computere – også for private", en: "A workshop for computers — individuals welcome" },
+    d: {
+      da: "Værksted for computere – også for private",
+      en: "A workshop for computers — individuals welcome",
+    },
     k: "reparer repair værksted workshop private",
   },
   {
     href: "/ydelser",
     t: { da: "Alle ydelser", en: "All services" },
-    d: { da: "Indkøb, klargøring, levering, opkøb og opstart", en: "Sourcing, preparation, delivery, buy-back and setup" },
+    d: {
+      da: "Indkøb, klargøring, levering, opkøb og opstart",
+      en: "Sourcing, preparation, delivery, buy-back and setup",
+    },
     k: "ydelser services",
   },
   {
     href: "/modeller",
     t: { da: "Populære modeller", en: "Popular models" },
-    d: { da: "ThinkPad, EliteBook, Latitude, OptiPlex og flere", en: "ThinkPad, EliteBook, Latitude, OptiPlex and more" },
+    d: {
+      da: "ThinkPad, EliteBook, Latitude, OptiPlex og flere",
+      en: "ThinkPad, EliteBook, Latitude, OptiPlex and more",
+    },
     k: "modeller models",
   },
   {
     href: "/maskinen",
     t: { da: "Maskinen indeni", en: "Inside the machine" },
-    d: { da: "Hvad vi tester og skifter i en erhvervsbærbar", en: "What we test and replace in a business laptop" },
+    d: {
+      da: "Hvad vi tester og skifter i en erhvervsbærbar",
+      en: "What we test and replace in a business laptop",
+    },
     k: "3d indeni inside",
   },
   {
     href: "/kvalitet",
     t: { da: "Stand og kvalitet", en: "Condition and quality" },
-    d: { da: "Grad A, B og C, funktionstest og garanti", en: "Grades A, B and C, function test and warranty" },
+    d: {
+      da: "Grad A, B og C, funktionstest og garanti",
+      en: "Grades A, B and C, function test and warranty",
+    },
     k: "grad grade garanti warranty test stand condition kvalitet quality",
   },
   {
     href: "/vejledninger",
     t: { da: "Artikler og guides", en: "Articles and guides" },
-    d: { da: "Køb, priser, RAM, SSD, Windows og sikre opgraderinger", en: "Buying, prices, RAM, SSD, Windows and safe upgrades" },
+    d: {
+      da: "Køb, priser, RAM, SSD, Windows og sikre opgraderinger",
+      en: "Buying, prices, RAM, SSD, Windows and safe upgrades",
+    },
     k: "vejledninger guides artikler articles",
   },
   {
@@ -112,7 +143,10 @@ const pages: { href: string; t: Localized; d: Localized; k?: string }[] = [
   {
     href: "/kontakt",
     t: { da: "Kontakt", en: "Contact" },
-    d: { da: "Skriv til os eller find den rette person", en: "Write to us or find the right person" },
+    d: {
+      da: "Skriv til os eller find den rette person",
+      en: "Write to us or find the right person",
+    },
     k: "kontakt contact email e-mail mail telefon phone",
   },
   {
@@ -148,7 +182,13 @@ const line = (s: string) => {
 
 function build(lang: Lang): Entry[] {
   return [
-    ...pages.map((p) => ({ g: "page" as const, t: p.t[lang], d: p.d[lang], h: localePath(p.href, lang), k: p.k })),
+    ...pages.map((p) => ({
+      g: "page" as const,
+      t: p.t[lang],
+      d: p.d[lang],
+      h: localePath(p.href, lang),
+      k: p.k,
+    })),
     ...categories.map((c) => ({
       g: "product" as const,
       t: c.name[lang],
@@ -175,12 +215,12 @@ function build(lang: Lang): Entry[] {
       d: line(s.summary[lang]),
       h: localePath(`/ydelser/${s.slug}`, lang),
     })),
-    ...guides.map((gd) => ({
+    ...[...guides, ...practicalGuides].map((gd) => ({
       g: "guide" as const,
       t: gd.title[lang],
       d: line(gd.summary[lang]),
       h: localePath(`/vejledninger/${gd.slug}`, lang),
-      k: gd.primaryKeyword,
+      k: "primaryKeyword" in gd ? gd.primaryKeyword : gd.title.da,
     })),
   ];
 }

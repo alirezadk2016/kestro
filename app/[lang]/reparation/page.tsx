@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowDown } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
@@ -183,6 +184,14 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
             <div className="mt-8 max-w-3xl lg:col-span-6 lg:mt-10">
               <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
+              <Link
+                href={`${localePath("/vejledninger", lang)}#praktiske-guides`}
+                className="mt-4 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-200 underline underline-offset-4"
+              >
+                {lang === "da"
+                  ? "Vil du tjekke noget selv? Se vores praktiske guides"
+                  : "Want to check something yourself? Explore our practical guides"}
+              </Link>
             </div>
           </div>
         </Container>

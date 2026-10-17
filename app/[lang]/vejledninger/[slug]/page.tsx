@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import PracticalGuidePage, { practicalMetadata } from "@/components/practical/PracticalGuidePage";
+import { practicalGuides, getPracticalGuide } from "@/lib/practical-guides";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
@@ -42,7 +44,9 @@ import { buttonClass } from "@/components/Button";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return langs.flatMap((lang) => guides.map((guide) => ({ lang, slug: guide.slug })));
+  return langs.flatMap((lang) =>
+    [...guides, ...practicalGuides].map((guide) => ({ lang, slug: guide.slug })),
+  );
 }
 
 const copy = {
@@ -76,6 +80,8 @@ export async function generateMetadata(props: {
   params: Promise<{ lang: Lang; slug: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
+  const practical = getPracticalGuide(params.slug);
+  if (practical) return practicalMetadata(practical, params.lang);
   const guide = getGuide(params.slug);
   if (!guide) return {};
   const lang = params.lang;
@@ -122,6 +128,8 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
   const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
+  const practical = getPracticalGuide(params.slug);
+  if (practical) return <PracticalGuidePage guide={practical} lang={lang} />;
   const guide = getGuide(params.slug);
   if (!guide) notFound();
 

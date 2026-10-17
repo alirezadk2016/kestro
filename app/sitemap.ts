@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { models } from "@/lib/models";
 import { guides } from "@/lib/guides";
+import { practicalGuides } from "@/lib/practical-guides";
 import { legalUpdated } from "@/lib/legal";
 import { services } from "@/lib/services";
 import { repairs } from "@/lib/repairs";
@@ -63,9 +64,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * ignores it otherwise, and an omitted date is treated better than a wrong
    * one. Give a page a real date here when there is one to give.
    */
-  const guideRoutes: Route[] = guides.map((guide) => ({
+  const guideRoutes: Route[] = [...guides, ...practicalGuides].map((guide) => ({
     path: `/vejledninger/${guide.slug}`,
-    lastModified: guide.updated,
+    lastModified: "updated" in guide ? guide.updated : "2026-10-17",
   }));
 
   const serviceRoutes: Route[] = services.map((service) => ({

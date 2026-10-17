@@ -1,30 +1,20 @@
 import type { Metadata } from "next";
+import PracticalGuides from "@/components/practical/PracticalGuides";
+import { practicalGuides } from "@/lib/practical-guides";
 import Link from "next/link";
-import { ArrowRight, BadgeEuro, BookOpen, MemoryStick, Scale } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
-import { VidenHeroPlate, VidenClusterPlate } from "@/components/VidenPlate";
+import { VidenClusterPlate } from "@/components/VidenPlate";
 import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
-import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
+import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema from "@/components/PageSchema";
 
-/*
- * Viden — the hub.
- *
- * The section is called Viden; the URL stays /vejledninger. Decoupling the two
- * is deliberate: the name is what a reader remembers, the URL is what costs
- * redirects to change, and the hub owns no keyword in the map, so relabelling
- * costs nothing.
- *
- * Drawn as a plate folder rather than a blog index. Every graphic is inline
- * SVG and every jump link is a real <a href="#…"> to an id in the markup, so
- * the whole page — including the anchors an article's cluster eyebrow links
- * back to — works for a crawler and with JavaScript switched off. No card
- * grid, no filter state, no gradients, no shadow.
- */
+/* Existing article URLs and cluster anchors stay stable. Practical tasks
+ * appear first; the editorial library remains below them. */
 
 const copy = {
   da: {
@@ -73,30 +63,6 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-const startingPoints = [
-  {
-    slug: "hvorfor-er-ram-blevet-dyrere",
-    icon: BadgeEuro,
-    question: { da: "Hvorfor er RAM blevet dyrere?", en: "Why is memory more expensive?" },
-  },
-  {
-    slug: "refurbished-eller-ny-baerbar",
-    icon: Scale,
-    question: {
-      da: "Skal jeg købe refurbished eller nyt?",
-      en: "Should I buy refurbished or new?",
-    },
-  },
-  {
-    slug: "hvor-meget-kan-en-baerbar-opgraderes",
-    icon: MemoryStick,
-    question: {
-      da: "Hvor meget kan min bærbar opgraderes?",
-      en: "How far can I upgrade my laptop?",
-    },
-  },
-];
-
 export async function generateMetadata(props: {
   params: Promise<{ lang: Lang }>;
 }): Promise<Metadata> {
@@ -138,13 +104,6 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
     }))
     .filter((group) => group.articles.length > 0);
 
-  /* Real numbers, read off the data. Nothing here is a claim. */
-  const lastUpdated = guides
-    .map((guide) => guide.updated)
-    .sort()
-    .at(-1);
-
-  const updatedLabel = lastUpdated ? formatDate(lastUpdated, lang) : "";
   const hubUrl = `${SITE_ORIGIN}${localePath("/vejledninger", lang)}`;
   const listId = `${hubUrl}#articles`;
   const articleList = {
@@ -152,15 +111,15 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
     "@type": "ItemList",
     "@id": listId,
     name: c.title,
-    numberOfItems: guides.length,
-    itemListElement: groups
-      .flatMap(({ articles }) => articles)
-      .map((guide, index) => ({
+    numberOfItems: guides.length + practicalGuides.length,
+    itemListElement: [...practicalGuides, ...groups.flatMap(({ articles }) => articles)].map(
+      (guide, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: guide.title[lang],
         url: `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`,
-      })),
+      }),
+    ),
   };
 
   return (
@@ -185,144 +144,42 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           thirty kilobytes of HTML saying one thing eight times. */}
       {guides.some((guide) => needsPanelChrome(guide.slug, lang)) && <GuidePanelStyles />}
 
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 max-md:-mt-[65px]">
-        {/* The plate sits behind the type and is clipped by the section, so it
-            reads as a drawing the page is laid on rather than an illustration
-            dropped into it. Fixed aspect, so nothing shifts as it paints. */}
-        {/* Committed to, rather than left at a quarter opacity under a wash
-            where it read as a smudge. It is the only drawing in the hero, so
-            it either carries the space on the right or should not be there. */}
-        {/* The colour classes here used to set the drawing's stroke, and with
-            it how present it was: dimmer on a phone where it crowds the type,
-            stronger on a wide screen where it has the room. The plate is a
-            render now and takes no colour from CSS, so the same intent is
-            carried by opacity. */}
-        {/* Not on a phone. At 390px this is bg-contain inside a mask that
-            removes three quarters of it, so what arrived was a few diagonal
-            lines behind the heading — dirt rather than a graphic, and it took
-            contrast off the type it lay under. The phone gets the same
-            artwork as an actual picture further down instead. */}
-        <VidenHeroPlate className="pointer-events-none absolute hidden opacity-60 sm:-right-24 sm:top-8 sm:h-[26rem] sm:w-[58rem] md:block lg:right-0 lg:top-0 lg:h-full lg:w-[68rem] lg:opacity-100" />
-        {/* Vertical wash on a phone, horizontal on a wide screen: the drawing
-            has to stay legible on the right where there is room, and stay out
-            of the way of the type where there is not. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950/55 to-brand-950 max-md:hidden lg:bg-gradient-to-r lg:from-brand-950 lg:via-brand-950/70 lg:to-transparent"
-        />
-
-        {/* On a phone the plate is the masthead's ground, from under the
-            glass bar, and the words sit on glass over its foot, as on the
-            front page and the category pages. From md the wrapper is
-            display: contents and the masthead is what it was. */}
-        <Container className="relative flex flex-col py-6 max-md:pt-0 md:block md:py-16 lg:py-20">
-          <div className="glass-card relative z-10 max-md:-mt-14 md:contents">
-            <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
-
-            {/* w-fit so the box is the width of the label.
-              As a block <p> it measured 1216px across — twelve characters of
-              text claiming the full content column, most of it lying over the
-              plate on the right. Nothing renders there, but a box is what an
-              automated contrast check has to sample, so it read the lit part
-              of the render as this text's background and called 3.11:1 on
-              type that actually sits on 8.48:1. The label is a label; its box
-              should say so. */}
-            <p className="eyebrow mt-6 w-fit text-brand-300 sm:mt-8">{c.eyebrow}</p>
-            <h1 className="mt-4 max-w-3xl text-balance font-display t-h1 font-extrabold leading-[0.98] tracking-display text-paper">
-              {c.title}
-            </h1>
-            <p className="mt-6 max-w-xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
-              {c.description}
-            </p>
-
-            {/* A meta line, not a dashboard.
-             *
-             * These were three tiles with the counts set at 24px over 12px
-             * labels. On a phone the third wrapped to its own row and the group
-             * came out ragged, and the counts — the least interesting thing on
-             * the page — carried the most weight on the first screen. What they
-             * are is the page's metadata, so they are set like metadata. */}
-            {/* Each item whole, and no separators.
-             *
-             * Set as one run of text it broke as "SENEST / OPDATERET 31. AUG.
-             * 2026", and a label split across two lines is the loudest thing
-             * on an otherwise quiet screen. Middots fixed that and introduced
-             * their own: whichever item wraps leaves a "·" hanging at the end
-             * of the line above it. Space separates these perfectly well, and
-             * space cannot orphan. */}
-            <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-1.5 text-paper/65 sm:mt-8">
-              <span className="whitespace-nowrap">
-                <span className="tabular-nums text-paper/85">{guides.length}</span> {c.statGuides}
-              </span>
-              <span className="whitespace-nowrap">
-                <span className="tabular-nums text-paper/85">{groups.length}</span> {c.statClusters}
-              </span>
-              <span className="whitespace-nowrap">
-                {c.statUpdated}{" "}
-                <time dateTime={lastUpdated} className="tabular-nums text-paper/85">
-                  {updatedLabel}
-                </time>
-              </span>
-            </p>
-
-            {/* The first screen needs a picture on it.
-             *
-             * Measured on a 390px phone: the first image on this page sat at
-             * y=1387 — most of two screens of breadcrumb, heading, paragraph
-             * and counts before anything was drawn. The plate behind the
-             * masthead does not count: at that width it is bg-contain inside a
-             * mask that removes three quarters of it. Here it is a picture. */}
-          </div>
-
-          <VidenHeroPlate
-            variant="band"
-            className="under-bar art-bleed order-first -mx-4 aspect-[4/3] sm:-mx-6 md:hidden"
-          />
-        </Container>
-      </section>
-
-      <section aria-labelledby="start-reading" className="border-b border-white/10 py-10 sm:py-14">
+      <section className="border-b border-white/10 bg-brand-950 py-8 sm:py-12">
         <Container>
-          <div className="flex items-center gap-3">
-            <BookOpen aria-hidden="true" className="h-5 w-5 shrink-0 text-brand-300" />
-            <h2 id="start-reading" className="font-display t-h3 font-bold text-paper">
-              {c.start}
-            </h2>
-          </div>
-          <ul className="mt-6 grid gap-4 lg:grid-cols-3">
-            {startingPoints.map(({ slug, icon: Icon, question }) => {
-              const guide = guides.find((item) => item.slug === slug);
-              if (!guide) return null;
-              return (
-                <li key={slug}>
-                  <Link
-                    href={localePath(`/vejledninger/${slug}`, lang)}
-                    className="plate plate-lift group flex h-full flex-col gap-4 p-5 sm:p-6"
-                  >
-                    <Icon aria-hidden="true" className="h-6 w-6 text-brand-300" />
-                    <h3 className="font-display text-lg font-bold leading-snug text-paper group-hover:text-brand-300">
-                      {question[lang]}
-                    </h3>
-                    <p className="flex-1 text-sm leading-6 text-paper/75">{guide.summary[lang]}</p>
-                    <span className="flex items-center justify-between gap-3 text-sm text-brand-300">
-                      {c.read}
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                      />
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="mt-6 max-w-4xl text-sm leading-6 text-paper/65">{c.editorial}</p>
+          <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
+          <p className="eyebrow mt-6 text-brand-300">{c.eyebrow}</p>
+          <h1 className="mt-4 max-w-4xl font-display t-h1 font-extrabold tracking-display text-paper">
+            {c.title}
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-paper/85">
+            {lang === "da"
+              ? "Find et konkret svar, forstå din computer, og vælg dit næste skridt."
+              : "Find a practical answer, understand your computer and choose your next step."}
+          </p>
+          <nav
+            aria-label={lang === "da" ? "Vælg indhold" : "Choose content"}
+            className="mt-6 flex flex-wrap gap-3"
+          >
+            <a
+              href="#praktiske-guides"
+              className="inline-flex min-h-[44px] items-center rounded-lg bg-brand-600 px-5 text-sm font-semibold text-white hover:bg-brand-700"
+            >
+              {lang === "da" ? "Praktiske guides" : "Practical guides"}
+            </a>
+            <a
+              href="#artikler"
+              className="inline-flex min-h-[44px] items-center rounded-lg border border-white/25 px-5 text-sm font-semibold text-paper hover:bg-white/10"
+            >
+              {lang === "da" ? "Artikler og emner" : "Articles and topics"}
+            </a>
+          </nav>
         </Container>
       </section>
+      <PracticalGuides lang={lang} />
 
       {/* The index: four plates in a folder. Each is a real link to the anchor
           its section carries, which is also what an article links back to. */}
-      <section className="border-b border-white/10 py-10 sm:py-20">
+      <section id="artikler" className="scroll-mt-28 border-b border-white/10 py-10 sm:py-20">
         <Container>
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.indexTitle}

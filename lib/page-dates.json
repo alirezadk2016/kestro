@@ -91,7 +91,7 @@
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-17",
     "files": 4
   },
   "/vejledninger/[slug]": {

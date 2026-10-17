@@ -414,6 +414,70 @@ export const sources = {
       en: "NIST defines three levels of media sanitisation — Clear, Purge and Destroy — by the level of recovery effort each one defeats.",
     },
   },
+  windowsBatteryReport: {
+    id: "windowsBatteryReport",
+    publisher: "Microsoft Learn",
+    title: { da: "Powercfg: batteryreport", en: "Powercfg: batteryreport" },
+    url: "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options#batteryreport",
+    accessed: "2026-10-17",
+    claim: {
+      da: "powercfg /batteryreport opretter en rapport om batteriforbrug; uden en outputsti gemmes rapporten i den aktuelle mappe.",
+      en: "powercfg /batteryreport creates a battery usage report; without an output path it saves the report in the current directory.",
+    },
+  },
+  windowsBatteryCare: {
+    id: "windowsBatteryCare",
+    publisher: "Microsoft Support",
+    title: { da: "Pas på batteriet i Windows", en: "Caring for your battery in Windows" },
+    url: "https://support.microsoft.com/en-us/windows/experience/power-battery/caring-for-your-battery-in-windows",
+    accessed: "2026-10-17",
+    claim: {
+      da: "Microsoft beskriver, hvordan Kommandoprompt og powercfg /batteryreport bruges til at oprette en HTML-batterirapport og finde den gemte fil.",
+      en: "Microsoft explains how to create an HTML battery report using Command Prompt and powercfg /batteryreport, then locate the saved file.",
+    },
+  },
+  surfaceBatteryCapacity: {
+    id: "surfaceBatteryCapacity",
+    publisher: "Microsoft Support",
+    title: {
+      da: "Kontrollér batterikapacitet på Surface",
+      en: "How to check your Surface battery capacity",
+    },
+    url: "https://support.microsoft.com/en-us/surface/battery/how-to-check-your-surface-battery-capacity",
+    accessed: "2026-10-17",
+    claim: {
+      da: "Forholdet mellem Full Charge Capacity og Design Capacity bruges til at beregne den rapporterede kapacitet. Surface-specifikke servicegrænser overføres ikke til andre maskiner.",
+      en: "The ratio of Full Charge Capacity to Design Capacity is used to calculate reported capacity. Surface-specific service thresholds are not applied to other devices.",
+    },
+  },
+  windowsPerformanceCheck: {
+    id: "windowsPerformanceCheck",
+    publisher: "Microsoft Support",
+    title: {
+      da: "Tips til bedre pc-ydeevne i Windows",
+      en: "Tips to improve PC performance in Windows",
+    },
+    url: "https://support.microsoft.com/en-au/windows/experience/performance-optimization/tips-to-improve-pc-performance-in-windows",
+    accessed: "2026-10-17",
+    claim: {
+      da: "Jobliste kan åbnes med Ctrl+Shift+Esc; fanerne Processer og Ydeevne hjælper med at se CPU-, hukommelses- og diskforbrug.",
+      en: "Task Manager opens with Ctrl+Shift+Esc; Processes and Performance help identify CPU, memory and disk usage.",
+    },
+  },
+  ssdFormFactors: {
+    id: "ssdFormFactors",
+    publisher: "Kingston Technology",
+    title: {
+      da: "SSD-formater: 2,5 tommer, M.2 og flere",
+      en: "SSD form factors: 2.5-inch, M.2 and more",
+    },
+    url: "https://www.kingston.com/en/blog/pc-performance/ssd-form-factors",
+    accessed: "2026-10-17",
+    claim: {
+      da: "M.2 er et fysisk format. M.2-drev kan bruge SATA eller PCIe; NVMe er ikke et synonym for M.2.",
+      en: "M.2 is a physical form factor. M.2 drives can use SATA or PCIe; NVMe is not a synonym for M.2.",
+    },
+  },
 } satisfies Record<string, Source>;
 
 export type SourceId = keyof typeof sources;

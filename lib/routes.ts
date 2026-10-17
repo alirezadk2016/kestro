@@ -63,6 +63,10 @@ export const englishPath: Record<string, string> = {
    * Danish URLs do not move. Every old English address keeps answering through
    * a 301 in next.config.mjs.
    */
+  "/vejledninger/tjek-batterikapacitet": "/knowledge/check-battery-capacity",
+  "/vejledninger/tjek-ram-forbrug": "/knowledge/check-memory-usage",
+  "/vejledninger/hdd-eller-ssd": "/knowledge/hdd-or-ssd",
+  "/vejledninger/langsom-computer": "/knowledge/slow-computer",
   "/vejledninger/windows-10-support-slutter": "/knowledge/windows-10-end-of-support",
   "/vejledninger/refurbished-eller-brugt": "/knowledge/refurbished-or-used",
   "/vejledninger/reparere-eller-koebe-ny": "/knowledge/repair-or-replace",

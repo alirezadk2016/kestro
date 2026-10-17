@@ -28,6 +28,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 import { verifyVisualPolish } from "./visual.mjs";
+import { verifyPracticalGuides } from "./practical.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -86,6 +87,14 @@ const PAGES = [
   "/vejledninger",
   "/vejledninger/tjek-brugt-baerbar-foer-koeb",
   "/en/knowledge/check-a-used-laptop",
+  "/vejledninger/tjek-batterikapacitet",
+  "/en/knowledge/check-battery-capacity",
+  "/vejledninger/tjek-ram-forbrug",
+  "/en/knowledge/check-memory-usage",
+  "/vejledninger/hdd-eller-ssd",
+  "/en/knowledge/hdd-or-ssd",
+  "/vejledninger/langsom-computer",
+  "/en/knowledge/slow-computer",
   "/ydelser/nordisk-tilpasning",
   "/en/services/nordic-preparation",
   "/reparation/ram-og-ssd-opgradering",
@@ -132,12 +141,15 @@ const executablePath = [
   .filter(Boolean)
   .find((candidate) => existsSync(candidate));
 
-const browser = await chromium.launch({
-  ...(executablePath ? { executablePath } : {}),
-  args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
-});
+const launchBrowser = () =>
+  chromium.launch({
+    ...(executablePath ? { executablePath } : {}),
+    args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
+  });
+let browser = await launchBrowser();
 
 /* ---------------------------------------------------------------- structure */
+console.log("verify: page structure and metadata");
 
 for (const path of PAGES) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -369,6 +381,11 @@ for (const path of PAGES) {
 }
 
 /* ----------------------------------------------------------------- contrast */
+// These checks have no shared-session dependency on the structure sweep.
+// Release its graphics and network resources before sampling rendered pages.
+await browser.close();
+browser = await launchBrowser();
+console.log("verify: rendered text contrast");
 
 /*
  * Against rendered pixels, not computed styles.
@@ -552,6 +569,7 @@ for (const [name, viewport] of [
 }
 
 /* ------------------------------------------------------------------- motion */
+console.log("verify: motion and reduced-motion behaviour");
 
 {
   /* Without JavaScript, nothing may be hidden. */
@@ -640,6 +658,7 @@ for (const path of ["/reparation", "/en/repairs"]) {
 }
 
 /* ---------------------------------------------------------------- navigation */
+console.log("verify: navigation and shared layouts");
 
 /*
  * The site has to survive being used, not only being loaded.
@@ -688,7 +707,7 @@ for (const path of ["/reparation", "/en/repairs"]) {
   await readThrough("direct load of /");
 
   /* Check the visible labels; the knowledge URL is unchanged. */
-  for (const label of ["Reparation", "Om os", "Artikler"]) {
+  for (const label of ["Reparation", "Om os", "Viden"]) {
     await page.click(`header nav a:has-text("${label}")`);
     await page.waitForTimeout(1100);
     await readThrough(`after clicking ${label}`);
@@ -1240,6 +1259,10 @@ for (const [url, info] of articleVariants) {
   }
 }
 
+// Console checks use a fresh browser after the long graphics/metadata sweeps.
+// Every console assertion remains active; resource exhaustion is not ignored.
+await browser.close();
+browser = await launchBrowser();
 {
   const messages = [];
   for (const path of ["/", "/en", "/kontakt", "/maskinen"]) {
@@ -1251,6 +1274,12 @@ for (const [url, info] of articleVariants) {
     await page.close();
   }
   for (const message of messages) fail("console", message);
+}
+
+try {
+  await verifyPracticalGuides(browser, BASE, fail);
+} catch (error) {
+  fail("practical guide interactions", error.stack ?? error.message);
 }
 
 try {

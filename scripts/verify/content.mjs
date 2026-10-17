@@ -88,7 +88,10 @@ const routeExists = (href) => {
       services: "lib/services.ts",
       guides: "lib/guides.ts",
     }[source];
-    return read(file).includes(`slug: "${last}"`);
+    return (
+      read(file).includes(`slug: "${last}"`) ||
+      (parent === "vejledninger" && read("lib/practical-guides.ts").includes(`slug: "${last}"`))
+    );
   }
   return false;
 };

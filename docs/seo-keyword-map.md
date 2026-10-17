@@ -1,10 +1,37 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 218 i alt, 189 danske, 28 engelske og én norsk/dansk – og for hver række den title, siden har i dag, og om søgeordet står i den.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 226 i alt, 193 danske, 32 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
 ## Hvad der var galt
+
+### Praktiske vejledninger, 17. oktober 2026
+
+Ejeren har godkendt fire konkrete hjælpeopgaver i vejledningstræet. De får
+hvert sit svar og sin engelske parallel; de eksisterende kommercielle
+reparationssider og guider til køb, udskiftning og modelkompatibilitet
+beholder deres egne intentioner. Beregnerne understøtter opgaven på siden
+og opretter ikke ekstra sider med samme søgeintention.
+
+| Dansk URL og primært søgeord | Engelsk URL og primært søgeord | Afgrænsning |
+| --- | --- | --- |
+| `/vejledninger/tjek-batterikapacitet` · tjek batterikapacitet | `/en/knowledge/check-battery-capacity` · check battery capacity | Find rapporten, og beregn rapporteret kapacitet fra to værdier. Batteriskift er fortsat en reparationsydelse. |
+| `/vejledninger/tjek-ram-forbrug` · tjek ram-forbrug | `/en/knowledge/check-memory-usage` · check ram usage | Observer RAM-forbrug før en beslutning; montering og modelgrænser forklares i de eksisterende opgraderingsguider. |
+| `/vejledninger/hdd-eller-ssd` · hdd eller ssd | `/en/knowledge/hdd-or-ssd` · hdd or ssd | Identificér drev og format; ingen tilstandsdiagnose eller universelt løfte om kompatibilitet. |
+| `/vejledninger/langsom-computer` · langsom computer | `/en/knowledge/slow-computer` · slow computer | Undersøg CPU, RAM og disk under opgaven; økonomien i reparation eller køb tilhører fortsat beslutningsguiden. |
+
+Den sekundære »langsom computer på arbejdet« følger nu diagnoseguiden frem
+for `/vejledninger/reparere-eller-koebe-ny`. Der flyttes ingen eksisterende
+URL'er. Fire opgavespecifikke vidensgrafer beskriver de nødvendige begreber
+og beregnernes grænser i `docs/seo-knowledge-graph.json`.
+
+Dette er ejerens godkendte indholdsudvidelse, ikke en dokumenteret
+søgeordsundersøgelse. Dansk SERP-evidens, engelsk SERP-evidens, indeksering
+og effekten på trafik er ikke verificeret. Volumen, CPC og difficulty er
+fortsat `unknown`; prioriteten er redaktionel og bygger på opgaven, ikke
+efterspørgselsdata. Metadata, byggede ruter og brugerflader skal gennem den
+samlede frigivelseskontrol før publicering.
 
 ### Status 16. oktober 2026
 

@@ -149,6 +149,10 @@ const englishRoutes = [
   /* Stage two: the slugs. Kept byte-identical to englishPath in lib/routes.ts —
      next.config.mjs cannot import TypeScript, so the list exists twice and
      scripts/verify asserts the two are the same. */
+  ["/vejledninger/tjek-batterikapacitet", "/knowledge/check-battery-capacity"],
+  ["/vejledninger/tjek-ram-forbrug", "/knowledge/check-memory-usage"],
+  ["/vejledninger/hdd-eller-ssd", "/knowledge/hdd-or-ssd"],
+  ["/vejledninger/langsom-computer", "/knowledge/slow-computer"],
   ["/vejledninger/windows-10-support-slutter", "/knowledge/windows-10-end-of-support"],
   ["/vejledninger/refurbished-eller-brugt", "/knowledge/refurbished-or-used"],
   ["/vejledninger/reparere-eller-koebe-ny", "/knowledge/repair-or-replace"],

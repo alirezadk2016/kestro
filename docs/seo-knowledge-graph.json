@@ -1650,6 +1650,247 @@
      ]
     }
    }
+  },
+  "/vejledninger/tjek-batterikapacitet": {
+   "main": [
+    "batterikapacitet",
+    "batterirapport"
+   ],
+   "nodes": {
+    "Windows-rapport": {
+     "Opret rapport lokalt": [
+      "powercfg /batteryreport"
+     ],
+     "Rapportfil på computeren": [
+      "html-fil",
+      "stifinder"
+     ],
+     "Designkapacitet": [
+      "design capacity",
+      "designkapacitet"
+     ],
+     "Fuld opladningskapacitet": [
+      "full charge capacity",
+      "fuld opladningskapacitet"
+     ]
+    },
+    "Beregning": {
+     "Samme batteri og enhed": [
+      "samme batteri",
+      "samme enhed"
+     ],
+     "Hele mWh": [
+      "mwh"
+     ],
+     "Forhold i procent": [
+      "divideret",
+      "÷",
+      "procent"
+     ],
+     "Flere batterier": [
+      "flere batterier",
+      "hver for sig"
+     ],
+     "Resultat over 100 procent": [
+      "over 100"
+     ]
+    },
+    "Afgrænsning": {
+     "Kapacitet adskilt fra opladning": [
+      "opladning",
+      "opladet"
+     ],
+     "Ikke en garanti for batteritid": [
+      "ikke en fysisk",
+      "garanti for batteritid"
+     ],
+     "Sikker hjælp ved opsvulmning": [
+      "opsvulmning"
+     ]
+    }
+   }
+  },
+  "/vejledninger/tjek-ram-forbrug": {
+   "main": [
+    "ram-forbrug",
+    "ram"
+   ],
+   "nodes": {
+    "Observation": {
+     "Jobliste": [
+      "jobliste"
+     ],
+     "Hukommelse under Ydeevne": [
+      "ydeevne",
+      "hukommelse"
+     ],
+     "Normale programmer": [
+      "almindelige programmer",
+      "normalt bruger"
+     ],
+     "Brugt og tilgængelig RAM": [
+      "i brug",
+      "tilgængelig"
+     ],
+     "Samme enhed": [
+      "samme enhed",
+      "gb"
+     ]
+    },
+    "Næste skridt": {
+     "Find processernes forbrug": [
+      "processer",
+      "hukommelseskolonnen"
+     ],
+     "Gentag observationen": [
+      "gentagne",
+      "igen"
+     ],
+     "Modelspecifik kompatibilitet": [
+      "fastloddet",
+      "ram-type",
+      "kapacitetsgrænse"
+     ]
+    },
+    "Afgrænsning": {
+     "Ikke en hastighedsmåling": [
+      "ram-hastighed"
+     ],
+     "Ikke en hukommelsesfejltest": [
+      "hukommelsesfejl"
+     ],
+     "Procent alene er ikke en diagnose": [
+      "ikke en diagnose",
+      "ikke, om du mangler"
+     ]
+    }
+   }
+  },
+  "/vejledninger/hdd-eller-ssd": {
+   "main": [
+    "hdd",
+    "ssd"
+   ],
+   "nodes": {
+    "Identifikation": {
+     "Disk i Jobliste": [
+      "jobliste",
+      "ydeevne → disk"
+     ],
+     "Præcis drevmodel": [
+      "drevmodel",
+      "præcise model"
+     ],
+     "Bekræft hos producenten": [
+      "producentens supportside"
+     ],
+     "Flere drev": [
+      "flere",
+      "hvert relevant drev"
+     ]
+    },
+    "Kompatibilitet": {
+     "Fysisk format": [
+      "fysisk format",
+      "fysiske format"
+     ],
+     "M.2": [
+      "m.2"
+     ],
+     "SATA": [
+      "sata"
+     ],
+     "PCIe og NVMe": [
+      "pcie",
+      "nvme"
+     ],
+     "Længde og adapter": [
+      "længde",
+      "adapter"
+     ],
+     "Specifikationer og servicemanual": [
+      "specifikationer",
+      "servicemanual"
+     ]
+    },
+    "Data og afgrænsning": {
+     "Sikkerhedskopi før skift": [
+      "sikkerhedskopi"
+     ],
+     "Dataflytning eller ny installation": [
+      "dataflytning",
+      "ny installation"
+     ],
+     "Gendannelsesnøgler": [
+      "gendannelsesnøgler"
+     ],
+     "Ikke en tilstandstest": [
+      "tester ikke drevets tilstand"
+     ]
+    }
+   }
+  },
+  "/vejledninger/langsom-computer": {
+   "main": [
+    "langsom computer",
+    "langsom"
+   ],
+   "nodes": {
+    "Observation": {
+     "Gentag den langsomme opgave": [
+      "genskab",
+      "gentag"
+     ],
+     "Jobliste": [
+      "jobliste"
+     ],
+     "CPU": [
+      "cpu"
+     ],
+     "RAM og hukommelse": [
+      "ram",
+      "hukommelse"
+     ],
+     "Disk": [
+      "disk"
+     ],
+     "Knyt forbrug til en proces": [
+      "proces",
+      "processer"
+     ]
+    },
+    "Næste skridt": {
+     "Gem før ændringer": [
+      "gem arbejdet",
+      "gemt"
+     ],
+     "Kendte programmer": [
+      "kendte",
+      "velkendte"
+     ],
+     "Én ændring og sammenligning": [
+      "én ændring",
+      "sammenlign"
+     ],
+     "Observeret behov før køb": [
+      "observeret behov",
+      "ikke automatisk løsningen"
+     ]
+    },
+    "Afgrænsning": {
+     "Ikke fuld hardwarediagnose": [
+      "ikke en fuld hardwarediagnose"
+     ],
+     "Browseren isolerer ikke fysisk hastighed": [
+      "browsermålinger",
+      "fysisk cpu- eller ram-hastighed"
+     ],
+     "Uforklarede fejl kræver undersøgelse": [
+      "uforklarede udfald",
+      "nærmere undersøgelse"
+     ]
+    }
+   }
   }
  }
 }
