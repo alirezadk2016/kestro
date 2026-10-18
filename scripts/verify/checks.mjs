@@ -23,12 +23,13 @@
  *
  * Exits non-zero on any failure, so it can gate a deploy.
  */
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 import { verifyVisualPolish } from "./visual.mjs";
 import { verifyPracticalGuides } from "./practical.mjs";
+import { verifyAdmin } from "./admin.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -387,6 +388,111 @@ await browser.close();
 browser = await launchBrowser();
 console.log("verify: rendered text contrast");
 
+const PAINT_TIMEOUT_MS = 30_000;
+
+/** Record request evidence while leaving each check's readiness condition intact. */
+function readinessDiagnostics(page, label) {
+  const active = new Map();
+  const failed = [];
+  page.on("request", (request) => {
+    active.set(request, { type: request.resourceType(), url: request.url(), started: Date.now() });
+  });
+  page.on("requestfinished", (request) => active.delete(request));
+  page.on("requestfailed", (request) => {
+    failed.push({
+      type: request.resourceType(),
+      url: request.url(),
+      error: request.failure()?.errorText,
+    });
+    active.delete(request);
+  });
+  page.on("response", (response) => {
+    if (response.status() >= 400) {
+      failed.push({
+        type: response.request().resourceType(),
+        url: response.url(),
+        status: response.status(),
+      });
+    }
+  });
+
+  return async (stage, check) => {
+    try {
+      return await check();
+    } catch (error) {
+      console.error(`verify: readiness failed: ${label}, ${stage}`);
+      console.error(
+        JSON.stringify(
+          {
+            active: [...active.values()].map(({ started, ...request }) => ({
+              ...request,
+              ageMs: Date.now() - started,
+            })),
+            failed,
+          },
+          null,
+          2,
+        ),
+      );
+      // Diagnostics must not turn the original failure into an unbounded wait.
+      let timer;
+      try {
+        const dom = await Promise.race([
+          page.content(),
+          new Promise((_, reject) => {
+            timer = setTimeout(() => reject(new Error("DOM capture timed out")), 2000);
+          }),
+        ]);
+        const directory = join(process.cwd(), ".next", "verify-diagnostics");
+        mkdirSync(directory, { recursive: true });
+        const filename = join(
+          directory,
+          `readiness-${label.replace(/[^a-z0-9]+/gi, "-")}-${Date.now()}.html`,
+        );
+        writeFileSync(filename, dom);
+        console.error(`verify: failed readiness DOM saved to ${filename}`);
+      } catch (diagnosticError) {
+        console.error(`verify: readiness DOM capture: ${diagnosticError.message}`);
+      } finally {
+        clearTimeout(timer);
+      }
+      throw error;
+    }
+  };
+}
+
+async function waitForContrastPaint(page, timeout = PAINT_TIMEOUT_MS) {
+  await page.waitForFunction(
+    async () => {
+      await document.fonts.ready;
+      const visible = [...document.images].filter((image) => {
+        const box = image.getBoundingClientRect();
+        const style = getComputedStyle(image);
+        return (
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          box.width > 0 &&
+          box.height > 0 &&
+          box.bottom > 0 &&
+          box.right > 0 &&
+          box.top < innerHeight &&
+          box.left < innerWidth
+        );
+      });
+      if (visible.some((image) => !image.complete)) return false;
+      const broken = visible.find((image) => image.naturalWidth === 0);
+      if (broken) throw new Error(`Visible image failed: ${broken.currentSrc || broken.src}`);
+      await Promise.all(visible.map((image) => image.decode()));
+      // load already waits for the site's CSS background images; these frames
+      // let their paint and the newly decoded lazy images reach the compositor.
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      return true;
+    },
+    null,
+    { timeout },
+  );
+}
+
 /*
  * Against rendered pixels, not computed styles.
  *
@@ -413,7 +519,17 @@ for (const [name, viewport] of [
     "/produkter/smartphones",
   ]) {
     const page = await browser.newPage({ viewport });
-    await page.goto(BASE + path, { waitUntil: "networkidle" });
+    const ready = readinessDiagnostics(page, `contrast-${name}-${path}`);
+    await ready("navigation and first paint", async () => {
+      const deadline = Date.now() + PAINT_TIMEOUT_MS;
+      const response = await page.goto(BASE + path, {
+        waitUntil: "load",
+        timeout: PAINT_TIMEOUT_MS,
+      });
+      if (response?.status() !== 200)
+        throw new Error(`Expected HTTP 200, received ${response?.status() ?? "no response"}`);
+      await waitForContrastPaint(page, Math.max(1, deadline - Date.now()));
+    });
 
     /* Scroll the whole page once so anything that reveals on scroll is out. */
     await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
@@ -427,6 +543,7 @@ for (const [name, viewport] of [
       await page.evaluate((y) => scrollTo(0, y), top);
       /* Long enough for the 0.85s reveal transition to finish. */
       await page.waitForTimeout(1200);
+      await ready(`paint at scroll ${top}`, () => waitForContrastPaint(page));
 
       const texts = await page.evaluate(() => {
         const out = [];
@@ -1073,7 +1190,18 @@ for (const width of [320, 390, 1440]) {
   await context.close();
 }
 
-/* ------------------------------------------------------------------ console */
+/* ---------------------------------------------------------------- education */
+
+/* Every motion/navigation context above is closed. These server-HTML checks
+ * have no dependency on its cookies, gallery state or WebGL resources. Check
+ * the lifecycle before releasing Chromium's process-wide caches/graphics. */
+const leftoverContexts = browser.contexts();
+if (leftoverContexts.length) {
+  fail("browser lifecycle", `${leftoverContexts.length} context(s) remain before education`);
+}
+await browser.close();
+browser = await launchBrowser();
+console.log("verify: education server-rendered content");
 
 /* The education hub and articles must be readable and linked without client JS. */
 for (const [hub, title, articlePaths] of [
@@ -1101,13 +1229,16 @@ for (const [hub, title, articlePaths] of [
     viewport: { width: 390, height: 844 },
   });
   const page = await context.newPage();
-  await page.goto(BASE + hub, { waitUntil: "networkidle" });
+  const ready = readinessDiagnostics(page, `education-no-js-${hub}`);
+  const navigate = (path) =>
+    ready(`navigation ${path}`, () => page.goto(BASE + path, { waitUntil: "networkidle" }));
+  await navigate(hub);
   if (!(await page.getByRole("heading", { level: 1, name: title, exact: true }).count()))
     fail("education hub", `missing clear article heading on ${hub}`);
   for (const path of articlePaths) {
     if (!(await page.locator(`main a[href='${path}']`).count()))
       fail("education hub", `missing article link ${path}`);
-    const response = await page.goto(BASE + path, { waitUntil: "networkidle" });
+    const response = await navigate(path);
     if (response?.status() !== 200)
       fail("education route", `${path} returned ${response?.status()}`);
     const article = await page
@@ -1139,9 +1270,9 @@ for (const [hub, title, articlePaths] of [
       fail("education artwork", `missing article illustration on ${path}`);
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1))
       fail("education layout", `horizontal overflow on ${path}`);
-    await page.goto(BASE + hub, { waitUntil: "networkidle" });
+    await navigate(hub);
   }
-  await page.goto(BASE + articlePaths[2], { waitUntil: "networkidle" });
+  await navigate(articlePaths[2]);
   const text = await page.locator("main").innerText();
   if (
     !text.includes("128 GB") ||
@@ -1163,7 +1294,10 @@ for (const [hub, prefix, language] of [
 ]) {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  await page.goto(BASE + hub, { waitUntil: "networkidle" });
+  const ready = readinessDiagnostics(page, `education-variants-${hub}`);
+  const navigate = (path) =>
+    ready(`navigation ${path}`, () => page.goto(BASE + path, { waitUntil: "networkidle" }));
+  await navigate(hub);
   const hubInfo = await page.evaluate((prefix) => {
     const schemas = [...document.querySelectorAll("script[type='application/ld+json']")].map(
       (node) => JSON.parse(node.textContent),
@@ -1193,7 +1327,7 @@ for (const [hub, prefix, language] of [
     const path = new URL(item.url).pathname;
     if (item.position !== index + 1 || !hubInfo.hrefs.includes(path))
       fail("bilingual article index", `invalid position or invisible item ${path}`);
-    const response = await page.goto(BASE + path, { waitUntil: "networkidle" });
+    const response = await navigate(path);
     if (response?.status() !== 200 || /noindex/i.test(response?.headers()["x-robots-tag"] ?? ""))
       fail("bilingual article response", `not indexable: ${path}`);
     const info = await page.evaluate(() => {
@@ -1274,6 +1408,12 @@ browser = await launchBrowser();
     await page.close();
   }
   for (const message of messages) fail("console", message);
+}
+
+try {
+  await verifyAdmin(browser, BASE, fail);
+} catch (error) {
+  fail("admin interactions", error.stack ?? error.message);
 }
 
 try {

@@ -29,6 +29,7 @@
 import crypto from "node:crypto";
 import { readFile } from "node:fs/promises";
 import process from "node:process";
+import ts from "typescript";
 
 const ORIGIN = process.argv[2] ?? "http://127.0.0.1:4310";
 const PASSWORD = process.env.ATTACK_PASSWORD ?? "test-password";
@@ -133,6 +134,20 @@ async function main() {
 
   await shutOut("L1", "inbox, plain GET", "/admin/beskeder", {}, [404]);
   await shutOut("L1", "inbox, RSC segment request", "/admin/beskeder", { headers: RSC }, [404]);
+  for (const [name, path] of [
+    ["traffic", "/admin/trafik"],
+    ["system status", "/admin/system"],
+  ]) {
+    await shutOut("L1", `${name}, plain GET`, path, {}, [404]);
+    await shutOut("L1", `${name}, RSC segment request`, path, { headers: RSC }, [404]);
+    await shutOut(
+      "L1",
+      `${name}, forged session`,
+      path,
+      { cookie: `${COOKIE}=${FORGED}`, headers: RSC },
+      [404],
+    );
+  }
   await shutOut(
     "L1",
     "one message, RSC segment request",
@@ -153,6 +168,23 @@ async function main() {
     },
     [403],
   );
+
+  for (const name of ["status", "note"]) {
+    for (const cookie of [undefined, `${COOKIE}=${FORGED}`]) {
+      await shutOut(
+        "L1",
+        `${name}, ${cookie ? "forged session" : "no session"}`,
+        `/api/admin/${name}`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/x-www-form-urlencoded" },
+          body: "id=any-id&status=read&note=test",
+          cookie,
+        },
+        [403],
+      );
+    }
+  }
   await shutOut(
     "L1",
     "reply, no session",
@@ -161,6 +193,17 @@ async function main() {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: "id=any-id&body=hello",
+    },
+    [403],
+  );
+  await shutOut(
+    "L1",
+    "change enquiry status, no session",
+    "/api/admin/status",
+    {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: "id=00000000-0000-4000-8000-000000000000&status=read",
     },
     [403],
   );
@@ -285,6 +328,9 @@ async function main() {
   for (const [name, path, body] of [
     ["login", "/api/admin/login", `password=${encodeURIComponent(PASSWORD)}`],
     ["archive", "/api/admin/archive", "id=any-id"],
+    ["reply", "/api/admin/reply", "id=any-id&body=hello"],
+    ["status", "/api/admin/status", "id=any-id&status=read"],
+    ["note", "/api/admin/note", "id=any-id&note=test"],
     ["logout", "/api/admin/logout", ""],
   ]) {
     const { status, headers } = await ask(path, {
@@ -304,6 +350,18 @@ async function main() {
       status === 403 && !gave.includes(`${COOKIE}=`),
       `${status}${gave ? " set-cookie" : ""}`,
     );
+    for (const [kind, headers] of [
+      ["sibling origin", { "sec-fetch-site": "same-site" }],
+      ["foreign Origin without fetch metadata", { origin: "https://evil.example" }],
+    ]) {
+      const refused = await ask(path, {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded", ...headers },
+        body,
+        cookie: `${COOKIE}=${VALID}`,
+      });
+      record("CSRF", `${name}, ${kind}`, refused.status === 403, String(refused.status));
+    }
   }
 
   {
@@ -371,9 +429,15 @@ async function main() {
      send this for a __Host- cookie it had been given — it is what a sibling
      subdomain or a plain-http hop could plant — so the panel must not read it
      however good the signature is. */
-  await shutOut("L1", "valid session under the unprefixed name", "/admin/beskeder", {
-    cookie: `kestro_admin=${VALID}`,
-  }, [404]);
+  await shutOut(
+    "L1",
+    "valid session under the unprefixed name",
+    "/admin/beskeder",
+    {
+      cookie: `kestro_admin=${VALID}`,
+    },
+    [404],
+  );
 
   /* ---- Guessing, with no database to count the guesses -------------------- */
 
@@ -402,7 +466,10 @@ async function main() {
       "L2",
       "a wrong password costs time",
       slowed,
-      tries.map((t) => `${t.status}/${t.ms}ms`).slice(0, 2).join(" "),
+      tries
+        .map((t) => `${t.status}/${t.ms}ms`)
+        .slice(0, 2)
+        .join(" "),
     );
     record(
       "L2",
@@ -447,6 +514,77 @@ async function main() {
       status === 200,
       `${status} ${text.length}b`,
     );
+  }
+  for (const path of ["/admin/trafik", "/admin/system"]) {
+    const { status, headers, text } = await ask(path, { cookie: `${COOKIE}=${VALID}` });
+    record("open", `a real session reaches ${path}`, status === 200, String(status));
+    const robots = headers.get("x-robots-tag") ?? "";
+    record("headers", `${path} stays noindex`, robots.includes("noindex"), robots || "missing");
+    record(
+      "headers",
+      `${path} is not cacheable`,
+      (headers.get("cache-control") ?? "").includes("no-store"),
+      headers.get("cache-control") ?? "missing",
+    );
+    record(
+      "leak",
+      `${path} never prints the authentication secret`,
+      !text.includes(PASSWORD) && !text.includes(SECRET),
+      "redacted values",
+    );
+  }
+
+  /* Rejected before a database write or mail send. These deliberately invalid
+     requests never need an enquiry fixture and cannot alter a customer's row. */
+  for (const endpoint of ["archive", "reply", "status", "note"]) {
+    const { status } = await ask(`/api/admin/${endpoint}`, {
+      method: "POST",
+      cookie: `${COOKIE}=${VALID}`,
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-fetch-site": "same-origin",
+      },
+      body: "id=not-a-uuid&body=hello&status=read&note=test",
+    });
+    record(
+      "input",
+      `${endpoint} rejects an invalid enquiry id`,
+      [400, 422].includes(status),
+      String(status),
+    );
+
+    const malformed = await ask(`/api/admin/${endpoint}`, {
+      method: "POST",
+      cookie: `${COOKIE}=${VALID}`,
+      headers: { "content-type": "application/json", "sec-fetch-site": "same-origin" },
+      body: "{",
+    });
+    record(
+      "input",
+      `${endpoint} rejects a malformed form`,
+      malformed.status === 400,
+      String(malformed.status),
+    );
+  }
+  for (const [name, endpoint, fields] of [
+    ["unknown status", "status", { status: "owner" }],
+    ["oversized note", "note", { note: "x".repeat(5001) }],
+    ["empty reply", "reply", { body: "   " }],
+    ["oversized reply", "reply", { body: "x".repeat(10001) }],
+  ]) {
+    const { status } = await ask(`/api/admin/${endpoint}`, {
+      method: "POST",
+      cookie: `${COOKIE}=${VALID}`,
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-fetch-site": "same-origin",
+      },
+      body: new URLSearchParams({
+        id: "00000000-0000-4000-8000-000000000000",
+        ...fields,
+      }).toString(),
+    });
+    record("input", name, [400, 422].includes(status), String(status));
   }
 
   /* ---- Headers ---------------------------------------------------------- */
@@ -546,7 +684,12 @@ async function main() {
     for (const path of ["/tilbud", "/en/get-a-quote"]) {
       const { status, text } = await ask(`${path}?${query}`);
       const echoed = text.includes(MARK) || text.includes("onerror=") || text.includes("onload=");
-      record("prefill", `${path} does not reflect the query`, status === 200 && !echoed, String(status));
+      record(
+        "prefill",
+        `${path} does not reflect the query`,
+        status === 200 && !echoed,
+        String(status),
+      );
     }
   }
 
@@ -574,7 +717,9 @@ async function main() {
       const index = JSON.parse(text);
       hrefs = [...index.da, ...index.en].map((entry) => entry.h);
     } catch {}
-    const stray = hrefs.filter((h) => !/^\/(en\/)?[a-z0-9-]+(\/[a-z0-9-]+)?$/.test(h) || /admin|api/.test(h));
+    const stray = hrefs.filter(
+      (h) => !/^\/(en\/)?[a-z0-9-]+(\/[a-z0-9-]+)?$/.test(h) || /admin|api/.test(h),
+    );
     const spill = leaked(text);
     record(
       "leak",
@@ -583,7 +728,12 @@ async function main() {
       `${status}, ${hrefs.length} entries${stray.length ? `, stray ${stray.slice(0, 3).join(" ")}` : ""}${spill.length ? `, leaked ${spill.join(", ")}` : ""}`,
     );
     const post = await ask("/search.json", { method: "POST", body: "{}" });
-    record("leak", "search index refuses a write", [403, 404, 405].includes(post.status), String(post.status));
+    record(
+      "leak",
+      "search index refuses a write",
+      [403, 404, 405].includes(post.status),
+      String(post.status),
+    );
   }
 
   /* ---- The two implementations of one signature ------------------------- */
@@ -629,6 +779,53 @@ async function main() {
         `${name} asks first`,
         body.startsWith("await adminOnly("),
         at < 0 ? "not found" : body.slice(0, body.indexOf("\n")).trim(),
+      );
+    }
+
+    // Parse new signatures, including object-typed options, without mistaking
+    // the first `{` in a parameter type for the start of a function body.
+    const tree = ts.createSourceFile("db.ts", source, ts.ScriptTarget.Latest, true);
+    for (const name of [
+      "searchEnquiries",
+      "setEnquiryStatus",
+      "recordReply",
+      "updateEnquiryNote",
+      "adminDatabaseHealth",
+    ]) {
+      const declaration = tree.statements.find(
+        (node) => ts.isFunctionDeclaration(node) && node.name?.text === name,
+      );
+      const first = declaration?.body?.statements[0]?.getText(tree) ?? "";
+      record("L3", `${name} asks first`, /^await adminOnly\(/.test(first), first || "not found");
+    }
+  }
+  {
+    for (const path of [
+      "app/admin/page.tsx",
+      "app/admin/beskeder/page.tsx",
+      "app/admin/beskeder/[id]/page.tsx",
+      "app/admin/trafik/page.tsx",
+      "app/admin/system/page.tsx",
+    ]) {
+      const source = await readFile(new URL(`../../${path}`, import.meta.url), "utf8");
+      const tree = ts.createSourceFile(
+        path,
+        source,
+        ts.ScriptTarget.Latest,
+        true,
+        ts.ScriptKind.TSX,
+      );
+      const page = tree.statements.find(
+        (node) =>
+          ts.isFunctionDeclaration(node) &&
+          node.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword),
+      );
+      const first = page?.body?.statements[0]?.getText(tree) ?? "";
+      record(
+        "L2",
+        `${path} gates its page first`,
+        first === "await requireAdmin();",
+        first || "not found",
       );
     }
   }

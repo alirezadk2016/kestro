@@ -7,9 +7,12 @@
  */
 import { spawn } from "node:child_process";
 import { once } from "node:events";
+import { fileURLToPath } from "node:url";
 
 const PORT = process.env.VERIFY_PORT ?? "4173";
-const BASE = `http://127.0.0.1:${PORT}`;
+// Next normalizes loopback IPs to "localhost" inside NextURL. Keep the bind
+// hostname and internal rewrite origin identical on the local test server.
+const BASE = `http://localhost:${PORT}`;
 const NEXT_CLI = "node_modules/next/dist/bin/next";
 
 const bin = (command) =>
@@ -63,9 +66,13 @@ console.log(`verify: serving on ${BASE}`);
  * The value is local to this process and never leaves it.
  */
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "verify-only-password";
-const server = spawn(process.execPath, [NEXT_CLI, "start", "-p", PORT], {
-  stdio: "ignore",
+const server = spawn(process.execPath, [NEXT_CLI, "start", "-p", PORT, "-H", "localhost"], {
+  stdio: ["ignore", "ignore", "pipe"],
   env: { ...process.env, ADMIN_PASSWORD, ADMIN_SESSION_SECRET: "" },
+});
+let serverLog = "";
+server.stderr.on("data", (chunk) => {
+  serverLog = (serverLog + chunk).slice(-10000);
 });
 
 const stop = () => {
@@ -95,9 +102,10 @@ for (;;) {
 }
 
 const checks = run("node", ["scripts/verify/checks.mjs"], {
-  env: { ...process.env, VERIFY_BASE: BASE },
+  env: { ...process.env, VERIFY_BASE: BASE, VERIFY_ADMIN_SECRET: ADMIN_PASSWORD },
 });
 const [checksCode] = await once(checks, "exit");
+if (checksCode && serverLog) console.error(`verify: server diagnostics\n${serverLog}`);
 
 /*
  * And then try to get in.
@@ -115,4 +123,77 @@ const attack = run("node", ["scripts/security/attack.mjs", BASE], {
 const [attackCode] = await once(attack, "exit");
 
 stop();
-process.exit(checksCode || attackCode || 0);
+if (server.exitCode === null && server.signalCode === null) await once(server, "exit");
+
+// A second child serves the same build with synthetic enquiries. The fetch
+// adapter exists only in this verification process, uses .invalid endpoints,
+// and refuses all external networking. No fixture switch or route ships in
+// the application. The real security suite above always runs first.
+console.log("verify: admin workflows with local synthetic enquiries");
+const fixturePort = process.env.VERIFY_FIXTURE_PORT ?? String(Number(PORT) + 1);
+const fixtureBase = `http://localhost:${fixturePort}`;
+try {
+  const response = await fetch(fixtureBase + "/", { signal: AbortSignal.timeout(1500) });
+  if (response) throw new Error(`something is already serving ${fixtureBase}`);
+} catch (error) {
+  if (error.message?.startsWith("something is already serving")) {
+    console.error(`verify: ${error.message}; stop it or set VERIFY_FIXTURE_PORT`);
+    process.exit(checksCode || attackCode || 1);
+  }
+}
+const preload = fileURLToPath(new URL("./admin-fixture.cjs", import.meta.url)).replaceAll(
+  "\\",
+  "/",
+);
+const fixture = spawn(process.execPath, [NEXT_CLI, "start", "-p", fixturePort, "-H", "localhost"], {
+  stdio: ["ignore", "ignore", "pipe"],
+  env: {
+    ...process.env,
+    ADMIN_PASSWORD,
+    ADMIN_SESSION_SECRET: "",
+    DATABASE_URL:
+      "postgresql://fixture:fixture@ep-test.kestro-fixture.invalid/fixture?sslmode=require",
+    RESEND_API_KEY: "fixture-only-not-a-real-key",
+    RESEND_ENDPOINT: "https://mail.kestro-fixture.invalid/send",
+    CONTACT_FROM: "Kestro fixture <sender@example.invalid>",
+    CONTACT_TO: "inbox@example.invalid",
+    VERIFY_ADMIN_FIXTURE: "local-only",
+    NODE_OPTIONS: `${process.env.NODE_OPTIONS || ""} --require "${preload}"`.trim(),
+  },
+});
+const stopFixture = () => {
+  if (!fixture.killed) fixture.kill("SIGTERM");
+};
+process.on("exit", stopFixture);
+let fixtureLog = "";
+fixture.stderr.on("data", (chunk) => {
+  fixtureLog = (fixtureLog + chunk).slice(-10000);
+});
+let fixtureCode = 1;
+try {
+  const until = Date.now() + 60000;
+  for (;;) {
+    try {
+      const response = await fetch(fixtureBase + "/admin", { signal: AbortSignal.timeout(2000) });
+      if (response.ok) break;
+    } catch {}
+    if (Date.now() > until || fixture.exitCode !== null)
+      throw new Error("admin fixture server did not start");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+  const fixtureChecks = run("node", ["scripts/verify/admin-fixture-checks.mjs"], {
+    env: {
+      ...process.env,
+      VERIFY_BASE: fixtureBase,
+      VERIFY_ADMIN_SECRET: ADMIN_PASSWORD,
+      VERIFY_ADMIN_FIXTURE: "local-only",
+    },
+  });
+  [fixtureCode] = await once(fixtureChecks, "exit");
+} catch (error) {
+  console.error(`verify: ${error.message}`);
+} finally {
+  stopFixture();
+  if (fixtureCode && fixtureLog) console.error(fixtureLog);
+}
+process.exit(checksCode || attackCode || fixtureCode || 0);

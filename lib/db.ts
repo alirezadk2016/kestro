@@ -149,6 +149,7 @@ export type Enquiry = {
   reply_body: string | null;
   /** Null when the mail went out, or when there was nothing to send it with. */
   mail_error: string | null;
+  internal_note: string | null;
 };
 
 /*
@@ -191,6 +192,7 @@ function ensureSchema(): Promise<void> {
      * NOT EXISTS is a no-op the second time and every time after.
      */
     await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
+    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS internal_note TEXT`;
 
     /* The inbox is always read newest first, and the unread count is read on
        every page of the panel. */
@@ -296,7 +298,10 @@ function ensureSchema(): Promise<void> {
 
 /** Store an enquiry. Returns false when there is nowhere to store it. */
 export async function saveEnquiry(
-  enquiry: Omit<Enquiry, "created_at" | "status" | "replied_at" | "reply_body" | "mail_error">,
+  enquiry: Omit<
+    Enquiry,
+    "created_at" | "status" | "replied_at" | "reply_body" | "mail_error" | "internal_note"
+  >,
 ): Promise<boolean> {
   if (!sql) return false;
   try {
@@ -366,32 +371,135 @@ export async function getEnquiry(id: string): Promise<Enquiry | null> {
     await ensureSchema();
     const rows = (await sql`SELECT * FROM enquiries WHERE id = ${id}`) as Enquiry[];
     return rows[0] ?? null;
-  } catch (error) {
-    console.error("getEnquiry failed", error);
-    return null;
+  } catch {
+    console.error("getEnquiry failed");
+    // A failed read is not a missing customer message. The admin error
+    // boundary can offer recovery without exposing the database error.
+    throw new Error("Beskedarkivet kunne ikke læses.");
   }
 }
 
-export async function setEnquiryStatus(id: string, status: EnquiryStatus): Promise<void> {
-  if (!sql) return;
+export async function setEnquiryStatus(id: string, status: EnquiryStatus): Promise<boolean> {
+  await adminOnly("enquiry status changes");
+  if (!sql) return false;
   try {
     await ensureSchema();
-    await sql`UPDATE enquiries SET status = ${status} WHERE id = ${id}`;
-  } catch (error) {
-    console.error("setEnquiryStatus failed", error);
+    const rows =
+      (await sql`UPDATE enquiries SET status = ${status} WHERE id = ${id} RETURNING id`) as {
+        id: string;
+      }[];
+    return rows.length > 0;
+  } catch {
+    console.error("setEnquiryStatus failed");
+    return false;
   }
 }
 
-export async function recordReply(id: string, body: string): Promise<void> {
-  if (!sql) return;
+export async function recordReply(id: string, body: string): Promise<boolean> {
+  await adminOnly("reply records");
+  if (!sql) return false;
   try {
     await ensureSchema();
-    await sql`
+    const rows = (await sql`
       UPDATE enquiries
       SET status = 'replied', replied_at = now(), reply_body = ${body}
-      WHERE id = ${id}`;
-  } catch (error) {
-    console.error("recordReply failed", error);
+      WHERE id = ${id} RETURNING id`) as { id: string }[];
+    return rows.length > 0;
+  } catch {
+    console.error("recordReply failed");
+    return false;
+  }
+}
+
+export async function updateEnquiryNote(id: string, note: string): Promise<boolean> {
+  await adminOnly("internal enquiry notes");
+  if (!sql || note.length > 5000) return false;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      UPDATE enquiries SET internal_note = ${note || null} WHERE id = ${id} RETURNING id`) as {
+      id: string;
+    }[];
+    return rows.length > 0;
+  } catch {
+    console.error("updateEnquiryNote failed");
+    return false;
+  }
+}
+
+export type EnquiryCounts = Record<EnquiryStatus | "all" | "active", number>;
+export type EnquirySearch = {
+  q?: string;
+  status?: EnquiryStatus | "active" | "all";
+  source?: EnquirySource;
+  sort?: "newest" | "oldest";
+  page?: number;
+  pageSize?: number;
+};
+
+/** A bounded page from the entire archive, not a filter over the latest 200 rows. */
+export async function searchEnquiries(options: EnquirySearch = {}): Promise<{
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  counts: EnquiryCounts;
+  available: boolean;
+}> {
+  await adminOnly("the enquiry work queue");
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const counts: EnquiryCounts = { all: 0, active: 0, new: 0, read: 0, replied: 0, archived: 0 };
+  const empty = { items: [], total: 0, page: 1, pageSize, counts, available: false };
+  if (!sql) return empty;
+  // Escape ILIKE's wildcard characters so a customer name containing % or _
+  // means that literal text. Every value is a tagged-template SQL parameter.
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  const status = options.status || "active";
+  const source = options.source || "";
+  const oldest = options.sort === "oldest";
+  try {
+    await ensureSchema();
+    const [totals, grouped] = await Promise.all([
+      sql`SELECT count(*)::int AS n FROM enquiries
+        WHERE (${status} = 'all' OR (${status} = 'active' AND status <> 'archived') OR status = ${status})
+          AND (${source} = '' OR source = ${source})
+          AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})`,
+      sql`SELECT status, count(*)::int AS n FROM enquiries GROUP BY status`,
+    ]);
+    for (const row of grouped as { status: EnquiryStatus; n: number }[]) {
+      if (row.status in counts) counts[row.status] = row.n;
+      counts.all += row.n;
+      if (row.status !== "archived") counts.active += row.n;
+    }
+    const total = Number((totals as { n: number }[])[0]?.n || 0);
+    const requested = Number.isFinite(options.page) ? Math.floor(options.page!) : 1;
+    const page = Math.max(1, Math.min(Math.ceil(total / pageSize) || 1, requested));
+    const items = await sql`SELECT * FROM enquiries
+      WHERE (${status} = 'all' OR (${status} = 'active' AND status <> 'archived') OR status = ${status})
+        AND (${source} = '' OR source = ${source})
+        AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})
+      ORDER BY CASE WHEN ${oldest} THEN created_at END ASC,
+               CASE WHEN NOT ${oldest} THEN created_at END DESC, id ASC
+      LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
+    return { items: items as Enquiry[], total, page, pageSize, counts, available: true };
+  } catch {
+    // Query parameters can contain customer details; never include them in logs.
+    console.error("searchEnquiries failed");
+    return empty;
+  }
+}
+
+/** Configuration is not connectivity: actually read before claiming DB health. */
+export async function adminDatabaseHealth(): Promise<"missing" | "error" | "ready"> {
+  await adminOnly("database health");
+  if (!sql) return "missing";
+  try {
+    await ensureSchema();
+    await sql`SELECT id FROM enquiries LIMIT 1`;
+    return "ready";
+  } catch {
+    return "error";
   }
 }
 
@@ -565,6 +673,7 @@ export async function touchVisit(visitor: string): Promise<void> {
 export type Breakdown = { name: string; visits: number };
 
 export type ViewStats = {
+  available: boolean;
   total: number;
   today: number;
   last30: number;
@@ -573,6 +682,7 @@ export type ViewStats = {
 };
 
 export type LiveStats = {
+  available: boolean;
   /** Visits with a signal in the last five minutes. */
   online: number;
   /** What each of them is reading, newest first. */
@@ -604,6 +714,7 @@ export type LiveStats = {
 };
 
 const EMPTY_LIVE: LiveStats = {
+  available: false,
   online: 0,
   reading: [],
   visitsToday: 0,
@@ -626,8 +737,9 @@ const EMPTY_LIVE: LiveStats = {
  * Every breakdown is over the same thirty-day window as the chart, so the
  * numbers on the page can be compared with each other.
  */
-export async function liveStats(): Promise<LiveStats> {
+export async function liveStats(windowDays = 30): Promise<LiveStats> {
   await adminOnly("live visitor figures");
+  const days = [7, 30, 90].includes(windowDays) ? windowDays : 30;
   if (!sql) return EMPTY_LIVE;
   try {
     await ensureSchema();
@@ -642,26 +754,26 @@ export async function liveStats(): Promise<LiveStats> {
       sql`
         SELECT
           coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now())), 0)::int AS today,
-          coalesce(count(*) FILTER (WHERE started_at > now() - interval '30 days'), 0)::int AS last30,
-          coalesce(count(*) FILTER (WHERE started_at > now() - interval '30 days'
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'), 0)::int AS last30,
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
                                       AND last_seen - started_at >= interval '5 seconds'), 0)::int AS measured,
           coalesce(avg(extract(epoch FROM (last_seen - started_at)))
-                     FILTER (WHERE started_at > now() - interval '30 days'
+                     FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
                                AND last_seen - started_at >= interval '5 seconds'), 0)::int AS avg_seconds,
-          coalesce(count(*) FILTER (WHERE started_at > now() - interval '30 days'
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
                                       AND hits <= 1), 0)::int AS single
         FROM visits`,
       sql`
         SELECT source AS name, count(*)::int AS visits FROM visits
-        WHERE started_at > now() - interval '30 days'
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
         GROUP BY source ORDER BY visits DESC, name LIMIT 12`,
       sql`
         SELECT coalesce(country, '??') AS name, count(*)::int AS visits FROM visits
-        WHERE started_at > now() - interval '30 days'
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
         GROUP BY country ORDER BY visits DESC, name LIMIT 12`,
       sql`
         SELECT coalesce(device, 'Ukendt') AS name, count(*)::int AS visits FROM visits
-        WHERE started_at > now() - interval '30 days'
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
         GROUP BY device ORDER BY visits DESC, name`,
     ]);
 
@@ -676,6 +788,7 @@ export async function liveStats(): Promise<LiveStats> {
     )[0];
 
     return {
+      available: true,
       online: (online as { n: number }[])[0]?.n ?? 0,
       reading: reading as LiveStats["reading"],
       visitsToday: t?.today ?? 0,
@@ -695,9 +808,17 @@ export async function liveStats(): Promise<LiveStats> {
   }
 }
 
-export async function viewStats(): Promise<ViewStats> {
+export async function viewStats(windowDays = 30): Promise<ViewStats> {
   await adminOnly("page-view figures");
-  const empty: ViewStats = { total: 0, today: 0, last30: 0, daily: [], topPages: [] };
+  const days = [7, 30, 90].includes(windowDays) ? windowDays : 30;
+  const empty: ViewStats = {
+    available: false,
+    total: 0,
+    today: 0,
+    last30: 0,
+    daily: [],
+    topPages: [],
+  };
   if (!sql) return empty;
   try {
     await ensureSchema();
@@ -706,20 +827,22 @@ export async function viewStats(): Promise<ViewStats> {
         SELECT
           coalesce(sum(views), 0)::int AS total,
           coalesce(sum(views) FILTER (WHERE day = CURRENT_DATE), 0)::int AS today,
-          coalesce(sum(views) FILTER (WHERE day > CURRENT_DATE - 30), 0)::int AS last30
+          coalesce(sum(views) FILTER (WHERE day >= CURRENT_DATE - (${days} - 1)), 0)::int AS last30
         FROM page_views`,
       sql`
         SELECT to_char(day, 'YYYY-MM-DD') AS day, sum(views)::int AS views
         FROM page_views
-        WHERE day > CURRENT_DATE - 30
+        WHERE day >= CURRENT_DATE - (${days} - 1)
         GROUP BY day ORDER BY day`,
       sql`
         SELECT path, sum(views)::int AS views
         FROM page_views
+        WHERE day >= CURRENT_DATE - (${days} - 1)
         GROUP BY path ORDER BY views DESC LIMIT 12`,
     ]);
     const t = (totals as { total: number; today: number; last30: number }[])[0];
     return {
+      available: true,
       total: t?.total ?? 0,
       today: t?.today ?? 0,
       last30: t?.last30 ?? 0,

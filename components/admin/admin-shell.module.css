@@ -1,0 +1,386 @@
+.shell {
+  min-height: 100dvh;
+}
+
+.main {
+  width: 100%;
+  min-width: 0;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 28px 20px 56px;
+  scroll-margin-top: 16px;
+}
+
+/* The public site's prose measure must not shrink admin queue rows or message
+   panels to half their track. Explicit max-w utilities still control introductions. */
+.main:global(#admin-main) p:not([class*="max-w-"]),
+.main:global(#admin-main) :is(ul, ol) > li {
+  max-width: none;
+}
+
+.skip {
+  position: fixed;
+  inset: 12px auto auto 12px;
+  z-index: 100;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #0b1426;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transform: translateY(-160%);
+}
+
+.skip:focus {
+  transform: translateY(0);
+}
+
+.nav {
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  background: #0e192c;
+}
+
+.navInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px 12px;
+  padding: 14px 16px 0;
+}
+
+.brand {
+  display: inline-flex;
+  min-height: 44px;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.brandMark {
+  height: 29px;
+  width: 33px;
+  flex: none;
+}
+
+.brandName {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.brandLabel {
+  display: block;
+  margin-top: 3px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.045em;
+}
+
+.navLabel,
+.session {
+  display: none;
+}
+
+.destinations {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  list-style: none;
+}
+
+.destination {
+  position: relative;
+  display: flex;
+  min-height: 66px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-bottom: 2px solid transparent;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 4px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition:
+    color 150ms,
+    background-color 150ms;
+}
+
+.destination:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 4%);
+}
+
+.destinationActive {
+  border-color: #6690f9;
+  color: #fff;
+  background: rgb(59 130 246 / 11%);
+  font-weight: 600;
+}
+
+.destinationIcon {
+  height: 18px;
+  width: 18px;
+  flex: none;
+}
+
+.destinationActive .destinationIcon {
+  color: #93aefb;
+}
+
+.unread {
+  position: absolute;
+  inset: 4px 8px auto auto;
+  display: inline-flex;
+  min-width: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 1px 4px;
+  color: #fff;
+  background: #1e40ff;
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action {
+  display: flex;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 10px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 12px;
+  font-weight: 500;
+  transition:
+    color 150ms,
+    background-color 150ms;
+}
+
+.action:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 5%);
+}
+
+.siteLabel {
+  display: none;
+}
+
+.login {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+.loginInner {
+  width: 100%;
+  max-width: 420px;
+}
+
+.loginBrand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.loginCard {
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 16px;
+  padding: 28px 24px;
+  background: #111e33;
+  box-shadow: 0 16px 48px rgb(0 0 0 / 12%);
+}
+
+.loginFoot {
+  display: flex;
+  min-height: 44px;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 12px;
+}
+
+.loginFoot:hover {
+  color: #fff;
+}
+
+@media (min-width: 640px) {
+  .main {
+    padding: 36px 32px 64px;
+  }
+
+  .navInner {
+    padding-inline: 24px;
+  }
+
+  .loginCard {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    display: grid;
+    grid-template-columns: 244px minmax(0, 1fr);
+  }
+
+  .main {
+    padding: 40px 40px 72px;
+  }
+
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    overflow-y: auto;
+    border-right: 1px solid rgb(255 255 255 / 9%);
+    border-bottom: 0;
+  }
+
+  .navInner {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 28px 16px 20px;
+  }
+
+  .brand {
+    margin-inline: 12px;
+  }
+
+  .brandMark {
+    height: 32px;
+    width: 36px;
+  }
+
+  .brandName {
+    font-size: 23px;
+  }
+
+  .brandLabel {
+    font-size: 11px;
+  }
+
+  .navLabel {
+    display: block;
+    margin: 42px 12px 12px;
+    color: rgb(255 255 255 / 65%);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .destinations {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .destination {
+    min-height: 48px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .destinationActive {
+    border-color: rgb(102 144 249 / 24%);
+    box-shadow: inset 2px 0 #6690f9;
+  }
+
+  .unread {
+    position: static;
+    margin-left: auto;
+    font-size: 11px;
+  }
+
+  .session {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: auto;
+    padding: 40px 12px 20px;
+  }
+
+  .session svg {
+    height: 17px;
+    width: 17px;
+    flex: none;
+    margin-top: 2px;
+    color: #93aefb;
+  }
+
+  .session p {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .session span {
+    display: block;
+    margin-top: 4px;
+    color: rgb(255 255 255 / 65%);
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    border-top: 1px solid rgb(255 255 255 / 9%);
+    padding-top: 12px;
+  }
+
+  .action {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .siteLabel {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destination,
+  .action {
+    transition: none;
+  }
+}

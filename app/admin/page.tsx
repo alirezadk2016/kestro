@@ -1,334 +1,186 @@
 import Link from "next/link";
-
-import LivePanel from "@/components/admin/LivePanel";
-import { Figure, Ranked, SectionHead, EnquiryRow } from "@/components/admin/parts";
+import { SectionHead } from "@/components/admin/parts";
+import { InboxRow } from "@/components/admin/InboxRow";
+import { CARD, EYEBROW, FIGURE } from "@/components/admin/tokens";
 import {
-  AlertIcon,
-  ClockIcon,
-  DeviceIcon,
-  ExitIcon,
-  GlobeIcon,
   InboxIcon,
-  PagesIcon,
+  ArrowLeftIcon,
   PulseIcon,
+  PagesIcon,
+  AlertIcon,
 } from "@/components/admin/icons";
-import {
-  listEnquiries,
-  viewStats,
-  liveStats,
-  dbConfigured,
-  dbMisconfigured,
-  databaseEnvNames,
-  envNameSample,
-} from "@/lib/db";
-import { CARD, EYEBROW } from "@/components/admin/tokens";
-import { countryName, decimal, duration } from "@/lib/format";
+import { searchEnquiries } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin-auth";
+import { decimal } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
-  /* The layout's login wall is not the gate — a page can be rendered
-     without it. See requireAdmin. */
   await requireAdmin();
-
-  if (!dbConfigured) return <NoDatabase />;
-
-  const [enquiries, stats, live] = await Promise.all([listEnquiries(), viewStats(), liveStats()]);
-  const newest = enquiries.slice(0, 5);
-
-  /* Whether a reply can leave the building. Beskeder still arrive without it —
-     they are written to the database before the mail is attempted — but every
-     answer sent from here would fail, and it is better to say so once at the
-     top than to let each attempt discover it. Only the key: the sender falls
-     back to Resend's test address, which needs no configuration. */
+  const queue = await searchEnquiries({ status: "active", pageSize: 5 });
   const mailReady = Boolean(process.env.RESEND_API_KEY);
+  const pending = queue.counts.new + queue.counts.read;
 
   return (
-    <div className="space-y-12">
-      <header>
-        <h1 className="font-display text-[1.625rem] font-extrabold tracking-[-0.02em]">Oversigt</h1>
-        <p className="mt-1.5 text-sm text-paper/55">
-          Trafik og henvendelser på kestro.dk. Tallene er sitets egne.
-        </p>
+    <div className="space-y-8">
+      <header className="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <p className={EYEBROW}>Kestro · arbejdsdag</p>
+          <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">Oversigt</h1>
+          <p className="mt-2 text-sm leading-6 text-paper/70">
+            Start med henvendelserne. Følg derefter op på sitet.
+          </p>
+        </div>
+        <Link
+          href="/admin/beskeder?status=new"
+          className="inline-flex min-h-11 items-center gap-3 rounded-md bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+        >
+          <InboxIcon /> Åbn nye beskeder
+        </Link>
       </header>
 
-      {!mailReady && (
-        <p className="flex items-start gap-2.5 border-l-2 border-amber-400/70 bg-amber-400/[0.07] px-4 py-3 text-sm leading-6 text-amber-100/90">
-          <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-amber-300" />
-          <span>
-            <code className="bg-white/10 px-1 py-0.5">RESEND_API_KEY</code> er ikke sat på denne
-            deployment. Beskeder lander stadig her i panelet — de bliver gemt før mailen forsøges —
-            men der sendes ingen mail, og svar herfra kan ikke afsendes. Sæt nøglen i Vercel og kør
-            Redeploy.
-          </span>
-        </p>
-      )}
-
-      <LivePanel initial={live} />
-
-      <section>
-        {/* Two columns or five, and nothing between: three columns leaves the
-            fifth figure alone on a row beside an empty cell that reads as a
-            missing card. The fifth spans the pair below lg so the grid is
-            always full. */}
-        <dl
-          className={`grid grid-cols-2 gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-5 ${CARD}`}
+      {(!queue.available || !mailReady) && (
+        <div
+          role="status"
+          className="flex items-start gap-3 rounded-lg border border-amber-300/25 bg-amber-300/5 p-4 text-sm leading-6 text-amber-100"
         >
-          <Figure label="Besøg i dag" value={decimal(live.visitsToday)} Icon={PulseIcon} />
-          <Figure label="Besøg / 30 dage" value={decimal(live.visits30)} Icon={PulseIcon} />
-          <Figure
-            label="Sidevisninger"
-            value={decimal(stats.total)}
-            note="i alt, siden starten"
-            Icon={PagesIcon}
-          />
-          <Figure
-            label="Gns. tid"
-            value={live.avgBasis > 0 ? duration(live.avgSeconds) : "—"}
-            note={
-              live.avgBasis > 0
-                ? `målt på ${live.avgBasis} besøg over 5 sek.`
-                : "ingen besøg med målbar længde endnu"
-            }
-            Icon={ClockIcon}
-          />
-          <Figure
-            label="Kun én side"
-            value={live.bouncePct === null ? "—" : `${live.bouncePct} %`}
-            note={live.bouncePct === null ? "ingen besøg endnu" : "af besøgene på 30 dage"}
-            Icon={ExitIcon}
-            className="col-span-2 lg:col-span-1"
-          />
-        </dl>
-
-        {stats.daily.length > 0 && <Chart daily={stats.daily} />}
-      </section>
-
-      <section>
-        <SectionHead
-          title="Hvor de kommer fra"
-          note="Besøg de seneste 30 dage. Et besøg tælles der, hvor det startede — går man videre inde på sitet, bliver kilden ikke skrevet om."
-        />
-        <div className={`mt-6 grid gap-px overflow-hidden bg-white/[0.07] lg:grid-cols-3 ${CARD}`}>
-          <Ranked
-            title="Kilde"
-            rows={live.sources}
-            Icon={PulseIcon}
-            empty="Ingen besøg registreret endnu."
-          />
-          <Ranked
-            title="Land"
-            rows={live.countries.map((row) => ({
-              name: countryName(row.name),
-              visits: row.visits,
-              code: row.name,
-            }))}
-            Icon={GlobeIcon}
-            withFlags
-            empty="Intet land registreret endnu."
-          />
-          <Ranked
-            title="Enhed"
-            rows={live.devices}
-            Icon={DeviceIcon}
-            empty="Ingen enheder registreret endnu."
-          />
-        </div>
-      </section>
-
-      {stats.topPages.length > 0 && (
-        <section>
-          <SectionHead title="Mest læste sider" />
-          <div className={`mt-6 overflow-hidden ${CARD}`}>
-            <Ranked
-              title="Sidevisninger i alt"
-              rows={stats.topPages.map((page) => ({ name: page.path, visits: page.views }))}
-              empty=""
-            />
+          <AlertIcon className="mt-1 h-4 w-4 shrink-0" />
+          <div>
+            <p>
+              {!queue.available
+                ? "Beskedarkivet er ikke tilgængeligt. Visningen kan ikke bruges som en tom indbakke."
+                : "Mailafsendelse er ikke konfigureret. Beskeder kan læses, men svar kan ikke sendes herfra."}
+            </p>
+            <Link
+              href="/admin/system"
+              className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4"
+            >
+              Se systemstatus →
+            </Link>
           </div>
-        </section>
+        </div>
       )}
 
-      <section>
+      <section aria-labelledby="work-title" className={`${CARD} overflow-hidden`}>
+        <div className="flex flex-wrap items-start justify-between gap-5 border-b border-white/10 p-6">
+          <div>
+            <h2 id="work-title" className="text-lg font-bold">
+              Din indbakke
+            </h2>
+            <p className="mt-1 text-sm text-paper/70">
+              Overblik over nye, læste og besvarede henvendelser.
+            </p>
+          </div>
+          <p className={`${FIGURE} text-4xl`}>
+            {queue.available ? decimal(pending) : "—"}
+            <span className="ml-2 text-sm font-normal tracking-normal text-paper/70">
+              afventer svar
+            </span>
+          </p>
+        </div>
+        <dl className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {[
+            { label: "Nye", value: queue.counts.new, href: "/admin/beskeder?status=new" },
+            {
+              label: "Læst · afventer svar",
+              value: queue.counts.read,
+              href: "/admin/beskeder?status=read",
+            },
+            {
+              label: "Besvarede",
+              value: queue.counts.replied,
+              href: "/admin/beskeder?status=replied",
+            },
+          ].map((item) => (
+            <div key={item.label} className="p-5">
+              <dt className="text-xs text-paper/70">{item.label}</dt>
+              <dd>
+                <Link
+                  href={item.href}
+                  className="mt-1 inline-flex min-h-11 items-center gap-4 text-2xl font-bold tabular-nums hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
+                >
+                  {queue.available ? decimal(item.value) : "—"}
+                  <span aria-hidden="true" className="text-base text-paper/65">
+                    ↗
+                  </span>
+                </Link>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section aria-label="Seneste beskeder">
         <SectionHead
           title="Seneste beskeder"
           aside={
             <Link
               href="/admin/beskeder"
-              className="inline-flex items-center gap-2 border border-white/12 px-3.5 py-2 text-sm text-paper/70 transition hover:border-white/25 hover:text-paper"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-200 hover:text-paper"
             >
-              <InboxIcon className="h-4 w-4" />
-              Alle beskeder
+              Alle beskeder <span aria-hidden="true">→</span>
             </Link>
           }
         />
-
-        {newest.length === 0 ? (
-          <p className="mt-6 border border-dashed border-white/[0.12] p-12 text-center text-sm leading-6 text-paper/45">
-            Ingen beskeder endnu. De lander her i samme øjeblik nogen sender formularen.
+        {!queue.available ? (
+          <p className="py-8 text-sm text-paper/70">
+            Kontrollér databaseforbindelsen under System.
           </p>
-        ) : (
-          <ul className={`mt-6 divide-y divide-white/[0.06] overflow-hidden ${CARD}`}>
-            {newest.map((enquiry) => (
-              <EnquiryRow key={enquiry.id} enquiry={enquiry} />
+        ) : queue.items.length ? (
+          <ul className={`${CARD} mt-4 overflow-hidden`}>
+            {queue.items.map((enquiry) => (
+              <InboxRow key={enquiry.id} enquiry={enquiry} />
             ))}
           </ul>
+        ) : (
+          <div className={`${CARD} mt-4 p-8`}>
+            <InboxIcon className="h-6 w-6 text-brand-200" />
+            <p className="mt-3 font-semibold">Ingen aktive beskeder</p>
+            <p className="mt-2 text-sm text-paper/70">
+              Nye henvendelser fra sitets formularer vises her.
+            </p>
+            <Link
+              href="/admin/beskeder?status=archived"
+              className="mt-3 inline-flex min-h-11 items-center text-sm text-brand-200 underline underline-offset-4"
+            >
+              Åbn arkivet
+            </Link>
+          </div>
         )}
       </section>
-    </div>
-  );
-}
 
-/**
- * Thirty days of views.
- *
- * Bars drawn with div heights rather than a charting library: one series of at
- * most thirty numbers, and a dependency for that would cost more in bundle
- * than the whole panel.
- *
- * The window is built here rather than taken from the rows, because a day with
- * no visits has no row — and drawing only the days that exist makes one day of
- * data fill the full width as a solid block with the same date at both ends.
- * That reads as a month of steady traffic and means the opposite. Thirty slots
- * always, most of them empty at the start.
- */
-const WINDOW_DAYS = 30;
-
-/* UTC, to match the database: page_views keys on CURRENT_DATE and Neon runs in
-   UTC. Deriving the window in another zone would offset every bar by one. */
-const isoDay = (date: Date) => date.toISOString().slice(0, 10);
-
-const shortDay = (iso: string) =>
-  new Date(`${iso}T00:00:00Z`).toLocaleDateString("da-DK", {
-    day: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  });
-
-function Chart({ daily }: { daily: { day: string; views: number }[] }) {
-  const byDay = new Map(daily.map((d) => [d.day, d.views]));
-
-  /* Normally today. The comparison is for the hour where the server has rolled
-     over to a new date and the database has not, or the reverse. */
-  const latest = daily.at(-1)?.day ?? "";
-  const today = isoDay(new Date());
-  const end = new Date(`${latest > today ? latest : today}T00:00:00Z`);
-
-  const days = Array.from({ length: WINDOW_DAYS }, (_, i) => {
-    const date = new Date(end);
-    date.setUTCDate(date.getUTCDate() - (WINDOW_DAYS - 1 - i));
-    const day = isoDay(date);
-    return { day, views: byDay.get(day) ?? 0 };
-  });
-
-  const peak = Math.max(...days.map((d) => d.views), 1);
-
-  return (
-    <figure className={`mt-8 p-6 ${CARD}`}>
-      <figcaption className={EYEBROW}>Sidevisninger pr. dag, seneste 30 dage</figcaption>
-      <div className="mt-5 flex h-36 items-end gap-[3px] border-b border-white/12">
-        {days.map((day) => (
-          <div
-            key={day.day}
-            title={`${shortDay(day.day)}: ${day.views}`}
-            style={{ height: day.views > 0 ? `${(day.views / peak) * 100}%` : undefined }}
-            /* A day with no visits is a hairline on the axis, not a short bar:
-               a bar with a floor height claims traffic that was not there. */
-            className={
-              day.views > 0
-                ? "min-w-[3px] flex-1 bg-gradient-to-t from-brand-600/70 to-brand-400/90 transition-colors hover:from-brand-400 hover:to-brand-300"
-                : "h-px min-w-[3px] flex-1 bg-white/12"
-            }
-          />
-        ))}
-      </div>
-      <div className="mt-2.5 flex justify-between text-xs tabular-nums text-paper/45">
-        <span>{shortDay(days[0].day)}</span>
-        <span>højeste dag: {peak}</span>
-        <span>{shortDay(days[days.length - 1].day)}</span>
-      </div>
-    </figure>
-  );
-}
-
-/**
- * What the deployment can actually see.
- *
- * "No database" has two causes that look identical from here — the integration
- * was never connected to this project, or it was connected after the last
- * build and the running deployment predates it — and telling them apart from
- * the outside is guesswork that costs a redeploy per guess. Listing the
- * variable names settles it in one look.
- *
- * Names, never values. A Postgres URL contains the password; this panel is
- * behind a password, not behind a firewall, and the difference matters enough
- * that the value never leaves the server. Nothing here is secret on its own:
- * PGHOST existing is not a credential.
- */
-function NoDatabase() {
-  const usable = databaseEnvNames();
-  const related = envNameSample();
-
-  return (
-    <div className="max-w-2xl">
-      <h1 className="font-display text-[1.75rem] font-extrabold tracking-tight">Ingen database</h1>
-      <p className="mt-4 text-sm leading-6 text-paper/65">
-        Panelet virker, men der er ingen database at læse fra, så der er hverken beskeder eller
-        besøgstal at vise. Formularerne sender stadig e-mail som altid — det er kun arkivet der
-        mangler.
-      </p>
-      <p className="mt-4 text-sm leading-6 text-paper/65">
-        Opret databasen under Storage i Vercel og forbind den til dette projekt. Enhver variabel der
-        ender på <code className="bg-white/10 px-1.5 py-0.5 text-brand-200">_URL</code> og
-        indeholder en Postgres-forbindelse bliver brugt — navnet er lige meget. Tabellerne oprettes
-        selv ved første besked.
-      </p>
-
-      <div className="mt-8 border border-white/[0.09] bg-white/[0.03] p-5">
-        <h2 className="text-[11px] uppercase tracking-[0.16em] text-paper/55">
-          Hvad denne deployment kan se
-        </h2>
-
-        {dbMisconfigured ? (
-          <p className="mt-3 text-sm leading-6 text-paper/70">
-            Der er sat en forbindelse, men den kunne ikke bruges — strengen har ikke den form
-            driveren kræver (
-            <code className="bg-white/10 px-1 py-0.5 text-brand-200">
-              postgresql://bruger:kode@vært/database
-            </code>
-            ). Ret variablen i Vercel og kør Redeploy. Resten af sitet kører videre imens;
-            formularerne sender stadig e-mail.
-          </p>
-        ) : usable.length > 0 ? (
-          <p className="mt-3 text-sm leading-6 text-paper/70">
-            Der findes en brugbar forbindelse ({usable.join(", ")}), men den var der ikke da
-            processen startede. Kør Redeploy uden build-cache, så bygges siden med variablen på
-            plads.
-          </p>
-        ) : related.length > 0 ? (
-          <>
-            <p className="mt-3 text-sm leading-6 text-paper/70">
-              Ingen af variablerne herunder indeholder en Postgres-forbindelse. Databasen er
-              sandsynligvis oprettet, men ikke forbundet til dette projekt — eller denne deployment
-              er bygget før den blev det.
-            </p>
-            <ul className="mt-3 flex flex-wrap gap-1.5">
-              {related.map((name) => (
-                <li key={name} className="bg-white/10 px-2 py-1 font-mono text-xs text-paper/60">
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <p className="mt-3 text-sm leading-6 text-paper/70">
-            Der er ingen database-variabler overhovedet i dette miljø. Integrationen er ikke
-            forbundet til projektet: Vercel → Storage → databasen → Connect to Project → vælg dette
-            projekt, og kør derefter Redeploy.
-          </p>
-        )}
-      </div>
+      <section aria-label="Genveje">
+        <SectionHead title="Genveje" />
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {[
+            {
+              href: "/admin/trafik",
+              title: "Trafik og læsning",
+              note: "Se besøg, kilder og læste sider i en valgt periode.",
+              Icon: PulseIcon,
+            },
+            {
+              href: "/admin/system",
+              title: "System og adgang",
+              note: "Kontrollér database, mailopsætning og din session.",
+              Icon: PagesIcon,
+            },
+          ].map(({ href, title, note, Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`${CARD} group flex items-start gap-4 p-5 transition-colors hover:bg-white/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300`}
+            >
+              <Icon className="mt-1 h-5 w-5 shrink-0 text-brand-200" />
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold">{title}</h3>
+                <p className="mt-1 text-sm leading-6 text-paper/70">{note}</p>
+              </div>
+              <ArrowLeftIcon className="mt-1 h-4 w-4 shrink-0 rotate-180 text-paper/65 group-hover:text-brand-200" />
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

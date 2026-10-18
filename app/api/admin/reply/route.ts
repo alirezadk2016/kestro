@@ -6,11 +6,12 @@ import {
   MAIL_ERROR_MAX_AGE,
   sessionValid,
 } from "@/lib/admin-auth";
-import { getEnquiry, recordReply, scrubSecrets } from "@/lib/db";
+import { getEnquiry, recordReply, scrubSecrets, type Enquiry } from "@/lib/db";
 import { company } from "@/lib/company";
 import { seeOther } from "@/lib/redirect";
 import { crossSitePost } from "@/lib/same-site";
 import { looksLikeEmail, oneLine } from "@/lib/mail-safe";
+import { adminForm, enquiryIdValid } from "@/lib/admin-form";
 
 export const runtime = "nodejs";
 
@@ -47,21 +48,29 @@ export async function POST(request: Request) {
     return new NextResponse("forbidden", { status: 403 });
   }
 
-  const form = await request.formData();
-  const id = String(form.get("id") ?? "");
-  const body = String(form.get("body") ?? "")
-    .trim()
-    .slice(0, 10000);
-  if (!id || !body) {
-    return seeOther(`/admin/beskeder/${id}`);
-  }
+  const form = await adminForm(request);
+  if (!form) return new NextResponse("invalid form", { status: 400 });
+  const id = form.get("id");
+  const value = form.get("body");
+  if (!enquiryIdValid(id)) return new NextResponse("invalid id", { status: 422 });
+  if (typeof value !== "string" || !value.trim() || value.trim().length > 10000)
+    return new NextResponse("invalid reply", { status: 422 });
+  const body = value.trim();
 
-  const enquiry = await getEnquiry(id);
+  let enquiry: Enquiry | null;
+  try {
+    enquiry = await getEnquiry(id);
+  } catch {
+    return new NextResponse("message archive unavailable", { status: 503 });
+  }
   if (!enquiry) return new NextResponse("not found", { status: 404 });
   /* Checked again on the way out: a row stored before the intake rule was
      tightened could hold "a@b.dk, c@d.dk", and `to` would send to both. */
   if (!looksLikeEmail(enquiry.email)) {
-    return withReason(seeOther(`/admin/beskeder/${id}?fejl=send`), "Afsenderens adresse er ikke gyldig.");
+    return withReason(
+      seeOther(`/admin/beskeder/${id}?fejl=send`),
+      "Afsenderens adresse er ikke gyldig.",
+    );
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -125,18 +134,18 @@ export async function POST(request: Request) {
   } catch {
     console.error("Admin reply: request failed");
     return withReason(
-      seeOther(`/admin/beskeder/${id}?fejl=send`),
-      "Kunne ikke få forbindelse til mailudbyderen.",
+      seeOther(`/admin/beskeder/${id}?fejl=ukendt`),
+      "Afsendelsen kunne ikke bekræftes. Kontrollér leveringen hos mailudbyderen, før du sender igen.",
     );
   }
 
   /* Only after the send succeeded. Recording a reply that never left would be
      worse than not recording it: the message would look handled. */
-  await recordReply(id, body);
+  const recorded = await recordReply(id, body);
 
   /* Say so. Every branch above already redirected with a reason, and the page
      now reads all of them — including this one, because "the form cleared and
      the page looks the same" is not the difference between sent and not
      sent that anybody should have to infer. */
-  return seeOther(`/admin/beskeder/${id}?sendt=1`);
+  return seeOther(`/admin/beskeder/${id}?sendt=1${recorded ? "" : "&lagring=fejl"}`);
 }

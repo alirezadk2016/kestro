@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cookies } from "next/headers";
 
 import "../globals.css";
 import AdminNav from "@/components/admin/AdminNav";
-import { AlertIcon } from "@/components/admin/icons";
+import { InboxCountProvider } from "@/components/admin/InboxCount";
+import Logo from "@/components/Logo";
+import { AlertIcon, ArrowLeftIcon } from "@/components/admin/icons";
+import styles from "@/components/admin/admin-shell.module.css";
 import { SESSION_COOKIE, FAILED_COOKIE, sessionValid, adminConfigured } from "@/lib/admin-auth";
 import { countNew } from "@/lib/db";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -83,12 +87,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         className={`${jakarta.variable} min-h-dvh bg-brand-950 font-sans text-paper antialiased`}
       >
         {authed ? (
-          /* A rail on wide screens, a strip above the content on narrow ones.
-             Same markup, same order, so nothing is duplicated or hidden. */
-          <div className="lg:grid lg:min-h-dvh lg:grid-cols-[15rem_minmax(0,1fr)]">
-            <AdminNav unread={unread} />
-            <main className="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 lg:py-12">{children}</main>
-          </div>
+          <>
+            <a href="#admin-main" className={styles.skip}>
+              Gå til indhold
+            </a>
+            <div className={styles.shell}>
+              <InboxCountProvider initialCount={unread}>
+                <AdminNav />
+                <main id="admin-main" tabIndex={-1} className={styles.main}>
+                  {children}
+                </main>
+              </InboxCountProvider>
+            </div>
+          </>
         ) : (
           <LoginWall configured={adminConfigured} failed={failed} />
         )}
@@ -108,59 +119,83 @@ export default async function AdminLayout({ children }: { children: React.ReactN
  */
 function LoginWall({ configured, failed }: { configured: boolean; failed: boolean }) {
   return (
-    <div className="grid min-h-dvh place-items-center bg-[radial-gradient(120%_100%_at_50%_0%,rgba(37,99,235,0.14),transparent_65%)] px-5">
-      <div className="w-full max-w-sm">
-        <p className="font-display text-lg font-extrabold tracking-tight">
-          Kestro <span className="text-brand-300">admin</span>
-        </p>
+    <main className={styles.login}>
+      <div className={styles.loginInner}>
+        <div className={styles.loginBrand}>
+          <Logo className="h-9 w-auto" idPrefix="admin-login" />
+          <span>
+            <span className={styles.brandName}>Kestro</span>
+            <span className={styles.brandLabel}>Administration</span>
+          </span>
+        </div>
 
-        {configured ? (
-          <>
-            <h1 className="mt-8 font-display text-2xl font-bold tracking-tight">Log ind</h1>
-            <p className="mt-2 text-sm text-paper/60">Beskeder og besøgstal for kestro.dk.</p>
-
-            {failed && (
-              <p
-                role="alert"
-                className="mt-6 flex items-start gap-2.5 border-l-2 border-red-400/80 bg-red-400/[0.08] px-4 py-3 text-sm text-red-100/90"
-              >
-                <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-red-300" />
-                Forkert adgangskode. Prøv igen.
-              </p>
-            )}
-
-            <form action="/api/admin/login" method="post" className="mt-8">
-              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-paper/80">
-                Adgangskode
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                autoComplete="current-password"
-                autoFocus
-                className="w-full border border-white/15 bg-white/[0.06] px-4 py-3 text-sm text-paper transition focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40"
-              />
-              <button className="mt-4 w-full bg-brand-600 px-5 py-3 text-sm font-semibold text-paper transition hover:bg-brand-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300">
+        <section className={styles.loginCard} aria-labelledby="admin-login-title">
+          {configured ? (
+            <>
+              <h1 id="admin-login-title" className="font-display text-2xl font-bold tracking-tight">
                 Log ind
-              </button>
-            </form>
-          </>
-        ) : (
-          <div className="mt-8 border-l-2 border-amber-400/70 bg-amber-400/[0.06] p-5">
-            <h1 className="flex items-center gap-2 font-display text-lg font-bold">
-              <AlertIcon className="h-5 w-5 flex-none text-amber-300" />
-              Panelet er ikke sat op
-            </h1>
-            <p className="mt-3 text-sm leading-6 text-paper/70">
-              Der er ingen adgangskode konfigureret, så panelet er lukket. Sæt{" "}
-              <code className="bg-white/10 px-1.5 py-0.5 text-brand-200">ADMIN_PASSWORD</code> i
-              Vercel og deploy igen.
-            </p>
-          </div>
-        )}
+              </h1>
+              <p className="mt-2 text-sm leading-6 text-paper/70">
+                Dit arbejdsrum til beskeder, trafik og drift.
+              </p>
+
+              {failed && (
+                <p
+                  role="alert"
+                  className="mt-6 flex items-start gap-2.5 rounded-r-lg border-l-2 border-red-400/80 bg-red-400/[0.08] px-4 py-3 text-sm leading-6 text-red-100/90"
+                >
+                  <AlertIcon className="mt-0.5 h-4 w-4 flex-none text-red-300" />
+                  Forkert adgangskode. Prøv igen.
+                </p>
+              )}
+
+              <form action="/api/admin/login" method="post" className="mt-8">
+                <label
+                  htmlFor="password"
+                  className="mb-1.5 block text-sm font-medium text-paper/80"
+                >
+                  Adgangskode
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  autoFocus
+                  className="min-h-12 w-full rounded-lg border border-white/20 bg-brand-950/50 px-4 py-3 text-base text-paper transition-colors focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40"
+                />
+                <button
+                  type="submit"
+                  className="mt-4 min-h-12 w-full rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-paper transition-colors hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950"
+                >
+                  Log ind
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className="border-l-2 border-amber-400/70 bg-amber-400/[0.06] p-5">
+              <h1
+                id="admin-login-title"
+                className="flex items-center gap-2 font-display text-lg font-bold"
+              >
+                <AlertIcon className="h-5 w-5 flex-none text-amber-300" />
+                Panelet er ikke sat op
+              </h1>
+              <p className="mt-3 text-sm leading-6 text-paper/70">
+                Der er ingen adgangskode konfigureret, så panelet er lukket. Sæt{" "}
+                <code className="bg-white/10 px-1.5 py-0.5 text-brand-200">ADMIN_PASSWORD</code> i
+                Vercel og deploy igen.
+              </p>
+            </div>
+          )}
+        </section>
+
+        <Link href="/" className={styles.loginFoot}>
+          <ArrowLeftIcon className="h-4 w-4" />
+          Til kestro.dk
+        </Link>
       </div>
-    </div>
+    </main>
   );
 }
