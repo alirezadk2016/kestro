@@ -1,7 +1,7 @@
 import Link from "next/link";
 import LivePanel from "@/components/admin/LivePanel";
-import { Figure, Ranked, SectionHead } from "@/components/admin/parts";
-import { CARD, EYEBROW, INPUT, BUTTON } from "@/components/admin/tokens";
+import { AdminPageHeader, Figure, Ranked, SectionHead } from "@/components/admin/parts";
+import { CARD, INPUT, BUTTON } from "@/components/admin/tokens";
 import { liveStats, viewStats } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin-auth";
 import { countryName, decimal, duration } from "@/lib/format";
@@ -20,32 +20,30 @@ export default async function TrafficPage({
   const value = (n: number) => (visits.available ? decimal(n) : "—");
   return (
     <div className="space-y-8">
-      <header className="flex flex-wrap items-end justify-between gap-5">
-        <div>
-          <p className={EYEBROW}>Kestro · indsigt</p>
-          <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">Trafik</h1>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-paper/70">
-            Sitets egne målinger. Et besøg og en sidevisning er forskellige ting.
-          </p>
-        </div>
-        <form method="get" action="/admin/trafik" className="flex flex-wrap items-end gap-2">
-          <div>
-            <label htmlFor="traffic-days" className="mb-2 block text-xs text-paper/70">
-              Periode
-            </label>
-            <select id="traffic-days" name="days" defaultValue={days} className={INPUT}>
-              {[7, 30, 90].map((n) => (
-                <option key={n} value={n}>
-                  Seneste {n} dage
-                </option>
-              ))}
-            </select>
-          </div>
-          <button type="submit" className={BUTTON}>
-            Vis periode
-          </button>
-        </form>
-      </header>
+      <AdminPageHeader
+        eyebrow="Kestro · indsigt"
+        title="Trafik"
+        description="Sitets egne målinger. Et besøg og en sidevisning er forskellige ting."
+        actions={
+          <form method="get" action="/admin/trafik" className="flex flex-wrap items-end gap-2">
+            <div>
+              <label htmlFor="traffic-days" className="mb-2 block text-xs text-paper/70">
+                Periode
+              </label>
+              <select id="traffic-days" name="days" defaultValue={days} className={INPUT}>
+                {[7, 30, 90].map((n) => (
+                  <option key={n} value={n}>
+                    Seneste {n} dage
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className={BUTTON}>
+              Vis periode
+            </button>
+          </form>
+        }
+      />
       {(!visits.available || !views.available) && (
         <p
           role="status"

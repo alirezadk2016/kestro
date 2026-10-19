@@ -14,22 +14,26 @@
 
 /** A raised block. Light over the dark ground rather than a second colour, so
     the surface stays in the brand's single hue at every depth. */
-export const CARD = "rounded-xl border border-white/[0.1] bg-white/[0.035]";
+export const CARD = "rounded-xl border border-[color:var(--admin-border)] bg-[var(--admin-panel)]";
 
 /** The same, for a block that sits inside another one. */
-export const INSET = "bg-brand-950/50";
+export const INSET = "bg-[var(--admin-inset)]";
 
-export const HAIRLINE = "border-white/[0.1]";
+export const HAIRLINE = "border-[color:var(--admin-border)]";
 
 /** Small caps. One size and one tracking for every label in the panel. */
-export const EYEBROW = "text-[10px] font-semibold uppercase tracking-[0.14em] text-paper/65";
+export const EYEBROW =
+  "text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--admin-muted)]";
 
 /** Any figure. Tight tracking because these are set large, and tabular so a
     number changing under a live update does not shift the layout. */
 export const FIGURE = "font-display font-extrabold tabular-nums tracking-[-0.02em]";
 
 export const INPUT =
-  "min-h-11 rounded-md border border-white/20 bg-brand-950 px-3 py-2 text-sm text-paper focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+  "min-h-11 rounded-md border border-[color:var(--admin-control-border)] bg-[var(--admin-inset)] px-3 py-2 text-sm text-paper focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40";
 
 export const BUTTON =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/20 px-4 py-2 text-sm font-semibold text-paper transition-colors hover:border-brand-300 hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[color:var(--admin-control-border)] bg-[var(--admin-panel)] px-4 py-2 text-sm font-semibold text-paper transition-colors hover:border-brand-300 hover:bg-[var(--admin-elevated)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed disabled:text-paper/65";
+
+export const PRIMARY_BUTTON =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand-600 px-4 py-2 text-sm font-semibold text-paper transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-paper/70";

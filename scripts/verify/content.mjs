@@ -16,11 +16,18 @@
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { verifyMediaIndex } from "../build/admin-media.mjs";
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
 
 const failures = [];
 const fail = (message) => failures.push(message);
+
+try {
+  console.log(`media: ${await verifyMediaIndex()} image files match the admin inventory`);
+} catch (error) {
+  fail(error.message);
+}
 
 /* The data is TypeScript, so it is read as text rather than imported. That is
    deliberate: a check that needed a build step to run would not be able to

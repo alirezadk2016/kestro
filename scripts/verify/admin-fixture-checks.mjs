@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { existsSync } from "node:fs";
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -52,6 +52,7 @@ async function scenario(name, run) {
   });
   context.setDefaultTimeout(15000);
   context.setDefaultNavigationTimeout(30000);
+  let contextClosing = false;
   const cookieUrl = new URL(base);
   cookieUrl.protocol = "https:";
   await context.addCookies([
@@ -66,28 +67,76 @@ async function scenario(name, run) {
   ]);
   await context.route("**/*", async (route) => {
     const request = route.request();
-    if (new URL(request.url()).origin !== origin.origin) return route.abort();
-    if (request.isNavigationRequest() && request.method() === "GET") {
-      // This server is deliberately loopback HTTP. Chromium otherwise upgrades
-      // a fetch's relative 303 redirect to HTTPS on the same non-TLS port.
-      // Adjust transport only in the fixture browser; production headers and
-      // every auth/CSRF gate are still checked unchanged by attack.mjs.
-      const response = await route.fetch({ maxRedirects: 0, headers: await request.allHeaders() });
-      const headers = response.headers();
-      if (headers["content-security-policy"])
-        headers["content-security-policy"] = headers["content-security-policy"].replace(
-          /(^|;)\s*upgrade-insecure-requests\s*(?=;|$)/g,
-          "$1",
-        );
-      return route.fulfill({ response, headers });
+    try {
+      if (new URL(request.url()).origin !== origin.origin) return await route.abort();
+      if (
+        request.method() === "GET" &&
+        (request.isNavigationRequest() || request.headers().rsc === "1")
+      ) {
+        // Buffer document and Flight GETs through the same loopback transport.
+        // Mixing fulfilled documents with native streamed Flight requests made
+        // Chromium abort valid responses before their navigation committed here.
+        // Exact UI assertions still apply; no application route or data changes.
+        const response = await route.fetch({
+          maxRedirects: 0,
+          headers: await request.allHeaders(),
+        });
+        const headers = response.headers();
+        // This test server is HTTP. Remove only the document's transport upgrade
+        // so relative 303 redirects do not target TLS on a non-TLS port. Flight
+        // headers and all production auth/CSRF/CSP assertions stay unchanged.
+        if (request.isNavigationRequest() && headers["content-security-policy"])
+          headers["content-security-policy"] = headers["content-security-policy"].replace(
+            /(^|;)\s*upgrade-insecure-requests\s*(?=;|$)/g,
+            "$1",
+          );
+        return await route.fulfill({ response, headers });
+      }
+      return await route.continue();
+    } catch (error) {
+      // Navigation supersedes buffered Flight responses. Ignore only that
+      // confirmed browser cancellation or our own completed-scenario teardown;
+      // every other transport failure still fails verification.
+      if (contextClosing || request.failure()?.errorText === "net::ERR_ABORTED") return;
+      throw error;
     }
-    return route.continue();
   });
   const page = await context.newPage();
+  const pendingRequests = new Map();
+  const recentRequests = [];
+  function recordRequest(entry) {
+    recentRequests.push(entry);
+    if (recentRequests.length > 40) recentRequests.shift();
+  }
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    const entry = {
+      method: request.method(),
+      path: `${url.pathname}${url.search}`,
+      type: request.resourceType(),
+    };
+    pendingRequests.set(request, entry);
+    recordRequest({ phase: "request", ...entry });
+  });
+  page.on("requestfinished", (request) => pendingRequests.delete(request));
+  page.on("requestfailed", (request) => {
+    recordRequest({
+      phase: "failed",
+      ...pendingRequests.get(request),
+      error: request.failure()?.errorText,
+    });
+    pendingRequests.delete(request);
+  });
   page.on("pageerror", (error) =>
     failures.push(`${name} at ${page.url()}: ${error.stack || error.message}`),
   );
   page.on("response", (response) => {
+    const url = new URL(response.url());
+    recordRequest({
+      phase: "response",
+      path: `${url.pathname}${url.search}`,
+      status: response.status(),
+    });
     if (new URL(response.url()).pathname.startsWith("/_next/") && response.status() >= 400)
       failures.push(`${name}: asset ${response.status()} ${new URL(response.url()).pathname}`);
   });
@@ -96,7 +145,47 @@ async function scenario(name, run) {
     console.log(`verify: admin fixture passed: ${name}`);
   } catch (error) {
     failures.push(`${name}: ${error.stack || error.message}`);
+    // The top-level local-only guards and synthetic preload apply to every
+    // scenario. Capture no headers, cookies or form bodies, and bound the DOM
+    // and request history so failures are useful without dumping a full page.
+    try {
+      const debug = {
+        scenario: name,
+        url: page.url(),
+        pendingRequests: [...pendingRequests.values()].slice(-20),
+        recentRequests,
+        headings: await page.locator("h1").allTextContents(),
+        mainText: (await page.locator("main").innerText({ timeout: 2000 })).slice(0, 6000),
+        pagination: await page.locator('nav[aria-label$="sider"]').evaluateAll((nodes) =>
+          nodes.map((node) => ({
+            label: node.getAttribute("aria-label"),
+            text: node.textContent?.slice(0, 500),
+            links: [...node.querySelectorAll("a")].map((link) => ({
+              text: link.textContent,
+              href: link.getAttribute("href"),
+            })),
+          })),
+        ),
+      };
+      console.error(`admin fixture diagnostic: ${JSON.stringify(debug)}`);
+      if (process.env.VERIFY_ARTIFACT_DIR) {
+        const directory = process.env.VERIFY_ARTIFACT_DIR;
+        const tag = `failure-${name
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .slice(0, 90)}`;
+        await mkdir(directory, { recursive: true });
+        await writeFile(join(directory, `${tag}.json`), JSON.stringify(debug, null, 2), "utf8");
+        await screenshot(page, `${tag}.png`);
+      }
+    } catch (diagnosticError) {
+      console.error(`admin fixture diagnostic unavailable: ${diagnosticError.message}`);
+    }
   } finally {
+    // Closing cancels pending buffered requests. Stop accepting routes first;
+    // waiting for canceled Flight handlers can deadlock before context.close.
+    contextClosing = true;
+    await context.unrouteAll({ behavior: "ignoreErrors" });
     await context.close();
   }
 }
@@ -117,7 +206,69 @@ async function screenshot(page, filename) {
   await page.screenshot({ path: join(directory, filename), fullPage: true });
 }
 
+const dayParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Copenhagen",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+}).formatToParts(new Date());
+const dayPart = (type) => dayParts.find((part) => part.type === type)?.value;
+const today = `${dayPart("year")}-${dayPart("month")}-${dayPart("day")}`;
+const relativeDay = (offset) =>
+  new Date(new Date(`${today}T12:00:00Z`).getTime() + offset * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
+
+async function openDetails(summary) {
+  if ((await summary.locator("..").getAttribute("open")) === null) await summary.click();
+}
+
+const namedEnquiry = (page, container, number) =>
+  container.getByRole("link").filter({
+    has: page.getByText(`Testkunde ${String(number).padStart(2, "0")}`, { exact: true }),
+  });
+
+/** URL changes can precede the streamed RSC commit. Require the exact rendered
+ * result rather than treating a transient empty/loading tree as final data. */
+async function waitForCount(locator, expected, message = "the expected rendered count appears") {
+  const deadline = Date.now() + 15000;
+  let actual;
+  do {
+    actual = await locator.count();
+    if (actual === expected) return;
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  } while (Date.now() < deadline);
+  assert.equal(actual, expected, message);
+}
+
+async function screenshotsAtBothSizes(page, name) {
+  for (const [width, height, size] of [
+    [1440, 1000, "desktop"],
+    [390, 844, "mobile"],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.evaluate(() => document.fonts.ready);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      false,
+      `${name} fits ${width}px`,
+    );
+    await screenshot(page, `kestro-admin-${name}-${size}.png`);
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
+}
+
 try {
+  await scenario("actionable dashboard uses actual fixture counts", async (page) => {
+    await visit(page, "/admin");
+    const work = page.getByRole("region", { name: "Arbejdsstatus", exact: true });
+    const cells = work.locator("dl > div");
+    assert.match(await cells.nth(0).innerText(), /Nye beskeder\s+20/);
+    assert.match(await cells.nth(1).innerText(), /Aktive beskeder\s+60/);
+    assert.match(await cells.nth(2).innerText(), /Til opfølgning\s+24/);
+    await screenshotsAtBothSizes(page, "dashboard");
+  });
+
   await scenario("80-row queue, pagination, literal search and sort", async (page) => {
     await visit(page, "/admin/beskeder?status=all");
     // Let production prefetch finish, then read again: merely seeing an inbox
@@ -176,7 +327,187 @@ try {
     assert.equal(query.get("q"), "Testkunde");
     assert.equal(query.get("source"), "quote");
     assert.equal(query.get("sort"), "oldest");
+
+    await visit(page, "/admin/beskeder?status=all");
+    const search = page.getByRole("search", { name: "Søg i beskeder", exact: true });
+    assert.equal(
+      await search.getByLabel("Søg", { exact: true }).isVisible(),
+      true,
+      "search remains visible without expanding filters",
+    );
+    assert.equal(
+      await search.getByLabel("Type", { exact: true }).isVisible(),
+      false,
+      "secondary filters begin collapsed",
+    );
+    await openDetails(search.locator("summary").filter({ hasText: "Type og sortering" }));
+    await search.getByLabel("Søg", { exact: true }).fill("Testkunde");
+    await search.getByLabel("Type", { exact: true }).selectOption("quote");
+    await search.getByLabel("Sortering", { exact: true }).selectOption("oldest");
+    await search.getByRole("button", { name: "Søg og filtrér", exact: true }).click();
+    await page.waitForURL(
+      (url) =>
+        url.searchParams.get("source") === "quote" && url.searchParams.get("sort") === "oldest",
+    );
+    assert.match(await list(page).locator(":scope > li").first().innerText(), /Testkunde 80/);
   });
+
+  await scenario(
+    "contact dossiers group normalized addresses without marking messages read",
+    async (page) => {
+      await visit(page, "/admin/kontakter");
+      assert.match(await page.getByRole("main").innerText(), /49 kontakter/);
+      const contacts = page.getByRole("list", { name: "Kontakter", exact: true });
+      assert.equal(await contacts.locator(":scope > li").count(), 25);
+      await screenshotsAtBothSizes(page, "contacts");
+      await page.getByLabel("Søg efter kontakt", { exact: true }).fill("fixture1@example.invalid");
+      await page.getByRole("button", { name: "Søg kontakter", exact: true }).click();
+      await page.waitForURL((url) => url.searchParams.get("q") === "fixture1@example.invalid");
+      await contacts.waitFor({ state: "visible" });
+      await waitForCount(contacts.locator(":scope > li"), 1);
+      assert.equal(
+        await contacts.locator(":scope > li").count(),
+        1,
+        "case and surrounding whitespace do not create duplicate contacts",
+      );
+      const grouped = contacts.getByRole("link").first();
+      assert.equal(
+        await grouped.getAttribute("href"),
+        `/admin/kontakter/${id(9)}`,
+        "the earliest enquiry supplies an opaque, stable anchor",
+      );
+      await grouped.click();
+      await page.waitForURL((url) => url.pathname === `/admin/kontakter/${id(9)}`);
+      const messages = page.getByRole("list", { name: "Kontaktens henvendelser", exact: true });
+      await waitForCount(messages.locator(":scope > li"), 3);
+      assert.equal(await messages.locator(":scope > li").count(), 3);
+      const rows = await messages.locator(":scope > li").allTextContents();
+      for (const number of ["01", "05", "09"])
+        assert.ok(rows.some((row) => row.includes(`Testkunde ${number}`)));
+      assert.equal(
+        await namedEnquiry(page, messages, 2).count(),
+        0,
+        "another email address is not merged",
+      );
+      const navigation = page.getByRole("navigation", { name: "Panel", exact: true });
+      assert.equal(
+        await navigation.locator('[aria-label="20 nye beskeder"]').count(),
+        1,
+        "viewing a contact profile does not mark its messages read",
+      );
+      await page.reload({ waitUntil: "networkidle" });
+      assert.equal(await navigation.locator('[aria-label="20 nye beskeder"]').count(), 1);
+
+      await visit(page, `/admin/kontakter/${id(70)}`);
+      assert.equal(await messages.locator(":scope > li").count(), 25);
+      const links = await messages
+        .getByRole("link")
+        .evaluateAll((elements) => elements.map((element) => element.getAttribute("href")));
+      assert.ok(
+        links.every(
+          (href) => Number(href.split("-").at(-1)) >= 41 && Number(href.split("-").at(-1)) <= 70,
+        ),
+        "the dossier contains only the selected normalized email group",
+      );
+      const nextContactPage = page
+        .getByRole("navigation", { name: "Kontaktens beskedsider" })
+        .getByRole("link", { name: "Næste", exact: true });
+      assert.equal(await nextContactPage.getAttribute("href"), `/admin/kontakter/${id(70)}?page=2`);
+      await nextContactPage.click();
+      await page.waitForURL((url) => url.searchParams.get("page") === "2");
+      await waitForCount(messages.locator(":scope > li"), 5);
+      assert.equal(await messages.locator(":scope > li").count(), 5);
+      assert.match(await messages.innerText(), /Testkunde 70/);
+      assert.equal(
+        await messages.getByText("Arkiveret", { exact: true }).count(),
+        1,
+        "archived history remains reachable in the contact dossier",
+      );
+    },
+  );
+
+  await scenario(
+    "follow-up scopes, saved priority and dates, clearing and activity",
+    async (page) => {
+      await visit(page, "/admin/opfoelgning");
+      const scopes = page.getByRole("navigation", { name: "Opfølgningsperiode", exact: true });
+      assert.match(await scopes.getByRole("link", { name: /^Til og med i dag/ }).innerText(), /24/);
+      assert.match(await scopes.getByRole("link", { name: /^Overskredet/ }).innerText(), /12/);
+      assert.match(await scopes.getByRole("link", { name: /^Planlagt/ }).innerText(), /12/);
+      const tasks = page.getByRole("list", { name: "Opfølgninger", exact: true });
+      assert.equal(await tasks.locator(":scope > li").count(), 24);
+      assert.equal(
+        await tasks.getByText("Arkiveret", { exact: true }).count(),
+        0,
+        "archived enquiries are excluded even when their dates are due",
+      );
+      assert.equal(
+        await namedEnquiry(page, tasks, 12).count(),
+        0,
+        "an archived overdue fixture cannot enter the queue",
+      );
+      await screenshotsAtBothSizes(page, "followups");
+      await scopes.getByRole("link", { name: /^Overskredet/ }).click();
+      await page.waitForURL((url) => url.searchParams.get("scope") === "overdue");
+      await waitForCount(tasks.locator(":scope > li"), 12);
+      assert.equal(await tasks.locator(":scope > li").count(), 12);
+      assert.equal(await namedEnquiry(page, tasks, 1).count(), 0, "today is due but not overdue");
+      await visit(page, "/admin/opfoelgning?scope=all&priority=high");
+      assert.equal(await tasks.locator(":scope > li").count(), 9);
+      assert.equal(await tasks.getByText("Høj prioritet", { exact: true }).count(), 9);
+
+      await visit(page, "/admin/beskeder?status=read");
+      await namedEnquiry(page, list(page), 10).click();
+      await page.waitForURL((url) => url.pathname === `/admin/beskeder/${id(10)}`);
+      const priority = page.getByLabel("Prioritet", { exact: true });
+      const date = page.getByLabel("Følg op den", { exact: true });
+      await priority.selectOption("high");
+      await date.fill(relativeDay(3));
+      await page.getByRole("button", { name: "Gem opfølgning", exact: true }).click();
+      await page.getByRole("status").filter({ hasText: "Opfølgningen er gemt." }).waitFor();
+      await page.goBack({ waitUntil: "networkidle" });
+      await page.waitForURL((url) => url.pathname === "/admin/beskeder");
+      const updated = namedEnquiry(page, list(page), 10);
+      await updated.getByText("Høj prioritet", { exact: true }).waitFor();
+      assert.match(
+        await updated.innerText(),
+        /Høj prioritet/,
+        "Back navigation reflects the saved metadata",
+      );
+      assert.match(await updated.innerText(), /Opfølgning/);
+      await updated.click();
+      assert.equal(await priority.inputValue(), "high");
+      assert.equal(await date.inputValue(), relativeDay(3), "saved dates persist on reopening");
+      await page.reload({ waitUntil: "networkidle" });
+      assert.equal(await priority.inputValue(), "high");
+      assert.equal(await date.inputValue(), relativeDay(3));
+      const history = page.getByRole("region", { name: "Historik", exact: true });
+      await openDetails(history.locator("summary"));
+      assert.equal(
+        await history.getByRole("heading", { level: 3, name: "Opfølgning", exact: true }).count(),
+        1,
+      );
+      assert.match(await history.innerText(), /Prioritet: høj/);
+      await visit(page, "/admin/opfoelgning?scope=upcoming&q=Testkunde%2010&priority=high");
+      assert.equal(
+        await tasks.locator(":scope > li").count(),
+        1,
+        "the saved date and priority participate in filtering",
+      );
+      await tasks.getByRole("link").first().click();
+      await page.getByRole("button", { name: "Ryd dato", exact: true }).click();
+      await page.getByRole("button", { name: "Gem opfølgning", exact: true }).click();
+      await page.getByRole("status").filter({ hasText: "Opfølgningen er gemt." }).waitFor();
+      await page.reload({ waitUntil: "networkidle" });
+      assert.equal(await date.inputValue(), "", "the follow-up date can be explicitly cleared");
+      await openDetails(history.locator("summary"));
+      assert.equal(
+        await history.getByRole("heading", { level: 3, name: "Opfølgning", exact: true }).count(),
+        2,
+        "both real changes append metadata events",
+      );
+    },
+  );
 
   await scenario("internal notes, unread, archive and restore", async (page) => {
     await visit(page, "/admin/beskeder?status=new");
@@ -241,6 +572,33 @@ try {
     await archive.waitFor({ state: "visible" });
     assert.equal(await archive.count(), 1, "the restored state persists after a reload");
     if (badgeFailure) throw badgeFailure;
+  });
+
+  await scenario("Back navigation does not restore a stale unread queue", async (page) => {
+    await visit(page, "/admin/beskeder?status=new");
+    const row = namedEnquiry(page, list(page), 13);
+    await row.waitFor({ state: "visible" });
+    assert.equal(await row.count(), 1);
+    await row.click();
+    await page.getByRole("heading", { name: "Testkunde 13", exact: true }).waitFor();
+    await page.goBack({ waitUntil: "networkidle" });
+    await page.waitForURL(
+      (url) => url.pathname === "/admin/beskeder" && url.searchParams.get("status") === "new",
+    );
+    await list(page).waitFor({ state: "visible" });
+    await waitForCount(row, 0, "a read message leaves the rendered new-only queue after Back");
+    assert.equal(
+      await row.count(),
+      0,
+      "a message that was read is absent after returning to the new-only list",
+    );
+    await page.goForward({ waitUntil: "networkidle" });
+    await page.getByRole("heading", { name: "Testkunde 13", exact: true }).waitFor();
+    await page.reload({ waitUntil: "networkidle" });
+    assert.equal(
+      await page.getByRole("button", { name: "Markér som ulæst", exact: true }).count(),
+      1,
+    );
   });
 
   await scenario("reply survives provider failure and clears after mock success", async (page) => {
@@ -372,6 +730,97 @@ try {
       true,
     );
   });
+
+  await scenario(
+    "bulk selection is bounded to this page, preserves filters and can be recovered",
+    async (page) => {
+      let replyRequests = 0;
+      page.on("request", (request) => {
+        if (new URL(request.url()).pathname === "/api/admin/reply") replyRequests++;
+      });
+      await visit(page, "/admin/beskeder?status=all&source=quote&sort=oldest&q=Testkunde");
+      const bulk = page.getByRole("form", { name: "Håndtér valgte beskeder", exact: true });
+      const before = await list(page)
+        .getByRole("link")
+        .evaluateAll((elements) =>
+          elements.map((element) => element.getAttribute("href").split("/").at(-1)),
+        );
+      assert.equal(before.length, 25);
+      await openDetails(bulk.locator("summary"));
+      await bulk.getByRole("button", { name: "Vælg / ryd denne side", exact: true }).click();
+      assert.equal(await bulk.getByRole("checkbox", { checked: true }).count(), 25);
+      assert.match(await bulk.locator("summary").innerText(), /25 valgt/);
+      await bulk.getByLabel("Handling", { exact: true }).selectOption("archived");
+      const posted = page.waitForRequest(
+        (request) =>
+          new URL(request.url()).pathname === "/api/admin/bulk-status" &&
+          request.method() === "POST",
+      );
+      await bulk.getByRole("button", { name: "Anvend på valgte", exact: true }).click();
+      const payload = new URLSearchParams((await posted).postData());
+      assert.equal(payload.getAll("ids").length, 25);
+      assert.deepEqual(
+        [...payload.getAll("ids")].sort(),
+        [...before].sort(),
+        "no off-page or hidden record is submitted",
+      );
+      await page.waitForURL(
+        (url) =>
+          url.searchParams.get("result") === "bulk" && url.searchParams.get("changed") === "18",
+      );
+      let query = new URL(page.url()).searchParams;
+      assert.equal(query.get("q"), "Testkunde");
+      assert.equal(query.get("source"), "quote");
+      assert.equal(query.get("sort"), "oldest");
+      assert.equal(query.get("status"), "all");
+      await waitForCount(list(page).getByText("Arkiveret", { exact: true }), 25);
+      assert.equal(
+        await list(page).getByText("Arkiveret", { exact: true }).count(),
+        25,
+        "selected records are archived while already archived records are not counted as changed",
+      );
+      assert.match(
+        await page.getByRole("status").filter({ hasText: "beskeder er opdateret" }).innerText(),
+        /18/,
+      );
+
+      await openDetails(bulk.locator("summary"));
+      await bulk.getByRole("button", { name: "Vælg / ryd denne side", exact: true }).click();
+      await bulk.getByLabel("Handling", { exact: true }).selectOption("read");
+      await bulk.getByRole("button", { name: "Anvend på valgte", exact: true }).click();
+      await page.waitForURL(
+        (url) =>
+          url.searchParams.get("result") === "bulk" && url.searchParams.get("changed") === "25",
+      );
+      await waitForCount(list(page).getByText("Læst", { exact: true }), 25);
+      assert.equal(
+        await list(page).getByText("Læst", { exact: true }).count(),
+        25,
+        "archived selected records can be restored to active/read state",
+      );
+      await page
+        .getByRole("navigation", { name: "Beskedsider", exact: true })
+        .getByRole("link", { name: "Næste", exact: true })
+        .click();
+      await page.waitForURL((url) => url.searchParams.get("page") === "2");
+      await waitForCount(list(page).locator(":scope > li"), 2);
+      assert.equal(await list(page).locator(":scope > li").count(), 2);
+      assert.match(
+        await namedEnquiry(page, list(page), 5).innerText(),
+        /\bNy\b/,
+        "an unselected record on another page remains unread",
+      );
+      assert.match(
+        await namedEnquiry(page, list(page), 2).innerText(),
+        /Besvaret/,
+        "an unselected confirmed reply keeps its status",
+      );
+      query = new URL(page.url()).searchParams;
+      assert.equal(query.get("source"), "quote");
+      assert.equal(query.get("sort"), "oldest");
+      assert.equal(replyRequests, 0, "bulk metadata actions never invoke the reply flow");
+    },
+  );
 } finally {
   await browser.close();
 }

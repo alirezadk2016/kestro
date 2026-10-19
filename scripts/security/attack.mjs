@@ -137,6 +137,12 @@ async function main() {
   for (const [name, path] of [
     ["traffic", "/admin/trafik"],
     ["system status", "/admin/system"],
+    ["follow-up queue", "/admin/opfoelgning"],
+    ["contacts", "/admin/kontakter"],
+    ["contact detail", "/admin/kontakter/00000000-0000-4000-8000-000000000001"],
+    ["content inventory", "/admin/indhold"],
+    ["content detail", "/admin/indhold/tjek-batterikapacitet"],
+    ["media library", "/admin/medier"],
   ]) {
     await shutOut("L1", `${name}, plain GET`, path, {}, [404]);
     await shutOut("L1", `${name}, RSC segment request`, path, { headers: RSC }, [404]);
@@ -169,7 +175,7 @@ async function main() {
     [403],
   );
 
-  for (const name of ["status", "note"]) {
+  for (const name of ["status", "note", "follow-up", "bulk-status"]) {
     for (const cookie of [undefined, `${COOKIE}=${FORGED}`]) {
       await shutOut(
         "L1",
@@ -331,6 +337,8 @@ async function main() {
     ["reply", "/api/admin/reply", "id=any-id&body=hello"],
     ["status", "/api/admin/status", "id=any-id&status=read"],
     ["note", "/api/admin/note", "id=any-id&note=test"],
+    ["follow-up", "/api/admin/follow-up", "id=any-id&priority=high&follow_up_on=2026-10-21"],
+    ["bulk status", "/api/admin/bulk-status", "ids=any-id&status=archived"],
     ["logout", "/api/admin/logout", ""],
   ]) {
     const { status, headers } = await ask(path, {
@@ -515,7 +523,14 @@ async function main() {
       `${status} ${text.length}b`,
     );
   }
-  for (const path of ["/admin/trafik", "/admin/system"]) {
+  for (const path of [
+    "/admin/trafik",
+    "/admin/system",
+    "/admin/opfoelgning",
+    "/admin/kontakter",
+    "/admin/indhold",
+    "/admin/medier",
+  ]) {
     const { status, headers, text } = await ask(path, { cookie: `${COOKIE}=${VALID}` });
     record("open", `a real session reaches ${path}`, status === 200, String(status));
     const robots = headers.get("x-robots-tag") ?? "";
@@ -536,7 +551,7 @@ async function main() {
 
   /* Rejected before a database write or mail send. These deliberately invalid
      requests never need an enquiry fixture and cannot alter a customer's row. */
-  for (const endpoint of ["archive", "reply", "status", "note"]) {
+  for (const endpoint of ["archive", "reply", "status", "note", "follow-up", "bulk-status"]) {
     const { status } = await ask(`/api/admin/${endpoint}`, {
       method: "POST",
       cookie: `${COOKIE}=${VALID}`,
@@ -571,6 +586,23 @@ async function main() {
     ["oversized note", "note", { note: "x".repeat(5001) }],
     ["empty reply", "reply", { body: "   " }],
     ["oversized reply", "reply", { body: "x".repeat(10001) }],
+    ["unknown follow-up priority", "follow-up", { priority: "urgent", follow_up_on: "" }],
+    ["impossible follow-up date", "follow-up", { priority: "normal", follow_up_on: "2026-02-30" }],
+    [
+      "follow-up datetime instead of date",
+      "follow-up",
+      { priority: "high", follow_up_on: "2026-10-21T09:00:00Z" },
+    ],
+    [
+      "bulk cannot mark mail replied",
+      "bulk-status",
+      { ids: "00000000-0000-4000-8000-000000000000", status: "replied" },
+    ],
+    [
+      "bulk refuses an invalid selected UUID",
+      "bulk-status",
+      { ids: "not-a-uuid", status: "archived" },
+    ],
   ]) {
     const { status } = await ask(`/api/admin/${endpoint}`, {
       method: "POST",
@@ -585,6 +617,26 @@ async function main() {
       }).toString(),
     });
     record("input", name, [400, 422].includes(status), String(status));
+  }
+  {
+    const fields = new URLSearchParams({ status: "read" });
+    for (let index = 0; index < 26; index++)
+      fields.append("ids", "00000000-0000-4000-8000-000000000000");
+    const { status } = await ask("/api/admin/bulk-status", {
+      method: "POST",
+      cookie: `${COOKIE}=${VALID}`,
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-fetch-site": "same-origin",
+      },
+      body: fields.toString(),
+    });
+    record(
+      "input",
+      "bulk limits the original selection before deduplication",
+      status === 422,
+      String(status),
+    );
   }
 
   /* ---- Headers ---------------------------------------------------------- */
@@ -791,6 +843,12 @@ async function main() {
       "recordReply",
       "updateEnquiryNote",
       "adminDatabaseHealth",
+      "updateEnquiryFollowUp",
+      "bulkSetEnquiryStatus",
+      "searchFollowUps",
+      "searchContacts",
+      "getContact",
+      "listEnquiryEvents",
     ]) {
       const declaration = tree.statements.find(
         (node) => ts.isFunctionDeclaration(node) && node.name?.text === name,
@@ -806,6 +864,12 @@ async function main() {
       "app/admin/beskeder/[id]/page.tsx",
       "app/admin/trafik/page.tsx",
       "app/admin/system/page.tsx",
+      "app/admin/opfoelgning/page.tsx",
+      "app/admin/kontakter/page.tsx",
+      "app/admin/kontakter/[id]/page.tsx",
+      "app/admin/indhold/page.tsx",
+      "app/admin/indhold/[slug]/page.tsx",
+      "app/admin/medier/page.tsx",
     ]) {
       const source = await readFile(new URL(`../../${path}`, import.meta.url), "utf8");
       const tree = ts.createSourceFile(

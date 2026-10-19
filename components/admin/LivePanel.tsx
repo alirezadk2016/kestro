@@ -190,7 +190,7 @@ export default function LivePanel({ initial }: { initial: LiveStats }) {
               {pending ? "Henter…" : "Opdater"}
             </button>
           </div>
-          <p className="text-right text-[11px] leading-5 tabular-nums text-paper/65">
+          <p className="text-right text-xs leading-5 tabular-nums text-paper/65">
             {!running && !expired && (
               <span className="block">Automatisk opdatering er sat på pause</span>
             )}

@@ -46,6 +46,13 @@ export const InboxIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const ContactsIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="9" cy="8" r="3" />
+    <path d="M3.5 20v-2a5.5 5.5 0 0 1 11 0v2M16.5 5.5a3 3 0 0 1 0 5.5m1 3a5.5 5.5 0 0 1 3 4.9V20" />
+  </Svg>
+);
+
 export const PulseIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M3 12h3.5l2-6 3.5 12 2.5-8 1.5 2H21" />

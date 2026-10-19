@@ -1,6 +1,9 @@
 import type { Localized } from "@/lib/i18n";
 import type { SourceId } from "@/lib/sources";
 
+/** Shared by the published pages and the source-managed admin catalogue. */
+export const practicalGuideDates = { published: "2026-10-17", modified: "2026-10-19" } as const;
+
 /** Practical tasks stay in the guide tree; calculators support the task. */
 export type PracticalGuideSlug =
   "tjek-batterikapacitet" | "tjek-ram-forbrug" | "hdd-eller-ssd" | "langsom-computer";

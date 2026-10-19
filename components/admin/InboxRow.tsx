@@ -17,10 +17,37 @@ export const INBOX_SOURCE = {
 } as const;
 
 /** One full-width target; secondary details remain readable on a narrow phone. */
-export function InboxRow({ enquiry }: { enquiry: Enquiry }) {
+export const followUpDate = (date: string) =>
+  new Date(`${date}T12:00:00Z`).toLocaleDateString("da-DK", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Europe/Copenhagen",
+  });
+
+export function InboxRow({
+  enquiry,
+  selectable = false,
+}: {
+  enquiry: Enquiry;
+  selectable?: boolean;
+}) {
   const badge = STATUS[enquiry.status];
   return (
-    <li className="border-b border-white/[0.08] last:border-b-0">
+    <li
+      className={`border-b border-white/[0.08] last:border-b-0 ${selectable ? "grid grid-cols-[3rem_minmax(0,1fr)]" : ""}`}
+    >
+      {selectable && (
+        <label className="ml-1 mt-3 inline-flex h-11 w-11 items-center justify-center rounded-md focus-within:outline focus-within:outline-2 focus-within:outline-brand-300">
+          <input
+            type="checkbox"
+            name="ids"
+            value={enquiry.id}
+            className="h-4 w-4 accent-brand-400"
+          />
+          <span className="sr-only">Vælg besked fra {enquiry.name}</span>
+        </label>
+      )}
       <Link
         href={`/admin/beskeder/${enquiry.id}`}
         prefetch={false}
@@ -32,11 +59,16 @@ export function InboxRow({ enquiry }: { enquiry: Enquiry }) {
           >
             {enquiry.name}
           </span>
-          <span className={`rounded px-2 py-0.5 text-[11px] font-semibold ${badge.color}`}>
+          <span className={`rounded px-2 py-0.5 text-xs font-semibold ${badge.color}`}>
             {badge.label}
           </span>
+          {enquiry.priority === "high" && (
+            <span className="rounded bg-amber-400/15 px-2 py-0.5 text-xs font-semibold text-amber-200">
+              Høj prioritet
+            </span>
+          )}
           {enquiry.mail_error && (
-            <span className="rounded bg-amber-400/15 px-2 py-0.5 text-[11px] font-semibold text-amber-200">
+            <span className="rounded bg-amber-400/15 px-2 py-0.5 text-xs font-semibold text-amber-200">
               Mailkopi fejlede
             </span>
           )}
@@ -56,6 +88,12 @@ export function InboxRow({ enquiry }: { enquiry: Enquiry }) {
           <span>{INBOX_SOURCE[enquiry.source] ?? "Kontakt"}</span>
           {enquiry.subject && (
             <span className="min-w-0 break-words [overflow-wrap:anywhere]">{enquiry.subject}</span>
+          )}
+          {enquiry.follow_up_on && (
+            <span className="font-medium text-brand-200">
+              Opfølgning {followUpDate(enquiry.follow_up_on)}
+              {enquiry.status === "archived" ? " · i arkiv" : ""}
+            </span>
           )}
         </div>
         <p className="line-clamp-2 break-words text-sm leading-6 text-paper/75 [overflow-wrap:anywhere] sm:col-span-2">

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
-import { CARD, EYEBROW } from "@/components/admin/tokens";
-import { SectionHead } from "@/components/admin/parts";
+import Link from "next/link";
+import { BUTTON, CARD } from "@/components/admin/tokens";
+import { AdminPageHeader, SectionHead } from "@/components/admin/parts";
 import { requireAdmin, SESSION_COOKIE } from "@/lib/admin-auth";
 import { adminDatabaseHealth, dbMisconfigured } from "@/lib/db";
 
@@ -58,14 +59,16 @@ export default async function SystemPage() {
   ];
   return (
     <div className="space-y-8">
-      <header>
-        <p className={EYEBROW}>Kestro · drift</p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">Systemstatus</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-paper/70">
-          Se hvad der er tilsluttet, og hvad der kræver handling. Ingen nøgler eller adgangskoder
-          vises.
-        </p>
-      </header>
+      <AdminPageHeader
+        eyebrow="Kestro · drift"
+        title="Systemstatus"
+        description="Se hvad der er tilsluttet, og hvad der kræver handling. Ingen nøgler eller adgangskoder vises."
+        actions={
+          <form action="/admin/system" method="get">
+            <button className={BUTTON}>Kontrollér igen</button>
+          </form>
+        }
+      />
       <section
         aria-label="Forbindelser"
         className={`${CARD} divide-y divide-white/10 overflow-hidden`}
@@ -133,13 +136,56 @@ export default async function SystemPage() {
           >
             Åbn kildekode ↗
           </a>
-          <form action="/admin/system" method="get">
-            <button className="inline-flex min-h-11 items-center rounded-md border border-white/15 px-4 text-sm font-medium text-paper/90 hover:border-brand-300">
-              Kontrollér igen
-            </button>
-          </form>
         </div>
       </section>
+      <details className={`${CARD} group p-5 sm:p-6`}>
+        <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300">
+          <h2 className="text-base font-semibold">Sådan bruger du panelet</h2>
+          <span aria-hidden="true" className="text-brand-200 group-open:rotate-180">
+            ↓
+          </span>
+        </summary>
+        <ol className="mt-4 grid gap-5 sm:grid-cols-2">
+          {[
+            {
+              title: "Planlæg næste skridt",
+              text: "Åbn en besked, vælg prioritet og en opfølgningsdato. Find dagens og forfaldne opfølgninger samlet.",
+              href: "/admin/opfoelgning",
+              label: "Åbn opfølgning",
+            },
+            {
+              title: "Find kontaktens historik",
+              text: "Kontakter samler tidligere henvendelser efter e-mailadresse. Oplysningerne stammer fra beskederne.",
+              href: "/admin/kontakter",
+              label: "Åbn kontakter",
+            },
+            {
+              title: "Håndtér flere beskeder",
+              text: "Vælg op til 25 beskeder på den aktuelle indbakkeside, og brug en fælles handling. Læs bekræftelsen, før du fortsætter.",
+              href: "/admin/beskeder",
+              label: "Åbn indbakken",
+            },
+            {
+              title: "Se sitets indhold",
+              text: "Indhold og Medier viser de faktiske kilder og billeder. Offentlige tekster er kildestyrede og udgives gennem kodeprojektet.",
+              href: "/admin/indhold",
+              label: "Åbn indhold",
+            },
+          ].map((workflow, index) => (
+            <li key={workflow.title} className="min-w-0">
+              <p className="text-xs font-semibold tabular-nums text-brand-200">0{index + 1}</p>
+              <h3 className="mt-2 text-sm font-semibold">{workflow.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-paper/70">{workflow.text}</p>
+              <Link
+                href={workflow.href}
+                className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-brand-200 underline underline-offset-4"
+              >
+                {workflow.label} →
+              </Link>
+            </li>
+          ))}
+        </ol>
+      </details>
     </div>
   );
 }

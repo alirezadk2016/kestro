@@ -7,11 +7,18 @@ import { INBOX_SOURCE } from "@/components/admin/InboxRow";
 import MessageReplyForm from "@/components/admin/MessageReplyForm";
 import MessageNoteForm from "@/components/admin/MessageNoteForm";
 import MessageReadReceipt from "@/components/admin/MessageReadReceipt";
+import MessageFollowUpForm from "@/components/admin/MessageFollowUpForm";
 import { BUTTON, CARD } from "@/components/admin/tokens";
 import { MAIL_ERROR_COOKIE, requireAdmin } from "@/lib/admin-auth";
 import { enquiryIdValid } from "@/lib/admin-form";
 import { company } from "@/lib/company";
-import { countNew, getEnquiry, setEnquiryStatus, type EnquiryStatus } from "@/lib/db";
+import {
+  countNew,
+  getEnquiry,
+  listEnquiryEvents,
+  setEnquiryStatus,
+  type EnquiryStatus,
+} from "@/lib/db";
 import { looksLikeEmail } from "@/lib/mail-safe";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +46,7 @@ export default async function EnquiryPage(props: {
     result?: string;
     note?: string;
     handling?: string;
+    followup?: string;
   }>;
 }) {
   // The layout is not the boundary: RSC can ask for this segment directly.
@@ -54,6 +62,7 @@ export default async function EnquiryPage(props: {
   const readSaved = enquiry.status === "new" ? await setEnquiryStatus(enquiry.id, "read") : true;
   const unread = enquiry.status === "new" && readSaved ? await countNew() : undefined;
   const status = enquiry.status === "new" && readSaved ? "read" : enquiry.status;
+  const events = await listEnquiryEvents(enquiry.id);
   const key =
     searchParams.sendt === "1"
       ? "sendt"
@@ -159,6 +168,13 @@ export default async function EnquiryPage(props: {
           <a href="#reply-heading" className={`${BUTTON} text-sm`}>
             Skriv svar ↓
           </a>
+          <Link
+            href={`/admin/kontakter/${enquiry.id}`}
+            prefetch={false}
+            className={`${BUTTON} text-sm`}
+          >
+            Samlet kontakt
+          </Link>
           <a href="#message-actions" className={`${BUTTON} text-sm xl:hidden`}>
             Kontakt og håndtering ↓
           </a>
@@ -229,6 +245,54 @@ export default async function EnquiryPage(props: {
               Kundens svar på din e-mail lander i {replyTo}. Panelet viser det senest sendte svar.
             </p>
           </section>
+
+          <section aria-labelledby="history-heading" className={`${CARD} p-5 sm:p-6`}>
+            <h2 id="history-heading" className="text-base font-semibold">
+              Historik
+            </h2>
+            {!events.available ? (
+              <p role="status" className="mt-3 text-sm leading-6 text-amber-100">
+                Historikken kunne ikke hentes. Det betyder ikke, at der ingen ændringer er.
+              </p>
+            ) : events.items.length ? (
+              <details className="mt-2">
+                <summary className="flex min-h-11 cursor-pointer items-center text-sm font-medium text-brand-200">
+                  Vis seneste hændelser ({events.items.length}) ↓
+                </summary>
+                <ol className="mt-3 space-y-4 border-l border-white/15 pl-4">
+                  {events.items.map((event) => (
+                    <li key={event.id}>
+                      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                        <h3 className="text-sm font-semibold">
+                          {
+                            {
+                              status: "Status",
+                              note: "Intern note",
+                              follow_up: "Opfølgning",
+                              reply: "Sendt svar",
+                            }[event.kind]
+                          }
+                        </h3>
+                        <time dateTime={event.created_at} className="text-xs text-paper/65">
+                          {when(event.created_at)}
+                        </time>
+                      </div>
+                      <p className="mt-1 whitespace-pre-wrap break-words text-sm leading-6 text-paper/80 [overflow-wrap:anywhere]">
+                        {event.detail}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-4 text-xs leading-5 text-paper/65">
+                  Op til 20 registrerede ændringer. Tidligere handlinger er ikke rekonstrueret.
+                </p>
+              </details>
+            ) : (
+              <p className="mt-3 text-sm leading-6 text-paper/70">
+                Ingen registrerede ændringer endnu. Tidligere handlinger er ikke rekonstrueret.
+              </p>
+            )}
+          </section>
         </div>
 
         <aside
@@ -288,6 +352,26 @@ export default async function EnquiryPage(props: {
                 </div>
               )}
             </dl>
+          </section>
+
+          <section className={`${CARD} p-5`}>
+            <h2 className="text-base font-semibold">Opfølgning</h2>
+            {status === "archived" && (
+              <p className="mt-2 text-xs leading-5 text-paper/70">
+                Beskeden er i arkiv og er udeladt af opfølgningskøen. Dato og prioritet bevares ved
+                genåbning.
+              </p>
+            )}
+            <MessageFollowUpForm
+              id={enquiry.id}
+              initialPriority={enquiry.priority}
+              initialDate={enquiry.follow_up_on}
+              outcome={
+                searchParams.followup === "saved" || searchParams.followup === "error"
+                  ? searchParams.followup
+                  : undefined
+              }
+            />
           </section>
 
           <section className={`${CARD} p-5`}>

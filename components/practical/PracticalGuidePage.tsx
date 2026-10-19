@@ -10,7 +10,7 @@ import { buttonClass } from "@/components/Button";
 import { htmlLang, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import { citationSchema } from "@/lib/sources";
-import type { PracticalGuide } from "@/lib/practical-guides";
+import { practicalGuideDates, type PracticalGuide } from "@/lib/practical-guides";
 import { BatteryCapacityTool, RamUsageTool } from "./CapacityTools";
 import BrowserCheck from "./BrowserCheck";
 import styles from "./practical.module.css";
@@ -36,8 +36,8 @@ export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
       type: "article",
       title: guide.metaTitle[lang],
       description: guide.metaDescription[lang],
-      publishedTime: "2026-10-17",
-      modifiedTime: "2026-10-19",
+      publishedTime: practicalGuideDates.published,
+      modifiedTime: practicalGuideDates.modified,
       images,
     },
     twitter: {
@@ -60,8 +60,8 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     headline: guide.title[lang],
     description: guide.metaDescription[lang],
     inLanguage: htmlLang[lang],
-    datePublished: "2026-10-17",
-    dateModified: "2026-10-19",
+    datePublished: practicalGuideDates.published,
+    dateModified: practicalGuideDates.modified,
     author: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     publisher: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     image: {
@@ -116,7 +116,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
         description={guide.metaDescription[lang]}
         sources={guide.sourceIds}
         primaryEntityId={articleId}
-        contentDates={{ published: "2026-10-17", modified: "2026-10-19" }}
+        contentDates={practicalGuideDates}
       />
       <script
         type="application/ld+json"

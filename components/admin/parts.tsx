@@ -1,8 +1,68 @@
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 import { EYEBROW, FIGURE, HAIRLINE } from "@/components/admin/tokens";
 import { decimal, flag } from "@/lib/format";
 import type { Breakdown } from "@/lib/db";
+
+export function AdminPageHeader({
+  eyebrow,
+  title,
+  description,
+  actions,
+  compactMobile = false,
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  actions?: ReactNode;
+  /** For short overview titles whose description is repeated by the work below. */
+  compactMobile?: boolean;
+}) {
+  return (
+    <header
+      className={`flex flex-wrap items-end justify-between ${compactMobile ? "gap-x-4 gap-y-3 sm:gap-x-8 sm:gap-y-5" : "gap-x-8 gap-y-5"}`}
+    >
+      <div className="min-w-0">
+        <p className={EYEBROW}>{eyebrow}</p>
+        <h1 className="mt-2 break-words font-display text-3xl font-extrabold tracking-tight">
+          {title}
+        </h1>
+        {description && (
+          <p
+            className={`mt-3 max-w-2xl text-sm leading-6 text-paper/75 ${compactMobile ? "hidden sm:block" : ""}`}
+          >
+            {description}
+          </p>
+        )}
+      </div>
+      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+    </header>
+  );
+}
+
+export function EmptyState({
+  title,
+  description,
+  action,
+  Icon,
+  headingLevel = 2,
+}: {
+  title: string;
+  description: string;
+  action?: ReactNode;
+  Icon?: (props: { className?: string }) => ReactElement;
+  headingLevel?: 2 | 3;
+}) {
+  const Heading = headingLevel === 3 ? "h3" : "h2";
+  return (
+    <div className="rounded-lg bg-[var(--admin-inset)] px-5 py-8 sm:px-6">
+      {Icon && <Icon className="mb-4 h-6 w-6 text-brand-200" />}
+      <Heading className="text-base font-semibold text-paper">{title}</Heading>
+      <p className="mt-2 max-w-xl text-sm leading-6 text-paper/70">{description}</p>
+      {action && <div className="mt-4">{action}</div>}
+    </div>
+  );
+}
 
 /**
  * The panel's shared furniture.
@@ -59,9 +119,7 @@ export function Figure({
   className?: string;
 }) {
   return (
-    <div
-      className={`group relative bg-brand-950 p-5 transition-colors hover:bg-white/[0.03] ${className}`}
-    >
+    <div className={`relative bg-[var(--admin-panel)] p-5 ${className}`}>
       <div className={`flex items-center gap-2 ${EYEBROW}`}>
         {Icon && <Icon className="h-4 w-4 flex-none text-paper/65" />}
         {label}
@@ -100,7 +158,7 @@ export function Ranked({
   const total = totalVisits ?? rows.reduce((sum, row) => sum + row.visits, 0);
 
   return (
-    <div className="bg-brand-950 p-5">
+    <div className="bg-[var(--admin-panel)] p-5">
       <h3 className={`flex items-center gap-2 ${EYEBROW}`}>
         {Icon && <Icon className="h-4 w-4 flex-none text-paper/65" />}
         {title}

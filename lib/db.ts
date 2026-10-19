@@ -3,6 +3,15 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { neon } from "@neondatabase/serverless";
 
 import { adminAuthed } from "@/lib/admin-auth";
+import {
+  bulkEnquiryIds,
+  copenhagenToday,
+  followUpDateValid,
+  FOLLOW_UP_SCOPES,
+  type EnquiryPriority,
+  type FollowUpScope,
+} from "@/lib/admin-follow-up";
+export type { EnquiryPriority, FollowUpScope } from "@/lib/admin-follow-up";
 
 /**
  * The one place the site keeps anything.
@@ -150,6 +159,8 @@ export type Enquiry = {
   /** Null when the mail went out, or when there was nothing to send it with. */
   mail_error: string | null;
   internal_note: string | null;
+  priority: EnquiryPriority;
+  follow_up_on: string | null;
 };
 
 /*
@@ -193,6 +204,19 @@ function ensureSchema(): Promise<void> {
      */
     await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
     await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS internal_note TEXT`;
+    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS priority TEXT NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high'))`;
+    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS follow_up_on DATE`;
+    await sql`CREATE INDEX IF NOT EXISTS enquiries_follow_up_idx ON enquiries (follow_up_on, created_at DESC) WHERE status <> 'archived'`;
+    await sql`CREATE INDEX IF NOT EXISTS enquiries_contact_idx ON enquiries (lower(btrim(email)), created_at DESC)`;
+    await sql`
+      CREATE TABLE IF NOT EXISTS enquiry_events (
+        id TEXT PRIMARY KEY,
+        enquiry_id TEXT NOT NULL REFERENCES enquiries(id),
+        kind TEXT NOT NULL CHECK (kind IN ('status', 'note', 'follow_up', 'reply')),
+        detail TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      )`;
+    await sql`CREATE INDEX IF NOT EXISTS enquiry_events_enquiry_idx ON enquiry_events (enquiry_id, created_at DESC, id DESC)`;
 
     /* The inbox is always read newest first, and the unread count is read on
        every page of the panel. */
@@ -300,7 +324,14 @@ function ensureSchema(): Promise<void> {
 export async function saveEnquiry(
   enquiry: Omit<
     Enquiry,
-    "created_at" | "status" | "replied_at" | "reply_body" | "mail_error" | "internal_note"
+    | "created_at"
+    | "status"
+    | "replied_at"
+    | "reply_body"
+    | "mail_error"
+    | "internal_note"
+    | "priority"
+    | "follow_up_on"
   >,
 ): Promise<boolean> {
   if (!sql) return false;
@@ -355,8 +386,8 @@ export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> 
   try {
     await ensureSchema();
     const rows = status
-      ? await sql`SELECT * FROM enquiries WHERE status = ${status} ORDER BY created_at DESC LIMIT 200`
-      : await sql`SELECT * FROM enquiries WHERE status <> 'archived' ORDER BY created_at DESC LIMIT 200`;
+      ? await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status = ${status} ORDER BY created_at DESC LIMIT 200`
+      : await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status <> 'archived' ORDER BY created_at DESC LIMIT 200`;
     return rows as Enquiry[];
   } catch (error) {
     console.error("listEnquiries failed", error);
@@ -369,7 +400,8 @@ export async function getEnquiry(id: string): Promise<Enquiry | null> {
   if (!sql) return null;
   try {
     await ensureSchema();
-    const rows = (await sql`SELECT * FROM enquiries WHERE id = ${id}`) as Enquiry[];
+    const rows =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE id = ${id}`) as Enquiry[];
     return rows[0] ?? null;
   } catch {
     console.error("getEnquiry failed");
@@ -381,14 +413,24 @@ export async function getEnquiry(id: string): Promise<Enquiry | null> {
 
 export async function setEnquiryStatus(id: string, status: EnquiryStatus): Promise<boolean> {
   await adminOnly("enquiry status changes");
-  if (!sql) return false;
+  if (!sql || !["new", "read", "archived"].includes(status)) return false;
   try {
     await ensureSchema();
-    const rows =
-      (await sql`UPDATE enquiries SET status = ${status} WHERE id = ${id} RETURNING id`) as {
-        id: string;
-      }[];
-    return rows.length > 0;
+    const detail =
+      status === "new"
+        ? "Markeret som ulæst."
+        : status === "read"
+          ? "Markeret som læst."
+          : "Beskeden er arkiveret.";
+    const rows = (await sql`
+      WITH previous AS (SELECT id, status FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET status = ${status} FROM previous p
+        WHERE e.id = p.id AND p.status IS DISTINCT FROM ${status} RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'status', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
   } catch {
     console.error("setEnquiryStatus failed");
     return false;
@@ -401,10 +443,14 @@ export async function recordReply(id: string, body: string): Promise<boolean> {
   try {
     await ensureSchema();
     const rows = (await sql`
-      UPDATE enquiries
-      SET status = 'replied', replied_at = now(), reply_body = ${body}
-      WHERE id = ${id} RETURNING id`) as { id: string }[];
-    return rows.length > 0;
+      WITH changed AS (UPDATE enquiries
+        SET status = 'replied', replied_at = now(), reply_body = ${body}
+        WHERE id = ${id} RETURNING id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'reply', 'Et svar er sendt som e-mail.' FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM changed) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
   } catch {
     console.error("recordReply failed");
     return false;
@@ -416,11 +462,16 @@ export async function updateEnquiryNote(id: string, note: string): Promise<boole
   if (!sql || note.length > 5000) return false;
   try {
     await ensureSchema();
+    const detail = note ? "Den interne note er opdateret." : "Den interne note er fjernet.";
     const rows = (await sql`
-      UPDATE enquiries SET internal_note = ${note || null} WHERE id = ${id} RETURNING id`) as {
-      id: string;
-    }[];
-    return rows.length > 0;
+      WITH previous AS (SELECT id, internal_note FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET internal_note = ${note || null} FROM previous p
+        WHERE e.id = p.id AND p.internal_note IS DISTINCT FROM ${note || null} RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'note', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
   } catch {
     console.error("updateEnquiryNote failed");
     return false;
@@ -475,7 +526,8 @@ export async function searchEnquiries(options: EnquirySearch = {}): Promise<{
     const total = Number((totals as { n: number }[])[0]?.n || 0);
     const requested = Number.isFinite(options.page) ? Math.floor(options.page!) : 1;
     const page = Math.max(1, Math.min(Math.ceil(total / pageSize) || 1, requested));
-    const items = await sql`SELECT * FROM enquiries
+    const items =
+      await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries
       WHERE (${status} = 'all' OR (${status} = 'active' AND status <> 'archived') OR status = ${status})
         AND (${source} = '' OR source = ${source})
         AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})
@@ -486,6 +538,306 @@ export async function searchEnquiries(options: EnquirySearch = {}): Promise<{
   } catch {
     // Query parameters can contain customer details; never include them in logs.
     console.error("searchEnquiries failed");
+    return empty;
+  }
+}
+
+export type EnquiryEvent = {
+  id: string;
+  enquiry_id: string;
+  kind: "status" | "note" | "follow_up" | "reply";
+  detail: string;
+  created_at: string;
+};
+
+export async function listEnquiryEvents(
+  id: string,
+): Promise<{ items: EnquiryEvent[]; available: boolean }> {
+  await adminOnly("enquiry activity");
+  if (!sql) return { items: [], available: false };
+  try {
+    await ensureSchema();
+    const items = (await sql`SELECT id, enquiry_id, kind, detail, created_at FROM enquiry_events
+      WHERE enquiry_id = ${id} ORDER BY created_at DESC, id DESC LIMIT 20`) as EnquiryEvent[];
+    return { items, available: true };
+  } catch {
+    console.error("listEnquiryEvents failed");
+    return { items: [], available: false };
+  }
+}
+
+export async function updateEnquiryFollowUp(
+  id: string,
+  input: { priority: EnquiryPriority; followUpOn: string | null },
+): Promise<boolean> {
+  await adminOnly("enquiry follow-up changes");
+  if (
+    !sql ||
+    !["normal", "high"].includes(input.priority) ||
+    (input.followUpOn !== null && !followUpDateValid(input.followUpOn))
+  )
+    return false;
+  const date = input.followUpOn;
+  const dateLabel = date
+    ? new Date(`${date}T12:00:00.000Z`).toLocaleDateString("da-DK", {
+        dateStyle: "long",
+        timeZone: "Europe/Copenhagen",
+      })
+    : "ingen dato";
+  const detail = `Prioritet: ${input.priority === "high" ? "høj" : "normal"}. Opfølgning: ${dateLabel}.`;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      WITH previous AS (SELECT id, priority, follow_up_on FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET priority = ${input.priority}, follow_up_on = ${date}::date FROM previous p
+        WHERE e.id = p.id AND (p.priority IS DISTINCT FROM ${input.priority} OR p.follow_up_on IS DISTINCT FROM ${date}::date) RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'follow_up', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
+  } catch {
+    console.error("updateEnquiryFollowUp failed");
+    return false;
+  }
+}
+
+export async function bulkSetEnquiryStatus(
+  ids: string[],
+  status: "new" | "read" | "archived",
+): Promise<{ changed: number; available: boolean }> {
+  await adminOnly("bulk enquiry status changes");
+  const valid = bulkEnquiryIds(ids);
+  if (!sql || !valid || !["new", "read", "archived"].includes(status))
+    return { changed: 0, available: false };
+  const eventIds = valid.map(() => randomUUID());
+  const detail =
+    status === "new"
+      ? "Markeret som ulæst ved en samlet handling."
+      : status === "read"
+        ? "Markeret som læst ved en samlet handling."
+        : "Arkiveret ved en samlet handling.";
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      WITH requested AS (SELECT unnest(${valid}::text[]) AS id, unnest(${eventIds}::text[]) AS event_id),
+      previous AS (SELECT e.id, e.status, r.event_id FROM enquiries e JOIN requested r ON e.id = r.id ORDER BY e.id FOR UPDATE OF e),
+      changed AS (UPDATE enquiries e SET status = ${status} FROM previous p
+        WHERE e.id = p.id AND p.status IS DISTINCT FROM ${status} RETURNING e.id, p.event_id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT event_id, id, 'status', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM changed) AS changed,
+             (SELECT count(*)::int FROM logged) AS events`) as { changed: number }[];
+    return { changed: Number(rows[0]?.changed || 0), available: true };
+  } catch {
+    console.error("bulkSetEnquiryStatus failed");
+    return { changed: 0, available: false };
+  }
+}
+
+export type FollowUpCounts = Record<FollowUpScope | "high", number>;
+export type FollowUpSearch = {
+  scope?: FollowUpScope;
+  q?: string;
+  priority?: "all" | "high";
+  page?: number;
+  pageSize?: number;
+};
+
+export async function searchFollowUps(options: FollowUpSearch = {}): Promise<{
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+  today: string;
+  counts: FollowUpCounts;
+}> {
+  await adminOnly("the follow-up queue");
+  const today = copenhagenToday();
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const counts: FollowUpCounts = {
+    due: 0,
+    overdue: 0,
+    upcoming: 0,
+    unscheduled: 0,
+    all: 0,
+    high: 0,
+  };
+  const empty = {
+    items: [],
+    total: 0,
+    page: 1,
+    pageSize,
+    pages: 1,
+    available: false,
+    today,
+    counts,
+  };
+  if (!sql) return empty;
+  const scope = FOLLOW_UP_SCOPES.includes(options.scope!) ? options.scope! : "due";
+  const priority = options.priority === "high" ? "high" : "all";
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  try {
+    await ensureSchema();
+    const [figures, totals] = await Promise.all([
+      sql`SELECT count(*)::int AS "all", count(*) FILTER (WHERE priority = 'high')::int AS high,
+        count(*) FILTER (WHERE follow_up_on <= ${today}::date)::int AS due,
+        count(*) FILTER (WHERE follow_up_on < ${today}::date)::int AS overdue,
+        count(*) FILTER (WHERE follow_up_on > ${today}::date)::int AS upcoming,
+        count(*) FILTER (WHERE follow_up_on IS NULL)::int AS unscheduled
+        FROM enquiries WHERE status <> 'archived'`,
+      sql`SELECT count(*)::int AS n FROM enquiries WHERE status <> 'archived'
+        AND (${priority} = 'all' OR priority = 'high')
+        AND (${scope} = 'all' OR (${scope} = 'due' AND follow_up_on <= ${today}::date)
+          OR (${scope} = 'overdue' AND follow_up_on < ${today}::date)
+          OR (${scope} = 'upcoming' AND follow_up_on > ${today}::date)
+          OR (${scope} = 'unscheduled' AND follow_up_on IS NULL))
+        AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})`,
+    ]);
+    const total = Number((totals as { n: number }[])[0]?.n || 0);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status <> 'archived'
+      AND (${priority} = 'all' OR priority = 'high')
+      AND (${scope} = 'all' OR (${scope} = 'due' AND follow_up_on <= ${today}::date)
+        OR (${scope} = 'overdue' AND follow_up_on < ${today}::date)
+        OR (${scope} = 'upcoming' AND follow_up_on > ${today}::date)
+        OR (${scope} = 'unscheduled' AND follow_up_on IS NULL))
+      AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})
+      ORDER BY enquiries.follow_up_on ASC NULLS LAST, (priority = 'high') DESC, created_at DESC, id ASC
+      LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as Enquiry[];
+    return {
+      items,
+      total,
+      page,
+      pageSize,
+      pages,
+      available: true,
+      today,
+      counts: (figures as FollowUpCounts[])[0] || counts,
+    };
+  } catch {
+    console.error("searchFollowUps failed");
+    return empty;
+  }
+}
+
+export type ContactSummary = {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  enquiryCount: number;
+  pendingCount: number;
+  lastSeen: string;
+};
+
+export async function searchContacts(
+  options: { q?: string; page?: number; pageSize?: number } = {},
+): Promise<{
+  items: ContactSummary[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+}> {
+  await adminOnly("contact summaries");
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const empty = { items: [], total: 0, page: 1, pageSize, pages: 1, available: false };
+  if (!sql) return empty;
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  try {
+    await ensureSchema();
+    const totals = (await sql`SELECT count(*)::int AS n FROM (
+      SELECT lower(btrim(email)) FROM enquiries WHERE btrim(email) <> '' GROUP BY lower(btrim(email))
+      HAVING (${term} = '' OR bool_or(concat_ws(' ', name, company, email, phone) ILIKE ${pattern}))
+    ) contacts`) as { n: number }[];
+    const total = Number(totals[0]?.n || 0);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items = (await sql`SELECT
+      (array_agg(id ORDER BY created_at ASC, id ASC))[1] AS id,
+      coalesce(nullif(btrim((array_agg(name ORDER BY (nullif(btrim(name), '') IS NULL), created_at DESC, id DESC))[1]), ''), (array_agg(email ORDER BY created_at DESC, id DESC))[1]) AS name,
+      lower(btrim(email)) AS email,
+      nullif(btrim((array_agg(company ORDER BY (nullif(btrim(company), '') IS NULL), created_at DESC, id DESC))[1]), '') AS company,
+      nullif(btrim((array_agg(phone ORDER BY (nullif(btrim(phone), '') IS NULL), created_at DESC, id DESC))[1]), '') AS phone,
+      count(*)::int AS "enquiryCount", count(*) FILTER (WHERE status IN ('new', 'read'))::int AS "pendingCount",
+      max(created_at) AS "lastSeen"
+      FROM enquiries WHERE btrim(email) <> '' GROUP BY lower(btrim(email))
+      HAVING (${term} = '' OR bool_or(concat_ws(' ', name, company, email, phone) ILIKE ${pattern}))
+      ORDER BY max(created_at) DESC, lower(btrim(email)) ASC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as ContactSummary[];
+    return { items, total, page, pageSize, pages, available: true };
+  } catch {
+    console.error("searchContacts failed");
+    return empty;
+  }
+}
+
+export async function getContact(
+  id: string,
+  options: { page?: number } = {},
+): Promise<{
+  contact: ContactSummary | null;
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+}> {
+  await adminOnly("a contact's enquiry history");
+  const pageSize = 25;
+  const empty = {
+    contact: null,
+    items: [],
+    total: 0,
+    page: 1,
+    pageSize,
+    pages: 1,
+    available: false,
+  };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const anchor = (await sql`SELECT email FROM enquiries WHERE id = ${id}`) as { email: string }[];
+    const email = anchor[0]?.email.trim().toLowerCase();
+    if (!email) return { ...empty, available: true };
+    const profiles = (await sql`SELECT
+      (array_agg(id ORDER BY created_at ASC, id ASC))[1] AS id,
+      coalesce(nullif(btrim((array_agg(name ORDER BY (nullif(btrim(name), '') IS NULL), created_at DESC, id DESC))[1]), ''), (array_agg(email ORDER BY created_at DESC, id DESC))[1]) AS name,
+      lower(btrim(email)) AS email,
+      nullif(btrim((array_agg(company ORDER BY (nullif(btrim(company), '') IS NULL), created_at DESC, id DESC))[1]), '') AS company,
+      nullif(btrim((array_agg(phone ORDER BY (nullif(btrim(phone), '') IS NULL), created_at DESC, id DESC))[1]), '') AS phone,
+      count(*)::int AS "enquiryCount", count(*) FILTER (WHERE status IN ('new', 'read'))::int AS "pendingCount",
+      max(created_at) AS "lastSeen"
+      FROM enquiries WHERE lower(btrim(email)) = ${email} GROUP BY lower(btrim(email))`) as ContactSummary[];
+    const contact = profiles[0] || null;
+    if (!contact) return { ...empty, available: true };
+    const total = Number(contact.enquiryCount);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries
+      WHERE lower(btrim(email)) = ${email} ORDER BY created_at DESC, id ASC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as Enquiry[];
+    return { contact, items, total, page, pageSize, pages, available: true };
+  } catch {
+    console.error("getContact failed");
     return empty;
   }
 }

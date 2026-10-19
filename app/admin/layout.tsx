@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 
 import "../globals.css";
 import AdminNav from "@/components/admin/AdminNav";
+import AdminHistoryRefresh from "@/components/admin/AdminHistoryRefresh";
 import { InboxCountProvider } from "@/components/admin/InboxCount";
 import Logo from "@/components/Logo";
 import { AlertIcon, ArrowLeftIcon } from "@/components/admin/icons";
@@ -93,6 +94,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </a>
             <div className={styles.shell}>
               <InboxCountProvider initialCount={unread}>
+                <AdminHistoryRefresh />
                 <AdminNav />
                 <main id="admin-main" tabIndex={-1} className={styles.main}>
                   {children}
@@ -129,15 +131,36 @@ function LoginWall({ configured, failed }: { configured: boolean; failed: boolea
           </span>
         </div>
 
+        <div className={styles.loginStory}>
+          <p className={styles.loginTitle}>
+            Dit websted.
+            <br />
+            Dit arbejdsrum.
+          </p>
+          <p className={styles.loginDescription}>
+            Beskeder, opfølgning og indhold. Samlet ét sted.
+          </p>
+          <div className={styles.loginArtwork}>
+            {/* The public site's original artwork anchors the private workspace
+                in Kestro's existing visual identity. It is not a UI preview. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/cards/cat-laptops.webp"
+              alt="Bærbar computer på et skrivebord med udsigt over byen."
+              width={1600}
+              height={900}
+            />
+          </div>
+          <p className={styles.loginCaption}>Kestro · Refurbished business IT</p>
+        </div>
+
         <section className={styles.loginCard} aria-labelledby="admin-login-title">
           {configured ? (
             <>
               <h1 id="admin-login-title" className="font-display text-2xl font-bold tracking-tight">
                 Log ind
               </h1>
-              <p className="mt-2 text-sm leading-6 text-paper/70">
-                Dit arbejdsrum til beskeder, trafik og drift.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-paper/70">Fortsæt til dit arbejdsrum.</p>
 
               {failed && (
                 <p
@@ -163,7 +186,7 @@ function LoginWall({ configured, failed }: { configured: boolean; failed: boolea
                   required
                   autoComplete="current-password"
                   autoFocus
-                  className="min-h-12 w-full rounded-lg border border-white/20 bg-brand-950/50 px-4 py-3 text-base text-paper transition-colors focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40"
+                  className="min-h-12 w-full rounded-lg border border-[#64748b] bg-[#0e1726] px-4 py-3 text-base text-paper transition-colors focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-400/40"
                 />
                 <button
                   type="submit"

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AlertIcon, InboxIcon } from "@/components/admin/icons";
 import { InboxRow } from "@/components/admin/InboxRow";
+import InboxBulk from "@/components/admin/InboxBulk";
 import { INPUT } from "@/components/admin/tokens";
 import { requireAdmin } from "@/lib/admin-auth";
 import { searchEnquiries, type EnquirySource, type EnquiryStatus } from "@/lib/db";
@@ -89,6 +90,22 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
             : "Beskeden er arkiveret. Den kan genåbnes under Arkiverede."}
         </p>
       )}
+      {scalar(params.result) === "bulk" && (
+        <p
+          role="status"
+          className="mt-5 rounded-lg border border-emerald-400/25 bg-emerald-400/[0.07] p-4 text-sm text-emerald-100"
+        >
+          {Math.max(0, Math.min(25, Number(scalar(params.changed)) || 0))} beskeder er opdateret.
+        </p>
+      )}
+      {scalar(params.bulk) === "error" && (
+        <p
+          role="alert"
+          className="mt-5 rounded-lg border border-amber-400/25 bg-amber-400/[0.07] p-4 text-sm leading-6 text-amber-100"
+        >
+          Beskederne kunne ikke opdateres. Kontrollér forbindelsen under System, og prøv igen.
+        </p>
+      )}
 
       <nav aria-label="Beskedstatus" className="mt-7 flex flex-wrap gap-2">
         {STATUS_FILTERS.map((filter) => (
@@ -116,53 +133,65 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         aria-label="Søg i beskeder"
         action="/admin/beskeder"
         method="get"
-        className="mt-5 grid gap-3 rounded-xl border border-white/10 bg-white/[0.025] p-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_10rem_10rem_auto]"
+        className="mt-5 rounded-xl border border-white/10 bg-white/[0.025] p-4"
       >
         <input type="hidden" name="status" value={status} />
-        <div className="min-w-0 sm:col-span-2 xl:col-span-1">
-          <label htmlFor="inbox-search" className="mb-2 block text-xs font-medium text-paper/75">
-            Søg
-          </label>
-          <input
-            id="inbox-search"
-            name="q"
-            type="search"
-            defaultValue={q}
-            maxLength={120}
-            placeholder="Navn, firma, e-mail eller besked"
-            className={`${fieldClass} placeholder:text-paper/65`}
-          />
+        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+          <div className="min-w-0">
+            <label htmlFor="inbox-search" className="mb-2 block text-xs font-medium text-paper/75">
+              Søg
+            </label>
+            <input
+              id="inbox-search"
+              name="q"
+              type="search"
+              defaultValue={q}
+              maxLength={120}
+              placeholder="Navn, firma, e-mail eller besked"
+              className={`${fieldClass} placeholder:text-paper/65`}
+            />
+          </div>
+          <button className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-brand-600 px-5 text-sm font-semibold text-paper transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:w-auto">
+            Søg og filtrér
+          </button>
         </div>
-        <div>
-          <label htmlFor="inbox-source" className="mb-2 block text-xs font-medium text-paper/75">
-            Type
-          </label>
-          <select
-            id="inbox-source"
-            name="source"
-            defaultValue={source ?? ""}
-            className={fieldClass}
-          >
-            <option value="">Alle typer</option>
-            {SOURCES.map((item) => (
-              <option key={item.key} value={item.key}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="inbox-sort" className="mb-2 block text-xs font-medium text-paper/75">
-            Sortering
-          </label>
-          <select id="inbox-sort" name="sort" defaultValue={sort} className={fieldClass}>
-            <option value="newest">Nyeste først</option>
-            <option value="oldest">Ældste først</option>
-          </select>
-        </div>
-        <button className="inline-flex min-h-[44px] items-center justify-center self-end rounded-lg bg-brand-600 px-5 text-sm font-semibold text-paper transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:col-span-2 xl:col-span-1">
-          Søg og filtrér
-        </button>
+        <details open={Boolean(source || sort !== "newest")} className="mt-2">
+          <summary className="flex min-h-11 cursor-pointer items-center text-xs font-medium text-paper/80">
+            Type og sortering{source || sort !== "newest" ? " · aktive filtre" : ""} ↓
+          </summary>
+          <div className="grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor="inbox-source"
+                className="mb-2 block text-xs font-medium text-paper/75"
+              >
+                Type
+              </label>
+              <select
+                id="inbox-source"
+                name="source"
+                defaultValue={source ?? ""}
+                className={fieldClass}
+              >
+                <option value="">Alle typer</option>
+                {SOURCES.map((item) => (
+                  <option key={item.key} value={item.key}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="inbox-sort" className="mb-2 block text-xs font-medium text-paper/75">
+                Sortering
+              </label>
+              <select id="inbox-sort" name="sort" defaultValue={sort} className={fieldClass}>
+                <option value="newest">Nyeste først</option>
+                <option value="oldest">Ældste først</option>
+              </select>
+            </div>
+          </div>
+        </details>
       </form>
 
       {!result.available ? (
@@ -225,14 +254,22 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
               </p>
             </section>
           ) : (
-            <ul
-              aria-label="Henvendelser"
-              className="mt-3 overflow-hidden rounded-xl border border-white/10 bg-white/[0.015]"
+            <InboxBulk
+              key={JSON.stringify([status, source, q, sort, result.page])}
+              q={q}
+              statusFilter={status}
+              source={source}
+              sort={sort}
             >
-              {result.items.map((enquiry) => (
-                <InboxRow key={enquiry.id} enquiry={enquiry} />
-              ))}
-            </ul>
+              <ul
+                aria-label="Henvendelser"
+                className="mt-3 overflow-hidden rounded-xl border border-white/10 bg-white/[0.015]"
+              >
+                {result.items.map((enquiry) => (
+                  <InboxRow key={enquiry.id} enquiry={enquiry} selectable />
+                ))}
+              </ul>
+            </InboxBulk>
           )}
 
           {pages > 1 && (
