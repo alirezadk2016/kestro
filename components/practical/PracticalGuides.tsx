@@ -12,20 +12,22 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
   const c =
     lang === "da"
       ? {
-          label: "Kestro · Praktisk hjælp",
+          label: "Praktisk hjælp",
           title: "Praktiske guides",
-          intro: "Et spørgsmål. En guide. Et konkret næste skridt.",
+          intro:
+            "Fire ting, du selv kan tjekke i Windows: batteriet, RAM, drevet og det, der gør computeren langsom.",
           open: "Åbn guiden",
           feature: "Start her, hvis du er i tvivl",
-          photo: "AI-genererede emnebilleder. Trinene viser, hvad du skal gøre i Windows.",
+          photo: "Billederne er AI-genererede illustrationer.",
         }
       : {
-          label: "Kestro · Practical help",
+          label: "Practical help",
           title: "Practical guides",
-          intro: "One question. One guide. A clear next step.",
+          intro:
+            "Four things you can check yourself in Windows: the battery, the RAM, the drive and what is slowing the computer down.",
           open: "Open the guide",
           feature: "Start here if you are unsure",
-          photo: "AI-generated topic images. The steps explain what to do in Windows.",
+          photo: "The pictures are AI-generated illustrations.",
         };
 
   return (

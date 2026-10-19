@@ -40,31 +40,31 @@ export function categoryLead(category: Category, lang: Lang): string {
 
 const PREPARED: Record<string, { da: string; en: string }> = {
   "baerbare-computere": {
-    da: "Bed om testresultat, dokumentation for sletning, dansk eller norsk tastatur og en beskrivelse af stand og batteri. Aftal, hvad der skal klargøres, og hvad der følger med.",
-    en: "Ask for test results, erasure documentation, a Danish or Norwegian keyboard, and a description of condition and battery health. Agree what preparation is needed and what is included.",
+    da: "Bed om resultatet af funktionstesten, dokumentation for sletning, dansk eller norsk tastatur og en beskrivelse af stand og batteri. Aftal, hvad der skal klargøres, og hvad der følger med.",
+    en: "Ask for the function-test results, erasure documentation, a Danish or Norwegian keyboard, and a description of condition and battery health. Agree what preparation is needed and what is included.",
   },
   "stationaere-computere": {
-    da: "Bed om testresultat, dokumentation for sletning og oplysninger om Windows-licens. Aftal også tastatur, mus og skærmkabler, hvis de skal med.",
-    en: "Ask for test results, erasure documentation and Windows licence details. Also agree on a keyboard, mouse and monitor cables if needed.",
+    da: "Bed om resultatet af funktionstesten, dokumentation for sletning og oplysninger om Windows-licens. Aftal også tastatur, mus og skærmkabler, hvis de skal med.",
+    en: "Ask for the function-test results, erasure documentation and Windows licence details. Also agree on a keyboard, mouse and monitor cables if needed.",
   },
   "mini-pc": {
-    da: "Bed om testresultat, dokumentation for sletning og oplysninger om Windows-licens. Kontrollér, at den rigtige strømforsyning og eventuelt VESA-beslag er med.",
-    en: "Ask for test results, erasure documentation and Windows licence details. Check that the correct power supply and any required VESA mount are included.",
+    da: "Bed om resultatet af funktionstesten, dokumentation for sletning og oplysninger om Windows-licens. Kontrollér, at den rigtige strømforsyning og eventuelt VESA-beslag er med.",
+    en: "Ask for the function-test results, erasure documentation and Windows licence details. Check that the correct power supply and any required VESA mount are included.",
   },
   skaerme: {
-    da: "Bed om oplysninger om pixel- og panelskader, fodens justering og de medfølgende kabler. En skærm uden fod eller det rigtige kabel kræver ekstra tilbehør.",
-    en: "Ask about pixel and panel defects, stand adjustment and included cables. A monitor without a stand or the right cable needs extra accessories.",
+    da: "Bed om resultatet af funktionstesten, oplysninger om pixel- og panelskader, fodens justering og de medfølgende kabler. En skærm uden fod eller det rigtige kabel kræver ekstra tilbehør.",
+    en: "Ask for the function-test results and about pixel and panel defects, stand adjustment and included cables. A monitor without a stand or the right cable needs extra accessories.",
   },
   dockingstationer: {
     da: "Få oplyst det præcise dock-modelnummer, strømforsyning, værtskabel og eventuelt behov for firmware eller drivere. Samme stikform betyder ikke nødvendigvis samme funktion.",
     en: "Confirm the exact dock model number, power supply, host cable and any firmware or driver requirements. The same connector shape does not necessarily mean the same functionality.",
   },
   tablets: {
-    da: "Bed om batteritilstand, test af touchskærm og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
+    da: "Bed om batteritilstand, funktionstest af touchskærmen og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
     en: "Ask for battery health, touchscreen test results and confirmation that the device has been released from its previous owner and management. A reset alone does not establish that a tablet can enrol in your MDM.",
   },
   smartphones: {
-    da: "Bed om batteritilstand, test af skærm, kamera og opladning samt bekræftelse på, at telefonen er frigivet fra tidligere ejer og administration. Aftal tilbehør og eventuel håndtering af de gamle telefoner særskilt.",
+    da: "Bed om batteritilstand, funktionstest af skærm, kamera og opladning samt bekræftelse på, at telefonen er frigivet fra tidligere ejer og administration. Aftal tilbehør og eventuel håndtering af de gamle telefoner særskilt.",
     en: "Ask for battery health, screen, camera and charging test results, and confirmation that the phone has been released from its previous owner and management. Agree accessories and any handling of old phones separately.",
   },
 };
@@ -228,8 +228,8 @@ export function categoryFaqs(category: Category): FaqItem[] {
         en: `What should be agreed about preparing ${name.en}?`,
       },
       answer: {
-        da: `${prepared.da} Få også leveringsadresse, fragt og tidsramme bekræftet skriftligt.`,
-        en: `${prepared.en} Also get the delivery address, shipping cost and lead time confirmed in writing.`,
+        da: `${prepared.da} Få også leveringsadresse i Danmark eller Norge, fragt, tidsramme og garantivilkår bekræftet skriftligt.`,
+        en: `${prepared.en} Also get the delivery address in Denmark or Norway, shipping cost, lead time and warranty terms confirmed in writing.`,
       },
     });
   }

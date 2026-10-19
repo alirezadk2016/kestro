@@ -149,7 +149,7 @@ export function createBrowserCheck(clock: Clock, publish: (reading: Reading) => 
 const copy = {
   da: {
     label: "Browsercheck",
-    lead: "Prøv en fast beregningsopgave i din browser. Den starter kun, når du vælger det.",
+    lead: "Kør tjekket, lav én ændring – fx luk faner – og kør det igen. Så kan du se, om ændringen gjorde browseren hurtigere.",
     start: "Start browsercheck",
     again: "Prøv igen",
     running: "Testen kører…",
@@ -160,10 +160,15 @@ const copy = {
     runningHelp: "Hold fanen åben. Du kan stoppe undervejs.",
     unit: "iterationer pr. sekund",
     result: "Resultat i denne browseropgave",
+    baseline: "Det er dit udgangspunkt. Lav én ændring, og kør tjekket igen.",
+    faster: "hurtigere end første kørsel",
+    slower: "langsommere end første kørsel",
+    same: "Samme som første kørsel",
+    reset: "Nyt udgangspunkt",
     compare:
-      "Sammenlign kun gentagelser på samme enhed og i samme browser. Strømtilstand og andre programmer påvirker resultatet.",
+      "Sammenlign kun kørsler i samme browser på samme computer. Små forskelle kan skyldes, at målingen svinger – kør gerne et par gange.",
     limit:
-      "Korte beregninger med pauser. Måler ikke CPU-frekvens, RAM-hastighed eller computerens helbred. Resultatet afgør ikke, om du skal opgradere.",
+      "Måler kun, hvor hurtigt browseren regner lige nu – ikke processor, RAM eller computerens helbred.",
     stopped: "Testen er stoppet.",
     background: "Testen er stoppet. Hold denne fane i forgrunden, når du prøver igen.",
     timeout: "Testen tog for lang tid. Luk tunge opgaver, og prøv igen.",
@@ -174,7 +179,7 @@ const copy = {
   },
   en: {
     label: "Browser check",
-    lead: "Try a fixed calculation in your browser. It only starts when you choose to run it.",
+    lead: "Run the check, make one change — close some tabs, say — and run it again, to see whether the change made the browser faster.",
     start: "Start browser check",
     again: "Try again",
     running: "Check running…",
@@ -185,10 +190,15 @@ const copy = {
     runningHelp: "Keep this tab open. You can stop at any time.",
     unit: "iterations per second",
     result: "Result for this browser task",
+    baseline: "This is your starting point. Make one change and run the check again.",
+    faster: "faster than the first run",
+    slower: "slower than the first run",
+    same: "The same as the first run",
+    reset: "New starting point",
     compare:
-      "Only compare repeats on the same device and in the same browser. Power settings and other apps affect the result.",
+      "Only compare runs in the same browser on the same computer. Small differences can be the measurement varying — run it a few times.",
     limit:
-      "Short calculations with pauses. Does not measure CPU frequency, RAM speed or computer health. The result does not decide whether you need an upgrade.",
+      "Measures only how fast the browser calculates right now — not the processor, RAM or the computer's health.",
     stopped: "The check has stopped.",
     background: "The check has stopped. Keep this tab in the foreground when you try again.",
     timeout: "The check took too long. Close demanding apps and try again.",
@@ -204,11 +214,18 @@ export default function BrowserCheck({ lang }: { lang: Lang }) {
   const t = copy[lang];
   const [reading, setReading] = useState<Reading>(INITIAL);
   const [ready, setReady] = useState(false);
+  /* The first completed run is the starting point the next ones are compared
+     with: the guide's last step is "try one change and compare", and a rate
+     on its own says nothing anybody can act on. */
+  const baselineRef = useRef<number | null>(null);
+  const [baseline, setBaseline] = useState<number | null>(null);
+  const [baselineRun, setBaselineRun] = useState(false);
   const controller = useRef<ReturnType<typeof createBrowserCheck> | null>(null);
   const startButton = useRef<HTMLButtonElement>(null);
   const stopButton = useRef<HTMLButtonElement>(null);
   const labelId = useId();
   const running = reading.phase === "running";
+  const locale = lang === "da" ? "da-DK" : "en-GB";
 
   useEffect(() => {
     let mounted = true;
@@ -225,6 +242,14 @@ export default function BrowserCheck({ lang }: { lang: Lang }) {
       },
       (next) => {
         if (!mounted) return;
+        if (next.phase === "complete" && next.rate !== undefined) {
+          const first = baselineRef.current === null;
+          if (first) {
+            baselineRef.current = next.rate;
+            setBaseline(next.rate);
+          }
+          setBaselineRun(first);
+        }
         setReading(next);
         if (next.phase !== "running" && document.activeElement === stopButton.current) {
           // Restore focus after React has enabled the start button again.
@@ -278,6 +303,19 @@ export default function BrowserCheck({ lang }: { lang: Lang }) {
             >
               {running ? t.running : reading.phase === "idle" ? t.start : t.again}
             </button>
+            {!running && baseline !== null && (
+              <button
+                type="button"
+                className={buttonClass("secondary")}
+                onClick={() => {
+                  baselineRef.current = null;
+                  setBaseline(null);
+                  setReading(INITIAL);
+                }}
+              >
+                {t.reset}
+              </button>
+            )}
             {running && (
               <button
                 ref={stopButton}
@@ -303,10 +341,23 @@ export default function BrowserCheck({ lang }: { lang: Lang }) {
                   className="mt-3 block break-words font-display text-3xl font-semibold tabular-nums tracking-tight text-paper sm:text-4xl"
                   data-checksum={reading.checksum}
                 >
-                  {Math.round(reading.rate).toLocaleString(lang === "da" ? "da-DK" : "en-GB")}
+                  {Math.round(reading.rate).toLocaleString(locale)}
                 </p>
                 <p className="mt-1 text-sm text-paper/75">{t.unit}</p>
-                <p className="mt-4 text-sm leading-relaxed text-paper/75">{t.compare}</p>
+                {baselineRun || baseline === null ? (
+                  <p className="mt-4 text-sm font-semibold text-paper">{t.baseline}</p>
+                ) : (
+                  <p className="mt-4 text-sm font-semibold text-paper">
+                    {(() => {
+                      const change = Math.round(((reading.rate - baseline) / baseline) * 100);
+                      const first = Math.round(baseline).toLocaleString(locale);
+                      return change === 0
+                        ? `${t.same} (${first}).`
+                        : `${Math.abs(change)}${lang === "da" ? " %" : "%"} ${change > 0 ? t.faster : t.slower} (${first}).`;
+                    })()}
+                  </p>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-paper/75">{t.compare}</p>
               </>
             )}
           </div>

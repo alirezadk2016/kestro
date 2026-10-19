@@ -43,15 +43,15 @@ export const practicalGuides: PracticalGuide[] = [
     },
     metaDescription: {
       da: "Lav en batterirapport i Windows, find designkapacitet og fuld opladningskapacitet, og beregn kapacitet i procent. Følg guiden, og forstå dine tal.",
-      en: "Check Windows battery capacity with a report and two figures. See retained capacity and learn what the result tells you. Read it all step by step.",
+      en: "Check Windows battery capacity with a report and two figures, work out the percentage in our calculator and see what it means for battery life.",
     },
     summary: {
       da: "Find rapporten, og beregn kapaciteten med to tal fra Windows.",
       en: "Find the report and calculate capacity with two Windows figures.",
     },
     intro: {
-      da: "Windows kan lave en batterirapport med kommandoen powercfg /batteryreport. Fuld opladningskapacitet divideret med designkapacitet gange 100 viser, hvor meget af den oprindelige kapacitet rapporten angiver.",
-      en: "Windows can create a battery report with powercfg /batteryreport. Full charge capacity divided by design capacity, multiplied by 100, gives the reported capacity as a percentage of its original specification.",
+      da: "Skriv powercfg /batteryreport i Kommandoprompt, og find Design Capacity og Full Charge Capacity i rapporten. Del den anden med den første, og gang med 100: 40.000 mWh ud af 50.000 mWh er 80 % af batteriets kapacitet fra nyt.",
+      en: "Run powercfg /batteryreport in Command Prompt and find Design Capacity and Full Charge Capacity in the report. Divide the second by the first and multiply by 100: 40,000 mWh out of 50,000 mWh is 80% of the battery's capacity when new.",
     },
     image: "/images/practical/battery.webp",
     imageAlt: {
@@ -83,12 +83,12 @@ export const practicalGuides: PracticalGuide[] = [
       },
       {
         title: {
-          da: "Beregn og sammenhold med hverdagen",
-          en: "Calculate and compare with daily use",
+          da: "Beregn, og sammenlign med hverdagen",
+          en: "Calculate, then compare with daily use",
         },
         body: {
-          da: "Indtast begge tal i beregneren her på siden; den kræver hele mWh. Sammenhold resultatet med, hvor længe computeren faktisk kan bruges uden oplader.",
-          en: "Enter both figures in this page's calculator, which uses whole mWh. Compare the result with how long the computer actually lasts away from its charger.",
+          da: "Skriv begge tal i beregneren nedenfor i hele mWh. Hold resultatet op mod, hvor længe computeren faktisk holder uden oplader.",
+          en: "Enter both figures in whole mWh in the calculator below. Hold the result up against how long the computer actually lasts away from its charger.",
         },
       },
     ],
@@ -106,18 +106,18 @@ export const practicalGuides: PracticalGuide[] = [
       },
       {
         title: {
-          da: "Mangler tallene? Lad dem stå åbne",
-          en: "Missing figures? Leave them unknown",
+          da: "Flere batterier, et tal mangler, eller over 100 %",
+          en: "Two batteries, a missing figure, or over 100%",
         },
         body: {
-          da: "Har computeren flere batterier, beregnes de hver for sig. Hvis kapaciteten mangler, eller resultatet er over 100 %, skal rapport og enheder kontrolleres, før du drager en konklusion.",
-          en: "Calculate each battery separately if the computer has more than one. If capacity is missing or the result exceeds 100%, check the report and units before drawing a conclusion.",
+          da: "Har computeren to batterier, så beregn dem hver for sig. Mangler et tal, eller giver det over 100 %, så tjek, at begge tal er fra samme batteri og i mWh, før du konkluderer noget.",
+          en: "If the computer has two batteries, calculate each one separately. If a figure is missing or the result is over 100%, check that both figures come from the same battery and are in mWh before you conclude anything.",
         },
       },
     ],
     limits: {
-      da: "Resultatet er en beregning af rapporterede kapaciteter, ikke en fysisk sikkerhedstest eller en garanti for batteritid. Ved synlig opsvulmning skal du stoppe brugen og få hjælp til sikker udskiftning.",
-      en: "The result calculates reported capacities; it is not a physical safety test or a battery-life guarantee. If the battery is visibly swollen, stop using the device and get help with safe replacement.",
+      da: "Er batteriet synligt opsvulmet – buler bunden, eller løfter tastaturet sig – så stop med at bruge computeren, og få batteriet skiftet sikkert. Det gælder, uanset hvad rapporten viser.",
+      en: "If the battery is visibly swollen — the base bulges or the keyboard lifts — stop using the computer and have the battery replaced safely, whatever the report says.",
     },
     sourceIds: [
       "windowsBatteryReport",
@@ -151,8 +151,8 @@ export const practicalGuides: PracticalGuide[] = [
       en: "Check RAM usage in Windows: find your RAM needs | Kestro",
     },
     metaDescription: {
-      da: "Tjek RAM-forbrug i Jobliste. Se brugt og ledig RAM, og find de apps, der fylder. Læs guiden trin for trin før du beslutter, om du vil købe ny RAM.",
-      en: "Check RAM usage in Windows. See used and free RAM, and identify the apps using it. Read the guide in full here, then follow it step by step.",
+      da: "Tjek RAM-forbrug i Jobliste. Se brugt og ledig RAM, og find de apps, der fylder. Læs guiden trin for trin, før du beslutter, om du vil købe ny RAM.",
+      en: "Check RAM usage in Task Manager: see used and free RAM, find the apps that use it and work out the percentage before you buy more memory.",
     },
     summary: {
       da: "Se dit hukommelsesforbrug, før du beslutter at købe mere RAM.",
@@ -185,8 +185,8 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Notér brugt og tilgængelig RAM", en: "Note used and available RAM" },
         body: {
-          da: "Læs I brug og Tilgængelig i samme øjeblik; deres sum er en praktisk tilnærmelse til den brugbare RAM. Brug samme enhed i beregneren, og undlad hardware-reserveret hukommelse.",
-          en: "Read In use and Available at the same moment; their sum is a practical approximation of usable RAM. Use the same unit in the calculator and leave out hardware-reserved memory.",
+          da: "Aflæs I brug og Tilgængelig på samme tidspunkt. Lagt sammen giver de den RAM, Windows kan bruge – det er det tal, beregneren kalder samlet brugbar RAM.",
+          en: "Read In use and Available at the same moment. Added together, they give the RAM Windows can use — the figure the calculator calls total usable RAM.",
         },
       },
       {
@@ -215,8 +215,8 @@ export const practicalGuides: PracticalGuide[] = [
       },
     ],
     limits: {
-      da: "Beregneren bruger dine indtastede værdier og måler hverken fysisk RAM-hastighed eller hukommelsesfejl. En høj forbrugsprocent alene er ikke en diagnose.",
-      en: "The calculator uses the figures you enter; it measures neither physical RAM speed nor memory errors. A high usage percentage alone is not a diagnosis.",
+      da: "Lukker programmer sig selv, eller får du blå skærm, kan der være en fejl – ikke bare for lidt RAM. Det kræver en egentlig fejlfinding, ikke en beregning.",
+      en: "If programs close by themselves or you get blue screens, there may be a fault — not just too little RAM. That calls for proper troubleshooting, not a calculation.",
     },
     sourceIds: ["windowsPerformanceCheck", "memoryGenerations", "thinkpadT480Specs"],
     related: [
@@ -252,7 +252,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     metaDescription: {
       da: "HDD eller SSD? Find dit drev i Windows og lær om M.2, SATA og NVMe. Tjek format, stik og filer før et nyt drev. Læs vores vejledning trin for trin.",
-      en: "HDD or SSD? Find the drive type. Read this guide to M.2, SATA and NVMe, then check the fit and files before a new drive. See it all step by step.",
+      en: "HDD or SSD? Find the drive type in Windows, learn what M.2, SATA and NVMe mean, and check the format and your files before fitting a new one.",
     },
     summary: {
       da: "Find drevtypen, og forstå hvad en passende SSD skal matche.",
@@ -317,8 +317,8 @@ export const practicalGuides: PracticalGuide[] = [
       },
     ],
     limits: {
-      da: "Guiden identificerer lager og kompatibilitet; den tester ikke drevets tilstand. Ved mistanke om datatab eller gentagne læsefejl skal data prioriteres før en belastningstest.",
-      en: "This guide identifies storage and compatibility; it does not test drive health. If data loss or recurring read errors are suspected, prioritise the data before running a load test.",
+      da: "Guiden finder drevtypen; den tester ikke, om drevet er sundt. Forsvinder filer, eller kommer der læsefejl, så tag en kopi af dine data først – før du tester eller skifter noget.",
+      en: "This guide identifies the drive; it does not test whether the drive is healthy. If files go missing or read errors appear, copy your data first — before you test or replace anything.",
     },
     sourceIds: [
       "windowsPerformanceCheck",
@@ -358,7 +358,7 @@ export const practicalGuides: PracticalGuide[] = [
       en: "Slow computer? Check CPU, RAM and disk in Windows | Kestro",
     },
     metaDescription: {
-      da: "Langsom computer? Tjek CPU, RAM og disk i Jobliste. Find de apps i brug, og dit næste skridt. Læs guiden trin for trin før du vælger nye dele.",
+      da: "Langsom computer? Tjek CPU, RAM og disk i Jobliste, og find det program, der bremser. Følg guiden trin for trin, før du bruger penge på nye dele.",
       en: "Slow computer? Check CPU, RAM and disk usage. Find the busy app, then follow the steps to decide what to do before you choose new parts.",
     },
     summary: {
@@ -424,8 +424,8 @@ export const practicalGuides: PracticalGuide[] = [
       },
     ],
     limits: {
-      da: "Jobliste viser ressourceforbrug, ikke en fuld hardwarediagnose. Browsermålinger kan heller ikke isolere fysisk CPU- eller RAM-hastighed; uforklarede udfald eller fejl kræver en nærmere undersøgelse.",
-      en: "Task Manager shows resource usage, not a complete hardware diagnosis. Browser measurements cannot isolate physical CPU or RAM speed either; unexplained shutdowns or errors need further investigation.",
+      da: "Slukker computeren uden varsel, eller kommer der fejlmeddelelser, er det ikke et spørgsmål om ydelse. Så er der brug for en egentlig fejlfinding.",
+      en: "If the computer shuts down without warning or shows error messages, it is not a performance question. That needs proper troubleshooting.",
     },
     sourceIds: ["windowsPerformanceCheck"],
     related: [

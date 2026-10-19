@@ -515,3 +515,35 @@ also passed targeted checks. Production delivery uses the existing
 `claude/nextjs-14-scaffold-qycd1n` branch and Vercel integration. The deployed
 commit is checked separately through `/api/version`; Search Console indexing
 and traffic require post-release observation.
+
+### New sections reviewed, 19 October 2026
+
+The practical guides, the three new articles, the products hub and the
+category copy that landed between 15 and 17 October, read on a phone and at
+1440 and 1920 px, then measured with `mak run`. 150 pages.
+
+| Check | Before | After |
+| --- | --- | --- |
+| FAIL | 0 | 0 |
+| Rule 9: page that matters with one link in | 1 (`/vejledninger/tjek-batterikapacitet`) | 0 |
+| Knowledge-graph coverage, categories | 67–88 % after the rewrite dropped "funktionstest" and Danmark/Norge | 83–100 % |
+| Bug crawl, 150 pages × 2 widths | 0 errors, 0 broken links of 218, 0 overflow | same |
+| Duplicate article images on `/vejledninger` | 3 pairs | 0 |
+
+Changed:
+- **Practical guides.** The battery calculator says what its number means, in
+  the same four bands as `/reparation/batteriskift` (one source,
+  `lib/battery-bands.ts`). The browser check compares a run with the first
+  one, which is the guide's last step; a rate on its own meant nothing. Each
+  page says its caveat once, the AI-image note is one short line, and four
+  leads and headings were rewritten in plainer Danish and English.
+- **Articles.** The RAM-price article opens with the answer; the
+  refurbished-or-new and upgrade articles lost a filler sentence each.
+  Their `updated` is 19 October because their words changed.
+- **Category FAQ.** "Funktionstest" and delivery to Danmark/Norge are back,
+  as advice to get in writing rather than as a promise.
+- **Links in.** The battery, RAM and troubleshooting repair pages link the
+  guide that measures the problem first; the used-laptop checklist links the
+  battery guide.
+
+Waits on the owner, as before.

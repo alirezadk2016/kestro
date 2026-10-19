@@ -31,12 +31,12 @@ const copy = {
     modelsBody:
       "Se forskelle i hukommelse, lager, skærm og muligheder for opgradering. Brug eksemplerne, når I afklarer kravene til jeres næste computer.",
     modelsButton: "Se modeloversigten",
-    choiceTitle: "Hvilken computer passer til mit behov?",
+    choiceTitle: "Hvilken computer passer til jeres behov?",
     choiceLead:
       "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
     requirementsTitle: "Det bør være afklaret før et køb",
     requirementsLead:
-      "Bed om disse oplysninger for den konkrete leverance. En modelbeskrivelse er ikke dokumentation for en bestemt brugt enheds stand.",
+      "Bed om disse oplysninger for netop de enheder, I får. En modelbeskrivelse siger intet om den enkelte brugte maskines stand.",
     enquiry: "Beskriv jeres behov",
   },
   en: {
@@ -57,12 +57,12 @@ const copy = {
     modelsBody:
       "Compare memory, storage, display and upgrade options. Use the examples when clarifying requirements for your next computer.",
     modelsButton: "See the model overview",
-    choiceTitle: "Which computer fits my needs?",
+    choiceTitle: "Which computer fits your needs?",
     choiceLead:
       "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
     requirementsTitle: "What to clarify before buying",
     requirementsLead:
-      "Ask for these details for the specific delivery. A model description is not evidence of the condition of an individual used device.",
+      "Ask for these details for the units you will actually get. A model description says nothing about the condition of the individual used machine.",
     enquiry: "Describe your requirements",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -71,8 +71,8 @@ const buyingChoices = [
   {
     title: { da: "Kontor, hjemmearbejde og startup", en: "Office, home working and startups" },
     body: {
-      da: "Hvilken computer passer til din nystartede virksomhed? Oplys programmer, mobilitet og et samlet budget per arbejdsplads med skærm, dock og licenser.",
-      en: "Which computer fits your new business? List applications, mobility needs and a total budget per desk that includes monitor, dock and licences.",
+      da: "Starter I en ny virksomhed? Fortæl os, hvilke programmer I bruger, om I arbejder mobilt, og hvad I vil bruge pr. arbejdsplads – med skærm, dock og licenser.",
+      en: "Starting a new business? Tell us which applications you use, whether you work on the move, and what you want to spend per desk — monitor, dock and licences included.",
     },
     links: [
       {

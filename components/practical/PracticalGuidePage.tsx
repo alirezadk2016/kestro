@@ -37,7 +37,7 @@ export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
       title: guide.metaTitle[lang],
       description: guide.metaDescription[lang],
       publishedTime: "2026-10-17",
-      modifiedTime: "2026-10-17",
+      modifiedTime: "2026-10-19",
       images,
     },
     twitter: {
@@ -61,7 +61,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     description: guide.metaDescription[lang],
     inLanguage: htmlLang[lang],
     datePublished: "2026-10-17",
-    dateModified: "2026-10-17",
+    dateModified: "2026-10-19",
     author: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     publisher: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     image: {
@@ -86,7 +86,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           result: "Hvad betyder det?",
           related: "Dit næste skridt",
           source: "Kilder og dokumentation",
-          image: "AI-genereret emnebillede. Ikke en modelbestemt reparationsvejledning.",
+          image: "Illustration, AI-genereret.",
           stepLink: "Se trinene",
           battery: "Beregn batteriets kapacitet",
           ram: "Beregn dit RAM-forbrug",
@@ -100,7 +100,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           result: "What does it mean?",
           related: "Your next step",
           source: "Sources and documentation",
-          image: "AI-generated topic image. Not a model-specific repair manual.",
+          image: "Illustration, AI-generated.",
           stepLink: "View the steps",
           battery: "Calculate battery capacity",
           ram: "Calculate memory usage",
@@ -116,7 +116,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
         description={guide.metaDescription[lang]}
         sources={guide.sourceIds}
         primaryEntityId={articleId}
-        contentDates={{ published: "2026-10-17", modified: "2026-10-17" }}
+        contentDates={{ published: "2026-10-17", modified: "2026-10-19" }}
       />
       <script
         type="application/ld+json"

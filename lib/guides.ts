@@ -214,14 +214,14 @@ export const guides: Guide[] = [
     },
     readingMinutes: 6,
     published: "2026-10-16",
-    updated: "2026-10-16",
+    updated: "2026-10-19",
     tldr: {
-      da: "RAM-priser afhænger af udbud, efterspørgsel og hukommelsestype. TrendForces offentlige september-resuméer beskriver pres fra servere og AI, men ikke ens prisstigninger på alle varer. Sammenlign derfor aktuelle tilbud på samme modul og hele computerens konfiguration. Køb RAM, hvis målinger viser en flaskehals, ikke alene fordi en prognose varsler dyrere chips.",
-      en: "RAM prices depend on supply, demand and memory type. TrendForce's public September summaries describe pressure from servers and AI, not uniform increases on every product. Compare current quotes for the same module and complete computer configuration. Buy memory when measurements show a bottleneck, not simply because a forecast predicts more expensive chips.",
+      da: "Producenterne flytter kapacitet mod server- og AI-hukommelse, og udbuddet af RAM til pc'er er stramt. TrendForces resuméer fra september 2026 beskriver stabile kontraktpriser lige nu, men pres fremover – ikke ens stigninger på alle varer. Køb derfor RAM, når en måling viser, at du mangler hukommelse, ikke fordi en prognose varsler dyrere chips.",
+      en: "Manufacturers are moving capacity towards server and AI memory, and the supply of PC RAM is tight. TrendForce's September 2026 summaries describe stable contract prices for now but pressure ahead — not the same rise on every product. So buy RAM when a measurement shows you are short of memory, not because a forecast predicts dearer chips.",
     },
     intro: {
-      da: "Prisstatus undersøgt 16. oktober 2026. Denne artikel forklarer markedet ud fra offentlige resuméer, ikke en købt markedsrapport eller et indeks over danske butikker. Rådene om køb er vores vurdering; prognoserne tilhører den navngivne kilde.",
-      en: "Price context checked on 16 October 2026. This article uses public summaries, not a purchased market report or an index of Danish retailers. The buying advice is our assessment; forecasts belong to the named source.",
+      da: "Prisstatus undersøgt 16. oktober 2026 ud fra TrendForces offentlige resuméer. Prognoserne er deres; rådene om køb er vores.",
+      en: "Price context checked on 16 October 2026 against TrendForce's public summaries. The forecasts are theirs; the buying advice is ours.",
     },
     sections: [
       {
@@ -410,10 +410,10 @@ export const guides: Guide[] = [
     audience: { da: "Private, startups og indkøbere", en: "Individuals, startups and buyers" },
     readingMinutes: 7,
     published: "2026-10-16",
-    updated: "2026-10-16",
+    updated: "2026-10-19",
     tldr: {
-      da: "En refurbished erhvervsbærbar kan være et godt køb, når den løser dine opgaver, har dokumenteret stand og batteri og kan bruge et understøttet styresystem. Nyt kan være bedre ved særlige ydelseskrav eller lang planlagt brugstid. Sammenlign hele pakken, ikke kun processorens navn eller prisskiltet. Der findes ikke ét rigtigt valg til alle.",
-      en: "A refurbished business laptop can be good value when it handles your work, has documented condition and battery health and can run a supported operating system. New may be better for specific performance requirements or a long planned service life. Compare the entire package, not just the processor name or price tag. There is no single right choice for everyone.",
+      da: "En refurbished erhvervsbærbar kan være et godt køb, når den løser dine opgaver, har dokumenteret stand og batteri og kan bruge et understøttet styresystem. Nyt kan være bedre ved særlige ydelseskrav eller lang planlagt brugstid. Sammenlign hele pakken, ikke kun processorens navn eller prisskiltet.",
+      en: "A refurbished business laptop can be good value when it handles your work, has documented condition and battery health and can run a supported operating system. New may be better for specific performance requirements or a long planned service life. Compare the entire package, not just the processor name or price tag.",
     },
     intro: {
       da: "Spørgsmålet er ikke, om alle skal købe brugt. Det er, hvilken løsning der opfylder dit behov med færrest samlede omkostninger og acceptable risici. Her er en beslutningsramme til både hjemmearbejde og en virksomheds næste arbejdspladser.",
@@ -441,7 +441,7 @@ export const guides: Guide[] = [
             en: "RAM, SSD, battery and physical Danish or Norwegian keyboard are specified, not merely described as good condition.",
           },
           {
-            da: "Operativsystem, drivere, licenser og eventuel virksomhedsadministration kan understøttes i den planlagte periode.",
+            da: "Styresystem, drivere, licenser og eventuel virksomhedsadministration kan understøttes i den planlagte periode.",
             en: "The operating system, drivers, licences and any company management can be supported for the intended period.",
           },
         ],
@@ -663,7 +663,7 @@ export const guides: Guide[] = [
     },
     readingMinutes: 8,
     published: "2026-10-16",
-    updated: "2026-10-16",
+    updated: "2026-10-19",
     tldr: {
       da: "Den præcise model bestemmer, hvad der kan opgraderes. To bærbare med en 8. generations processor kan have henholdsvis udskiftelig DDR4 og fastloddet LPDDR3. Find producentens manual, kontrollér RAM-sokler og SSD-interface, og vurder Windows med PC Health Check. Maksimal understøttet kapacitet er ikke nødvendigvis det, du har brug for eller bør betale for.",
       en: "The exact model determines upgrade options. Two laptops with an 8th-generation processor can have replaceable DDR4 or soldered LPDDR3. Find the manufacturer manual, check memory slots and SSD interface, and assess Windows with PC Health Check. Maximum supported capacity is not necessarily the amount you need or should pay for.",
@@ -814,8 +814,8 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Nogle RAM- og SSD-skift er egnede til en omhyggelig bruger med korrekt værktøj og en modelspecifik manual. Andre kræver omfattende adskillelse, specialdele eller professionel service. Der er ingen generel ti-minutters garanti.",
-            en: "Some memory and SSD replacements suit a careful user with the right tools and model-specific manual. Others require extensive disassembly, specialist parts or professional service. There is no universal ten-minute guarantee.",
+            da: "Nogle RAM- og SSD-skift er egnede til en omhyggelig bruger med korrekt værktøj og en modelspecifik manual. Andre kræver omfattende adskillelse, specialdele eller professionel service. Hvor svært det er, afhænger helt af modellen.",
+            en: "Some memory and SSD replacements suit a careful user with the right tools and model-specific manual. Others require extensive disassembly, specialist parts or professional service. How hard it is depends entirely on the model.",
           },
         ],
         list: [
@@ -2082,6 +2082,10 @@ export const guides: Guide[] = [
       {
         href: "/reparation/batteriskift",
         label: { da: "Batteriskift på bærbar", en: "Laptop battery replacement" },
+      },
+      {
+        href: "/vejledninger/tjek-batterikapacitet",
+        label: { da: "Mål batteriet, før du køber", en: "Measure the battery before you buy" },
       },
       {
         href: "/reparation/klargoering-af-brugt-udstyr",

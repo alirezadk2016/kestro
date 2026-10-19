@@ -1248,7 +1248,10 @@ for (const [hub, title, articlePaths] of [
           .map((node) => JSON.parse(node.textContent))
           .find((schema) => schema["@type"] === "Article"),
       );
-    if (article?.datePublished !== "2026-10-16" || article?.dateModified !== "2026-10-16")
+    /* Published on the 16th; the openings were rewritten on the 19th (answer
+       first, one hedge instead of four), and a changed text carries the day
+       it changed (CLAUDE.md, "Opdateret"). */
+    if (article?.datePublished !== "2026-10-16" || article?.dateModified !== "2026-10-19")
       fail("education dates", `incorrect new-article dates on ${path}`);
     const webpageDates = await page
       .locator("script[type='application/ld+json']")

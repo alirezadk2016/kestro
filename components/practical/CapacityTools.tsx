@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import type { Lang } from "@/lib/i18n";
 import { buttonClass } from "@/components/Button";
+import { batteryBandFor } from "@/lib/battery-bands";
 
 /** Report values use whole mWh; separators must be consistent groups of three. */
 export function parseWholeMWh(value: string): number | null {
@@ -54,9 +55,10 @@ const copy = {
       unit: "mWh",
       resultLabel: "Rapporteret kapacitet",
       resultSuffix: "af designkapaciteten",
-      resultNote: "Beregnet fra dine tal. Det er ikke den aktuelle opladning eller en diagnose.",
+      resultNote: "",
+      bandNote: "Sådan læser vi tallet – ikke en officiel standard.",
       above:
-        "Over 100 %: kontrollér samme batteri og enhed. Rapportens estimater kan afvige; resultatet er ikke begrænset kunstigt.",
+        "Over 100 % sker, når rapporten anslår kapaciteten højt. Tjek, at begge tal er fra samme batteri og i mWh.",
       empty: "Din kapacitet vises her, når du har indtastet begge tal.",
       method: "Full Charge Capacity ÷ Design Capacity × 100",
     },
@@ -76,7 +78,8 @@ const copy = {
       resultLabel: "RAM i brug",
       resultSuffix: "af den oplyste brugbare RAM",
       resultNote:
-        "Et øjebliksbillede af forbruget. Det måler ikke RAM-hastighed eller behovet for en opgradering.",
+        "Ét øjebliksbillede. Mål igen under det arbejde, der føles langsomt – er forbruget højt hver gang, er RAM værd at se nærmere på.",
+      bandNote: "",
       above: "",
       empty: "Dit forbrug og den ledige RAM vises her efter beregningen.",
       method: "RAM i brug ÷ samlet brugbar RAM × 100",
@@ -105,9 +108,10 @@ const copy = {
       unit: "mWh",
       resultLabel: "Reported capacity",
       resultSuffix: "of design capacity",
-      resultNote: "Calculated from your values. This is not the current charge or a diagnosis.",
+      resultNote: "",
+      bandNote: "How we read the number — not an official standard.",
       above:
-        "Above 100%: check that both values use the same battery and unit. Report estimates can differ; the result has not been capped.",
+        "Over 100% happens when the report estimates capacity high. Check that both figures come from the same battery and are in mWh.",
       empty: "Your capacity appears here once you enter both values and calculate.",
       method: "Full Charge Capacity ÷ Design Capacity × 100",
     },
@@ -124,7 +128,8 @@ const copy = {
       resultLabel: "RAM in use",
       resultSuffix: "of the usable RAM you entered",
       resultNote:
-        "A snapshot of usage. This does not measure RAM speed or determine whether an upgrade is needed.",
+        "One snapshot. Measure again during the work that feels slow — if usage is high every time, RAM is worth a closer look.",
+      bandNote: "",
       above: "",
       empty: "Your usage and free RAM appear here after you calculate.",
       method: "RAM in use ÷ total usable RAM × 100",
@@ -288,6 +293,17 @@ function CapacityTool({ lang, kind }: { lang: Lang; kind: ToolKind }) {
                 {kind === "battery" && result.percentage > 100 && (
                   <p className="mt-5 text-sm leading-relaxed text-ink-700">{t.above}</p>
                 )}
+                {kind === "battery" && result.percentage <= 100 && (
+                  <div className="mt-6 border-l-2 border-brand-600 pl-4">
+                    <p className="text-sm font-semibold uppercase tracking-[0.08em] text-ink-700">
+                      {batteryBandFor(result.percentage).range}
+                    </p>
+                    <p className="mt-1 text-base font-semibold leading-snug text-ink-900">
+                      {batteryBandFor(result.percentage).reading[lang]}
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-ink-600">{t.bandNote}</p>
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -301,8 +317,10 @@ function CapacityTool({ lang, kind }: { lang: Lang; kind: ToolKind }) {
             )}
           </div>
           <div className="mt-8">
-            <p className="text-sm leading-relaxed text-ink-600">{t.resultNote}</p>
-            <p className="mt-5 border-t border-ink-200 pt-5 text-xs leading-relaxed text-ink-600">
+            {t.resultNote && (
+              <p className="mb-5 text-sm leading-relaxed text-ink-600">{t.resultNote}</p>
+            )}
+            <p className="border-t border-ink-200 pt-5 text-xs leading-relaxed text-ink-600">
               <span className="font-semibold">{c.formula}: </span>
               {t.method}
             </p>
