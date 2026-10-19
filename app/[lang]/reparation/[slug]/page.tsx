@@ -161,6 +161,21 @@ export default async function RepairPage(props: Params) {
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
             {repair.intro[lang]}
           </p>
+          {/* The guide that measures the problem first. On the battery page
+              it sits beside the bands instead, where the number is read. */}
+          {repair.tool && !repair.bands && (
+            <Link
+              href={localePath(repair.tool.href, lang)}
+              className="group mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+            >
+              {repair.tool.label[lang]}
+              <ArrowRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                strokeWidth={2}
+              />
+            </Link>
+          )}
           <p className="label mt-6 text-paper/65">
             {c.updated}{" "}
             <time dateTime={updated} className="tabular-nums text-paper/85">
@@ -176,7 +191,9 @@ export default async function RepairPage(props: Params) {
       {repair.bands && (
         <section className="bg-ink-900 py-10 sm:py-20">
           <Container>
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.bands}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {c.bands}
+            </h2>
             <ul className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
               {repair.bands.map((band) => (
                 <li key={band.range} className="plate flex items-baseline gap-4 p-4 sm:p-5">
@@ -198,6 +215,19 @@ export default async function RepairPage(props: Params) {
                 {repair.bandsNote[lang]}
               </p>
             )}
+            {repair.tool && (
+              <Link
+                href={localePath(repair.tool.href, lang)}
+                className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+              >
+                {repair.tool.label[lang]}
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={2}
+                />
+              </Link>
+            )}
           </Container>
         </section>
       )}
@@ -205,7 +235,9 @@ export default async function RepairPage(props: Params) {
       {repair.howTo && (
         <section className="py-10 sm:py-20">
           <Container>
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.howTo}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {c.howTo}
+            </h2>
             <div className="mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 sm:gap-6">
               {repair.howTo.map((block) => (
                 <div key={block.heading.da} className="plate p-5 sm:p-6">
@@ -264,7 +296,9 @@ export default async function RepairPage(props: Params) {
               heading and "Alle reparationer" did not fit one row, and the
               link went to two lines beside it. */}
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">{c.more}</h2>
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {c.more}
+            </h2>
             <Link
               href={localePath("/reparation", lang)}
               className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"

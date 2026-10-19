@@ -1932,27 +1932,27 @@ type Art = { src: string; alt: Localized; neutral?: boolean };
 
 const artwork: Record<string, Art> = {
   "hvorfor-er-ram-blevet-dyrere": {
-    src: "/viden/ydelse.webp",
+    src: "/images/practical/ram.webp",
     neutral: true,
     alt: {
-      da: "RAM og NVMe SSD på et arbejdsbord, illustreret til artiklen om hukommelsespriser.",
-      en: "Memory and an NVMe SSD on a workbench, illustrating the memory-pricing article.",
+      da: "Et RAM-modul til en bærbar ved siden af en tom hukommelsessokkel.",
+      en: "A laptop RAM module beside an empty memory socket.",
     },
   },
   "refurbished-eller-ny-baerbar": {
-    src: "/viden/stand.webp",
+    src: "/graphics/grade-a.webp",
     neutral: true,
     alt: {
-      da: "To bærbare med forskellig kosmetisk stand, illustration til sammenligning af købsvalg.",
-      en: "Two laptops with different cosmetic condition, illustrating a comparison of buying options.",
+      da: "En lukket bærbar uden synligt slid på et stenbord.",
+      en: "A closed laptop with no visible wear on a stone desk.",
     },
   },
   "hvor-meget-kan-en-baerbar-opgraderes": {
-    src: "/viden/beslutning.webp",
+    src: "/cards/exploded.webp",
     neutral: true,
     alt: {
-      da: "En åbnet bærbar og udskiftelige dele på et arbejdsbord, illustration til opgraderingsguiden.",
-      en: "An opened laptop and replaceable parts on a workbench, illustrating the upgrade guide.",
+      da: "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade.",
+      en: "A laptop separated into layers: screen, keyboard, mainboard and base plate.",
     },
   },
   "tjek-brugt-baerbar-foer-koeb": {

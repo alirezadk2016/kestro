@@ -278,7 +278,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
              * already clamped to something that fitted, so a paragraph ended up
              * set as a caption against the right margin of the heading.
              */}
-            <header className="max-w-5xl border-b border-white/20 pb-7">
+            <header className="max-w-5xl border-b border-white/20 pb-7 min-[1680px]:max-w-none">
               {/* Position in the folder, not the name of the folder. It read
                   "01 / EMNER" on every section — the label of the index above,
                   repeated four times, saying the same thing about four
@@ -314,9 +314,17 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                 not a grid or a flex at 34em, and that cap squeezed each row —
                 picture and all — into 544px, so the titles broke after every
                 word. */}
-            <ol className="flex max-w-5xl flex-col">
+            {/* Two columns from 1680 px. At 1920 the container is about
+                1600 px wide and one 1024 px reading column left a third of
+                every topic empty; two rows side by side still keep each row's
+                text to a reading measure. The hairlines go there, because a
+                rule under one cell of a grid row reads as a table. */}
+            <ol className="flex max-w-5xl flex-col min-[1680px]:grid min-[1680px]:max-w-none min-[1680px]:grid-cols-2 min-[1680px]:gap-x-12 min-[1680px]:gap-y-2">
               {articles.map((guide, index) => (
-                <li key={guide.slug} className="border-b border-white/[0.08] last:border-b-0">
+                <li
+                  key={guide.slug}
+                  className="border-b border-white/[0.08] last:border-b-0 min-[1680px]:border-b-0"
+                >
                   {/*
                    * No number on the guide.
                    *

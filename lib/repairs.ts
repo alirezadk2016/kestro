@@ -1,6 +1,7 @@
 import type { Localized } from "./i18n";
 import type { CraftMarkName } from "@/components/CraftMark";
 import type { SourceId } from "./sources";
+import { batteryBands } from "./battery-bands";
 
 /*
  * The repair pages.
@@ -58,6 +59,8 @@ export type Repair = {
   /** Battery only: how to read a percentage, and how to find one. */
   bands?: RepairBand[];
   bandsNote?: Localized;
+  /** A practical guide that lets the reader measure the problem first. */
+  tool?: { href: string; label: Localized };
   howTo?: { heading: Localized; steps: Localized[] }[];
 };
 
@@ -111,39 +114,17 @@ export const repairs: Repair[] = [
         en: "The battery percentage, if you have looked it up. Then we can say whether a replacement is worth it at all.",
       },
     ],
-    bands: [
-      {
-        range: "90–100%",
-        reading: {
-          da: "Som ny. Maskinen holder, hvad den blev solgt til at holde.",
-          en: "As new. The machine lasts what it was sold to last.",
-        },
-      },
-      {
-        range: "80–90%",
-        reading: {
-          da: "Almindeligt slid. De fleste maskiner klarer stadig en arbejdsdag.",
-          en: "Normal wear. Most machines still manage a working day.",
-        },
-      },
-      {
-        range: "70–80%",
-        reading: {
-          da: "Du kan mærke det. Planlæg et skift, men det haster sjældent.",
-          en: "You notice it. Plan a replacement, though it is rarely urgent.",
-        },
-      },
-      {
-        range: "Under 70%",
-        reading: {
-          da: "Skift det. Herfra er maskinen reelt bundet til en stikkontakt.",
-          en: "Replace it. Below this the machine is effectively tied to a socket.",
-        },
-      },
-    ],
+    bands: batteryBands,
     bandsNote: {
       da: "Det er sådan, vi læser tallet – ikke en officiel standard. Kapacitet er kun den ene halvdel: hvor længe maskinen faktisk holder, afhænger også af skærmens lysstyrke, hvad der kører, og hvilken maskine det er. To maskiner på 85% holder ikke nødvendigvis lige længe.",
       en: "That is how we read the number — not an official standard. Capacity is only half of it: how long a machine actually lasts also depends on screen brightness, what is running, and which machine it is. Two machines at 85% will not necessarily last the same time.",
+    },
+    tool: {
+      href: "/vejledninger/tjek-batterikapacitet",
+      label: {
+        da: "Regn kapaciteten ud i vores beregner",
+        en: "Work out the capacity in our calculator",
+      },
     },
     howTo: [
       {
@@ -187,6 +168,13 @@ export const repairs: Repair[] = [
     slug: "ram-og-ssd-opgradering",
     mark: "memory",
     name: { da: "RAM- og SSD-opgradering", en: "Memory and SSD upgrades" },
+    tool: {
+      href: "/vejledninger/tjek-ram-forbrug",
+      label: {
+        da: "Mål først, om du mangler RAM",
+        en: "First measure whether you are short of RAM",
+      },
+    },
     metaTitle: {
       da: "RAM og SSD: opgradering af din gamle bærbar | Kestro",
       en: "Upgrade an old laptop: RAM and SSD options | Kestro",
@@ -233,7 +221,10 @@ export const repairs: Repair[] = [
     slug: "skaermskift",
     mark: "screen",
     name: { da: "Skærmskift", en: "Screen replacement" },
-    h1: { da: "Skærmskift på bærbar, tablet og telefon", en: "Laptop, tablet and phone screen replacement" },
+    h1: {
+      da: "Skærmskift på bærbar, tablet og telefon",
+      en: "Laptop, tablet and phone screen replacement",
+    },
     metaTitle: {
       da: "Skærmskift på bærbar, tablet og telefon: pris først | Kestro",
       en: "Screen replacement for laptops, tablets and phones | Kestro",
@@ -276,7 +267,10 @@ export const repairs: Repair[] = [
     slug: "tastaturskift-og-nordisk-layout",
     mark: "keyboard",
     name: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
-    h1: { da: "Tastaturskift på bærbar og nordisk layout", en: "Laptop keyboard swap and Nordic layout" },
+    h1: {
+      da: "Tastaturskift på bærbar og nordisk layout",
+      en: "Laptop keyboard swap and Nordic layout",
+    },
     metaTitle: {
       da: "Tastaturskift og dansk tastatur på bærbar | Kestro",
       en: "Keyboard replacement and Danish or Norwegian layout | Kestro",
@@ -455,8 +449,14 @@ export const repairs: Repair[] = [
     slug: "software-og-licenser",
     mark: "written",
     name: { da: "Software og licenser", en: "Software and licences" },
-    h1: { da: "Software og licenser til firmacomputere", en: "Software and licences for company computers" },
-    metaTitle: { da: "Software og licenser på nye firmacomputere | Kestro", en: "Software and licences on new company computers | Kestro" },
+    h1: {
+      da: "Software og licenser til firmacomputere",
+      en: "Software and licences for company computers",
+    },
+    metaTitle: {
+      da: "Software og licenser på nye firmacomputere | Kestro",
+      en: "Software and licences on new company computers | Kestro",
+    },
     metaDescription: {
       da: "Licenser og programmer til firmacomputere på plads, før maskinerne når medarbejderne: hvad vi sætter op, hvad der kan flyttes, og hvad I leverer.",
       en: "Software and licences for company computers, in place before they reach your staff: what we set up, what can be transferred, and what you supply.",
@@ -495,8 +495,14 @@ export const repairs: Repair[] = [
     slug: "ny-opsaetning-og-dataflytning",
     mark: "adjust",
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
-    h1: { da: "Opsætning af ny computer og flytning af data", en: "Setting up a new computer and moving your data" },
-    metaTitle: { da: "Flyt data til ny computer – og få den sat op | Kestro", en: "Move data to a new computer — setup and transfer | Kestro" },
+    h1: {
+      da: "Opsætning af ny computer og flytning af data",
+      en: "Setting up a new computer and moving your data",
+    },
+    metaTitle: {
+      da: "Flyt data til ny computer – og få den sat op | Kestro",
+      en: "Move data to a new computer — setup and transfer | Kestro",
+    },
     metaDescription: {
       da: "Flyt data til ny computer: vi installerer styresystemet, flytter filer, profiler og programmer – og gennemgår listen med dig, før den gamle slettes.",
       en: "New computer? We install the system and move files, profiles and software across — and go through the list with you before the old one is wiped.",
@@ -536,7 +542,17 @@ export const repairs: Repair[] = [
     slug: "fejlfinding",
     mark: "repair",
     name: { da: "Fejlfinding", en: "Troubleshooting" },
-    h1: { da: "Fejlfinding: computeren starter ikke eller går ned", en: "Troubleshooting: the computer will not start or crashes" },
+    h1: {
+      da: "Fejlfinding: computeren starter ikke eller går ned",
+      en: "Troubleshooting: the computer will not start or crashes",
+    },
+    tool: {
+      href: "/vejledninger/langsom-computer",
+      label: {
+        da: "Er den bare langsom? Find selv det, der bremser",
+        en: "Just slow? Find what is holding it back yourself",
+      },
+    },
     metaTitle: {
       da: "Computer starter ikke eller går ned? Fejlfinding | Kestro",
       en: "Computer won't start or keeps crashing? Diagnosis | Kestro",
@@ -584,7 +600,10 @@ export const repairs: Repair[] = [
     mark: "assembly",
     name: { da: "Samling af pc", en: "PC assembly" },
     h1: { da: "Få samlet en pc efter opgaven", en: "Get a PC built for the job" },
-    metaTitle: { da: "Få samlet en pc efter opgaven – bygget og testet | Kestro", en: "Custom PC building and upgrades, load-tested | Kestro" },
+    metaTitle: {
+      da: "Få samlet en pc efter opgaven – bygget og testet | Kestro",
+      en: "Custom PC building and upgrades, load-tested | Kestro",
+    },
     metaDescription: {
       da: "Få samlet en pc efter opgaven, ikke efter et datablad – fra bunden eller videre på din nuværende maskine. Samlet, installeret og belastningstestet.",
       en: "Get a PC built to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
@@ -626,7 +645,10 @@ export const repairs: Repair[] = [
     slug: "klargoering-af-brugt-udstyr",
     mark: "tested",
     name: { da: "Klargøring af brugt udstyr", en: "Setting up used equipment" },
-    h1: { da: "Klargøring og tjek af brugt computer", en: "Preparing and checking a used computer" },
+    h1: {
+      da: "Klargøring og tjek af brugt computer",
+      en: "Preparing and checking a used computer",
+    },
     metaTitle: {
       da: "Tjek af brugt computer: batteri, stand og opsætning | Kestro",
       en: "Used computer check-up: battery, condition, setup | Kestro",
@@ -677,18 +699,73 @@ export const repairs: Repair[] = [
  * Each repair now appears in three to six of these lists.
  */
 export const relatedRepairs: Record<string, string[]> = {
-  batteriskift: ["reservedele-og-komponentskift", "rens-og-koeling", "fejlfinding", "klargoering-af-brugt-udstyr"],
-  "ram-og-ssd-opgradering": ["windows-installation", "ny-opsaetning-og-dataflytning", "samling-af-pc", "fejlfinding"],
-  skaermskift: ["reservedele-og-komponentskift", "tastaturskift-og-nordisk-layout", "batteriskift", "fejlfinding"],
-  "tastaturskift-og-nordisk-layout": ["skaermskift", "reservedele-og-komponentskift", "klargoering-af-brugt-udstyr", "batteriskift"],
-  "reservedele-og-komponentskift": ["batteriskift", "skaermskift", "tastaturskift-og-nordisk-layout", "rens-og-koeling"],
-  "rens-og-koeling": ["fejlfinding", "reservedele-og-komponentskift", "ram-og-ssd-opgradering", "batteriskift"],
-  "windows-installation": ["software-og-licenser", "ny-opsaetning-og-dataflytning", "ram-og-ssd-opgradering", "fejlfinding"],
-  "software-og-licenser": ["windows-installation", "ny-opsaetning-og-dataflytning", "klargoering-af-brugt-udstyr", "samling-af-pc"],
-  "ny-opsaetning-og-dataflytning": ["windows-installation", "software-og-licenser", "samling-af-pc", "klargoering-af-brugt-udstyr"],
+  batteriskift: [
+    "reservedele-og-komponentskift",
+    "rens-og-koeling",
+    "fejlfinding",
+    "klargoering-af-brugt-udstyr",
+  ],
+  "ram-og-ssd-opgradering": [
+    "windows-installation",
+    "ny-opsaetning-og-dataflytning",
+    "samling-af-pc",
+    "fejlfinding",
+  ],
+  skaermskift: [
+    "reservedele-og-komponentskift",
+    "tastaturskift-og-nordisk-layout",
+    "batteriskift",
+    "fejlfinding",
+  ],
+  "tastaturskift-og-nordisk-layout": [
+    "skaermskift",
+    "reservedele-og-komponentskift",
+    "klargoering-af-brugt-udstyr",
+    "batteriskift",
+  ],
+  "reservedele-og-komponentskift": [
+    "batteriskift",
+    "skaermskift",
+    "tastaturskift-og-nordisk-layout",
+    "rens-og-koeling",
+  ],
+  "rens-og-koeling": [
+    "fejlfinding",
+    "reservedele-og-komponentskift",
+    "ram-og-ssd-opgradering",
+    "batteriskift",
+  ],
+  "windows-installation": [
+    "software-og-licenser",
+    "ny-opsaetning-og-dataflytning",
+    "ram-og-ssd-opgradering",
+    "fejlfinding",
+  ],
+  "software-og-licenser": [
+    "windows-installation",
+    "ny-opsaetning-og-dataflytning",
+    "klargoering-af-brugt-udstyr",
+    "samling-af-pc",
+  ],
+  "ny-opsaetning-og-dataflytning": [
+    "windows-installation",
+    "software-og-licenser",
+    "samling-af-pc",
+    "klargoering-af-brugt-udstyr",
+  ],
   fejlfinding: ["rens-og-koeling", "windows-installation", "skaermskift", "ram-og-ssd-opgradering"],
-  "samling-af-pc": ["ram-og-ssd-opgradering", "windows-installation", "software-og-licenser", "rens-og-koeling"],
-  "klargoering-af-brugt-udstyr": ["batteriskift", "tastaturskift-og-nordisk-layout", "windows-installation", "software-og-licenser"],
+  "samling-af-pc": [
+    "ram-og-ssd-opgradering",
+    "windows-installation",
+    "software-og-licenser",
+    "rens-og-koeling",
+  ],
+  "klargoering-af-brugt-udstyr": [
+    "batteriskift",
+    "tastaturskift-og-nordisk-layout",
+    "windows-installation",
+    "software-og-licenser",
+  ],
 };
 
 export const getRepair = (slug: string) => repairs.find((r) => r.slug === slug);
