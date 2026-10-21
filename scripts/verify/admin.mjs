@@ -374,6 +374,11 @@ export async function verifyAdmin(browser, base, fail) {
     await page.waitForURL(base + "/admin/indhold");
     assert.equal(await dialog.isVisible(), false, "navigation closes the menu");
     await page.getByRole("heading", { level: 1, name: "Indhold", exact: true }).waitFor();
+    // Let the thumbnails finish before the context closes. `next start`'s
+    // image optimizer never answers a URL again once a request for it was
+    // aborted mid-resize, so closing here left the next scenario waiting on
+    // the same thumbnails until it timed out.
+    await page.waitForLoadState("networkidle");
   });
 
   await scenario("content inventory filters, resets and opens actual metadata", async (page) => {
