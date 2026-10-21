@@ -1,10 +1,40 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 243 i alt, 207 danske, 35 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 263 i alt, 227 danske, 35 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
 ## Hvad der var galt
+
+### Ejerens søgeord, 21. oktober 2026
+
+Ejeren sendte 21 søgninger om køb, salg og reparation af bærbare. De er
+oversat til dansk søgesprog og lagt efter regel 1: én side per intention,
+ingen ny side.
+
+| Intention | Danske søgeord | Side |
+| --- | --- | --- |
+| Køb, brugt, til virksomheden | køb brugt bærbar, brugte bærbare til salg, køb bærbar til virksomhed, køb bærbar | `/produkter/baerbare-computere` |
+| Pris og budget | billig bærbar, køb billig bærbar, budget bærbar, billig erhvervsbærbar | `/produkter/baerbare-computere` (FAQ om billig bærbar til arbejde) |
+| Mange på én gang | bærbare computere engros, køb bærbare i større antal | `/flaadeloesninger` |
+| Reparation | bærbar reparation, laptop reparation | `/reparation` |
+| Sælge | sælg brugt bærbar | `/saelg-til-os` |
+| Køb og salg | køb og salg af brugte computere | `/` |
+| Hjælp til valget | hjælp til at vælge bærbar | `/vejledninger/tjek-brugt-baerbar-foer-koeb` (informationel, regel 3) |
+| Opsætning | hjælp til it-opsætning i virksomheden | `/ydelser/opstart-af-arbejdspladser` |
+
+Allerede dækket: bærbar til startup, bærbar med dansk tastatur. Ikke
+målrettet: bærbar til skole og bedste bærbar til studerende (privatkøb),
+gaming bærbar (foldet ind i `/produkter`), bærbar bedste pris
+(prissammenligning, og Kestro har ingen salgspriser). Skoler som institution
+er ejerens beslutning.
+
+På siderne: laptopkategoriens indledning siger »brugte bærbare til
+virksomheden« og tiltaler læseren med »I«; kategorien linker til
+`/flaadeloesninger` med ankeret »Køb bærbare i større antal«, og
+spørgsmålet står som overskrift i flådesidens FAQ. »Billig« og »budget«
+besvares uden et billigst-løfte. Volumen er `unknown`, indtil Search
+Console eller Keyword Planner viser den.
 
 ### Search Console læst, 21. oktober 2026
 

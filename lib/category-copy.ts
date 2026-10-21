@@ -27,7 +27,7 @@ const list = (items: string[], and: string) =>
 export function categoryLead(category: Category, lang: Lang): string {
   if (category.slug === "baerbare-computere") {
     return lang === "da"
-      ? "Find en brugt bærbar til erhverv efter dit behov: kontor, hjemmearbejde eller startup. Afklar opgaver, budget og dansk eller norsk tastatur, før du vælger computer."
+      ? "Find brugte bærbare til virksomheden efter jeres behov: kontor, hjemmearbejde eller startup. Afklar opgaver, budget og dansk eller norsk tastatur, før I vælger computer."
       : "Find a used business laptop around your needs: office work, home working or a startup. Clarify tasks, budget and a Danish or Norwegian keyboard before choosing a computer.";
   }
   const n = category.brands.length;

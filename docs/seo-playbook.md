@@ -9,6 +9,21 @@ This file is the other half: where kestro.dk stands against those rules. It
 records what passes, what is pending, and what waits on the owner. Update it
 in every change that applies Mak or adds a lesson.
 
+## The owner's laptop searches — 21 October 2026
+
+The owner sent 21 searches about buying, selling and repairing laptops. Each
+was put into Danish search language and given to the page its intent belongs
+to (rule 1); no page was created. The table is in `docs/seo-keyword-map.md`.
+- The laptop category's lead now says "brugte bærbare til virksomheden" and
+  addresses the reader as "I"; the category links to `/flaadeloesninger` as
+  "Køb bærbare i større antal", and that question is now a heading in the
+  fleet FAQ, answered "Ja – bærbare, stationære og skærme".
+- The laptop category's two upgrade links had the same anchor; the workshop
+  one now says what it is.
+- Not targeted: school and student laptops (private buyers), gaming laptops
+  (folded into `/produkter`), "best price" (price comparison; Kestro has no
+  selling prices). Schools as institutions are the owner's call.
+
 ## Search Console read — 21 October 2026
 
 The first reading under rule 14, through the Windsor.ai connector
