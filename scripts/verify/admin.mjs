@@ -20,6 +20,18 @@ export async function verifyAdmin(browser, base, fail) {
   const expires = String(Date.now() + 10 * 60_000);
   const signature = crypto.createHmac("sha256", secret).update(expires).digest("base64url");
   const cookie = `__Host-kestro_admin=${expires}.${signature}`;
+  /*
+   * Thumbnails are fetched from a context that outlives every scenario.
+   *
+   * `next start` optimizes a local image by replaying the request on the
+   * visitor's own socket (fetchInternalImage passes `socket: _req.socket`).
+   * When a scenario closes or navigates with a thumbnail still resizing, that
+   * socket is gone, the replay never finishes, and every later request for
+   * the same image waits on it: the content inventory then timed out on
+   * networkidle, on one run and not the next. Fetched here, a request is
+   * never abandoned halfway, whatever the scenario does.
+   */
+  const images = await browser.newContext();
 
   async function scenario(name, run, authenticated = true) {
     const context = await browser.newContext({
@@ -46,6 +58,13 @@ export async function verifyAdmin(browser, base, fail) {
         const request = route.request();
         try {
           if (new URL(request.url()).origin !== origin.origin) return await route.abort();
+          if (request.method() === "GET" && new URL(request.url()).pathname === "/_next/image") {
+            const response = await images.request.get(request.url(), {
+              maxRedirects: 0,
+              headers: await request.allHeaders(),
+            });
+            return await route.fulfill({ response });
+          }
           if (
             request.method() === "GET" &&
             (request.isNavigationRequest() || request.headers().rsc === "1")
@@ -374,11 +393,6 @@ export async function verifyAdmin(browser, base, fail) {
     await page.waitForURL(base + "/admin/indhold");
     assert.equal(await dialog.isVisible(), false, "navigation closes the menu");
     await page.getByRole("heading", { level: 1, name: "Indhold", exact: true }).waitFor();
-    // Let the thumbnails finish before the context closes. `next start`'s
-    // image optimizer never answers a URL again once a request for it was
-    // aborted mid-resize, so closing here left the next scenario waiting on
-    // the same thumbnails until it timed out.
-    await page.waitForLoadState("networkidle");
   });
 
   await scenario("content inventory filters, resets and opens actual metadata", async (page) => {
@@ -503,4 +517,6 @@ export async function verifyAdmin(browser, base, fail) {
       "unsupported periods fall back to the documented default",
     );
   });
+
+  await images.close();
 }
