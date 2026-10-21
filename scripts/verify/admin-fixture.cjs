@@ -60,6 +60,128 @@ const enquiries = Array.from({ length: 80 }, (_, offset) => {
 });
 let mailCalls = 0;
 const events = [];
+let searchReport = null;
+let searchImportedAt = null;
+// Deliberately synthetic acquisition visits. They never leave this isolated
+// verification process and have no relationship to the enquiry identities.
+const traffic = Array.from({ length: 300 }, (_, index) => {
+  const current = index < 240;
+  const bucket = current ? index : index - 240;
+  const source =
+    bucket % 10 < 4
+      ? "Google"
+      : bucket % 10 < 6
+        ? "Instagram"
+        : bucket % 10 < 9
+          ? "Direkte / ukendt"
+          : "newsletter";
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() - (current ? bucket % 30 : 30 + (bucket % 30)));
+  date.setUTCHours(10, 0, 0, 0);
+  const tagged = source === "Instagram" || source === "newsletter";
+  const legacy = source === "Google" && bucket % 4 === 0;
+  return {
+    started_at: date.toISOString(),
+    source,
+    channel:
+      source === "Google"
+        ? "search"
+        : source === "Instagram"
+          ? "social"
+          : source === "newsletter"
+            ? "email"
+            : "direct_unknown",
+    medium: tagged ? (source === "newsletter" ? "email" : "social") : null,
+    campaign: tagged ? "fixture-guide" : null,
+    content: tagged ? "bio" : null,
+    method: legacy ? "legacy" : tagged ? "utm" : source === "Google" ? "referrer" : "unknown",
+    path: bucket % 3 ? "/vejledninger" : "/reparation",
+  };
+});
+
+function acquisition(text, params) {
+  const kind = text.match(/acquisition:(\w+)/)[1];
+  const dates = [
+    ...new Set(
+      params.filter((value) => typeof value === "string" && /^\d{4}-\d\d-\d\dT/.test(value)),
+    ),
+  ].sort();
+  const end = dates.at(-1),
+    start = dates.at(-2),
+    previousStart = kind === "totals" ? dates[0] : start;
+  const selected = (name) => {
+    const pattern =
+      name === "channel"
+        ? /AND \(\$(\d+) = '' OR coalesce\(channel, 'other'\)/
+        : new RegExp(`AND \\(\\$(\\d+) = '' OR ${name} =`);
+    const match = text.match(pattern);
+    return match ? params[Number(match[1]) - 1] : "";
+  };
+  const filters = {
+    source: selected("source"),
+    channel: selected("channel"),
+    campaign: selected("campaign"),
+  };
+  const all = traffic.filter((row) => row.started_at >= start && row.started_at < end);
+  const matches = (row) =>
+    Object.entries(filters).every(([key, value]) => !value || row[key] === value);
+  const current = all.filter(matches);
+  const group = (rows, keys, counts = false) => {
+    const groups = new Map();
+    for (const row of rows) {
+      const values = Object.fromEntries(keys.map((key) => [key, row[key]]));
+      const key = JSON.stringify(values);
+      if (!groups.has(key))
+        groups.set(key, {
+          ...values,
+          visits: 0,
+          ...(counts ? { tagged: 0, referred: 0, legacy: 0 } : {}),
+        });
+      const entry = groups.get(key);
+      entry.visits++;
+      if (counts) {
+        entry.tagged += Number(row.method === "utm");
+        entry.referred += Number(row.method === "referrer");
+        entry.legacy += Number(row.method === "legacy");
+      }
+    }
+    return [...groups.values()].sort((a, b) => b.visits - a.visits);
+  };
+  if (kind === "totals")
+    return [
+      {
+        all_visits: all.length,
+        visits: current.length,
+        attributed: current.filter((row) => row.method !== "unknown").length,
+        unknown: current.filter((row) => row.method === "unknown").length,
+        tagged: current.filter((row) => row.method === "utm").length,
+        legacy: current.filter((row) => row.method === "legacy").length,
+        previous: traffic.filter(
+          (row) => row.started_at >= previousStart && row.started_at < start && matches(row),
+        ).length,
+      },
+    ];
+  if (kind === "daily")
+    return group(
+      current.map((row) => ({ day: row.started_at.slice(0, 10) })),
+      ["day"],
+    );
+  if (kind === "channels") return group(current, ["channel"]);
+  if (kind === "sources") return group(current, ["source", "channel", "medium"], true);
+  if (kind === "campaigns")
+    return group(
+      current.filter((row) => row.campaign),
+      ["source", "medium", "campaign", "content"],
+    );
+  if (kind === "landing") return group(current, ["path"]);
+  if (kind === "options")
+    return ["source", "channel", "campaign"].flatMap((key) =>
+      [...new Set(all.map((row) => row[key]).filter(Boolean))]
+        .sort()
+        .map((value) => ({ kind: key, value })),
+    );
+  throw new Error("Unknown acquisition fixture query");
+}
 
 function event(row, kind, detail, id) {
   events.unshift({
@@ -155,11 +277,24 @@ function result(rows) {
   const names = rows.length ? Object.keys(rows[0]) : [];
   const fields = names.map((name) => ({
     name,
-    dataTypeID: typeof rows[0][name] === "number" ? 23 : 25,
+    dataTypeID:
+      typeof rows[0][name] === "number"
+        ? 23
+        : typeof rows[0][name] === "object" && rows[0][name] !== null
+          ? 3802
+          : 25,
   }));
   return {
     fields,
-    rows: rows.map((row) => names.map((name) => (row[name] === null ? null : String(row[name])))),
+    rows: rows.map((row) =>
+      names.map((name) =>
+        row[name] === null
+          ? null
+          : typeof row[name] === "object"
+            ? JSON.stringify(row[name])
+            : String(row[name]),
+      ),
+    ),
     rowCount: rows.length,
     command: "SELECT",
   };
@@ -186,6 +321,18 @@ function search(params) {
 function sql({ query, params = [] }) {
   const text = query.replace(/\s+/g, " ").trim();
   if (/^(CREATE|ALTER) /.test(text)) return result([]);
+  if (text.startsWith("UPDATE visits SET channel = CASE") && text.endsWith("WHERE channel IS NULL"))
+    return result([]);
+  if (text.includes("acquisition:")) return result(acquisition(text, params));
+  if (text.startsWith("INSERT INTO search_console_reports")) {
+    searchReport = JSON.parse(
+      params.find((value) => typeof value === "string" && value.startsWith('{"schemaVersion"')),
+    );
+    searchImportedAt = new Date().toISOString();
+    return result([{ property: searchReport.property }]);
+  }
+  if (text.includes("FROM search_console_reports"))
+    return result(searchReport ? [{ report: searchReport, importedAt: searchImportedAt }] : []);
   if (text.startsWith("WITH") && text.includes("INSERT INTO enquiry_events")) {
     if (text.startsWith("WITH requested")) {
       const ids = String(params[0]).match(/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}/gi) || [];

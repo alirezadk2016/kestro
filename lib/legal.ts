@@ -17,5 +17,5 @@
  */
 export const legalUpdated = {
   "/handelsbetingelser": "2026-10-14",
-  "/privatlivspolitik": "2026-10-14",
+  "/privatlivspolitik": "2026-10-21",
 } as const;

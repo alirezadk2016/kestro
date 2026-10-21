@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { currentSalt, recordHit, touchVisit } from "@/lib/db";
 import { crossSitePost } from "@/lib/same-site";
-import { campaignSource, classifySource, clientIp, deviceOf, isBot, visitorId } from "@/lib/visits";
+import { clientIp, deviceOf, isBot, resolveAttribution, visitorId } from "@/lib/visits";
 
 export const runtime = "nodejs";
 
@@ -16,9 +16,9 @@ export const runtime = "nodejs";
  * page for ten minutes is recorded as lasting zero seconds.
  *
  * The visitor is identified by a hash computed here and thrown away with the
- * day's salt. Nothing is written to the browser, so this needs no consent
- * banner and the privacy policy's claim that we store nothing on your device
- * stays literally true. See lib/visits.ts.
+ * day's salt. This first-party counter writes no browser storage and runs
+ * separately from the consent-gated Google tag. See lib/visits.ts and the
+ * privacy policy for its data scope.
  *
  * Always answers 204, whatever happened. It is called on every page load, and
  * a counter that can make a page report an error is worse than a counter that
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
        the number honest enough to reason about. */
     if (isBot(agent)) return NO_CONTENT();
 
-    /* A page view is a path, a referrer and a query string: well under a
+    /* A page view is a path, a referring origin and allowed campaign labels: under a
        kilobyte. Without a cap the JSON parser would read whatever it was sent
        before any of the checks below ran, so an anonymous caller could make
        every request as expensive as the platform's own body limit. */
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     const body = JSON.parse(raw) as {
       path?: unknown;
       referrer?: unknown;
-      search?: unknown;
+      attribution?: unknown;
       ping?: unknown;
     };
 
@@ -79,23 +79,20 @@ export async function POST(request: Request) {
        fills with any string a caller invents, and "most read pages" becomes
        whatever a bored visitor typed into the address bar. */
     if (!/^\/[a-z0-9\-/]*$/i.test(path) || path.length > 120) return NO_CONTENT();
+    if (path.includes("//") || /^\/api(?:\/|$)/i.test(path)) return NO_CONTENT();
     /* The panel is not part of the site's traffic. */
     if (path.startsWith("/admin")) return NO_CONTENT();
 
-    const referrer = typeof body.referrer === "string" && body.referrer ? body.referrer : null;
-    /* The page's own query string, sent by the client: a campaign tag lives on
-       the address the visitor opened, and the request to this endpoint has
-       none of its own. Capped so a long address cannot be used to make the
-       body arbitrarily large. */
-    const search = typeof body.search === "string" ? body.search.slice(0, 300) : "";
+    const attribution = resolveAttribution(
+      body.attribution,
+      body.referrer,
+      new URL(request.url).hostname,
+    );
 
     await recordHit({
       visitor,
       path,
-      /* The campaign's own claim wins over the referring host: a link tapped
-         in an Instagram story usually arrives with no referrer at all, and
-         then utm_source is the only thing that knows where it came from. */
-      source: campaignSource(search) ?? classifySource(referrer, new URL(request.url).hostname),
+      ...attribution,
       /* Set by Vercel's edge from the request's address. Two letters, derived
          and not stored on the way in — the address itself never reaches us. */
       country: request.headers.get("x-vercel-ip-country"),

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { assertAdminContrast } from "./admin-contrast.mjs";
 
 /** Exercise the real admin build with a local, signed test session.
  * Never runs against a public host, never sends a reply or changes an enquiry.
@@ -173,10 +174,20 @@ export async function verifyAdmin(browser, base, fail) {
 
   async function captureCatalogue(page, path) {
     const directory = process.env.VERIFY_ARTIFACT_DIR;
-    if (!directory || !/^\/admin\/(indhold|medier)(\/|$)/.test(path)) return;
+    if (!directory || !/^\/admin\/(indhold|medier|trafik|seo|kampagner)(\/|$)/.test(path)) return;
     await mkdir(directory, { recursive: true });
     const label =
-      path === "/admin/medier" ? "media" : path === "/admin/indhold" ? "content" : "content-detail";
+      path === "/admin/medier"
+        ? "media"
+        : path === "/admin/indhold"
+          ? "content"
+          : path === "/admin/trafik"
+            ? "traffic-empty"
+            : path === "/admin/seo"
+              ? "seo-empty"
+              : path === "/admin/kampagner"
+                ? "campaign-builder"
+                : "content-detail";
     for (const [name, width] of [
       ["desktop", 1440],
       ["mobile", 390],
@@ -222,7 +233,28 @@ export async function verifyAdmin(browser, base, fail) {
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth + 1,
       );
+      if (overflow)
+        console.error(
+          "admin overflow",
+          path,
+          width,
+          await page.locator("main *").evaluateAll((nodes) =>
+            nodes
+              .filter((node) => {
+                const r = node.getBoundingClientRect();
+                return r.width > 0 && r.right > innerWidth + 1;
+              })
+              .slice(0, 12)
+              .map((node) => ({
+                tag: node.tagName,
+                class: node.className,
+                width: Math.round(node.getBoundingClientRect().width),
+                right: Math.round(node.getBoundingClientRect().right),
+              })),
+          ),
+        );
       assert.equal(overflow, false, `${path} fits ${width}px`);
+      if (width === 390 || width === 1440) await assertAdminContrast(page);
       const nav = page.getByRole("navigation", { name: "Panel", exact: true });
       const links = nav.locator("a,button");
       for (let index = 0; index < (await links.count()); index++) {
@@ -281,6 +313,8 @@ export async function verifyAdmin(browser, base, fail) {
       ["/admin/indhold/tjek-batterikapacitet", "Tjek batterikapacitet i Windows"],
       ["/admin/medier", "Medier"],
       ["/admin/trafik", "Trafik"],
+      ["/admin/seo", "Google & SEO"],
+      ["/admin/kampagner", "Kampagnelinks"],
       ["/admin/system", "Systemstatus"],
     ]) {
       await visit(page, path);
@@ -361,7 +395,7 @@ export async function verifyAdmin(browser, base, fail) {
     const links = dialog
       .getByRole("navigation", { name: "Alle sektioner", exact: true })
       .getByRole("link");
-    assert.equal(await links.count(), 8, "every workspace is reachable on a phone");
+    assert.equal(await links.count(), 10, "every workspace is reachable on a phone");
     for (const link of await links.all()) await target(link, "mobile menu link");
     await page.keyboard.press("Escape");
     assert.equal(await dialog.isVisible(), false, "Escape dismisses the menu");

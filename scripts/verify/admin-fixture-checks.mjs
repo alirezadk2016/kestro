@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
+import { assertAdminContrast } from "./admin-contrast.mjs";
 
 const base = process.env.VERIFY_BASE;
 const secret = process.env.VERIFY_ADMIN_SECRET;
@@ -248,6 +249,21 @@ async function screenshotsAtBothSizes(page, name) {
   ]) {
     await page.setViewportSize({ width, height });
     await page.evaluate(() => document.fonts.ready);
+    await assertAdminContrast(page);
+    if (name === "growth-traffic" && width === 390) {
+      await page.evaluate(() => scrollTo(0, 0));
+      const firstSource = await page
+        .getByRole("table", {
+          name: "Trafikkilder med antal besøg og andel af det valgte udvalg",
+          exact: true,
+        })
+        .getByRole("link", { name: "Google", exact: true })
+        .boundingBox();
+      assert.ok(
+        firstSource && firstSource.y + firstSource.height <= height,
+        "a real source is visible in the initial phone viewport",
+      );
+    }
     assert.equal(
       await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
       false,
@@ -699,6 +715,12 @@ try {
           });
     });
     await visit(page, "/admin/trafik");
+    await openDetails(
+      page
+        .locator("details")
+        .filter({ has: page.locator("summary", { hasText: "På sitet lige nu" }) })
+        .locator(":scope > summary"),
+    );
     const live = page.getByRole("region", { name: "Besøgende på sitet", exact: true });
     await page.waitForFunction(() =>
       document
@@ -819,6 +841,326 @@ try {
       assert.equal(query.get("source"), "quote");
       assert.equal(query.get("sort"), "oldest");
       assert.equal(replyRequests, 0, "bulk metadata actions never invoke the reply flow");
+    },
+  );
+
+  await scenario(
+    "growth sources, filters and export use the same measured visit denominator",
+    async (page) => {
+      await visit(page, "/admin/trafik?days=30");
+      const sources = page.getByRole("table", {
+        name: "Trafikkilder med antal besøg og andel af det valgte udvalg",
+        exact: true,
+      });
+      const total = page.locator("main dl").first().locator(":scope > div").first().locator("dd");
+      assert.equal((await total.innerText()).trim(), "240");
+      const sourceRow = (name) =>
+        sources.getByRole("row").filter({ has: page.getByRole("link", { name, exact: true }) });
+      assert.equal((await sourceRow("Google").getByRole("cell").nth(1).innerText()).trim(), "96");
+      assert.equal((await sourceRow("Google").getByRole("cell").nth(2).innerText()).trim(), "40 %");
+      assert.equal(
+        (await sourceRow("Instagram").getByRole("cell").nth(1).innerText()).trim(),
+        "48",
+      );
+      assert.equal(
+        (await sourceRow("Instagram").getByRole("cell").nth(2).innerText()).trim(),
+        "20 %",
+      );
+      assert.match(await page.locator("main").innerText(), /Instagram alene beviser ikke Explore/);
+      await screenshotsAtBothSizes(page, "growth-traffic");
+
+      await sourceRow("Google").getByRole("link", { name: "Google", exact: true }).click();
+      await page.waitForURL((url) => url.searchParams.get("source") === "Google");
+      await waitForCount(sources.locator("tbody > tr"), 1);
+      assert.equal((await total.innerText()).trim(), "96");
+      assert.match(await page.locator("main").innerText(), /96 af 240 registrerede besøg/);
+      assert.equal(
+        (await sourceRow("Google").getByRole("cell").nth(2).innerText()).trim(),
+        "100 %",
+      );
+      assert.equal(
+        await page.getByLabel("Kilde", { exact: true }).inputValue(),
+        "Google",
+        "drill-down also updates the visible source filter",
+      );
+      const filteredExport = await page
+        .getByRole("link", { name: "Eksportér CSV", exact: true })
+        .getAttribute("href");
+      assert.equal(new URL(filteredExport, base).searchParams.get("source"), "Google");
+      const exported = await page.request.get(base + filteredExport, { headers: { cookie } });
+      assert.equal(exported.status(), 200);
+      assert.match(exported.headers()["content-type"], /^text\/csv/);
+      assert.match(
+        await exported.text(),
+        /"Besøg i det valgte udsnit","96","Besøg i hele perioden","240"/,
+      );
+      await page.getByRole("link", { name: "Nulstil filtre", exact: true }).click();
+      await page.waitForURL((url) => !url.searchParams.has("source"));
+      await waitForCount(sources.locator("tbody > tr"), 4);
+      assert.equal((await total.innerText()).trim(), "240");
+
+      const form = page.locator('form[action="/admin/trafik"]');
+      await openDetails(form.locator("summary"));
+      assert.equal(
+        await form.getByLabel("Kilde", { exact: true }).inputValue(),
+        "",
+        "reset clears the visible selector too",
+      );
+      await form.getByLabel("Kanal", { exact: true }).selectOption("social");
+      await form.getByLabel("Kampagne", { exact: true }).selectOption("fixture-guide");
+      await form.getByRole("button", { name: "Vis periode", exact: true }).click();
+      await page.waitForURL(
+        (url) =>
+          url.searchParams.get("channel") === "social" &&
+          url.searchParams.get("campaign") === "fixture-guide",
+      );
+      await waitForCount(sources.locator("tbody > tr"), 1);
+      assert.equal((await total.innerText()).trim(), "48");
+      assert.equal(
+        (await sourceRow("Instagram").getByRole("cell").nth(2).innerText()).trim(),
+        "100 %",
+      );
+      assert.match(await page.locator("main").innerText(), /48 af 240 registrerede besøg/);
+      assert.match(
+        await page
+          .getByRole("table", { name: "Registrerede kampagner og placeringer", exact: true })
+          .innerText(),
+        /fixture-guide/,
+      );
+    },
+  );
+
+  await scenario(
+    "campaign presets create real links and clipboard denial keeps a selectable copy",
+    async (page, context) => {
+      await context.addInitScript(() => {
+        Object.defineProperty(navigator, "clipboard", {
+          configurable: true,
+          value: {
+            writeText: async () => {
+              throw new DOMException("fixture denied", "NotAllowedError");
+            },
+          },
+        });
+      });
+      await visit(page, "/admin/kampagner");
+      await page.getByLabel("Kampagnenavn", { exact: true }).fill("fixture-guide");
+      await page.getByRole("button", { name: "Instagram · story", exact: true }).click();
+      const output = page.getByLabel("Færdigt kampagnelink", { exact: true });
+      const link = new URL(await output.inputValue());
+      assert.equal(link.origin, "https://www.kestro.dk");
+      assert.equal(link.searchParams.get("utm_source"), "instagram");
+      assert.equal(link.searchParams.get("utm_medium"), "social");
+      assert.equal(link.searchParams.get("utm_campaign"), "fixture-guide");
+      assert.equal(link.searchParams.get("utm_content"), "story");
+      await page.getByRole("button", { name: "Kopiér link", exact: true }).click();
+      await page
+        .getByRole("status")
+        .filter({ hasText: "Automatisk kopiering er blokeret" })
+        .waitFor();
+      assert.equal(
+        await output.inputValue(),
+        link.href,
+        "denied clipboard access never discards the generated URL",
+      );
+      assert.equal(
+        await output.evaluate(
+          (node) =>
+            document.activeElement === node &&
+            node.selectionEnd - node.selectionStart === node.value.length,
+        ),
+        true,
+        "the full manual copy is selected",
+      );
+      await screenshotsAtBothSizes(page, "growth-campaigns");
+      await page.getByLabel("Destinationsside", { exact: true }).fill("https://example.com/steal");
+      assert.equal(await output.inputValue(), "");
+      assert.equal(
+        await page.getByRole("button", { name: "Kopiér link", exact: true }).isDisabled(),
+        true,
+      );
+      assert.match(await page.locator("#campaign-validation").innerText(), /Linket skal gå til/);
+      await page.getByLabel("Destinationsside", { exact: true }).fill("/admin");
+      assert.equal(await output.inputValue(), "");
+      assert.match(
+        await page.locator("#campaign-validation").innerText(),
+        /Admin, filer og ukendte adresser/,
+      );
+      await page
+        .getByLabel("Destinationsside", { exact: true })
+        .fill("https://www.kestro.dk/vejledninger?old=remove");
+      await page.getByRole("button", { name: "Nyhedsbrev", exact: true }).click();
+      const newsletter = new URL(await output.inputValue());
+      assert.equal(newsletter.searchParams.get("old"), null);
+      assert.equal(newsletter.searchParams.get("utm_source"), "newsletter");
+      assert.equal(newsletter.searchParams.get("utm_medium"), "email");
+      assert.equal(
+        newsletter.searchParams.get("utm_content"),
+        null,
+        "changing placement clears stale story tagging",
+      );
+      assert.match(
+        await page.locator("main").innerText(),
+        /beviser ikke, at besøget kom fra Instagram Explore/,
+      );
+    },
+  );
+
+  await scenario(
+    "Search Console validates before saving and supports query paging, backup and safe reimport",
+    async (page) => {
+      const synthetic = {
+        schemaVersion: 1,
+        property: "sc-domain:kestro.dk",
+        dateFrom: relativeDay(-30),
+        dateTo: relativeDay(-3),
+        timezone: "America/Los_Angeles",
+        searchType: "web",
+        generatedAt: new Date().toISOString(),
+        source: "google_search_console",
+        partial: true,
+        totals: { clicks: 200, impressions: 4000, position: 7.3 },
+        daily: [
+          { date: relativeDay(-5), clicks: 120, impressions: 2400, position: 7.3 },
+          { date: relativeDay(-4), clicks: 80, impressions: 1600, position: 7.3 },
+        ],
+        queries: Array.from({ length: 45 }, (_, index) => ({
+          query: `fixture query ${String(index + 1).padStart(2, "0")}`,
+          clicks: index % 3,
+          impressions: 20 + index,
+          position: 5 + index / 10,
+        })),
+        pages: [
+          {
+            page: "https://www.kestro.dk/vejledninger",
+            clicks: 130,
+            impressions: 2500,
+            position: 6.5,
+          },
+          {
+            page: "https://www.kestro.dk/reparation",
+            clicks: 70,
+            impressions: 1500,
+            position: 8.5,
+          },
+        ],
+      };
+      let importPosts = 0;
+      page.on("request", (request) => {
+        if (
+          new URL(request.url()).pathname === "/api/admin/search-console-import" &&
+          request.method() === "POST"
+        )
+          importPosts++;
+      });
+      async function savePreview() {
+        const persisted = page.waitForResponse(
+          (response) =>
+            new URL(response.url()).pathname === "/api/admin/search-console-import" &&
+            response.request().method() === "POST",
+        );
+        await page.getByRole("button", { name: "Gem denne rapport", exact: true }).click();
+        const response = await persisted;
+        assert.equal(
+          response.status(),
+          200,
+          "the validated report is accepted by the independently gated endpoint",
+        );
+        assert.deepEqual(await response.json(), { saved: true });
+      }
+      await visit(page, "/admin/seo");
+      await page.getByRole("heading", { name: "Google & SEO", exact: true }).waitFor();
+      const importDetails = page.locator("#search-console-import");
+      await openDetails(importDetails.locator("summary"));
+      await page.getByRole("button", { name: "Indsæt rapport", exact: true }).click();
+      const input = page.getByLabel("Indsæt JSON- eller CSV-rapport · højst 2 MB", { exact: true });
+      await input.fill('{"invalid":');
+      await page.getByRole("button", { name: "Forhåndsvis fil", exact: true }).click();
+      await page.getByRole("alert").filter({ hasText: "JSON-filen kan ikke læses" }).waitFor();
+      assert.equal(importPosts, 0, "invalid local input is not submitted");
+      assert.equal(
+        await page.getByRole("button", { name: "Gem denne rapport", exact: true }).count(),
+        0,
+      );
+      await input.fill(JSON.stringify(synthetic));
+      await page.getByRole("button", { name: "Forhåndsvis fil", exact: true }).click();
+      await page.getByRole("heading", { name: "Valideret forhåndsvisning", exact: true }).waitFor();
+      assert.equal(importPosts, 0, "preview itself writes no data");
+      await savePreview();
+      await page.getByRole("table", { name: /^Søgefraser ·/ }).waitFor();
+      const table = page.getByRole("table", { name: /^Søgefraser ·/ });
+      await waitForCount(table.locator("tbody > tr"), 20);
+      const totals = page.getByRole("region", {
+        name: "Rapportens samlede søgesynlighed",
+        exact: true,
+      });
+      assert.equal(
+        (await totals.locator("dl > div").first().locator("dd").innerText()).trim(),
+        "200",
+      );
+      assert.match(
+        await page.locator("main").innerText(),
+        /De kan ikke knyttes til en bestemt besøgende/,
+      );
+      await screenshotsAtBothSizes(page, "growth-seo");
+      const pages = page.getByRole("navigation", { name: "Søgerapportens sider", exact: true });
+      await pages.getByRole("link", { name: "Næste →", exact: true }).click();
+      await page.waitForURL((url) => url.searchParams.get("page") === "2");
+      await pages.getByText("Side 2 af 3", { exact: false }).waitFor();
+      await waitForCount(table.locator("tbody > tr"), 20);
+      await page.getByLabel("Find i rapporten", { exact: true }).fill("fixture query 01");
+      await page.getByRole("button", { name: "Vis rapport", exact: true }).click();
+      await page.waitForURL((url) => url.searchParams.get("q") === "fixture query 01");
+      await waitForCount(table.locator("tbody > tr"), 1);
+      assert.match(await table.innerText(), /fixture query 01/);
+      assert.equal(
+        (await totals.locator("dl > div").first().locator("dd").innerText()).trim(),
+        "200",
+        "table filtering does not change property totals",
+      );
+      await page.getByRole("link", { name: "Nulstil", exact: true }).click();
+      await page.waitForURL((url) => !url.searchParams.has("q"));
+      await waitForCount(table.locator("tbody > tr"), 20);
+      await openDetails(totals.locator("details > summary"));
+      const backupPath = await page
+        .getByRole("link", { name: "Hent rapport ↓", exact: true })
+        .getAttribute("href");
+      const backupResponse = await page.request.get(base + backupPath, { headers: { cookie } });
+      assert.equal(backupResponse.status(), 200);
+      assert.match(backupResponse.headers()["content-disposition"], /attachment/);
+      const backup = await backupResponse.json();
+      assert.deepEqual(
+        backup,
+        synthetic,
+        "the downloadable backup contains the validated report, not a summed derivative",
+      );
+
+      await openDetails(importDetails.locator("summary"));
+      await page.getByRole("button", { name: "Indsæt rapport", exact: true }).click();
+      await input.fill(JSON.stringify(backup));
+      await page.getByRole("button", { name: "Forhåndsvis fil", exact: true }).click();
+      await savePreview();
+      await page.reload({ waitUntil: "networkidle" });
+      assert.equal(
+        (await totals.locator("dl > div").first().locator("dd").innerText()).trim(),
+        "200",
+        "reimport replaces the same report rather than doubling totals",
+      );
+
+      await openDetails(importDetails.locator("summary"));
+      await page.getByRole("button", { name: "Indsæt rapport", exact: true }).click();
+      await input.fill(
+        'Top queries,Clicks,Impressions,CTR,Position\n"fixture csv query",3,90,3.33%,6.5',
+      );
+      await page.getByRole("button", { name: "Forhåndsvis fil", exact: true }).click();
+      await savePreview();
+      await table.getByText("fixture csv query", { exact: true }).waitFor();
+      assert.equal(
+        (await totals.locator("dl > div").first().locator("dd").innerText()).trim(),
+        "—",
+        "a query-only CSV does not manufacture a whole-property total",
+      );
+      assert.match(await totals.innerText(), /Ingen samlet ejendomsmåling/);
     },
   );
 } finally {

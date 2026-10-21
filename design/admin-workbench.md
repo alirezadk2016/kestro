@@ -23,12 +23,12 @@ workspace should feel like a carefully arranged service desk, with work in the
 centre and reference material within reach.
 
 Navigation has four groups: Arbejde (Oversigt, Beskeder, Opfølgning, Kontakter),
-Websted (Indhold, Medier), Indsigt (Trafik), and Drift (System). Desktop keeps
-all eight links in the rail. Mobile keeps the three daily-work destinations
-visible and opens all eight in a native modal navigation menu. Escape, keyboard
+Websted (Indhold, Medier), Vækst (Trafik & kilder, Google & SEO, Kampagnelinks),
+and Drift (System). Desktop keeps all ten links in the rail. Mobile keeps the three daily-work destinations
+visible and opens all ten in a native modal navigation menu. Escape, keyboard
 containment and return focus come from the native dialog; a resize closes it.
 Without JavaScript the menu button is replaced by direct links to the other
-five sections; the desktop grouping and normal native navigation still work.
+seven sections; the desktop grouping and normal native navigation still work.
 
 | Component checkpoint        | Decisions before implementation                                                                                                                                  |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |

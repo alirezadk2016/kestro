@@ -16,6 +16,8 @@ import {
   LogoutIcon,
   PagesIcon,
   PulseIcon,
+  SearchIcon,
+  LinkIcon,
 } from "@/components/admin/icons";
 import styles from "@/components/admin/admin-shell.module.css";
 
@@ -55,7 +57,14 @@ const groups = [
       { href: "/admin/medier", label: "Medier", Icon: MediaIcon },
     ],
   },
-  { label: "Indsigt", items: [{ href: "/admin/trafik", label: "Trafik", Icon: PulseIcon }] },
+  {
+    label: "Vækst",
+    items: [
+      { href: "/admin/trafik", label: "Trafik & kilder", Icon: PulseIcon },
+      { href: "/admin/seo", label: "Google & SEO", Icon: SearchIcon },
+      { href: "/admin/kampagner", label: "Kampagnelinks", Icon: LinkIcon },
+    ],
+  },
   { label: "Drift", items: [{ href: "/admin/system", label: "System", Icon: DeviceIcon }] },
 ];
 const items = groups.flatMap((group) => group.items);

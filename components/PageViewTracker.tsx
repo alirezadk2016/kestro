@@ -7,6 +7,36 @@ import { useEffect, useRef } from "react";
     that an open tab costs a handful of requests an hour. */
 const HEARTBEAT_MS = 60_000;
 
+/** Send only campaign labels. Search terms, email links and other URL
+    parameters are not part of the site's traffic collector. The server
+    validates these fields again; client filtering is not a trust boundary. */
+function campaignTags() {
+  const params = new URLSearchParams(window.location.search);
+  const label = (name: string, max: number) =>
+    params
+      .get(name)
+      ?.replace(/[^0-9A-Za-zÀ-ÿ ._-]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, max) || null;
+  return {
+    source: label("utm_source", 40),
+    medium: label("utm_medium", 40),
+    campaign: label("utm_campaign", 80),
+    content: label("utm_content", 80),
+    term: label("utm_term", 80),
+  };
+}
+
+function referringOrigin(): string | null {
+  try {
+    const url = new URL(document.referrer);
+    return /^https?:$/.test(url.protocol) ? url.origin : null;
+  } catch {
+    return null;
+  }
+}
+
 const send = (body: Record<string, unknown>) =>
   fetch("/api/track", {
     method: "POST",
@@ -35,9 +65,9 @@ const send = (body: Record<string, unknown>) =>
  * stay. It is sent only while the tab is actually visible, so a page left
  * open in a background tab overnight does not report a nine-hour visit.
  *
- * No consent gate, and it needs none: nothing is stored in the browser and
- * nothing identifies a person. The visitor is told apart on the server by a
- * hash that is discarded with the day's salt — see lib/visits.ts.
+ * This first-party counter is separate from the consent-gated Google tag.
+ * It writes no browser storage. Its server-derived identifier and campaign
+ * labels are described in the privacy policy; see lib/visits.ts.
  */
 export default function PageViewTracker() {
   const pathname = usePathname();
@@ -53,8 +83,8 @@ export default function PageViewTracker() {
 
     send({
       path: pathname,
-      referrer: document.referrer,
-      search: window.location.search,
+      referrer: referringOrigin(),
+      attribution: campaignTags(),
     });
   }, [pathname]);
 

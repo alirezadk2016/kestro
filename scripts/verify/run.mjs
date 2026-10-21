@@ -52,6 +52,9 @@ const [contentCode] = await once(content, "exit");
 if (contentCode !== 0) process.exit(contentCode);
 
 console.log("verify: building");
+const growthData = run("node", ["scripts/verify/growth-data.mjs"]);
+const [growthCode] = await once(growthData, "exit");
+if (growthCode !== 0) process.exit(growthCode);
 const build = run(process.execPath, [NEXT_CLI, "build"]);
 const [code] = await once(build, "exit");
 if (code !== 0) process.exit(code);

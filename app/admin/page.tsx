@@ -11,6 +11,8 @@ import {
   ContactsIcon,
   InboxIcon,
   PulseIcon,
+  SearchIcon,
+  LinkIcon,
 } from "@/components/admin/icons";
 import { searchEnquiries, searchFollowUps } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin-auth";
@@ -341,6 +343,52 @@ export default async function AdminHome() {
             </div>
           </section>
 
+          <section aria-labelledby="growth-title" className={`${CARD} overflow-hidden`}>
+            <div className="px-5 pb-3 pt-5">
+              <p className={EYEBROW}>Vækst</p>
+              <h2 id="growth-title" className="mt-2 text-lg font-bold tracking-tight">
+                Bliv fundet. Følg kilden.
+              </h2>
+            </div>
+            <div className="divide-y divide-white/10">
+              {[
+                {
+                  href: "/admin/trafik",
+                  title: "Trafik & kilder",
+                  note: "Kilder, kampagner og indgangssider",
+                  Icon: PulseIcon,
+                },
+                {
+                  href: "/admin/seo",
+                  title: "Google & SEO",
+                  note: "Søgeord og sider fra Search Console",
+                  Icon: SearchIcon,
+                },
+                {
+                  href: "/admin/kampagner",
+                  title: "Kampagnelinks",
+                  note: "Mærk links til dine næste placeringer",
+                  Icon: LinkIcon,
+                },
+              ].map(({ href, title, note, Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  prefetch={false}
+                  className="group flex min-h-11 items-start gap-3 px-5 py-4 transition-colors hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-brand-300"
+                >
+                  <Icon className="mt-0.5 h-[18px] w-[18px] flex-none text-brand-200" />
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold group-hover:text-brand-200">
+                      {title}
+                    </span>
+                    <span className="mt-1 block text-xs leading-5 text-paper/70">{note}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
           <section aria-labelledby="shortcuts-title">
             <h2 id="shortcuts-title" className="text-sm font-semibold text-paper/85">
               Arbejd videre
@@ -352,12 +400,6 @@ export default async function AdminHome() {
                   title: "Kontakter",
                   note: "Historik fra henvendelser",
                   Icon: ContactsIcon,
-                },
-                {
-                  href: "/admin/trafik",
-                  title: "Trafik og læsning",
-                  note: "Besøg, kilder og læste sider",
-                  Icon: PulseIcon,
                 },
                 {
                   href: "/admin/system",

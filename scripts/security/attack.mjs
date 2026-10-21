@@ -136,6 +136,8 @@ async function main() {
   await shutOut("L1", "inbox, RSC segment request", "/admin/beskeder", { headers: RSC }, [404]);
   for (const [name, path] of [
     ["traffic", "/admin/trafik"],
+    ["Google search reports", "/admin/seo"],
+    ["campaign links", "/admin/kampagner"],
     ["system status", "/admin/system"],
     ["follow-up queue", "/admin/opfoelgning"],
     ["contacts", "/admin/kontakter"],
@@ -163,6 +165,25 @@ async function main() {
   );
   await shutOut("L1", "live figures", "/api/admin/live", {}, [403]);
   await shutOut("L1", "live figures, RSC headers", "/api/admin/live", { headers: RSC }, [403]);
+  for (const [name, type, body, expected] of [
+    ["search import rejects non-JSON", "text/plain", "{}", 415],
+    ["search import validates schema server-side", "application/json", "{}", 422],
+    ["search import rejects invalid JSON", "application/json", '{"schemaVersion":', 422],
+    [
+      "search import bounds request bytes",
+      "application/json",
+      " ".repeat(2 * 1024 * 1024 + 1),
+      413,
+    ],
+  ]) {
+    const response = await ask("/api/admin/search-console-import", {
+      method: "POST",
+      headers: { "content-type": type, "sec-fetch-site": "same-origin", origin: ORIGIN },
+      body,
+      cookie: `${COOKIE}=${VALID}`,
+    });
+    record("INPUT", name, response.status === expected, String(response.status));
+  }
   await shutOut(
     "L1",
     "archive, no session",
@@ -175,7 +196,14 @@ async function main() {
     [403],
   );
 
-  for (const name of ["status", "note", "follow-up", "bulk-status"]) {
+  for (const name of [
+    "status",
+    "note",
+    "follow-up",
+    "bulk-status",
+    "search-console-import",
+    "search-console-sync",
+  ]) {
     for (const cookie of [undefined, `${COOKIE}=${FORGED}`]) {
       await shutOut(
         "L1",
@@ -187,6 +215,17 @@ async function main() {
           body: "id=any-id&status=read&note=test",
           cookie,
         },
+        [403],
+      );
+    }
+  }
+  for (const name of ["acquisition-export", "search-console-export"]) {
+    for (const cookie of [undefined, `${COOKIE}=${FORGED}`]) {
+      await shutOut(
+        "L1",
+        `${name}, ${cookie ? "forged session" : "no session"}`,
+        `/api/admin/${name}`,
+        { cookie, headers: RSC },
         [403],
       );
     }
@@ -339,6 +378,8 @@ async function main() {
     ["note", "/api/admin/note", "id=any-id&note=test"],
     ["follow-up", "/api/admin/follow-up", "id=any-id&priority=high&follow_up_on=2026-10-21"],
     ["bulk status", "/api/admin/bulk-status", "ids=any-id&status=archived"],
+    ["search report import", "/api/admin/search-console-import", "{}"],
+    ["search report sync", "/api/admin/search-console-sync", "{}"],
     ["logout", "/api/admin/logout", ""],
   ]) {
     const { status, headers } = await ask(path, {
@@ -849,6 +890,9 @@ async function main() {
       "searchContacts",
       "getContact",
       "listEnquiryEvents",
+      "getAcquisitionStats",
+      "getSearchConsoleReport",
+      "saveSearchConsoleReport",
     ]) {
       const declaration = tree.statements.find(
         (node) => ts.isFunctionDeclaration(node) && node.name?.text === name,
@@ -863,6 +907,8 @@ async function main() {
       "app/admin/beskeder/page.tsx",
       "app/admin/beskeder/[id]/page.tsx",
       "app/admin/trafik/page.tsx",
+      "app/admin/seo/page.tsx",
+      "app/admin/kampagner/page.tsx",
       "app/admin/system/page.tsx",
       "app/admin/opfoelgning/page.tsx",
       "app/admin/kontakter/page.tsx",

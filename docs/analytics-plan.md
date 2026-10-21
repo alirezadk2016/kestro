@@ -53,6 +53,41 @@ bekræftes af en lokal browsertest.
 
 ## Search Console
 
+### Privat vækstpanel · 21. oktober 2026
+
+`/admin/trafik` tæller besøg med 30 minutters inaktivitet som sessionsgrænse,
+ikke unikke personer. Kilde og kampagne fastholdes fra besøgets første signal.
+Kun fem UTM-mærkater accepteres; den rå querystreng sendes ikke af trackeren.
+Manglende henviser vises som **Direkte / ukendt**, og historiske rækker beholder
+en tydelig legacy-markering. Ældre kildelabels kan klassificeres, men tidligere
+kampagner, medier eller betalt trafik opfindes ikke. Besøg kobles ikke til
+navngivne henvendelser. Filtertabeller deler samme nævner; live-oplysninger er
+separat markeret og påvirkes ikke af kilde-/kampagnefiltrene.
+
+`/admin/kampagner` bygger mærkede links til publicerede sider. `utm_content=bio`
+beskriver det delte link; det er ikke bevis for eksponering i Instagram Explore.
+Browserens henviser kan være manglende eller reduceret til domænet.
+
+`/admin/seo` gemmer validerede, private Search Console-rapporter. Samme ejendom,
+periode og søgetype erstattes atomisk, så genimport ikke lægger tal sammen.
+JSON-rapporten kan indeholde de separate dag-, forespørgsels- og sidetabeller;
+en enkelt officiel CSV-tabel kan også importeres. En query-/side-CSV har ingen
+samlet ejendomstotal. Skjulte forespørgsler og leverandørens rækkegrænser betyder,
+at synlige queryrækker ikke nødvendigvis summerer til rapportens klik.
+
+Egne besøgsdage bruger UTC; Search Console bruger America/Los_Angeles. Google-
+klik er ikke det samme som egne besøg. Forsinkede dage, delvise rapporter og
+fraværende forbindelser vises eksplicit. Windsor.ai kan kun opdateres fra
+serveren med en særskilt konfigureret `WINDSOR_API_KEY`; en forbindelse i en
+administrators chat er ikke en automatisk forbindelse i webapplikationen.
+Ingen API-nøgle eller virkelig rapport må indgå i kildekoden.
+
+Primære beskrivelser: [Google om Search Console-data](https://developers.google.com/search/blog/2022/10/performance-data-deep-dive),
+[Search Analytics API](https://developers.google.com/webmaster-tools/v1/searchanalytics/query),
+[MDN om Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy).
+
+### Kontrol i Google-kontoen
+
 Ejerskab, indeksering og søgetrafik skal bekræftes i den faktiske konto. Kontrollér:
 
 - en ejendom for **både** `https://www.kestro.dk` og domæneejendommen, så

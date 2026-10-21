@@ -3,6 +3,13 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { neon } from "@neondatabase/serverless";
 
 import { adminAuthed } from "@/lib/admin-auth";
+import type {
+  AcquisitionFilters,
+  AcquisitionStats,
+  SearchConsoleReport,
+  StoredSearchConsoleReport,
+} from "@/lib/insights-types";
+import type { VisitAttribution } from "@/lib/visits";
 import {
   bulkEnquiryIds,
   copenhagenToday,
@@ -231,11 +238,9 @@ function ensureSchema(): Promise<void> {
      * table proportional to how many pages the site has, which is 112, and
      * makes every chart a single grouped read.
      *
-     * Views, not visitors. Telling two visits apart needs something that
-     * survives between requests — a cookie, or a fingerprint derived from the
-     * address and the browser — and the privacy policy says this site stores
-     * neither. Vercel's own panel gives unique visitors; this gives the shape
-     * of the traffic without identifying anyone.
+     * Views, not unique people. The separate visit table below deduplicates
+     * reloads using a server-derived daily hash, without a browser cookie or
+     * storage identifier. This day/path table remains aggregate counts only.
      */
     await sql`
       CREATE TABLE IF NOT EXISTS page_views (
@@ -277,6 +282,33 @@ function ensureSchema(): Promise<void> {
     /* Who is here now, and the open-visit lookup that runs on every hit. */
     await sql`CREATE INDEX IF NOT EXISTS visits_last_seen_idx ON visits (last_seen DESC)`;
     await sql`CREATE INDEX IF NOT EXISTS visits_open_idx ON visits (visitor, last_seen DESC)`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS medium TEXT`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS campaign TEXT`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS content TEXT`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS term TEXT`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS referrer_host TEXT`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS attribution_method TEXT NOT NULL DEFAULT 'legacy'`;
+    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS channel TEXT`;
+    /* Historical source names establish a broad platform category only.
+       They cannot recover a campaign, medium, paid status or referrer. */
+    await sql`
+      UPDATE visits SET channel = CASE
+        WHEN lower(source) IN ('google', 'bing', 'duckduckgo', 'ecosia', 'yahoo') THEN 'search'
+        WHEN lower(source) IN ('instagram', 'facebook', 'linkedin', 'x', 'tiktok', 'youtube', 'pinterest', 'reddit') THEN 'social'
+        WHEN source IN ('Direkte', 'Direkte / ukendt') THEN 'direct_unknown'
+        ELSE 'other' END
+      WHERE channel IS NULL`;
+    await sql`CREATE INDEX IF NOT EXISTS visits_started_idx ON visits (started_at DESC)`;
+    await sql`
+      CREATE TABLE IF NOT EXISTS search_console_reports (
+        property TEXT NOT NULL,
+        date_from DATE NOT NULL,
+        date_to DATE NOT NULL,
+        search_type TEXT NOT NULL,
+        report JSONB NOT NULL,
+        imported_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+        PRIMARY KEY (property, date_from, date_to, search_type)
+      )`;
 
     /*
      * The day's salt.
@@ -940,22 +972,12 @@ export async function currentSalt(): Promise<string | null> {
   }
 }
 
-export type VisitHit = {
+export type VisitHit = VisitAttribution & {
   visitor: string;
   path: string;
-  source: string;
   country: string | null;
   device: string;
 };
-
-/** Add one to today's count for a path. */
-async function bumpView(path: string): Promise<void> {
-  if (!sql) return;
-  await sql`
-    INSERT INTO page_views (day, path, views)
-    VALUES (CURRENT_DATE, ${path}, 1)
-    ON CONFLICT (day, path) DO UPDATE SET views = page_views.views + 1`;
-}
 
 /**
  * Record a page being read, against the visit it belongs to.
@@ -975,26 +997,39 @@ export async function recordHit(hit: VisitHit): Promise<void> {
   try {
     await ensureSchema();
 
-    const open = (await sql`
-      SELECT id, last_path FROM visits
-      WHERE visitor = ${hit.visitor} AND last_seen > now() - interval '30 minutes'
-      ORDER BY last_seen DESC LIMIT 1`) as { id: string; last_path: string | null }[];
-
-    if (open.length === 0) {
-      await sql`
-        INSERT INTO visits (id, visitor, source, entry_path, last_path, country, device)
-        VALUES (${randomUUID()}, ${hit.visitor}, ${hit.source}, ${hit.path}, ${hit.path},
-                ${hit.country}, ${hit.device})`;
-      await bumpView(hit.path);
-      return;
-    }
-
-    const repeat = open[0].last_path === hit.path;
-    await sql`
-      UPDATE visits
-      SET last_seen = now(), last_path = ${hit.path}, hits = hits + ${repeat ? 0 : 1}
-      WHERE id = ${open[0].id}`;
-    if (!repeat) await bumpView(hit.path);
+    /* The lock is a separate statement in a READ COMMITTED transaction.
+       A second concurrent first hit gets a fresh snapshot after it acquires
+       the lock, so it sees the visit the first hit has just committed. */
+    await sql.transaction(
+      [
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${hit.visitor}, 0))`,
+        sql`
+        WITH open_visit AS MATERIALIZED (
+          SELECT id, last_path FROM visits
+          WHERE visitor = ${hit.visitor} AND last_seen > now() - interval '30 minutes'
+          ORDER BY last_seen DESC LIMIT 1
+        ), changed AS (
+          UPDATE visits SET last_seen = now(), last_path = ${hit.path},
+            hits = hits + CASE WHEN (SELECT last_path FROM open_visit) IS DISTINCT FROM ${hit.path} THEN 1 ELSE 0 END
+          WHERE id = (SELECT id FROM open_visit)
+          RETURNING id
+        ), created AS (
+          INSERT INTO visits (id, visitor, source, entry_path, last_path, country, device,
+            medium, campaign, content, term, referrer_host, attribution_method, channel)
+          SELECT ${randomUUID()}, ${hit.visitor}, ${hit.source}, ${hit.path}, ${hit.path},
+            ${hit.country}, ${hit.device}, ${hit.medium}, ${hit.campaign}, ${hit.content},
+            ${hit.term}, ${hit.referrerHost}, ${hit.method}, ${hit.channel}
+          WHERE NOT EXISTS (SELECT 1 FROM open_visit)
+          RETURNING id
+        )
+        INSERT INTO page_views (day, path, views)
+        SELECT CURRENT_DATE, ${hit.path}, 1
+        WHERE EXISTS (SELECT 1 FROM created)
+           OR EXISTS (SELECT 1 FROM open_visit WHERE last_path IS DISTINCT FROM ${hit.path})
+        ON CONFLICT (day, path) DO UPDATE SET views = page_views.views + 1`,
+      ],
+      { isolationLevel: "ReadCommitted" },
+    );
   } catch (error) {
     console.error("recordHit failed", error);
   }
@@ -1204,6 +1239,233 @@ export async function viewStats(windowDays = 30): Promise<ViewStats> {
   } catch (error) {
     console.error("viewStats failed", error);
     return empty;
+  }
+}
+
+/** Session acquisition, with every breakdown using the same filtered base. */
+export async function getAcquisitionStats(filters: AcquisitionFilters): Promise<AcquisitionStats> {
+  await adminOnly("traffic acquisition figures");
+  const days = [7, 30, 90].includes(filters.days) ? filters.days : 30;
+  const source = typeof filters.source === "string" ? filters.source.trim().slice(0, 253) : "";
+  const campaign = typeof filters.campaign === "string" ? filters.campaign.trim().slice(0, 80) : "";
+  const knownChannels = [
+    "search",
+    "social",
+    "paid",
+    "email",
+    "referral",
+    "direct_unknown",
+    "other",
+  ];
+  const channel =
+    typeof filters.channel === "string" && knownChannels.includes(filters.channel)
+      ? filters.channel
+      : "";
+  const today = new Date();
+  const end = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 1),
+  );
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - days);
+  const previousStart = new Date(start);
+  previousStart.setUTCDate(previousStart.getUTCDate() - days);
+  const dayBefore = (date: Date) =>
+    new Date(date.getTime() - 86_400_000).toISOString().slice(0, 10);
+  const startISO = start.toISOString();
+  const endISO = end.toISOString();
+  const previousStartISO = previousStart.toISOString();
+  const empty: AcquisitionStats = {
+    available: false,
+    days,
+    filters: { source, channel, campaign },
+    range: {
+      from: startISO.slice(0, 10),
+      to: dayBefore(end),
+      previousFrom: previousStartISO.slice(0, 10),
+      previousTo: dayBefore(start),
+      timezone: "UTC",
+    },
+    allVisits: 0,
+    totals: { visits: 0, attributed: 0, unknown: 0, tagged: 0, legacy: 0 },
+    previousVisits: 0,
+    daily: [],
+    channels: [],
+    sources: [],
+    otherSourceVisits: 0,
+    campaigns: [],
+    landingPages: [],
+    options: { sources: [], channels: [], campaigns: [] },
+  };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const [totals, daily, channels, sources, campaigns, landingPages, options] = await Promise.all([
+      sql`
+        /* acquisition:totals */
+        SELECT
+          (SELECT count(*)::int FROM visits WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz) AS all_visits,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz)::int AS visits,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND (
+            attribution_method IN ('utm', 'referrer') OR (attribution_method = 'legacy' AND source NOT IN ('', 'Direkte', 'Direkte / ukendt', 'Ukendt'))
+          ))::int AS attributed,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND NOT (
+            attribution_method IN ('utm', 'referrer') OR (attribution_method = 'legacy' AND source NOT IN ('', 'Direkte', 'Direkte / ukendt', 'Ukendt'))
+          ))::int AS unknown,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND attribution_method = 'utm')::int AS tagged,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND attribution_method = 'legacy')::int AS legacy,
+          count(*) FILTER (WHERE started_at < ${startISO}::timestamptz)::int AS previous
+        FROM visits
+        WHERE started_at >= ${previousStartISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})`,
+      sql`
+        /* acquisition:daily */
+        SELECT to_char(started_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY day ORDER BY day`,
+      sql`
+        /* acquisition:channels */
+        SELECT coalesce(channel, 'other') AS channel, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY coalesce(channel, 'other') ORDER BY visits DESC, channel`,
+      sql`
+        /* acquisition:sources */
+        SELECT source, coalesce(channel, 'other') AS channel, medium, count(*)::int AS visits,
+          count(*) FILTER (WHERE attribution_method = 'utm')::int AS tagged,
+          count(*) FILTER (WHERE attribution_method = 'referrer')::int AS referred,
+          count(*) FILTER (WHERE attribution_method = 'legacy')::int AS legacy
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY source, coalesce(channel, 'other'), medium
+        ORDER BY visits DESC, source, channel, medium NULLS FIRST LIMIT 100`,
+      sql`
+        /* acquisition:campaigns */
+        SELECT source, medium, campaign, content, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+          AND campaign IS NOT NULL
+        GROUP BY source, medium, campaign, content
+        ORDER BY visits DESC, campaign, source, medium NULLS FIRST, content NULLS FIRST LIMIT 100`,
+      sql`
+        /* acquisition:landing */
+        SELECT coalesce(entry_path, 'Ukendt') AS path, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY coalesce(entry_path, 'Ukendt') ORDER BY visits DESC, path LIMIT 100`,
+      sql`
+        /* acquisition:options */
+        WITH current_visits AS (
+          SELECT source, coalesce(channel, 'other') AS channel, campaign FROM visits
+          WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+        )
+        SELECT 'source' AS kind, source AS value FROM current_visits GROUP BY source
+        UNION ALL SELECT 'channel' AS kind, channel AS value FROM current_visits GROUP BY channel
+        UNION ALL SELECT 'campaign' AS kind, campaign AS value FROM current_visits WHERE campaign IS NOT NULL GROUP BY campaign
+        ORDER BY kind, value`,
+    ]);
+    const t = (
+      totals as {
+        all_visits: number;
+        visits: number;
+        attributed: number;
+        unknown: number;
+        tagged: number;
+        legacy: number;
+        previous: number;
+      }[]
+    )[0];
+    const sourceRows = sources as AcquisitionStats["sources"];
+    const byDay = new Map((daily as AcquisitionStats["daily"]).map((row) => [row.day, row.visits]));
+    const optionRows = options as { kind: string; value: string }[];
+    return {
+      ...empty,
+      available: true,
+      allVisits: t?.all_visits ?? 0,
+      totals: {
+        visits: t?.visits ?? 0,
+        attributed: t?.attributed ?? 0,
+        unknown: t?.unknown ?? 0,
+        tagged: t?.tagged ?? 0,
+        legacy: t?.legacy ?? 0,
+      },
+      previousVisits: t?.previous ?? 0,
+      daily: Array.from({ length: days }, (_, index) => {
+        const day = new Date(start.getTime() + index * 86_400_000).toISOString().slice(0, 10);
+        return { day, visits: byDay.get(day) ?? 0 };
+      }),
+      channels: channels as AcquisitionStats["channels"],
+      sources: sourceRows,
+      otherSourceVisits: Math.max(
+        0,
+        (t?.visits ?? 0) - sourceRows.reduce((sum, row) => sum + row.visits, 0),
+      ),
+      campaigns: campaigns as AcquisitionStats["campaigns"],
+      landingPages: landingPages as AcquisitionStats["landingPages"],
+      options: {
+        sources: optionRows.filter((row) => row.kind === "source").map((row) => row.value),
+        channels: optionRows.filter((row) => row.kind === "channel").map((row) => row.value),
+        campaigns: optionRows.filter((row) => row.kind === "campaign").map((row) => row.value),
+      },
+    };
+  } catch (error) {
+    console.error("getAcquisitionStats failed", error);
+    return empty;
+  }
+}
+
+/** Latest imported aggregate Google report; never visitor/customer records. */
+export async function getSearchConsoleReport(): Promise<StoredSearchConsoleReport> {
+  await adminOnly("Search Console reports");
+  const empty: StoredSearchConsoleReport = { available: false, report: null, importedAt: null };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const rows = await sql`
+      SELECT report, to_char(imported_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS "importedAt" FROM search_console_reports
+      WHERE property = 'sc-domain:kestro.dk'
+      ORDER BY imported_at DESC, date_to DESC, date_from DESC, search_type LIMIT 1`;
+    const row = (rows as { report: SearchConsoleReport; importedAt: string }[])[0];
+    return { available: true, report: row?.report ?? null, importedAt: row?.importedAt ?? null };
+  } catch (error) {
+    console.error("getSearchConsoleReport failed", error);
+    return empty;
+  }
+}
+
+/** Re-importing a property/period/type replaces one snapshot atomically. */
+export async function saveSearchConsoleReport(report: SearchConsoleReport): Promise<boolean> {
+  await adminOnly("Search Console report imports");
+  if (!sql || report.property !== "sc-domain:kestro.dk" || report.schemaVersion !== 1) return false;
+  try {
+    await ensureSchema();
+    const payload = JSON.stringify(report);
+    await sql`
+      INSERT INTO search_console_reports (property, date_from, date_to, search_type, report)
+      VALUES (${report.property}, ${report.dateFrom}::date, ${report.dateTo}::date, ${report.searchType}, ${payload}::jsonb)
+      ON CONFLICT (property, date_from, date_to, search_type) DO UPDATE
+      SET report = EXCLUDED.report, imported_at = now()`;
+    return true;
+  } catch (error) {
+    console.error("saveSearchConsoleReport failed", error);
+    return false;
   }
 }
 

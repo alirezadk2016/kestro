@@ -3,14 +3,18 @@ import Link from "next/link";
 import { BUTTON, CARD } from "@/components/admin/tokens";
 import { AdminPageHeader, SectionHead } from "@/components/admin/parts";
 import { requireAdmin, SESSION_COOKIE } from "@/lib/admin-auth";
-import { adminDatabaseHealth, dbMisconfigured } from "@/lib/db";
+import { adminDatabaseHealth, dbMisconfigured, getSearchConsoleReport } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
 export default async function SystemPage() {
   await requireAdmin();
-  const database = await adminDatabaseHealth();
+  const [database, searchReport] = await Promise.all([
+    adminDatabaseHealth(),
+    getSearchConsoleReport(),
+  ]);
   const mail = Boolean(process.env.RESEND_API_KEY);
+  const windsor = Boolean(process.env.WINDSOR_API_KEY);
   const dedicatedSecret = Boolean(process.env.ADMIN_SESSION_SECRET);
   // The signature has already been verified by requireAdmin. Never render it.
   const expires = Number((await cookies()).get(SESSION_COOKIE)?.value.split(".")[0]);
@@ -47,6 +51,28 @@ export default async function SystemPage() {
       note: mail
         ? "RESEND_API_KEY er til stede. Domæne og levering er ikke testet her; denne kontrol sender ingen e-mail."
         : "Tilføj RESEND_API_KEY og en godkendt afsender i projektets miljøvariabler. Genudgiv derefter.",
+    },
+    {
+      title: "Google & SEO",
+      state: !searchReport.available
+        ? "Rapport kunne ikke læses"
+        : searchReport.report
+          ? "Rapport gemt"
+          : "Ingen rapport gemt endnu",
+      ok: searchReport.available && Boolean(searchReport.report),
+      note: !searchReport.available
+        ? "Kontrollér databasen. En manglende forbindelse er ikke det samme som en tom Search Console-rapport."
+        : searchReport.report
+          ? `Seneste gemte dataperiode: ${new Date(`${searchReport.report.dateFrom}T12:00:00Z`).toLocaleDateString("da-DK", { dateStyle: "medium", timeZone: "UTC" })} – ${new Date(`${searchReport.report.dateTo}T12:00:00Z`).toLocaleDateString("da-DK", { dateStyle: "medium", timeZone: "UTC" })}. Rapportens oprindelse, dato og afgrænsning vises under Google & SEO.`
+          : "Importér en rigtig Search Console-rapport under Google & SEO. Der vises ingen opdigtede søgeord eller tal.",
+    },
+    {
+      title: "Automatisk SEO-kilde",
+      state: windsor ? "API-nøgle konfigureret" : "Manuel import tilgængelig",
+      ok: windsor,
+      note: windsor
+        ? "WINDSOR_API_KEY er til stede på webstedet. Denne kontrol henter ingen data og bekræfter ikke kontoadgang; forbindelsen testes først ved rapportopdatering."
+        : "Der er ingen Windsor-nøgle konfigureret på webstedet. En forbindelse i chatten overføres ikke automatisk til serveren. Manuel rapportimport kan bruges under Google & SEO.",
     },
     {
       title: "Sessionsignering",
@@ -164,6 +190,18 @@ export default async function SystemPage() {
               text: "Vælg op til 25 beskeder på den aktuelle indbakkeside, og brug en fælles handling. Læs bekræftelsen, før du fortsætter.",
               href: "/admin/beskeder",
               label: "Åbn indbakken",
+            },
+            {
+              title: "Find dine trafikkilder",
+              text: "Vælg en kilde eller kampagne for at se de tilhørende indgangssider. Direkte / ukendt er ikke bevis for en indtastet adresse.",
+              href: "/admin/trafik",
+              label: "Åbn trafik & kilder",
+            },
+            {
+              title: "Se søgeord og mærk links",
+              text: "Google & SEO bruger en rigtig Search Console-rapport. Kampagnelinks gør dine egne placeringer genkendelige i næste besøg.",
+              href: "/admin/seo",
+              label: "Åbn Google & SEO",
             },
             {
               title: "Se sitets indhold",
