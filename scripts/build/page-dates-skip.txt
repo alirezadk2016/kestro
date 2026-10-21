@@ -20,3 +20,4 @@ fd235b9  # card grids recomposed: marks inline, one large door, prompt on touch
 # pages and some link labels; on these files it changed only classes,
 # comments or quote marks
 fdeee3b app/[lang]/tilbud/page.tsx app/[lang]/priser/page.tsx app/[lang]/vejledninger/page.tsx app/[lang]/vejledninger/[slug]/page.tsx app/[lang]/privatlivspolitik/page.tsx app/[lang]/flaadeloesninger/page.tsx app/[lang]/reparation/[slug]/page.tsx components/ContactForm.tsx
+dfd6168 lib/legal.ts  # only the privacy date changed; the terms document was not revised
