@@ -246,10 +246,10 @@ const rolloutPhases = [
 
 const enterpriseFaqs = [
   {
-    question: { da: "Hvor mange enheder kan I levere?", en: "How many machines can you deliver?" },
+    question: { da: "Kan vi købe bærbare i større antal?", en: "Can we buy laptops in bulk?" },
     answer: {
-      da: "Vi skaffer maskinerne til den enkelte ordre frem for at sælge fra et fast lager, så antallet afhænger af, hvad der kan skaffes til den ønskede specifikation og tidsramme. Fortæl os omfanget, så melder vi konkret tilbage på, hvad vi kan levere og hvornår.",
-      en: "We source per order rather than selling from fixed stock, so the number depends on what can be found at the specification and timing you want. Tell us the scope and we come back concretely on what we can deliver and when.",
+      da: "Ja – bærbare, stationære og skærme. Vi skaffer maskinerne til den enkelte ordre frem for at sælge fra et fast lager, så antallet afhænger af, hvad der kan skaffes til den ønskede specifikation og tidsramme. Fortæl os omfanget, så melder vi konkret tilbage på, hvad vi kan levere og hvornår.",
+      en: "Yes – laptops, desktops and monitors. We source per order rather than selling from fixed stock, so the number depends on what can be found at the specification and timing you want. Tell us the scope and we come back concretely on what we can deliver and when.",
     },
   },
   {

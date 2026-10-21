@@ -133,7 +133,11 @@ export const categories: Category[] = [
       },
       {
         href: "/reparation/ram-og-ssd-opgradering",
-        label: { da: "Kan den gamle bærbare opgraderes?", en: "Can the old laptop be upgraded?" },
+        label: { da: "RAM og SSD opgraderet på værkstedet", en: "Memory and SSD fitted in the workshop" },
+      },
+      {
+        href: "/flaadeloesninger",
+        label: { da: "Køb bærbare i større antal", en: "Buy laptops in bulk" },
       },
     ],
   },
