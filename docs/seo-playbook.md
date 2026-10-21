@@ -9,6 +9,62 @@ This file is the other half: where kestro.dk stands against those rules. It
 records what passes, what is pending, and what waits on the owner. Update it
 in every change that applies Mak or adds a lesson.
 
+## Search Console read — 21 October 2026
+
+The first reading under rule 14, through the Windsor.ai connector
+(`searchconsole`, property `sc-domain:kestro.dk`). It is read-only: it gives
+performance and sitemap data, not Page Indexing, URL Inspection or Core Web
+Vitals. Raw figures stay outside this public repository (rule 14: share it
+with nobody); this records what they led to.
+
+What holds:
+- **Property:** Domain, as the method asks. **Sitemap:**
+  `https://www.kestro.dk/sitemap.xml`, every URL in it submitted, no errors
+  or warnings, re-read by Google on 19 October.
+- **Old addresses:** Google still shows some of the English pages on their
+  old Danish-slug addresses (`/en/produkter/...`, `/en/knowledge/<danish>`,
+  `/en/modeller/...`). Every one of them answers with a single 301 to a live
+  200 page; none 404s. Nothing to change; Google folds them as it recrawls.
+- **Canonical host:** www, which is the host the sitemap was submitted on.
+
+What it showed, and what was done (rules 1, 2, 5, 9):
+- **Wrong page for the general term.** "Computer til erhverv", "pc til
+  erhverv", "køb pc til erhverv" and "arbejdscomputer" land on `/modeller`.
+  None names a model, so the general category owns them. `/produkter`'s
+  description now says "computere til erhverv", and `/modeller` links to
+  `/produkter` with that anchor.
+- **The Danish laptop and monitor categories had no impressions at all**
+  in the period, while Danish laptop searches reached `/produkter` and the
+  old English laptop address. The laptop category has the most internal
+  links in of any category (20 pages), and its canonical, hreflang, sitemap
+  entry and status are correct, so this reads as an indexing question, not a
+  content one. Only URL Inspection can answer it. The category's title now
+  carries "til erhverv" and its description addresses the business with "I"
+  instead of "du".
+- **Lenovo in the title.** Searches use the brand ("brugt lenovo x1
+  carbon"); the Dell and HP model titles already carried theirs. All seven
+  Lenovo model titles now do, in both languages, each measured under 580 px.
+- **Keyword map:** 17 rows from Search Console, each on the page its intent
+  belongs to. Volume stays `unknown`: impressions are this site's, not the
+  market's.
+- **Not acted on:** zero clicks at positions 5–10 on pages with a handful of
+  impressions. At this volume that is not a CTR signal, and rewriting a
+  snippet on it would be guessing. A query that is plainly another trade
+  (industrial shredders on the desktop category) is left alone.
+
+Open, for the owner:
+- **URL Inspection** on `/produkter/baerbare-computere` and
+  `/produkter/skaerme`: is the page indexed, and which canonical did Google
+  choose? Then request indexing for both.
+- **Indexing → Pages:** the exclusion reasons and the URLs under each. The
+  connector cannot read them.
+- **Workstations.** Workstation searches land on `/modeller`. A category is
+  only right if Kestro sources workstations (rule 2); the owner decides.
+- **Bing Webmaster Tools:** import the property from Search Console.
+
+Next reading: weekly while the site is this young; compare completed
+windows, not a partial week against a full one.
+
 ## Needs-Led Targeting — 16 October 2026
 
 - The owner prioritised selection, budget, company use, startup equipment,
@@ -306,10 +362,10 @@ in one go.
   primary keyword's own words ("starter ikke") are not in the page body.
 - **Rule 13, evergreen:** guides answer standing questions; no year in any
   URL.
-- **Rule 14, Search Console:** waits on the owner. Create a Domain property
-  for kestro.dk, add the TXT record where the DNS is managed, submit
-  `https://www.kestro.dk/sitemap.xml`, and add the same site to Bing
-  Webmaster Tools (it can import from Search Console).
+- **Rule 14, Search Console:** done. Domain property `sc-domain:kestro.dk`,
+  sitemap processed without errors; read through the Windsor.ai connector
+  (first reading 21 October 2026, above). Bing Webmaster Tools still waits
+  on the owner (it can import from Search Console).
 
 ### `mak run`, applied 14 October 2026
 

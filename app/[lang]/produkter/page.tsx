@@ -16,7 +16,7 @@ const copy = {
   da: {
     metaTitle: "Brugt IT-udstyr til virksomheder: pc, skærm og dock | Kestro",
     metaDescription:
-      "Refurbished bærbare, stationære, mini-pc'er, skærme, tablets og docks til virksomheder i Danmark og Norge – skaffet til ordren, med vilkår på skrift.",
+      "Brugte computere til erhverv: bærbare, stationære, mini-pc'er, skærme, tablets og docks – skaffet til ordren i Danmark og Norge, med vilkår på skrift.",
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
     description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Start med opgaver, programmer og budget; afklar derefter skærme, dansk eller norsk tastatur og om den gamle computer kan opgraderes.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",

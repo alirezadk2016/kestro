@@ -121,6 +121,23 @@ thin pages).
 Weekly at first, then monthly, a short note in `docs/seo-playbook.md`: what
 moved, what was changed because of it.
 
+**At Kestro, through Windsor.ai.** The property is read with the Windsor.ai
+connector: `get_data` on `searchconsole`, account `sc-domain:kestro.dk`, with
+`include_fresh_data` for the last days. Fields: `query`, `page`, `clicks`,
+`impressions`, `ctr`, `position`, `date`, `country`, `device`; the sitemap
+table is `path`, `submitted`, `errors`, `warnings`, `last_downloaded`. It is
+read-only and has no Page Indexing, URL Inspection or Core Web Vitals: those,
+and every "request indexing", are the owner's, in the Search Console UI.
+- Resolve every reported URL against the build (`curl -L`): an old address
+  that 301s once to a 200 needs nothing.
+- Diff the sitemap against the pages that had any impression. A page with
+  plenty of links in and no impressions at all is an indexing question for
+  URL Inspection, not a reason to rewrite it.
+- A handful of impressions at positions 5–10 with no click is not a CTR
+  signal. Act on CTR once a query has impressions in the hundreds.
+- No figure goes into the repository, which is public: record what the
+  data led to, never the data.
+
 ## Content upkeep
 
 - **Refresh, don't republish.** A page that drops gets its facts checked and

@@ -41,11 +41,11 @@ export const categories: Category[] = [
       en: "Refurbished business laptops for office and hybrid work",
     },
     metaTitle: {
-      da: "Brugte bærbare computere med dansk tastatur | Kestro",
+      da: "Brugte bærbare computere til erhverv – dansk tastatur | Kestro",
       en: "Refurbished business laptops with Nordic keyboards | Kestro",
     },
     metaDescription: {
-      da: "Vælg brugt bærbar til kontor, startup eller hjemmearbejde. Afklar budget, batteri og dansk eller norsk tastatur. Få råd om pris og valg til dit behov.",
+      da: "Brugte laptops til virksomheder – til kontor, startup eller hjemmearbejde. Afklar budget, batteri og dansk eller norsk tastatur, og få råd, før I vælger.",
       en: "Find a used laptop for work, a startup or home office. Check budget, battery and Danish or Norwegian keys. Ask for advice before choosing a laptop.",
     },
     intro: {

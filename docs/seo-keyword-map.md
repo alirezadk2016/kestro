@@ -1,10 +1,36 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 226 i alt, 193 danske, 32 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 243 i alt, 207 danske, 35 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
 ## Hvad der var galt
+
+### Search Console læst, 21. oktober 2026
+
+Første læsning efter Mak-regel 14. Tallene bliver uden for dette offentlige
+repository; her står kun, hvad de førte til. Visninger er sitets egne, ikke
+markedets søgevolumen, så Search volume forbliver `unknown`.
+
+- **17 nye rækker** med søgninger, Google allerede forbinder med sitet. Hver
+  er lagt på den side, intentionen hører til, med »Search Console« i noten.
+- **»Computer til erhverv« og varianterne** (pc til erhverv, køb pc til
+  erhverv, arbejdscomputer) landede på `/modeller`. Ingen af dem nævner en
+  model, så de hører til den generelle kategori `/produkter` (regel 2).
+  Oversigtens description bærer nu »computere til erhverv«, og `/modeller`
+  linker til `/produkter` med det anker.
+- **»Brugte laptops til virksomheder«** landede på `/produkter` og på den
+  gamle engelske adresse, aldrig på `/produkter/baerbare-computere`. Den
+  danske laptopkategori – og skærmkategorien – havde ingen visninger i
+  perioden, selv om laptopkategorien har flest interne links ind af alle
+  kategorier. Det peger på indeksering, ikke på indhold; URL-inspektion
+  kræver ejerens adgang. Kategoriens title siger nu »til erhverv«, og
+  descriptionen tiltaler virksomheden med »I«.
+- **Lenovo i title.** Søgningerne bruger mærket (»brugt lenovo x1 carbon«),
+  og Dell- og HP-modellerne havde det allerede. Alle syv Lenovo-modeller har
+  nu »Lenovo« i title på begge sprog, målt under 580 px.
+- **Ingen ny side.** »Workstation« og varianterne lander på `/modeller`.
+  En kategori kræver produkterne (regel 2); spørgsmålet ligger hos ejeren.
 
 ### Praktiske vejledninger, 17. oktober 2026
 

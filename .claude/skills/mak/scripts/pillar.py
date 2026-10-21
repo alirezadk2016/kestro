@@ -33,6 +33,7 @@ import { categories } from "./lib/categories";
 import { guides, clusters } from "./lib/guides";
 import { services } from "./lib/services";
 import { repairs } from "./lib/repairs";
+import { practicalGuides } from "./lib/practical-guides";
 const n = (x: any) => x?.da ?? x;
 console.log(JSON.stringify({
   cats: categories.map((c: any) => ({ slug: c.slug, name: n(c.name) })),
@@ -41,6 +42,7 @@ console.log(JSON.stringify({
   guides: guides.map((g: any) => ({ slug: g.slug, cluster: g.cluster, title: n(g.title) })),
   services: services.map((s: any) => ({ slug: s.slug, name: n(s.name) })),
   repairs: repairs.map((r: any) => ({ slug: r.slug, name: n(r.name) })),
+  practical: practicalGuides.map((g: any) => ({ slug: g.slug, title: n(g.title) })),
 }));
 """], text=True).strip().splitlines()[-1])
 
@@ -81,6 +83,9 @@ for cl in st["clusters"]:
     gs = [g for g in st["guides"] if g["cluster"] == cl["id"]]
     group("Vejledninger (blog)", cl["name"], note="Emne – vist på /vejledninger." if gs else "Emne uden artikler endnu.")
     for g in gs: page("Vejledninger (blog)", cl["name"], g["title"], url=f"/vejledninger/{g['slug']}")
+# The practical guides are their own collection (lib/practical-guides.ts): tasks done on the machine, not articles.
+group("Vejledninger (blog)", "Praktisk hjælp", note="Opgaver med en beregner eller et tjek – vist på /vejledninger.")
+for g in st["practical"]: page("Vejledninger (blog)", "Praktisk hjælp", g["title"], url=f"/vejledninger/{g['slug']}")
 for u, k in proposed.items():
     if u not in audit:
         rows.append({**{c: "" for c in COLS}, "Træ": "Forslag", "Niveau 1": u.rsplit("/", 1)[0], "Niveau 2": u.rsplit("/", 1)[-1],

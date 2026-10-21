@@ -1208,7 +1208,7 @@ export const guides: Guide[] = [
       en: "Refurbished vs used laptops: the difference | Kestro",
     },
     metaDescription: {
-      da: "Refurbished eller brugt computer? Se hvad ordene betyder, og hvad du skal tjekke om stand, batteri og test. Få en tjekliste til dit næste køb.",
+      da: "Refurbished eller brugt computer? Se, hvad ordene betyder, og hvad I skal tjekke om stand, batteri og test. Få en tjekliste til jeres næste indkøb.",
       en: "Refurbished or used laptop? Learn what each term means and what to ask about condition, testing and battery health before choosing a computer.",
     },
     summary: {

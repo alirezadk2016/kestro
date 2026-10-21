@@ -21,6 +21,8 @@ const copy = {
     noStockLine:
       "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
+    byTypeLine: "Leder I efter en type maskine frem for en bestemt model?",
+    byTypeLink: "Se computere til erhverv efter kategori",
     noShopBody1:
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
@@ -35,6 +37,8 @@ const copy = {
     description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and actual configuration.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",
+    byTypeLine: "Looking for a type of machine rather than a specific model?",
+    byTypeLink: "See business computers by category",
     noShopBody1:
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
@@ -92,6 +96,19 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
               className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
             >
               {c.noStockLink}
+            </Link>
+          </p>
+          {/* Search Console lands "computer til erhverv" and its variants
+              here, on the model catalogue. A search that names no model
+              belongs to the general category (mak rule 2), so the catalogue
+              points there in so many words. */}
+          <p className="mt-2 max-w-3xl text-sm leading-[1.6] text-paper/65">
+            {c.byTypeLine}{" "}
+            <Link
+              href={localePath("/produkter", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
+            >
+              {c.byTypeLink}
             </Link>
           </p>
 

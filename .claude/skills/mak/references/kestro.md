@@ -85,7 +85,8 @@ checks this.
   - Danish URLs never move.
   - Renaming a route needs the owner's yes and a redirect.
 - **Search evidence.** `google.com` and the autocomplete endpoints are
-  blocked here. Ask the owner for screenshots or a Search Console export,
-  and say plainly when a decision waits on one.
+  blocked here. Search Console is readable through the Windsor.ai connector
+  (`beyond-course.md`, "Reading Search Console"); for anything else ask the
+  owner for screenshots, and say plainly when a decision waits on one.
 - **This repository is public.** Course material, and anything personal in
   it, stays out: names, phone numbers, handles, client data.
