@@ -66,10 +66,9 @@ const copy = {
       "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se hvad prisen afhænger af, og kontakt os om en konkret pris og muligheder til jer.",
     title: "Hvad koster brugte computere?",
     whyTitle: "Hvorfor er priserne vejledende?",
-    whyBody1:
-      "Vi har endnu ikke et bekræftet lager eller faste salgspriser, så eksemplerne er offentlige detailpriser hos eksterne forhandlere på den angivne dato – ikke et løfte om, at vi kan levere samme maskine til samme pris.",
+    whyBody1: "Model, stand, antal, tastatur og klargøring kan ændre beløbet.",
     whyBody2:
-      "Model, stand, antal, tastatur og klargøring kan ændre beløbet, så kontakt os, før I lægger et indkøbsbudget fast.",
+      "Vi afklarer muligheder, tilgængelighed og en konkret pris med jer, før I lægger et indkøbsbudget fast.",
     driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
@@ -108,10 +107,9 @@ const copy = {
       "Indicative budgets for used business IT, dated retail price examples and what affects the price. Contact us to discuss options and a specific price.",
     title: "What do used business computers cost?",
     whyTitle: "Why are the prices indicative?",
-    whyBody1:
-      "We have no confirmed stock or fixed selling prices yet, so the examples are public retail prices from external retailers on the stated date — not a promise that we can supply the same machine at the same price.",
+    whyBody1: "Model, condition, quantity, keyboard and preparation can change the amount.",
     whyBody2:
-      "Model, condition, quantity, keyboard and preparation can change the amount, so contact us before you fix a purchasing budget.",
+      "We discuss the options, availability and a specific price with you before you fix a purchasing budget.",
     driversTitle: "What decides your price?",
     driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
@@ -170,8 +168,8 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
   const range = `${nf.format(Math.min(...amounts))}–${nf.format(Math.max(...amounts))} DKK`;
   const lead =
     lang === "da"
-      ? `Ca. ${range} per enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Det er budgetreferencer, ikke Kestros salgspriser.`
-      : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}. These are budget references, not Kestro selling prices.`;
+      ? `Ca. ${range} per enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Budgetreferencerne er ikke Kestros salgspriser eller en bekræftelse på lager.`
+      : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}. These budget references are not Kestro selling prices or confirmation of stock.`;
 
   /* The two questions a buyer types into a search box before they trust a
      supplier enough to write to them. Marked up so the answers can appear

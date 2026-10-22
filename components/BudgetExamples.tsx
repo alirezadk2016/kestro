@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { budgetExamples, budgetAmount, budgetReadOn, budgetSource, formatDkk } from "@/lib/pricing";
-import { priceDisclaimer } from "@/lib/project";
 import { company } from "@/lib/company";
 import { formatDate, localePath, type Lang } from "@/lib/i18n";
 import SourceList from "./SourceList";
@@ -16,7 +15,6 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
           <h2 id="budget-heading" className="t-h2 font-display font-extrabold text-paper">
             {da ? "Et konkret udgangspunkt" : "A concrete starting point"}
           </h2>
-          <p className="mt-4 text-base leading-7 text-paper/85">{priceDisclaimer[lang]}</p>
         </div>
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
           {budgetExamples.map((item) => (
@@ -72,8 +70,8 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
               : "Per unit in DKK, rounded up to the nearest DKK 100 from the external retail prices, including the retailer's VAT and stated service fee. References read "}
             <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>.
             {da
-              ? " Ikke Kestros salgspriser, ikke et markeds-gennemsnit og ikke et løfte om momsfradrag. Tilpasning og andre konfigurationer kan ændre beløbet; fragt og afgifter ved levering til Norge er ikke beregnet."
-              : " Not Kestro selling prices, a market average or a promise of VAT deductibility. Preparation and other configurations may change the amount; shipping and taxes for Norway have not been calculated."}
+              ? " Hver reference gælder den angivne konfiguration; beløbene er ikke et markedsgennemsnit eller et løfte om momsfradrag. Fragt og afgifter ved levering til Norge er ikke beregnet."
+              : " Each reference applies to the stated configuration; the amounts are not a market average or a promise of VAT deductibility. Shipping and taxes for Norway have not been calculated."}
           </p>
           <SourceList
             lang={lang}
