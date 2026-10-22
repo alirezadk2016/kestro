@@ -181,12 +181,44 @@ export type Enquiry = {
  */
 let ready: Promise<void> | null = null;
 
+/*
+ * Another instance created the same object at the same moment.
+ *
+ * IF NOT EXISTS is a check followed by a create, not one atomic step, so two
+ * cold instances can both pass the check and the slower one fails on the
+ * catalogue's own unique index: 23505 on pg_class (or pg_type for a table),
+ * 42P07 for a relation, 42701 for a column, 42710 for another object. It
+ * happened once in production, on 19 October 2026, when a deploy added
+ * enquiries_follow_up_idx and two instances started together: one /api/track
+ * request failed. The object exists by the time the loser hears about it, so
+ * running the statements again turns every one of them into a no-op.
+ */
+const CONCURRENT_DDL = new Set(["23505", "42P07", "42701", "42710"]);
+const concurrentDdl = (error: unknown) =>
+  CONCURRENT_DDL.has(String((error as { code?: unknown } | null)?.code ?? ""));
+
 function ensureSchema(): Promise<void> {
   if (!sql) return Promise.resolve();
   if (ready) return ready;
 
-  ready = (async () => {
-    await sql`
+  ready = createSchema()
+    .catch((error) => {
+      if (!concurrentDdl(error)) throw error;
+      return createSchema();
+    })
+    .catch((error) => {
+      /* Let the next call try again rather than caching a failure for the
+         life of the instance. */
+      ready = null;
+      throw error;
+    });
+
+  return ready;
+}
+
+async function createSchema(): Promise<void> {
+  if (!sql) return;
+  await sql`
       CREATE TABLE IF NOT EXISTS enquiries (
         id          TEXT PRIMARY KEY,
         created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -202,20 +234,20 @@ function ensureSchema(): Promise<void> {
         replied_at  TIMESTAMPTZ,
         reply_body  TEXT
       )`;
-    /*
-     * Why the mail copy did not go out, when it did not.
-     *
-     * Added after the fact rather than in the CREATE above, because the table
-     * already exists in production and this has to work on both. ADD COLUMN IF
-     * NOT EXISTS is a no-op the second time and every time after.
-     */
-    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
-    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS internal_note TEXT`;
-    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS priority TEXT NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high'))`;
-    await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS follow_up_on DATE`;
-    await sql`CREATE INDEX IF NOT EXISTS enquiries_follow_up_idx ON enquiries (follow_up_on, created_at DESC) WHERE status <> 'archived'`;
-    await sql`CREATE INDEX IF NOT EXISTS enquiries_contact_idx ON enquiries (lower(btrim(email)), created_at DESC)`;
-    await sql`
+  /*
+   * Why the mail copy did not go out, when it did not.
+   *
+   * Added after the fact rather than in the CREATE above, because the table
+   * already exists in production and this has to work on both. ADD COLUMN IF
+   * NOT EXISTS is a no-op the second time and every time after.
+   */
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS internal_note TEXT`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS priority TEXT NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high'))`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS follow_up_on DATE`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_follow_up_idx ON enquiries (follow_up_on, created_at DESC) WHERE status <> 'archived'`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_contact_idx ON enquiries (lower(btrim(email)), created_at DESC)`;
+  await sql`
       CREATE TABLE IF NOT EXISTS enquiry_events (
         id TEXT PRIMARY KEY,
         enquiry_id TEXT NOT NULL REFERENCES enquiries(id),
@@ -223,26 +255,26 @@ function ensureSchema(): Promise<void> {
         detail TEXT NOT NULL,
         created_at TIMESTAMPTZ NOT NULL DEFAULT now()
       )`;
-    await sql`CREATE INDEX IF NOT EXISTS enquiry_events_enquiry_idx ON enquiry_events (enquiry_id, created_at DESC, id DESC)`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiry_events_enquiry_idx ON enquiry_events (enquiry_id, created_at DESC, id DESC)`;
 
-    /* The inbox is always read newest first, and the unread count is read on
+  /* The inbox is always read newest first, and the unread count is read on
        every page of the panel. */
-    await sql`CREATE INDEX IF NOT EXISTS enquiries_created_idx ON enquiries (created_at DESC)`;
-    await sql`CREATE INDEX IF NOT EXISTS enquiries_status_idx ON enquiries (status)`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_created_idx ON enquiries (created_at DESC)`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_status_idx ON enquiries (status)`;
 
-    /*
-     * Views, aggregated by day and path rather than stored one row per hit.
-     *
-     * A row per view would be a table that grows without limit and answers
-     * every question with a scan. Counting into a day/path cell keeps the
-     * table proportional to how many pages the site has, which is 112, and
-     * makes every chart a single grouped read.
-     *
-     * Views, not unique people. The separate visit table below deduplicates
-     * reloads using a server-derived daily hash, without a browser cookie or
-     * storage identifier. This day/path table remains aggregate counts only.
-     */
-    await sql`
+  /*
+   * Views, aggregated by day and path rather than stored one row per hit.
+   *
+   * A row per view would be a table that grows without limit and answers
+   * every question with a scan. Counting into a day/path cell keeps the
+   * table proportional to how many pages the site has, which is 112, and
+   * makes every chart a single grouped read.
+   *
+   * Views, not unique people. The separate visit table below deduplicates
+   * reloads using a server-derived daily hash, without a browser cookie or
+   * storage identifier. This day/path table remains aggregate counts only.
+   */
+  await sql`
       CREATE TABLE IF NOT EXISTS page_views (
         day    DATE NOT NULL,
         path   TEXT NOT NULL,
@@ -250,23 +282,23 @@ function ensureSchema(): Promise<void> {
         PRIMARY KEY (day, path)
       )`;
 
-    /*
-     * A visit: one browser reading the site over one sitting.
-     *
-     * This is the table that makes a refresh stop counting as a new reader.
-     * page_views above answers "how many pages were read"; this answers "by
-     * how many people, from where, on what, and for how long" — and the two
-     * are different questions that were previously both answered by the same
-     * incrementing counter.
-     *
-     * A sitting ends after thirty minutes of silence, which is the same window
-     * every analytics tool uses. Coming back after an hour is a second visit,
-     * which is what it feels like to the person too.
-     *
-     * `visitor` is the daily hash from lib/visits.ts, not an address and not
-     * anything that survives the day. No IP, no name, no id in the browser.
-     */
-    await sql`
+  /*
+   * A visit: one browser reading the site over one sitting.
+   *
+   * This is the table that makes a refresh stop counting as a new reader.
+   * page_views above answers "how many pages were read"; this answers "by
+   * how many people, from where, on what, and for how long" — and the two
+   * are different questions that were previously both answered by the same
+   * incrementing counter.
+   *
+   * A sitting ends after thirty minutes of silence, which is the same window
+   * every analytics tool uses. Coming back after an hour is a second visit,
+   * which is what it feels like to the person too.
+   *
+   * `visitor` is the daily hash from lib/visits.ts, not an address and not
+   * anything that survives the day. No IP, no name, no id in the browser.
+   */
+  await sql`
       CREATE TABLE IF NOT EXISTS visits (
         id          TEXT PRIMARY KEY,
         visitor     TEXT NOT NULL,
@@ -279,27 +311,27 @@ function ensureSchema(): Promise<void> {
         country     TEXT,
         device      TEXT
       )`;
-    /* Who is here now, and the open-visit lookup that runs on every hit. */
-    await sql`CREATE INDEX IF NOT EXISTS visits_last_seen_idx ON visits (last_seen DESC)`;
-    await sql`CREATE INDEX IF NOT EXISTS visits_open_idx ON visits (visitor, last_seen DESC)`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS medium TEXT`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS campaign TEXT`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS content TEXT`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS term TEXT`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS referrer_host TEXT`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS attribution_method TEXT NOT NULL DEFAULT 'legacy'`;
-    await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS channel TEXT`;
-    /* Historical source names establish a broad platform category only.
+  /* Who is here now, and the open-visit lookup that runs on every hit. */
+  await sql`CREATE INDEX IF NOT EXISTS visits_last_seen_idx ON visits (last_seen DESC)`;
+  await sql`CREATE INDEX IF NOT EXISTS visits_open_idx ON visits (visitor, last_seen DESC)`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS medium TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS campaign TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS content TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS term TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS referrer_host TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS attribution_method TEXT NOT NULL DEFAULT 'legacy'`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS channel TEXT`;
+  /* Historical source names establish a broad platform category only.
        They cannot recover a campaign, medium, paid status or referrer. */
-    await sql`
+  await sql`
       UPDATE visits SET channel = CASE
         WHEN lower(source) IN ('google', 'bing', 'duckduckgo', 'ecosia', 'yahoo') THEN 'search'
         WHEN lower(source) IN ('instagram', 'facebook', 'linkedin', 'x', 'tiktok', 'youtube', 'pinterest', 'reddit') THEN 'social'
         WHEN source IN ('Direkte', 'Direkte / ukendt') THEN 'direct_unknown'
         ELSE 'other' END
       WHERE channel IS NULL`;
-    await sql`CREATE INDEX IF NOT EXISTS visits_started_idx ON visits (started_at DESC)`;
-    await sql`
+  await sql`CREATE INDEX IF NOT EXISTS visits_started_idx ON visits (started_at DESC)`;
+  await sql`
       CREATE TABLE IF NOT EXISTS search_console_reports (
         property TEXT NOT NULL,
         date_from DATE NOT NULL,
@@ -310,26 +342,26 @@ function ensureSchema(): Promise<void> {
         PRIMARY KEY (property, date_from, date_to, search_type)
       )`;
 
-    /*
-     * The day's salt.
-     *
-     * In the database rather than in memory because every request may land on
-     * a different serverless instance, and two instances with two salts would
-     * hash the same browser to two visitors. Yesterday's row is deleted, which
-     * is what makes yesterday's hashes permanently unlinkable.
-     */
-    /*
-     * Failed logins, so the panel's one password cannot simply be guessed.
-     *
-     * In the database rather than in memory, and that is the whole point: a
-     * per-instance counter is what app/api/kontakt/route.ts has and it says so
-     * itself — "serverless gives no guarantee that two requests reach the same
-     * instance, so it stops a naive flood rather than a determined one". For a
-     * contact form that is an acceptable trade. For the only lock on the admin
-     * panel it is not: an attacker who opens ten connections gets ten
-     * independent counters and the limit stops existing.
-     */
-    await sql`
+  /*
+   * The day's salt.
+   *
+   * In the database rather than in memory because every request may land on
+   * a different serverless instance, and two instances with two salts would
+   * hash the same browser to two visitors. Yesterday's row is deleted, which
+   * is what makes yesterday's hashes permanently unlinkable.
+   */
+  /*
+   * Failed logins, so the panel's one password cannot simply be guessed.
+   *
+   * In the database rather than in memory, and that is the whole point: a
+   * per-instance counter is what app/api/kontakt/route.ts has and it says so
+   * itself — "serverless gives no guarantee that two requests reach the same
+   * instance, so it stops a naive flood rather than a determined one". For a
+   * contact form that is an acceptable trade. For the only lock on the admin
+   * panel it is not: an attacker who opens ten connections gets ten
+   * independent counters and the limit stops existing.
+   */
+  await sql`
       CREATE TABLE IF NOT EXISTS admin_attempts (
         ip            TEXT PRIMARY KEY,
         fails         INTEGER NOT NULL DEFAULT 0,
@@ -337,19 +369,11 @@ function ensureSchema(): Promise<void> {
         locked_until  TIMESTAMPTZ
       )`;
 
-    await sql`
+  await sql`
       CREATE TABLE IF NOT EXISTS analytics_salt (
         day  DATE PRIMARY KEY,
         salt TEXT NOT NULL
       )`;
-  })().catch((error) => {
-    /* Let the next call try again rather than caching a failure for the life
-       of the instance. */
-    ready = null;
-    throw error;
-  });
-
-  return ready;
 }
 
 /** Store an enquiry. Returns false when there is nowhere to store it. */

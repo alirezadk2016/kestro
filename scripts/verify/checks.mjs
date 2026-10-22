@@ -154,6 +154,13 @@ console.log("verify: page structure and metadata");
 
 for (const path of PAGES) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  /* This pass reads markup only and closes each page at DOMContentLoaded, with
+     its images still loading. `next start`'s optimizer serves a resize from a
+     request bound to the visitor's socket, so an aborted one never finishes
+     and every later request for that image waits on it: the 390px pass then
+     timed out on /modeller/lenovo-thinkpad-t480. Refused in the browser, the
+     request never reaches the server. */
+  await page.route("**/_next/image?**", (route) => route.abort());
   const response = await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
 
   if (!response || response.status() >= 400) {
