@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight, ChevronDown, Phone, Search } from "lucide-react";
 import Container from "./Container";
@@ -22,8 +22,41 @@ export default function Header({ lang }: { lang: Lang }) {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchLoaded, setSearchLoaded] = useState(false);
+  const header = useRef<HTMLElement>(null);
+  const drawer = useRef<HTMLDivElement>(null);
   const burger = useRef<HTMLButtonElement>(null);
   const productsTrigger = useRef<HTMLButtonElement>(null);
+
+  useLayoutEffect(() => {
+    const panel = drawer.current;
+    if (!open || !panel) return;
+    const viewport = window.visualViewport;
+    function sizeDrawer() {
+      if (!panel) return;
+      const bottom = viewport ? viewport.offsetTop + viewport.height : window.innerHeight;
+      const height = `${Math.max(0, bottom - panel.getBoundingClientRect().top)}px`;
+      if (panel.style.height !== height) panel.style.height = height;
+    }
+    /* The language hint can leave the sticky bar below the viewport's top.
+       Size from the drawer's real position, including after text or viewport
+       changes, rather than subtracting a nominal header height. */
+    sizeDrawer();
+    const observer = new ResizeObserver(sizeDrawer);
+    if (header.current) observer.observe(header.current);
+    const hint = document.querySelector(".lang-hint");
+    if (hint) observer.observe(hint);
+    window.addEventListener("resize", sizeDrawer);
+    window.addEventListener("scroll", sizeDrawer, { passive: true });
+    viewport?.addEventListener("resize", sizeDrawer);
+    viewport?.addEventListener("scroll", sizeDrawer);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", sizeDrawer);
+      window.removeEventListener("scroll", sizeDrawer);
+      viewport?.removeEventListener("resize", sizeDrawer);
+      viewport?.removeEventListener("scroll", sizeDrawer);
+    };
+  }, [open]);
 
   /*
    * Hold the page still while the drawer is open.
@@ -37,13 +70,15 @@ export default function Header({ lang }: { lang: Lang }) {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    /* And out of reach of Tab. The drawer covers the page, so Tab past its
-       last link used to land on a breadcrumb nobody could see. */
-    const behind = [document.querySelector("main"), document.querySelector("footer")];
-    for (const el of behind) if (el) el.inert = true;
+    /* The language hint and consent banner are siblings too. Isolating only
+       main/footer left their controls reachable behind the full-screen menu. */
+    const behind = Array.from(header.current?.parentElement?.children ?? [])
+      .filter((el): el is HTMLElement => el instanceof HTMLElement && el !== header.current)
+      .map((el) => ({ el, inert: el.inert }));
+    for (const { el } of behind) el.inert = true;
     return () => {
       document.body.style.overflow = previous;
-      for (const el of behind) if (el) el.inert = false;
+      for (const { el, inert } of behind) el.inert = inert;
     };
   }, [open]);
   /*
@@ -58,10 +93,32 @@ export default function Header({ lang }: { lang: Lang }) {
   useEffect(() => {
     if (!open) return;
     function onKey(event: KeyboardEvent) {
-      if (event.key !== "Escape") return;
-      setOpen(false);
-      setMobileProductsOpen(false);
-      burger.current?.focus();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        setMobileProductsOpen(false);
+        burger.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const controls = Array.from(
+        header.current?.querySelectorAll<HTMLElement>(
+          'a[href]:not([tabindex="-1"]), button:not([disabled]), input:not([disabled]), [tabindex="0"]',
+        ) ?? [],
+      ).filter((el) => el.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (!first || !last) return;
+      if (!header.current?.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -70,7 +127,11 @@ export default function Header({ lang }: { lang: Lang }) {
   const pathname = usePathname() ?? "/";
 
   function openSearch() {
+    /* The drawer's search control unmounts as it opens the dialog. Give the
+       native dialog a persistent return target before that happens. */
+    if (drawer.current?.contains(document.activeElement)) burger.current?.focus();
     setOpen(false);
+    setProductsOpen(false);
     setMobileProductsOpen(false);
     setSearchLoaded(true);
     setSearchOpen(true);
@@ -90,12 +151,14 @@ export default function Header({ lang }: { lang: Lang }) {
 
   useEffect(() => {
     setOpen(false);
+    setProductsOpen(false);
     setMobileProductsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1024px)");
     const closeOnDesktop = () => {
+      setProductsOpen(false);
       if (!desktop.matches) return;
       setOpen(false);
       setMobileProductsOpen(false);
@@ -124,6 +187,17 @@ export default function Header({ lang }: { lang: Lang }) {
    */
   const isCurrent = (href: string) =>
     basePath === href || (href !== "/" && basePath.startsWith(href + "/"));
+  const productPages = [
+    productsNav.models,
+    productsNav.machine,
+    productsNav.quality,
+    productsNav.sampleQuote,
+  ];
+  const productsCurrent = [productsNav.hub, ...productPages].some((link) => isCurrent(link.href));
+
+  function closeProducts() {
+    setProductsOpen(false);
+  }
 
   function closeMobile() {
     setOpen(false);
@@ -131,7 +205,10 @@ export default function Header({ lang }: { lang: Lang }) {
   }
 
   return (
-    <header className={`glass-nav sticky top-0 z-50 ${basePath === "/" ? "header-home" : ""}`}>
+    <header
+      ref={header}
+      className={`glass-nav sticky top-0 ${open ? "z-[70]" : "z-50"} ${basePath === "/" ? "header-home" : ""}`}
+    >
       {/*
         The first thing a keyboard reaches on every page.
 
@@ -147,6 +224,7 @@ export default function Header({ lang }: { lang: Lang }) {
       */}
       <a
         href="#indhold"
+        tabIndex={open ? -1 : undefined}
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-none focus:bg-brand-700 focus:px-5 focus:text-sm focus:font-semibold focus:text-paper focus:outline-none focus:ring-2 focus:ring-paper focus:ring-offset-2"
       >
         {ui.skipToContent[lang]}
@@ -155,7 +233,8 @@ export default function Header({ lang }: { lang: Lang }) {
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
           href={localePath("/", lang)}
-          className="flex min-h-[44px] items-center gap-2.5 font-display text-xl font-extrabold tracking-tight text-paper"
+          onClick={closeMobile}
+          className="flex min-h-[44px] flex-none items-center gap-2.5 whitespace-nowrap font-display text-xl font-extrabold tracking-tight text-paper max-[359px]:gap-2 max-[359px]:text-lg"
         >
           <Logo className="h-7 w-auto" idPrefix="header" />
           Kestro
@@ -191,11 +270,9 @@ export default function Header({ lang }: { lang: Lang }) {
             page.
  
             So the label stays a link to the hub and the chevron becomes a
-            button that owns the panel. Pointer behaviour is unchanged; focus
-            moving anywhere inside the wrapper opens it, focus leaving the
-            wrapper closes it, and Escape closes it and puts focus back on the
-            button. onFocus and onBlur are React's focusin/focusout, so they
-            catch focus arriving in the panel's children too.
+            button that owns the panel. Focus leaving the wrapper closes it,
+            and Escape closes it and puts focus back on the button. React's
+            onBlur bubbles, so it also catches focus leaving a panel link.
           */}
           <div
             className="relative"
@@ -215,7 +292,15 @@ export default function Header({ lang }: { lang: Lang }) {
             <div className="flex items-center gap-1">
               <Link
                 href={localePath(productsNav.hub.href, lang)}
-                className="inline-flex min-h-[44px] items-center text-sm font-medium text-paper/75 transition hover:text-paper"
+                onClick={closeProducts}
+                aria-current={
+                  basePath === productsNav.hub.href ? "page" : productsCurrent ? "true" : undefined
+                }
+                className={`relative inline-flex min-h-[44px] items-center text-sm transition ${
+                  productsCurrent
+                    ? "font-semibold text-paper after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-px after:bg-brand-400"
+                    : "font-medium text-paper/75 hover:text-paper"
+                }`}
               >
                 {productsNav.hub.label[lang]}
               </Link>
@@ -241,36 +326,25 @@ export default function Header({ lang }: { lang: Lang }) {
                 className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
               >
                 <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
-                  <Link
-                    href={localePath(productsNav.models.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
-                  >
-                    {productsNav.models.label[lang]}
-                  </Link>
-                  <Link
-                    href={localePath(productsNav.machine.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
-                  >
-                    {productsNav.machine.label[lang]}
-                  </Link>
-                  <Link
-                    href={localePath(productsNav.quality.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
-                  >
-                    {productsNav.quality.label[lang]}
-                  </Link>
-                  <Link
-                    href={localePath(productsNav.sampleQuote.href, lang)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10"
-                  >
-                    {productsNav.sampleQuote.label[lang]}
-                  </Link>
+                  {productPages.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={localePath(link.href, lang)}
+                      onClick={closeProducts}
+                      aria-current={isCurrent(link.href) ? "page" : undefined}
+                      className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10 ${isCurrent(link.href) ? "bg-white/[0.08]" : ""}`}
+                    >
+                      {link.label[lang]}
+                    </Link>
+                  ))}
                   <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
-                      className="block rounded-lg px-3 py-2 text-sm text-paper/75 transition hover:bg-white/10 hover:text-paper"
+                      onClick={closeProducts}
+                      aria-current={isCurrent(`/produkter/${category.slug}`) ? "page" : undefined}
+                      className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm transition hover:bg-white/10 hover:text-paper ${isCurrent(`/produkter/${category.slug}`) ? "bg-white/[0.08] font-semibold text-paper" : "text-paper/75"}`}
                     >
                       {category.name[lang]}
                     </Link>
@@ -326,7 +400,7 @@ export default function Header({ lang }: { lang: Lang }) {
           company whose enquiries start with a call, one tap to dial belongs in
           the bar itself.
         */}
-        <div className="flex items-center gap-1 lg:hidden">
+        <div className="flex flex-none items-center gap-1 max-[359px]:gap-0 lg:hidden">
           {/*
             The quote, one tap away on every page of a phone.
 
@@ -339,7 +413,8 @@ export default function Header({ lang }: { lang: Lang }) {
           */}
           <Link
             href={localePath("/tilbud", lang)}
-            className={`mr-1 inline-flex h-11 items-center justify-center rounded-lg bg-brand-600 px-3.5 text-sm font-semibold tracking-tight text-white transition-colors hover:bg-brand-500 motion-safe:active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 ${
+            onClick={closeMobile}
+            className={`mr-1 inline-flex h-11 flex-none items-center justify-center whitespace-nowrap rounded-lg bg-brand-600 px-3.5 text-sm font-semibold tracking-tight text-white transition-colors hover:bg-brand-500 motion-safe:active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 max-[359px]:px-2.5 ${
               basePath === "/" ? "header-cta-home" : ""
             }`}
           >
@@ -350,7 +425,7 @@ export default function Header({ lang }: { lang: Lang }) {
             <a
               href={`tel:${company.phoneHref}`}
               aria-label={ui.callUs[lang]}
-              className="inline-flex h-11 w-11 items-center justify-center text-paper/75 transition hover:text-paper"
+              className="inline-flex h-11 w-11 flex-none items-center justify-center text-paper/75 transition hover:text-paper"
             >
               <Phone className="h-5 w-5" strokeWidth={1.9} />
             </a>
@@ -360,7 +435,7 @@ export default function Header({ lang }: { lang: Lang }) {
             type="button"
             onClick={openSearch}
             aria-label={ui.search[lang]}
-            className="inline-flex h-11 w-11 items-center justify-center text-paper/85 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+            className="inline-flex h-11 w-11 flex-none items-center justify-center text-paper/85 transition hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <Search className="h-5 w-5" strokeWidth={1.9} />
           </button>
@@ -372,7 +447,7 @@ export default function Header({ lang }: { lang: Lang }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={ui.openMenu[lang]}
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
+            className="-mr-2 inline-flex h-11 w-11 flex-none items-center justify-center text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -403,8 +478,9 @@ export default function Header({ lang }: { lang: Lang }) {
           but locked against scrolling. */}
       {open && (
         <div
+          ref={drawer}
           id="mobile-menu"
-          className="h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-white/10 bg-brand-950 sm:h-[calc(100dvh-5rem)] lg:hidden"
+          className="overflow-y-auto overscroll-contain border-b border-white/10 bg-brand-950 lg:hidden"
         >
           <Container className="flex flex-col gap-1 py-4">
             {/* Search first: on a phone it is the fastest way to any of the
@@ -423,7 +499,8 @@ export default function Header({ lang }: { lang: Lang }) {
               onClick={() => setMobileProductsOpen((v) => !v)}
               aria-expanded={mobileProductsOpen}
               aria-controls="mobile-products"
-              className="flex min-h-[44px] items-center justify-between rounded-lg px-3 text-base font-medium text-paper/85 transition-colors hover:bg-white/10 hover:text-paper"
+              aria-current={productsCurrent ? "true" : undefined}
+              className={`flex min-h-[44px] items-center justify-between rounded-lg px-3 text-base font-medium transition-colors hover:bg-white/10 hover:text-paper ${productsCurrent ? "bg-white/[0.06] text-paper" : "text-paper/85"}`}
             >
               {productsNav.hub.label[lang]}
               <ChevronDown
@@ -438,25 +515,21 @@ export default function Header({ lang }: { lang: Lang }) {
                 most often hit with a thumb. */}
             {mobileProductsOpen && (
               <div id="mobile-products" className="mb-1 border-l border-white/10 pl-3">
-                {[
-                  { href: productsNav.hub.href, label: productsNav.overview },
-                  productsNav.models,
-                  productsNav.machine,
-                  productsNav.quality,
-                  productsNav.sampleQuote,
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={localePath(item.href, lang)}
-                    onClick={closeMobile}
-                    aria-current={basePath === item.href ? "page" : undefined}
-                    className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${
-                      basePath === item.href ? "text-paper" : "text-paper/85"
-                    }`}
-                  >
-                    {item.label[lang]}
-                  </Link>
-                ))}
+                {[{ href: productsNav.hub.href, label: productsNav.overview }, ...productPages].map(
+                  (item) => (
+                    <Link
+                      key={item.href}
+                      href={localePath(item.href, lang)}
+                      onClick={closeMobile}
+                      aria-current={basePath === item.href ? "page" : undefined}
+                      className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${
+                        basePath === item.href ? "text-paper" : "text-paper/85"
+                      }`}
+                    >
+                      {item.label[lang]}
+                    </Link>
+                  ),
+                )}
                 <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
                 {categories.map((category) => {
                   const href = `/produkter/${category.slug}`;
@@ -530,6 +603,35 @@ function LanguageSwitcher({
   basePath: string;
   onNavigate?: () => void;
 }) {
+  const [suffix, setSuffix] = useState("");
+  useEffect(() => {
+    function syncLocation() {
+      const current = new URLSearchParams(window.location.search);
+      const selection = new URLSearchParams();
+      /* Keep only the quote form's existing public selection fields. Tracking
+         and arbitrary query parameters are not part of the other language. */
+      if (basePath === "/tilbud") {
+        for (const key of ["model", "hvornaar"]) {
+          const value = current.get(key)?.trim().slice(0, 120);
+          if (value) selection.set(key, value);
+        }
+        const quantity = current.get("antal");
+        if (quantity && ["1", "2–9", "10–49", "50+"].includes(quantity)) {
+          selection.set("antal", quantity);
+        }
+      }
+      const query = selection.toString();
+      setSuffix(`${query ? `?${query}` : ""}${window.location.hash}`);
+    }
+    syncLocation();
+    window.addEventListener("hashchange", syncLocation);
+    window.addEventListener("popstate", syncLocation);
+    return () => {
+      window.removeEventListener("hashchange", syncLocation);
+      window.removeEventListener("popstate", syncLocation);
+    };
+  }, [basePath, lang]);
+
   return (
     /* Two words and a rule, not a segmented control.
        It was a bordered pair with the current language filled in brand blue,
@@ -545,7 +647,7 @@ function LanguageSwitcher({
       {langs.map((code) => (
         <Link
           key={code}
-          href={localePath(basePath, code)}
+          href={`${localePath(basePath, code)}${suffix}`}
           onClick={onNavigate}
           hrefLang={code}
           aria-current={code === lang ? "true" : undefined}

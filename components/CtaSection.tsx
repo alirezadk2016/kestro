@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Container from "./Container";
 import Button from "./Button";
-import { localePath, type Lang } from "@/lib/i18n";
+import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { ui } from "@/lib/nav";
 
 const copy = {
@@ -18,6 +18,31 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
+type Intent = "purchase" | "repair" | "buyback";
+const taskCopy: Record<
+  Exclude<Intent, "purchase">,
+  { title: Localized; body: Localized; action: Localized; href: string }
+> = {
+  repair: {
+    title: { da: "Skal vi se på jeres computer?", en: "Need help with your computer?" },
+    body: {
+      da: "Skriv model og hvad der er galt i reparationsformularen, så afklarer vi næste skridt.",
+      en: "Tell us the model and what is wrong in the repair form, and we discuss the next step.",
+    },
+    action: { da: "Beskriv problemet", en: "Describe the problem" },
+    href: "/reparation#reparation-formular",
+  },
+  buyback: {
+    title: { da: "Hvilket udstyr skal I af med?", en: "What equipment are you moving on?" },
+    body: {
+      da: "Send modeller, antal og stand, så kan vi vurdere mulighederne.",
+      en: "Send the models, quantity and condition so we can assess the options.",
+    },
+    action: { da: "Beskriv jeres udstyr", en: "Describe your equipment" },
+    href: "/saelg-til-os#saelg-formular",
+  },
+};
+
 /*
  * The close of a page: one glass band, one sentence, one action.
  *
@@ -32,8 +57,9 @@ const copy = {
  * Glass on the stage's own light: the key light up and to the right shows
  * through the panel, which is what makes it read as a pane and not a box.
  */
-export default function CtaSection({ lang }: { lang: Lang }) {
+export default function CtaSection({ lang, intent = "purchase" }: { lang: Lang; intent?: Intent }) {
   const c = copy[lang];
+  const task = intent === "purchase" ? null : taskCopy[intent];
 
   return (
     <section className="stage py-10 sm:py-16">
@@ -41,13 +67,19 @@ export default function CtaSection({ lang }: { lang: Lang }) {
         <div className="glass-band flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div className="max-w-2xl">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.title}
+              {task?.title[lang] ?? c.title}
             </h2>
-            <p className="mt-3 text-base leading-[1.65] text-paper/75">{c.body}</p>
+            <p className="mt-3 text-base leading-[1.65] text-paper/75">
+              {task?.body[lang] ?? c.body}
+            </p>
           </div>
           <div className="flex flex-none flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
-            <Button href={localePath("/tilbud", lang)} size="lg" className="w-full sm:w-auto">
-              {ui.bookCall[lang]}
+            <Button
+              href={localePath(task?.href ?? "/tilbud", lang)}
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              {task?.action[lang] ?? ui.bookCall[lang]}
             </Button>
             <Link
               href={localePath("/kontakt", lang)}

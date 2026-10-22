@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
+import Button from "@/components/Button";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { type Crumb } from "@/components/BreadcrumbSchema";
 import CtaSection from "@/components/CtaSection";
@@ -53,6 +54,7 @@ const copy = {
     read: "Læs mere",
     back: "Alle reparationer",
     updated: "Opdateret",
+    enquire: "Spørg om reparation",
   },
   en: {
     breadcrumb: "Repairs",
@@ -64,6 +66,7 @@ const copy = {
     read: "Read more",
     back: "All repairs",
     updated: "Updated",
+    enquire: "Ask about a repair",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -161,6 +164,12 @@ export default async function RepairPage(props: Params) {
           <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
             {repair.intro[lang]}
           </p>
+          <Button
+            href={localePath("/reparation#reparation-formular", lang)}
+            className="mt-6 w-full sm:w-auto"
+          >
+            {c.enquire}
+          </Button>
           {/* The guide that measures the problem first. On the battery page
               it sits beside the bands instead, where the number is read. */}
           {repair.tool && !repair.bands && (
@@ -340,7 +349,7 @@ export default async function RepairPage(props: Params) {
 
       {sources.length > 0 && <FactNote lang={lang} ids={sources} />}
 
-      <CtaSection lang={lang} />
+      <CtaSection lang={lang} intent="repair" />
     </>
   );
 }

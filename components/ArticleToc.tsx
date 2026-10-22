@@ -50,9 +50,9 @@ export default function ArticleToc({
 
   return (
     <nav aria-label={copy[lang].title} className={`border-l border-white/15 pl-5 ${className}`}>
-      {/* Open on a wide screen, foldable on a narrow one — same markup, so the
-          links are in the DOM for a crawler in both cases. */}
-      <details open className="group [&[open]>summary_svg]:rotate-180 sm:[&>summary]:hidden">
+      {/* Keep the native control visible at every width: a reader who closes
+          the list on a phone must still be able to reopen it after resizing. */}
+      <details open className="group [&[open]>summary_svg]:rotate-180">
         <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-sm font-semibold text-paper [&::-webkit-details-marker]:hidden">
           {copy[lang].title}
           <svg
@@ -66,9 +66,6 @@ export default function ArticleToc({
             <path d="M5 8l5 5 5-5" />
           </svg>
         </summary>
-        <p className="hidden text-sm font-semibold text-paper sm:block leading-[1.6]">
-          {copy[lang].title}
-        </p>
         {list}
       </details>
     </nav>

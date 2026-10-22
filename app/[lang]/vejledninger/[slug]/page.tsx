@@ -91,8 +91,8 @@ export async function generateMetadata(props: {
     ? [
         {
           url: `${SITE_ORIGIN}${art.src}`,
-          width: 1536,
-          height: 1024,
+          width: art.width,
+          height: art.height,
           type: "image/webp",
           alt: art.alt[lang],
         },
@@ -201,8 +201,8 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
           image: {
             "@type": "ImageObject",
             url: `${SITE_ORIGIN}${art.src}`,
-            width: 1536,
-            height: 1024,
+            width: art.width,
+            height: art.height,
             caption: art.alt[lang],
           },
         }

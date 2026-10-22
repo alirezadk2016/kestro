@@ -162,7 +162,7 @@ export default async function AdminContent({
                       alt={entry.images.da.alt}
                       fill
                       sizes="(min-width:1280px) 136px, (min-width:640px) 120px, 96px"
-                      className="object-cover"
+                      className="object-contain"
                     />
                   ) : (
                     <span className="flex h-full items-center justify-center text-xs text-paper/70">

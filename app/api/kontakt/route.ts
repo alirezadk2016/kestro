@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { company } from "@/lib/company";
 import { isSameSite } from "@/lib/same-site";
 import { noteMailFailure, saveEnquiry } from "@/lib/db";
-import { displayName, looksLikeEmail, oneLine } from "@/lib/mail-safe";
+import { displayName, oneLine } from "@/lib/mail-safe";
+import { validateContactPayload } from "@/lib/contact";
 
 /**
  * The contact form's actual destination.
@@ -31,10 +32,7 @@ import { displayName, looksLikeEmail, oneLine } from "@/lib/mail-safe";
 
 const RESEND_ENDPOINT = process.env.RESEND_ENDPOINT ?? "https://api.resend.com/emails";
 
-/** Long enough for anything real, short enough to bound what we forward. */
-const LIMITS = { name: 120, company: 160, email: 200, phone: 60, message: 5000 };
-
-/* Comfortably above the sum of LIMITS, far below anything worth abusing. */
+/* Comfortably above the shared field limits, far below anything worth abusing. */
 const MAX_BODY_BYTES = 64 * 1024;
 
 /*
@@ -95,11 +93,6 @@ function tooManyFrom(ip: string): boolean {
   return recent.length > RATE_LIMIT.max;
 }
 
-function clean(value: unknown, max: number): string {
-  return typeof value === "string" ? value.trim().slice(0, max) : "";
-}
-
-
 export async function POST(request: Request) {
   if (!isSameSite(request)) {
     return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
@@ -120,8 +113,8 @@ export async function POST(request: Request) {
    *
    * Nothing bounded the request before: an 8 MB body was read, parsed and
    * answered 200, and the fields were only truncated afterwards — so the
-   * memory had already been spent. Every field this route keeps is capped in
-   * LIMITS below and the largest is 5000 characters, so 64 KB is far more than
+   * memory had already been spent. Every field this route keeps is bounded by
+   * lib/contact.ts and the largest is 5000 characters, so 64 KB is far more than
    * an honest submission needs and far less than a cheap way to make the
    * function work.
    */
@@ -131,7 +124,7 @@ export async function POST(request: Request) {
   }
 
   const raw = await request.text();
-  if (raw.length > MAX_BODY_BYTES) {
+  if (new TextEncoder().encode(raw).byteLength > MAX_BODY_BYTES) {
     return NextResponse.json({ ok: false, error: "too_large" }, { status: 413 });
   }
 
@@ -153,21 +146,18 @@ export async function POST(request: Request) {
   }
 
   /* A field no person sees and no person fills in. Bots fill in everything. */
-  if (clean(payload.website, 200)) {
+  if (typeof payload.website === "string" && payload.website.trim()) {
     return NextResponse.json({ ok: true, configured: true });
   }
 
-  const name = oneLine(clean(payload.name, LIMITS.name));
-  const organisation = oneLine(clean(payload.company, LIMITS.company));
-  const email = clean(payload.email, LIMITS.email);
-  const phone = oneLine(clean(payload.phone, LIMITS.phone));
-  const message = clean(payload.message, LIMITS.message);
-  const subject = oneLine(clean(payload.subject, 160)) || "Henvendelse via kestro.dk";
-  const page = oneLine(clean(payload.page, 200));
-
-  if (!name || !message || !looksLikeEmail(email)) {
-    return NextResponse.json({ ok: false, error: "invalid" }, { status: 422 });
-  }
+  const validated = validateContactPayload(payload);
+  if (!validated.ok)
+    return NextResponse.json(
+      { ok: false, error: "invalid", fields: validated.fields },
+      { status: 422 },
+    );
+  const { name, company: organisation, email, phone, message, page, kind } = validated.value;
+  const subject = validated.value.subject || "Henvendelse via kestro.dk";
 
   const lines = [
     `Navn: ${name}`,
@@ -206,7 +196,7 @@ export async function POST(request: Request) {
     subject: subject || null,
     message,
     page: page || null,
-    source: subject.toLowerCase().includes("tilbud") ? "quote" : "contact",
+    source: kind,
   });
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -237,9 +227,7 @@ export async function POST(request: Request) {
           to: [process.env.CONTACT_TO ?? company.email],
           /* So hitting reply in the inbox answers the customer, not ourselves. */
           reply_to: oneLine(`${displayName(name)} <${email}>`),
-          subject: oneLine(
-            organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`,
-          ),
+          subject: oneLine(organisation ? `${subject} — ${organisation}` : `${subject} — ${name}`),
           text: lines.join("\n"),
         }),
         signal: AbortSignal.timeout(10000),

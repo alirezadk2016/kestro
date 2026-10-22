@@ -94,7 +94,9 @@ export default function SearchConsoleImport({
           ? "Rapporten er gemt. Visningen er opdateret."
           : "Den nye rapport er hentet og gemt.",
       );
-      setSaved(true);
+      setSaved(kind === "save");
+      // A provider refresh saved its own report, not the file in this preview.
+      if (kind === "sync") setPreview(null);
       router.refresh();
     } catch (caught) {
       setError(
@@ -108,7 +110,8 @@ export default function SearchConsoleImport({
   }
 
   return (
-    <div className={styles.panelBody}>
+    <fieldset className={`${styles.panelBody} min-w-0`} disabled={busy !== null}>
+      <legend className="sr-only">Importér eller opdatér Search Console-rapport</legend>
       <p className={styles.sectionCopy}>
         Importér én officiel CSV-tabel eller en samlet Kestro JSON-rapport. Filen vises og
         kontrolleres før lagring; samme ejendom, periode og søgetype erstattes, så tallene ikke
@@ -311,6 +314,6 @@ export default function SearchConsoleImport({
           {error}
         </p>
       )}
-    </div>
+    </fieldset>
   );
 }

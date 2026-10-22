@@ -284,7 +284,7 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
 
       <FactNote lang={lang} ids={["repairDirective"]} />
 
-      <CtaSection lang={lang} />
+      <CtaSection lang={lang} intent="repair" />
     </>
   );
 }

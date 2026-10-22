@@ -51,6 +51,11 @@ const content = run("node", ["scripts/verify/content.mjs"]);
 const [contentCode] = await once(content, "exit");
 if (contentCode !== 0) process.exit(contentCode);
 
+console.log("verify: contact validation");
+const contactData = run("node", ["scripts/verify/contact-data.mjs"]);
+const [contactCode] = await once(contactData, "exit");
+if (contactCode !== 0) process.exit(contactCode);
+
 console.log("verify: building");
 const growthData = run("node", ["scripts/verify/growth-data.mjs"]);
 const [growthCode] = await once(growthData, "exit");

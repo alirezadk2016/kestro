@@ -37,8 +37,7 @@ const copy = {
     fieldHours: "Åbningstider",
     at: "hos",
     briefTitle: "Hvad skal der stå i beskeden?",
-    briefBody:
-      "Antal, type og tidsramme er det vigtigste. Resten sparer en runde spørgsmål.",
+    briefBody: "Antal, type og tidsramme er det vigtigste. Resten sparer en runde spørgsmål.",
     brief1: "Antal enheder – også hvis det er et skøn.",
     brief2: "Type: bærbar, stationær, mini-pc, skærm, dockingstation eller andet.",
     brief3: "Krav til processor, hukommelse (RAM) og lagerplads, hvis I har dem.",
@@ -68,8 +67,7 @@ const copy = {
     fieldHours: "Opening hours",
     at: "at",
     briefTitle: "What should the message say?",
-    briefBody:
-      "Quantity, type and timing matter most. The rest saves a round of questions.",
+    briefBody: "Quantity, type and timing matter most. The rest saves a round of questions.",
     brief1: "Number of devices — an estimate is fine.",
     brief2: "Type: laptop, desktop, mini PC, monitor, docking station or something else.",
     brief3: "Requirements for processor, memory (RAM) and storage, if you have them.",
@@ -200,7 +198,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                 </Link>
               </p>
               <div className="plate p-6 sm:p-8">
-                <ContactForm lang={lang} />
+                <ContactForm lang={lang} companyRequired={false} />
               </div>
             </div>
 

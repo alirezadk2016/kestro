@@ -2,9 +2,9 @@ import Image from "next/image";
 import type { Lang, Localized } from "@/lib/i18n";
 
 /*
- * Guide covers use 1536x1024 text-free artwork in both languages. The SVG
- * panels remain available as a fallback for a guide without suitable artwork.
- * Both paths render on the server in a stable 3:2 frame.
+ * Text-free guide artwork is shared by both languages. Its intrinsic
+ * dimensions are recorded below; square and 4:3 covers retain their subjects
+ * inside the stable 3:2 frame. SVG panels remain a server-rendered fallback.
  */
 
 /* The palette, from tailwind.config.ts. Written out because SVG gradients and
@@ -1928,11 +1928,22 @@ export function GuidePanelStyles() {
  * Only language-neutral artwork is shared across locales. All current covers
  * meet that rule; keep the flag for future images that contain language.
  */
-type Art = { src: string; alt: Localized; neutral?: boolean };
+type Art = {
+  src: string;
+  width: number;
+  height: number;
+  alt: Localized;
+  neutral?: boolean;
+  /** Preserve the whole subject when a square or 4:3 cover sits in a 3:2 slot. */
+  fit?: "contain";
+};
 
 const artwork: Record<string, Art> = {
   "hvorfor-er-ram-blevet-dyrere": {
     src: "/images/practical/ram.webp",
+    width: 1200,
+    height: 900,
+    fit: "contain",
     neutral: true,
     alt: {
       da: "Et RAM-modul til en bærbar ved siden af en tom hukommelsessokkel.",
@@ -1941,6 +1952,9 @@ const artwork: Record<string, Art> = {
   },
   "refurbished-eller-ny-baerbar": {
     src: "/graphics/grade-a.webp",
+    width: 720,
+    height: 720,
+    fit: "contain",
     neutral: true,
     alt: {
       da: "En lukket bærbar uden synligt slid på et stenbord.",
@@ -1949,6 +1963,8 @@ const artwork: Record<string, Art> = {
   },
   "hvor-meget-kan-en-baerbar-opgraderes": {
     src: "/cards/exploded.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "En bærbar computer skilt ad i lag: skærm, tastatur, bundkort og bundplade.",
@@ -1957,6 +1973,8 @@ const artwork: Record<string, Art> = {
   },
   "tjek-brugt-baerbar-foer-koeb": {
     src: "/viden/inspektion.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "En bærbar på et testbord med en blå kontrollinje over skærm og tastatur.",
@@ -1965,6 +1983,8 @@ const artwork: Record<string, Art> = {
   },
   "opgrader-ram-i-baerbar": {
     src: "/viden/ydelse.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "Et RAM-modul og et NVMe SSD med synlige chips og kontakter på et arbejdsbord.",
@@ -1973,6 +1993,8 @@ const artwork: Record<string, Art> = {
   },
   "windows-10-support-slutter": {
     src: "/viden/levetid.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "Tre bærbare viser udstyrets livscyklus: lukket, i brug og åbnet til opgradering.",
@@ -1982,6 +2004,8 @@ const artwork: Record<string, Art> = {
 
   "reparere-eller-koebe-ny": {
     src: "/viden/beslutning.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "En bærbar åbnet til reparation ved siden af en intakt maskine, med reservedele på bordet.",
@@ -1990,6 +2014,8 @@ const artwork: Record<string, Art> = {
   },
   "samle-din-egen-pc": {
     src: "/viden/montering.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "Et åbent pc-kabinet med bundkort, RAM, grafikkort, køler og strømforsyning på arbejdsbordet.",
@@ -1998,6 +2024,8 @@ const artwork: Record<string, Art> = {
   },
   "windows-11-paa-aeldre-maskine": {
     src: "/viden/kompatibilitet.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "En bærbar med blå skærm ved siden af en processor og et lille sikkerhedskort til hardwarekontrol.",
@@ -2006,6 +2034,8 @@ const artwork: Record<string, Art> = {
   },
   "slet-data-foer-du-saelger": {
     src: "/viden/datasikkerhed.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "Et SSD og et andet drev på et arbejdsbord under gennemgang før sikker datasletning.",
@@ -2014,6 +2044,8 @@ const artwork: Record<string, Art> = {
   },
   "refurbished-eller-brugt": {
     src: "/viden/stand.webp",
+    width: 1536,
+    height: 1024,
     neutral: true,
     alt: {
       da: "To ens bærbare side om side, den ene med brugsspor og den anden rengjort og klargjort.",
@@ -2082,12 +2114,12 @@ export default function GuidePanel({
         <Image
           src={art.src}
           alt={art.alt[lang]}
-          width={1536}
-          height={1024}
+          width={art.width}
+          height={art.height}
           quality={88}
           sizes={sizes}
           priority={priority}
-          className="h-full w-full object-cover"
+          className={`h-full w-full ${art.fit === "contain" ? "object-contain" : "object-cover"}`}
         />
       </div>
     );

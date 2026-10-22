@@ -345,11 +345,7 @@ export default function LaptopAssembly({
   }, []);
 
   return (
-    <figure
-      ref={root}
-      className={`repair-laptop hidden min-w-0 lg:block ${className}`}
-      data-scene-state={state}
-    >
+    <figure ref={root} className={`repair-laptop min-w-0 ${className}`} data-scene-state={state}>
       <span id={instructionsId} className="sr-only" hidden={state !== "ready"}>
         {lang === "da"
           ? "Brug piletasterne til at dreje modellen og Home til at nulstille visningen."
@@ -363,23 +359,21 @@ export default function LaptopAssembly({
         aria-label={state === "ready" ? labels.model : undefined}
         aria-describedby={state === "ready" ? instructionsId : undefined}
       >
-        <picture>
-          <source media="(min-width: 1024px)" srcSet="/models/laptop-repair.webp" />
-          {/* A media-scoped source keeps the desktop poster off mobile networks, even without JS. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-            alt={
-              lang === "da"
-                ? "Illustreret samlet bærbar med åbent display og tastatur"
-                : "Illustrated assembled laptop with an open display and keyboard"
-            }
-            width={1200}
-            height={1200}
-            decoding="async"
-            className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 motion-reduce:transition-none motion-reduce:!opacity-100 ${state === "ready" ? "opacity-0" : "opacity-100"}`}
-          />
-        </picture>
+        {/* The static poster remains visible on phones and without JavaScript.
+            The renderer and its controls are still limited to desktop. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/models/laptop-repair.webp"
+          alt={
+            lang === "da"
+              ? "Illustreret samlet bærbar med åbent display og tastatur"
+              : "Illustrated assembled laptop with an open display and keyboard"
+          }
+          width={1200}
+          height={1200}
+          decoding="async"
+          className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 motion-reduce:transition-none motion-reduce:!opacity-100 ${state === "ready" ? "opacity-0" : "opacity-100"}`}
+        />
         <canvas
           ref={canvas}
           aria-hidden="true"
@@ -392,7 +386,7 @@ export default function LaptopAssembly({
             disabled={state === "loading"}
             aria-label={state === "loading" ? labels.loading : labels.activate}
             title={state === "loading" ? labels.loading : labels.activate}
-            className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded border border-white/25 bg-brand-950/95 text-paper shadow-lg transition-colors hover:border-brand-300 hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper disabled:cursor-wait motion-reduce:hidden"
+            className="absolute bottom-4 right-4 hidden h-12 w-12 items-center justify-center rounded border border-white/25 bg-brand-950/95 text-paper shadow-lg transition-colors hover:border-brand-300 hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper disabled:cursor-wait motion-reduce:hidden lg:flex"
           >
             {state === "loading" ? (
               <LoaderCircle aria-hidden="true" size={23} className="animate-spin" />
@@ -403,7 +397,7 @@ export default function LaptopAssembly({
         )}
       </div>
       <div
-        className={`mt-2 flex items-center gap-2 border-t border-paper/10 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none ${state === "ready" ? "" : "invisible pointer-events-none"}`}
+        className={`mt-2 hidden items-center gap-2 border-t border-paper/10 pt-2 motion-reduce:invisible motion-reduce:pointer-events-none lg:flex ${state === "ready" ? "" : "invisible pointer-events-none"}`}
         aria-hidden={state !== "ready"}
       >
         <button

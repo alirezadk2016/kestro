@@ -30,6 +30,10 @@ import sharp from "sharp";
 import { verifyVisualPolish } from "./visual.mjs";
 import { verifyPracticalGuides } from "./practical.mjs";
 import { verifyAdmin } from "./admin.mjs";
+import { verifySiteImages } from "./site-images.mjs";
+import { verifySiteUx } from "./site-ux.mjs";
+import { verifySiteForms } from "./site-forms.mjs";
+import { verifySiteInventory } from "./site-inventory.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -148,6 +152,12 @@ const launchBrowser = () =>
     args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
   });
 let browser = await launchBrowser();
+
+try {
+  await verifySiteInventory(BASE, fail);
+} catch (error) {
+  fail("public site inventory", error.stack ?? error.message);
+}
 
 /* ---------------------------------------------------------------- structure */
 console.log("verify: page structure and metadata");
@@ -752,7 +762,7 @@ console.log("verify: motion and reduced-motion behaviour");
   await context.close();
 }
 
-/* Desktop-only repair artwork must cost nothing on a mobile connection. */
+/* A phone gets the static repair poster, without desktop 3D models or controls. */
 for (const path of ["/reparation", "/en/repairs"]) {
   for (const javaScriptEnabled of [true, false]) {
     const context = await browser.newContext({
@@ -763,7 +773,7 @@ for (const path of ["/reparation", "/en/repairs"]) {
     const requests = [];
     page.on("request", (request) => {
       if (
-        /models\/(laptop-repair|laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp/.test(
+        /models\/(?:laptop-(?:base|lid)\.glb|(?:laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp)/.test(
           request.url(),
         )
       )
@@ -773,10 +783,24 @@ for (const path of ["/reparation", "/en/repairs"]) {
     await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(250);
     const figure = page.locator(".repair-laptop");
-    if (await figure.isVisible()) fail(path, "desktop laptop visible on mobile");
+    if (!(await figure.isVisible())) fail(path, "static repair poster missing on mobile");
+    const poster = figure.locator("img");
+    const decoded = await poster
+      .evaluate(async (image) => {
+        await image.decode();
+        return (
+          image.complete &&
+          image.naturalWidth > 0 &&
+          image.currentSrc.includes("/models/laptop-repair.webp")
+        );
+      })
+      .catch(() => false);
+    if (!decoded) fail(path, "mobile repair poster failed to decode");
+    if (await figure.locator("button:visible, input:visible").count())
+      fail(path, "desktop 3D controls visible on mobile");
     const state = await figure.getAttribute("data-scene-state");
     if (state === "ready") fail(path, "mobile WebGL renderer started");
-    if (requests.length) fail(path, "mobile downloaded desktop laptop artwork");
+    if (requests.length) fail(path, "mobile downloaded desktop 3D models or textures");
     await context.close();
   }
 }
@@ -1425,6 +1449,18 @@ browser = await launchBrowser();
     await page.close();
   }
   for (const message of messages) fail("console", message);
+}
+
+for (const [label, verify] of [
+  ["site image framing", verifySiteImages],
+  ["site navigation", verifySiteUx],
+  ["site forms", verifySiteForms],
+]) {
+  try {
+    await verify(browser, BASE, fail);
+  } catch (error) {
+    fail(label, error.stack ?? error.message);
+  }
 }
 
 try {

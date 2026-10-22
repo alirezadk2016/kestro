@@ -60,8 +60,8 @@ const cards = [
     title: { da: "Flådeløsninger", en: "Fleet solutions" },
     brands: { da: "Fra 10 enheder til hele flåden", en: "From 10 devices to the whole fleet" },
     alt: {
-      da: "En række ens bærbare computere klargjort til levering",
-      en: "A row of identical laptops prepared for delivery",
+      da: "To stakke lukkede bærbare computere og én åben bærbar på et stenbord",
+      en: "Two stacks of closed laptops and one open laptop on a stone desk",
     },
   },
 ];

@@ -8,6 +8,13 @@ import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { buttonClass } from "./Button";
 import { projectNotice } from "@/lib/project";
+import {
+  CONTACT_LIMITS,
+  QUOTE_DETAIL_LIMIT,
+  composeEnquiryMessage,
+  validateContactPayload,
+  type ContactField,
+} from "@/lib/contact";
 
 /* From lib/company.ts, so the fallback address in the "we could not send"
    panel can never drift from the one the route delivers to. */
@@ -81,6 +88,16 @@ const copy = {
     defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
     from: "fra",
     via: "via kestro.dk",
+    invalidName: "Skriv dit navn, højst 120 tegn.",
+    invalidEmail: "Skriv en gyldig e-mailadresse, højst 200 tegn.",
+    invalidCompany: "Virksomhedsnavnet må højst være 160 tegn.",
+    invalidPhone: "Telefonnummeret må højst være 60 tegn.",
+    invalidMessage: "Skriv en besked, før du sender.",
+    messageTooLong:
+      "Beskeden må højst være 5.000 tegn inklusive specifikationer. Forkort teksten; din kladde er bevaret.",
+    invalidFields: "Kontrollér felterne, før du sender igen. Din kladde er bevaret.",
+    messageCount: "tegn",
+    quoteCount: "tegn inklusive specifikationer",
   },
   en: {
     name: "Name",
@@ -136,6 +153,16 @@ const copy = {
       "Tell us what you need — number of devices, specifications, timing and anything else.",
     from: "from",
     via: "via kestro.dk",
+    invalidName: "Enter your name, up to 120 characters.",
+    invalidEmail: "Enter a valid email address, up to 200 characters.",
+    invalidCompany: "The company name may contain up to 160 characters.",
+    invalidPhone: "The phone number may contain up to 60 characters.",
+    invalidMessage: "Write a message before sending.",
+    messageTooLong:
+      "The message may contain up to 5,000 characters including specifications. Shorten the text; your draft is preserved.",
+    invalidFields: "Check the fields before sending again. Your draft is preserved.",
+    messageCount: "characters",
+    quoteCount: "characters including specifications",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -197,6 +224,8 @@ export default function ContactForm({
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
+  const [invalidFields, setInvalidFields] = useState<ContactField[]>([]);
+  const [validationError, setValidationError] = useState("");
   const started = useRef(false);
   useEffect(() => setReady(true), []);
 
@@ -248,7 +277,6 @@ export default function ContactForm({
      form to fill in. They open by themselves when something arrives filled
      in, from the front page's mini form or a link. */
   const [moreOpen, setMoreOpen] = useState(false);
-  const specFilled = Boolean(values.ram || values.disk || values.tastatur || values.hvornaar);
 
   /*
    * Prefill from the link the buyer arrived on: /tilbud?model=…&antal=….
@@ -269,6 +297,7 @@ export default function ContactForm({
        React escapes it, so a query string cannot become markup. */
     const when = params.get("hvornaar")?.trim().slice(0, 120) ?? "";
     if (!model && !band && !when) return;
+    if (when) setMoreOpen(true);
     setValues((prev) => ({
       ...prev,
       udstyr: prev.udstyr || model,
@@ -282,6 +311,8 @@ export default function ContactForm({
   ) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
+    setInvalidFields([]);
+    setValidationError("");
   }
 
   /**
@@ -304,7 +335,44 @@ export default function ContactForm({
       values.hvornaar ? `${c.deadline} ${values.hvornaar}` : null,
     ].filter((line): line is string => line !== null);
 
-    return values.besked ? `${spec.join("\n")}\n\n${values.besked}` : spec.join("\n");
+    return composeEnquiryMessage(values.besked, spec);
+  }
+
+  const message = messageBody();
+  const specificationLength = quote ? message.length - values.besked.length : 0;
+  // Leave room for the blank line even before the optional message is typed.
+  const messageBudget = quote
+    ? Math.max(0, CONTACT_LIMITS.message - specificationLength - (values.besked ? 0 : 2))
+    : CONTACT_LIMITS.message;
+
+  function showValidation(fields: ContactField[]) {
+    setInvalidFields(fields);
+    const first = fields[0];
+    setValidationError(
+      first === "name"
+        ? c.invalidName
+        : first === "email"
+          ? c.invalidEmail
+          : first === "company"
+            ? c.invalidCompany
+            : first === "phone"
+              ? c.invalidPhone
+              : first === "message"
+                ? message.trim()
+                  ? c.messageTooLong
+                  : c.invalidMessage
+                : c.invalidFields,
+    );
+    const fieldId: Partial<Record<ContactField, string>> = {
+      name: "navn",
+      company: "virksomhed",
+      email: "email",
+      phone: "telefon",
+      message: "besked",
+    };
+    window.requestAnimationFrame(() => {
+      document.getElementById(fieldId[first] ?? "contact-validation")?.focus();
+    });
   }
 
   /** The finished message, for the visitor to copy or hand to their mail app. */
@@ -327,22 +395,31 @@ export default function ContactForm({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "sending") return;
+    const payload = {
+      name: values.navn,
+      company: values.virksomhed,
+      email: values.email,
+      phone: values.telefon,
+      message,
+      subject: subject_prefix,
+      page: window.location.pathname,
+      kind: quote ? "quote" : "contact",
+      website: values.website,
+    };
+    const validated = validateContactPayload(payload);
+    if (!validated.ok) {
+      showValidation(validated.fields);
+      return;
+    }
+    setInvalidFields([]);
+    setValidationError("");
     setStatus("sending");
 
     try {
       const response = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: values.navn,
-          company: values.virksomhed,
-          email: values.email,
-          phone: values.telefon,
-          message: messageBody(),
-          subject: subject_prefix,
-          page: window.location.pathname,
-          website: values.website,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -354,6 +431,19 @@ export default function ContactForm({
           form: quote ? "quote" : "contact",
           ...(quote ? { quantity_band: values.antal } : {}),
         });
+        return;
+      }
+
+      if (response.status === 422) {
+        const result = await response.json().catch(() => null);
+        const fields = Array.isArray(result?.fields)
+          ? result.fields.filter(
+              (field: unknown): field is ContactField =>
+                typeof field === "string" && (field === "kind" || field in CONTACT_LIMITS),
+            )
+          : [];
+        setStatus("idle");
+        showValidation(fields);
         return;
       }
 
@@ -389,7 +479,7 @@ export default function ContactForm({
    * people.
    */
   const inputClasses =
-    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40 [&:user-invalid]:border-red-300/80 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-400/25";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40 aria-[invalid=true]:border-amber-300 [&:user-invalid]:border-red-300/80 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-400/25";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -491,6 +581,9 @@ export default function ContactForm({
           type="button"
           onClick={() => {
             setValues(emptyValues);
+            setMoreOpen(false);
+            setInvalidFields([]);
+            setValidationError("");
             started.current = false;
             setStatus("idle");
           }}
@@ -532,7 +625,7 @@ export default function ContactForm({
         </p>
       </noscript>
       <fieldset
-        disabled={!ready}
+        disabled={!ready || status === "sending"}
         className="min-w-0 space-y-5"
         aria-label={lang === "da" ? "Kontaktformular" : "Enquiry form"}
       >
@@ -578,6 +671,9 @@ export default function ContactForm({
               type="text"
               autoComplete="name"
               required
+              maxLength={CONTACT_LIMITS.name}
+              aria-invalid={invalidFields.includes("name") || undefined}
+              aria-describedby={invalidFields.includes("name") ? "contact-validation" : undefined}
               value={values.navn}
               onChange={handleChange}
               className={inputClasses}
@@ -600,6 +696,11 @@ export default function ContactForm({
               type="text"
               autoComplete="organization"
               required={companyRequired}
+              maxLength={CONTACT_LIMITS.company}
+              aria-invalid={invalidFields.includes("company") || undefined}
+              aria-describedby={
+                invalidFields.includes("company") ? "contact-validation" : undefined
+              }
               value={values.virksomhed}
               onChange={handleChange}
               className={inputClasses}
@@ -617,6 +718,9 @@ export default function ContactForm({
               type="email"
               autoComplete="email"
               required
+              maxLength={CONTACT_LIMITS.email}
+              aria-invalid={invalidFields.includes("email") || undefined}
+              aria-describedby={invalidFields.includes("email") ? "contact-validation" : undefined}
               value={values.email}
               onChange={handleChange}
               className={inputClasses}
@@ -633,6 +737,9 @@ export default function ContactForm({
               name="telefon"
               type="tel"
               autoComplete="tel"
+              maxLength={CONTACT_LIMITS.phone}
+              aria-invalid={invalidFields.includes("phone") || undefined}
+              aria-describedby={invalidFields.includes("phone") ? "contact-validation" : undefined}
               value={values.telefon}
               onChange={handleChange}
               className={inputClasses}
@@ -651,6 +758,7 @@ export default function ContactForm({
                 id="udstyr"
                 name="udstyr"
                 type="text"
+                maxLength={QUOTE_DETAIL_LIMIT}
                 value={values.udstyr}
                 onChange={handleChange}
                 className={inputClasses}
@@ -659,7 +767,7 @@ export default function ContactForm({
             </div>
 
             <details
-              open={moreOpen || specFilled}
+              open={moreOpen}
               onToggle={(event) => setMoreOpen(event.currentTarget.open)}
               className="group sm:col-span-2"
             >
@@ -709,7 +817,10 @@ export default function ContactForm({
                 </div>
 
                 <div>
-                  <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label
+                    htmlFor="tastatur"
+                    className="mb-1.5 block text-sm font-medium text-paper/85"
+                  >
                     {c.keyboard}
                   </label>
                   <select
@@ -729,13 +840,17 @@ export default function ContactForm({
                 </div>
 
                 <div>
-                  <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/85">
+                  <label
+                    htmlFor="hvornaar"
+                    className="mb-1.5 block text-sm font-medium text-paper/85"
+                  >
                     {c.deadline}
                   </label>
                   <input
                     id="hvornaar"
                     name="hvornaar"
                     type="text"
+                    maxLength={QUOTE_DETAIL_LIMIT}
                     value={values.hvornaar}
                     onChange={handleChange}
                     className={inputClasses}
@@ -760,12 +875,24 @@ export default function ContactForm({
             id="besked"
             name="besked"
             required={!quote}
+            maxLength={messageBudget}
+            aria-invalid={
+              invalidFields.includes("message") ||
+              message.length > CONTACT_LIMITS.message ||
+              undefined
+            }
+            aria-describedby={`contact-message-count${invalidFields.includes("message") ? " contact-validation" : ""}`}
             rows={quote ? 4 : 5}
             value={values.besked}
             onChange={handleChange}
             className={inputClasses}
             placeholder={placeholder}
           />
+          <p id="contact-message-count" className="mt-2 text-xs tabular-nums text-paper/75">
+            {message.length.toLocaleString(lang === "da" ? "da-DK" : "en-GB")} /{" "}
+            {CONTACT_LIMITS.message.toLocaleString(lang === "da" ? "da-DK" : "en-GB")}{" "}
+            {quote ? c.quoteCount : c.messageCount}
+          </p>
         </div>
 
         {/* Hidden from people by position rather than display:none, which some
@@ -786,6 +913,16 @@ export default function ContactForm({
         </div>
 
         <div>
+          {validationError && (
+            <p
+              id="contact-validation"
+              role="alert"
+              tabIndex={-1}
+              className="mb-4 text-sm leading-6 text-amber-100"
+            >
+              {validationError}
+            </p>
+          )}
           {/* The site's one button, from the same string as the front page's
             form: full width under the thumb on a phone, its own width on a
             wide screen. It was a hand-written 44px pill a third of the

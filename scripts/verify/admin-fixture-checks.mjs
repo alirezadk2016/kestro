@@ -1054,19 +1054,72 @@ try {
           importPosts++;
       });
       async function savePreview() {
+        const controls = [
+          ["file import mode", page.getByRole("button", { name: "Vælg fil", exact: true })],
+          ["paste import mode", page.getByRole("button", { name: "Indsæt rapport", exact: true })],
+          ["start date", page.getByLabel("Fra dato · Pacific", { exact: true })],
+          ["end date", page.getByLabel("Til dato · Pacific", { exact: true })],
+          ["search type", page.getByLabel("Søgetype i CSV-eksporten", { exact: true })],
+          [
+            "pasted report",
+            page.getByLabel("Indsæt JSON- eller CSV-rapport · højst 2 MB", { exact: true }),
+          ],
+        ];
+        let release;
+        const barrier = new Promise((resolve) => (release = resolve));
+        let held;
+        let failed;
+        const responseHeld = new Promise((resolve, reject) => {
+          held = resolve;
+          failed = reject;
+        });
+        const endpoint = `${origin.origin}/api/admin/search-console-import`;
+        const holdResponse = async (route) => {
+          if (route.request().method() !== "POST") return route.fallback();
+          try {
+            // Run the real independently gated local endpoint first, then hold
+            // its actual response while the browser must keep inputs locked.
+            const response = await route.fetch({
+              maxRedirects: 0,
+              headers: await route.request().allHeaders(),
+            });
+            held();
+            await barrier;
+            await route.fulfill({ response });
+          } catch (error) {
+            failed(error);
+            await route.abort().catch(() => {});
+          }
+        };
+        await page.route(endpoint, holdResponse);
         const persisted = page.waitForResponse(
           (response) =>
             new URL(response.url()).pathname === "/api/admin/search-console-import" &&
             response.request().method() === "POST",
         );
-        await page.getByRole("button", { name: "Gem denne rapport", exact: true }).click();
-        const response = await persisted;
-        assert.equal(
-          response.status(),
-          200,
-          "the validated report is accepted by the independently gated endpoint",
-        );
-        assert.deepEqual(await response.json(), { saved: true });
+        // Preserve the original failure if a busy-state assertion fails before
+        // the response arrives; the barrier still releases in finally.
+        void persisted.catch(() => {});
+        try {
+          await page.getByRole("button", { name: "Gem denne rapport", exact: true }).click();
+          await responseHeld;
+          for (const [name, control] of controls)
+            assert.equal(await control.isDisabled(), true, `${name} is disabled during saving`);
+          release();
+          const response = await persisted;
+          assert.equal(
+            response.status(),
+            200,
+            "the validated report is accepted by the independently gated endpoint",
+          );
+          assert.deepEqual(await response.json(), { saved: true });
+          await page.getByRole("button", { name: "Rapport gemt", exact: true }).waitFor();
+          for (const [name, control] of controls)
+            assert.equal(await control.isDisabled(), false, `${name} is enabled after saving`);
+        } finally {
+          release();
+          await page.unroute(endpoint, holdResponse);
+        }
       }
       await visit(page, "/admin/seo");
       await page.getByRole("heading", { name: "Google & SEO", exact: true }).waitFor();
