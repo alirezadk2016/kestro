@@ -937,6 +937,11 @@ for (const { home, pricing, terms, label, refuse } of [
   }
 }
 
+// Navigation above creates many renderer contexts after the graphics sweep.
+// Consent has no shared-session dependency: release those resources before
+// verifying its real hydration and withdrawal behaviour, with all assertions.
+await browser.close();
+browser = await launchBrowser();
 {
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await context.newPage();
@@ -948,7 +953,9 @@ for (const { home, pricing, terms, label, refuse } of [
   await page.route("**/api/kontakt", (route) =>
     route.fulfill({ contentType: "application/json", body: '{"ok":true}' }),
   );
-  await page.goto(BASE + "/kontakt", { waitUntil: "networkidle" });
+  const consentPage = await page.goto(BASE + "/kontakt", { waitUntil: "networkidle" });
+  if (consentPage?.status() !== 200)
+    throw new Error(`Consent page returned ${consentPage?.status()}`);
   await page.getByRole("button", { name: "Accepter statistik", exact: true }).click();
   await page.waitForFunction(() => typeof window.gtag === "function");
   await page.evaluate(() => {
