@@ -535,6 +535,7 @@ for (const [name, viewport] of [
     "/kvalitet",
     "/produkter/smartphones",
   ]) {
+    console.log(`verify: contrast ${name} ${path}`);
     const page = await browser.newPage({ viewport });
     const ready = readinessDiagnostics(page, `contrast-${name}-${path}`);
     await ready("navigation and first paint", async () => {

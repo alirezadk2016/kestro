@@ -1077,11 +1077,31 @@ try {
         const holdResponse = async (route) => {
           if (route.request().method() !== "POST") return route.fallback();
           try {
+            const headers = await route.request().allHeaders();
+            assert.equal(
+              new URL(route.request().url()).origin,
+              origin.origin,
+              "the intercepted save targets the local fixture origin",
+            );
+            assert.equal(headers.origin, origin.origin, "the save originates in the fixture UI");
+            if (headers.referer)
+              assert.equal(
+                new URL(headers.referer).origin,
+                origin.origin,
+                "the save has a same-origin referrer",
+              );
             // Run the real independently gated local endpoint first, then hold
             // its actual response while the browser must keep inputs locked.
+            // Chromium pauses this request before adding Sec-Fetch metadata.
+            // Replay that missing metadata only after proving both origins;
+            // retain its real cookie, Origin and every other supplied header.
             const response = await route.fetch({
               maxRedirects: 0,
-              headers: await route.request().allHeaders(),
+              headers: {
+                ...headers,
+                "sec-fetch-site": headers["sec-fetch-site"] ?? "same-origin",
+                "sec-fetch-mode": headers["sec-fetch-mode"] ?? "cors",
+              },
             });
             held();
             await barrier;
