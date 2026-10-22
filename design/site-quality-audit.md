@@ -38,6 +38,14 @@ flows, independent security requests and isolated synthetic admin workflows.
 Focused regressions exercise the findings above at 320/390px and desktop sizes.
 Captures and actual account data stay outside the public repository.
 
+The JavaScript-off sweep finishes image requests before closing its context and
+checks the actual main landmark and heading. A cold-cache reproduction showed
+that closing at DOMContentLoaded could strand an optimizer request while the
+following document still returned HTTP 200; the corrected sequence passed at
+320, 390, 1024, 1280 and 1440px. The report-save response barrier also proves its
+local origin before supplying Fetch Metadata that Chromium adds only after its
+interception point. Neither adjustment relaxes application or security checks.
+
 Changes to interface labels, validation, navigation and image framing do not
 date every public article anew. Only the revised prices-page wording receives
 a new content date. The previous privacy disclosure keeps its own revision.

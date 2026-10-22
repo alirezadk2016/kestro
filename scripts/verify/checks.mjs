@@ -713,16 +713,31 @@ console.log("verify: motion and reduced-motion behaviour");
     javaScriptEnabled: false,
   });
   const page = await context.newPage();
-  await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-  const hidden = await page.evaluate(() => 0).catch(() => null);
-  if (hidden === null) {
-    const opacity = await page
-      .locator("[data-reveal]")
-      .first()
-      .evaluate((el) => getComputedStyle(el).opacity)
-      .catch(() => "1");
-    if (opacity !== "1") fail("/ (no javascript)", `content hidden at opacity ${opacity}`);
-  }
+  // Finish the optimizer's requests before closing this visitor's socket.
+  // Aborting it at DOMContentLoaded can strand a shared resize promise and
+  // leave the following page waiting on that image despite its document's 200.
+  const response = await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  if (response?.status() !== 200) fail("/ (no javascript)", "homepage is not HTTP 200");
+  const hidden = await page.evaluate(() => {
+    const content = [
+      document.querySelector("main"),
+      document.querySelector("main h1"),
+      ...document.querySelectorAll("[data-reveal]"),
+    ];
+    return content.flatMap((element, index) => {
+      if (!element) return [`missing landmark ${index}`];
+      const bounds = element.getBoundingClientRect();
+      let ancestor = element;
+      while (ancestor) {
+        const style = getComputedStyle(ancestor);
+        if (style.opacity === "0" || style.display === "none" || style.visibility === "hidden")
+          return [element.tagName];
+        ancestor = ancestor.parentElement;
+      }
+      return bounds.width > 0 && bounds.height > 0 ? [] : [element.tagName];
+    });
+  });
+  if (hidden.length) fail("/ (no javascript)", `content hidden: ${hidden.join(", ")}`);
   await context.close();
 }
 
