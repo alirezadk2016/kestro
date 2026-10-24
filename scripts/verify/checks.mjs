@@ -166,6 +166,10 @@ const launchBrowser = async () => {
     args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
   });
   const images = await launched.newContext();
+  /* The thumbnail context is the gate's own. A context a check leaves open is
+     still a leftover, and the lifecycle check before education must see it. */
+  const contexts = launched.contexts.bind(launched);
+  launched.contexts = () => contexts().filter((context) => context !== images);
   const newContext = launched.newContext.bind(launched);
   launched.newContext = async (options) => {
     const context = await newContext(options);

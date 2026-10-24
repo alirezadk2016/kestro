@@ -42,6 +42,10 @@ export async function verifyAdmin(browser, base, fail) {
     context.setDefaultTimeout(15000);
     context.setDefaultNavigationTimeout(30000);
     let contextClosing = false;
+    /* What each document arrived as, for a hydration error to be read
+       against: a cut-off document and a real mismatch look alike in a
+       minified React error. */
+    const documents = new Map();
     if (authenticated) {
       const cookieUrl = new URL(base);
       cookieUrl.protocol = "https:";
@@ -80,6 +84,14 @@ export async function verifyAdmin(browser, base, fail) {
               headers: await request.allHeaders(),
             });
             const headers = response.headers();
+            if (request.isNavigationRequest()) {
+              const body = await response.body();
+              documents.set(request.url(), {
+                status: response.status(),
+                bytes: body.length,
+                complete: /<\/html>\s*$/.test(body.subarray(-64).toString("utf8")),
+              });
+            }
             if (request.isNavigationRequest() && headers["content-security-policy"])
               headers["content-security-policy"] = headers["content-security-policy"].replace(
                 /(^|;)\s*upgrade-insecure-requests\s*(?=;|$)/g,
@@ -112,9 +124,13 @@ export async function verifyAdmin(browser, base, fail) {
       requestFailures.push({ url: request.url(), error: request.failure()?.errorText });
       active.delete(request);
     });
-    page.on("pageerror", (error) =>
-      fail(`admin ${name}`, `${page.url()}: ${error.stack || error.message}`),
-    );
+    page.on("pageerror", (error) => {
+      const arrived = documents.get(page.url());
+      fail(
+        `admin ${name}`,
+        `${page.url()}${arrived ? ` (document ${JSON.stringify(arrived)})` : ""}: ${error.stack || error.message}`,
+      );
+    });
     try {
       await run(page);
       console.log(`verify: admin passed: ${name}`);
