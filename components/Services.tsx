@@ -9,7 +9,7 @@ const services = [
   {
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi finder brugte erhvervscomputere i vores leverandørnetværk i Sydeuropa – valgt efter opgaven, ikke efter hvad der står på et lager.",
+      da: "Vi finder brugte erhvervscomputere i vores leverandørnetværk i Sydeuropa – valgt efter opgaven, ikke efter, hvad der står på et lager.",
       en: "We find used business computers through our supplier network in southern Europe — chosen for the job, not for what is in a warehouse.",
     },
   },

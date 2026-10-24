@@ -41,7 +41,7 @@ const copy = {
   da: {
     question: "Hvad er refurbished erhvervs-IT?",
     answer:
-      "Refurbished erhvervs-IT – på dansk også kaldt renoveret – er brugt udstyr fra virksomheder, der er testet, istandsat hvor det var nødvendigt og sat op igen, før det sælges videre. Kestro har fokus på den slags maskiner til virksomheder i Danmark og Norge.",
+      "Refurbished erhvervs-IT – på dansk også kaldt renoveret – er brugt udstyr fra virksomheder, som er testet, istandsat, hvor det var nødvendigt, og sat op igen, før det sælges videre. Kestro har fokus på den slags maskiner til virksomheder i Danmark og Norge.",
     updated: "Opdateret",
     faqTitle: "Det spørger virksomheder også om",
   },

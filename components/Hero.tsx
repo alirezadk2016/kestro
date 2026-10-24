@@ -34,7 +34,7 @@ const copy = {
        says refurbished, so the sentence under it says what that means here,
        instead of using the two words as if they were one. */
     subLead: "Kestro skaffer brugte erhvervscomputere til virksomheder",
-    sub: "i Danmark og Norge og gør dem klar – testet, med nordisk tastatur.",
+    sub: "i Danmark og Norge og gør dem klar – testede og med nordisk tastatur.",
     /* The project's status on the first screen, once, in small type. A buyer
        who learns it three screens down, after reading "supplier" and "get a
        quote", has reason to feel misled. */

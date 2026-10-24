@@ -47,7 +47,7 @@ const copy = {
       "Pris per enhed og samlet – ikke kun en totalsum",
       "Stand og batterikapacitet per enhed",
       "Garantivilkår, og hvem der håndterer en fejl",
-      "En tidsramme, ikke et løfte vi ikke kan holde",
+      "En tidsramme, ikke et løfte, vi ikke kan holde",
     ],
     formTitle: "Få en pris på jeres opsætning",
     quantity: "Hvor mange maskiner?",
@@ -58,7 +58,7 @@ const copy = {
     optional: "(valgfrit)",
     submit: "Fortsæt til tilbuddet",
     next: "Næste trin er navn, virksomhed og e-mail. Det er uforpligtende.",
-    who: "Dem I kommer til at tale med",
+    who: "Dem, I kommer til at tale med",
     meet: "Mød os",
   },
   en: {

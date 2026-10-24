@@ -48,8 +48,8 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
               quality={88}
               alt={
                 lang === "da"
-                  ? "Illustreret sort erhvervsbærbar med individuelle taster og rød TrackPoint"
-                  : "Illustrated black business laptop with individual keys and red TrackPoint"
+                  ? "Illustration af en sort erhvervsbærbar med individuelle taster og rød TrackPoint"
+                  : "Illustration of a black business laptop with individual keys and a red TrackPoint"
               }
               sizes="(min-width: 1536px) 40vw, (min-width: 1024px) 560px, 92vw"
               className="object-contain"

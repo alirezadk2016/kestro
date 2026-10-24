@@ -39,7 +39,7 @@ const situations = [
       en: "Do you need to buy for several employees?",
     },
     answer: {
-      da: "Fra ti maskiner til hele flåden. Samme konfiguration hele vejen rundt, de specifikationer opgaven kræver, og mulighed for at bytte det gamle ind.",
+      da: "Fra ti maskiner til hele flåden. Samme konfiguration hele vejen rundt, de specifikationer, opgaven kræver, og mulighed for at bytte det gamle ind.",
       en: "From ten machines to the whole fleet. The same configuration throughout, the specifications the work actually needs, and the option to trade the old kit in.",
     },
     /* The same three things as the answer, set as the list they are, for
@@ -47,7 +47,7 @@ const situations = [
     lead: { da: "Fra ti maskiner til hele flåden.", en: "From ten machines to the whole fleet." },
     points: [
       { da: "Samme konfiguration på hver maskine", en: "The same configuration on every machine" },
-      { da: "De specifikationer opgaven kræver", en: "The specifications the work actually needs" },
+      { da: "De specifikationer, opgaven kræver", en: "The specifications the work actually needs" },
       { da: "Mulighed for at bytte det gamle ind", en: "The option to trade the old kit in" },
     ],
     mark: "batch" as CraftMarkName,
