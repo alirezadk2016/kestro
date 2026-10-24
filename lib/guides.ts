@@ -1095,8 +1095,8 @@ export const guides: Guide[] = [
             en: "Do the inventory first, then sort the machines into the three routes. Then decide what happens to the ones going out — they have a value, and that value can be offset against what comes in. Finally set an order so the replacement happens in batches rather than all at once: a fleet replaced in one go has to be replaced in one go next time as well.",
           },
           {
-            da: "Hvis I standardiserer på én konfiguration, mens I alligevel er i gang, bliver den næste runde nemmere. Det er sjældent muligt for hele flåden, men det er næsten altid muligt for den største gruppe af medarbejdere.",
-            en: "If you standardise on one configuration while you are at it, the next round gets easier. That is rarely possible for the whole fleet, but it is almost always possible for the largest group of employees.",
+            da: "Hvis I standardiserer på én konfiguration, mens I alligevel er i gang, bliver den næste runde nemmere. Det er sjældent muligt for hele flåden, men det er ofte muligt for den største gruppe af medarbejdere.",
+            en: "If you standardise on one configuration while you are at it, the next round gets easier. That is rarely possible for the whole fleet, but it is often possible for the largest group of employees.",
           },
         ],
       },
@@ -2122,8 +2122,8 @@ export const guides: Guide[] = [
           en: "What should I check before buying a used laptop?",
         },
         answer: {
-          da: "Batteriets tilstand, skærmen på både hvid og sort baggrund, hver eneste tast, alle porte med noget i dem, diskens SMART-data, blæseren under belastning, kamera og mikrofon og højttalere, hængslerne, BIOS-adgangskode og enhedslåse, at Windows er aktiveret, og om strømforsyningen følger med. Hvert punkt tager under et minut.",
-          en: "The battery condition, the screen on both a white and a black background, every single key, all the ports with something in them, the drive's SMART data, the fan under load, camera and microphone and speakers, the hinges, BIOS password and device locks, that Windows is activated, and whether the power supply is included. Each point takes under a minute.",
+          da: "Batteriets tilstand, skærmen på både hvid og sort baggrund, hver eneste tast, alle porte med noget i dem, diskens SMART-data, blæseren under belastning, kamera, mikrofon og højttalere, hængslerne, BIOS-adgangskode og enhedslåse, at Windows er aktiveret, og om strømforsyningen følger med. De fleste punkter tager kun et øjeblik.",
+          en: "The battery condition, the screen on both a white and a black background, every single key, all the ports with something in them, the drive's SMART data, the fan under load, camera, microphone and speakers, the hinges, BIOS password and device locks, that Windows is activated, and whether the power supply is included. Most points take a moment.",
         },
       },
       {
@@ -2165,19 +2165,19 @@ export const guides: Guide[] = [
       en: "How to build your own PC: which parts must match, what order to assemble in, and what goes wrong the first time. A walkthrough without mystique.",
     },
     summary: {
-      da: "Rækkefølgen, de dele, der skal passe sammen, og de fejl, alle laver første gang.",
-      en: "The order, the parts that must match, and the mistakes everyone makes first time.",
+      da: "Rækkefølgen, de dele, der skal passe sammen, og de fejl, der er lette at lave første gang.",
+      en: "The order, the parts that must match, and the mistakes that are easy to make first time.",
     },
     audience: { da: "Private og gaming", en: "Individuals and gaming" },
     readingMinutes: 6,
     updated: "2026-10-08",
     tldr: {
-      da: "Rækkefølgen gør arbejdet nemt: bundkort, CPU, køler og RAM samles uden for kabinettet, og først derefter skrues det hele i. De fejl, der koster tid, er næsten altid strøm, der ikke er sat i, eller RAM, der ikke sidder helt fast.",
-      en: "The order makes the work easy: motherboard, CPU, cooler and memory go together outside the case, and only then does the whole thing get screwed in. The mistakes that cost time are almost always power that is not plugged in, or memory that is not fully seated.",
+      da: "Rækkefølgen gør arbejdet nemt: bundkort, CPU, køler og RAM samles uden for kabinettet, og først derefter skrues det hele i. De fejl, der koster tid, er typisk strøm, der ikke er sat i, eller RAM, der ikke sidder helt fast.",
+      en: "The order makes the work easy: motherboard, CPU, cooler and memory go together outside the case, and only then does the whole thing get screwed in. The mistakes that cost time are typically power that is not plugged in, or memory that is not fully seated.",
     },
     intro: {
-      da: "At samle en pc er lettere, end det ser ud. Delene kan kun sidde ét sted, og de kan stort set ikke sættes forkert i. Det svære er at vælge dele, der passer sammen – resten er skruearbejde.",
-      en: "Building a PC is easier than it looks. Parts only fit in one place, and they can barely be inserted the wrong way. The hard part is choosing components that fit together — the rest is screwing things in.",
+      da: "At samle en pc er lettere, end det ser ud. De fleste dele passer kun på én måde. Det svære er at vælge dele, der passer sammen – resten er mest skruearbejde.",
+      en: "Building a PC is easier than it looks. Most parts only fit one way. The hard part is choosing components that fit together — the rest is mostly screwing things in.",
     },
     sections: [
       {
@@ -2201,7 +2201,7 @@ export const guides: Guide[] = [
             en: "The motherboard decides the memory generation, DDR4 or DDR5, and how many modules there is room for.",
           },
           {
-            da: "Kabinettet bestemmer, hvor langt et grafikkort og hvor høj en køler der kan være. Mål efter, i stedet for at håbe.",
+            da: "Kabinettet bestemmer, hvor langt et grafikkort og hvor høj en køler der kan være. Mål efter i stedet for at håbe.",
             en: "The case decides how long a graphics card and how tall a cooler will fit. Measure, rather than hope.",
           },
           {
@@ -2218,8 +2218,8 @@ export const guides: Guide[] = [
         heading: { da: "Rækkefølgen ved samling", en: "The order of assembly" },
         body: [
           {
-            da: "Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet – at gøre det i kabinettet er den fejl, folk oftest fortryder.",
-            en: "Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case — doing it inside the case is the mistake people most often regret.",
+            da: "Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet, hvor det er trangt at komme til.",
+            en: "Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case, where it is cramped to reach.",
           },
           {
             da: "Så kommer bundkortet i kabinettet, derefter strømforsyningen, og til sidst grafikkortet. Kabler føres bagest, mens der stadig er plads til hænderne.",
@@ -2231,8 +2231,8 @@ export const guides: Guide[] = [
         heading: { da: "De klassiske fejl", en: "The classic mistakes" },
         body: [
           {
-            da: "Fire ting står bag næsten alle maskiner, der ikke vil starte første gang:",
-            en: "Four things are behind almost every machine that will not start the first time:",
+            da: "Fire ting står tit bag en maskine, der ikke vil starte første gang:",
+            en: "Four things are often behind a machine that will not start the first time:",
           },
         ],
         list: [
@@ -2249,8 +2249,8 @@ export const guides: Guide[] = [
             en: "The monitor is plugged into the motherboard output instead of the graphics card. The screen is black even though everything works.",
           },
           {
-            da: "Afstandsboltene mellem kabinet og bundkort mangler eller sidder forkert. Det kortslutter bundkortet mod pladen.",
-            en: "The standoffs between case and motherboard are missing or misplaced. That shorts the board against the tray.",
+            da: "Afstandsboltene mellem kabinet og bundkort mangler eller sidder forkert. Det kan kortslutte bundkortet mod pladen.",
+            en: "The standoffs between case and motherboard are missing or misplaced. That can short the board against the tray.",
           },
         ],
       },
@@ -2296,8 +2296,8 @@ export const guides: Guide[] = [
           en: "Should the motherboard be assembled in the case?",
         },
         answer: {
-          da: "Nej. Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet – at gøre det i kabinettet er den fejl, folk oftest fortryder.",
-          en: "No. Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case — doing it inside the case is the mistake people most often regret.",
+          da: "Nej. Sæt processor, hukommelse og M.2-disk i bundkortet, mens det ligger på bordet. Der er langt bedre plads dér end nede i kabinettet, hvor det er trangt at komme til.",
+          en: "No. Fit the processor, memory and M.2 drive to the motherboard while it is lying on the table. There is far more room there than down in the case, where it is cramped to reach.",
         },
       },
       {
@@ -2306,8 +2306,8 @@ export const guides: Guide[] = [
           en: "The PC will not start the first time — what is it usually?",
         },
         answer: {
-          da: "Fire ting står bag næsten alle. Det ekstra 8-benede strømstik til processoren er ikke sat i, og så er maskinen helt død. Hukommelsen sidder i de forkerte sokler. Skærmen er sat i bundkortets udgang i stedet for grafikkortets, og så er billedet sort, selvom alt virker. Eller afstandsboltene mellem kabinet og bundkort mangler og kortslutter bundkortet mod pladen.",
-          en: "Four things are behind nearly all of them. The extra 8-pin processor power connector is not plugged in, and the machine is completely dead. The memory is in the wrong sockets. The monitor is plugged into the motherboard's output instead of the graphics card's, so the picture is black although everything works. Or the standoffs between case and motherboard are missing and short the board against the plate.",
+          da: "Fire ting står tit bag det. Det ekstra 8-benede strømstik til processoren er ikke sat i, og så er maskinen helt død. Hukommelsen sidder i de forkerte sokler. Skærmen er sat i bundkortets udgang i stedet for grafikkortets, og så er billedet sort, selvom alt virker. Eller afstandsboltene mellem kabinet og bundkort mangler og kan kortslutte bundkortet mod pladen.",
+          en: "Four things are often behind it. The extra 8-pin processor power connector is not plugged in, and the machine is completely dead. The memory is in the wrong sockets. The monitor is plugged into the motherboard's output instead of the graphics card's, so the picture is black although everything works. Or the standoffs between case and motherboard are missing and can short the board against the tray.",
         },
       },
       {
@@ -2342,8 +2342,8 @@ export const guides: Guide[] = [
       en: "Can an old PC run Windows 11? Use PC Health Check to check CPU, TPM and Secure Boot. Find out what to do next if the device is not supported.",
     },
     summary: {
-      da: "Hvorfor en maskine, der virker fint, ikke kan få Windows 11 – og hvad mulighederne så er.",
-      en: "Why a machine that works fine cannot get Windows 11 — and what the options are.",
+      da: "Hvorfor en maskine, der virker fint, ikke altid kan få Windows 11 – og hvad mulighederne så er.",
+      en: "Why a machine that works fine cannot always get Windows 11 — and what the options are.",
     },
     audience: { da: "Private og virksomheder", en: "Individuals and companies" },
     readingMinutes: 6,
@@ -2395,7 +2395,7 @@ export const guides: Guide[] = [
             en: "There are guides to bypassing the requirements. We do not recommend it on a machine used in a company: Microsoft gives no guarantee of updates afterwards, and a machine without security updates is a problem, not a saving.",
           },
           {
-            da: "Windows 10 22H2 mistede almindelig support 14. oktober 2025. Kontrollér særskilt ESU-berettigelse og slutdato eller en eksisterende LTSC-udgaves vilkår; de er ikke automatisk tilgængelige til enhver maskine. Alternativer er understøttet erstatningshardware eller et andet understøttet styresystem, hvis programmer og udstyr passer.",
+            da: "Windows 10 22H2 mistede almindelig support 14. oktober 2025. Kontrollér særskilt ESU-berettigelse og slutdato eller en eksisterende LTSC-udgaves vilkår; de er ikke automatisk tilgængelige for enhver maskine. Alternativer er understøttet erstatningshardware eller et andet understøttet styresystem, hvis programmer og udstyr passer.",
             en: "Windows 10 22H2 lost general support on 14 October 2025. Check separate ESU eligibility and expiry, or the terms of an existing LTSC edition; these are not automatically available for every machine. Alternatives include supported replacement hardware or another supported operating system if applications and peripherals are compatible.",
           },
         ],
@@ -2408,7 +2408,7 @@ export const guides: Guide[] = [
     related: [
       {
         href: "/produkter/baerbare-computere",
-        label: { da: "Maskiner, der kommer med over", en: "Machines that make the jump" },
+        label: { da: "Bærbare til Windows 11", en: "Laptops for Windows 11" },
       },
       {
         href: "/tilbud",
