@@ -333,7 +333,7 @@ export const practicalGuides: PracticalGuide[] = [
       {
         href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
         label: {
-          da: "Se, hvad din bærbar kan opgraderes med",
+          da: "Se, hvad din bærbare kan opgraderes med",
           en: "See what can be upgraded in your laptop",
         },
       },

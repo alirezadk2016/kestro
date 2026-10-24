@@ -176,7 +176,7 @@ export const repairs: Repair[] = [
       },
     },
     metaTitle: {
-      da: "RAM og SSD: opgradering af din gamle bærbar | Kestro",
+      da: "RAM og SSD: opgradering af din gamle bærbare | Kestro",
       en: "Upgrade an old laptop: RAM and SSD options | Kestro",
     },
     metaDescription: {

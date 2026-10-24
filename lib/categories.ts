@@ -111,7 +111,7 @@ export const categories: Category[] = [
       },
       {
         href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
-        label: { da: "Kan den gamle bærbar opgraderes?", en: "Can the old laptop be upgraded?" },
+        label: { da: "Kan den gamle bærbare opgraderes?", en: "Can the old laptop be upgraded?" },
       },
       {
         href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",

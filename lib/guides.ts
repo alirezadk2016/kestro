@@ -193,7 +193,7 @@ export const guides: Guide[] = [
     primaryKeyword: "hvorfor er ram blevet dyrere",
     author: "alireza",
     title: {
-      da: "Hvorfor er RAM blevet dyrere, og hvad betyder det for din bærbar?",
+      da: "Hvorfor er RAM blevet dyrere, og hvad betyder det for din bærbare?",
       en: "Why has RAM become more expensive, and what does it mean for your laptop?",
     },
     metaTitle: {
@@ -201,7 +201,7 @@ export const guides: Guide[] = [
       en: "Why is RAM more expensive? Memory prices in 2026 | Kestro",
     },
     metaDescription: {
-      da: "Hvorfor er RAM dyrere? Se hvad der presser prisen, og få hjælp til at vælge mere RAM, en brugt pc eller nyt. Med daterede kilder og råd før dit køb.",
+      da: "Hvorfor er RAM dyrere? Se, hvad der presser prisen, og få hjælp til at vælge mere RAM, en brugt pc eller nyt. Med daterede kilder og råd før køb.",
       en: "RAM prices in 2026: AI, chip supply and retail prices explained. Is it still wise to upgrade? Get tips for comparing a used laptop with a new PC.",
     },
     summary: {
@@ -247,7 +247,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "HBM til AI, server-RAM og hukommelse til almindelige pc'er er ikke samme produkt. TrendForces resuméer beskriver, at kapacitet prioriteres mod serverprodukter. Det kan begrænse udbuddet til pc'er; det betyder ikke, at et HBM-modul kan sættes i din bærbar.",
+            da: "HBM til AI, server-RAM og hukommelse til almindelige pc'er er ikke samme produkt. TrendForces resuméer beskriver, at kapacitet prioriteres mod serverprodukter. Det kan begrænse udbuddet til pc'er; det betyder ikke, at et HBM-modul kan sættes i din bærbare.",
             en: "HBM for AI, server RAM and ordinary PC memory are not the same product. TrendForce's summaries describe capacity being prioritised towards server products. This can constrain PC supply; it does not mean an HBM module can be installed in your laptop.",
           },
           {
@@ -475,7 +475,7 @@ export const guides: Guide[] = [
         ],
         table: {
           caption: {
-            da: "Oplysninger du bør have før valget",
+            da: "Oplysninger, du bør have før valget",
             en: "Information to obtain before choosing",
           },
           head: [
@@ -535,7 +535,7 @@ export const guides: Guide[] = [
         heading: { da: "Regn på den samlede pris", en: "Calculate the total cost" },
         body: [
           {
-            da: "Sammenlign køb + nødvendige dele + arbejde + dataflytning + tilbehør + forventet nedetid. Hold momsgrundlaget ens i tilbuddene, og afklar om eventuelle gebyrer og fragt er med. Vi angiver ikke en universel besparelsesprocent.",
+            da: "Sammenlign køb + nødvendige dele + arbejde + dataflytning + tilbehør + forventet nedetid. Hold momsgrundlaget ens i tilbuddene, og afklar, om eventuelle gebyrer og fragt er med. Vi angiver ikke en universel besparelsesprocent.",
             en: "Compare purchase + necessary parts + labour + data migration + accessories + expected downtime. Keep the VAT basis consistent between quotes and establish whether fees and shipping are included. We do not claim a universal saving percentage.",
           },
           {
@@ -551,11 +551,11 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Start med roller, programmer og tilbehør, ikke et bestemt modelnavn. Notér hvor mange der arbejder stationært, rejser eller bruger tunge programmer. Et enkelt fælles minimum kan være lettere at administrere, men en udvikler og en receptionist har ikke nødvendigvis samme behov.",
+            da: "Start med roller, programmer og tilbehør, ikke et bestemt modelnavn. Notér, hvor mange der arbejder stationært, rejser eller bruger tunge programmer. Et enkelt fælles minimum kan være lettere at administrere, men en udvikler og en receptionist har ikke nødvendigvis samme behov.",
             en: "Start with roles, applications and accessories, not a particular model name. Record how many people work at a desk, travel or use demanding applications. One shared minimum specification may simplify management, but a developer and a receptionist do not necessarily have the same needs.",
           },
           {
-            da: "Afprøv en repræsentativ maskine med jeres dockingstation, skærme, VPN og styringsværktøjer. Bed om alternativer, hvis den samme konfiguration ikke kan skaffes senere. Vurder også om gammelt udstyr kan opgraderes, før alle arbejdspladser udskiftes.",
+            da: "Afprøv en repræsentativ maskine med jeres dockingstation, skærme, VPN og styringsværktøjer. Bed om alternativer, hvis den samme konfiguration ikke kan skaffes senere. Vurder også, om gammelt udstyr kan opgraderes, før alle arbejdspladser udskiftes.",
             en: "Trial a representative machine with your dock, monitors, VPN and management tools. Ask about alternatives if the same configuration cannot be sourced later. Also assess whether existing equipment can be upgraded before replacing every workstation.",
           },
         ],
@@ -650,7 +650,7 @@ export const guides: Guide[] = [
       en: "Laptop upgrade limits: RAM, SSD and Windows | Kestro",
     },
     metaDescription: {
-      da: "Kan din bærbar få mere RAM, SSD eller Windows 11? Tjek model, sokler og krav, og se hvad du selv kan gøre. Med kilder og råd til et sikkert skift.",
+      da: "Kan din bærbare få mere RAM, SSD eller Windows 11? Tjek model, sokler og krav, og se, hvad du selv kan gøre. Med kilder og trin til et sikkert skift.",
       en: "Is your laptop fit for a RAM or SSD upgrade? Check model, slots and Windows 11 eligibility. See real limits and safety tips before you fit a new part.",
     },
     summary: {
@@ -675,7 +675,7 @@ export const guides: Guide[] = [
     sections: [
       {
         heading: {
-          da: "Find modellen før du finder delen",
+          da: "Find modellen, før du finder delen",
           en: "Find the model before finding the part",
         },
         body: [
@@ -684,7 +684,7 @@ export const guides: Guide[] = [
             en: "Record manufacturer, full model name, generation and machine type or product number from the label or system information. Look up that variant with its manufacturer. A family name such as ThinkPad or Latitude is not enough.",
           },
           {
-            da: "Find både specifikationsarket og servicemanualen: det første beskriver understøttede dele, det andet adgangen og sikkerhedsproceduren. CPU-producentens maksimum er ikke automatisk det maksimum, den færdige bærbar understøtter.",
+            da: "Find både specifikationsarket og servicemanualen: det første beskriver understøttede dele, det andet adgangen og sikkerhedsproceduren. CPU-producentens maksimum er ikke automatisk det maksimum, den færdige bærbare understøtter.",
             en: "Find both the specification sheet and service manual: the first describes supported parts, the second access and safety procedures. The CPU manufacturer's maximum is not automatically the maximum supported by the finished laptop.",
           },
         ],
@@ -765,7 +765,7 @@ export const guides: Guide[] = [
         heading: { da: "Hvilken RAM kan du sætte i?", en: "Which memory can you install?" },
         body: [
           {
-            da: "Kontrollér om RAM er fastloddet, sidder i sokler eller er en blanding. Dernæst skal type, formfaktor, kapacitet pr. sokkel, samlet kapacitet og producentens hastighedskrav passe. DDR4 og DDR5 er ikke udskiftelige; køb ikke efter GB alene.",
+            da: "Kontrollér, om RAM er fastloddet, sidder i sokler eller er en blanding. Dernæst skal type, formfaktor, kapacitet pr. sokkel, samlet kapacitet og producentens hastighedskrav passe. DDR4 og DDR5 er ikke udskiftelige; køb ikke efter GB alene.",
             en: "Check whether memory is soldered, socketed or a mixture. Then match type, form factor, capacity per slot, total capacity and manufacturer speed requirements. DDR4 and DDR5 are not interchangeable; do not buy by gigabytes alone.",
           },
           {
@@ -985,11 +985,11 @@ export const guides: Guide[] = [
             en: "The two get mixed together in almost every conversation about this, and that leads to wrong decisions in both directions. The questions are independent.",
           },
           {
-            da: "Det første handler om styresystemet: får den konkrete maskine stadig sikkerhedsrettelser? Kontrollér Windows-udgave, supportdato og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
+            da: "Det første handler om styresystemet: får den konkrete maskine stadig sikkerhedsrettelser? Kontrollér Windows-udgave og supportdato, og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
             en: "The first concerns the operating system: does this particular device still receive security fixes? Check the Windows edition, support date and whether valid ESU enrolment is actually active. A newer device running Windows 10 version 22H2 without ESU does not receive general security updates simply because it is newer.",
           },
           {
-            da: "Det andet handler om den enkelte maskine: må den installere Windows 11? Her er svaret forskelligt fra maskine til maskine, og det afgøres af TPM 2.0, Secure Boot i UEFI-tilstand og om processoren står på Microsofts liste. Kravene og hvordan I tjekker dem står i vejledningen om Windows 11 på en ældre maskine.",
+            da: "Det andet handler om den enkelte maskine: må den installere Windows 11? Her er svaret forskelligt fra maskine til maskine, og det afgøres af TPM 2.0, Secure Boot i UEFI-tilstand, og om processoren står på Microsofts liste. Kravene, og hvordan I tjekker dem, står i vejledningen om Windows 11 på en ældre maskine.",
             en: "The second is about the individual machine: is it allowed to install Windows 11? Here the answer differs from machine to machine, decided by TPM 2.0, Secure Boot in UEFI mode, and whether the processor is on Microsoft's list. The requirements and how to check them are in our guide on Windows 11 on an older machine.",
           },
           {
@@ -1115,7 +1115,7 @@ export const guides: Guide[] = [
       },
       {
         href: "/produkter",
-        label: { da: "Udstyr vi kan skaffe", en: "Equipment we can source" },
+        label: { da: "Udstyr, vi kan skaffe", en: "Equipment we can source" },
       },
       {
         href: "/tilbud",
@@ -1348,7 +1348,7 @@ export const guides: Guide[] = [
             en: "Whether documentation comes with it: an erasure report, a list of serial numbers, a statement of the battery's measured condition. Documentation is what makes a claim checkable.",
           },
           {
-            da: "Hvordan stand er beskrevet: en bogstavskala, en fritekstbeskrivelse eller ingenting. Skalaerne er sælgerens egne og betyder ikke det samme to steder.",
+            da: "Hvordan standen er beskrevet: en bogstavskala, en fritekstbeskrivelse eller ingenting. Skalaerne er sælgerens egne og betyder ikke det samme to steder.",
             en: "How condition is described: a letter scale, a free-text description, or nothing. The scales are the seller's own and do not mean the same thing in two places.",
           },
           {
@@ -1452,7 +1452,7 @@ export const guides: Guide[] = [
       },
       {
         href: "/produkter",
-        label: { da: "Udstyr vi kan skaffe", en: "Equipment we can source" },
+        label: { da: "Udstyr, vi kan skaffe", en: "Equipment we can source" },
       },
       {
         href: "/tilbud",
@@ -1578,7 +1578,7 @@ export const guides: Guide[] = [
             en: "Slow or faulty storage: a compatible SSD may be relevant. Include backup, migration and any reinstallation.",
           },
           {
-            da: "Varme og støj: undersøg ventilation, blæser og temperaturer. Lad diagnosen afgøre, om rens eller kølerarbejde er nødvendigt.",
+            da: "Varme og støj: undersøg ventilation, blæser og temperaturer. Lad diagnosen afgøre, om rengøring eller kølerarbejde er nødvendigt.",
             en: "Heat and noise: investigate ventilation, fan and temperatures. Let diagnosis determine whether cleaning or cooling work is needed.",
           },
         ],
@@ -1603,7 +1603,7 @@ export const guides: Guide[] = [
       },
     ],
     closing: {
-      da: "Er du i tvivl, så skriv til os med model og hvad der sker. Vi siger ærligt, hvis det ikke kan betale sig – det er billigere for os at sige nej end at lave en reparation, du fortryder.",
+      da: "Er du i tvivl, så skriv til os, hvilken model det er, og hvad der sker. Vi siger ærligt, hvis det ikke kan betale sig – det er billigere for os at sige nej end at lave en reparation, du fortryder.",
       en: "If you are unsure, write to us with the model and what happens. We will say honestly if it is not worth it — it is cheaper for us to say no than to do a repair you regret.",
     },
     related: [
@@ -1700,7 +1700,7 @@ export const guides: Guide[] = [
       en: "Upgrade laptop RAM safely: checks and fitting | Kestro",
     },
     metaDescription: {
-      da: "Kan du opgradere RAM i din bærbar? Tjek type, sokler og kapacitet før køb. Læs om sikkert skift, batteri og backup, og hvornår du bør få hjælp.",
+      da: "Kan du opgradere RAM i din bærbare? Tjek type, sokler og kapacitet før et køb. Læs om sikkert skift, batteri og backup, og hvornår du bør få hjælp.",
       en: "Upgrade laptop RAM safely: check slots, type and capacity before buying. Get backup and battery precautions, fitting advice and reasons to stop.",
     },
     summary: {
@@ -1712,7 +1712,7 @@ export const guides: Guide[] = [
     published: "2026-08-23",
     updated: "2026-10-16",
     tldr: {
-      da: "RAM kan kun opgraderes, hvis den konkrete bærbar har en understøttet udvidelsesmulighed. Kontrollér sokler, type og maksimum i producentens dokumentation, og mål først, om hukommelsen er flaskehalsen. Før åbning: sikkerhedskopi, BitLocker-nøgle, korrekt strømafbrydelse og ESD-beskyttelse. Følg servicemanualen, og stop ved batteriskade eller en del, der ikke passer uden kraft.",
+      da: "RAM kan kun opgraderes, hvis den konkrete bærbare har en understøttet udvidelsesmulighed. Kontrollér sokler, type og maksimum i producentens dokumentation, og mål først, om hukommelsen er flaskehalsen. Før åbning: sikkerhedskopi, BitLocker-nøgle, korrekt strømafbrydelse og ESD-beskyttelse. Følg servicemanualen, og stop ved batteriskade eller en del, der ikke passer uden kraft.",
       en: "Memory can only be upgraded if the exact laptop has a supported expansion option. Check slots, type and maximum capacity in manufacturer documentation, and first measure whether memory is the bottleneck. Before opening: backup, BitLocker key, correct power isolation and ESD protection. Follow the service manual and stop for battery damage or a part that needs forcing.",
     },
     intro: {
