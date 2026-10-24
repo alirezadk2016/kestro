@@ -58,7 +58,7 @@ export default async function TrafficPage({ searchParams }: { searchParams: Prom
     <div className={styles.workspace}>
       <GrowthHeader
         title="Trafik"
-        description="Se hvor Kestro bliver fundet — fra første kilde til den side, besøget starter på."
+        description="Se, hvor Kestro bliver fundet — fra første kilde til den side, besøget starter på."
       />
       <GrowthNav active="traffic" />
       <div className={styles.paper}>

@@ -13,7 +13,7 @@ export default async function CampaignPage() {
     <div className={styles.workspace}>
       <GrowthHeader
         title="Kampagnelinks"
-        description="Giv hvert link en tydelig kilde, så du kan se hvilke placeringer der sender besøg til Kestro."
+        description="Giv hvert link en tydelig kilde, så du kan se, hvilke placeringer der sender besøg til Kestro."
       />
       <GrowthNav active="campaigns" />
       <GrowthPanel

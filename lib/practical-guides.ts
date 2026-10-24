@@ -167,7 +167,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     image: "/images/practical/ram.webp",
     imageAlt: {
-      da: "Illustrativt foto af et SO-DIMM RAM-modul ved en laptops hukommelsessokler",
+      da: "Illustrativt foto af et SO-DIMM RAM-modul ved hukommelsessoklerne i en bærbar",
       en: "Illustrative photograph of a SO-DIMM RAM module beside a laptop's memory sockets",
     },
     steps: [
@@ -374,7 +374,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     image: "/images/practical/performance.webp",
     imageAlt: {
-      da: "Illustrativt foto af en laptops køleblæser, varmerør og processorens køleplade",
+      da: "Illustrativt foto af køleblæser, varmerør og processorens køleplade i en bærbar",
       en: "Illustrative photograph of a laptop cooling fan, heat pipe and processor cooling plate",
     },
     steps: [

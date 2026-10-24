@@ -88,7 +88,7 @@ export default async function SystemPage() {
       <AdminPageHeader
         eyebrow="Kestro · drift"
         title="Systemstatus"
-        description="Se hvad der er tilsluttet, og hvad der kræver handling. Ingen nøgler eller adgangskoder vises."
+        description="Se, hvad der er tilsluttet, og hvad der kræver handling. Ingen nøgler eller adgangskoder vises."
         actions={
           <form action="/admin/system" method="get">
             <button className={BUTTON}>Kontrollér igen</button>

@@ -9,7 +9,7 @@ import { buttonClass } from "./Button";
 
 const copy = {
   da: {
-    choose: "Vælg hvem I vil i kontakt med",
+    choose: "Vælg, hvem I vil i kontakt med",
     nordic: "Norden",
     international: "International",
     callDirect: "Ring direkte til",

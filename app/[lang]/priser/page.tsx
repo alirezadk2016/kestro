@@ -63,7 +63,7 @@ const copy = {
   da: {
     metaTitle: "Hvad koster brugte computere til virksomheder? | Kestro",
     metaDescription:
-      "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se hvad prisen afhænger af, og kontakt os om en konkret pris og muligheder til jer.",
+      "Vejledende budgetpriser på brugt IT og daterede priseksempler. Se, hvad prisen afhænger af, og spørg os om en konkret pris og muligheder for jer.",
     title: "Hvad koster brugte computere?",
     whyTitle: "Hvorfor er priserne vejledende?",
     whyBody1: "Model, stand, antal, tastatur og klargøring kan ændre beløbet.",
