@@ -84,6 +84,30 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Copy Review — 24 October 2026
+
+A sentence-level read of every Danish page against CLAUDE.md's writing
+rules, with the English mirrors changed alongside.
+
+- **Claims out.** "Populære modeller" was a demand claim in the menu, the
+  footer, two service pages and the site search; the anchor is now
+  "Modeller og specifikationer" (rule 9: a descriptive anchor, and a new
+  variant to `/modeller`). Invented figures went: a 60 % battery "three months
+  later" on `/kvalitet` and `/tilbud-eksempel`, a U2419H "on thousands of
+  desks", an unlabelled 70 % threshold in the used-laptop checklist (now the
+  site's own rule of thumb from `lib/battery-bands.ts`, said to be ours).
+  Stock and price promises on the U2419H, E243, ThinkVision and G5 dock
+  pages, and "most common", "almost every", "most overlooked" statistics
+  across the guides and "inside the machine", were softened or removed.
+- **Metadata re-measured** after grammar fixes changed five descriptions
+  (two guides, the RAM-upgrade guide, `/priser`, the U2419H): all 145–160
+  characters and at most 920 px with `measure.mjs`. No title or URL moved.
+- **Anchor.** The Windows 11 guide's link to the laptop category reads
+  "Bærbare til Windows 11" instead of "Maskiner, der kommer med over".
+- **Grammar.** "Din bærbare", "den gamle bærbare" (definite after a
+  determiner), the comma before a subordinate clause, English words in
+  Danish copy ("tower", "laptop-model", "runtime-tests", "en laptops").
+
 ## Needs-Led Targeting — 16 October 2026
 
 - The owner prioritised selection, budget, company use, startup equipment,
