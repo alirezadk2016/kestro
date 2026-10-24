@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cookies } from "next/headers";
+import { Suspense } from "react";
 
 import "../globals.css";
 import AdminNav from "@/components/admin/AdminNav";
@@ -97,7 +98,23 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 <AdminHistoryRefresh />
                 <AdminNav />
                 <main id="admin-main" tabIndex={-1} className={styles.main}>
-                  {children}
+                  {/*
+                   * A boundary between <main> and the page, for hydration.
+                   *
+                   * The panel streams, so the page arrives as its own row of
+                   * the Flight payload, after this layout's. When React reaches
+                   * <main> before that row, it suspends while reconciling
+                   * <main>'s children and later replays <main>. The React that
+                   * Next 15.5.28 bundles (19.2 canary) does not rewind the
+                   * hydration cursor on that replay: it tries to claim <main>
+                   * again from inside it, throws #418, and renders the whole
+                   * document again on the client. Measured with the mismatch
+                   * instrumented: fiber <main>, cursor on its first child,
+                   * about one admin run in three. Inside a boundary the same
+                   * wait suspends the boundary instead, and nothing is claimed
+                   * twice.
+                   */}
+                  <Suspense>{children}</Suspense>
                 </main>
               </InboxCountProvider>
             </div>
