@@ -1951,7 +1951,7 @@ export const guides: Guide[] = [
       da: "Vælg efter opgaver og budget, og kontrollér derefter den brugte bærbares stand og tilbehør.",
       en: "Choose around tasks and budget, then check the used laptop's condition and accessories.",
     },
-    audience: { da: "Alle der køber brugt", en: "Anyone buying second-hand" },
+    audience: { da: "Alle, der køber brugt", en: "Anyone buying second-hand" },
     readingMinutes: 6,
     published: "2026-08-23",
     updated: "2026-10-16",
@@ -1997,14 +1997,14 @@ export const guides: Guide[] = [
         heading: { da: "Det, du skal undersøge på maskinen", en: "What to inspect on the machine" },
         body: [
           {
-            da: "Tag maskinen i hånden og gå listen igennem i rækkefølge. Hvert punkt tager under et minut.",
-            en: "Pick the machine up and work through the list in order. Each point takes under a minute.",
+            da: "Tag maskinen i hånden og gå listen igennem i rækkefølge. De fleste punkter tager kun et øjeblik.",
+            en: "Pick the machine up and work through the list in order. Most points take a moment.",
           },
         ],
         list: [
           {
-            da: "Batteriets tilstand. I Windows: åbn Kommandoprompt og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Under 70 procent betyder, at et nyt batteri er på vej.",
-            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. Below 70 per cent means a new battery is coming.",
+            da: "Batteriets tilstand. I Windows: åbn Kommandoprompt og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Jo større forskellen er, jo kortere holder en opladning – er den stor, skal et nyt batteri med i prisen.",
+            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. The bigger the gap, the shorter a charge lasts — if it is large, a new battery belongs in the price.",
           },
           {
             da: "Skærmen på hvid og på sort baggrund. Døde pixels ses på hvid, lysutæthed og indbrænding ses på sort.",
@@ -2015,24 +2015,24 @@ export const guides: Guide[] = [
             en: "Every single key. Open a blank document and press through all of them. One dead key is cheap to live with, but it belongs in the price.",
           },
           {
-            da: "Alle porte med noget i. Tag en USB-nøgle og et HDMI-kabel med. Porte, der aldrig blev testet, er den hyppigste ubehagelige overraskelse.",
-            en: "Every port, with something in it. Bring a USB stick and an HDMI cable. Ports that were never tested are the most common unpleasant surprise.",
+            da: "Alle porte med noget i. Tag en USB-nøgle og et HDMI-kabel med. En port, ingen har prøvet, kan blive en ubehagelig overraskelse senere.",
+            en: "Every port, with something in it. Bring a USB stick and an HDMI cable. A port nobody tried can turn into an unpleasant surprise later.",
           },
           {
             da: "Diskens tilstand. Programmet CrystalDiskInfo læser SMART-data og siger, hvor meget disken har kørt, og om den melder fejl.",
             en: "Disk health. CrystalDiskInfo reads the SMART data and tells you how long the disk has run and whether it is reporting errors.",
           },
           {
-            da: "Blæseren under belastning. Åbn en håndfuld faner, og lyt. Skrabende lyd er et leje på vej ud.",
-            en: "The fan under load. Open a handful of tabs and listen. A scraping sound is a bearing on its way out.",
+            da: "Blæseren under belastning. Åbn en håndfuld faner, og lyt. En skrabende lyd kan være et leje på vej ud.",
+            en: "The fan under load. Open a handful of tabs and listen. A scraping sound can be a bearing on its way out.",
           },
           {
             da: "Kamera, mikrofon og højttalere. Start et opkald med dig selv i et vilkårligt program.",
             en: "Camera, microphone and speakers. Start a call with yourself in any app.",
           },
           {
-            da: "Hængslerne. Åbn og luk skærmen langsomt. Knirken eller slør ender med at revne kabinettet.",
-            en: "The hinges. Open and close the screen slowly. Creaking or play ends up cracking the chassis.",
+            da: "Hængslerne. Åbn og luk skærmen langsomt. Knirken eller slør kan ende med at revne kabinettet.",
+            en: "The hinges. Open and close the screen slowly. Creaking or play can end up cracking the chassis.",
           },
           {
             da: "BIOS-adgangskode og enhedslåse. Genstart og gå ind i BIOS. En låst maskine fra en tidligere ejer kan ikke altid låses op – heller ikke af os.",
@@ -2048,8 +2048,8 @@ export const guides: Guide[] = [
         heading: { da: "Spørg om to ting", en: "Ask two questions" },
         body: [
           {
-            da: "Følger strømforsyningen med? Og hvorfor sælges maskinen? Det første er en reel udgift, hvis svaret er nej. Det andet får du sjældent et falsk svar på, hvis du spørger ligeud.",
-            en: "Is the power supply included? And why is the machine being sold? The first is a real cost if the answer is no. The second rarely gets you a false answer if you ask straight out.",
+            da: "Følger strømforsyningen med? Og hvorfor sælges maskinen? Det første er en reel udgift, hvis svaret er nej. Det andet kan fortælle, hvordan maskinen har været brugt.",
+            en: "Is the power supply included? And why is the machine being sold? The first is a real cost if the answer is no. The second can tell you how the machine has been used.",
           },
         ],
       },
@@ -2112,8 +2112,8 @@ export const guides: Guide[] = [
           en: "How do I check the battery condition on a used laptop?",
         },
         answer: {
-          da: "Åbn Kommandoprompt i Windows og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Under 70 procent betyder, at et nyt batteri er på vej.",
-          en: "Open the Command Prompt in Windows and type powercfg /batteryreport. The report shows the original capacity against the current one. Under 70 per cent means a new battery is on the way.",
+          da: "Åbn Kommandoprompt i Windows og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Jo større forskellen er, jo kortere holder en opladning; er den stor, så regn et nyt batteri med i prisen.",
+          en: "Open the Command Prompt in Windows and type powercfg /batteryreport. The report shows the original capacity against the current one. The bigger the gap, the shorter a charge lasts; if it is large, count a new battery into the price.",
         },
       },
       {
