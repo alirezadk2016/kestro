@@ -162,8 +162,8 @@ export const categories: Category[] = [
       en: "Refurbished business desktops and workstations — Dell OptiPlex, HP EliteDesk, Lenovo ThinkCentre and more. Function-tested and prepared.",
     },
     intro: {
-      da: "Til faste arbejdspladser er en renoveret stationær ofte den mest økonomiske løsning. Stationære erhvervsmaskiner er bygget til lang levetid og er nemme at opgradere, hvilket gør dem velegnede til genbrug.",
-      en: "For a desk that nobody carries anywhere, a refurbished desktop is usually the cheapest sensible answer. Business desktops are built to last and easy to upgrade, which is exactly what makes them worth buying second-hand.",
+      da: "Til faste arbejdspladser er en renoveret stationær ofte den mest økonomiske løsning. Stationære erhvervsmaskiner er typisk bygget til lang levetid og nemme at opgradere, hvilket gør dem velegnede til genbrug.",
+      en: "For a desk that nobody carries anywhere, a refurbished desktop is usually the cheapest sensible answer. Business desktops are usually built to last and easy to upgrade, which is what makes them worth buying second-hand.",
     },
     brands: [
       "Dell OptiPlex",
@@ -284,8 +284,8 @@ export const categories: Category[] = [
       en: "Refurbished mini PCs — ThinkCentre Tiny, OptiPlex Micro, HP Mini — for receptions, tills, digital signage and small desks. Sourced per order.",
     },
     intro: {
-      da: "Mini-pc'er giver samme ydelse som en almindelig stationær i et kabinet, der kan skjules bag skærmen eller monteres under bordet. De er populære, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
-      en: "A mini PC gives you desktop performance in something that hides behind the monitor or mounts under the desk. They are popular where space is tight, or where a clear desk matters.",
+      da: "En mini-pc klarer det samme kontorarbejde som en almindelig stationær, i et kabinet, der kan skjules bag skærmen eller monteres under bordet. Den passer, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
+      en: "A mini PC handles the same office work as an ordinary desktop, in a case that hides behind the monitor or mounts under the desk. It suits places where space is tight, or where a clear desk matters.",
     },
     brands: [
       "Lenovo ThinkCentre Tiny",
@@ -400,8 +400,8 @@ export const categories: Category[] = [
       en: "Refurbished company phones and smartwatches — iPhone, Galaxy, Pixel, Apple Watch. Tested, reset and ready; old phones collected and erased.",
     },
     intro: {
-      da: "Firmatelefoner udskiftes ofte hyppigere end nødvendigt. Renoverede enheder giver samme funktionalitet til en markant lavere pris – særligt når der skal udstyres flere medarbejdere på én gang.",
-      en: "Company phones get replaced more often than they need to be. Refurbished devices do the same job for a good deal less — especially when a whole team has to be equipped at once.",
+      da: "Firmatelefoner udskiftes ofte, før de er slidt op. En renoveret telefon af en nyere model kan dække det samme behov, også når der skal udstyres flere medarbejdere på én gang.",
+      en: "Company phones are often replaced before they are worn out. A refurbished phone of a newer model can meet the same need, including when a whole team has to be equipped at once.",
     },
     brands: [
       "Apple iPhone",

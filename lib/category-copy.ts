@@ -82,11 +82,11 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
   },
   "stationaere-computere": {
     question: {
-      da: "Skal vi vælge en tower, SFF eller mini-pc?",
+      da: "Skal vi vælge et tårn, et lille kabinet eller en mini-pc?",
       en: "Should we choose a tower, SFF or mini PC?",
     },
     answer: {
-      da: "En tower giver typisk mest plads til udvidelser, mens SFF fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads og skærmudgange på den konkrete model, især til CAD eller flere skærme.",
+      da: "Et tårn giver typisk mest plads til udvidelser, mens et lille kabinet (SFF) fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads og skærmudgange på den konkrete model, især til CAD eller flere skærme.",
       en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the actual chassis, power supply, card clearance and display outputs, especially for CAD or multiple monitors.",
     },
   },
@@ -116,7 +116,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "How do we know whether a dock fits our laptops?",
     },
     answer: {
-      da: "Send laptop-model, dock-model og skærmenes opløsning og tilslutninger. USB-C, Thunderbolt og USB-docks med DisplayLink stiller forskellige krav. Kontrollér både billedsignal, nødvendig opladningseffekt og eventuelle drivere; et USB-C-stik alene er ikke nok til at afgøre kompatibilitet.",
+      da: "Send modelnavnet på den bærbare og på docken samt skærmenes opløsning og tilslutninger. USB-C, Thunderbolt og USB-docks med DisplayLink stiller forskellige krav. Kontrollér både billedsignal, nødvendig opladningseffekt og eventuelle drivere; et USB-C-stik alene er ikke nok til at afgøre kompatibilitet.",
       en: "Send the laptop model, dock model, and monitor resolutions and connections. USB-C, Thunderbolt and USB docks using DisplayLink have different requirements. Check video support, required charging power and any drivers; a USB-C connector alone cannot establish compatibility.",
     },
   },
