@@ -186,7 +186,10 @@ export const services: Service[] = [
   {
     slug: "klargoering-og-test",
     name: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
-    h1: { da: "Klargøring og test af computere til medarbejdere", en: "Preparing and testing computers for employees" },
+    h1: {
+      da: "Klargøring og test af computere til medarbejdere",
+      en: "Preparing and testing computers for employees",
+    },
     metaTitle: {
       da: "Klargøring og test af computere til medarbejdere | Kestro",
       en: "Preparing computers for employees — tested, set up | Kestro",
@@ -303,7 +306,10 @@ export const services: Service[] = [
   {
     slug: "levering",
     name: { da: "Levering til virksomheden", en: "Delivery to the company" },
-    h1: { da: "Levering af IT-udstyr til virksomheden", en: "Delivering IT equipment to your company" },
+    h1: {
+      da: "Levering af IT-udstyr til virksomheden",
+      en: "Delivering IT equipment to your company",
+    },
     metaTitle: {
       da: "IT-udstyr leveret til virksomheder i DK og Norge | Kestro",
       en: "Delivery of business IT in Denmark and Norway | Kestro",
@@ -358,7 +364,10 @@ export const services: Service[] = [
   {
     slug: "overskudslager-og-returvarer",
     name: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
-    h1: { da: "Overskudslager og returvarer af IT-udstyr", en: "IT overstock and returned equipment" },
+    h1: {
+      da: "Overskudslager og returvarer af IT-udstyr",
+      en: "IT overstock and returned equipment",
+    },
     metaTitle: {
       da: "Sælg IT-overskudslager, returvarer og demoenheder | Kestro",
       en: "Sell IT overstock, returned stock and demo units | Kestro",
@@ -398,7 +407,10 @@ export const services: Service[] = [
   {
     slug: "opstart-af-arbejdspladser",
     name: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
-    h1: { da: "IT-udstyr til nye medarbejdere: opstart af arbejdspladser", en: "IT equipment for new starters: workstation setup" },
+    h1: {
+      da: "IT-udstyr til nye medarbejdere: opstart af arbejdspladser",
+      en: "IT equipment for new starters: workstation setup",
+    },
     metaTitle: {
       da: "IT-udstyr til nye medarbejdere – klar fra dag ét | Kestro",
       en: "IT equipment for new employees — ready on day one | Kestro",

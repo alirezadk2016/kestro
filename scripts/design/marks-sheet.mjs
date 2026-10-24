@@ -38,7 +38,10 @@ const M = require(work);
 await rm(work);
 
 const css = await readFile("app/globals.css", "utf8");
-const tile = css.slice(css.indexOf(".mark-tile {"), css.indexOf("}", css.indexOf(".mark-tile {")) + 1);
+const tile = css.slice(
+  css.indexOf(".mark-tile {"),
+  css.indexOf("}", css.indexOf(".mark-tile {")) + 1,
+);
 
 const names = [...src.matchAll(/^  (?:"([a-z-]+)"|([a-z]+)): \($/gm)].map((m) => m[1] ?? m[2]);
 const craft = names.slice(0, names.indexOf("ram") === -1 ? names.length : names.indexOf("ram"));

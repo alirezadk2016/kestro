@@ -14,10 +14,9 @@ import sharp from "sharp";
  * these are judgements with a defensible band, not build errors.
  */
 const hero = await sharp("public/hero/scene.webp").stats();
-const HERO_MEAN = hero.channels.slice(0, 3).reduce(
-  (sum, channel, index) => sum + channel.mean * [0.2126, 0.7152, 0.0722][index],
-  0,
-);
+const HERO_MEAN = hero.channels
+  .slice(0, 3)
+  .reduce((sum, channel, index) => sum + channel.mean * [0.2126, 0.7152, 0.0722][index], 0);
 /* A directory other than public/cards, so a test render can be measured
    before it replaces anything. */
 const DIR = process.argv[2] ?? "public/cards";
@@ -78,7 +77,7 @@ for (const asset of ASSETS) {
   if (mean < HERO_MEAN - 18 || mean > HERO_MEAN + 25) {
     problems.push(
       `${asset.file}: mean luminance ${mean.toFixed(1)}, hero is ${HERO_MEAN.toFixed(1)} ` +
-      `(band ${(HERO_MEAN - 18).toFixed(1)}-${(HERO_MEAN + 25).toFixed(1)})`,
+        `(band ${(HERO_MEAN - 18).toFixed(1)}-${(HERO_MEAN + 25).toFixed(1)})`,
     );
   }
 

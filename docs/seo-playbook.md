@@ -14,6 +14,7 @@ in every change that applies Mak or adds a lesson.
 The owner sent 21 searches about buying, selling and repairing laptops. Each
 was put into Danish search language and given to the page its intent belongs
 to (rule 1); no page was created. The table is in `docs/seo-keyword-map.md`.
+
 - The laptop category's lead now says "brugte bærbare til virksomheden" and
   addresses the reader as "I"; the category links to `/flaadeloesninger` as
   "Køb bærbare i større antal", and that question is now a heading in the
@@ -33,6 +34,7 @@ Vitals. Raw figures stay outside this public repository (rule 14: share it
 with nobody); this records what they led to.
 
 What holds:
+
 - **Property:** Domain, as the method asks. **Sitemap:**
   `https://www.kestro.dk/sitemap.xml`, every URL in it submitted, no errors
   or warnings, re-read by Google on 19 October.
@@ -43,6 +45,7 @@ What holds:
 - **Canonical host:** www, which is the host the sitemap was submitted on.
 
 What it showed, and what was done (rules 1, 2, 5, 9):
+
 - **Wrong page for the general term.** "Computer til erhverv", "pc til
   erhverv", "køb pc til erhverv" and "arbejdscomputer" land on `/modeller`.
   None names a model, so the general category owns them. `/produkter`'s
@@ -68,6 +71,7 @@ What it showed, and what was done (rules 1, 2, 5, 9):
   (industrial shredders on the desktop category) is left alone.
 
 Open, for the owner:
+
 - **URL Inspection** on `/produkter/baerbare-computere` and
   `/produkter/skaerme`: is the page indexed, and which canonical did Google
   choose? Then request indexing for both.
@@ -140,13 +144,13 @@ windows, not a partial week against a full one.
 - `npm audit --omit=dev` reports zero findings after compatible patches. Nine development-tool dependency findings remain; no forced Tailwind major upgrade or unverified override is used to hide them.
 - Not resolved by wording: the real data controller's identity/contact details, processor agreements and legal review before trading; authentic photos for 17 model pages; actual customer evidence; stock, margins, repair handover and service policies. Catalogue comparison/filtering, broader visual simplification and new articles remain separate design/content work, not claims of defects already fixed.
 
-| Lesson | In Mak | Checked here |
-| --- | --- | --- |
-| 2-1 | Rules 6–7, the order of work | 14 October 2026 |
-| 2-2 | Rules 1–5; URL, snippet preview and harvest sources added 14 October | 13 and 14 October 2026 |
-| 2-3 | Rules 8–10, heading roles in 5 | 14 October 2026 |
-| 2-4 | Rules 11–14 | 14 October 2026 |
-| — | Beyond the course (`references/beyond-course.md`) | 14 October 2026 |
+| Lesson | In Mak                                                               | Checked here           |
+| ------ | -------------------------------------------------------------------- | ---------------------- |
+| 2-1    | Rules 6–7, the order of work                                         | 14 October 2026        |
+| 2-2    | Rules 1–5; URL, snippet preview and harvest sources added 14 October | 13 and 14 October 2026 |
+| 2-3    | Rules 8–10, heading roles in 5                                       | 14 October 2026        |
+| 2-4    | Rules 11–14                                                          | 14 October 2026        |
+| —      | Beyond the course (`references/beyond-course.md`)                    | 14 October 2026        |
 
 ---
 
@@ -250,27 +254,28 @@ windows, not a partial week against a full one.
     proposed page against it.
 - **Rule 7, pillars:** five of the jobs people come for have a tree.
 
-  | Job | Tree |
-  | --- | --- |
-  | Buy | `/produkter`, `/modeller` |
+  | Job          | Tree                            |
+  | ------------ | ------------------------------- |
+  | Buy          | `/produkter`, `/modeller`       |
   | Have it done | `/ydelser`, `/flaadeloesninger` |
-  | Repair | `/reparation` |
-  | Sell | `/saelg-til-os` |
-  | Learn | `/vejledninger` |
+  | Repair       | `/reparation`                   |
+  | Sell         | `/saelg-til-os`                 |
+  | Learn        | `/vejledninger`                 |
 
   Candidates from the course's repair example: error codes, and manuals or
   drivers. Not candidates: training and a parts shop, which Kestro does not
   sell.
+
 - **Rule 7, the six steps:**
 
-  | Step | Status |
-  | --- | --- |
-  | 1. User needs | Done: B2B buyers, sellers, and repair customers including private ones. |
-  | 2. Keyword research | Partial: the map exists, without volumes. |
-  | 3. Hierarchy | Done: the pillar sheet. |
+  | Step                       | Status                                                                                                  |
+  | -------------------------- | ------------------------------------------------------------------------------------------------------- |
+  | 1. User needs              | Done: B2B buyers, sellers, and repair customers including private ones.                                 |
+  | 2. Keyword research        | Partial: the map exists, without volumes.                                                               |
+  | 3. Hierarchy               | Done: the pillar sheet.                                                                                 |
   | 4. Alignment with products | Done: no category without the things it names. Tablets and phones have no model pages, which is honest. |
-  | 5. Competitors | Started (see below). |
-  | 6. Review | Running: `mak audit` and this file. |
+  | 5. Competitors             | Started (see below).                                                                                    |
+  | 6. Review                  | Running: `mak audit` and this file.                                                                     |
 
   On step 5, Danish refurbished sellers seen in search results put brand
   pages high in their structure: "Refurbished Lenovo ThinkPad", "Lenovo
@@ -285,15 +290,15 @@ sees (title, URL, description), the tag checks an SEO extension makes, and
 the URL as a column in the homework sheet. `audit.mjs` now makes the
 extension's checks. Results on 136 pages:
 
-| Check | Result |
-| --- | --- |
-| Canonical is the page's own path | 136 / 136 |
-| `<meta charset>` in the first 1024 bytes | 136 / 136 |
-| No heading level skipped | 136 / 136 (median seven H2s a page) |
-| Title over 65 characters (the extension's warning) | 0 |
-| Description over 170 characters (the extension's warning) | 0 |
-| URL is lowercase ASCII words joined by hyphens | 136 / 136; longest 50 characters, deepest 3 levels |
-| Slug carries the whole primary keyword | 4 of 77; partly 58; none 15 |
+| Check                                                     | Result                                             |
+| --------------------------------------------------------- | -------------------------------------------------- |
+| Canonical is the page's own path                          | 136 / 136                                          |
+| `<meta charset>` in the first 1024 bytes                  | 136 / 136                                          |
+| No heading level skipped                                  | 136 / 136 (median seven H2s a page)                |
+| Title over 65 characters (the extension's warning)        | 0                                                  |
+| Description over 170 characters (the extension's warning) | 0                                                  |
+| URL is lowercase ASCII words joined by hyphens            | 136 / 136; longest 50 characters, deepest 3 levels |
+| Slug carries the whole primary keyword                    | 4 of 77; partly 58; none 15                        |
 
 - **The slug numbers are information, not faults.** Most "partly" rows are
   model and category pages whose slug drops "brugt" (`/modeller/lenovo-thinkpad-t480`
@@ -335,6 +340,7 @@ search that names no first choice gets a general category beside them.
   pages for it, Kestro sources enough of those machines to fill it, and the
   page has a real answer. The keyword pool decides which parents exist, so
   this waits on the Keyword Planner exports (rule 6).
+
 - **Not possible: a price band.** Kestro has no prices of its own. The
   examples on `/priser` are external retail references.
 - **One product in several categories: already true** where the facts allow
@@ -387,19 +393,20 @@ in one go.
 The whole method run on the site, as far as the facts allow. Measured by
 `mak run` before and after, 136 pages:
 
-| Check | Before | After |
-| --- | --- | --- |
-| Titles 50–60 characters (all ≤ 580 px) | 91 | 131 (the five left: four legal pages, and the English tablets title at 61) |
-| Descriptions 145–160 characters (all ≤ 920 px) | 23 | 61; the rest sit at 850–920 px, a full snippet |
-| Primary keyword in the H1 | 5 of 77 | 67 of 77 |
-| Product categories linked from every page | 0 | 7 (footer) |
-| Repair pages with one link in | 8 | 0 (three to six each) |
-| Blog → commercial links | 42 | 52 |
-| Knowledge-graph coverage, categories | 35–76 % | 67–88 % |
-| Knowledge-graph coverage, repairs | 50–91 % | 75–100 % |
-| FAIL | 0 | 0 |
+| Check                                          | Before  | After                                                                      |
+| ---------------------------------------------- | ------- | -------------------------------------------------------------------------- |
+| Titles 50–60 characters (all ≤ 580 px)         | 91      | 131 (the five left: four legal pages, and the English tablets title at 61) |
+| Descriptions 145–160 characters (all ≤ 920 px) | 23      | 61; the rest sit at 850–920 px, a full snippet                             |
+| Primary keyword in the H1                      | 5 of 77 | 67 of 77                                                                   |
+| Product categories linked from every page      | 0       | 7 (footer)                                                                 |
+| Repair pages with one link in                  | 8       | 0 (three to six each)                                                      |
+| Blog → commercial links                        | 42      | 52                                                                         |
+| Knowledge-graph coverage, categories           | 35–76 % | 67–88 %                                                                    |
+| Knowledge-graph coverage, repairs              | 50–91 % | 75–100 %                                                                   |
+| FAIL                                           | 0       | 0                                                                          |
 
 What changed:
+
 - **Rule 5.** 61 descriptions lengthened with the main entity, its synonym
   and a true call to action (pre-launch: a written quote, a price before
   work, a non-binding enquiry; never an order). 40 titles moved into
@@ -414,12 +421,14 @@ What changed:
   leveret?" with sentences the service pages already state.
 
 Kept on purpose:
+
 - The front page, fleet, quality, models and contact H1s, and the guide
   "Refurbished eller brugt" (its question reads better than the keyword).
 - Danish URLs.
 - The legal pages' short titles.
 
 Waits on the owner:
+
 - **Search Console:** a Domain property for kestro.dk, its TXT record added
   at one.com (the domain's DNS), and the sitemap submitted. Bing Webmaster
   Tools can import it.
@@ -432,7 +441,6 @@ Waits on the owner:
   compatible parts, which brands and models the repairs cover (rule 11's
   model coverage), Microsoft 365 licences.
 
-
 ### Audit, 15 October 2026
 
 A bug crawl and `mak run` on the build of `5535e39` (with the mobile hero,
@@ -441,19 +449,20 @@ fleet scene, grade comparison and repair viewer that landed the same day).
 Bug crawl: all 136 sitemap pages, at 1440 px and on a 390 px phone, read in
 a real browser.
 
-| Check | Result |
-| --- | --- |
-| Page errors, console errors | 0 (WebGL notices from the software renderer only) |
-| Broken internal links, of 202 distinct targets | 0 |
-| In-page anchors pointing at a missing id | 0 |
-| hreflang alternates answering anything but 200 | 0 |
-| Broken images, images without `alt` | 0 |
-| Horizontal overflow, elements wider than the screen | 0 |
-| Duplicate ids, controls without a name | 0 |
-| Production runtime errors (Vercel, last 7 days) | 0 |
-| `npm audit --omit=dev` (what ships) | 0 |
+| Check                                               | Result                                            |
+| --------------------------------------------------- | ------------------------------------------------- |
+| Page errors, console errors                         | 0 (WebGL notices from the software renderer only) |
+| Broken internal links, of 202 distinct targets      | 0                                                 |
+| In-page anchors pointing at a missing id            | 0                                                 |
+| hreflang alternates answering anything but 200      | 0                                                 |
+| Broken images, images without `alt`                 | 0                                                 |
+| Horizontal overflow, elements wider than the screen | 0                                                 |
+| Duplicate ids, controls without a name              | 0                                                 |
+| Production runtime errors (Vercel, last 7 days)     | 0                                                 |
+| `npm audit --omit=dev` (what ships)                 | 0                                                 |
 
 Fixed:
+
 - **Two page entities on one URL.** The five category pages with models
   described themselves twice in JSON-LD: PageSchema's CollectionPage
   (`#webpage`) pointing its `mainEntity` at a second CollectionPage
@@ -475,6 +484,7 @@ Fixed:
   firmacomputere").
 
 Kept on purpose:
+
 - **Product without `offers`** on the 36 model pages. Search Console will
   list them as invalid product snippets; that is the price of not
   publishing a price Kestro does not have (see the note in
@@ -483,6 +493,7 @@ Kept on purpose:
   binding 920 px, a few characters under the 145–160 guide.
 
 Waits on the owner, as before, plus:
+
 - **Build-time advisories.** `npm audit` reports 9 (7 high, 2 moderate), all
   in Tailwind 3's file watcher and `eslint-config-next`, which run on the
   build machine and are not shipped. `braces` has no patched release; the
@@ -593,15 +604,16 @@ The practical guides, the three new articles, the products hub and the
 category copy that landed between 15 and 17 October, read on a phone and at
 1440 and 1920 px, then measured with `mak run`. 150 pages.
 
-| Check | Before | After |
-| --- | --- | --- |
-| FAIL | 0 | 0 |
-| Rule 9: page that matters with one link in | 1 (`/vejledninger/tjek-batterikapacitet`) | 0 |
-| Knowledge-graph coverage, categories | 67–88 % after the rewrite dropped "funktionstest" and Danmark/Norge | 83–100 % |
-| Bug crawl, 150 pages × 2 widths | 0 errors, 0 broken links of 218, 0 overflow | same |
-| Duplicate article images on `/vejledninger` | 3 pairs | 0 |
+| Check                                       | Before                                                              | After    |
+| ------------------------------------------- | ------------------------------------------------------------------- | -------- |
+| FAIL                                        | 0                                                                   | 0        |
+| Rule 9: page that matters with one link in  | 1 (`/vejledninger/tjek-batterikapacitet`)                           | 0        |
+| Knowledge-graph coverage, categories        | 67–88 % after the rewrite dropped "funktionstest" and Danmark/Norge | 83–100 % |
+| Bug crawl, 150 pages × 2 widths             | 0 errors, 0 broken links of 218, 0 overflow                         | same     |
+| Duplicate article images on `/vejledninger` | 3 pairs                                                             | 0        |
 
 Changed:
+
 - **Practical guides.** The battery calculator says what its number means, in
   the same four bands as `/reparation/batteriskift` (one source,
   `lib/battery-bands.ts`). The browser check compares a run with the first

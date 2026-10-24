@@ -72,10 +72,7 @@ export default function TeamSection({ lang }: { lang: Lang }) {
                 {/* A direct line only when there is one. Without it, writing
                     becomes the primary action rather than a fallback. */}
                 {member.phoneHref && (
-                  <a
-                    href={`tel:${member.phoneHref}`}
-                    className={buttonClass("primary")}
-                  >
+                  <a href={`tel:${member.phoneHref}`} className={buttonClass("primary")}>
                     <Phone className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                     {member.phoneDisplay}
                   </a>

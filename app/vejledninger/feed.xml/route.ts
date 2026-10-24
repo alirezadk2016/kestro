@@ -46,7 +46,10 @@ export function GET() {
   /* The feed's own timestamp is the newest article's, not the build's. A feed
      that changes its updated stamp on every deploy tells every aggregator that
      everything is new, every time. */
-  const newest = guides.reduce((latest, guide) => (guide.updated > latest ? guide.updated : latest), guides[0].updated);
+  const newest = guides.reduce(
+    (latest, guide) => (guide.updated > latest ? guide.updated : latest),
+    guides[0].updated,
+  );
 
   const entries = guides
     .slice()

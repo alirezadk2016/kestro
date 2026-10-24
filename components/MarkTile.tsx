@@ -16,8 +16,7 @@ const SIZE = {
 } as const;
 
 type Props = { size?: keyof typeof SIZE; className?: string } & (
-  | { name: CraftMarkName; spec?: never }
-  | { spec: SpecMarkName; name?: never }
+  { name: CraftMarkName; spec?: never } | { spec: SpecMarkName; name?: never }
 );
 
 export default function MarkTile({ size = "md", className = "", ...props }: Props) {

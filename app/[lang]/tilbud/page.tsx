@@ -43,8 +43,7 @@ const copy = {
       "Eksemplet viser et tilbud på enhedsniveau – model, specifikation, kosmetisk stand, batteri, tastaturlayout og styresystem – så I ved, hvad der kommer retur, inden I udfylder noget.",
     exampleLink: "Se eksemplet",
     needTitle: "Hvad har vi brug for at vide?",
-    needLead:
-      "Jo mere I kan sige om de fire ting her, jo færre spørgsmål skal vi stille bagefter.",
+    needLead: "Jo mere I kan sige om de fire ting her, jo færre spørgsmål skal vi stille bagefter.",
     needItems: [
       {
         title: "Antal, og hvad der følger med",

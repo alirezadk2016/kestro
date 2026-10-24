@@ -58,7 +58,14 @@ const copy = {
 };
 
 /* The places most visits are looking for, shown before anything is typed. */
-const SHORTCUTS = ["/produkter", "/priser", "/tilbud", "/flaadeloesninger", "/reparation", "/kontakt"];
+const SHORTCUTS = [
+  "/produkter",
+  "/priser",
+  "/tilbud",
+  "/flaadeloesninger",
+  "/reparation",
+  "/kontakt",
+];
 
 const fold = (s: string) =>
   s
@@ -109,7 +116,9 @@ function oneEdit(x: string, y: string) {
 /* A typed word is a near-prefix of a word in the index: "thinkapd" finds
    ThinkPad, "kontkat" Kontakt, "optiplx" OptiPlex. */
 const nearly = (word: string, token: string) =>
-  [token.length - 1, token.length, token.length + 1].some((n) => n > 0 && oneEdit(word.slice(0, n), token));
+  [token.length - 1, token.length, token.length + 1].some(
+    (n) => n > 0 && oneEdit(word.slice(0, n), token),
+  );
 
 function rank(entries: Prepared[], query: string): Prepared[] {
   const strict = rankWith(entries, query, false);
@@ -119,7 +128,9 @@ function rank(entries: Prepared[], query: string): Prepared[] {
 }
 
 function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[] {
-  const tokens = fold(query).split(/[^a-z0-9]+/).filter(Boolean);
+  const tokens = fold(query)
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
   if (!tokens.length) return [];
   const scored: [number, Prepared][] = [];
   for (const e of entries) {
@@ -130,16 +141,16 @@ function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[
           ? 2
           : 0
         : e.ft.startsWith(token)
-        ? 8
-        : e.fw.some((w) => w.startsWith(token))
-          ? 6
-          : e.ft.includes(token)
-            ? 4
-            : e.fk.includes(token)
-              ? 3
-              : e.fd.includes(token)
-                ? 1
-                : 0;
+          ? 8
+          : e.fw.some((w) => w.startsWith(token))
+            ? 6
+            : e.ft.includes(token)
+              ? 4
+              : e.fk.includes(token)
+                ? 3
+                : e.fd.includes(token)
+                  ? 1
+                  : 0;
       if (!s) {
         score = 0;
         break;
@@ -148,7 +159,10 @@ function rankWith(entries: Prepared[], query: string, fuzzy: boolean): Prepared[
     }
     if (score) scored.push([score, e]);
   }
-  return scored.sort((a, b) => b[0] - a[0]).slice(0, 12).map(([, e]) => e);
+  return scored
+    .sort((a, b) => b[0] - a[0])
+    .slice(0, 12)
+    .map(([, e]) => e);
 }
 
 export default function SiteSearch({
@@ -217,7 +231,8 @@ export default function SiteSearch({
     return order.map((g) => ({ g, items: by.get(g)! }));
   }, [shown]);
 
-  const links = () => Array.from(list.current?.querySelectorAll<HTMLAnchorElement>("a[data-result]") ?? []);
+  const links = () =>
+    Array.from(list.current?.querySelectorAll<HTMLAnchorElement>("a[data-result]") ?? []);
   const move = (from: HTMLElement, step: 1 | -1) => {
     const all = links();
     const i = all.indexOf(from as HTMLAnchorElement);
@@ -247,7 +262,11 @@ export default function SiteSearch({
           {/* The focus ring is the field's underline turning blue, not a box
               drawn through the middle of the panel. */}
           <div className="flex items-center gap-2 border-b-2 border-white/10 px-3 transition-colors focus-within:border-brand-500 sm:px-4">
-            <Search aria-hidden="true" className="h-5 w-5 flex-none text-paper/65" strokeWidth={1.9} />
+            <Search
+              aria-hidden="true"
+              className="h-5 w-5 flex-none text-paper/65"
+              strokeWidth={1.9}
+            />
             <label htmlFor={inputId} className="sr-only">
               {c.title}
             </label>
@@ -286,7 +305,10 @@ export default function SiteSearch({
             </button>
           </div>
 
-          <div ref={list} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2 sm:px-3">
+          <div
+            ref={list}
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2 sm:px-3"
+          >
             <p role="status" className="sr-only">
               {typed && entries ? c.results(results.length) : ""}
             </p>
@@ -339,7 +361,9 @@ export default function SiteSearch({
                         }}
                         className="block min-h-[44px] rounded-lg px-3 py-2.5 transition-colors hover:bg-white/[0.07] focus-visible:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-400"
                       >
-                        <span className="block text-[0.9375rem] font-semibold leading-6 text-paper">{e.t}</span>
+                        <span className="block text-[0.9375rem] font-semibold leading-6 text-paper">
+                          {e.t}
+                        </span>
                         <span className="block text-sm leading-5 text-paper/75">{e.d}</span>
                       </Link>
                     </li>

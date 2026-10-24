@@ -6,15 +6,15 @@ Eleven substantive articles, not keyword-only doorway pages.
 
 ## Coverage
 
-| Reader question | Canonical Danish guide |
-| --- | --- |
-| Why is RAM more expensive? Could this affect laptop prices? | `hvorfor-er-ram-blevet-dyrere` |
-| Should an individual or company buy refurbished or new? | `refurbished-eller-ny-baerbar` |
-| How far can an older laptop be upgraded? | `hvor-meget-kan-en-baerbar-opgraderes` |
-| Which RAM fits, how much, and can I replace it safely? | `opgrader-ram-i-baerbar` |
-| Can this existing PC run supported Windows 11? | `windows-11-paa-aeldre-maskine` |
-| Is repair or upgrading worth it? | `reparere-eller-koebe-ny` |
-| What does Windows 10 end of support mean? | `windows-10-support-slutter` |
+| Reader question                                             | Canonical Danish guide                 |
+| ----------------------------------------------------------- | -------------------------------------- |
+| Why is RAM more expensive? Could this affect laptop prices? | `hvorfor-er-ram-blevet-dyrere`         |
+| Should an individual or company buy refurbished or new?     | `refurbished-eller-ny-baerbar`         |
+| How far can an older laptop be upgraded?                    | `hvor-meget-kan-en-baerbar-opgraderes` |
+| Which RAM fits, how much, and can I replace it safely?      | `opgrader-ram-i-baerbar`               |
+| Can this existing PC run supported Windows 11?              | `windows-11-paa-aeldre-maskine`        |
+| Is repair or upgrading worth it?                            | `reparere-eller-koebe-ny`              |
+| What does Windows 10 end of support mean?                   | `windows-10-support-slutter`           |
 
 Existing used/refurbished definitions, buying checks, data erasure and PC
 assembly remain. No competing article per CPU generation or laptop model.

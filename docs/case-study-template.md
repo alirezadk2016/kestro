@@ -11,9 +11,10 @@ en opdigtet.
 ## Struktur
 
 **Overskrift:** hvad kunden fik, ikke hvad vi gjorde.
-*"32 identiske ThinkPads til to kontorer på tre uger"*
+_"32 identiske ThinkPads til to kontorer på tre uger"_
 
 **Fakta-boks** (det en indkøber scanner efter først):
+
 - Branche og størrelse (kan være anonymiseret: "rådgivningsvirksomhed, 40 ansatte")
 - Antal enheder
 - Maskintype og konfiguration

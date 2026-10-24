@@ -19,6 +19,7 @@ write it right than to have an audit find it.
 **Use the `mak` skill (`.claude/skills/mak/`, "مک") for any keyword, title,
 description, H1, category or new-page decision.** It holds the owner's SEO
 method, taught lesson by lesson from their course:
+
 - one page per search intent, with the results page deciding;
 - categories cut the way buyers search;
 - the blog tree kept apart from the product tree;

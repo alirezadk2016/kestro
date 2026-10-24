@@ -104,7 +104,9 @@ try {
     const [w, h] = SIZES[card];
     await sharp(png).resize(w, h).webp({ quality: 90 }).toFile(file);
     const kb = (statSync(file).size / 1024).toFixed(0);
-    console.log(`${card.padEnd(14)} ${w}x${h}  ${kb} kB  ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+    console.log(
+      `${card.padEnd(14)} ${w}x${h}  ${kb} kB  ${((Date.now() - t0) / 1000).toFixed(0)} s`,
+    );
   }
 } finally {
   rmSync(work, { recursive: true, force: true });

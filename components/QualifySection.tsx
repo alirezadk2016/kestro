@@ -163,7 +163,9 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                       </ul>
                     </>
                   ) : (
-                    <p className="mt-4 text-base leading-[1.75] text-paper/75">{item.answer[lang]}</p>
+                    <p className="mt-4 text-base leading-[1.75] text-paper/75">
+                      {item.answer[lang]}
+                    </p>
                   )}
                 </div>
                 <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">

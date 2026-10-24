@@ -130,7 +130,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="3" y="7.5" width="18" height="12.5" rx="2.5" />
       <path d="M9 7.5V6a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0115 6v1.5" />
       <path d="M3 12.5h7.5M13.5 12.5H21" />
-      <rect x="10.5" y="11" width="3" height="3.2" rx=".8" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="10.5"
+        y="11"
+        width="3"
+        height="3.2"
+        rx=".8"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
 
@@ -141,7 +149,11 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <path d="M5 3.8v4h4" />
       <path d="M4.6 14.8a8 8 0 0014.1 1.6" />
       <path d="M19 20.2v-4h-4" />
-      <path d="M8.3 15.7c0-4.2 3-7.4 7.4-7.4 0 4.2-3 7.4-7.4 7.4z" fill={ACCENT} className="stroke-brand-300" />
+      <path
+        d="M8.3 15.7c0-4.2 3-7.4 7.4-7.4 0 4.2-3 7.4-7.4 7.4z"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
       <path d="M8.3 15.7l3.4-3.4" stroke="#0B1426" strokeWidth="1.2" />
     </>
   ),
@@ -158,7 +170,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <path d="M13.5 9.5V16" />
       <circle cx="7" cy="16.5" r="1.9" />
       <circle cx="17" cy="16.5" r="1.9" />
-      <rect x="5.5" y="9" width="5" height="3.5" rx=".8" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="5.5"
+        y="9"
+        width="5"
+        height="3.5"
+        rx=".8"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
 
@@ -183,7 +203,10 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
   /* The page, its fold, and the tick that makes it an answer. */
   written: (
     <>
-      <path d="M6.5 3h7L19 8.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15A1.5 1.5 0 016.5 3z" fill={BODY} />
+      <path
+        d="M6.5 3h7L19 8.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15A1.5 1.5 0 016.5 3z"
+        fill={BODY}
+      />
       <path d="M6.5 3h7L19 8.5v11a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15A1.5 1.5 0 016.5 3z" />
       <path d="M13.5 3v4a1.5 1.5 0 001.5 1.5h4" />
       <path d="M8.5 12h7M8.5 15h4" />
@@ -207,7 +230,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="2.2" />
       <path d="M3.5 12.5h17" />
-      <rect x="6.5" y="6.5" width="5.5" height="6" rx="1" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="6.5"
+        y="6.5"
+        width="5.5"
+        height="6"
+        rx="1"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
       <path d="M15 17h2.5" />
     </>
   ),
@@ -247,7 +278,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
     <>
       <rect x="6" y="6" width="12" height="12" rx="2" fill={BODY} />
       <rect x="6" y="6" width="12" height="12" rx="2" />
-      <rect x="9.5" y="9.5" width="5" height="5" rx="1" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="9.5"
+        y="9.5"
+        width="5"
+        height="5"
+        rx="1"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
       <path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3" />
     </>
   ),
@@ -286,7 +325,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" fill={BODY} />
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
       <path d="M3.5 9.5h17M8 3v4M16 3v4" />
-      <rect x="7" y="12.5" width="3.5" height="3.5" rx=".8" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="7"
+        y="12.5"
+        width="3.5"
+        height="3.5"
+        rx=".8"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
 
@@ -295,7 +342,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="2.5" y="7" width="19" height="9" rx="1.2" fill={BODY} />
       <rect x="2.5" y="7" width="19" height="9" rx="1.2" />
       <path d="M5.5 16v2.5M8.5 16v2.5M15.5 16v2.5M18.5 16v2.5" />
-      <rect x="10.25" y="9.5" width="3.5" height="4" rx=".6" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="10.25"
+        y="9.5"
+        width="3.5"
+        height="4"
+        rx=".6"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
       <path d="M5.5 11.5h2M16.5 11.5h2" />
     </>
   ),
@@ -312,7 +367,10 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
     <>
       <rect x="2.5" y="6" width="19" height="12" rx="2" fill={BODY} />
       <rect x="2.5" y="6" width="19" height="12" rx="2" />
-      <path d="M6 9.5h.5M9.5 9.5h.5M13.5 9.5h.5M17.5 9.5h.5M6 12.5h.5M9.5 12.5h.5M13.5 12.5h.5M17.5 12.5h.5" strokeWidth="2" />
+      <path
+        d="M6 9.5h.5M9.5 9.5h.5M13.5 9.5h.5M17.5 9.5h.5M6 12.5h.5M9.5 12.5h.5M13.5 12.5h.5M17.5 12.5h.5"
+        strokeWidth="2"
+      />
       <path d="M8 15.3h8" className="stroke-brand-300" />
     </>
   ),
@@ -372,7 +430,15 @@ const marks: Record<CraftMarkName, React.ReactNode> = {
       <rect x="3.5" y="11" width="17" height="7.5" rx="2" />
       <path d="M7 14.75h2M11 14.75h2" />
       <path d="M16 11V8a2 2 0 012-2h1" />
-      <rect x="18.5" y="4.5" width="3" height="3" rx=".7" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="18.5"
+        y="4.5"
+        width="3"
+        height="3"
+        rx=".7"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
 
@@ -395,7 +461,15 @@ const specMarks: Record<SpecMarkName, React.ReactNode> = {
       <rect x="2" y="5.5" width="16" height="8" rx="1" fill={BODY} />
       <rect x="2" y="5.5" width="16" height="8" rx="1" />
       <path d="M4.5 13.5v2M7.5 13.5v2M12.5 13.5v2M15.5 13.5v2" />
-      <rect x="8.2" y="7.7" width="3.6" height="3.6" rx=".6" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="8.2"
+        y="7.7"
+        width="3.6"
+        height="3.6"
+        rx=".6"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
   /* A drive: long, thin, with its connector end. */
@@ -404,7 +478,15 @@ const specMarks: Record<SpecMarkName, React.ReactNode> = {
       <rect x="2" y="6.5" width="16" height="7" rx="1.4" fill={BODY} />
       <rect x="2" y="6.5" width="16" height="7" rx="1.4" />
       <path d="M5 8.8v2.4" />
-      <rect x="8" y="8.3" width="6" height="3.4" rx=".6" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="8"
+        y="8.3"
+        width="6"
+        height="3.4"
+        rx=".6"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
   keyboard: (
@@ -419,7 +501,15 @@ const specMarks: Record<SpecMarkName, React.ReactNode> = {
     <>
       <rect x="2" y="6" width="14" height="8" rx="1.8" />
       <path d="M18 8.5v3" />
-      <rect x="4.2" y="8.2" width="6" height="3.6" rx=".7" fill={ACCENT} className="stroke-brand-300" />
+      <rect
+        x="4.2"
+        y="8.2"
+        width="6"
+        height="3.6"
+        rx=".7"
+        fill={ACCENT}
+        className="stroke-brand-300"
+      />
     </>
   ),
   tested: (
@@ -432,7 +522,10 @@ const specMarks: Record<SpecMarkName, React.ReactNode> = {
   /* The page and the seal that makes it binding. */
   warranty: (
     <>
-      <path d="M4.5 2.5h6.5L15 6.5v10a1.3 1.3 0 01-1.3 1.3H4.5a1.3 1.3 0 01-1.3-1.3v-12.7a1.3 1.3 0 011.3-1.3z" fill={BODY} />
+      <path
+        d="M4.5 2.5h6.5L15 6.5v10a1.3 1.3 0 01-1.3 1.3H4.5a1.3 1.3 0 01-1.3-1.3v-12.7a1.3 1.3 0 011.3-1.3z"
+        fill={BODY}
+      />
       <path d="M4.5 2.5h6.5L15 6.5v10a1.3 1.3 0 01-1.3 1.3H4.5a1.3 1.3 0 01-1.3-1.3v-12.7a1.3 1.3 0 011.3-1.3z" />
       <path d="M6 8.5h5M6 11.3h3" />
       <circle cx="12.6" cy="14.6" r="2.3" fill={ACCENT} className="stroke-brand-300" />

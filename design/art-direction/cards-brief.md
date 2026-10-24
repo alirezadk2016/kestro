@@ -274,14 +274,14 @@ Two things had to be learned the hard way again:
 Five of the six contradicted their own alt text, which is a defect the site
 states in words on the page:
 
-| card | the alt text says | the picture showed |
-| --- | --- | --- |
-| `cat-laptops` | an open business laptop | one open laptop ✓ |
-| `cat-desktops` | a desktop tower **and a mini PC** side by side | one striped box |
-| `cat-monitors` | a widescreen monitor **with a keyboard and a docking station** | one monitor |
-| `cat-fleet` | a row of identical laptops prepared for delivery | a pale exploded-looking stack |
-| `exploded` | screen, keyboard, **mainboard** and base plate | two bare plates |
-| `fleet-scene` | a room of identical laptops **set out on desks** | one laptop on a plate |
+| card           | the alt text says                                              | the picture showed            |
+| -------------- | -------------------------------------------------------------- | ----------------------------- |
+| `cat-laptops`  | an open business laptop                                        | one open laptop ✓             |
+| `cat-desktops` | a desktop tower **and a mini PC** side by side                 | one striped box               |
+| `cat-monitors` | a widescreen monitor **with a keyboard and a docking station** | one monitor                   |
+| `cat-fleet`    | a row of identical laptops prepared for delivery               | a pale exploded-looking stack |
+| `exploded`     | screen, keyboard, **mainboard** and base plate                 | two bare plates               |
+| `fleet-scene`  | a room of identical laptops **set out on desks**               | one laptop on a plate         |
 
 One cause under all of it: **the props and the model were in different unit
 systems.** The hero's laptop measures 2.945 x 0.537 x 4.61 with its width on z
@@ -492,6 +492,7 @@ Two process notes, both of which cost a pass:
   chasing a warmth regression that did not exist. Seeded now.
 
 ### Measured, after
+
 ```
 cat-laptops.webp     1200x675  ratio 1.778  mean L  27.4  highlight r-b  -9.2  sd@render 20.8
 cat-desktops.webp    1200x675  ratio 1.778  mean L  30.0  highlight r-b   4.9  sd@render 29.8
@@ -517,8 +518,6 @@ a room. Two point lights hung over the benches obey the inverse square, and that
 falloff is the depth: the near bench reads, the third is half gone, the fourth
 is a suggestion. 18.6, and the picture is better for the same reason the number
 is.
-
-
 
 All six sit inside the brief. Nothing is left deliberately failing.
 

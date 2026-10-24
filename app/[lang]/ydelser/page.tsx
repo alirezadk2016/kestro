@@ -24,7 +24,8 @@ const copy = {
     /* Answer first, with the two counts the page actually lists. */
     description: `Kestro er leverandør af brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     processTitle: "Sådan foregår en leverance",
-    processSub: "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
+    processSub:
+      "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
       "Stand, batteritilstand, konfiguration og garantivilkår står skriftligt, før I bestiller. Vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren.",

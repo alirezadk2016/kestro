@@ -84,7 +84,12 @@ const config: Config = {
            before it loaded the font: the list below was never consulted. With
            a default inside the var(), a layout that forgets the font gets the
            metric-matched face instead of Times. */
-        sans: ['var(--font-sans, "Jakarta Fallback")', "Jakarta Fallback", "system-ui", "sans-serif"],
+        sans: [
+          'var(--font-sans, "Jakarta Fallback")',
+          "Jakarta Fallback",
+          "system-ui",
+          "sans-serif",
+        ],
         display: [
           'var(--font-sans, "Jakarta Fallback")',
           "Jakarta Fallback",

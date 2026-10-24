@@ -138,11 +138,23 @@ ${[
   entry("Produkter", da("/produkter"), "Equipment categories Kestro sources."),
   entry("Flådeløsninger", da("/flaadeloesninger"), "Replacing or equipping a whole fleet."),
   entry("Ydelser", da("/ydelser"), "Sourcing, preparation, Nordic setup, delivery, returns."),
-  entry("Reparation", da("/reparation"), "Repairs and upgrades to machines a company already owns."),
-  entry("Sælg til os", da("/saelg-til-os"), "Buying used business equipment back, with data erasure."),
+  entry(
+    "Reparation",
+    da("/reparation"),
+    "Repairs and upgrades to machines a company already owns.",
+  ),
+  entry(
+    "Sælg til os",
+    da("/saelg-til-os"),
+    "Buying used business equipment back, with data erasure.",
+  ),
   entry("Stand og kvalitet", da("/kvalitet"), "How condition is described and what terms apply."),
   entry("Priser", da("/priser"), "What decides a price. No price list is published."),
-  entry("Sådan ser et tilbud ud", da("/tilbud-eksempel"), "An example quote, filled in, as a document."),
+  entry(
+    "Sådan ser et tilbud ud",
+    da("/tilbud-eksempel"),
+    "An example quote, filled in, as a document.",
+  ),
   entry("Maskinen indeni", da("/maskinen"), "What the parts inside a business machine do."),
 ].join("\n")}
 
