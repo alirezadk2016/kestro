@@ -155,7 +155,7 @@ const sections: Section[] = [
         en: "Alongside Google Analytics we count visits with Vercel Analytics and measure page speed with Vercel Speed Insights. Both run whatever you answer in the banner, and there is a reason for that: they set no cookies, store nothing in your browser and do not follow you to other websites. What is recorded is a page view, which country the request came from, and how quickly the page rendered.",
       },
       {
-        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst og om den er hurtig nok – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand, og der indsamles ikke oplysninger, der kan pege på en bestemt person.",
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst, og om den er hurtig nok – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand, og der indsamles ikke oplysninger, der kan pege på en bestemt person.",
         en: "The legal basis is our legitimate interest in knowing whether the site is read and whether it is fast enough — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish Cookie Executive Order, and nothing is collected that can point to a particular person.",
       },
       {
