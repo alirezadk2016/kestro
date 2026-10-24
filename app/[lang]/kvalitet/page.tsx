@@ -18,7 +18,7 @@ const copy = {
       "Hvad grad A, B og C dækker, hvad en funktionstest skal indeholde, og hvilke garantivilkår I bør have på skrift, før I køber brugt eller refurbished IT.",
     title: "Stand, test og hvad I bør spørge om",
     description:
-      "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
+      "»Brugt« siger ikke i sig selv noget om kvalitet. Her er den gradering, mange i branchen bruger, hvad en ordentlig funktionstest dækker, og hvad I altid bør få oplyst skriftligt – også af os.",
     gradingTitle: "Hvad betyder A, B og C?",
     gradingBody:
       "Graden beskriver, hvordan maskinen ser ud – ikke hvordan den virker. Alt udstyr skal bestå den samme funktionstest, uanset grad. Nogle leverandører kalder det guld, sølv og bronze, men det dækker over det samme.",
@@ -45,7 +45,7 @@ const copy = {
       "Vi skaffer udstyret til hver ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
     notIncludedTitle: "Det følger typisk ikke med som standard",
     notIncludedBody:
-      "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er den klassiske grund til, at et billigt tilbud pludselig ikke er billigt. Sig til fra start, så regner vi det med.",
+      "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er en klassisk grund til, at et billigt tilbud pludselig ikke er billigt. Sig til fra start, så regner vi det med.",
     cta: "Få et tilbud, der er gennemskueligt",
   },
   en: {
@@ -54,7 +54,7 @@ const copy = {
       "What grades A, B and C cover, what a function test should include, and which warranty terms to get in writing before you buy used or refurbished IT.",
     title: "Condition, testing and what to ask about",
     description:
-      "“Used” says nothing about quality on its own. Here is the grading the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",
+      "“Used” says nothing about quality on its own. Here is the grading much of the industry uses, what a proper function test covers, and what you should always get in writing — from us as well.",
     gradingTitle: "What do A, B and C mean?",
     gradingBody:
       "The grade describes how the machine looks — not how it works. All equipment has to pass the same function test, whatever the grade. Some suppliers call it gold, silver and bronze, but it means the same thing.",
@@ -81,7 +81,7 @@ const copy = {
       "We source per order, so we know the specific equipment before you say yes. Everything below is in the quote:",
     notIncludedTitle: "What is usually not included as standard",
     notIncludedBody:
-      "Power supplies, cables, docking stations, bags and mice rarely come with used equipment unless it has been agreed. That is the classic reason a cheap quote suddenly is not cheap. Say it up front and we will include it.",
+      "Power supplies, cables, docking stations, bags and mice rarely come with used equipment unless it has been agreed. That is a classic reason a cheap quote suddenly is not cheap. Say it up front and we will include it.",
     cta: "Get a quote you can see through",
   },
 } satisfies Record<Lang, Record<string, string>>;

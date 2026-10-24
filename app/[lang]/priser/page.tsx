@@ -32,15 +32,15 @@ const drivers = [
   {
     heading: { da: "Antal", en: "Quantity" },
     body: {
-      da: "Ti ens maskiner er billigere per stk. end tre forskellige. Det er ikke en mængderabat – det er, at ens maskiner er lettere at skaffe og klargøre samlet.",
-      en: "Ten identical machines cost less each than three different ones. That is not a volume discount — identical machines are simply easier to source and prepare together.",
+      da: "Ti ens maskiner kan blive billigere per stk. end tre forskellige. Det er ikke en mængderabat – det er, at ens maskiner er lettere at skaffe og klargøre samlet.",
+      en: "Ten identical machines can cost less each than three different ones. That is not a volume discount — identical machines are simply easier to source and prepare together.",
     },
   },
   {
     heading: { da: "Hvad der skal med", en: "What goes with them" },
     body: {
-      da: "Dockingstationer, skærme, kabler og strømforsyninger følger sjældent med brugt udstyr. Det er den klassiske grund til, at et billigt tilbud pludselig ikke er billigt.",
-      en: "Docks, monitors, cables and power supplies rarely come with used equipment. That is the classic reason a cheap quote suddenly stops being cheap.",
+      da: "Dockingstationer, skærme, kabler og strømforsyninger følger sjældent med brugt udstyr. Det er en klassisk grund til, at et billigt tilbud pludselig ikke er billigt.",
+      en: "Docks, monitors, cables and power supplies rarely come with used equipment. That is a classic reason a cheap quote suddenly stops being cheap.",
     },
   },
   {
