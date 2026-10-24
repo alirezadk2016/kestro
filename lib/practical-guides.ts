@@ -58,7 +58,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     image: "/images/practical/battery.webp",
     imageAlt: {
-      da: "Illustrativt foto af et intakt laptopbatteri ved en åben computer",
+      da: "Illustrativt foto af et intakt batteri ved en åben bærbar",
       en: "Illustrative photograph of an intact laptop battery beside an open computer",
     },
     steps: [
@@ -258,7 +258,7 @@ export const practicalGuides: PracticalGuide[] = [
       en: "HDD or SSD? Find the drive type in Windows, learn what M.2, SATA and NVMe mean, and check the format and your files before fitting a new one.",
     },
     summary: {
-      da: "Find drevtypen, og forstå hvad en passende SSD skal matche.",
+      da: "Find drevtypen, og se, hvad en ny SSD skal passe til.",
       en: "Identify the drive type and understand what a compatible SSD must match.",
     },
     intro: {
