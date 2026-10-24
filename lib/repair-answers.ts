@@ -220,8 +220,8 @@ const specific: Record<string, Extra> = {
           en: "When is a used battery too worn?",
         },
         answer: {
-          da: "Over 80 % af den oprindelige kapacitet er almindeligt slid, under 70 % er det tid til at skifte. Vi oplyser batteriets faktiske kapacitet i procent, når vi har gennemgået maskinen.",
-          en: "Above 80% of the original capacity is ordinary wear; below 70% it is time to replace it. We state the battery's actual capacity as a percentage once we have been through the machine.",
+          da: "Sådan læser vi det: over 80 % af den oprindelige kapacitet er almindeligt slid, under 70 % er det tid til at skifte. Vi oplyser batteriets faktiske kapacitet i procent, når vi har gennemgået maskinen.",
+          en: "As we read it: above 80% of the original capacity is ordinary wear; below 70% it is time to replace it. We state the battery's actual capacity as a percentage once we have been through the machine.",
         },
       },
     ],

@@ -2003,8 +2003,8 @@ export const guides: Guide[] = [
         ],
         list: [
           {
-            da: "Batteriets tilstand. I Windows: åbn Kommandoprompt og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Jo større forskellen er, jo kortere holder en opladning – er den stor, skal et nyt batteri med i prisen.",
-            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. The bigger the gap, the shorter a charge lasts — if it is large, a new battery belongs in the price.",
+            da: "Batteriets tilstand. I Windows: åbn Kommandoprompt og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Vi regner under 70 procent af den oprindelige som tid til et nyt batteri – en tommelfingerregel, ikke en standard – og så skal det med i prisen.",
+            en: "Battery health. In Windows: open Command Prompt and type powercfg /batteryreport. The report shows the original capacity against the current one. We count below 70 per cent of the original as time for a new battery — a rule of thumb, not a standard — and then it belongs in the price.",
           },
           {
             da: "Skærmen på hvid og på sort baggrund. Døde pixels ses på hvid, lysutæthed og indbrænding ses på sort.",
@@ -2112,8 +2112,8 @@ export const guides: Guide[] = [
           en: "How do I check the battery condition on a used laptop?",
         },
         answer: {
-          da: "Åbn Kommandoprompt i Windows og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Jo større forskellen er, jo kortere holder en opladning; er den stor, så regn et nyt batteri med i prisen.",
-          en: "Open the Command Prompt in Windows and type powercfg /batteryreport. The report shows the original capacity against the current one. The bigger the gap, the shorter a charge lasts; if it is large, count a new battery into the price.",
+          da: "Åbn Kommandoprompt i Windows og skriv powercfg /batteryreport. Rapporten viser den oprindelige kapacitet over for den nuværende. Vi regner under 70 procent af den oprindelige som tid til et nyt batteri; det er en tommelfingerregel, ikke en standard.",
+          en: "Open the Command Prompt in Windows and type powercfg /batteryreport. The report shows the original capacity against the current one. We count below 70 per cent of the original as time for a new battery; that is a rule of thumb, not a standard.",
         },
       },
       {

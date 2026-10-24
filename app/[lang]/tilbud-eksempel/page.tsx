@@ -131,7 +131,7 @@ const copy = {
     priceLink: "Hvad der afgør prisen",
     whyTitle: "Hvorfor er alle felterne der?",
     whyBody:
-      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der virker i en test, kan være på 60 % tre måneder senere. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
+      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der klarer en test, kan stadig være slidt. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
     relatedTitle: "Videre herfra",
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
@@ -197,7 +197,7 @@ const copy = {
     priceLink: "What decides the price",
     whyTitle: "Why is every field there?",
     whyBody:
-      "Each field above exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can be at 60 % three months later. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
+      "Each field above exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can still be worn. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
     relatedTitle: "Where to go next",
     related: [
       { href: "/kvalitet", label: "Condition, testing and what to ask about" },
