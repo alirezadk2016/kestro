@@ -106,8 +106,8 @@ export const models: Model[] = [
       en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Quote with battery.',
     },
     intro: {
-      da: "T480 er bygget til at blive slæbt rundt hver dag, delene er lette at skaffe, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
-      en: "The T480 is built to be carried every day, parts are easy to get hold of, and it can be expanded instead of replaced. For ordinary office work it is still plenty fast, years after it was released.",
+      da: "T480 er bygget til at blive slæbt rundt hver dag, der findes reservedele til den, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
+      en: "The T480 is built to be carried every day, spare parts exist for it, and it can be expanded instead of replaced. For ordinary office work it is still plenty fast, years after it was released.",
     },
     goodFor: [
       { da: "Kontor, administration og sagsbehandling", en: "Office, administration and casework" },
@@ -218,8 +218,8 @@ export const models: Model[] = [
       {
         title: { da: "Reservedele er til at skaffe", en: "Spare parts are easy to find" },
         description: {
-          da: "Lenovo udgiver servicemanualer til T-serien, og delene er stadig lette at få fat i. En defekt skærm, et batteri eller et tastatur bliver en reparation i stedet for en ny maskine.",
-          en: "Lenovo publishes service manuals for the T series, and the parts are still easy to get. A broken screen, a battery or a keyboard becomes a repair instead of a new machine.",
+          da: "Lenovo udgiver servicemanualer til T-serien, og der findes stadig reservedele. En defekt skærm, et batteri eller et tastatur bliver en reparation i stedet for en ny maskine.",
+          en: "Lenovo publishes service manuals for the T series, and spare parts are still available. A broken screen, a battery or a keyboard becomes a repair instead of a new machine.",
         },
       },
       {
@@ -350,7 +350,7 @@ export const models: Model[] = [
       en: 'Refurbished ThinkPad T14 Gen 1 and 2: 14" Full HD, Intel i5/i7 or AMD Ryzen PRO and a swappable SSD. The Intel and AMD versions compared.',
     },
     intro: {
-      da: "T14 er det, T480 blev til. Samme grundidé – erhvervskabinet, godt tastatur, dele der kan skaffes – men med nyere processorer og en tyndere maskine. Den findes både med Intel og med AMD Ryzen PRO, og de to varianter er ikke helt ens.",
+      da: "T14 er det, T480 blev til. Samme grundidé – erhvervskabinet, godt tastatur, dele, der kan skaffes – men med nyere processorer og en tyndere maskine. Den findes både med Intel og med AMD Ryzen PRO, og de to varianter er ikke helt ens.",
       en: "The T14 is what the T480 turned into. Same idea — business chassis, good keyboard, parts you can get — but with newer processors in a thinner machine. It comes with either Intel or AMD Ryzen PRO, and the two are not quite the same.",
     },
     goodFor: [
@@ -673,8 +673,8 @@ export const models: Model[] = [
         en: "Office and administration at any size",
       },
       {
-        da: "Leverancer, hvor mange ens maskiner skal skaffes hurtigt",
-        en: "Deliveries where many identical machines are needed quickly",
+        da: "Leverancer med mange ens maskiner",
+        en: "Deliveries of many identical machines",
       },
       { da: "Arbejdspladser med HP-docks i forvejen", en: "Workplaces that already have HP docks" },
     ],
@@ -1528,8 +1528,8 @@ export const models: Model[] = [
       en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand. Quote with condition.',
     },
     intro: {
-      da: "EliteDisplay E-serien er HP's svar på UltraSharp og findes i store mængder på det brugte marked. Den har de samme grundfunktioner – mat IPS-panel, højdejustering og USB-hub – og ligger typisk lidt under Dell i pris.",
-      en: "The EliteDisplay E series is HP's answer to UltraSharp, and it turns up in large numbers on the used market. It has the same basics — matte IPS panel, height adjustment and a USB hub — and usually sits slightly below Dell on price.",
+      da: "EliteDisplay E-serien er HP's svar på UltraSharp med de samme grundfunktioner: mat IPS-panel, højdejustering og USB-hub. Ud over DisplayPort og HDMI har den VGA til ældre maskiner.",
+      en: "The EliteDisplay E series is HP's answer to UltraSharp, with the same basics: a matte IPS panel, height adjustment and a USB hub. Besides DisplayPort and HDMI it has VGA for older machines.",
     },
     goodFor: [
       { da: "Kontorarbejdspladser i alle størrelser", en: "Office desks at any scale" },
@@ -1538,8 +1538,8 @@ export const models: Model[] = [
         en: "Companies that already run HP hardware",
       },
       {
-        da: "Leverancer, hvor mange ens skærme skal skaffes hurtigt",
-        en: "Deliveries where many identical monitors are needed quickly",
+        da: "Leverancer med mange ens skærme",
+        en: "Deliveries of many identical monitors",
       },
     ],
     specs: [
@@ -1596,8 +1596,8 @@ export const models: Model[] = [
     group: "skaerme",
     category: "skaerme",
     tagline: {
-      da: "Matcher ThinkPad-flåden – både i udseende og i pris.",
-      en: "Matches a ThinkPad fleet — in looks and in price.",
+      da: "Matcher ThinkPad-flåden i udseende.",
+      en: "Matches a ThinkPad fleet in looks.",
     },
     metaTitle: {
       da: "Brugt Lenovo ThinkVision T24i: specs, fordele, ulemper | Kestro",

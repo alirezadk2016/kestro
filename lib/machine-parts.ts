@@ -51,7 +51,7 @@ export const exteriorViews: ExteriorView[] = [
     },
     checks: [
       {
-        da: "Stand udvendigt vurderes først: ridser, buler og om skallen er skæv.",
+        da: "Stand udvendigt vurderes først: ridser og buler, og om skallen er skæv.",
         en: "Condition outside is judged first: scratches, dents, and whether the shell sits square.",
       },
       {
@@ -65,7 +65,7 @@ export const exteriorViews: ExteriorView[] = [
     id: "keyboard",
     name: { da: "Tastatur", en: "Keyboard" },
     summary: {
-      da: "Den del kunden rører ved hver dag – og den der afgør, om en maskine kan sælges i Norden.",
+      da: "Den del, kunden rører ved hver dag – og den, der afgør, om en maskine kan sælges i Norden.",
       en: "The part the user touches every day — and the part that decides whether a machine can be sold in the Nordics.",
     },
     checks: [
@@ -74,7 +74,7 @@ export const exteriorViews: ExteriorView[] = [
         en: "Machines from southern Europe come with Spanish or Italian layouts. We change them to Danish or Norwegian before delivery.",
       },
       {
-        da: "Hver enkelt tast trykkes igennem. Én tast, der hænger, er nok til at maskinen ikke går videre.",
+        da: "Hver enkelt tast trykkes igennem. Én tast, der hænger, er nok til, at maskinen ikke går videre.",
         en: "Every single key is pressed. One sticking key is enough for a machine not to go on.",
       },
       {
@@ -111,8 +111,8 @@ export const exteriorViews: ExteriorView[] = [
     id: "hinge",
     name: { da: "Hængsler", en: "Hinges" },
     summary: {
-      da: "Den mest oversete slitagedel på en brugt bærbar, og den dyreste at opdage for sent.",
-      en: "The most overlooked wear part on a used laptop, and the most expensive one to discover too late.",
+      da: "En slitagedel, der er let at overse på en brugt bærbar, og dyr at opdage for sent.",
+      en: "A wear part that is easy to overlook on a used laptop, and expensive to discover too late.",
     },
     checks: [
       {
@@ -216,12 +216,12 @@ export const interiorParts: InteriorPart[] = [
       en: "DDR4 SO-DIMM · typically 1–2 sockets · up to 32 GB",
     },
     what: {
-      da: "Den plads maskinen arbejder på lige nu. Har den for lidt, skriver Windows til disken i stedet, og alt bliver langsomt – også selvom processoren er fin.",
+      da: "Den plads, maskinen arbejder på lige nu. Har den for lidt, skriver Windows til disken i stedet, og alt bliver langsomt – også selvom processoren er fin.",
       en: "The space the machine works in right now. Too little of it and Windows writes to the disk instead, and everything slows down — even with a perfectly good processor.",
     },
     upgrade: {
-      da: "Den opgradering, der oftest kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
-      en: "The upgrade that most often makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
+      da: "Den opgradering, der som regel kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
+      en: "The upgrade that usually makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
     },
     swappable: "yes",
     region: { x: 372, y: 168, width: 236, height: 96 },
@@ -236,8 +236,8 @@ export const interiorParts: InteriorPart[] = [
       en: "M.2 NVMe or SATA · 256 GB – 2 TB",
     },
     what: {
-      da: "Der hvor Windows, programmerne og filerne ligger. En gammel harddisk med skiver er den enkeltdel, der gør en ellers udmærket maskine ubrugelig.",
-      en: "Where Windows, the programs and the files live. An old spinning hard disk is the single part that makes an otherwise decent machine unusable.",
+      da: "Der, hvor Windows, programmerne og filerne ligger. En gammel harddisk med skiver kan alene gøre en ellers udmærket maskine træg.",
+      en: "Where Windows, the programs and the files live. An old spinning hard disk can on its own make an otherwise decent machine sluggish.",
     },
     upgrade: {
       da: "Skiftes på få minutter. Maskinerne sendes som udgangspunkt videre med SSD – og er der data på den gamle disk, slettes den, før den forlader os. Vi oplyser, hvilken metode der er brugt.",
@@ -280,8 +280,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Moves heat away from the processor. Choked with dust, the machine throttles itself down rather than cook.",
     },
     upgrade: {
-      da: "Blæser og ribber renses, og kølepastaen skiftes, når maskinen har brug for det. Det er den mest oversete årsag til, at en brugt maskine føles træg.",
-      en: "Fan and fins are cleaned and the thermal paste replaced when the machine needs it. It is the most overlooked reason a used machine feels sluggish.",
+      da: "Blæser og ribber renses, og kølepastaen skiftes, når maskinen har brug for det. Det er en ofte overset årsag til, at en brugt maskine føles træg.",
+      en: "Fan and fins are cleaned and the thermal paste replaced when the machine needs it. It is an often overlooked reason a used machine feels sluggish.",
     },
     swappable: "yes",
     region: { x: 60, y: 60, width: 250, height: 210 },
