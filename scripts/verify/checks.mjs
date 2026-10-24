@@ -146,11 +146,54 @@ const executablePath = [
   .filter(Boolean)
   .find((candidate) => existsSync(candidate));
 
-const launchBrowser = () =>
-  chromium.launch({
+/*
+ * Every context gets its thumbnails from one that outlives it.
+ *
+ * `next start` resizes a local image by replaying the request on the
+ * visitor's own socket (fetchInternalImage passes `socket: _req.socket`). A
+ * context that closes, or a page that moves on, with a resize still running
+ * leaves that replay unfinished, and every later request for the same image
+ * waits on it: a check much later in the run then timed out on networkidle
+ * (/admin/indhold, /modeller/lenovo-thinkpad-t480), on one run and not the
+ * next. admin.mjs and site-ux.mjs fetch thumbnails this way for their own
+ * contexts; this does it for every context the gate opens, so no image
+ * request is abandoned halfway whatever a check does. Routes a check adds
+ * itself still come first.
+ */
+const launchBrowser = async () => {
+  const launched = await chromium.launch({
     ...(executablePath ? { executablePath } : {}),
     args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
   });
+  const images = await launched.newContext();
+  const newContext = launched.newContext.bind(launched);
+  launched.newContext = async (options) => {
+    const context = await newContext(options);
+    await context.route("**/_next/image?**", async (route) => {
+      let response;
+      try {
+        response = await images.request.get(route.request().url(), {
+          maxRedirects: 0,
+          headers: await route.request().allHeaders(),
+        });
+      } catch {
+        return route.abort().catch(() => {});
+      }
+      // The page may have gone first; the resize above still finished.
+      await route.fulfill({ response }).catch(() => {});
+    });
+    return context;
+  };
+  /* browser.newPage() makes a context the page owns; keep that, so a check
+     that closes its page also closes what it opened. */
+  launched.newPage = async (options) => {
+    const context = await launched.newContext(options);
+    const page = await context.newPage();
+    page.once("close", () => context.close().catch(() => {}));
+    return page;
+  };
+  return launched;
+};
 let browser = await launchBrowser();
 
 try {
