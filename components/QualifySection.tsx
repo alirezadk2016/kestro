@@ -47,7 +47,10 @@ const situations = [
     lead: { da: "Fra ti maskiner til hele flåden.", en: "From ten machines to the whole fleet." },
     points: [
       { da: "Samme konfiguration på hver maskine", en: "The same configuration on every machine" },
-      { da: "De specifikationer, opgaven kræver", en: "The specifications the work actually needs" },
+      {
+        da: "De specifikationer, opgaven kræver",
+        en: "The specifications the work actually needs",
+      },
       { da: "Mulighed for at bytte det gamle ind", en: "The option to trade the old kit in" },
     ],
     mark: "batch" as CraftMarkName,
