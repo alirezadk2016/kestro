@@ -34,7 +34,7 @@ export default function ArticleToc({
     <ol className="mt-3">
       {items.map((item, i) => (
         <li key={item.id} className="flex items-center gap-3 text-sm leading-5">
-          <span aria-hidden="true" className="tabular-nums text-paper/35">
+          <span aria-hidden="true" className="tabular-nums text-paper/65">
             {String(i + 1).padStart(2, "0")}
           </span>
           <a
