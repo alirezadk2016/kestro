@@ -18,7 +18,7 @@ const copy = {
     metaDescription:
       "Brugte computere til erhverv: bærbare, stationære, mini-pc'er, skærme, tablets og docks – skaffet til ordren i Danmark og Norge, med vilkår på skrift.",
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
-    description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Start med opgaver, programmer og budget; afklar derefter skærme, dansk eller norsk tastatur og om den gamle computer kan opgraderes.`,
+    description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Start med opgaver, programmer og budget; afklar derefter skærme og dansk eller norsk tastatur, og om den gamle computer kan opgraderes.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
     noStockLink: "Se budgeteksempler og prisgrundlag",
     noPrices1:
@@ -149,7 +149,7 @@ const purchaseChecks = [
   {
     title: { da: "Software og licenser", en: "Software and licences" },
     body: {
-      da: "En installeret Windows-version siger ikke, hvilken licens der følger med. Afklar udgave, aktivering og om jeres egne licensaftaler skal bruges.",
+      da: "En installeret Windows-version siger ikke, hvilken licens der følger med. Afklar udgave og aktivering, og om jeres egne licensaftaler skal bruges.",
       en: "An installed Windows version does not tell you which licence is included. Clarify the edition, activation and whether your own licensing agreements will be used.",
     },
     href: "/ydelser/nordisk-tilpasning",

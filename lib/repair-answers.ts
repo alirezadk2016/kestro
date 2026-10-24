@@ -174,7 +174,7 @@ const specific: Record<string, Extra> = {
           en: "When is the old machine erased?",
         },
         answer: {
-          da: "Først når vi har gennemgået listen over filer, profiler og programmer med dig. NIST skelner mellem tre niveauer af sletning: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Sig til, hvis den gamle maskine skal sælges eller kasseres.",
+          da: "Først når vi har gennemgået listen over filer, profiler og programmer med dig. NIST skelner mellem tre niveauer af sletning: Clear (overskrivning), Purge (sletning, så data heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Sig til, hvis den gamle maskine skal sælges eller kasseres.",
           en: "Only once we have gone through the list of files, profiles and programs with you. NIST distinguishes three levels of erasure: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). Say if the old machine is to be sold or scrapped.",
         },
       },

@@ -34,7 +34,7 @@ const erasure: FaqItem = {
     en: "What happens to the data on the devices?",
   },
   answer: {
-    da: "Lagermedierne slettes, før enhederne klargøres igen, og vi oplyser, hvilken metode der er brugt. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Aftal på forhånd, hvilket I har brug for, og om I skal bruge dokumentation.",
+    da: "Lagermedierne slettes, før enhederne klargøres igen, og vi oplyser, hvilken metode der er brugt. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, så data heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Aftal på forhånd, hvilket I har brug for, og om I skal bruge dokumentation.",
     en: "The storage is erased before the devices are prepared again, and we tell you which method was used. NIST, the US standards body, distinguishes three levels: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). Agree up front which one you need and whether you need documentation.",
   },
 };

@@ -120,7 +120,7 @@ const contactFaqs: FaqItem[] = [
       en: "We have old machines to move on — what happens to the data?",
     },
     answer: {
-      da: "Lagermedierne slettes, før enhederne klargøres til videresalg. Skal I bruge dokumentation for sletningen til jeres egne GDPR-procedurer, så skriv det i beskeden. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, der heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Det er en god idé at aftale, hvilket I har brug for.",
+      da: "Lagermedierne slettes, før enhederne klargøres til videresalg. Skal I bruge dokumentation for sletningen til jeres egne GDPR-procedurer, så skriv det i beskeden. NIST, den amerikanske standardiseringsmyndighed, skelner mellem tre niveauer: Clear (overskrivning), Purge (sletning, så data heller ikke kan gendannes i et laboratorium) og Destroy (fysisk destruktion). Det er en god idé at aftale, hvilket I har brug for.",
       en: "The storage is erased before the devices are prepared for resale. If you need documentation of the erasure for your own GDPR procedures, say so in the message. NIST, the US standards body, distinguishes three levels: Clear (overwriting), Purge (erasure that cannot be recovered even in a laboratory) and Destroy (physical destruction). It is worth agreeing which one you need.",
     },
   },

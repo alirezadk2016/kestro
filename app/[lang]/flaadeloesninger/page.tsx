@@ -30,13 +30,13 @@ const copy = {
     capabilitiesTitle: "Det, større indkøb kræver",
     scaleTitle: "Ti, halvtreds og to hundrede maskiner er tre forskellige opgaver",
     scaleLead:
-      "Antallet ændrer ikke kun prisen, men hvordan indkøbet gribes an – fordi vi skaffer maskinerne til hver ordre i stedet for at sælge fra lager.",
+      "Antallet ændrer ikke kun prisen, men også, hvordan indkøbet gribes an – fordi vi skaffer maskinerne til hver ordre i stedet for at sælge fra lager.",
     scaleClose:
-      "Prisen per enhed afhænger af model, stand, specifikation og hvad der kan skaffes – ikke af antallet alene.",
+      "Prisen per enhed afhænger af model, stand og specifikation, og af, hvad der kan skaffes – ikke af antallet alene.",
     scaleCloseLink: "Hvad der afgør prisen",
     rolloutTitle: "Sådan forløber en flådeleverance, uge for uge",
     rolloutLead:
-      "Rækkefølgen er den samme hver gang. Ugerne er vejledende, fordi de afhænger af antal, specifikation og hvad leverandørnetværket har.",
+      "Rækkefølgen er den samme hver gang. Ugerne er vejledende, fordi de afhænger af antal og specifikation, og af, hvad leverandørnetværket har.",
     tradeTitle: "Ud med det gamle, ind med det nye – i én aftale",
     tradeBody:
       "Vi kan købe jeres gamle udstyr og modregne værdien i det nye indkøb – én aftale i stedet for to forløb.",
