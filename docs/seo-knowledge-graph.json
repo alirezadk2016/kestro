@@ -1,0 +1,795 @@
+{
+  "_about": "Mak rule 12. One knowledge graph per page: the concepts a searcher, or an AI assistant answering one, expects the page to cover. Grouped as the course does: main entity and synonyms, sub-entities, uses, money, terms. A node is covered when any of its terms (lowercase substrings) appears in the page's main text. A node that is missing is a question for the owner, not a sentence to invent: it goes on the page only if Kestro can say something true about it. Check with .claude/skills/mak/scripts/graph.mjs.",
+  "graphs": {
+    "/produkter/baerbare-computere": {
+      "main": ["bærbar", "laptop"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Tastatur": {
+          "dansk tastatur": ["dansk tastatur", "dansk eller norsk tastatur", "danske tastatur"],
+          "norsk tastatur": ["norsk"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "datasletning": ["sletning", "slettet", "sletter", "slettes"],
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "ThinkPad": ["thinkpad"],
+          "EliteBook": ["elitebook"],
+          "Latitude": ["latitude"],
+          "ProBook": ["probook"],
+          "MacBook": ["macbook"],
+          "Surface": ["surface"]
+        },
+        "Dele": {
+          "processor": ["processor", "cpu"],
+          "RAM": ["ram", "hukommelse"],
+          "SSD": ["ssd", "disk"],
+          "skærm": ["skærm"],
+          "batteri": ["batteri"],
+          "porte": ["usb-c", "porte", "thunderbolt", "hdmi"]
+        },
+        "Software": {
+          "Windows 11": ["windows 11"],
+          "licens": ["licens"]
+        },
+        "Brug": {
+          "kontor": ["kontor"],
+          "hybridarbejde": ["hybrid"],
+          "udvikling": ["udvikl"]
+        },
+        "Tilbehør": {
+          "dockingstation": ["dock"],
+          "oplader": ["oplader", "lader"]
+        }
+      }
+    },
+    "/produkter/stationaere-computere": {
+      "main": ["stationær", "desktop"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "datasletning": ["sletning", "slettet", "sletter", "slettes"],
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "OptiPlex": ["optiplex"],
+          "EliteDesk": ["elitedesk"],
+          "ThinkCentre": ["thinkcentre"]
+        },
+        "Formfaktor": {
+          "tower": ["tower"],
+          "SFF": ["sff", "small form", "lille kabinet"],
+          "mini/tiny": ["mini", "tiny"]
+        },
+        "Dele": {
+          "processor": ["processor", "cpu"],
+          "RAM": ["ram", "hukommelse"],
+          "SSD": ["ssd", "disk"],
+          "grafikkort": ["grafik"],
+          "porte": ["usb", "displayport", "hdmi", "porte"]
+        },
+        "Software": {
+          "Windows 11": ["windows 11"],
+          "licens": ["licens"]
+        },
+        "Brug": {
+          "kontor": ["kontor"],
+          "reception/skranke": ["reception", "skranke", "kasse"],
+          "tungere arbejde": ["cad", "tungere", "workstation"]
+        },
+        "Tilbehør": {
+          "skærm": ["skærm"],
+          "tastatur og mus": ["mus"]
+        }
+      }
+    },
+    "/produkter/skaerme": {
+      "main": ["skærm", "monitor"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "UltraSharp": ["ultrasharp"],
+          "EliteDisplay": ["elitedisplay"],
+          "ThinkVision": ["thinkvision"]
+        },
+        "Egenskaber": {
+          "størrelse i tommer": ["tommer", "24\"", "27\""],
+          "opløsning": ["opløsning", "1920", "full hd", "1080", "qhd", "4k"],
+          "panel (IPS)": ["ips", "panel"],
+          "højdejustering": ["højde", "justerbar", "pivot"],
+          "tilslutning": ["displayport", "hdmi", "usb-c", "vga"]
+        },
+        "Opsætning": {
+          "to skærme": ["to skærme", "dobbelt", "flere skærme"],
+          "dockingstation": ["dock"],
+          "VESA/arm": ["vesa", "arm"]
+        },
+        "Kontrol": {
+          "døde pixels": ["pixel"],
+          "indbrænding": ["indbrænd", "burn"]
+        }
+      }
+    },
+    "/produkter/mini-pc": {
+      "main": ["mini-pc", "mini pc", "tiny"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "datasletning": ["sletning", "slettet", "sletter", "slettes"],
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "ThinkCentre Tiny": ["thinkcentre", "tiny"],
+          "OptiPlex Micro": ["optiplex"],
+          "EliteDesk Mini": ["elitedesk"]
+        },
+        "Egenskaber": {
+          "lille og stille": ["lille", "stille", "plads"],
+          "VESA-montering": ["vesa", "bag skærmen", "montere"],
+          "strømforbrug": ["strøm", "watt"],
+          "porte": ["usb", "displayport", "hdmi"]
+        },
+        "Dele": {
+          "processor": ["processor", "cpu"],
+          "RAM": ["ram", "hukommelse"],
+          "SSD": ["ssd"]
+        },
+        "Brug": {
+          "kontor": ["kontor"],
+          "skranke/reception": ["reception", "skranke", "kasse", "infoskærm"]
+        }
+      }
+    },
+    "/produkter/tablets": {
+      "main": ["tablet", "ipad"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "datasletning": ["sletning", "slettet", "sletter", "slettes"],
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "iPad": ["ipad"],
+          "Galaxy Tab": ["galaxy"],
+          "Surface": ["surface"]
+        },
+        "Egenskaber": {
+          "skærm": ["skærm"],
+          "lagerplads": ["gb", "lager"],
+          "mobildata": ["4g", "5g", "cellular", "sim"],
+          "batteri": ["batteri"]
+        },
+        "Drift": {
+          "MDM": ["mdm", "administr", "intune"],
+          "nulstilling/aktiveringslås": ["nulstil", "aktiveringslås", "icloud", "frp"],
+          "opdateringer": ["opdatering", "ipados", "android"]
+        },
+        "Brug": {
+          "felt/lager": ["felt", "lager", "service"],
+          "kasse/booking": ["kasse", "booking", "reception"]
+        }
+      }
+    },
+    "/produkter/smartphones": {
+      "main": ["smartphone", "telefon", "iphone"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "datasletning": ["sletning", "slettet", "sletter", "slettes"],
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "iPhone": ["iphone"],
+          "Samsung Galaxy": ["galaxy", "samsung"]
+        },
+        "Egenskaber": {
+          "lagerplads": ["gb", "lager"],
+          "batteri": ["batteri"],
+          "skærm": ["skærm"],
+          "5G": ["5g"]
+        },
+        "Drift": {
+          "MDM": ["mdm", "administr", "intune"],
+          "aktiveringslås": ["aktiveringslås", "icloud", "frp", "nulstil"],
+          "opdateringer": ["opdatering", "ios", "android"]
+        }
+      }
+    },
+    "/produkter/dockingstationer": {
+      "main": ["dockingstation", "dock"],
+      "nodes": {
+        "Stand og kontrol": {
+          "stand pr. enhed": ["stand"],
+          "funktionstest": ["funktionstest", "testet", "tester"]
+        },
+        "Penge og tilbud": {
+          "skriftligt tilbud": ["tilbud"],
+          "pris": ["pris"],
+          "antal": ["antal", "flere maskiner", "stk"]
+        },
+        "Vilkår": {
+          "garanti": ["garanti"],
+          "vilkår": ["vilkår"]
+        },
+        "Levering": {
+          "levering": ["levering", "leverer"],
+          "Danmark": ["danmark"],
+          "Norge": ["norge"]
+        },
+        "Data og miljø": {
+          "genbrug": ["genbrug", "levetid", "miljø", "co2", "co₂"]
+        },
+        "Mærker og serier": {
+          "ThinkPad Dock": ["thinkpad"],
+          "Dell WD19": ["wd19"],
+          "HP USB-C Dock": ["hp usb-c dock", "hp"]
+        },
+        "Tilslutning": {
+          "USB-C": ["usb-c"],
+          "Thunderbolt": ["thunderbolt"],
+          "DisplayPort/HDMI": ["displayport", "hdmi"],
+          "netværk": ["netværk", "ethernet", "lan"],
+          "strøm (W)": ["watt", " w ", "strøm", "lader"]
+        },
+        "Kompatibilitet": {
+          "passer til hvilke maskiner": ["passer", "kompatib", "virker med"],
+          "flere skærme": ["skærme"],
+          "firmware": ["firmware", "driver"]
+        },
+        "Tilbehør": {
+          "strømforsyning": ["strømforsyning", "oplader", "adapter"]
+        }
+      }
+    },
+    "/reparation/batteriskift": {
+      "main": ["batteri"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Måling": {
+          "kapacitet i procent af ny": ["procent", "%"],
+          "Windows-rapport": ["powercfg", "battery report", "batteryreport"],
+          "Mac": ["mac"],
+          "ladecyklusser": ["cyklus"]
+        },
+        "Tegn": {
+          "holder ikke en arbejdsdag": ["arbejdsdag"],
+          "svulmet batteri": ["svulm", "bulet", "hævet"],
+          "slukker pludseligt": ["slukker", "pludselig"]
+        },
+        "Valg": {
+          "originalt eller kompatibelt": ["original", "kompatib"],
+          "garanti på batteriet": ["garanti"]
+        },
+        "Miljø": {
+          "bortskaffelse": ["bortskaf", "genbrug"]
+        }
+      }
+    },
+    "/reparation/ram-og-ssd-opgradering": {
+      "main": ["ram", "ssd", "opgrader"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Dele": {
+          "RAM": ["ram", "hukommelse"],
+          "SSD": ["ssd"],
+          "NVMe/SATA": ["nvme", "sata", "m.2"],
+          "loddet RAM": ["loddet", "fastloddet"]
+        },
+        "Grænser": {
+          "maksimal RAM": ["maksimal", "maks"],
+          "ledige pladser": ["plads", "slot"]
+        },
+        "Flytning": {
+          "Windows flyttes med": ["flytter windows", "kloning", "klon", "flytter"]
+        },
+        "Tegn": {
+          "langsom maskine": ["langsom"],
+          "disk på 100 %": ["disk"]
+        }
+      }
+    },
+    "/reparation/skaermskift": {
+      "main": ["skærm"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Enheder": {
+          "bærbar": ["bærbar"],
+          "tablet": ["tablet"],
+          "telefon": ["telefon"]
+        },
+        "Panel": {
+          "panelet i netop din maskine": ["panel"],
+          "touch": ["touch", "berøring"],
+          "opløsning": ["opløsning"]
+        },
+        "Skade": {
+          "revne": ["revne"],
+          "død stribe/pixel": ["stribe", "pixel"],
+          "mørk skærm": ["sort", "mørk"]
+        },
+        "Kontrol": {
+          "farve og lysstyrke": ["farve", "lysstyrke"]
+        }
+      }
+    },
+    "/reparation/tastaturskift-og-nordisk-layout": {
+      "main": ["tastatur"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Layout": {
+          "dansk": ["dansk"],
+          "norsk": ["norsk"],
+          "æ ø å": ["æ, ø og å", "æøå", "æ ø å"],
+          "tysk/amerikansk": ["tysk", "amerikansk"]
+        },
+        "Valg": {
+          "fysisk skift, ikke en indstilling": ["fysisk"],
+          "baggrundsbelysning": ["baggrundsbelys"],
+          "klistermærker": ["klistermærk", "sticker"]
+        },
+        "Kontrol": {
+          "hver tast trykkes": ["hver tast"]
+        }
+      }
+    },
+    "/reparation/reservedele-og-komponentskift": {
+      "main": ["reservedel", "komponent"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Dele": {
+          "blæser": ["blæser"],
+          "hængsler": ["hængsel", "hængsler"],
+          "ladestik": ["ladestik"],
+          "højttalere": ["højttaler"],
+          "kabler": ["kabel", "kabler"]
+        },
+        "Valg": {
+          "originale dele": ["original"],
+          "kan det betale sig": ["værd", "betale sig"]
+        },
+        "Regler": {
+          "ret til reparation (EU)": ["eu", "reparationsdirektiv", "ret til reparation"]
+        }
+      }
+    },
+    "/reparation/rens-og-koeling": {
+      "main": ["rens", "køling"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Tegn": {
+          "varm": ["varm"],
+          "larmer": ["larm"],
+          "langsom (throttling)": ["langsom", "skruer ned", "throttl"]
+        },
+        "Arbejde": {
+          "støv i køleribber": ["støv", "køleribbe"],
+          "kølepasta": ["kølepasta"],
+          "blæser": ["blæser"]
+        },
+        "Kontrol": {
+          "temperatur under belastning": ["temperatur", "belast"]
+        }
+      }
+    },
+    "/reparation/windows-installation": {
+      "main": ["windows"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Arbejde": {
+          "ren installation": ["ren installation", "fra bunden"],
+          "drivere": ["driver"],
+          "opdateringer": ["opdatering"]
+        },
+        "Før": {
+          "data der skal med": ["data"],
+          "licens og version": ["licens", "version"]
+        },
+        "Versioner": {
+          "Windows 11": ["windows 11"],
+          "Windows 10": ["windows 10"],
+          "TPM/krav": ["tpm", "krav"]
+        }
+      }
+    },
+    "/reparation/software-og-licenser": {
+      "main": ["software", "licens"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Licenser": {
+          "knyttet til maskine eller bruger": ["bruger", "konto", "maskine"],
+          "overdragelse": ["overdrag", "flytte"],
+          "Microsoft 365/Office": ["office", "microsoft 365", "m365"],
+          "Windows-licens": ["windows"]
+        },
+        "Arbejde": {
+          "installation af programmer": ["installerer", "program"]
+        }
+      }
+    },
+    "/reparation/ny-opsaetning-og-dataflytning": {
+      "main": ["dataflytning", "opsætning", "flytte"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Hvad flyttes": {
+          "filer": ["filer"],
+          "profiler": ["profil"],
+          "programmer": ["program"],
+          "adgangskoder i browser": ["adgangskode"],
+          "mail": ["mail"]
+        },
+        "Bagefter": {
+          "gennemgang før sletning": ["gennemgår", "slettet", "slette"]
+        }
+      }
+    },
+    "/reparation/fejlfinding": {
+      "main": ["fejlfinding", "fejl"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Symptomer": {
+          "starter ikke": ["starter ikke"],
+          "går ned": ["går ned"],
+          "blå skærm": ["blå skærm", "bsod"],
+          "langsom": ["langsom"],
+          "lyde/bip": ["bip", "lyd"]
+        },
+        "Metode": {
+          "mønster: hvornår sker det": ["hvornår", "mønster"],
+          "data på maskinen": ["data"]
+        },
+        "Udfald": {
+          "kan det betale sig": ["betale sig"]
+        }
+      }
+    },
+    "/reparation/samling-af-pc": {
+      "main": ["samling", "samle", "byg"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Dele": {
+          "processor": ["processor", "cpu"],
+          "grafikkort": ["grafik"],
+          "RAM": ["ram"],
+          "strømforsyning": ["strømforsyning", "psu"],
+          "kabinet": ["kabinet"],
+          "køling": ["køl"]
+        },
+        "Arbejde": {
+          "belastningstest": ["belastningstest", "belast"],
+          "installation": ["install"],
+          "opgradering af nuværende": ["opgrader", "nuværende"]
+        },
+        "Brug": {
+          "opgaven bestemmer delene": ["opgave"]
+        }
+      }
+    },
+    "/reparation/klargoering-af-brugt-udstyr": {
+      "main": ["klargøring", "klargør"],
+      "nodes": {
+        "Penge": {
+          "pris før arbejdet": ["pris", "koster"]
+        },
+        "Proces": {
+          "hvad vi skal bruge": ["model"]
+        },
+        "Kunder": {
+          "privatkunder velkomne": ["privat"],
+          "virksomheder": ["virksomhed", "firma", "erhverv"]
+        },
+        "Arbejde": {
+          "datasletning": ["slet", "slettes"],
+          "Windows": ["windows"],
+          "test": ["test"],
+          "batteri": ["batteri"],
+          "tastatur": ["tastatur"]
+        },
+        "Før": {
+          "købt brugt": ["brugt"]
+        }
+      }
+    },
+    "/vejledninger/tjek-batterikapacitet": {
+      "main": ["batterikapacitet", "batterirapport"],
+      "nodes": {
+        "Windows-rapport": {
+          "Opret rapport lokalt": ["powercfg /batteryreport"],
+          "Rapportfil på computeren": ["html-fil", "stifinder"],
+          "Designkapacitet": ["design capacity", "designkapacitet"],
+          "Fuld opladningskapacitet": ["full charge capacity", "fuld opladningskapacitet"]
+        },
+        "Beregning": {
+          "Samme batteri og enhed": ["samme batteri", "samme enhed"],
+          "Hele mWh": ["mwh"],
+          "Forhold i procent": ["divideret", "÷", "procent"],
+          "Flere batterier": ["flere batterier", "hver for sig"],
+          "Resultat over 100 procent": ["over 100"]
+        },
+        "Afgrænsning": {
+          "Kapacitet adskilt fra opladning": ["opladning", "opladet"],
+          "Ikke en garanti for batteritid": ["ikke en fysisk", "garanti for batteritid"],
+          "Sikker hjælp ved opsvulmning": ["opsvulmning"]
+        }
+      }
+    },
+    "/vejledninger/tjek-ram-forbrug": {
+      "main": ["ram-forbrug", "ram"],
+      "nodes": {
+        "Observation": {
+          "Jobliste": ["jobliste"],
+          "Hukommelse under Ydeevne": ["ydeevne", "hukommelse"],
+          "Normale programmer": ["almindelige programmer", "normalt bruger"],
+          "Brugt og tilgængelig RAM": ["i brug", "tilgængelig"],
+          "Samme enhed": ["samme enhed", "gb"]
+        },
+        "Næste skridt": {
+          "Find processernes forbrug": ["processer", "hukommelseskolonnen"],
+          "Gentag observationen": ["gentagne", "igen"],
+          "Modelspecifik kompatibilitet": ["fastloddet", "ram-type", "kapacitetsgrænse"]
+        },
+        "Afgrænsning": {
+          "Ikke en hastighedsmåling": ["ram-hastighed"],
+          "Ikke en hukommelsesfejltest": ["hukommelsesfejl"],
+          "Procent alene er ikke en diagnose": ["ikke en diagnose", "ikke, om du mangler"]
+        }
+      }
+    },
+    "/vejledninger/hdd-eller-ssd": {
+      "main": ["hdd", "ssd"],
+      "nodes": {
+        "Identifikation": {
+          "Disk i Jobliste": ["jobliste", "ydeevne → disk"],
+          "Præcis drevmodel": ["drevmodel", "præcise model"],
+          "Bekræft hos producenten": ["producentens supportside"],
+          "Flere drev": ["flere", "hvert relevant drev"]
+        },
+        "Kompatibilitet": {
+          "Fysisk format": ["fysisk format", "fysiske format"],
+          "M.2": ["m.2"],
+          "SATA": ["sata"],
+          "PCIe og NVMe": ["pcie", "nvme"],
+          "Længde og adapter": ["længde", "adapter"],
+          "Specifikationer og servicemanual": ["specifikationer", "servicemanual"]
+        },
+        "Data og afgrænsning": {
+          "Sikkerhedskopi før skift": ["sikkerhedskopi"],
+          "Dataflytning eller ny installation": ["dataflytning", "ny installation"],
+          "Gendannelsesnøgler": ["gendannelsesnøgler"],
+          "Ikke en tilstandstest": ["tester ikke drevets tilstand"]
+        }
+      }
+    },
+    "/vejledninger/langsom-computer": {
+      "main": ["langsom computer", "langsom"],
+      "nodes": {
+        "Observation": {
+          "Gentag den langsomme opgave": ["genskab", "gentag"],
+          "Jobliste": ["jobliste"],
+          "CPU": ["cpu"],
+          "RAM og hukommelse": ["ram", "hukommelse"],
+          "Disk": ["disk"],
+          "Knyt forbrug til en proces": ["proces", "processer"]
+        },
+        "Næste skridt": {
+          "Gem før ændringer": ["gem arbejdet", "gemt"],
+          "Kendte programmer": ["kendte", "velkendte"],
+          "Én ændring og sammenligning": ["én ændring", "sammenlign"],
+          "Observeret behov før køb": ["observeret behov", "ikke automatisk løsningen"]
+        },
+        "Afgrænsning": {
+          "Ikke fuld hardwarediagnose": ["ikke en fuld hardwarediagnose"],
+          "Browseren isolerer ikke fysisk hastighed": [
+            "browsermålinger",
+            "fysisk cpu- eller ram-hastighed"
+          ],
+          "Uforklarede fejl kræver undersøgelse": ["uforklarede udfald", "nærmere undersøgelse"]
+        }
+      }
+    }
+  }
+}

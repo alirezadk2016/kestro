@@ -8,22 +8,22 @@ Kilde: `docs/seo-keyword-map.csv` (trin 2). Målinger: den kørende produktionsb
 
 Interne indgående links (uden header og footer tæller alle sider i menuen 55), ordantal og antal modeller knyttet til siden:
 
-| Side | Indgående | Ord | Modeller |
-| --- | --- | --- | --- |
-| `/produkter/baerbare-computere` | 19 | 688 | 9 |
-| `/produkter/skaerme` | 13 | 513 | 3 |
-| `/produkter/dockingstationer` | 12 | 455 | 3 |
-| `/produkter/stationaere-computere` | 12 | 456 | 2 |
-| `/produkter/mini-pc` | 10 | 433 | 1 |
-| `/produkter/tablets` | 9 | 364 | 0 |
-| `/produkter/smartphones` | 9 | 345 | 0 |
-| `/produkter/smartwatches` | 9 | 345 | 0 |
-| `/produkter/gaming` | 9 | 365 | 0 |
-| `/flaadeloesninger/forespoergsel` | 4 | 338 | 0 |
-| `/ydelser/opstart-af-arbejdspladser` | 1 | 413 | 0 |
-| `/ydelser/overskudslager-og-returvarer` | 1 | 396 | 0 |
-| `/vejledninger/windows-11-paa-aeldre-maskine` | 1 | 556 | 0 |
-| `/vejledninger/slet-data-foer-du-saelger` | 1 | 536 | 0 |
+| Side                                          | Indgående | Ord | Modeller |
+| --------------------------------------------- | --------- | --- | -------- |
+| `/produkter/baerbare-computere`               | 19        | 688 | 9        |
+| `/produkter/skaerme`                          | 13        | 513 | 3        |
+| `/produkter/dockingstationer`                 | 12        | 455 | 3        |
+| `/produkter/stationaere-computere`            | 12        | 456 | 2        |
+| `/produkter/mini-pc`                          | 10        | 433 | 1        |
+| `/produkter/tablets`                          | 9         | 364 | 0        |
+| `/produkter/smartphones`                      | 9         | 345 | 0        |
+| `/produkter/smartwatches`                     | 9         | 345 | 0        |
+| `/produkter/gaming`                           | 9         | 365 | 0        |
+| `/flaadeloesninger/forespoergsel`             | 4         | 338 | 0        |
+| `/ydelser/opstart-af-arbejdspladser`          | 1         | 413 | 0        |
+| `/ydelser/overskudslager-og-returvarer`       | 1         | 396 | 0        |
+| `/vejledninger/windows-11-paa-aeldre-maskine` | 1         | 556 | 0        |
+| `/vejledninger/slet-data-foer-du-saelger`     | 1         | 536 | 0        |
 
 To ting springer ud af tabellen:
 
@@ -34,12 +34,12 @@ To ting springer ud af tabellen:
 
 **Beslutning: 301 fra `/flaadeloesninger/forespoergsel` til `/tilbud`.**
 
-| Kriterium | `/tilbud` | `/flaadeloesninger/forespoergsel` |
-| --- | --- | --- |
-| Ord | 389 | 338 |
-| Indgående links | 55 (i menuen) | 4 |
-| Formular | Antalsbånd 1 / 2-9 / 10-49 / 50+, model, RAM, disk, tastatur, dato | Fri tekst |
-| Primært søgeord | tilbud på it-udstyr | ingen egen |
+| Kriterium       | `/tilbud`                                                          | `/flaadeloesninger/forespoergsel` |
+| --------------- | ------------------------------------------------------------------ | --------------------------------- |
+| Ord             | 389                                                                | 338                               |
+| Indgående links | 55 (i menuen)                                                      | 4                                 |
+| Formular        | Antalsbånd 1 / 2-9 / 10-49 / 50+, model, RAM, disk, tastatur, dato | Fri tekst                         |
+| Primært søgeord | tilbud på it-udstyr                                                | ingen egen                        |
 
 De to sider har samme intention, samme handling og samme formular. `/tilbud` har den bedre formular, hele menuen peger på den, og antalsbåndet 50+ dækker præcis det, flådeforespørgslen fandtes for. `/flaadeloesninger` beholder sin CTA, men den peger fremover på `/tilbud?antal=50%2B`.
 
@@ -49,8 +49,8 @@ De to sider har samme intention, samme handling og samme formular. `/tilbud` har
 
 **Beslutning: begge beholdes, med skarpt adskilte roller. Ingen URL-flytning.**
 
-- `/produkter` ejer **kategorien**: "brugt it-udstyr til virksomheder". Den svarer på *hvilke typer udstyr kan I skaffe*.
-- `/modeller` ejer **mærke og model**: "lenovo thinkpad brugt". Den svarer på *hvilke konkrete maskiner kender I*.
+- `/produkter` ejer **kategorien**: "brugt it-udstyr til virksomheder". Den svarer på _hvilke typer udstyr kan I skaffe_.
+- `/modeller` ejer **mærke og model**: "lenovo thinkpad brugt". Den svarer på _hvilke konkrete maskiner kender I_.
 
 Kannibaliseringen i dag er i titlen: `/modeller` hedder "Modeller vi ofte skaffer | Brugte erhvervscomputere | Kestro" og tager dermed kategoriordene. Den skal hedde "Modeller vi ofte skaffer til erhverv | Kestro" (trin 2, side-for-side).
 
@@ -60,11 +60,11 @@ Kannibaliseringen i dag er i titlen: `/modeller` hedder "Modeller vi ofte skaffe
 
 **Beslutning: tre sider, tre roller, ingen overlap i primære ord.**
 
-| Side | Rolle | Primært ord | Må ikke tage |
-| --- | --- | --- | --- |
-| `/kvalitet` | **Vores standard og garanti** | garanti på refurbished computere | "hvad skal man tjekke" |
-| `/vejledninger/tjek-brugt-baerbar-foer-koeb` | **Køberens egen tjekliste** | hvad skal man tjekke på en brugt bærbar | "garanti" |
-| `/ydelser/klargoering-og-test` | **Hvad vi gør ved maskinen** | klargøring af computere til medarbejdere | "grad A B C" |
+| Side                                         | Rolle                         | Primært ord                              | Må ikke tage           |
+| -------------------------------------------- | ----------------------------- | ---------------------------------------- | ---------------------- |
+| `/kvalitet`                                  | **Vores standard og garanti** | garanti på refurbished computere         | "hvad skal man tjekke" |
+| `/vejledninger/tjek-brugt-baerbar-foer-koeb` | **Køberens egen tjekliste**   | hvad skal man tjekke på en brugt bærbar  | "garanti"              |
+| `/ydelser/klargoering-og-test`               | **Hvad vi gør ved maskinen**  | klargøring af computere til medarbejdere | "grad A B C"           |
 
 De tre skal krydslinke: kvalitet → tjekliste ("vil I selv tjekke, så her er listen"), tjekliste → kvalitet ("sådan gør vi"), klargøring → kvalitet.
 
@@ -81,10 +81,10 @@ Problemet er ikke overlap, det er synlighed: opstartssiden har **ét** indgåend
 
 **Beslutning: begge ud af arkitekturen. De er de eneste to sider på sitet uden en B2B-intention at tildele.**
 
-| Side | Ord | Modeller | B2B-søgeord i trin 2 | Beslutning |
-| --- | --- | --- | --- | --- |
-| `/produkter/gaming` | 365 | 0 | ingen | **301 → `/produkter`** |
-| `/produkter/smartwatches` | 345 | 0 | ingen | **Flet ind i `/produkter/smartphones` som et afsnit, derefter 301** |
+| Side                      | Ord | Modeller | B2B-søgeord i trin 2 | Beslutning                                                          |
+| ------------------------- | --- | -------- | -------------------- | ------------------------------------------------------------------- |
+| `/produkter/gaming`       | 365 | 0        | ingen                | **301 → `/produkter`**                                              |
+| `/produkter/smartwatches` | 345 | 0        | ingen                | **Flet ind i `/produkter/smartphones` som et afsnit, derefter 301** |
 
 Gaming trækker hobbyister ind på et domæne, hvis hele indhold taler til indkøbere; det er ikke bare irrelevant trafik, det er et forkert signal om, hvad sitet handler om. Smartwatches er tættere på forretningen — en virksomhed, der køber firmatelefoner, kan spørge til ure — men den fortjener et afsnit, ikke en side.
 
@@ -153,13 +153,13 @@ I dag er interne links stort set lig med menuen: alt i menuen har 55 indgående,
 
 **Regel 3 — vejledning → den side, der løser problemet.** Hver guide slutter med ét link til den kommercielle side, der svarer på det, guiden rejste:
 
-| Guide | Linker til |
-| --- | --- |
-| tjek-brugt-baerbar-foer-koeb | `/kvalitet`, `/produkter/baerbare-computere` |
-| slet-data-foer-du-saelger | `/saelg-til-os` |
-| windows-11-paa-aeldre-maskine | `/produkter/baerbare-computere`, `/tilbud` |
-| opgrader-ram-i-baerbar | `/reparation` |
-| reparere-eller-koebe-ny | `/reparation`, `/priser` |
+| Guide                         | Linker til                                   |
+| ----------------------------- | -------------------------------------------- |
+| tjek-brugt-baerbar-foer-koeb  | `/kvalitet`, `/produkter/baerbare-computere` |
+| slet-data-foer-du-saelger     | `/saelg-til-os`                              |
+| windows-11-paa-aeldre-maskine | `/produkter/baerbare-computere`, `/tilbud`   |
+| opgrader-ram-i-baerbar        | `/reparation`                                |
+| reparere-eller-koebe-ny       | `/reparation`, `/priser`                     |
 
 **Regel 4 — kommerciel side → den guide, der fjerner indvendingen.** `/kvalitet` → tjeklisten. `/priser` → TCO-guiden (når den findes). `/flaadeloesninger` → standardiseringsguiden (når den findes).
 
@@ -175,38 +175,38 @@ I dag er interne links stort set lig med menuen: alt i menuen har 55 indgående,
 
 **Regel: en brødkrumme markeres kun op, hvis den også står på siden.** Derfor skal hubsiderne have en synlig sti, ikke bare schema.
 
-| Sidetype | Sti |
-| --- | --- |
-| Topside (`/produkter`, `/ydelser`, `/vejledninger`, `/modeller`, `/kvalitet` …) | Forside › **Siden** |
-| Kategori | Forside › Hvad vi skaffer › **Kategori** |
-| Model | Forside › Modeller › **Model** |
-| Ydelse | Forside › Ydelser › **Ydelse** |
-| Vejledning | Forside › Vejledninger › **Guide** |
-| `/tilbud`, `/kontakt`, `/om-os` | Forside › **Siden** |
+| Sidetype                                                                        | Sti                                      |
+| ------------------------------------------------------------------------------- | ---------------------------------------- |
+| Topside (`/produkter`, `/ydelser`, `/vejledninger`, `/modeller`, `/kvalitet` …) | Forside › **Siden**                      |
+| Kategori                                                                        | Forside › Hvad vi skaffer › **Kategori** |
+| Model                                                                           | Forside › Modeller › **Model**           |
+| Ydelse                                                                          | Forside › Ydelser › **Ydelse**           |
+| Vejledning                                                                      | Forside › Vejledninger › **Guide**       |
+| `/tilbud`, `/kontakt`, `/om-os`                                                 | Forside › **Siden**                      |
 
 Modelsiderne står under `/modeller`, ikke under deres kategori: stien skal matche den vej, brugeren faktisk kan gå, og URL'en er flad. Kategorien nås fra et link i brødteksten i stedet.
 
 ## 9. Behold · flet · redirect · noindex
 
-| Side | Beslutning | Begrundelse |
-| --- | --- | --- |
-| / | Behold | Forside, hovedord |
-| /produkter + 5 kategorier med modeller | Behold | Kerne i arkitekturen |
-| /produkter/tablets | Behold, men styrk | Har B2B-søgeord (P2), men 0 modeller og 364 ord |
-| /produkter/smartphones | Behold, udvid | Modtager smartwatches-afsnittet |
-| /produkter/smartwatches | **Flet + 301** → `/produkter/smartphones` | 0 modeller, 0 B2B-søgeord, 345 ord |
-| /produkter/gaming | **301** → `/produkter` | Forkert publikum for et B2B-domæne |
-| /modeller + 36 modelsider | Behold | Long tail med købsintention |
-| /flaadeloesninger | Behold | Segmentside, 55 links |
-| /flaadeloesninger/forespoergsel | **301** → `/tilbud` | Samme intention, tyndere side, dårligere formular |
-| /ydelser + 6 ydelsessider | Behold, link bedre | To af dem har ét indgående link |
-| /kvalitet, /priser, /tilbud-eksempel, /maskinen | Behold | Tillidsspor, hver med sin rolle |
-| /tilbud | Behold | Den ene konverteringsside |
-| /saelg-til-os, /reparation | Behold | Egne intentioner, egne primære ord |
-| /vejledninger + 5 guides | Behold | Informationelt spor |
-| /vejledninger/samle-din-egen-pc | Behold, men **byg ikke videre** | Forkert publikum; ikke skadelig nok til at fjerne |
-| /om-os, /kontakt, /privatlivspolitik | Behold | Virksomhed og jura |
-| /api/version | Ingen ændring | Ikke i sitemap, ikke crawlbar |
+| Side                                            | Beslutning                                | Begrundelse                                       |
+| ----------------------------------------------- | ----------------------------------------- | ------------------------------------------------- |
+| /                                               | Behold                                    | Forside, hovedord                                 |
+| /produkter + 5 kategorier med modeller          | Behold                                    | Kerne i arkitekturen                              |
+| /produkter/tablets                              | Behold, men styrk                         | Har B2B-søgeord (P2), men 0 modeller og 364 ord   |
+| /produkter/smartphones                          | Behold, udvid                             | Modtager smartwatches-afsnittet                   |
+| /produkter/smartwatches                         | **Flet + 301** → `/produkter/smartphones` | 0 modeller, 0 B2B-søgeord, 345 ord                |
+| /produkter/gaming                               | **301** → `/produkter`                    | Forkert publikum for et B2B-domæne                |
+| /modeller + 36 modelsider                       | Behold                                    | Long tail med købsintention                       |
+| /flaadeloesninger                               | Behold                                    | Segmentside, 55 links                             |
+| /flaadeloesninger/forespoergsel                 | **301** → `/tilbud`                       | Samme intention, tyndere side, dårligere formular |
+| /ydelser + 6 ydelsessider                       | Behold, link bedre                        | To af dem har ét indgående link                   |
+| /kvalitet, /priser, /tilbud-eksempel, /maskinen | Behold                                    | Tillidsspor, hver med sin rolle                   |
+| /tilbud                                         | Behold                                    | Den ene konverteringsside                         |
+| /saelg-til-os, /reparation                      | Behold                                    | Egne intentioner, egne primære ord                |
+| /vejledninger + 5 guides                        | Behold                                    | Informationelt spor                               |
+| /vejledninger/samle-din-egen-pc                 | Behold, men **byg ikke videre**           | Forkert publikum; ikke skadelig nok til at fjerne |
+| /om-os, /kontakt, /privatlivspolitik            | Behold                                    | Virksomhed og jura                                |
+| /api/version                                    | Ingen ændring                             | Ikke i sitemap, ikke crawlbar                     |
 
 **Ingen sider foreslås `noindex`.** Alt, der ikke skal indekseres, foreslås enten 301'et eller flettet — en `noindex`-side, der stadig ligger i menuen, er en side, ingen har taget stilling til.
 
@@ -227,30 +227,30 @@ Opsætningen i dag er korrekt og ændres ikke: 112 sider, hver med `da`, `en` og
 
 Fra trin 2, uændret, med prioritet efter forretningsværdi:
 
-| Pri | URL | Primært søgeord |
-| --- | --- | --- |
-| P0 | `/vejledninger/windows-10-support-slutter` | windows 10 support slut virksomhed |
-| P1 | `/vejledninger/refurbished-eller-brugt` | refurbished vs brugt |
-| P1 | `/vejledninger/vaelg-erhvervsbaerbar` | thinkpad vs elitebook vs latitude |
-| P1 | `/vejledninger/standardiser-firmacomputere` | standardisering af computere i virksomheden |
-| P1 | `/vejledninger/it-til-nystartet-virksomhed` | it-udstyr til nystartet virksomhed |
-| P1 | `/vejledninger/it-til-mindre-virksomheder` | it til mindre virksomheder |
-| P1 | `/vejledninger/ram-og-ssd-til-kontormaskiner` | hvor meget ram har man brug for |
-| P2 | `/vejledninger/tco-paa-firmacomputere` | tco på firmacomputere |
-| P2 | `/vejledninger/leasing-eller-koeb` | leasing eller køb af firmacomputere |
+| Pri | URL                                           | Primært søgeord                             |
+| --- | --------------------------------------------- | ------------------------------------------- |
+| P0  | `/vejledninger/windows-10-support-slutter`    | windows 10 support slut virksomhed          |
+| P1  | `/vejledninger/refurbished-eller-brugt`       | refurbished vs brugt                        |
+| P1  | `/vejledninger/vaelg-erhvervsbaerbar`         | thinkpad vs elitebook vs latitude           |
+| P1  | `/vejledninger/standardiser-firmacomputere`   | standardisering af computere i virksomheden |
+| P1  | `/vejledninger/it-til-nystartet-virksomhed`   | it-udstyr til nystartet virksomhed          |
+| P1  | `/vejledninger/it-til-mindre-virksomheder`    | it til mindre virksomheder                  |
+| P1  | `/vejledninger/ram-og-ssd-til-kontormaskiner` | hvor meget ram har man brug for             |
+| P2  | `/vejledninger/tco-paa-firmacomputere`        | tco på firmacomputere                       |
+| P2  | `/vejledninger/leasing-eller-koeb`            | leasing eller køb af firmacomputere         |
 
-Alle ni er vejledninger. Det er ikke en tilfældighed: kategorierne og ydelserne findes allerede, og det, der mangler, er svarene på de spørgsmål, der kommer *før* nogen ser på en kategori.
+Alle ni er vejledninger. Det er ikke en tilfældighed: kategorierne og ydelserne findes allerede, og det, der mangler, er svarene på de spørgsmål, der kommer _før_ nogen ser på en kategori.
 
 ## 12. Risici og det, der kræver din beslutning
 
-| # | Beslutning | Risiko hvis vi tager fejl |
-| --- | --- | --- |
-| 1 | 301 fra `/flaadeloesninger/forespoergsel` til `/tilbud` | Lav. Siden er tynd og har fire links. Hvis den mod forventning rangerer, bevarer 301'en det. |
-| 2 | 301 fra `/produkter/gaming` til `/produkter` | Lav-mellem. Hvis gaming faktisk trækker trafik, mister vi den — men det er trafik uden købsintention på et B2B-domæne. |
-| 3 | Flet smartwatches ind i smartphones | Lav. Indholdet bevares som afsnit. |
-| 4 | Ingen underkategorier | Lav. Kan altid tilføjes senere, hvis der kommer efterspørgsel. Det omvendte — at fjerne dem igen — er dyrere. |
-| 5 | Modelsider bliver liggende fladt under `/modeller` | Lav. Alternativet koster 36 redirects for en teoretisk gevinst. |
-| 6 | Engelske slugs udskydes | Mellem. Vi lever med et CTR-tab på det sekundære marked, indtil det gøres. |
+| #   | Beslutning                                              | Risiko hvis vi tager fejl                                                                                              |
+| --- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 1   | 301 fra `/flaadeloesninger/forespoergsel` til `/tilbud` | Lav. Siden er tynd og har fire links. Hvis den mod forventning rangerer, bevarer 301'en det.                           |
+| 2   | 301 fra `/produkter/gaming` til `/produkter`            | Lav-mellem. Hvis gaming faktisk trækker trafik, mister vi den — men det er trafik uden købsintention på et B2B-domæne. |
+| 3   | Flet smartwatches ind i smartphones                     | Lav. Indholdet bevares som afsnit.                                                                                     |
+| 4   | Ingen underkategorier                                   | Lav. Kan altid tilføjes senere, hvis der kommer efterspørgsel. Det omvendte — at fjerne dem igen — er dyrere.          |
+| 5   | Modelsider bliver liggende fladt under `/modeller`      | Lav. Alternativet koster 36 redirects for en teoretisk gevinst.                                                        |
+| 6   | Engelske slugs udskydes                                 | Mellem. Vi lever med et CTR-tab på det sekundære marked, indtil det gøres.                                             |
 
 **Tre ting, jeg ikke kan afgøre for jer, fordi der ikke er data:**
 
@@ -260,14 +260,14 @@ Alle ni er vejledninger. Det er ikke en tilfældighed: kategorierne og ydelserne
 
 ## 13. Sammenfatning
 
-| | Før | Efter |
-| --- | --- | --- |
-| Sider i sitemap | 112 | 106 |
-| Kategorier | 9 | 7 |
-| Konverteringsformularer | 2 | 1 |
-| Kannibaliseringskonflikter | 6 | 0 |
-| Sider uden primært søgeord | 7 | 5 (bevidst: /om-os, /tilbud-eksempel, /maskinen, samle-din-egen-pc, /privatlivspolitik) |
-| Brødkrummer | 82/112 | 108/108 |
-| Sider med under 3 indgående links | 5 | 0 |
+|                                   | Før    | Efter                                                                                   |
+| --------------------------------- | ------ | --------------------------------------------------------------------------------------- |
+| Sider i sitemap                   | 112    | 106                                                                                     |
+| Kategorier                        | 9      | 7                                                                                       |
+| Konverteringsformularer           | 2      | 1                                                                                       |
+| Kannibaliseringskonflikter        | 6      | 0                                                                                       |
+| Sider uden primært søgeord        | 7      | 5 (bevidst: /om-os, /tilbud-eksempel, /maskinen, samle-din-egen-pc, /privatlivspolitik) |
+| Brødkrummer                       | 82/112 | 108/108                                                                                 |
+| Sider med under 3 indgående links | 5      | 0                                                                                       |
 
 Ingen af tallene i højre kolonne er nået endnu. De er målet for trin 4-6, når du har godkendt planen.

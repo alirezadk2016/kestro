@@ -2,35 +2,40 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
-import { metaFor, type Lang, type Localized } from "@/lib/i18n";
+import { metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
+import { legalUpdated } from "@/lib/legal";
+import PageSchema from "@/components/PageSchema";
 
 /*
  * Required under GDPR art. 13 the moment a visitor can send us their name and
- * email. Everything here describes what the site actually does — it sets no
- * cookies, loads nothing from a third party, and the contact form opens the
- * visitor's own mail client rather than posting to a server of ours.
+ * email. Everything here describes what the site actually does, which is the
+ * only thing that makes it worth anything — so it has to be corrected whenever
+ * the site changes, and it has twice: the contact form posts to our own API
+ * now rather than opening a mail client, and visits are counted without
+ * cookies for everyone, not only for those who accept Google.
  */
 
-/** Fixed, so "last updated" does not silently become the build date. */
-const UPDATED = "2026-08-23";
+/* The date the sitemap also publishes, from lib/legal.ts — written once
+   so the page and the <lastmod> can never disagree. */
+const UPDATED = legalUpdated["/privatlivspolitik"];
 
 const copy = {
   da: {
     metaTitle: "Privatlivspolitik | Kestro",
     metaDescription:
-      "Sådan behandler Kestro personoplysninger: kontaktformularerne, sprogcookien og den statistik, der kun kører, hvis I siger ja.",
+      "Sådan behandler Kestro personoplysninger: kontaktformularerne, cookiefri besøgstal og den statistik fra Google, der kun kører, hvis I siger ja.",
     title: "Privatlivspolitik",
     description:
-      "Hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: hjemmesiden i sig selv indsamler ingenting.",
+      "Privatlivspolitikken for kestro.dk er de 12 punkter herunder: hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet, der følger jer videre.",
     updated: "Senest opdateret",
   },
   en: {
     metaTitle: "Privacy policy | Kestro",
     metaDescription:
-      "How Kestro handles personal data: the contact forms, the language cookie, and the statistics that only run if you accept them.",
+      "How Kestro handles personal data: the contact forms, what is stored locally, cookieless visit counts, and statistics that only run if you accept them.",
     title: "Privacy policy",
     description:
-      "What data we process, why, and what you can require. Short version: the website itself collects nothing.",
+      "The privacy policy for kestro.dk is the 12 sections below: what data we process, why, and what you can require. Short version: no advertising, nothing shared for marketing, and nothing that follows you elsewhere.",
     updated: "Last updated",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -39,11 +44,11 @@ type Section = { heading: Localized; body: Localized[] };
 
 const sections: Section[] = [
   {
-    heading: { da: "Dataansvarlig", en: "Data controller" },
+    heading: { da: "Hvem er dataansvarlig?", en: "Who is the data controller?" },
     body: [
       {
-        da: `${company.name}, ${company.locationShort.da}. E-mail: ${company.email}.`,
-        en: `${company.name}, ${company.locationShort.en}. Email: ${company.email}.`,
+        da: `${company.name} er et projekt under etablering, endnu ikke en registreret virksomhed. Kontakt om siden og personoplysninger: ${company.email}.`,
+        en: `${company.name} is a project in preparation, not yet a registered business. Contact for this site and personal data: ${company.email}.`,
       },
     ],
   },
@@ -51,13 +56,13 @@ const sections: Section[] = [
     heading: { da: "Kort fortalt", en: "In short" },
     body: [
       {
-        da: "Denne hjemmeside viser ingen reklamer og deler ikke oplysninger til markedsføring. Skrifttyper og billeder ligger på vores eget domæne. Vi bruger Google Analytics til at se, hvilke sider der bliver læst – men kun hvis I aktivt siger ja. Siger I nej, bliver der ikke hentet noget fra Google overhovedet.",
-        en: "This website shows no advertising and shares nothing for marketing. Fonts and images are served from our own domain. We use Google Analytics to see which pages get read — but only if you actively say yes. If you say no, nothing is loaded from Google at all.",
+        da: "Denne hjemmeside viser ingen reklamer og deler ikke oplysninger til markedsføring. Skrifttyper og billeder ligger på vores eget domæne. Vi tæller besøg og måler hastighed uden cookies – det kører altid, og det følger jer ikke videre. Google Analytics bruger vi kun, hvis I aktivt siger ja; siger I nej, bliver der ikke hentet noget fra Google overhovedet.",
+        en: "This website shows no advertising and shares nothing for marketing. Fonts and images are served from our own domain. We count visits and measure speed without cookies — that always runs, and it does not follow you elsewhere. Google Analytics we use only if you actively say yes; if you say no, nothing is loaded from Google at all.",
       },
     ],
   },
   {
-    heading: { da: "Cookies", en: "Cookies" },
+    heading: { da: "Sætter siden cookies?", en: "Does the site set cookies?" },
     body: [
       {
         da: "Vi sætter ingen cookies af os selv. To små værdier gemmes lokalt i jeres browser: jeres svar på spørgsmålet om statistik, og om I har lukket beskeden om den engelske udgave. De sendes aldrig til os, og de bruges ikke til andet end at huske de to valg.",
@@ -65,19 +70,22 @@ const sections: Section[] = [
       },
       {
         da: "De to værdier er nødvendige for at kunne huske, hvad I har svaret, og kræver derfor ikke samtykke. Statistik gør: siger I ja i banneret, sætter Google Analytics sine egne cookies (_ga og _ga_*) for at kunne skelne besøg fra hinanden. De udløber efter to år og indeholder et tilfældigt id, ikke et navn. Siger I nej – eller svarer I ikke – bliver der hverken sat cookies eller sendt data.",
-        en: "Those two values are necessary to remember what you answered, so they need no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random id, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
+        en: "Those two values are necessary to remember what you answered, so they need no consent. Statistics do: if you say yes in the banner, Google Analytics sets its own cookies (_ga and _ga_*) to tell visits apart. They expire after two years and hold a random ID, not a name. If you say no — or do not answer — nothing is set and nothing is sent.",
       },
     ],
   },
   {
-    heading: { da: "Kontaktformularerne", en: "The contact forms" },
+    heading: {
+      da: "Hvad sker der med det, I sender i formularerne?",
+      en: "What happens to what you send through the forms?",
+    },
     body: [
       {
         da: "Når I sender en formular, går indholdet til vores egen server på kestro.dk, som sender det videre til os som en e-mail. Vi modtager altså først oplysninger, når I trykker send – men det er siden, der sender dem, ikke jeres eget mailprogram.",
         en: "When you submit a form, the content goes to our own server on kestro.dk, which passes it on to us as an email. So we receive information only once you press send — but it is the site that sends it, not your own mail client.",
       },
       {
-        da: "Vi behandler: navn, virksomhed, e-mailadresse, telefonnummer hvis oplyst, indholdet af beskeden, og hvilken side på kestro.dk den blev sendt fra. På tilbudsformularen desuden det, I selv udfylder om antal, model, hukommelse, lagerplads, tastatur og ønsket leveringstidspunkt.",
+        da: "Vi behandler: navn, virksomhed, e-mailadresse, telefonnummer, hvis det er oplyst, indholdet af beskeden, og hvilken side på kestro.dk den blev sendt fra. På tilbudsformularen desuden det, I selv udfylder om antal, model, hukommelse, lagerplads, tastatur og ønsket leveringstidspunkt.",
         en: "We process: name, company, email address, phone number if given, the content of the message, and which page on kestro.dk it was sent from. On the quote form, also what you fill in about quantity, model, memory, storage, keyboard and preferred delivery date.",
       },
       {
@@ -107,8 +115,8 @@ const sections: Section[] = [
         en: "If you accept statistics in the banner, we load Google Analytics 4 and measure which pages get read, how you arrived, and whether a form was sent. We never send your name, email, phone number or the content of a message to Google.",
       },
       {
-        da: 'Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket "Cookies og statistik" nederst på siden; derefter indlæses Google ikke igen.',
-        en: 'The legal basis is your consent — GDPR article 6(1)(a) and the Danish cookie order § 3. You can withdraw it at any time through the "Cookies and statistics" link at the bottom of the page; after that, Google is not loaded again.',
+        da: "Retsgrundlaget er jeres samtykke – databeskyttelsesforordningens artikel 6, stk. 1, litra a, og cookiebekendtgørelsens § 3. Samtykket kan trækkes tilbage når som helst via linket »Cookies og statistik« nederst på siden; derefter indlæses Google ikke igen.",
+        en: "The legal basis is your consent — GDPR article 6(1)(a) and the Danish Cookie Executive Order § 3. You can withdraw it at any time through the “Cookies and statistics” link at the bottom of the page; after that, Google is not loaded again.",
       },
       {
         da: "Google LLC behandler oplysningerne som databehandler og er amerikansk. Overførslen sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og EU-US Data Privacy Framework. Vi har slået deling til Googles annonceprodukter fra.",
@@ -117,10 +125,50 @@ const sections: Section[] = [
     ],
   },
   {
+    heading: {
+      da: "Vores egen besøgsstatistik",
+      en: "Our own visit statistics",
+    },
+    body: [
+      {
+        da: "Vi fører vores eget besøgstal på vores egen server. Vi gemmer de læste sider, besøgets varighed, land og enhedstype samt henvisende domæne, når browseren sender det. Fra kampagnelinks gemmer vi kun de afgrænsede mærkater utm_source, utm_medium, utm_campaign, utm_content og utm_term. Resten af URL'ens parametre gemmes ikke i besøgsstatistikken. Mærkaterne beskriver linkets kilde, kampagne og placering; de dokumenterer ikke i sig selv, hvor en person først så os. Besøgsstatistikken kobles ikke til navngivne henvendelser.",
+        en: "We keep our own visit count on our own server. We store the pages read, visit duration, country and device type, and the referring domain when the browser supplies it. From campaign links we store only the bounded labels utm_source, utm_medium, utm_campaign, utm_content and utm_term. Other URL parameters are not stored in the visit statistics. These labels describe the link's source, campaign and placement; they do not by themselves establish where a person first saw us. Visit statistics are not linked to named enquiries.",
+      },
+      {
+        da: "For at kunne se, at to sidevisninger hører til samme besøg, danner vi et tal ud fra jeres IP-adresse, jeres browserbetegnelse og en tilfældig værdi, der udskiftes hvert døgn. Selve IP-adressen bliver hverken gemt eller logget, og når døgnets tilfældige værdi er slettet, kan tallet ikke længere føres tilbage til en adresse – heller ikke af os. Der bliver stadig ikke sat cookies eller gemt noget i jeres browser.",
+        en: "To see that two page views belong to the same visit, we derive a number from your IP address, your browser identification and a random value that is replaced every 24 hours. The IP address itself is neither stored nor logged, and once the day's random value has been deleted the number can no longer be traced back to an address — not even by us. Still no cookies, and still nothing stored in your browser.",
+      },
+      {
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst, og hvordan den bliver fundet – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand. Tallene ligger i vores egen database hos Neon, Inc. og bliver ikke delt med nogen.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and how it is found — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish Cookie Executive Order. The numbers live in our own database with Neon, Inc. and are not shared with anyone.",
+      },
+    ],
+  },
+  {
+    heading: {
+      da: "Besøgstal og hastighed (Vercel)",
+      en: "Visit counts and speed (Vercel)",
+    },
+    body: [
+      {
+        da: "Ud over Google Analytics tæller vi besøg med Vercel Analytics og måler sidernes hastighed med Vercel Speed Insights. Begge dele kører uanset, hvad I svarer i banneret, og det er der en grund til: de sætter ingen cookies, gemmer intet i jeres browser og følger jer ikke videre til andre hjemmesider. Der registreres en sidevisning, hvilket land forespørgslen kom fra, og hvor hurtigt siden blev vist.",
+        en: "Alongside Google Analytics we count visits with Vercel Analytics and measure page speed with Vercel Speed Insights. Both run whatever you answer in the banner, and there is a reason for that: they set no cookies, store nothing in your browser and do not follow you to other websites. What is recorded is a page view, which country the request came from, and how quickly the page rendered.",
+      },
+      {
+        da: "Retsgrundlaget er vores legitime interesse i at vide, om hjemmesiden bliver læst, og om den er hurtig nok – databeskyttelsesforordningens artikel 6, stk. 1, litra f. Fordi der hverken sættes eller læses noget i jeres udstyr, er der ikke tale om cookies i cookiebekendtgørelsens forstand, og der indsamles ikke oplysninger, der kan pege på en bestemt person.",
+        en: "The legal basis is our legitimate interest in knowing whether the site is read and whether it is fast enough — GDPR article 6(1)(f). Because nothing is written to or read from your device, these are not cookies in the sense of the Danish Cookie Executive Order, and nothing is collected that can point to a particular person.",
+      },
+      {
+        da: "Vercel Inc. er amerikansk og behandler oplysningerne som databehandler for os, på grundlag af EU-Kommissionens standardkontraktbestemmelser. Vercel er i forvejen vores hostingudbyder, så forespørgslen når dem under alle omstændigheder.",
+        en: "Vercel Inc. is a US company and processes the data as our processor, on the basis of the European Commission's standard contractual clauses. Vercel already hosts the site, so the request reaches them in any case.",
+      },
+    ],
+  },
+  {
     heading: { da: "Serverlogs", en: "Server logs" },
     body: [
       {
-        da: "Vores hostingudbyder registrerer tekniske oplysninger om besøg – blandt andet IP-adresse, tidspunkt og browsertype – for at kunne drive og sikre hjemmesiden. Loggene bruges ikke til at profilere besøgende.",
+        da: "Vores hostingudbyder registrerer tekniske oplysninger om besøg – blandt andet IP-adresse, tidspunkt og browsertype – for at kunne drive og sikre hjemmesiden. Logfilerne bruges ikke til at profilere besøgende.",
         en: "Our hosting provider records technical information about visits — IP address, time and browser type among others — in order to run and secure the website. The logs are not used to profile visitors.",
       },
     ],
@@ -129,8 +177,8 @@ const sections: Section[] = [
     heading: { da: "Leverandører og overførsel", en: "Providers and transfers" },
     body: [
       {
-        da: "Hjemmesiden hostes hos Vercel Inc. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle tre er databehandlere på vores vegne.",
-        en: "The website is hosted with Vercel Inc. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox. If you accept statistics, Google LLC also processes visit data for us. All three are processors acting on our behalf.",
+        da: "Hjemmesiden hostes hos Vercel Inc., som også leverer de besøgstal og hastighedsmålinger, der er beskrevet ovenfor. Beskeder fra formularerne sendes som e-mail gennem Resend, Inc., og modtages i vores egen mailkonto; samtidig gemmes de i vores database hos Neon, Inc., så vi kan svare på dem, uden at noget bliver væk. Accepterer I statistik, behandler Google LLC desuden besøgsdata for os. Alle fire er databehandlere på vores vegne.",
+        en: "The website is hosted with Vercel Inc., which also provides the visit counts and speed measurements described above. Messages from the forms are sent as email through Resend, Inc., and land in our own mailbox; they are stored at the same time in our database with Neon, Inc., so we can answer them without anything going missing. If you accept statistics, Google LLC also processes visit data for us. All four are processors acting on our behalf.",
       },
       {
         da: "Vercel, Resend og Google er amerikanske leverandører. Overførsel af personoplysninger til USA sker på grundlag af EU-Kommissionens standardkontraktbestemmelser og/eller EU-US Data Privacy Framework.",
@@ -139,7 +187,7 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Hvor længe vi gemmer", en: "How long we keep it" },
+    heading: { da: "Hvor længe gemmer vi oplysningerne?", en: "How long do we keep it?" },
     body: [
       {
         da: "Vi gemmer korrespondance, så længe det er nødvendigt for dialogen eller kundeforholdet. Bilag, der er omfattet af bogføringsloven, gemmes i fem år fra udgangen af det regnskabsår, de vedrører.",
@@ -148,7 +196,7 @@ const sections: Section[] = [
     ],
   },
   {
-    heading: { da: "Jeres rettigheder", en: "Your rights" },
+    heading: { da: "Hvilke rettigheder har I?", en: "What are your rights?" },
     body: [
       {
         da: "I har ret til indsigt i de oplysninger, vi behandler om jer, og ret til at få urigtige oplysninger rettet. I kan bede om sletning, om begrænsning af behandlingen, gøre indsigelse mod behandlingen og bede om dataportabilitet.",
@@ -162,7 +210,10 @@ const sections: Section[] = [
   },
 ];
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -171,43 +222,65 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
   };
 }
 
-export default function PrivatlivspolitikPage({ params }: { params: { lang: Lang } }) {
+export default async function PrivatlivspolitikPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
 
   return (
-    <section className="py-10 sm:py-20">
-      <Container>
-        <PageHeader
-          title={c.title}
-          description={c.description}
-          lang={lang}
-          href="/privatlivspolitik"
-          crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
-        />
+    <>
+      <PageSchema
+        lang={lang}
+        route="/privatlivspolitik"
+        name={c.title}
+        description={c.description}
+      />
 
-        <div className="mt-14 max-w-3xl">
-          {sections.map((section) => (
-            <div key={section.heading.da} className="border-t border-white/10 py-8">
-              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
-                {section.heading[lang]}
-              </h2>
-              {section.body.map((paragraph) => (
-                <p
-                  key={paragraph.da}
-                  className="mt-4 text-base leading-7 sm:leading-8 text-paper/65"
-                >
-                  {paragraph[lang]}
-                </p>
-              ))}
-            </div>
-          ))}
+      <section className="pb-12 pt-10 sm:pb-16 sm:pt-20">
+        <Container>
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/privatlivspolitik"
+            crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
+          />
+        </Container>
+      </section>
 
-          <p className="border-t border-white/10 pt-8 text-sm text-paper/55">
-            {c.updated}: {UPDATED}
-          </p>
-        </div>
-      </Container>
-    </section>
+      {/* The document on paper. A legal text is the one thing on the site a
+          reader reads start to finish, and it was 26 paragraphs of grey on
+          navy; as a white sheet on the light band it is a document, which
+          is what it is, and it joins the FAQs and the quote as the site's
+          paper. */}
+      <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
+        <Container>
+          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
+            {sections.map((section) => (
+              <div
+                key={section.heading.da}
+                className="border-t border-ink-200 py-8 first:border-t-0"
+              >
+                <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
+                  {section.heading[lang]}
+                </h2>
+                {section.body.map((paragraph) => (
+                  <p
+                    key={paragraph.da}
+                    className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-ink-700"
+                  >
+                    {paragraph[lang]}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            <p className="border-t border-ink-200 pt-8 text-sm text-ink-600 leading-[1.6]">
+              {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
+            </p>
+          </article>
+        </Container>
+      </section>
+    </>
   );
 }

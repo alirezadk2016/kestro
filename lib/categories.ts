@@ -3,6 +3,11 @@ import type { Localized } from "./i18n";
 export type Category = {
   slug: string;
   name: Localized;
+  /**
+   * The page's heading, when it should carry the search phrase and the
+   * short `name` (menus, cards, breadcrumbs) should not. Mak rule 5.
+   */
+  h1?: Localized;
   shortName: Localized;
   tagline: Localized;
   metaTitle: Localized;
@@ -29,22 +34,23 @@ export const categories: Category[] = [
   {
     slug: "baerbare-computere",
     name: { da: "Bærbare computere", en: "Business laptops" },
+    h1: { da: "Brugte bærbare computere", en: "Refurbished business laptops" },
     shortName: { da: "Bærbare", en: "Laptops" },
     tagline: {
       da: "Renoverede erhvervsbærbare til kontor og hybridarbejde",
       en: "Refurbished business laptops for office and hybrid work",
     },
     metaTitle: {
-      da: "Brugte bærbare computere til erhverv | Kestro",
-      en: "Refurbished business laptops for companies | Kestro",
+      da: "Brugte bærbare computere til erhverv – dansk tastatur | Kestro",
+      en: "Refurbished business laptops with Nordic keyboards | Kestro",
     },
     metaDescription: {
-      da: "Refurbished erhvervsbærbare fra ThinkPad-, EliteBook- og Latitude-serierne. Funktionstestet, nordisk tastatur og skriftlige vilkår før bestilling.",
-      en: "Refurbished business laptops — ThinkPad, MacBook, Latitude, EliteBook and more. Function-tested, with a Nordic keyboard.",
+      da: "Brugte laptops til virksomheder – til kontor, startup eller hjemmearbejde. Afklar budget, batteri og dansk eller norsk tastatur, og få råd, før I vælger.",
+      en: "Find a used laptop for work, a startup or home office. Check budget, battery and Danish or Norwegian keys. Ask for advice before choosing a laptop.",
     },
     intro: {
-      da: "Bærbare er det, vi oftest bliver bedt om at skaffe. Vi sourcer brugte erhvervsmaskiner – bygget til daglig kontorbrug frem for forbrugerbrug – funktionstester dem og klargør dem med dansk/nordisk tastatur, så de er klar til udlevering til medarbejderen.",
-      en: "Laptops are what we are asked for most often. We source used business machines — built for daily office work rather than consumer use — function-test them and prepare them with a Danish or Norwegian keyboard, so they are ready to hand to the employee.",
+      da: "Den rigtige firmabærbare afhænger af opgaven. Til kontor, hjemmearbejde eller en nystartet virksomhed skal programmer, batteri, skærm og tastatur passe til hverdagen. Fortæl os jeres behov og budget, og om I ønsker dansk eller norsk tastatur; pris og muligheder afklares for den konkrete konfiguration.",
+      en: "The right company laptop depends on the work. For an office, home working or a startup, software, battery, display and keyboard need to fit the day. Tell us your requirements and budget, including a Danish or Norwegian keyboard; price and options are checked for the actual configuration.",
     },
     brands: [
       "Lenovo ThinkPad",
@@ -61,6 +67,16 @@ export const categories: Category[] = [
       "Fujitsu Lifebook",
     ],
     useCases: [
+      {
+        title: {
+          da: "Bærbar til startup og iværksættere",
+          en: "Laptops for startups and founders",
+        },
+        description: {
+          da: "Start med de programmer, I skal bruge nu, og plads til næste medarbejder. Oplys budget per arbejdsplads med skærm, dock, licenser og tilbehør.",
+          en: "Start with the applications you need now and room for the next employee. State a budget per desk that includes monitor, dock, licences and accessories.",
+        },
+      },
       {
         title: { da: "Kontor og administration", en: "Office and administration" },
         description: {
@@ -90,40 +106,64 @@ export const categories: Category[] = [
     exampleModel: "lenovo-thinkpad-t480",
     guides: [
       {
-        href: "/vejledninger/windows-11-paa-aeldre-maskine",
-        label: {
-          da: "Kommer maskinen med over til Windows 11?",
-          en: "Will the machine make the jump to Windows 11?",
-        },
+        href: "/vejledninger/refurbished-eller-ny-baerbar",
+        label: { da: "Refurbished eller ny bærbar?", en: "Refurbished or new laptop?" },
+      },
+      {
+        href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
+        label: { da: "Kan den gamle bærbare opgraderes?", en: "Can the old laptop be upgraded?" },
       },
       {
         href: "/vejledninger/tjek-brugt-baerbar-foer-koeb",
+        label: { da: "Hvilken bærbar passer til mit behov?", en: "Which laptop fits my needs?" },
+      },
+      {
+        href: "/vejledninger/windows-11-paa-aeldre-maskine",
         label: {
-          da: "Ti ting du skal tjekke på en brugt bærbar",
-          en: "Ten things to check on a used laptop",
+          da: "Windows 11 på ældre maskiner",
+          en: "Windows 11 on older machines",
         },
+      },
+      {
+        href: "/ydelser/nordisk-tilpasning",
+        label: {
+          da: "Dansk eller norsk tastatur på bærbar",
+          en: "Danish or Norwegian laptop keyboard",
+        },
+      },
+      {
+        href: "/reparation/ram-og-ssd-opgradering",
+        label: {
+          da: "RAM og SSD opgraderet på værkstedet",
+          en: "Memory and SSD fitted in the workshop",
+        },
+      },
+      {
+        href: "/flaadeloesninger",
+        label: { da: "Køb bærbare i større antal", en: "Buy laptops in bulk" },
       },
     ],
   },
   {
     slug: "stationaere-computere",
     name: { da: "Stationære computere", en: "Desktop computers" },
+    h1: { da: "Brugte stationære computere", en: "Refurbished business desktops" },
     shortName: { da: "Stationære", en: "Desktops" },
     tagline: {
-      da: "Renoverede desktops og workstations til faste arbejdspladser",
+      da: "Renoverede stationære pc'er og workstations til faste arbejdspladser",
       en: "Refurbished desktops and workstations for fixed desks",
     },
     metaTitle: {
-      da: "Brugte stationære computere til erhverv | Kestro",
-      en: "Refurbished business desktop computers | Kestro",
+      da: "Brugte stationære computere – OptiPlex og EliteDesk | Kestro",
+      en: "Refurbished business desktops and workstations | Kestro",
     },
     metaDescription: {
-      da: "Refurbished stationære erhvervsmaskiner og små formfaktorer til kontoret. Vi sourcer til den enkelte ordre og oplyser stand skriftligt.",
-      en: "Refurbished business desktops and workstations — OptiPlex, EliteDesk, ThinkCentre and more. Function-tested and prepared.",
+      da: "Refurbished stationære pc'er og workstations – OptiPlex, EliteDesk og ThinkCentre – i tårn, lille kabinet eller mini. Skaffet til ordren, stand på skrift.",
+      en: "Refurbished business desktops and workstations — Dell OptiPlex, HP EliteDesk, Lenovo ThinkCentre and more. Function-tested and prepared.",
     },
     intro: {
-      da: "Til faste arbejdspladser er en renoveret desktop ofte den mest økonomiske løsning. Erhvervsdesktops er bygget til lang levetid og er nemme at opgradere, hvilket gør dem velegnede til genbrug.",
-      en: "For a desk that nobody carries anywhere, a refurbished desktop is usually the cheapest sensible answer. Business desktops are built to last and easy to upgrade, which is exactly what makes them worth buying second-hand.",
+      da: "Til faste arbejdspladser er en renoveret stationær ofte den mest økonomiske løsning. Stationære erhvervsmaskiner er typisk bygget til lang levetid og nemme at opgradere, hvilket gør dem velegnede til genbrug.",
+      en: "For a desk that nobody carries anywhere, a refurbished desktop is usually the cheapest sensible answer. Business desktops are usually built to last and easy to upgrade, which is what makes them worth buying second-hand.",
     },
     brands: [
       "Dell OptiPlex",
@@ -145,7 +185,7 @@ export const categories: Category[] = [
         },
       },
       {
-        title: { da: "Reception og fælles PC'er", en: "Reception and shared PCs" },
+        title: { da: "Reception og fælles pc'er", en: "Reception and shared PCs" },
         description: {
           da: "Robuste maskiner til fælles brug, kantine, lager eller mødelokaler.",
           en: "Sturdy machines for shared use in reception, canteen, warehouse or meeting rooms.",
@@ -160,8 +200,8 @@ export const categories: Category[] = [
       },
     ],
     specNote: {
-      da: "Vi tilpasser formfaktor (tower, SFF eller mini), RAM, lagring og grafikkort efter jeres behov.",
-      en: "We match the form factor (tower, SFF or mini), memory, storage and graphics card to what you need.",
+      da: "Vi tilpasser kabinettet (tårn, lille kabinet eller mini-pc), RAM, lagring og grafikkort efter jeres behov.",
+      en: "We match the case (tower, small form factor or mini PC), memory, storage and graphics card to what you need.",
     },
     guides: [
       {
@@ -173,18 +213,19 @@ export const categories: Category[] = [
   {
     slug: "skaerme",
     name: { da: "Skærme", en: "Monitors" },
+    h1: { da: "Brugte skærme til kontoret", en: "Refurbished monitors for the office" },
     shortName: { da: "Skærme", en: "Monitors" },
     tagline: {
       da: "Renoverede erhvervsskærme til faste arbejdspladser",
       en: "Refurbished business monitors for fixed desks",
     },
     metaTitle: {
-      da: "Brugte skærme til kontor og erhverv | Kestro",
-      en: "Used and refurbished business monitors | Kestro",
+      da: "Brugte skærme til kontoret – 22 til 27 tommer | Kestro",
+      en: "Refurbished business monitors, 24 and 27 inch | Kestro",
     },
     metaDescription: {
-      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docking, så en arbejdsplads står komplet.",
-      en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27" with height adjustment and a USB hub. Sourced per order.',
+      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docks, så arbejdspladsen står komplet.",
+      en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27", height-adjustable, with a USB hub. Sourced per order with your machines.',
     },
     intro: {
       da: "En skærm holder som regel længere end den computer, der står ved siden af, og derfor er det ofte her, der er mest at hente. Vi skaffer erhvervsskærme med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har – og de bliver tjekket for døde pixels og indbrændinger, inden de sendes af sted.",
@@ -228,22 +269,23 @@ export const categories: Category[] = [
   {
     slug: "mini-pc",
     name: { da: "Mini-pc'er", en: "Mini PCs" },
+    h1: { da: "Brugte mini-pc'er", en: "Refurbished mini PCs" },
     shortName: { da: "Mini-pc", en: "Mini PCs" },
     tagline: {
-      da: "Kompakte maskiner, hvor pladsen er trang",
+      da: "Kompakte maskiner til steder, hvor pladsen er trang",
       en: "Compact machines for desks with no room to spare",
     },
     metaTitle: {
-      da: "Brugte mini-pc'er til erhverv | Kestro",
-      en: "Refurbished mini PCs for business | Kestro",
+      da: "Brugte mini-pc'er til erhverv – fx ThinkCentre Tiny | Kestro",
+      en: "Refurbished business mini PCs — ThinkCentre Tiny | Kestro",
     },
     metaDescription: {
-      da: "Refurbished mini-pc'er og små formfaktorer til receptioner, kasseborde og kontorpladser med lidt plads. Sourcet per ordre, testet før levering.",
-      en: "Refurbished mini PCs and tiny desktops — Lenovo ThinkCentre Tiny, Dell OptiPlex Micro, HP Mini, Intel NUC. For offices, digital signage and tight workspaces.",
+      da: "Brugte og refurbished mini-pc'er til reception, kasse og trange kontorpladser – fx Lenovo ThinkCentre Tiny og Dell OptiPlex Micro. Skaffet til ordren.",
+      en: "Refurbished mini PCs — ThinkCentre Tiny, OptiPlex Micro, HP Mini — for receptions, tills, digital signage and small desks. Sourced per order.",
     },
     intro: {
-      da: "Mini-pc'er giver desktop-ydelse i en formfaktor, der kan skjules bag skærmen eller monteres under bordet. De er populære, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
-      en: "A mini PC gives you desktop performance in something that hides behind the monitor or mounts under the desk. They are popular where space is tight, or where a clear desk matters.",
+      da: "En mini-pc klarer det samme kontorarbejde som en almindelig stationær, i et kabinet, der kan skjules bag skærmen eller monteres under bordet. Den passer, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
+      en: "A mini PC handles the same office work as an ordinary desktop, in a case that hides behind the monitor or mounts under the desk. It suits places where space is tight, or where a clear desk matters.",
     },
     brands: [
       "Lenovo ThinkCentre Tiny",
@@ -258,7 +300,7 @@ export const categories: Category[] = [
       {
         title: { da: "Trange arbejdspladser", en: "Tight workspaces" },
         description: {
-          da: "Kontorer, receptioner og butikker, hvor der ikke er plads til en tower.",
+          da: "Kontorer, receptioner og butikker, hvor der ikke er plads til et almindeligt tårn.",
           en: "Offices, reception desks and shops where there is no room for a tower.",
         },
       },
@@ -278,29 +320,30 @@ export const categories: Category[] = [
       },
     ],
     specNote: {
-      da: "Mini-pc'er fås i flere ydelsesniveauer – fra letvægts kontorbrug til modeller, der matcher en almindelig desktop.",
+      da: "Mini-pc'er fås i flere ydelsesniveauer – fra let kontorarbejde til modeller, der kan måle sig med en almindelig stationær.",
       en: "Mini PCs come at several performance levels — from light office use to models that match an ordinary desktop.",
     },
   },
   {
     slug: "tablets",
     name: { da: "Tablets", en: "Tablets" },
+    h1: { da: "Brugte tablets til erhverv", en: "Refurbished business tablets" },
     shortName: { da: "Tablets", en: "Tablets" },
     tagline: {
-      da: "Renoverede tablets til felt, butik og præsentation",
+      da: "Renoverede tablets til feltarbejde, butik og præsentationer",
       en: "Refurbished tablets for field work, shops and presentations",
     },
     metaTitle: {
-      da: "Brugte tablets til erhverv | Kestro",
-      en: "Refurbished business tablets | Kestro",
+      da: "Brugte tablets til erhverv – iPad, Galaxy, Surface | Kestro",
+      en: "Refurbished business tablets — iPad, Galaxy, Surface | Kestro",
     },
     metaDescription: {
-      da: "Refurbished tablets til lager, service og mødelokaler. Vi skaffer dem per ordre og oplyser stand og batteritilstand, før I bestiller.",
-      en: "Refurbished tablets for companies — iPad, Samsung Galaxy Tab, Microsoft Surface and Lenovo Tab. Tested and prepared, delivered in Denmark and Norway.",
+      da: "Brugte tablets til erhverv: iPad, Galaxy Tab og Surface til lager, service og møder. Skaffet per ordre, med stand og batteri oplyst, før I bestiller.",
+      en: "Refurbished iPad, Galaxy Tab, Surface and Lenovo tablets for warehouse, service and meeting rooms. Condition and battery stated up front.",
     },
     intro: {
-      da: "Tablets er velegnede til medarbejdere i marken, i butikken eller på lageret, hvor en bærbar er for tung og en telefon for lille. Vi klargør enhederne, så de er nulstillet og klar til jeres MDM-opsætning.",
-      en: "Tablets suit people in the field, in the shop or in the warehouse, where a laptop is too heavy and a phone too small. We prepare the devices so they arrive reset and ready for your MDM setup.",
+      da: "Tablets er velegnede til medarbejdere i marken, i butikken eller på lageret, hvor en bærbar er for tung og en telefon for lille. Vi klargør enhederne, så de er nulstillet og klar til jeres system til styring af enheder (MDM).",
+      en: "Tablets suit people in the field, in the shop or in the warehouse, where a laptop is too heavy and a phone too small. We prepare the devices so they arrive reset and ready for your device management (MDM) setup.",
     },
     brands: [
       "Apple iPad",
@@ -342,27 +385,28 @@ export const categories: Category[] = [
   {
     slug: "smartphones",
     name: { da: "Smartphones", en: "Smartphones" },
+    h1: { da: "Brugte firmatelefoner og smartphones", en: "Refurbished company phones" },
     shortName: { da: "Smartphones", en: "Smartphones" },
     tagline: {
       da: "Renoverede telefoner og smartwatches til medarbejdere",
       en: "Refurbished phones and smartwatches for employees",
     },
     metaTitle: {
-      da: "Refurbished mobiltelefoner til virksomheder | Kestro",
-      en: "Refurbished business smartphones | Kestro",
+      da: "Brugte firmatelefoner – refurbished iPhone, Samsung | Kestro",
+      en: "Refurbished business phones — iPhone and Samsung | Kestro",
     },
     metaDescription: {
-      da: "Brugte firmatelefoner sourcet per ordre. Stand og batteritilstand oplyses per enhed, og gamle telefoner kan hentes retur med datasletning.",
-      en: "Refurbished company phones and smartwatches — iPhone, Samsung Galaxy, Pixel, Apple Watch. Tested, reset and ready to hand out.",
+      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og de gamle telefoner kan hentes retur og slettes.",
+      en: "Refurbished company phones and smartwatches — iPhone, Galaxy, Pixel, Apple Watch. Tested, reset and ready; old phones collected and erased.",
     },
     intro: {
-      da: "Firmatelefoner udskiftes ofte hyppigere end nødvendigt. Renoverede enheder giver samme funktionalitet til en markant lavere pris – særligt når der skal udstyres flere medarbejdere på én gang.",
-      en: "Company phones get replaced more often than they need to be. Refurbished devices do the same job for a good deal less — especially when a whole team has to be equipped at once.",
+      da: "Firmatelefoner udskiftes ofte, før de er slidt op. En renoveret telefon af en nyere model kan dække det samme behov, også når der skal udstyres flere medarbejdere på én gang.",
+      en: "Company phones are often replaced before they are worn out. A refurbished phone of a newer model can meet the same need, including when a whole team has to be equipped at once.",
     },
     brands: [
       "Apple iPhone",
-      "Samsung Galaxy S-serien",
-      "Samsung Galaxy A-serien",
+      "Samsung Galaxy S",
+      "Samsung Galaxy A",
       "Google Pixel",
       "Sony Xperia",
       "Nokia",
@@ -400,24 +444,28 @@ export const categories: Category[] = [
       },
     ],
     specNote: {
-      da: "Enhederne leveres nulstillet og afmeldt tidligere konti, klar til jeres opsætning. Smartwatches fås med eller uden mobilforbindelse, og remme kan leveres nye.",
+      da: "Enhederne leveres nulstillet og fjernet fra tidligere ejeres konti, klar til jeres opsætning. Smartwatches fås med eller uden mobilforbindelse, og remme kan leveres nye.",
       en: "Devices arrive reset and released from previous accounts, ready for your setup. Smartwatches come with or without mobile connectivity, and straps can be supplied new.",
     },
   },
   {
     slug: "dockingstationer",
-    name: { da: "Dockingstationer & tilbehør", en: "Docking stations & accessories" },
+    name: { da: "Dockingstationer og tilbehør", en: "Docking stations and accessories" },
+    h1: {
+      da: "Dockingstationer til bærbare og tilbehør",
+      en: "Docking stations for business laptops",
+    },
     shortName: { da: "Docking", en: "Docking" },
     tagline: {
-      da: "Docking, skærme og tilbehør til arbejdspladsen",
+      da: "Docks, kabler og tilbehør, der gør arbejdspladsen komplet",
       en: "Docks, monitors and accessories for the desk",
     },
     metaTitle: {
-      da: "Dockingstationer til erhvervsbærbare | Kestro",
-      en: "Business docking stations and accessories | Kestro",
+      da: "Dockingstation til bærbar – brugte erhvervsdocks | Kestro",
+      en: "Docking stations for business laptops, refurbished | Kestro",
     },
     metaDescription: {
-      da: "Brugte dockingstationer, kabler og tilbehør, der passer til de maskiner vi leverer – så skærme og netværk virker uden at nogen skal fejlfinde.",
+      da: "Brugte dockingstationer fra Lenovo, Dell og HP – plus kabler og tilbehør, der passer til maskinerne, så skærme og netværk virker fra første dag.",
       en: "Refurbished docking stations, monitors, keyboards and mice for business — ThinkPad Dock, Dell WD series, HP Thunderbolt Dock and more.",
     },
     intro: {
@@ -426,7 +474,7 @@ export const categories: Category[] = [
     },
     brands: [
       "Lenovo ThinkPad Dock",
-      "Dell WD-serien",
+      "Dell WD",
       "HP Thunderbolt Dock",
       "Dell Universal Dock",
       "HP USB-C Dock",
@@ -442,9 +490,9 @@ export const categories: Category[] = [
         },
       },
       {
-        title: { da: "Hot-desking", en: "Hot-desking" },
+        title: { da: "Delte skriveborde", en: "Hot-desking" },
         description: {
-          da: "Delte arbejdspladser, hvor medarbejdere tilslutter deres egen bærbare.",
+          da: "Medarbejderne sætter sig, hvor der er plads, og tilslutter deres egen bærbare med ét kabel.",
           en: "Shared desks where people plug in their own laptop.",
         },
       },
@@ -452,13 +500,13 @@ export const categories: Category[] = [
         title: { da: "Skærme og tilbehør", en: "Monitors and accessories" },
         description: {
           da: "Renoverede erhvervsskærme, tastaturer med nordisk layout, mus og headsets.",
-          en: "Refurbished business monitors, keyboards with Nordic layout, mice and headsets.",
+          en: "Refurbished business monitors, keyboards with a Danish or Norwegian layout, mice and headsets.",
         },
       },
     ],
     specNote: {
-      da: "Docking skal matche maskinens porte (USB-C, Thunderbolt eller ældre proprietære stik) – vi sikrer, at det passer til jeres enheder.",
-      en: "A dock has to match the machine's ports (USB-C, Thunderbolt or an older proprietary connector) — we make sure it fits the machines you have.",
+      da: "Docking skal matche maskinens porte (USB-C, Thunderbolt eller ældre stik, der kun passer til ét mærke) – vi sikrer, at det passer til jeres enheder.",
+      en: "A dock has to match the machine's ports (USB-C, Thunderbolt or an older connector that only fits one brand) — we make sure it fits the machines you have.",
     },
   },
 ];
