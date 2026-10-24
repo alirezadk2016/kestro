@@ -981,8 +981,8 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "De to bliver blandet sammen i næsten enhver samtale om det her, og det fører til forkerte beslutninger begge veje. Spørgsmålene er uafhængige.",
-            en: "The two get mixed together in almost every conversation about this, and that leads to wrong decisions in both directions. The questions are independent.",
+            da: "De to bliver tit blandet sammen, når talen falder på det her, og det fører til forkerte beslutninger begge veje. Spørgsmålene er uafhængige.",
+            en: "The two often get mixed together when this comes up, and that leads to wrong decisions in both directions. The questions are independent.",
           },
           {
             da: "Det første handler om styresystemet: får den konkrete maskine stadig sikkerhedsrettelser? Kontrollér Windows-udgave og supportdato, og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
@@ -1226,8 +1226,8 @@ export const guides: Guide[] = [
       en: "Used describes the machine's history: it had an owner before. Refurbished describes work somebody did to it afterwards — checking, cleaning, replacing worn parts, erasing data. The difference is real, but the word is not a standard anyone enforces. Two sellers can use it for completely different processes, which is why the question is not whether a machine is refurbished, but what was actually done to it.",
     },
     intro: {
-      da: "De to ord står side om side i næsten enhver annonce for brugt IT-udstyr, og de bliver brugt, som om de betyder det samme. Det gør de ikke – men forskellen ligger ikke i ordene. Den ligger i det arbejde, ordene påstår er udført, og det er dét, en indkøber skal have svar på.",
-      en: "The two words sit side by side in almost every advert for used IT equipment, and they get used as though they mean the same thing. They do not — but the difference is not in the words. It is in the work the words claim was done, and that is what a buyer needs an answer to.",
+      da: "De to ord står tit side om side i annoncer for brugt IT-udstyr, og de bliver brugt, som om de betyder det samme. Det gør de ikke – men forskellen ligger ikke i ordene. Den ligger i det arbejde, ordene påstår er udført, og det er dét, en indkøber skal have svar på.",
+      en: "The two words often sit side by side in adverts for used IT equipment, and they get used as though they mean the same thing. They do not — but the difference is not in the words. It is in the work the words claim was done, and that is what a buyer needs an answer to.",
     },
     sections: [
       {
@@ -1506,7 +1506,7 @@ export const guides: Guide[] = [
         },
         answer: {
           da: "Nej, og det er en udbredt misforståelse. Ordet er ikke reguleret, så omfanget af test afhænger helt af sælgeren – og det er derfor, spørgsmålet skal stilles konkret frem for at blive taget for givet.",
-          en: "No. That is the most common misunderstanding. The word is not regulated, so how much testing happens depends entirely on the seller — which is why the question has to be asked specifically rather than assumed.",
+          en: "No, and it is a widespread misunderstanding. The word is not regulated, so how much testing happens depends entirely on the seller — which is why the question has to be asked specifically rather than assumed.",
         },
       },
     ],

@@ -30,7 +30,10 @@ export const productsNav = {
      which is accurate and which nobody looks for. */
   hub: { href: "/produkter", label: { da: "Produkter", en: "Products" } },
   overview: { da: "Oversigt", en: "Overview" } as Localized,
-  models: { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+  models: {
+    href: "/modeller",
+    label: { da: "Modeller og specifikationer", en: "Models and specifications" },
+  },
   machine: { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   quality: { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
   sampleQuote: {
@@ -46,7 +49,10 @@ export const productsNav = {
  * "how do we buy" had no place of its own.
  */
 export const productExtras: NavLink[] = [
-  { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+  {
+    href: "/modeller",
+    label: { da: "Modeller og specifikationer", en: "Models and specifications" },
+  },
   { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
 ];
 

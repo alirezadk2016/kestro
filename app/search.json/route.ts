@@ -100,7 +100,7 @@ const pages: { href: string; t: Localized; d: Localized; k?: string }[] = [
   },
   {
     href: "/modeller",
-    t: { da: "Populære modeller", en: "Popular models" },
+    t: { da: "Modeller og specifikationer", en: "Models and specifications" },
     d: {
       da: "ThinkPad, EliteBook, Latitude, OptiPlex og flere",
       en: "ThinkPad, EliteBook, Latitude, OptiPlex and more",

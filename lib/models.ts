@@ -664,8 +664,8 @@ export const models: Model[] = [
       en: 'Refurbished HP EliteBook 840 G5 and G6: 14" Full HD, Intel i5/i7, up to 32 GB RAM in two slots — available with Sure View. Quote with condition.',
     },
     intro: {
-      da: "EliteBook 840 er en af de mest udbredte erhvervsbærbare i Europa, og netop derfor er den nem at skaffe i antal og til en fornuftig pris. Den har to hukommelsessokler, hvilket gør den billig at opgradere, og et fladt kabinet, der fylder lidt mindre i tasken end T-serien.",
-      en: "The EliteBook 840 is one of the most common business laptops in Europe, which is exactly why it is easy to source in numbers at a sensible price. It has two memory slots, which makes it cheap to upgrade, and a flat chassis that takes slightly less room in a bag than the T series.",
+      da: "EliteBook 840 er HP's 14-tommers erhvervsbærbar og det nærmeste modstykke til Lenovos T-serie. Den har to hukommelsessokler, hvilket gør den nem at opgradere, og et fladt kabinet, der fylder lidt mindre i tasken end T-serien.",
+      en: "The EliteBook 840 is HP's 14-inch business laptop and the closest counterpart to Lenovo's T series. It has two memory slots, which makes it easy to upgrade, and a flat chassis that takes slightly less room in a bag than the T series.",
     },
     goodFor: [
       {

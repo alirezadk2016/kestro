@@ -29,7 +29,7 @@ const copy = {
     testBody:
       "Det er her, forskellen mellem en billig og en dyr leverandør ligger. En maskine, der »starter op«, er ikke testet. Det her er, hvad vi kræver, før udstyret sendes videre til jer:",
     testNote:
-      "Batteriet er det punkt, der oftest bliver sprunget over. Et batteri på 60 % af sin oprindelige kapacitet virker fint i en test og bliver et problem tre måneder senere. Spørg til tallet.",
+      "Batteriet er let at springe over, fordi et slidt batteri kan klare en kort test og alligevel ikke holde en arbejdsdag. Spørg til den målte kapacitet.",
     dataTitle: "Hvad med data på brugt udstyr?",
     dataBody1:
       "Både når I køber og når I sælger, er data det punkt, der kan koste dyrt. En formateret disk er ikke en slettet disk. Data skal overskrives efter en anerkendt metode, eller disken skal destrueres fysisk, og der skal følge dokumentation med per enhed – ikke per leverance.",
@@ -65,7 +65,7 @@ const copy = {
     testBody:
       "This is where a cheap supplier and a good one differ. A machine that “boots up” has not been tested. This is what we require before equipment is passed on to you:",
     testNote:
-      "The battery is the point that gets skipped most often. A battery at 60% of its original capacity works fine in a test and becomes a problem three months later. Ask for the number.",
+      "The battery is easy to skip, because a worn battery can pass a short test and still not last a working day. Ask for the measured capacity.",
     dataTitle: "What about data on used equipment?",
     dataBody1:
       "Both when you buy and when you sell, data is the thing that can get expensive. A formatted disk is not an erased disk. Data has to be overwritten by a recognised method, or the disk destroyed physically, and documentation has to follow per device — not per delivery.",

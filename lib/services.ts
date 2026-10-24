@@ -178,8 +178,11 @@ export const services: Service[] = [
       },
     ],
     related: [
-      { href: "/produkter", label: { da: "Produkter vi skaffer", en: "Products we source" } },
-      { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+      { href: "/produkter", label: { da: "Produkter, vi skaffer", en: "Products we source" } },
+      {
+        href: "/modeller",
+        label: { da: "Modeller og specifikationer", en: "Models and specifications" },
+      },
       { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
     ],
   },
@@ -238,7 +241,7 @@ export const services: Service[] = [
         heading: { da: "Det bliver opgraderet", en: "What gets upgraded" },
         body: [
           {
-            da: "Hukommelse og disk er de to dele, der oftest afgør, om en ellers god maskine føles træg. Vi opgraderer RAM efter behov, og maskinerne sendes som udgangspunkt videre med SSD. Slidte dele skiftes, og lagermediet slettes, før maskinen sættes op igen – vi oplyser, hvilken metode der er brugt.",
+            da: "Hukommelse og disk er de to dele, der typisk afgør, om en ellers god maskine føles træg. Vi opgraderer RAM efter behov, og maskinerne sendes som udgangspunkt videre med SSD. Slidte dele skiftes, og lagermediet slettes, før maskinen sættes op igen – vi oplyser, hvilken metode der er brugt.",
             en: "Memory and disk are the two parts that most often decide whether an otherwise good machine feels sluggish. We upgrade memory where it is needed, and the machines we pass on come with an SSD as standard. Worn parts are replaced, and the storage media are erased before the machine is set up again — we tell you which method was used.",
           },
         ],
@@ -299,7 +302,10 @@ export const services: Service[] = [
     ],
     related: [
       { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
-      { href: "/modeller", label: { da: "Populære modeller", en: "Popular models" } },
+      {
+        href: "/modeller",
+        label: { da: "Modeller og specifikationer", en: "Models and specifications" },
+      },
       { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
     ],
   },
@@ -424,8 +430,8 @@ export const services: Service[] = [
       en: "Everything has to work on the first morning. That is a different job from buying machines.",
     },
     intro: {
-      da: "En ny afdeling eller en ny virksomhed har en dato. Enten står udstyret klar den morgen, eller også gør det ikke. Det er ikke et indkøb, det er en leveranceplan – og den mest almindelige fejl er at bestille maskinerne og glemme alt det, der skal til for at bruge dem.",
-      en: "A new department or a new company has a date. Either the equipment is ready that morning or it is not. That is not a purchase, it is a delivery plan — and the most common mistake is ordering the machines and forgetting everything needed to use them.",
+      da: "En ny afdeling eller en ny virksomhed har en dato. Enten står udstyret klar den morgen, eller også gør det ikke. Det er ikke et indkøb, det er en leveranceplan – og en almindelig fejl er at bestille maskinerne og glemme alt det, der skal til for at bruge dem.",
+      en: "A new department or a new company has a date. Either the equipment is ready that morning or it is not. That is not a purchase, it is a delivery plan — and a common mistake is ordering the machines and forgetting everything needed to use them.",
     },
     sections: [
       {
@@ -458,7 +464,7 @@ export const services: Service[] = [
       },
     ],
     related: [
-      { href: "/produkter", label: { da: "Produkter vi skaffer", en: "Products we source" } },
+      { href: "/produkter", label: { da: "Produkter, vi skaffer", en: "Products we source" } },
       { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
       { href: "/kontakt", label: { da: "Tal med os om opstart", en: "Talk to us about setup" } },
     ],

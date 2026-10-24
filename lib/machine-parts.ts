@@ -296,8 +296,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Intel Core i5 or i7 · soldered down",
     },
     what: {
-      da: "Maskinens regnekraft. Til kontorarbejde er en i5 fra en nyere generation næsten altid nok – generationen betyder mere end tallet.",
-      en: "The machine's computing power. For office work an i5 from a recent generation is nearly always enough — the generation matters more than the number.",
+      da: "Maskinens regnekraft. Til kontorarbejde er en i5 fra en nyere generation som regel nok – generationen betyder mere end tallet.",
+      en: "The machine's computing power. For office work an i5 from a recent generation is usually enough — the generation matters more than the number.",
     },
     upgrade: {
       da: "Kan ikke skiftes. Den sidder loddet på printet, og det er derfor, valget af model betyder noget fra starten.",
