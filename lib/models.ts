@@ -1430,20 +1430,20 @@ export const models: Model[] = [
     group: "skaerme",
     category: "skaerme",
     tagline: {
-      da: "Kontorskærmen, der er nem at skaffe mange ens af.",
-      en: "The office monitor that is easy to source many identical units of.",
+      da: "Dells 23,8-tommers kontorskærm med tynd ramme og USB-hub.",
+      en: "Dell's 23.8-inch office monitor with a thin bezel and a USB hub.",
     },
     metaTitle: {
       da: "Brugt Dell U2419H-skærm: specs, fordele og ulemper | Kestro",
       en: "Refurbished Dell U2419H monitor: specs, pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt Dell UltraSharp U2419H: 23,8" IPS i Full HD med tynd ramme, USB-hub og fod med højde og pivot. Let at skaffe mange ens. Tilbud på skrift.',
-      en: 'Refurbished Dell UltraSharp U2419H: 23.8" IPS Full HD, thin bezel, USB hub and a stand with height and pivot. Easy to source in matching sets.',
+      da: 'Brugt Dell UltraSharp U2419H: 23,8" IPS i Full HD med tynd ramme, USB-hub og fod med højde og pivot. Spørg efter flere ens, og få tilbud på skrift.',
+      en: 'Refurbished Dell UltraSharp U2419H: 23.8" IPS Full HD, thin bezel, USB hub and a stand with height and pivot. Ask us to quote for a matching set.',
     },
     intro: {
-      da: "UltraSharp er Dells erhvervsserie, og netop U2419H sad på tusindvis af arbejdspladser, før den blev udskiftet. Det betyder, at den er let at skaffe i antal – og at man kan give hele kontoret den samme skærm uden at betale nypris.",
-      en: "UltraSharp is Dell's business range, and the U2419H in particular sat on thousands of desks before it was replaced. That makes it easy to source in numbers — and lets you give a whole office the same monitor without paying new prices.",
+      da: "UltraSharp er Dells erhvervsserie, og U2419H er en 23,8-tommers kontorskærm fra den med IPS-panel, USB-hub og en fod, der kan stilles i højden og på højkant. Skal hele kontoret have den samme skærm, så skriv antallet; vi undersøger, hvor mange ens der kan skaffes, og hvad de koster brugt.",
+      en: "UltraSharp is Dell's business range, and the U2419H is a 23.8-inch office monitor from it, with an IPS panel, a USB hub and a stand that adjusts for height and turns portrait. If the whole office needs the same monitor, tell us how many; we check how many matching units can be sourced and what they cost used.",
     },
     goodFor: [
       { da: "To skærme per arbejdsplads", en: "Two monitors per desk" },
@@ -1516,8 +1516,8 @@ export const models: Model[] = [
     group: "skaerme",
     category: "skaerme",
     tagline: {
-      da: "HP's kontorskærm – samme klasse, ofte lidt billigere.",
-      en: "HP's office monitor — same class, usually a little cheaper.",
+      da: "HP's kontorskærm i samme klasse som UltraSharp.",
+      en: "HP's office monitor in the same class as the UltraSharp.",
     },
     metaTitle: {
       da: "Brugt HP EliteDisplay E243: specs, fordele, ulemper | Kestro",
@@ -1845,8 +1845,8 @@ export const models: Model[] = [
       en: "Refurbished HP USB-C Dock G5: two monitors over DisplayPort and HDMI, network and charging through one USB-C cable. Quote with condition.",
     },
     intro: {
-      da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er billig at skaffe brugt, fordi den fulgte med rigtig mange EliteBook-leverancer.",
-      en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is cheap to source second-hand, because it shipped with a great many EliteBook deliveries.",
+      da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er bygget til HP's erhvervsbærbare med USB-C; kontrollér opladningseffekt og skærmudgange mod den konkrete maskine.",
+      en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is built for HP's USB-C business laptops; check charging power and display outputs against the actual machine.",
     },
     goodFor: [
       { da: "Arbejdspladser med HP-maskiner", en: "Desks running HP machines" },
