@@ -119,8 +119,8 @@ const grades = [
       en: "Visible but small marks: light scratches on the lid or palm rest, perhaps a shiny key. The screen is flawless and the machine performs like a grade A.",
     },
     suits: {
-      da: "den typiske erhvervsmaskine. Her ligger det bedste forhold mellem pris og stand.",
-      en: "The typical business machine. This is where price and condition balance best.",
+      da: "den typiske erhvervsmaskine. Her ligger ofte det bedste forhold mellem pris og stand.",
+      en: "The typical business machine. This is often where price and condition balance best.",
     },
   },
   {
