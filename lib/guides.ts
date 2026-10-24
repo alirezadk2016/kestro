@@ -502,8 +502,8 @@ export const guides: Guide[] = [
                 en: "Ask for measured capacity and any replacement cost.",
               },
               {
-                da: "Undersøg kapacitet og relevante runtime-tests; reklamen er ikke din arbejdsdag.",
-                en: "Check capacity and relevant runtime tests; advertising is not your working day.",
+                da: "Undersøg kapacitet og målt batteritid; reklamens tal er ikke din arbejdsdag.",
+                en: "Check capacity and measured battery life; the advertised figure is not your working day.",
               },
             ],
             [
@@ -1368,7 +1368,7 @@ export const guides: Guide[] = [
             en: "For one machine, the difference between used and refurbished is a risk you carry yourself, and one a return can solve. For forty machines it is an operations problem. That is where the word stops being a detail.",
           },
           {
-            da: "Et konkret eksempel: fyrre maskiner købt som brugte uden ensartet proces kan have fem forskellige batteritilstande, tre forskellige diskstørrelser og to Windows-versioner. Hver afvigelse er en supportsag, der lander hos jer i løbet af det første år. Fyrre maskiner gennem den samme proces har den samme opsætning, og afvigelserne er kendt på forhånd.",
+            da: "Et konkret eksempel: fyrre maskiner købt som brugte uden ensartet proces kan have fem forskellige batteritilstande, tre forskellige diskstørrelser og to Windows-versioner. Hver afvigelse kan blive en supportsag hos jer i løbet af det første år. Fyrre maskiner gennem den samme proces har den samme opsætning, og afvigelserne er kendt på forhånd.",
             en: "A concrete example: forty machines bought as used with no consistent process can arrive with five different battery conditions, three different drive sizes and two Windows versions. Every deviation is a support case that lands with you during the first year. Forty machines through the same process have the same setup, and the deviations are known up front.",
           },
           {
@@ -1505,7 +1505,7 @@ export const guides: Guide[] = [
           en: "Is all refurbished equipment tested?",
         },
         answer: {
-          da: "Nej. Det er den mest almindelige misforståelse. Ordet er ikke reguleret, så omfanget af test afhænger helt af sælgeren – og det er derfor, spørgsmålet skal stilles konkret frem for at blive taget for givet.",
+          da: "Nej, og det er en udbredt misforståelse. Ordet er ikke reguleret, så omfanget af test afhænger helt af sælgeren – og det er derfor, spørgsmålet skal stilles konkret frem for at blive taget for givet.",
           en: "No. That is the most common misunderstanding. The word is not regulated, so how much testing happens depends entirely on the seller — which is why the question has to be asked specifically rather than assumed.",
         },
       },
