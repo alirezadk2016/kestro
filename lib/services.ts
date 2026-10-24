@@ -140,7 +140,7 @@ export const services: Service[] = [
         heading: { da: "Hvad prisen afhænger af", en: "What the price depends on" },
         body: [
           {
-            da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den den konkrete leverance i stedet for at være et tal, der alligevel skal laves om.",
+            da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den for den konkrete leverance i stedet for at være et tal, der alligevel skal laves om.",
             en: "We do not put list prices on machines we have not bought yet. The price comes once we know what the job needs — and then it holds for that actual delivery rather than being a figure that has to be revised anyway.",
           },
         ],
