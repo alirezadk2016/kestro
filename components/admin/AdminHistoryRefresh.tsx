@@ -10,12 +10,24 @@ export default function AdminHistoryRefresh() {
   const router = useRouter();
   const pathname = usePathname();
   const query = useSearchParams().toString();
+  const rendered = useRef(`${pathname}?${query}`);
   const pendingDestination = useRef<string | null>(null);
   const [restoration, setRestoration] = useState(0);
 
   useEffect(() => {
+    rendered.current = `${pathname}?${query}`;
+  }, [pathname, query]);
+
+  useEffect(() => {
     const restore = () => {
-      pendingDestination.current = `${location.pathname}?${new URLSearchParams(location.search)}`;
+      const destination = `${location.pathname}?${new URLSearchParams(location.search)}`;
+      /* An in-page anchor (the skip link, "#admin-main") is a fragment
+         navigation, and Chrome fires popstate for it too. The page it lands on
+         is the one already rendered, so nothing came out of the Router Cache;
+         refreshing here refetched the whole workspace from the server on every
+         press of "Gå til indhold". */
+      if (destination === rendered.current) return;
+      pendingDestination.current = destination;
       setRestoration((value) => value + 1);
     };
     window.addEventListener("popstate", restore);

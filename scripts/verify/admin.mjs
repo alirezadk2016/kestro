@@ -109,6 +109,34 @@ export async function verifyAdmin(browser, base, fail) {
         }
       });
     }
+    /* What changed in the DOM after it was parsed, for a hydration error to be
+       read against: React answers a mismatch by rendering the affected tree
+       again on the client, so the nodes it removed and inserted name the
+       subtree the server and the client disagreed about. */
+    await context.addInitScript(() => {
+      const log = (globalThis.__kestroDomLog = []);
+      const name = (node) =>
+        node.nodeType === 1
+          ? `${node.nodeName.toLowerCase()}${node.id ? `#${node.id}` : ""}`
+          : node.nodeType === 8
+            ? `<!--${node.data}-->`
+            : node.nodeName.toLowerCase();
+      const path = (node) => {
+        const parts = [];
+        for (let at = node; at?.nodeType === 1 && parts.length < 4; at = at.parentNode)
+          parts.unshift(name(at));
+        return parts.join(">");
+      };
+      document.addEventListener("DOMContentLoaded", () =>
+        new MutationObserver((records) => {
+          for (const record of records)
+            if (log.length < 30)
+              log.push(
+                `${Math.round(performance.now())}ms ${path(record.target)} +[${[...record.addedNodes].map(name)}] -[${[...record.removedNodes].map(name)}]`,
+              );
+        }).observe(document, { childList: true, subtree: true }),
+      );
+    });
     const page = await context.newPage();
     const active = new Map();
     const requestFailures = [];
@@ -124,11 +152,13 @@ export async function verifyAdmin(browser, base, fail) {
       requestFailures.push({ url: request.url(), error: request.failure()?.errorText });
       active.delete(request);
     });
-    page.on("pageerror", (error) => {
-      const arrived = documents.get(page.url());
+    page.on("pageerror", async (error) => {
+      const url = page.url();
+      const arrived = documents.get(url);
+      const changed = await page.evaluate(() => globalThis.__kestroDomLog ?? []).catch(() => []);
       fail(
         `admin ${name}`,
-        `${page.url()}${arrived ? ` (document ${JSON.stringify(arrived)})` : ""}: ${error.stack || error.message}`,
+        `${url}${arrived ? ` (document ${JSON.stringify(arrived)})` : ""}: ${error.stack || error.message}${changed.length ? `\n    DOM after parse:\n      ${changed.join("\n      ")}` : ""}`,
       );
     });
     try {
@@ -361,8 +391,17 @@ export async function verifyAdmin(browser, base, fail) {
       await captureCatalogue(page, path);
       const skip = page.locator('a[href="#admin-main"]');
       assert.equal(await skip.count(), 1, "the workspace has a skip link");
+      let refetched = 0;
+      const refetch = (request) => {
+        if (request.headers()["next-router-state-tree"]?.includes("refetch")) refetched++;
+      };
+      page.on("request", refetch);
       await skip.focus();
       await skip.press("Enter");
+      // A fragment navigation fires popstate; it must not reload the workspace.
+      await page.waitForTimeout(250);
+      page.off("request", refetch);
+      assert.equal(refetched, 0, `${path}: the skip link does not refetch the page`);
       assert.equal(await page.getByRole("main").getAttribute("id"), "admin-main");
       assert.ok(
         await page.getByRole("main").evaluate((element) => document.activeElement === element),
