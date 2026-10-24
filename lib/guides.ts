@@ -1664,7 +1664,7 @@ export const guides: Guide[] = [
       },
       {
         question: {
-          da: "Hvilke reparationer er de dyre?",
+          da: "Hvilke reparationer er dyre?",
           en: "Which repairs are the expensive ones?",
         },
         answer: {
@@ -1704,10 +1704,10 @@ export const guides: Guide[] = [
       en: "Upgrade laptop RAM safely: check slots, type and capacity before buying. Get backup and battery precautions, fitting advice and reasons to stop.",
     },
     summary: {
-      da: "Find den rigtige RAM, kontrollér om den kan skiftes, og vurder om opgaven er egnet til gør-det-selv.",
+      da: "Find den rigtige RAM, kontrollér, om den kan skiftes, og vurder, om opgaven er egnet til gør-det-selv.",
       en: "Find compatible memory, check whether it is replaceable and assess whether the job is suitable for DIY.",
     },
-    audience: { da: "Private der selv vil prøve", en: "People who want to do it themselves" },
+    audience: { da: "Private, der selv vil prøve", en: "People who want to do it themselves" },
     readingMinutes: 7,
     published: "2026-08-23",
     updated: "2026-10-16",
@@ -1791,7 +1791,7 @@ export const guides: Guide[] = [
             [
               { da: "16 GB", en: "16 GB" },
               {
-                da: "Et relevant udgangspunkt for almindeligt kontorarbejde; mål om dine programmer kræver mere.",
+                da: "Et relevant udgangspunkt for almindeligt kontorarbejde; mål, om dine programmer kræver mere.",
                 en: "A useful starting point for ordinary office work; measure whether your applications need more.",
               },
             ],
