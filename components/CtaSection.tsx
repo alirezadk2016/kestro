@@ -33,7 +33,7 @@ const taskCopy: Record<
     href: "/reparation#reparation-formular",
   },
   buyback: {
-    title: { da: "Hvilket udstyr skal I af med?", en: "What equipment are you moving on?" },
+    title: { da: "Hvilket udstyr skal I af med?", en: "What equipment are you getting rid of?" },
     body: {
       da: "Send modeller, antal og stand, så kan vi vurdere mulighederne.",
       en: "Send the models, quantity and condition so we can assess the options.",

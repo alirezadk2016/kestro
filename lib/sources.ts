@@ -421,7 +421,7 @@ export const sources = {
     url: "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options#batteryreport",
     accessed: "2026-10-17",
     claim: {
-      da: "powercfg /batteryreport opretter en rapport om batteriforbrug; uden en outputsti gemmes rapporten i den aktuelle mappe.",
+      da: "powercfg /batteryreport opretter en rapport om batteriforbrug; udelades /output, gemmes rapporten i den aktuelle mappe.",
       en: "powercfg /batteryreport creates a battery usage report; without an output path it saves the report in the current directory.",
     },
   },

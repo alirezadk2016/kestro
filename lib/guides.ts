@@ -909,7 +909,7 @@ export const guides: Guide[] = [
           en: "Can CPU or graphics be upgraded like RAM?",
         },
         answer: {
-          da: "Det skal undersøges i servicemanualen. I mange bærbare er CPU og GPU integreret eller fastloddet, og køling, strøm og BIOS begrænser mulighederne. Antag ikke et enkelt modulswap, bare fordi en stationær pc kan opgraderes sådan.",
+          da: "Det skal undersøges i servicemanualen. I mange bærbare er CPU og GPU integreret eller fastloddet, og køling, strøm og BIOS begrænser mulighederne. Gå ikke ud fra, at det er et enkelt modulskift, bare fordi en stationær pc kan opgraderes sådan.",
           en: "Check the service manual. In many laptops the CPU and GPU are integrated or soldered, and cooling, power and BIOS constrain the options. Do not assume a simple module swap just because a desktop can be upgraded that way.",
         },
       },
@@ -1831,7 +1831,7 @@ export const guides: Guide[] = [
         heading: { da: "Er gør-det-selv den rigtige løsning?", en: "Is DIY the right choice?" },
         body: [
           {
-            da: "Hvis manualen beskriver delen som brugerskiftbar, du har korrekt værktøj og kan følge sikkerhedsproceduren, kan opgaven være egnet hjemme. På en firmamaskine skal ejeren eller IT-ansvarlige godkende ændringen. Fastloddet RAM, limet adgang eller en usikker batteriprocedure er gode grunde til at stoppe. Sammenlign også dele og arbejdstid med maskinens værdi og softwarelevetid.",
+            da: "Hvis manualen beskriver delen som brugerudskiftelig, du har korrekt værktøj og kan følge sikkerhedsproceduren, kan opgaven være egnet hjemme. På en firmamaskine skal ejeren eller den IT-ansvarlige godkende ændringen. Fastloddet RAM, limet adgang eller en usikker batteriprocedure er gode grunde til at stoppe. Sammenlign også dele og arbejdstid med maskinens værdi og softwarelevetid.",
             en: "If the manual identifies the part as user-replaceable, you have the right tools and can follow the safety procedure, the job may suit home servicing. On a company machine, the owner or IT must approve the change. Soldered memory, glued access or an uncertain battery procedure are good reasons to stop. Also compare parts and labour with the machine's value and software lifetime.",
           },
         ],

@@ -366,8 +366,8 @@ export default function LaptopAssembly({
           src="/models/laptop-repair.webp"
           alt={
             lang === "da"
-              ? "Illustreret samlet bærbar med åbent display og tastatur"
-              : "Illustrated assembled laptop with an open display and keyboard"
+              ? "Illustration af en samlet bærbar med åben skærm og tastatur"
+              : "Illustration of an assembled laptop with an open screen and keyboard"
           }
           width={1200}
           height={1200}
