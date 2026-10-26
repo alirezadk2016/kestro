@@ -84,6 +84,33 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Search Console — week to 24 October 2026
+
+Rule 14, read through Windsor for `sc-domain:kestro.dk`, 18–24 October
+against 11–17 October. No figure is recorded here; what the data led to is.
+
+- **Visibility grew, mostly abroad.** The English practical guides (drive
+  type, RAM usage, slow computer, upgrade limits) took most of the new
+  impressions, largely outside Denmark. Danish impressions grew too, and
+  their average position improved. No query has impressions in the
+  hundreds, so no title or description was rewritten for CTR (rule 5).
+- **Rule 9.** The drive-type guide (`/vejledninger/hdd-eller-ssd`,
+  `/en/knowledge/hdd-or-ssd`) was the most-shown page, at positions 8–20,
+  with two content links in against a site median of seven. The upgrade-
+  limits guide, which explains M.2, SATA and NVMe and itself sits near page
+  one, now links it as "Er disken HDD eller SSD?".
+- **Old addresses.** `/en/produkter/*`, `/en/vejledninger/*`, `/en/ydelser/*`
+  and `/en/kvalitet` still collect impressions; each answers one 301 to its
+  English page with a 200. Nothing to do.
+- **No impressions yet** for `/produkter/baerbare-computere` and
+  `/produkter/skaerme`, though both are in the sitemap and linked from 20 and
+  11 pages. An indexing question for URL Inspection, not a rewrite.
+- **Sitemap:** 150 submitted, no errors or warnings, read by Google on 25
+  October.
+- **Waiting on the owner:** URL Inspection and "Request indexing" for the two
+  category pages above; the workstation category decision (workstation
+  searches keep landing on `/modeller` and the desktop category).
+
 ## Copy Review — 24 October 2026
 
 A sentence-level read of every Danish page against CLAUDE.md's writing

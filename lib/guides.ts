@@ -864,6 +864,10 @@ export const guides: Guide[] = [
         label: { da: "RAM: kontrol og sikkert skift", en: "Memory: checks and safe replacement" },
       },
       {
+        href: "/vejledninger/hdd-eller-ssd",
+        label: { da: "Er disken HDD eller SSD?", en: "Is the drive an HDD or an SSD?" },
+      },
+      {
         href: "/vejledninger/windows-11-paa-aeldre-maskine",
         label: { da: "Windows 11 på ældre hardware", en: "Windows 11 on older hardware" },
       },
