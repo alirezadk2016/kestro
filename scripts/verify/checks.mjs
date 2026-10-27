@@ -34,6 +34,7 @@ import { verifySiteImages } from "./site-images.mjs";
 import { verifySiteUx } from "./site-ux.mjs";
 import { verifySiteForms } from "./site-forms.mjs";
 import { verifySiteInventory } from "./site-inventory.mjs";
+import { verifyRepairSequence } from "./repair-sequence.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -825,47 +826,12 @@ console.log("verify: motion and reduced-motion behaviour");
   await context.close();
 }
 
-/* A phone gets the static repair poster, without desktop 3D models or controls. */
-for (const path of ["/reparation", "/en/repairs"]) {
-  for (const javaScriptEnabled of [true, false]) {
-    const context = await browser.newContext({
-      viewport: { width: 390, height: 844 },
-      javaScriptEnabled,
-    });
-    const page = await context.newPage();
-    const requests = [];
-    page.on("request", (request) => {
-      if (
-        /models\/(?:laptop-(?:base|lid)\.glb|(?:laptop-service|laptop-wallpaper|thinkpad-.*texture)\.webp)/.test(
-          request.url(),
-        )
-      )
-        requests.push(request.url());
-    });
-    await page.goto(BASE + path, { waitUntil: "networkidle" });
-    await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(250);
-    const figure = page.locator(".repair-laptop");
-    if (!(await figure.isVisible())) fail(path, "static repair poster missing on mobile");
-    const poster = figure.locator("img");
-    const decoded = await poster
-      .evaluate(async (image) => {
-        await image.decode();
-        return (
-          image.complete &&
-          image.naturalWidth > 0 &&
-          image.currentSrc.includes("/models/laptop-repair.webp")
-        );
-      })
-      .catch(() => false);
-    if (!decoded) fail(path, "mobile repair poster failed to decode");
-    if (await figure.locator("button:visible, input:visible").count())
-      fail(path, "desktop 3D controls visible on mobile");
-    const state = await figure.getAttribute("data-scene-state");
-    if (state === "ready") fail(path, "mobile WebGL renderer started");
-    if (requests.length) fail(path, "mobile downloaded desktop 3D models or textures");
-    await context.close();
-  }
+/* Native repair controls and all four photographs work on every device, with
+   and without JavaScript, without bringing the old renderer onto this route. */
+try {
+  await verifyRepairSequence(browser, BASE, fail);
+} catch (error) {
+  fail("repair photo sequence", error.stack ?? error.message);
 }
 
 /* ---------------------------------------------------------------- navigation */
@@ -1108,57 +1074,6 @@ for (const [width, height] of [
   );
   if (!(await enlarge.evaluate((el) => el === document.activeElement)))
     fail("gallery", "focus did not return after Escape");
-  await context.close();
-}
-
-{
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-  const page = await context.newPage();
-  const textures = [];
-  page.on("request", (request) => {
-    if (/laptop-wallpaper|thinkpad-.*texture/.test(request.url())) textures.push(request.url());
-  });
-  await page.goto(BASE + "/reparation", { waitUntil: "networkidle" });
-  const figure = page.locator(".repair-laptop");
-  await figure.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(500);
-  if ((await figure.getAttribute("data-scene-state")) !== "poster" || textures.length)
-    fail("3D activation", "model loaded before user intent");
-  const poster = figure.locator("img");
-  await poster.evaluate((image) => image.decode());
-  if (!(await poster.evaluate((image) => image.currentSrc.includes("/models/laptop-repair.webp"))))
-    fail("repair initial view", "first view is not the assembled laptop");
-  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
-  await page.getByRole("button", { name: "Åbn 3D-visning", exact: true }).click();
-  await page.waitForFunction(
-    () => {
-      const node = document.querySelector(".repair-laptop");
-      return node.dataset.sceneState === "ready" && node.dataset.assemblyProgress !== undefined;
-    },
-    null,
-    { timeout: 60000 },
-  );
-  if (Number(await figure.getAttribute("data-assembly-progress")) !== 0)
-    fail("repair initial view", "3D activation disassembled the laptop without user intent");
-  const assembled = figure.getByRole("button", { name: "Samlet computer", exact: true });
-  const service = figure.getByRole("button", { name: "Servicedele", exact: true });
-  if (
-    (await assembled.getAttribute("aria-pressed")) !== "true" ||
-    (await figure.locator("input").inputValue()) !== "0"
-  )
-    fail("repair initial view", "initial controls disagree with the assembled model");
-  await service.click();
-  await page.waitForFunction(
-    () => Number(document.querySelector(".repair-laptop").dataset.assemblyProgress) > 0.9998,
-    null,
-    { timeout: 15000 },
-  );
-  await assembled.click();
-  await page.waitForFunction(
-    () => Number(document.querySelector(".repair-laptop").dataset.assemblyProgress) < 0.0002,
-    null,
-    { timeout: 15000 },
-  );
   await context.close();
 }
 

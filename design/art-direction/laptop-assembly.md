@@ -1,5 +1,12 @@
 # Laptop Product and Service Views
 
+The repair-page viewer described below was retired on 27 October 2026.
+`RepairPhotoSequence.tsx` now presents four synchronized illustrative service
+photographs with native step selection on every screen. Its current brief is
+[`repair-photo-sequence.md`](repair-photo-sequence.md). The shared model and
+render utilities remain available for the homepage still and other product
+views; the legacy repair choreography below is historical build documentation.
+
 ## Scope
 
 The homepage is deliberately quiet: `ExampleMachine.tsx` renders a static,

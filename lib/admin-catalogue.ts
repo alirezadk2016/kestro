@@ -94,7 +94,12 @@ export type MediaGroup = (typeof mediaGroups)[number]["id"];
 export function mediaGroup(src: string): Exclude<MediaGroup, "all"> {
   if (src.startsWith("/images/practical/")) return "practical";
   if (src.startsWith("/viden/")) return "knowledge";
-  if (/^\/(cards|models|graphics)\//.test(src) || src.startsWith("/thinkpad-")) return "products";
+  if (
+    /^\/(cards|models|graphics)\//.test(src) ||
+    src.startsWith("/images/repairs/") ||
+    src.startsWith("/thinkpad-")
+  )
+    return "products";
   if (/^\/(hero|team)\//.test(src)) return "brand";
   return "other";
 }

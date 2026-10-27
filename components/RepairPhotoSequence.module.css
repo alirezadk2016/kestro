@@ -1,0 +1,167 @@
+.figure {
+  min-width: 0;
+  margin-inline: 0;
+}
+
+.sequence {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  @apply text-paper;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.panel {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.control {
+  position: relative;
+  min-width: 0;
+}
+
+/* Keep the native input focusable so arrow keys retain normal radio-group behavior. */
+.choice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+}
+
+.controlLabel {
+  @apply text-paper/65;
+  display: flex;
+  min-height: 60px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px;
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    color 140ms ease-out,
+    background-color 140ms ease-out,
+    border-color 140ms ease-out;
+}
+
+.number {
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.choice:checked + .controlLabel {
+  @apply border-brand-300/70 bg-brand-300/10 text-paper;
+}
+
+.choice:checked + .controlLabel .number {
+  @apply text-brand-300;
+}
+
+.choice:focus-visible + .controlLabel {
+  @apply outline-paper;
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .controlLabel:hover {
+    @apply bg-paper/5 text-paper;
+  }
+}
+
+.captions {
+  @apply text-paper/75;
+  min-height: 3.2em;
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.caption {
+  display: none;
+  margin: 0;
+}
+
+.disclosure {
+  @apply text-paper/65;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Open is the server-rendered default, including a readable older-CSS fallback. */
+.panel[data-repair-panel="open"],
+.caption[data-repair-caption="open"] {
+  display: block;
+}
+
+.sequence:has(.choice:checked) .panel,
+.sequence:has(.choice:checked) .caption {
+  display: none;
+}
+
+.sequence:has(.choice[value="cover"]:checked) .panel[data-repair-panel="cover"],
+.sequence:has(.choice[value="open"]:checked) .panel[data-repair-panel="open"],
+.sequence:has(.choice[value="removed"]:checked) .panel[data-repair-panel="removed"],
+.sequence:has(.choice[value="installed"]:checked) .panel[data-repair-panel="installed"],
+.sequence:has(.choice[value="cover"]:checked) .caption[data-repair-caption="cover"],
+.sequence:has(.choice[value="open"]:checked) .caption[data-repair-caption="open"],
+.sequence:has(.choice[value="removed"]:checked) .caption[data-repair-caption="removed"],
+.sequence:has(.choice[value="installed"]:checked) .caption[data-repair-caption="installed"] {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controlLabel {
+    transition: none;
+  }
+}

@@ -4,7 +4,7 @@ import { ArrowDown } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
-import LaptopAssembly from "@/components/LaptopAssembly";
+import RepairPhotoSequence from "@/components/RepairPhotoSequence";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
@@ -154,17 +154,16 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <section className="py-8 sm:py-16">
+      <section className="py-8 sm:py-12">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-12">
-            <div className="relative z-10 lg:col-span-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
+            <div className="relative z-10 lg:col-span-5">
               <PageHeader
                 title={c.title}
                 description={c.description}
                 lang={lang}
                 href="/reparation"
                 crumb={lang === "da" ? "Reparation" : "Repairs"}
-                updated="/reparation"
               />
               {/* The form is the page's action and sat 4,100px down a phone;
                   the header's quote button is for buying machines. */}
@@ -177,22 +176,10 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               </Button>
             </div>
 
-            <LaptopAssembly
+            <RepairPhotoSequence
               lang={lang}
-              className="mt-6 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-center"
+              className="mt-8 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:mt-0 lg:self-start"
             />
-
-            <div className="mt-8 max-w-3xl lg:col-span-6 lg:mt-10">
-              <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
-              <Link
-                href={`${localePath("/vejledninger", lang)}#praktiske-guides`}
-                className="mt-4 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-200 underline underline-offset-4"
-              >
-                {lang === "da"
-                  ? "Vil du tjekke noget selv? Se vores praktiske guides"
-                  : "Want to check something yourself? Explore our practical guides"}
-              </Link>
-            </div>
           </div>
         </Container>
       </section>
@@ -202,6 +189,17 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.whatWeDo}
           </h2>
+          <div className="mt-4 max-w-3xl">
+            <p className="text-base leading-[1.75] text-paper/75">{c.intro}</p>
+            <Link
+              href={`${localePath("/vejledninger", lang)}#praktiske-guides`}
+              className="mt-2 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-200 underline underline-offset-4"
+            >
+              {lang === "da"
+                ? "Vil du tjekke noget selv? Se vores praktiske guides"
+                : "Want to check something yourself? Explore our practical guides"}
+            </Link>
+          </div>
 
           {/* One column on a phone. At 390px two columns give a 170px card, and
               the summaries were wrapping to six lines inside it — which is also

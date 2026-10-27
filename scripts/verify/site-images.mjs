@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 /** Check the real delivered images without running a server or reaching a public host. */
 export async function verifySiteImages(browser, base, fail) {
-  console.log("verify: guide image framing, metadata and static repair posters");
+  console.log("verify: guide image framing and metadata");
   const origin = new URL(base);
   assert.ok(
     ["127.0.0.1", "localhost", "[::1]"].includes(origin.hostname),
@@ -263,63 +263,6 @@ export async function verifySiteImages(browser, base, fail) {
             await capture(page, name);
           });
         }
-      }
-    }
-
-    for (const [language, path] of [
-      ["da", "/reparation"],
-      ["en", "/en/repairs"],
-    ]) {
-      for (const [device, width, javaScriptEnabled] of [
-        ["mobile", 390, true],
-        ["mobile", 390, false],
-        ["desktop", 1440, true],
-      ]) {
-        const name = `repair-${language}-${device}-${javaScriptEnabled ? "js" : "no-js"}`;
-        await scenario(
-          name,
-          { viewport: { width, height: 844 }, javaScriptEnabled, reducedMotion: "no-preference" },
-          async (page) => {
-            const assets = [];
-            page.on("request", (request) => {
-              if (
-                /\/models\/(?:laptop-(?:base|lid)\.glb|(?:laptop-(?:service|wallpaper)|thinkpad-.*texture)\.webp)/.test(
-                  request.url(),
-                )
-              )
-                assets.push(request.url());
-            });
-            await visit(page, path, javaScriptEnabled);
-            const figure = page.locator(".repair-laptop");
-            const poster = figure.locator("img");
-            await imageReady(page, poster);
-            assert.equal(await poster.getAttribute("src"), "/models/laptop-repair.webp");
-            assert.ok(await figure.isVisible(), "repair illustration is visible");
-            assert.equal(
-              await poster.evaluate((image) => getComputedStyle(image).objectFit),
-              "contain",
-            );
-            assert.notEqual(
-              await figure.getAttribute("data-scene-state"),
-              "ready",
-              "poster does not start WebGL",
-            );
-            assert.equal(assets.length, 0, "static poster does not fetch 3D models or textures");
-            if (device === "mobile")
-              assert.equal(
-                await figure.locator("button:visible, input:visible").count(),
-                0,
-                "mobile has no inactive 3D controls",
-              );
-            assert.ok(
-              await poster.evaluate(
-                (image) => image.getBoundingClientRect().width <= innerWidth + 1,
-              ),
-              "repair poster fits the viewport",
-            );
-            await capture(page, name, javaScriptEnabled);
-          },
-        );
       }
     }
   } finally {

@@ -147,6 +147,34 @@
     "format": "webp"
   },
   {
+    "src": "/images/repairs/ram-01-cover.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 177940,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-02-open.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 189366,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-03-removed.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 186022,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-04-installed.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 164714,
+    "format": "webp"
+  },
+  {
     "src": "/models/laptop-assembly.webp",
     "width": 1200,
     "height": 1200,
