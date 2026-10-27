@@ -4,12 +4,77 @@ import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 
 const STAGES = [
-  ["cover", "/images/repairs/ram-01-cover.webp"],
-  ["open", "/images/repairs/ram-02-open.webp"],
-  ["removed", "/images/repairs/ram-03-removed.webp"],
-  ["installed", "/images/repairs/ram-04-installed.webp"],
+  ["cover", "/images/repairs/workbench-cover.webp"],
+  ["open", "/images/repairs/workbench-open.webp"],
+  ["removed", "/images/repairs/workbench-removed.webp"],
+  ["installed", "/images/repairs/workbench-installed.webp"],
 ];
-const WIDTHS = [320, 390, 768, 1440, 1920];
+const WIDTHS = [320, 390, 768, 1280, 1440, 1920];
+const IMAGE_WIDTH = 1983;
+const IMAGE_HEIGHT = 793;
+
+/** Read one live image only after its selected resource has finished decoding. */
+async function decodedImage(page, selector, name) {
+  // Hydration can replace an image or clear currentSrc after decode() resolves
+  // for its previous resource. Capture the live node and dimensions atomically.
+  // Playwright's polling predicate must be synchronous: an async predicate's
+  // Promise stops polling even when it later resolves false.
+  const deadline = Date.now() + 15000;
+  let rendered;
+  while (!rendered) {
+    const remaining = deadline - Date.now();
+    assert.ok(remaining > 0, `${name} image did not retain a stable decoded resource`);
+    const ready = await page.waitForFunction(
+      (selector) => {
+        const image = document.querySelector(selector);
+        if (!image?.currentSrc?.trim() || !image.complete || !image.naturalWidth) return false;
+        try {
+          new URL(image.currentSrc, location.href);
+        } catch {
+          return false;
+        }
+        return image;
+      },
+      selector,
+      { polling: 100, timeout: remaining },
+    );
+    try {
+      rendered = await ready.evaluate(async (image, selector) => {
+        const currentSrc = image.currentSrc;
+        if (!currentSrc?.trim() || !image.complete || !image.naturalWidth) return null;
+        let url;
+        try {
+          url = new URL(currentSrc, location.href);
+          await image.decode();
+        } catch {
+          return null;
+        }
+        if (
+          !image.isConnected ||
+          image !== document.querySelector(selector) ||
+          image.currentSrc !== currentSrc ||
+          !image.complete ||
+          !image.naturalWidth
+        )
+          return null;
+        const box = image.getBoundingClientRect();
+        const style = getComputedStyle(image);
+        return {
+          source: url.searchParams.get("url") || url.pathname,
+          width: Number(image.getAttribute("width")),
+          height: Number(image.getAttribute("height")),
+          ratio: image.naturalWidth / image.naturalHeight,
+          fit: style.objectFit,
+          position: style.objectPosition,
+          box: { width: box.width, height: box.height },
+        };
+      }, selector);
+    } finally {
+      await ready.dispose();
+    }
+  }
+  return rendered;
+}
 
 /** The repair sequence uses the browser's radio behaviour, including without JS. */
 export async function verifyRepairSequence(browser, base, fail) {
@@ -27,8 +92,8 @@ export async function verifyRepairSequence(browser, base, fail) {
     const file = new URL(`../../public${source}`, import.meta.url);
     const bytes = await readFile(file);
     const metadata = await sharp(bytes).metadata();
-    assert.equal(metadata.width, 1200, `${source} has the promised intrinsic width`);
-    assert.equal(metadata.height, 900, `${source} has the promised intrinsic height`);
+    assert.equal(metadata.width, IMAGE_WIDTH, `${source} has the promised intrinsic width`);
+    assert.equal(metadata.height, IMAGE_HEIGHT, `${source} has the promised intrinsic height`);
     fingerprints.push(
       createHash("sha256")
         .update(await sharp(bytes).raw().toBuffer())
@@ -196,8 +261,40 @@ export async function verifyRepairSequence(browser, base, fail) {
         assert.ok(labelText, `${value} has an accessible label`);
         const box = await label.boundingBox();
         assert.ok(box && box.width >= 44 && box.height >= 44, `${value} has a 44px tap target`);
+        const thumbnail = label.locator("img");
+        assert.equal(await thumbnail.count(), 1, `${value} has one thumbnail`);
+        assert.ok(await thumbnail.isVisible(), `${value} thumbnail is visible`);
+        assert.equal(await thumbnail.getAttribute("alt"), "", `${value} thumbnail is decorative`);
+        assert.ok(
+          await thumbnail.evaluate((image) => Boolean(image.closest("[aria-hidden='true']"))),
+          `${value} thumbnail does not repeat the radio's accessible name`,
+        );
+        await thumbnail.scrollIntoViewIfNeeded();
+        const preview = await decodedImage(
+          page,
+          `[data-repair-sequence] label[for='${id}'] img`,
+          `${value} thumbnail`,
+        );
+        assert.equal(
+          preview.source,
+          STAGES.find(([stage]) => stage === value)[1],
+          `${value} thumbnail shows its own stage`,
+        );
+        assert.equal(preview.fit, "cover", `${value} thumbnail deliberately crops the panorama`);
+        assert.equal(
+          preview.position,
+          "100% 50%",
+          `${value} thumbnail keeps the laptop on the right`,
+        );
+        assert.equal(
+          await panel.locator("img").getAttribute("loading"),
+          "eager",
+          `${value} main image loads before the first stage selection`,
+        );
         text.push({
-          label: labelText,
+          // Stage numerals are visually hidden on phones; the control's
+          // underlying label must stay the same across the responsive layout.
+          label: await label.evaluate((label) => label.textContent.replace(/\s+/g, " ").trim()),
           alt: await sequence.locator(`[data-repair-panel='${value}'] img`).getAttribute("alt"),
           caption: (
             await sequence.locator(`[data-repair-caption='${value}']`).textContent()
@@ -247,10 +344,19 @@ export async function verifyRepairSequence(browser, base, fail) {
         initialFrame && initialFrame.width > 0 && initialFrame.height > 0,
         "the photo frame is visible",
       );
-      assert.ok(
-        Math.abs(initialFrame.width / initialFrame.height - 4 / 3) < 0.01,
-        "the frame has a 4:3 ratio",
-      );
+      assert.ok(Math.abs(initialFrame.width - width) <= 1, "the workbench spans the viewport");
+      if (width >= 1280) {
+        const expectedHeight = Math.min(600, Math.max(500, width * 0.39));
+        assert.ok(
+          Math.abs(initialFrame.height - expectedHeight) <= 1,
+          "the desktop workbench keeps its fixed hero height",
+        );
+      } else {
+        assert.ok(
+          Math.abs(initialFrame.height - Math.min(480, (width * 2) / 3)) <= 1,
+          "the mobile workbench uses a capped 3:2 crop",
+        );
+      }
 
       async function assertStage(stage) {
         const active = await sequence.evaluate((root) => {
@@ -287,75 +393,28 @@ export async function verifyRepairSequence(browser, base, fail) {
         );
         const image = sequence.locator(`[data-repair-panel='${stage}'] img`);
         await image.scrollIntoViewIfNeeded();
-        // Hydration can replace a lazy image or clear currentSrc after decode()
-        // resolves for its previous resource. Re-find the live node on every
-        // poll, then capture the source and dimensions in the same stable decode.
-        // waitForFunction polls a predicate's immediate truthiness: an async
-        // predicate's Promise stops the poll even when it later resolves false.
-        // Keep readiness synchronous and retry decoding within one deadline.
         const selector = `[data-repair-sequence] [data-repair-panel='${stage}'] img`;
-        const deadline = Date.now() + 15000;
-        let rendered;
-        while (!rendered) {
-          const remaining = deadline - Date.now();
-          assert.ok(remaining > 0, `${stage} image did not retain a stable decoded resource`);
-          const ready = await page.waitForFunction(
-            (selector) => {
-              const image = document.querySelector(selector);
-              if (!image?.currentSrc?.trim() || !image.complete || !image.naturalWidth)
-                return false;
-              try {
-                new URL(image.currentSrc, location.href);
-              } catch {
-                return false;
-              }
-              return image;
-            },
-            selector,
-            { polling: 100, timeout: remaining },
-          );
-          try {
-            rendered = await ready.evaluate(async (image, selector) => {
-              const currentSrc = image.currentSrc;
-              if (!currentSrc?.trim() || !image.complete || !image.naturalWidth) return null;
-              let url;
-              try {
-                url = new URL(currentSrc, location.href);
-                await image.decode();
-              } catch {
-                return null;
-              }
-              if (
-                !image.isConnected ||
-                image !== document.querySelector(selector) ||
-                image.currentSrc !== currentSrc ||
-                !image.complete ||
-                !image.naturalWidth
-              )
-                return null;
-              const box = image.getBoundingClientRect();
-              return {
-                source: url.searchParams.get("url") || url.pathname,
-                width: Number(image.getAttribute("width")),
-                height: Number(image.getAttribute("height")),
-                ratio: image.naturalWidth / image.naturalHeight,
-                box: { width: box.width, height: box.height },
-              };
-            }, selector);
-          } finally {
-            await ready.dispose();
-          }
-        }
+        const rendered = await decodedImage(page, selector, stage);
         assert.equal(
           rendered.source,
           STAGES.find(([value]) => value === stage)[1],
           `${stage} displays its intended image`,
         );
-        assert.equal(rendered.width, 1200, `${stage} declares the real image width`);
-        assert.equal(rendered.height, 900, `${stage} declares the real image height`);
+        assert.equal(rendered.width, IMAGE_WIDTH, `${stage} declares the real image width`);
+        assert.equal(rendered.height, IMAGE_HEIGHT, `${stage} declares the real image height`);
         assert.ok(
-          Math.abs(rendered.ratio - 4 / 3) < 0.01,
+          Math.abs(rendered.ratio - IMAGE_WIDTH / IMAGE_HEIGHT) < 0.01,
           `${stage} decodes without an aspect-ratio change`,
+        );
+        assert.equal(
+          rendered.fit,
+          width >= 1280 ? "contain" : "cover",
+          `${stage} preserves the desktop panorama and deliberately crops it on mobile`,
+        );
+        assert.equal(
+          rendered.position,
+          "100% 50%",
+          `${stage} keeps the laptop at the right of the frame`,
         );
         const box = await frame.boundingBox();
         const position = await frame.evaluate((frame) => {
@@ -376,7 +435,7 @@ export async function verifyRepairSequence(browser, base, fail) {
         assert.ok(
           Math.abs(rendered.box.width - box.width) <= 2 &&
             Math.abs(rendered.box.height - box.height) <= 2,
-          `${stage} fills the same fixed frame`,
+          `${stage} occupies the same fixed frame`,
         );
         const overflow = await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,

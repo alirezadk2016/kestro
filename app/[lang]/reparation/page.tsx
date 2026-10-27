@@ -154,35 +154,24 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <section className="py-8 sm:py-12">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
-            <div className="relative z-10 lg:col-span-5">
-              <PageHeader
-                title={c.title}
-                description={c.description}
-                lang={lang}
-                href="/reparation"
-                crumb={lang === "da" ? "Reparation" : "Repairs"}
-              />
-              {/* The form is the page's action and sat 4,100px down a phone;
+      <RepairPhotoSequence lang={lang}>
+        <PageHeader
+          title={c.title}
+          description={c.description}
+          lang={lang}
+          href="/reparation"
+          crumb={lang === "da" ? "Reparation" : "Repairs"}
+        />
+        {/* The form is the page's action and sat 4,100px down a phone;
                   the header's quote button is for buying machines. */}
-              <Button
-                href="#reparation-formular"
-                className="mt-8 w-full sm:w-auto"
-                icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
-              >
-                {c.formTitle}
-              </Button>
-            </div>
-
-            <RepairPhotoSequence
-              lang={lang}
-              className="mt-8 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:mt-0 lg:self-start"
-            />
-          </div>
-        </Container>
-      </section>
+        <Button
+          href="#reparation-formular"
+          className="mt-6 w-full sm:w-auto"
+          icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
+        >
+          {c.formTitle}
+        </Button>
+      </RepairPhotoSequence>
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>

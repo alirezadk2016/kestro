@@ -578,6 +578,8 @@ for (const [name, viewport] of [
     "/ydelser/levering",
     "/kontakt",
     "/vejledninger",
+    "/reparation",
+    "/en/repairs",
     "/flaadeloesninger",
     "/saelg-til-os",
     "/kvalitet",

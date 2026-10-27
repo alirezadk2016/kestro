@@ -175,6 +175,34 @@
     "format": "webp"
   },
   {
+    "src": "/images/repairs/workbench-cover.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 137116,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-installed.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 158788,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-open.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 174888,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-removed.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 159916,
+    "format": "webp"
+  },
+  {
     "src": "/models/laptop-assembly.webp",
     "width": 1200,
     "height": 1200,

@@ -1,5 +1,10 @@
 # Repair Hero: Photographic RAM Sequence
 
+This macro-gallery direction was rejected by the owner after publication on
+27 October 2026. Its functional and continuity checks did not establish brand
+fit or compositional quality. The corrective direction is documented in
+[`repair-workbench.md`](repair-workbench.md); the record below is historical.
+
 ## Scope and intent
 
 Replace the repair page's interactive laptop render with a photographic example
