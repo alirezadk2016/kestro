@@ -94,7 +94,7 @@ export default function RepairPhotoSequence({
                   alt={stage.alt[lang]}
                   width={1983}
                   height={793}
-                  sizes="(min-width: 1536px) 1500px, (min-width: 1280px) 98vw, (min-width: 768px) 1200px, 167vw"
+                  sizes="(min-width: 1536px) 1500px, (min-width: 1024px) 98vw, (min-width: 768px) 1200px, 167vw"
                   priority={stage.value === "open"}
                   loading="eager"
                   fetchPriority={stage.value === "open" ? "high" : "low"}

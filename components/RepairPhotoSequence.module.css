@@ -211,10 +211,7 @@
     display: block;
   }
 }
-@media (min-width: 1280px) {
-  .controlLabel {
-    grid-template-columns: clamp(80px, 5vw, 96px) minmax(0, 1fr);
-  }
+@media (min-width: 1024px) {
   .copyContainer {
     position: absolute;
     inset: 0 0 auto;
@@ -250,6 +247,11 @@
   }
   .photo {
     object-fit: contain;
+  }
+}
+@media (min-width: 1280px) {
+  .controlLabel {
+    grid-template-columns: clamp(80px, 5vw, 96px) minmax(0, 1fr);
   }
   .bandLayout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);

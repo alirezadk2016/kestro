@@ -9,7 +9,7 @@ const STAGES = [
   ["removed", "/images/repairs/workbench-removed.webp"],
   ["installed", "/images/repairs/workbench-installed.webp"],
 ];
-const WIDTHS = [320, 390, 768, 1280, 1440, 1920];
+const WIDTHS = [320, 390, 768, 1024, 1280, 1440, 1920];
 const IMAGE_WIDTH = 1983;
 const IMAGE_HEIGHT = 793;
 
@@ -345,7 +345,7 @@ export async function verifyRepairSequence(browser, base, fail) {
         "the photo frame is visible",
       );
       assert.ok(Math.abs(initialFrame.width - width) <= 1, "the workbench spans the viewport");
-      if (width >= 1280) {
+      if (width >= 1024) {
         const expectedHeight = Math.min(600, Math.max(500, width * 0.39));
         assert.ok(
           Math.abs(initialFrame.height - expectedHeight) <= 1,
@@ -408,7 +408,7 @@ export async function verifyRepairSequence(browser, base, fail) {
         );
         assert.equal(
           rendered.fit,
-          width >= 1280 ? "contain" : "cover",
+          width >= 1024 ? "contain" : "cover",
           `${stage} preserves the desktop panorama and deliberately crops it on mobile`,
         );
         assert.equal(

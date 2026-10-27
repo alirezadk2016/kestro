@@ -33,14 +33,14 @@ The intended feeling is careful, calm service, with the repair enquiry primary.
 
 - Keep Jakarta, the existing type scale, Container, Button and navy/paper/blue
   palette. Preserve routes, main copy, metadata, form and service content.
-- From 1280px, use one 500–600px photographic field. A contained, right-aligned
+- From 1024px, use one 500–600px photographic field. A contained, right-aligned
   panorama preserves every chassis corner. Copy occupies about 40% of the
   existing Container and sits vertically centred over the quiet left side.
 - A navy selector band follows the photograph rather than covering hardware.
-  A short RAM example label and active caption sit left; four photographic
-  selectors sit right. A blue thumbnail edge marks selection, with a separate
+  From 1280px, a short RAM example label and active caption sit left; four
+  photographic selectors sit right. Below that width the band stacks. A blue thumbnail edge marks selection, with a separate
   high-contrast keyboard focus ring. No broad tinted number boxes.
-- Below 1280px, stack compact copy, a 3:2 crop of the right-hand device, controls
+- Below 1024px, stack compact copy, a 3:2 crop of the right-hand device, controls
   and caption. Crop only the panorama's quiet left region. All hardware corners
   must remain visible in the intended phone composition.
 - Native same-name radio inputs retain keyboard and no-JavaScript operation.
