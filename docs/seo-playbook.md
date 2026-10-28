@@ -84,6 +84,38 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Three new guides — 28 October 2026
+
+The owner approved building the guide topics the map proposed. Three of the
+five were built; two were not, on purpose.
+
+| Guide                                       | Primary keyword                             | Covered | In-links |
+| ------------------------------------------- | ------------------------------------------- | ------- | -------- |
+| `/vejledninger/thinkpad-elitebook-latitude` | thinkpad vs elitebook vs latitude           | 17 / 17 | 10       |
+| `/vejledninger/standardiser-firmacomputere` | standardisering af computere i virksomheden | 16 / 16 | 8        |
+| `/vejledninger/tco-paa-firmacomputere`      | tco på firmacomputere                       | 15 / 15 | 9        |
+
+- **Rule 5.** Titles 52–58 characters and descriptions 145–148, all within
+  580 and 920 px, in both languages. The comparison's H1 uses the natural
+  form ("ThinkPad, EliteBook eller Latitude: hvad er forskellen?"); "vs"
+  stays in the title.
+- **Rule 8.** The map's draft slug `vaelg-erhvervsbaerbar` was never
+  published, so the comparison took `thinkpad-elitebook-latitude`, with
+  the keyword in the path.
+- **Never invented.** The comparison's facts come from `lib/models.ts` and
+  the PSREF and Dell entries in `lib/sources.ts`. TCO gives the calculation
+  and a checklist, not one figure; the dates and requirements it uses are
+  cited from the registry.
+- **Rule 9.** In from the laptop, desktop and docking categories,
+  `/flaadeloesninger` and four guides, each with its own anchor.
+- **Rule 3.** "ens computere til alle medarbejdere" moved to
+  `/flaadeloesninger`: it is a buying search, and the guide explains it.
+- **Not built.** Leasing or buying: Kestro does not lease, and the
+  financial claims would need sources the registry does not have; TCO
+  compares leasing neutrally instead. IT for small businesses: the results
+  page probably wants IT-support providers, and the page would compete with
+  `/produkter`. Both wait on a Danish results page.
+
 ## `mak run` — 28 October 2026
 
 Run on a fresh build of the branch, then again after the fixes.

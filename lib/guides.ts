@@ -3011,7 +3011,7 @@ export const guides: Guide[] = [
       en: "Standardising the computers in your company",
     },
     metaTitle: {
-      da: "Standardisering af firmacomputere: én konfiguration | Kestro",
+      da: "Standardisering af computere i virksomheden | Kestro",
       en: "Standardising company computers: one configuration | Kestro",
     },
     metaDescription: {
