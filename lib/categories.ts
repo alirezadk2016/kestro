@@ -236,8 +236,8 @@ export const categories: Category[] = [
       {
         title: { da: "To skærme per arbejdsplads", en: "Two monitors per desk" },
         description: {
-          da: 'Den billigste måde at gøre en arbejdsdag hurtigere på. To brugte 24"-skærme koster typisk mindre end én ny.',
-          en: 'The cheapest way to make a working day faster. Two used 24" monitors normally cost less than one new one.',
+          da: "En ekstra skærm giver plads til to programmer side om side, fx et regneark og mailen.",
+          en: "A second monitor leaves room for two programs side by side, such as a spreadsheet and email.",
         },
       },
       {

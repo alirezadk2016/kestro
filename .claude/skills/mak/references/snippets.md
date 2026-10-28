@@ -60,7 +60,8 @@ get.**
   - Battery capacity measured in percent of new, stated per unit in the
     quote.
   - Condition per unit in writing; warranty terms in the quote.
-  - Delivery in Denmark and Norway; a reply within one working day.
+  - Delivery in Denmark and Norway. **No reply time:** `/kontakt` says there is
+    no guaranteed response time while the project is being set up.
   - Storage media erased before resale; collection when buying back.
   - Repairs: a price before work starts; private customers welcome; no
     minimum order.
@@ -70,7 +71,6 @@ get.**
 - **Calls to action that are true:**
   - "Skriftligt tilbud med stand og batteri."
   - "Pris, før vi går i gang."
-  - "Svar inden for én arbejdsdag."
   - "Vurdering, før I beslutter jer."
 - **A real caveat sells,** because it shows the page is honest: "loddet RAM",
   "passer kun til visse ThinkPad-modeller".
