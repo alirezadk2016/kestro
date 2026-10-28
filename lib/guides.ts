@@ -598,6 +598,10 @@ export const guides: Guide[] = [
         },
       },
       {
+        href: "/vejledninger/tco-paa-firmacomputere",
+        label: { da: "Sammenlign prisen pr. år (TCO)", en: "Compare the price per year (TCO)" },
+      },
+      {
         href: "/produkter/baerbare-computere",
         label: { da: "Bærbare efter arbejdsbehov", en: "Laptops by workload" },
       },
@@ -1129,6 +1133,10 @@ export const guides: Guide[] = [
         href: "/reparation/windows-installation",
         label: { da: "Geninstaller Windows", en: "Reinstall Windows" },
       },
+      {
+        href: "/vejledninger/standardiser-firmacomputere",
+        label: { da: "Standardiser på én konfiguration", en: "Standardise on one configuration" },
+      },
     ],
     sources: [
       guideSource("windows10Servicing"),
@@ -1628,6 +1636,13 @@ export const guides: Guide[] = [
       },
       { href: "/priser", label: { da: "Hvad afgør prisen", en: "What decides the price" } },
       {
+        href: "/vejledninger/tco-paa-firmacomputere",
+        label: {
+          da: "Hvad maskinen koster over hele levetiden",
+          en: "What the machine costs over its whole life",
+        },
+      },
+      {
         href: "/reparation/fejlfinding",
         label: { da: "Computeren starter ikke?", en: "Computer will not start?" },
       },
@@ -2082,6 +2097,13 @@ export const guides: Guide[] = [
       {
         href: "/produkter/baerbare-computere",
         label: { da: "Brugte bærbare computere", en: "Used business laptops" },
+      },
+      {
+        href: "/vejledninger/thinkpad-elitebook-latitude",
+        label: {
+          da: "Sammenlign ThinkPad, EliteBook og Latitude",
+          en: "Compare ThinkPad, EliteBook and Latitude",
+        },
       },
       {
         href: "/reparation/batteriskift",
@@ -2621,6 +2643,972 @@ export const guides: Guide[] = [
         answer: {
           da: "De skal fjernes sammen med data. En maskine, der stadig er bundet til jeres administration, kan ikke bruges af den næste ejer.",
           en: "They have to come off along with the data. A machine that is still tied to your administration cannot be used by the next owner.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "thinkpad-elitebook-latitude",
+    cluster: "buying-condition",
+    type: "beslutning",
+    intent: "commercial-education",
+    primaryKeyword: "thinkpad vs elitebook vs latitude",
+    author: "alireza",
+    title: {
+      da: "ThinkPad, EliteBook eller Latitude: hvad er forskellen?",
+      en: "ThinkPad, EliteBook or Latitude: what is the difference?",
+    },
+    metaTitle: {
+      da: "ThinkPad vs EliteBook vs Latitude: forskellene | Kestro",
+      en: "ThinkPad vs EliteBook vs Latitude: the differences | Kestro",
+    },
+    metaDescription: {
+      da: "ThinkPad, EliteBook eller Latitude? Se forskellene på tastatur, porte, docks og opgradering i brugte erhvervsmodeller, og vælg efter jeres opgaver.",
+      en: "ThinkPad, EliteBook or Latitude? Compare keyboard, ports, docks and upgrades on used business laptops, and pick the one that fits the job it does.",
+    },
+    summary: {
+      da: "Ydelsen følger processor, RAM og SSD. Forskellen mellem serierne sidder i tastatur, porte, docks og RAM-sokler.",
+      en: "Performance follows the processor, memory and SSD. The difference between the lines is in keyboard, ports, docks and memory sockets.",
+    },
+    audience: {
+      da: "Virksomheder, der skal vælge mellem de tre serier",
+      en: "Companies choosing between the three lines",
+    },
+    readingMinutes: 6,
+    published: "2026-10-28",
+    updated: "2026-10-28",
+    tldr: {
+      da: "ThinkPad, EliteBook og Latitude er Lenovos, HP's og Dells erhvervsserier, og i samme generation kan de have de samme Intel-processorer. Ydelsen følger derfor mest processor, RAM og SSD. Forskellen sidder i detaljerne: ThinkPad har TrackPoint, X1 Carbon har fastloddet RAM og intet netværksstik, EliteBook 840 og Latitude 5410 tager op til 32 GB i to sokler, og hver serie har sine egne docks. Vælg efter de docks, I har, og det arbejde, maskinen skal lave.",
+      en: "ThinkPad, EliteBook and Latitude are Lenovo's, HP's and Dell's business lines, and in the same generation they can carry the same Intel processors. Performance therefore follows the processor, memory and SSD more than the badge. The difference is in the details: ThinkPad has the TrackPoint, the X1 Carbon has soldered memory and no network port, the EliteBook 840 and Latitude 5410 take up to 32 GB in two sockets, and each line has its own docks. Choose by the docks you have and the work the machine must do.",
+    },
+    intro: {
+      da: "Sammenligningen bygger på de modeller, vi beskriver under Modeller: ThinkPad T480, T14, X1 Carbon og L14 fra Lenovo, EliteBook 840 G5 og G6 fra HP og Latitude 5410 og 7490 fra Dell. Det er brugte erhvervsmodeller fra de samme årgange, og forskellene herunder gælder dem – ikke hver eneste maskine, der har båret navnet.",
+      en: "The comparison is built on the models we describe under Models: the ThinkPad T480, T14, X1 Carbon and L14 from Lenovo, the EliteBook 840 G5 and G6 from HP, and the Latitude 5410 and 7490 from Dell. They are used business models from the same years, and the differences below apply to them — not to every machine that has carried the name.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Ydelsen følger processoren, ikke mærket",
+          en: "Performance follows the processor, not the badge",
+        },
+        body: [
+          {
+            da: "En ThinkPad T480, en EliteBook 840 G5 og en Latitude 7490 kan alle have en Intel Core i5 eller i7 fra 8. generation med 4 kerner og 8 tråde. Med samme processor, samme mængde RAM og samme SSD er det de tre dele, der sætter grænsen for almindeligt kontorarbejde – ikke mærket på låget.",
+            en: "A ThinkPad T480, an EliteBook 840 G5 and a Latitude 7490 can all have an 8th-generation Intel Core i5 or i7 with 4 cores and 8 threads. With the same processor, the same memory and the same SSD, those three parts set the limit for ordinary office work — not the badge on the lid.",
+          },
+          {
+            da: "Generationen betyder mere end mærket. En Latitude 5410 med 10. generation og en T14 med 10. eller 11. generation er et par år nyere end en T480 eller en Latitude 7490. Skal maskinerne holde længe, er generationen det første, I sammenligner.",
+            en: "The generation matters more than the brand. A Latitude 5410 with a 10th-generation processor and a T14 with a 10th or 11th are a couple of years newer than a T480 or a Latitude 7490. If the machines have to last, the generation is the first thing to compare.",
+          },
+          {
+            da: "Tung billed- eller videoredigering hører ikke hjemme på nogen af de tre kontorserier. Til det er en workstation som HP ZBook 15 det rigtige sammenligningsgrundlag.",
+            en: "Heavy photo or video editing does not belong on any of the three office lines. For that, a workstation such as the HP ZBook 15 is the right comparison.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "De tre serier side om side",
+          en: "The three lines side by side",
+        },
+        body: [
+          {
+            da: "Tabellen samler det, der adskiller modellerne i praksis. Oplysningerne kommer fra producenternes specifikationer og vores modelsider; den konkrete konfiguration skal altid bekræftes, før I bestiller.",
+            en: "The table brings together what separates the models in practice. The details come from the manufacturers' specifications and our model pages; the exact configuration should always be confirmed before you order.",
+          },
+        ],
+        table: {
+          caption: {
+            da: "ThinkPad, EliteBook og Latitude i de modeller, vi beskriver",
+            en: "ThinkPad, EliteBook and Latitude in the models we describe",
+          },
+          head: [
+            { da: "Område", en: "Area" },
+            { da: "ThinkPad", en: "ThinkPad" },
+            { da: "EliteBook 840", en: "EliteBook 840" },
+            { da: "Latitude", en: "Latitude" },
+          ],
+          rows: [
+            [
+              { da: "Modeller", en: "Models" },
+              { da: "T480, T14, X1 Carbon og L14", en: "T480, T14, X1 Carbon and L14" },
+              { da: "840 G5 og G6", en: "840 G5 and G6" },
+              { da: "5410 og 7490", en: "5410 and 7490" },
+            ],
+            [
+              { da: "Processor", en: "Processor" },
+              {
+                da: "7. eller 8. gen. (T480); 10. eller 11. gen. Intel eller AMD Ryzen PRO (T14)",
+                en: "7th or 8th gen (T480); 10th or 11th gen Intel or AMD Ryzen PRO (T14)",
+              },
+              { da: "Intel Core i5 eller i7, 8. gen.", en: "Intel Core i5 or i7, 8th gen" },
+              {
+                da: "8. gen. (7490); 10. gen. eller i5-8365U (5410)",
+                en: "8th gen (7490); 10th gen or i5-8365U (5410)",
+              },
+            ],
+            [
+              { da: "RAM", en: "Memory" },
+              {
+                da: "To sokler, op til 32 GB (T480); fastloddet plus én sokkel (T14 Gen 2 Intel); fastloddet (X1 Carbon)",
+                en: "Two sockets, up to 32 GB (T480); soldered plus one socket (T14 Gen 2 Intel); soldered (X1 Carbon)",
+              },
+              { da: "To sokler, 8–32 GB", en: "Two sockets, 8–32 GB" },
+              {
+                da: "To sokler; Dell angiver 32 GB som maksimum (5410)",
+                en: "Two sockets; Dell states 32 GB as the maximum (5410)",
+              },
+            ],
+            [
+              { da: "Netværksstik", en: "Network port" },
+              {
+                da: "Ja, undtagen X1 Carbon, der kræver adapter eller dock",
+                en: "Yes, except the X1 Carbon, which needs an adapter or dock",
+              },
+              { da: "Ja, Gigabit", en: "Yes, Gigabit" },
+              {
+                da: "Ja, og tre USB-A-porte på 5410",
+                en: "Yes, and three USB-A ports on the 5410",
+              },
+            ],
+            [
+              { da: "Docking", en: "Docking" },
+              {
+                da: "Mekanisk Ultra Dock til T480-generationen; USB-C og Thunderbolt",
+                en: "Mechanical Ultra Dock for the T480 generation; USB-C and Thunderbolt",
+              },
+              { da: "USB-C, fx HP USB-C Dock G5", en: "USB-C, such as the HP USB-C Dock G5" },
+              { da: "USB-C, fx Dell Dock WD19", en: "USB-C, such as the Dell Dock WD19" },
+            ],
+            [
+              { da: "Vægt", en: "Weight" },
+              {
+                da: "Omkring 1,5 kg (T14); 1,1–1,2 kg (X1 Carbon)",
+                en: "About 1.5 kg (T14); 1.1–1.2 kg (X1 Carbon)",
+              },
+              { da: "Omkring 1,5 kg", en: "About 1.5 kg" },
+              {
+                da: "Omkring 1,5 kg (5410); 1,4 kg (7490)",
+                en: "About 1.5 kg (5410); 1.4 kg (7490)",
+              },
+            ],
+            [
+              { da: "Værd at vide", en: "Worth knowing" },
+              {
+                da: "L14 har plastkabinet frem for magnesium som i T-serien",
+                en: "The L14 has a plastic chassis rather than the T series' magnesium",
+              },
+              {
+                da: "Sure View-privatlivsfilter på nogle modeller",
+                en: "Sure View privacy screen on some models",
+              },
+              {
+                da: "Smartkortlæser på nogle 5410-modeller",
+                en: "Smart card reader on some 5410 models",
+              },
+            ],
+          ],
+        },
+      },
+      {
+        heading: { da: "Tastatur og betjening", en: "Keyboard and pointing" },
+        body: [
+          {
+            da: "TrackPoint, den lille pegepind midt i tastaturet, er Lenovos og findes kun på ThinkPad. T480, T14 og L14 har den sammen med et fuldt tastatur, og T480 og T14 har fingeraftrykslæser. Bruger medarbejderne TrackPoint i dag, er et skift til et andet mærke den største omstilling, de mærker.",
+            en: "The TrackPoint, the small pointing stick in the middle of the keyboard, is Lenovo's and only found on ThinkPads. The T480, T14 and L14 have it with a full keyboard, and the T480 and T14 have a fingerprint reader. If your staff use the TrackPoint today, moving to another brand is the biggest adjustment they will notice.",
+          },
+          {
+            da: "Om en EliteBook eller Latitude har en pegepind, afhænger af model og konfiguration. Spørg, før I bestiller, hvis nogen bruger den.",
+            en: "Whether an EliteBook or Latitude has a pointing stick depends on the model and configuration. Ask before you order if anyone uses one.",
+          },
+          {
+            da: "Tastaturlayoutet er et spørgsmål for sig. På flere af modellerne kan tastaturet skiftes til dansk eller norsk; få layoutet skrevet ind i tilbuddet, så det ikke er et tysk eller engelsk tastatur, der kommer.",
+            en: "The keyboard layout is a separate question. On several of the models the keyboard can be changed to Danish or Norwegian; have the layout written into the quote, so a German or English keyboard is not what arrives.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Porte og skærm", en: "Ports and screen" },
+        body: [
+          {
+            da: "Latitude 5410 har tre USB-A-porte, en USB-C-port, HDMI, netværksstik og kombineret lydstik. EliteBook 840 og T14 har to USB-A, USB-C, HDMI og netværksstik, og T480 har både USB-C og Thunderbolt 3, dockstik og kortlæser. Ved et skrivebord med dock er forskellen lille; for en medarbejder uden dock tæller hver port.",
+            en: "The Latitude 5410 has three USB-A ports, one USB-C port, HDMI, a network port and a headset jack. The EliteBook 840 and T14 have two USB-A, USB-C, HDMI and a network port, and the T480 has both USB-C and Thunderbolt 3, a dock connector and a card reader. At a desk with a dock the difference is small; for someone without one, every port counts.",
+          },
+          {
+            da: "X1 Carbon skiller sig ud: Den vejer omkring 1,1–1,2 kg, men har intet netværksstik. Skal den på kabel, kræver det en adapter eller en dock, og de skal bestilles med.",
+            en: "The X1 Carbon stands apart: it weighs about 1.1–1.2 kg but has no network port. On a cable it needs an adapter or a dock, and those have to be ordered with it.",
+          },
+          {
+            da: "EliteBook 840 findes med Sure View, et indbygget privatlivsfilter. Det skærmer i toget, men gør skærmen mørkere på kontoret, så vælg det bevidst. Nogle Latitude 5410 har smartkortlæser til medarbejderkort; bruger I det, skal det stå i bestillingen.",
+            en: "The EliteBook 840 comes with Sure View, a built-in privacy screen. It shields the screen on the train but makes it darker in the office, so choose it on purpose. Some Latitude 5410s have a smart card reader for staff cards; if you use them, it has to be in the order.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Docks: der, hvor valget binder jer",
+          en: "Docks: where the choice commits you",
+        },
+        body: [
+          {
+            da: "Serierne ligner hinanden mest i maskinen og mindst i docken. ThinkPad Ultra Dock klikker fast under maskinen og passer kun til bestemte ThinkPad-generationer; T480 og maskiner fra samme periode bruger 40A2-typen. Dells ældre E-Port-docks passer ikke til Latitude 5410, og HP's ældre UltraSlim-docks passer ikke til nyere EliteBooks.",
+            en: "The lines are most alike in the machine and least alike in the dock. The ThinkPad Ultra Dock clicks in under the machine and fits only certain ThinkPad generations; the T480 and machines from the same period use the 40A2 type. Dell's older E-Port docks do not fit the Latitude 5410, and HP's older UltraSlim docks do not fit newer EliteBooks.",
+          },
+          {
+            da: "USB-C-docks er mere fleksible. Dell Dock WD19 virker også på andre mærker, og HP USB-C Dock G5 virker på de fleste USB-C-maskiner – men HP's egne funktioner, som tænd og sluk fra docken, virker kun sammen med HP. WD19TB er Thunderbolt-udgaven og kræver, at maskinen selv har Thunderbolt; ellers falder den ned på færre skærme.",
+            en: "USB-C docks are more flexible. The Dell Dock WD19 works on other brands too, and the HP USB-C Dock G5 works on most USB-C machines — but HP's own features, such as power on and off from the dock, only work with HP. The WD19TB is the Thunderbolt version and needs the machine itself to have Thunderbolt; otherwise it drops to fewer screens.",
+          },
+          {
+            da: "Står der allerede docks på skrivebordene, er det det stærkeste argument for at blive i samme serie. Vælg maskinen efter docken og ikke omvendt – ellers følger der en ny dock med hver ny maskine.",
+            en: "If there are docks on the desks already, that is the strongest argument for staying in the same line. Choose the machine by the dock, not the other way round — otherwise every new machine brings a new dock with it.",
+          },
+        ],
+      },
+      {
+        heading: { da: "RAM og opgradering", en: "Memory and upgrades" },
+        body: [
+          {
+            da: "T480, EliteBook 840 og Latitude 5410 og 7490 har to RAM-sokler, og Lenovo og Dell angiver 32 GB som maksimum for T480 og 5410. Det gør dem nemme at udvide senere, og SSD'en kan udskiftes på alle modellerne i sammenligningen.",
+            en: "The T480, EliteBook 840 and Latitude 5410 and 7490 have two memory sockets, and Lenovo and Dell state 32 GB as the maximum for the T480 and the 5410. That makes them easy to expand later, and the SSD can be replaced on every model in the comparison.",
+          },
+          {
+            da: "T14 Gen 2 med Intel har fastloddet RAM og én sokkel. Iris Xe-grafikken kræver dual-channel-hukommelse; med single-channel fungerer den som Intel UHD. Få derfor bekræftet, hvordan RAM'en er sat sammen, ikke kun hvor meget der er.",
+            en: "The T14 Gen 2 with Intel has soldered memory and one socket. Its Iris Xe graphics need dual-channel memory; in single channel they work as Intel UHD. So have it confirmed how the memory is put together, not only how much there is.",
+          },
+          {
+            da: "X1 Carbon har fastloddet RAM, der ikke kan udvides bagefter. Vælg 16 GB fra start, hvis maskinen skal holde nogle år.",
+            en: "The X1 Carbon has soldered memory that cannot be expanded afterwards. Choose 16 GB from the start if the machine has to last a few years.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Sådan vælger I", en: "How to choose" },
+        body: [
+          {
+            da: "Start med det, der allerede ligger fast hos jer, og lad mærket komme til sidst. Spørgsmålene herunder afgør det meste.",
+            en: "Start with what is already fixed where you are, and let the brand come last. The questions below decide most of it.",
+          },
+        ],
+        list: [
+          {
+            da: "Har I docks? Bliv i den serie, de passer til, eller vælg USB-C-docks, der virker på tværs af mærker.",
+            en: "Do you have docks? Stay in the line they fit, or choose USB-C docks that work across brands.",
+          },
+          {
+            da: "Bruger nogen TrackPoint? Så er ThinkPad det sikre valg.",
+            en: "Does anyone use the TrackPoint? Then ThinkPad is the safe choice.",
+          },
+          {
+            da: "Skal maskinen med i tasken hver dag? X1 Carbon er lettest i sammenligningen, men RAM'en er fastloddet.",
+            en: "Does the machine go in a bag every day? The X1 Carbon is the lightest in the comparison, but its memory is soldered.",
+          },
+          {
+            da: "Skal den på kabelnet uden adapter? Så er det en af de andre end X1 Carbon.",
+            en: "Does it need wired networking without an adapter? Then it is any of them except the X1 Carbon.",
+          },
+          {
+            da: "Skal den kunne udvides senere? Vælg en model med to RAM-sokler: T480, EliteBook 840 eller Latitude 5410 eller 7490.",
+            en: "Must it be expandable later? Choose a model with two memory sockets: the T480, EliteBook 840 or Latitude 5410 or 7490.",
+          },
+          {
+            da: "Skal I bruge smartkort eller privatlivsfilter? Bestil en Latitude med smartkortlæser eller en EliteBook med Sure View bevidst.",
+            en: "Do you need smart cards or a privacy screen? Order a Latitude with a smart card reader or an EliteBook with Sure View on purpose.",
+          },
+          {
+            da: "Skal mange have den samme? Vælg én model og én generation til hele gruppen – det betyder mere, end hvilket mærke det bliver.",
+            en: "Do many people need the same one? Choose one model and one generation for the whole group — that matters more than which brand it is.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Fortæl os, hvilke docks og skærme I har, og hvad maskinerne skal bruges til, så foreslår vi en model og en konfiguration og undersøger, om den kan skaffes i det antal, I skal bruge. Der er ingen binding i at spørge.",
+      en: "Tell us which docks and screens you have and what the machines are for, and we will suggest a model and a configuration and check whether it can be sourced in the number you need. Asking commits you to nothing.",
+    },
+    related: [
+      {
+        href: "/modeller",
+        label: { da: "Modeller og specifikationer", en: "Models and specifications" },
+      },
+      {
+        href: "/produkter/baerbare-computere",
+        label: { da: "Brugte erhvervsbærbare, vi skaffer", en: "Used business laptops we source" },
+      },
+      {
+        href: "/produkter/dockingstationer",
+        label: {
+          da: "Dockingstationer, der passer til maskinerne",
+          en: "Docks that fit the machines",
+        },
+      },
+      {
+        href: "/vejledninger/standardiser-firmacomputere",
+        label: {
+          da: "Én model til hele gruppen: standardisering",
+          en: "One model for the whole group: standardising",
+        },
+      },
+    ],
+    sources: [
+      guideSource("thinkpadT480Specs"),
+      guideSource("thinkpadT14Gen2Intel"),
+      guideSource("thinkpadX1CarbonGen7"),
+      guideSource("latitudeMemory"),
+      guideSource("latitudePorts"),
+    ],
+    faqs: [
+      {
+        question: {
+          da: "Hvilken er bedst: ThinkPad, EliteBook eller Latitude?",
+          en: "Which is best: ThinkPad, EliteBook or Latitude?",
+        },
+        answer: {
+          da: "Ingen af dem generelt. Med samme processor, RAM og SSD løser de det samme kontorarbejde; det, der skiller dem, er tastatur, porte, docks og RAM-sokler. Vælg den serie, der passer til jeres docks og medarbejdere.",
+          en: "None of them in general. With the same processor, memory and SSD they do the same office work; what separates them is the keyboard, ports, docks and memory sockets. Choose the line that fits your docks and your staff.",
+        },
+      },
+      {
+        question: {
+          da: "Kan en Dell-dock bruges til en ThinkPad?",
+          en: "Can a Dell dock be used with a ThinkPad?",
+        },
+        answer: {
+          da: "En USB-C-dock som Dell Dock WD19 virker også på andre mærker. Thunderbolt-udgaven WD19TB kræver, at maskinen selv har Thunderbolt, og strømforsyningen skal være stor nok til maskinen. En mekanisk dock som ThinkPad Ultra Dock passer kun til bestemte ThinkPad-generationer.",
+          en: "A USB-C dock such as the Dell Dock WD19 works on other brands too. The Thunderbolt version, the WD19TB, needs the machine itself to have Thunderbolt, and the power supply has to be large enough for the machine. A mechanical dock such as the ThinkPad Ultra Dock fits only certain ThinkPad generations.",
+        },
+      },
+      {
+        question: {
+          da: "Er en ThinkPad T480 stadig god nok?",
+          en: "Is a ThinkPad T480 still good enough?",
+        },
+        answer: {
+          da: "Til almindeligt kontorarbejde er 8. generation rigeligt, men ikke til tung billed- eller videoredigering. T480 findes med både 7. og 8. generations processor, så få den præcise processor bekræftet – også af hensyn til Windows 11.",
+          en: "For ordinary office work the 8th generation is plenty, but not for heavy photo or video editing. The T480 exists with both 7th- and 8th-generation processors, so have the exact processor confirmed — for Windows 11 as well.",
+        },
+      },
+      {
+        question: {
+          da: "Kan vi blande mærker i samme flåde?",
+          en: "Can we mix brands in the same fleet?",
+        },
+        answer: {
+          da: "Ja, men hvert mærke bringer sine egne docks, opladere og drivere med, og jo flere varianter, jo mere skal supporten kende. Det vigtigste er, at en gruppe med samme opgave får samme model.",
+          en: "Yes, but each brand brings its own docks, chargers and drivers, and the more variants there are, the more support has to know. What matters most is that a group with the same job gets the same model.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "standardiser-firmacomputere",
+    cluster: "lifecycle",
+    type: "erhvervs-it",
+    intent: "informational-commercial",
+    primaryKeyword: "standardisering af computere i virksomheden",
+    author: "alireza",
+    title: {
+      da: "Standardisering af computere i virksomheden",
+      en: "Standardising the computers in your company",
+    },
+    metaTitle: {
+      da: "Standardisering af firmacomputere: én konfiguration | Kestro",
+      en: "Standardising company computers: one configuration | Kestro",
+    },
+    metaDescription: {
+      da: "Ens computere til medarbejderne gør support, docks og udskiftning nemmere. Se, hvordan I vælger roller, en fast konfiguration og reservemaskiner.",
+      en: "The same computer for staff in the same role makes support, docks and replacement simpler. How to set roles, fix a configuration and keep spares.",
+    },
+    summary: {
+      da: "Samme opgave, samme maskine: én model, én konfiguration og én dock pr. rolle gør support og udskiftning enklere.",
+      en: "Same job, same machine: one model, one configuration and one dock per role make support and replacement simpler.",
+    },
+    audience: {
+      da: "Virksomheder med flere medarbejdere på bærbare eller stationære",
+      en: "Companies with several staff on laptops or desktops",
+    },
+    readingMinutes: 6,
+    published: "2026-10-28",
+    updated: "2026-10-28",
+    tldr: {
+      da: "Standardisering betyder, at medarbejdere med samme opgave får samme model, samme konfiguration og samme dock. Det gør support, reservedele og udskiftning enklere, fordi en fejl kan sammenlignes med en ens maskine, og én reservemaskine passer til hele gruppen. Start med de få roller, I faktisk har, lås model, processor, RAM, SSD, tastatur og dock for hver, og køb i hold, så næste udskiftning også bliver ens.",
+      en: "Standardising means staff who do the same job get the same model, the same configuration and the same dock. It makes support, spare parts and replacement simpler, because a fault can be compared with an identical machine and one spare fits the whole group. Start with the few roles you actually have, lock the model, processor, memory, SSD, keyboard and dock for each, and buy in batches so the next replacement is identical too.",
+    },
+    intro: {
+      da: "Her er det praktiske: hvad der skal låses, hvordan I deler medarbejderne i roller, og hvor standardisering ikke passer. Vejledningen gælder både nye og brugte maskiner. Med brugt udstyr er det model, generation og konfiguration, der skal ligge fast – ikke stand og alder ned til måneden.",
+      en: "This is the practical part: what to lock, how to divide staff into roles, and where standardising does not fit. The guide applies to new and used machines alike. With used equipment it is the model, generation and configuration that have to be fixed — not the condition and age down to the month.",
+    },
+    sections: [
+      {
+        heading: {
+          da: "Hvad standardisering betyder – og ikke betyder",
+          en: "What standardising means — and does not mean",
+        },
+        body: [
+          {
+            da: "At standardisere er at beslutte, at en gruppe medarbejdere med samme opgave får den samme maskine: samme model og generation, samme processor, samme mængde RAM og SSD, samme tastaturlayout og samme dock og oplader. Oven på det kommer den samme opsætning af Windows og de samme programmer.",
+            en: "To standardise is to decide that a group of staff with the same job get the same machine: the same model and generation, the same processor, the same memory and SSD, the same keyboard layout and the same dock and charger. On top of that comes the same Windows setup and the same programs.",
+          },
+          {
+            da: "Det betyder ikke, at hele virksomheden får én maskine. En designer og en bogholder har ikke samme behov, og at give dem samme computer gør den ene for dyr eller den anden for svag. Standardisering sker pr. rolle.",
+            en: "It does not mean the whole company gets one machine. A designer and a bookkeeper do not have the same needs, and giving them the same computer makes one too expensive or the other too weak. Standardising happens per role.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Hvad I får ud af det", en: "What you gain" },
+        body: [
+          {
+            da: "Fordelene kommer ikke af mærket, men af at maskinerne er ens. De viser sig især, når noget går galt.",
+            en: "The gains come not from the brand but from the machines being identical. They show most when something goes wrong.",
+          },
+        ],
+        list: [
+          {
+            da: "Fejlsøgning: En fejl på én maskine kan sammenlignes med en ens maskine ved siden af. Er den anden i orden, ligger fejlen i den første – ikke i modellen.",
+            en: "Troubleshooting: a fault on one machine can be compared with an identical one next to it. If the other is fine, the fault is in the first — not in the model.",
+          },
+          {
+            da: "Én opsætning: ét Windows-image og ét sæt drivere pr. model i stedet for et pr. maskine.",
+            en: "One setup: one Windows image and one set of drivers per model instead of one per machine.",
+          },
+          {
+            da: "Skriveborde, der passer til alle: Samme dock og oplader betyder, at en medarbejder kan sætte sig ved et hvilket som helst skrivebord.",
+            en: "Desks that fit everyone: the same dock and charger mean anyone can sit down at any desk.",
+          },
+          {
+            da: "Reservemaskiner, der kan bruges: En klargjort reserve passer til hele gruppen, så en defekt maskine kan skiftes med det samme og repareres bagefter.",
+            en: "Spares you can use: one prepared spare fits the whole group, so a broken machine can be swapped at once and repaired afterwards.",
+          },
+          {
+            da: "Reservedele: Batterier, opladere og tastaturer går på tværs af gruppen.",
+            en: "Spare parts: batteries, chargers and keyboards work across the group.",
+          },
+          {
+            da: "Næste indkøb: »Det samme som sidst« er en bestilling, alle kan forstå.",
+            en: "The next purchase: “the same as last time” is an order everyone understands.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Sådan deler I medarbejderne i roller",
+          en: "How to divide staff into roles",
+        },
+        body: [
+          {
+            da: "Tag udgangspunkt i opgaverne, ikke i titlerne. Ser man på, hvad maskinen skal kunne, er der som regel få roller, og én af dem dækker typisk den største gruppe. Eksemplerne herunder er modeller, vi beskriver under Modeller.",
+            en: "Start from the work, not the job titles. Looked at by what the machine has to do, there are usually few roles, and one of them typically covers the largest group. The examples below are models we describe under Models.",
+          },
+        ],
+        list: [
+          {
+            da: "Kontor og administration: en 14-tommer erhvervsbærbar som ThinkPad T14, EliteBook 840 eller Latitude 5410.",
+            en: "Office and administration: a 14-inch business laptop such as the ThinkPad T14, EliteBook 840 or Latitude 5410.",
+          },
+          {
+            da: "På farten hver dag: en let model som ThinkPad X1 Carbon – med RAM valgt fra start, fordi den ikke kan udvides.",
+            en: "On the move every day: a light model such as the ThinkPad X1 Carbon — with memory chosen from the start, because it cannot be expanded.",
+          },
+          {
+            da: "Fast arbejdsplads: en stationær eller mini-pc som Dell OptiPlex 5060, HP EliteDesk 800 eller Lenovo ThinkCentre M720q.",
+            en: "A fixed desk: a desktop or mini PC such as the Dell OptiPlex 5060, HP EliteDesk 800 or Lenovo ThinkCentre M720q.",
+          },
+          {
+            da: "Tungt arbejde som CAD, billed- og videoredigering: en workstation, fx HP ZBook 15.",
+            en: "Heavy work such as CAD, photo and video editing: a workstation, such as the HP ZBook 15.",
+          },
+          {
+            da: "Reception, lager og fælles maskiner: gerne den samme som kontorrollen, så reserverne går på tværs.",
+            en: "Reception, warehouse and shared machines: ideally the same as the office role, so the spares work across both.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Konfigurationen, der skal låses",
+          en: "The configuration to lock",
+        },
+        body: [
+          {
+            da: "Et modelnavn er ikke en konfiguration. To maskiner med samme navn kan have forskellig processor, RAM, skærm og tastatur, så skriv det hele ned for hver rolle.",
+            en: "A model name is not a configuration. Two machines with the same name can have a different processor, memory, screen and keyboard, so write all of it down for each role.",
+          },
+        ],
+        list: [
+          {
+            da: "Model og generation – fx T14 Gen 2, ikke bare T14.",
+            en: "Model and generation — T14 Gen 2, for example, not just T14.",
+          },
+          {
+            da: "Processor, og om den er Intel eller AMD. På T14 afgør det også, om der er Thunderbolt.",
+            en: "Processor, and whether it is Intel or AMD. On the T14 that also decides whether there is Thunderbolt.",
+          },
+          {
+            da: "RAM-mængde, og hvordan den sidder. På T14 Gen 2 Intel kræver Iris Xe-grafikken dual-channel-hukommelse.",
+            en: "Amount of memory, and how it is fitted. On the T14 Gen 2 Intel, the Iris Xe graphics need dual-channel memory.",
+          },
+          { da: "SSD-størrelse.", en: "SSD size." },
+          {
+            da: "Skærm: Full HD frem for HD, og om der skal være berøringsskærm eller privatlivsfilter.",
+            en: "Screen: Full HD rather than HD, and whether it should have touch or a privacy screen.",
+          },
+          { da: "Tastaturlayout: dansk eller norsk.", en: "Keyboard layout: Danish or Norwegian." },
+          {
+            da: "Dock og strømforsyning, med en effekt, der passer til maskinen.",
+            en: "Dock and power supply, rated for the machine.",
+          },
+          {
+            da: "Windows-udgave og firmwareindstillinger som TPM og Secure Boot, så maskinerne kan følge med til Windows 11.",
+            en: "Windows edition and firmware settings such as TPM and Secure Boot, so the machines can move on to Windows 11.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Docks og strøm: der, hvor ens bliver uens",
+          en: "Docks and power: where identical stops being identical",
+        },
+        body: [
+          {
+            da: "Docken er den del af standarden, der binder længst, fordi den bliver stående på skrivebordet, mens maskinerne skiftes. En mekanisk ThinkPad Ultra Dock passer kun til bestemte ThinkPad-generationer, og Dells ældre E-Port-docks passer ikke til Latitude 5410. En USB-C-dock som Dell Dock WD19 virker også på andre mærker og giver mere frihed, næste gang der skal købes.",
+            en: "The dock is the part of the standard that commits you longest, because it stays on the desk while the machines change. A mechanical ThinkPad Ultra Dock fits only certain ThinkPad generations, and Dell's older E-Port docks do not fit the Latitude 5410. A USB-C dock such as the Dell Dock WD19 also works on other brands and leaves more freedom next time you buy.",
+          },
+          {
+            da: "Strømforsyningen skal passe til maskinen. En dock med 130 W oplader ikke en workstation ordentligt, og på brugte docks mangler strømforsyningen ofte – få den skrevet ind i aftalen.",
+            en: "The power supply has to suit the machine. A 130 W dock does not charge a workstation properly, and used docks often come without their power supply — have it written into the agreement.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Reservemaskiner og udskiftning i hold",
+          en: "Spare machines and replacing in batches",
+        },
+        body: [
+          {
+            da: "Hold en eller flere klargjorte maskiner pr. rolle med jeres opsætning på. Når en maskine går i stykker, kan medarbejderen få reserven med det samme, og den defekte kan repareres uden travlhed. Hvor mange reserver der skal til, afhænger af, hvor mange I er, og hvor hurtigt en medarbejder skal være i gang igen.",
+            en: "Keep one or more prepared machines per role with your setup on them. When a machine breaks, the employee can have the spare at once, and the broken one can be repaired without a rush. How many spares you need depends on how many you are and how quickly someone has to be working again.",
+          },
+          {
+            da: "Køb og skift i hold. En flåde, der skiftes samlet, skal også skiftes samlet næste gang, og en flåde, der købes én maskine ad gangen, ender med lige så mange konfigurationer som maskiner. Et hold pr. rolle er et godt kompromis.",
+            en: "Buy and replace in batches. A fleet replaced in one go has to be replaced in one go next time, and a fleet bought one machine at a time ends up with as many configurations as machines. One batch per role is a good compromise.",
+          },
+          {
+            da: "Med brugte maskiner skal I spørge til antallet, før I lægger jer fast: Kan den samme model og konfiguration skaffes i det antal, I skal bruge, og hvad er alternativet, hvis den ikke kan? Stand og alder kan variere inden for samme model; det, der skal være ens, er model, generation og konfiguration.",
+            en: "With used machines, ask about the quantity before you commit: can the same model and configuration be sourced in the number you need, and what is the alternative if it cannot? Condition and age can vary within a model; what has to be identical is the model, generation and configuration.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Når standardisering ikke passer",
+          en: "When standardising does not fit",
+        },
+        body: [
+          {
+            da: "Nogle medarbejdere skal have noget andet: en workstation til tunge programmer, særligt udstyr af hensyn til et handicap eller en maskine, der er bundet til software, som ikke kan flytte endnu. Det er ikke et brud på standarden, når det er en beslutning med en begrundelse. Skriv undtagelserne ned, så de ikke bliver normen.",
+            en: "Some staff need something else: a workstation for heavy software, particular equipment because of a disability, or a machine tied to software that cannot move yet. That is not a break with the standard when it is a decision with a reason. Write the exceptions down, so they do not become the norm.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Skal en gruppe medarbejdere have ens maskiner, kan vi hjælpe med at vælge model og konfiguration pr. rolle, undersøge om antallet kan skaffes, og klargøre maskinerne ens. Der er ingen binding i at spørge.",
+      en: "If a group of staff need identical machines, we can help choose the model and configuration per role, check whether the quantity can be sourced, and prepare the machines identically. Asking commits you to nothing.",
+    },
+    related: [
+      {
+        href: "/flaadeloesninger",
+        label: {
+          da: "Ens computere til en hel gruppe",
+          en: "Identical computers for a whole group",
+        },
+      },
+      {
+        href: "/ydelser/opstart-af-arbejdspladser",
+        label: { da: "IT-udstyr til nye medarbejdere", en: "IT equipment for new staff" },
+      },
+      {
+        href: "/vejledninger/thinkpad-elitebook-latitude",
+        label: {
+          da: "Forskellen på ThinkPad, EliteBook og Latitude",
+          en: "The difference between ThinkPad, EliteBook and Latitude",
+        },
+      },
+      {
+        href: "/produkter/dockingstationer",
+        label: { da: "Dockingstationer til flere mærker", en: "Docks for several brands" },
+      },
+    ],
+    sources: [guideSource("thinkpadT14Gen2Intel")],
+    faqs: [
+      {
+        question: {
+          da: "Skal alle medarbejdere have den samme computer?",
+          en: "Should every employee have the same computer?",
+        },
+        answer: {
+          da: "Nej. Medarbejdere med samme opgave skal have den samme. En virksomhed har som regel få roller, og hver rolle får sin model og konfiguration.",
+          en: "No. Staff with the same job should have the same one. A company usually has few roles, and each role gets its own model and configuration.",
+        },
+      },
+      {
+        question: {
+          da: "Kan man standardisere med brugte computere?",
+          en: "Can you standardise on used computers?",
+        },
+        answer: {
+          da: "Ja, når model, generation og konfiguration ligger fast, og antallet kan skaffes. Spørg til antallet, før I beslutter jer, og aftal, hvad der sker, hvis en del af ordren ikke kan leveres i samme konfiguration.",
+          en: "Yes, when the model, generation and configuration are fixed and the quantity can be sourced. Ask about the quantity before you decide, and agree what happens if part of the order cannot be delivered in the same configuration.",
+        },
+      },
+      {
+        question: {
+          da: "Hvor mange reservemaskiner skal vi have?",
+          en: "How many spare machines should we keep?",
+        },
+        answer: {
+          da: "Det afhænger af, hvor mange I er, og hvor længe en medarbejder kan undvære sin maskine. Et udgangspunkt er én klargjort reserve pr. rolle, justeret efter hvor tit I faktisk skifter.",
+          en: "It depends on how many you are and how long someone can manage without their machine. A starting point is one prepared spare per role, adjusted to how often you actually swap.",
+        },
+      },
+      {
+        question: {
+          da: "Hvad med medarbejdere, der allerede har en maskine?",
+          en: "What about staff who already have a machine?",
+        },
+        answer: {
+          da: "De behøver ikke skifte med det samme. Lad dem følge standarden, når deres maskine alligevel skal skiftes, så flåden bliver ens over tid i stedet for på én dag.",
+          en: "They do not have to change straight away. Move them onto the standard when their machine is due anyway, so the fleet becomes identical over time rather than in a day.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "tco-paa-firmacomputere",
+    cluster: "lifecycle",
+    type: "beslutning",
+    intent: "informational-commercial",
+    primaryKeyword: "tco på firmacomputere",
+    author: "alireza",
+    title: {
+      da: "TCO: hvad koster en firmacomputer over hele levetiden?",
+      en: "TCO: what does a company computer cost over its whole life?",
+    },
+    metaTitle: {
+      da: "TCO på firmacomputere: prisen over hele levetiden | Kestro",
+      en: "TCO of company computers: the cost over their life | Kestro",
+    },
+    metaDescription: {
+      da: "TCO på firmacomputere: regn indkøb, opsætning, support, nedetid og restværdi med, før I vælger nyt, brugt eller leasing. Tjekliste til regnestykket.",
+      en: "TCO of company computers: add up purchase, setup, support, downtime and resale value before you pick new, used or leasing. With a full checklist.",
+    },
+    summary: {
+      da: "Indkøbsprisen er kun én post. Opsætning, support, nedetid og afvikling hører med, og summen deles med årene i brug.",
+      en: "The purchase price is one item. Setup, support, downtime and disposal belong in it too, and the total is divided by the years in use.",
+    },
+    audience: {
+      da: "Virksomheder, der budgetterer eller sammenligner computerindkøb",
+      en: "Companies budgeting for or comparing computer purchases",
+    },
+    readingMinutes: 6,
+    published: "2026-10-28",
+    updated: "2026-10-28",
+    tldr: {
+      da: "TCO, total cost of ownership, er alt, hvad en computer koster fra køb til afvikling: indkøb, opsætning, tilbehør, support og reparation, nedetid og datasletning, minus det, maskinen kan sælges for bagefter. Del summen med de år, maskinen faktisk bruges, og sammenlign nyt, brugt og leasing på prisen pr. år – ikke på indkøbsprisen. Levetiden sættes af opgaven og af, hvor længe styresystemet får sikkerhedsopdateringer.",
+      en: "TCO, total cost of ownership, is everything a computer costs from purchase to disposal: purchase, setup, accessories, support and repair, downtime and data erasure, minus what the machine can be sold for afterwards. Divide the total by the years the machine is actually used, and compare new, used and leasing on the price per year — not the purchase price. The lifetime is set by the work and by how long the operating system receives security updates.",
+    },
+    intro: {
+      da: "Indkøbsprisen er det eneste tal, der står på tilbuddet, og derfor bliver det tit det eneste, der sammenlignes. Her er de øvrige poster, hvor I finder tallene, og hvordan regnestykket ser ud. Vi sætter ikke tal på jeres poster; det er jeres egne tal, der gør regnestykket rigtigt.",
+      en: "The purchase price is the only figure on the quote, which is why it is often the only one compared. Here are the other items, where to find their figures, and how the calculation looks. We do not put numbers on your items; it is your own figures that make the calculation right.",
+    },
+    sections: [
+      {
+        heading: { da: "Regnestykket", en: "The calculation" },
+        body: [
+          {
+            da: "TCO = indkøb + opsætning + tilbehør + support og reparation + nedetid + afvikling − restværdi.",
+            en: "TCO = purchase + setup + accessories + support and repair + downtime + disposal − resale value.",
+          },
+          {
+            da: "TCO pr. år = TCO ÷ antal år i brug.",
+            en: "TCO per year = TCO ÷ years in use.",
+          },
+          {
+            da: "Det er prisen pr. år, der kan sammenlignes på tværs af nyt, brugt og leasing. En billig maskine, der skal skiftes tidligt, og en dyr maskine, der holder længe, kan ende samme sted – og det er netop det, regnestykket skal vise.",
+            en: "It is the price per year that can be compared across new, used and leasing. A cheap machine that has to be replaced early and an expensive one that lasts can end up in the same place — and that is exactly what the calculation is for.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Posterne, og hvor tallene kommer fra",
+          en: "The items, and where the figures come from",
+        },
+        body: [
+          {
+            da: "Tabellen er en tjekliste. Ikke alle poster er store for alle maskiner, men alle skal være overvejet.",
+            en: "The table is a checklist. Not every item is large for every machine, but every one should have been considered.",
+          },
+        ],
+        table: {
+          caption: { da: "TCO-posterne og deres kilder", en: "The TCO items and their sources" },
+          head: [
+            { da: "Post", en: "Item" },
+            { da: "Hvad den dækker", en: "What it covers" },
+            { da: "Hvor I finder tallet", en: "Where to find the figure" },
+          ],
+          rows: [
+            [
+              { da: "Indkøb", en: "Purchase" },
+              {
+                da: "Maskinen i den konfiguration, rollen kræver",
+                en: "The machine in the configuration the role needs",
+              },
+              {
+                da: "Tilbuddet – sammenlign samme processor, RAM, SSD, skærm og batteri",
+                en: "The quote — compare the same processor, memory, SSD, screen and battery",
+              },
+            ],
+            [
+              { da: "Opsætning", en: "Setup" },
+              {
+                da: "Windows, programmer, tilmelding i jeres administration og flytning af data",
+                en: "Windows, programs, enrolment in your management and moving data",
+              },
+              {
+                da: "Jeres egen tid eller IT-partnerens timepris",
+                en: "Your own time or your IT partner's hourly rate",
+              },
+            ],
+            [
+              { da: "Tilbehør", en: "Accessories" },
+              { da: "Dock, oplader, skærm og taske", en: "Dock, charger, screen and bag" },
+              {
+                da: "Tilbuddet; tæl med, hvad der allerede står på skrivebordene",
+                en: "The quote; count what is already on the desks",
+              },
+            ],
+            [
+              { da: "Support og reparation", en: "Support and repair" },
+              {
+                da: "Fejlsøgning, batteri, tastatur og andre dele i løbet af levetiden",
+                en: "Troubleshooting, battery, keyboard and other parts over the lifetime",
+              },
+              {
+                da: "Garanti og aftalevilkår, og jeres erfaring med de maskiner, I har",
+                en: "Warranty and terms, and your experience with the machines you have",
+              },
+            ],
+            [
+              { da: "Nedetid", en: "Downtime" },
+              {
+                da: "Medarbejderens tid uden en brugbar maskine",
+                en: "The employee's time without a working machine",
+              },
+              {
+                da: "Timer uden maskine gange det, en time koster jer",
+                en: "Hours without a machine times what an hour costs you",
+              },
+            ],
+            [
+              { da: "Afvikling", en: "Disposal" },
+              {
+                da: "Datasletning, dokumentation og afhentning",
+                en: "Data erasure, documentation and collection",
+              },
+              {
+                da: "Jeres egen tid eller leverandørens pris",
+                en: "Your own time or the supplier's price",
+              },
+            ],
+            [
+              { da: "Restværdi", en: "Resale value" },
+              {
+                da: "Det, maskinen kan sælges eller byttes for, når den går ud",
+                en: "What the machine can be sold or traded for when it goes out",
+              },
+              {
+                da: "Et bud ved udskiftningen; trækkes fra",
+                en: "An offer at replacement; subtracted",
+              },
+            ],
+          ],
+        },
+      },
+      {
+        heading: {
+          da: "Levetiden: tallet, alt andet deles med",
+          en: "Lifetime: the number everything else is divided by",
+        },
+        body: [
+          {
+            da: "Levetiden er ikke et tal, man slår op. Den afgøres af, hvornår maskinen ikke længere kan løse opgaven, og af hvornår styresystemet holder op med at få sikkerhedsopdateringer. Den almindelige support til Windows 10 version 22H2 sluttede 14. oktober 2025; Extended Security Updates (ESU) er en særskilt mulighed for fortsatte sikkerhedsrettelser.",
+            en: "The lifetime is not a figure you look up. It is decided by when the machine can no longer do the job and by when the operating system stops receiving security updates. General support for Windows 10 version 22H2 ended on 14 October 2025; Extended Security Updates (ESU) is a separate option for continued security fixes.",
+          },
+          {
+            da: "En maskine, der ikke opfylder kravene til Windows 11 – blandt andet TPM 2.0 og UEFI med Secure Boot – har derfor en kortere restlevetid end en, der gør, uanset hvordan den har det i øvrigt. Tjek det, før I sammenligner priser på brugte maskiner.",
+            en: "A machine that does not meet the Windows 11 requirements — TPM 2.0 and UEFI with Secure Boot among them — therefore has a shorter remaining life than one that does, however good its condition otherwise. Check it before comparing prices on used machines.",
+          },
+          {
+            da: "Brug jeres egen historik til resten: Hvor gamle var de maskiner, I sidst skiftede, og hvorfor blev de skiftet? Det er et bedre tal end et gennemsnit fra en anden virksomhed.",
+            en: "Use your own history for the rest: how old were the machines you last replaced, and why were they replaced? That is a better figure than an average from another company.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Nedetid: posten, der ikke står på nogen faktura",
+          en: "Downtime: the item no invoice shows",
+        },
+        body: [
+          {
+            da: "Når en maskine går i stykker, betaler I for reparationen og for den tid, medarbejderen ikke kan arbejde. Den sidste står ingen steder, så regn den ud: timer uden maskine gange det, en time koster jer.",
+            en: "When a machine breaks, you pay for the repair and for the time the employee cannot work. The second appears nowhere, so work it out: hours without a machine times what an hour costs you.",
+          },
+          {
+            da: "Det er her, ens maskiner og reservemaskiner tjener sig hjem. En klargjort reserve gør en fejl til et skift af maskine i stedet for en ventetid.",
+            en: "This is where identical machines and spares pay for themselves. A prepared spare turns a fault into a machine swap instead of a wait.",
+          },
+          {
+            da: "Garantien hører med her. Forbrug.dk beskriver to års reklamationsret ved forbrugerkøb; køber I som virksomhed, skal I læse aftalen og garantien for at vide, hvad en fejl koster jer.",
+            en: "The warranty belongs here too. Forbrug.dk describes a two-year right to complain on consumer purchases; if you buy as a company, read the agreement and the warranty to know what a fault will cost you.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Afvikling og restværdi", en: "Disposal and resale value" },
+        body: [
+          {
+            da: "En maskine, der går ud, skal have data slettet, før den forlader huset. Windows' Rens data gør gendannelse sværere, men Microsoft skriver selv, at funktionen ikke opfylder statslige eller branchespecifikke standarder for datasletning. NIST beskriver tre niveauer – Clear, Purge og Destroy – efter hvor stor en indsats det kræver at gendanne data bagefter. Regn med en metode, der passer til dataenes følsomhed, og med tiden til at dokumentere den.",
+            en: "A machine going out has to have its data erased before it leaves the building. Windows' Clean data makes recovery harder, but Microsoft itself says the function does not meet government or industry data-erasure standards. NIST describes three levels — Clear, Purge and Destroy — by the recovery effort each one defeats. Count on a method that suits how sensitive the data is, and on the time to document it.",
+          },
+          {
+            da: "Restværdien trækkes fra. En maskine, der stadig kan bruges, har en værdi, som kan modregnes i det, der kommer ind. En maskine med BIOS-adgangskode eller enhedslås kan ikke bruges af den næste ejer, så fjern dem sammen med data.",
+            en: "The resale value is subtracted. A machine that still works has a value that can be offset against what comes in. A machine with a BIOS password or device lock cannot be used by the next owner, so remove them along with the data.",
+          },
+        ],
+      },
+      {
+        heading: { da: "Nyt, brugt eller leasing", en: "New, used or leasing" },
+        body: [
+          {
+            da: "Regnestykket er det samme for alle tre; det er posterne, der fylder forskelligt. Køber I nyt, betaler I for hele levetiden fra start. Køber I brugt, er en del af levetiden brugt, så restlevetiden – generation, batteri og Windows 11-krav – skal tjekkes, før prisen sammenlignes. En brugt maskine er ikke automatisk billigst pr. år.",
+            en: "The calculation is the same for all three; it is the items that weigh differently. Buy new and you pay for the whole lifetime from the start. Buy used and part of the lifetime is spent, so the remaining life — generation, battery and Windows 11 requirements — has to be checked before the price is compared. A used machine is not automatically cheapest per year.",
+          },
+          {
+            da: "Ved leasing betaler I en fast ydelse i en aftalt periode. Læg alle ydelser sammen med gebyrer og kravene til stand ved tilbagelevering, og sammenlign med indkøb minus restværdi over den samme periode. Hvad der indgår – service, forsikring, udskiftning – står i aftalen.",
+            en: "With leasing you pay a fixed amount for an agreed period. Add up all the payments with the fees and the condition required at return, and compare with purchase minus resale value over the same period. What is included — service, insurance, replacement — is in the agreement.",
+          },
+        ],
+      },
+      {
+        heading: {
+          da: "Sådan sammenligner I to tilbud",
+          en: "How to compare two quotes",
+        },
+        body: [
+          {
+            da: "Gå de to tilbud igennem i samme rækkefølge, og skriv tallene ned undervejs.",
+            en: "Go through both quotes in the same order, and write the figures down as you go.",
+          },
+        ],
+        list: [
+          {
+            da: "Sammenlign samme konfiguration: processor, RAM, SSD, skærm, batteri og tastatur.",
+            en: "Compare the same configuration: processor, memory, SSD, screen, battery and keyboard.",
+          },
+          {
+            da: "Sæt en levetid på hver ud fra opgaven og Windows-supporten, ikke ud fra prisen.",
+            en: "Put a lifetime on each based on the work and Windows support, not on the price.",
+          },
+          {
+            da: "Læg opsætning og tilbehør til, og tæl det med, I allerede har.",
+            en: "Add setup and accessories, and count what you already have.",
+          },
+          {
+            da: "Regn nedetid med, og hvad en reservemaskine sparer.",
+            en: "Include downtime, and what a spare machine saves.",
+          },
+          {
+            da: "Træk restværdien fra, og læg afviklingen til.",
+            en: "Subtract the resale value, and add disposal.",
+          },
+          {
+            da: "Del med årene, og sammenlign prisen pr. år.",
+            en: "Divide by the years, and compare the price per year.",
+          },
+        ],
+      },
+    ],
+    closing: {
+      da: "Vil I have et tal at regne med, kan vi give et dateret tilbud på den konfiguration, rollen kræver – og et bud på de maskiner, der går ud, samtidig. Så har I indkøb og restværdi fra samme sted. Der er ingen binding i at spørge.",
+      en: "If you want a figure to work with, we can give a dated quote for the configuration the role needs — and an offer for the machines going out at the same time. Then you have purchase and resale value from one place. Asking commits you to nothing.",
+    },
+    related: [
+      {
+        href: "/vejledninger/reparere-eller-koebe-ny",
+        label: { da: "Reparere eller købe ny?", en: "Repair or buy new?" },
+      },
+      {
+        href: "/vejledninger/refurbished-eller-ny-baerbar",
+        label: { da: "Refurbished eller ny bærbar", en: "Refurbished or new laptop" },
+      },
+      {
+        href: "/vejledninger/standardiser-firmacomputere",
+        label: {
+          da: "Ens maskiner og reserver pr. rolle",
+          en: "Identical machines and spares per role",
+        },
+      },
+      {
+        href: "/tilbud",
+        label: { da: "Få et dateret tilbud", en: "Get a dated quote" },
+      },
+    ],
+    sources: [
+      guideSource("windows10Eol"),
+      guideSource("windows11Requirements"),
+      guideSource("dkWarranty"),
+      guideSource("windowsResetErasure"),
+      guideSource("nistSanitization"),
+    ],
+    faqs: [
+      {
+        question: { da: "Hvad betyder TCO?", en: "What does TCO mean?" },
+        answer: {
+          da: "Total cost of ownership: de samlede omkostninger ved en maskine fra køb til afvikling. Det omfatter indkøb, opsætning, tilbehør, support, nedetid og afvikling, minus restværdien.",
+          en: "Total cost of ownership: the full cost of a machine from purchase to disposal. It covers purchase, setup, accessories, support, downtime and disposal, minus the resale value.",
+        },
+      },
+      {
+        question: {
+          da: "Hvor mange år skal vi regne med?",
+          en: "How many years should we count on?",
+        },
+        answer: {
+          da: "Brug jeres egen historik og datoen for styresystemets support. Et gennemsnit fra en anden virksomhed passer sjældent til jeres opgaver, og derfor sætter vi ikke et tal på.",
+          en: "Use your own history and the operating system's support date. An average from another company rarely fits your work, which is why we do not put a number on it.",
+        },
+      },
+      {
+        question: {
+          da: "Er brugte computere billigere over levetiden?",
+          en: "Are used computers cheaper over their life?",
+        },
+        answer: {
+          da: "Ikke automatisk. Indkøbsprisen er typisk lavere, men restlevetiden afhænger af generation, batteri og Windows 11-krav. Sammenlign prisen pr. år for samme konfiguration, ikke prisen på tilbuddet.",
+          en: "Not automatically. The purchase price is typically lower, but the remaining life depends on generation, battery and Windows 11 requirements. Compare the price per year for the same configuration, not the price on the quote.",
+        },
+      },
+      {
+        question: {
+          da: "Er leasing dyrere end at købe?",
+          en: "Is leasing more expensive than buying?",
+        },
+        answer: {
+          da: "Det afhænger af aftalen. Læg alle ydelser og gebyrer sammen, og sammenlign med indkøb minus restværdi over den samme periode. Se også, hvem der ejer maskinen, og hvad der kræves ved tilbagelevering.",
+          en: "It depends on the agreement. Add up all the payments and fees, and compare with purchase minus resale value over the same period. Check too who owns the machine and what is required at return.",
         },
       },
     ],

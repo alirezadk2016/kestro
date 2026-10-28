@@ -323,7 +323,7 @@ Primært søgeord og title for hver dansk side. De engelske sider følger samme 
 
 ## Guides, der bør skrives
 
-Stadig gyldige fra første udgave. To af dem er skrevet siden (Windows 10 og refurbished mod brugt).
+Stadig gyldige fra første udgave. Fem af dem er skrevet siden: Windows 10, refurbished mod brugt og, 28. oktober 2026, sammenligningen, standardiseringen og TCO. Sammenligningen fik URL'en `/vejledninger/thinkpad-elitebook-latitude` i stedet for den foreslåede, så søgeordet står i stien; den gamle var aldrig udgivet.
 
 | Foreslået URL                                 | Primært søgeord                             | Hvorfor                                                                        |
 | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------ |

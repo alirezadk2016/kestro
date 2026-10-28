@@ -2052,6 +2052,36 @@ const artwork: Record<string, Art> = {
       en: "Two matching laptops side by side, one with wear marks and the other cleaned and prepared.",
     },
   },
+  "thinkpad-elitebook-latitude": {
+    src: "/cards/cat-laptops.webp",
+    width: 1600,
+    height: 900,
+    neutral: true,
+    alt: {
+      da: "En åben, sort erhvervsbærbar på et stenbord foran et vindue i aftenlys.",
+      en: "An open black business laptop on a stone desk in front of a window at dusk.",
+    },
+  },
+  "standardiser-firmacomputere": {
+    src: "/cards/fleet-scene.webp",
+    width: 1536,
+    height: 1024,
+    neutral: true,
+    alt: {
+      da: "Rækker af ens, åbne bærbare på et klargøringsbord med værktøj i forgrunden.",
+      en: "Rows of identical open laptops on a preparation bench, with tools in the foreground.",
+    },
+  },
+  "tco-paa-firmacomputere": {
+    src: "/cards/cat-fleet.webp",
+    width: 1600,
+    height: 900,
+    neutral: true,
+    alt: {
+      da: "To stakke lukkede bærbare og én åben bærbar på et stenbord.",
+      en: "Two stacks of closed laptops and one open laptop on a stone desk.",
+    },
+  },
 };
 
 export const hasGuidePanel = (slug: string) => slug in panels || slug in artwork;

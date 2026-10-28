@@ -798,6 +798,91 @@
           ]
         }
       }
+    },
+    "/vejledninger/thinkpad-elitebook-latitude": {
+      "main": ["thinkpad", "elitebook", "latitude"],
+      "nodes": {
+        "Serierne": {
+          "Lenovo ThinkPad": ["thinkpad"],
+          "HP EliteBook": ["elitebook"],
+          "Dell Latitude": ["latitude"],
+          "Modeller i sammenligningen": ["t480", "t14", "840", "5410", "7490"]
+        },
+        "Forskelle": {
+          "Processorgeneration": ["generation"],
+          "Tastatur og TrackPoint": ["trackpoint", "pegepind"],
+          "Porte": ["usb-c", "usb-a", "hdmi"],
+          "Netværksstik": ["netværksstik"],
+          "Docking": ["dock"],
+          "RAM-sokler og opgradering": ["sokler", "sokkel", "fastloddet"],
+          "Vægt": ["kg"],
+          "Kabinet": ["magnesium", "plast"],
+          "Privatlivsfilter og smartkort": ["sure view", "smartkort"]
+        },
+        "Valg": {
+          "Efter de docks, I har": ["docks, i har", "efter docken"],
+          "Efter opgaven": ["opgave", "arbejde"],
+          "Ens maskiner i en gruppe": ["samme model", "én model"],
+          "Tastaturlayout": ["dansk eller norsk"]
+        }
+      }
+    },
+    "/vejledninger/standardiser-firmacomputere": {
+      "main": ["standardisering", "standardisere", "ens computere"],
+      "nodes": {
+        "Hvad det er": {
+          "Samme model og konfiguration": ["konfiguration"],
+          "Pr. rolle": ["rolle", "roller"]
+        },
+        "Gevinster": {
+          "Fejlsøgning og support": ["fejlsøgning", "support"],
+          "Én opsætning": ["windows-image", "drivere"],
+          "Docks og opladere": ["dock", "oplader"],
+          "Reservemaskiner": ["reserve"],
+          "Reservedele": ["reservedele"]
+        },
+        "Konfiguration": {
+          "Model og generation": ["generation"],
+          "Processor": ["processor"],
+          "RAM": ["ram"],
+          "SSD": ["ssd"],
+          "Tastaturlayout": ["tastaturlayout"],
+          "Windows 11": ["windows 11"]
+        },
+        "Drift": {
+          "Udskiftning i hold": ["i hold"],
+          "Brugte maskiner i antal": ["antallet"],
+          "Undtagelser": ["undtagelser"]
+        }
+      }
+    },
+    "/vejledninger/tco-paa-firmacomputere": {
+      "main": ["tco", "total cost of ownership"],
+      "nodes": {
+        "Poster": {
+          "Indkøb": ["indkøb"],
+          "Opsætning": ["opsætning"],
+          "Tilbehør": ["tilbehør"],
+          "Support og reparation": ["reparation"],
+          "Nedetid": ["nedetid"],
+          "Afvikling og datasletning": ["datasletning", "afvikling"],
+          "Restværdi": ["restværdi"]
+        },
+        "Levetid": {
+          "Levetid": ["levetid"],
+          "Windows-support": ["windows 10", "sikkerhedsopdateringer"],
+          "Windows 11-krav": ["windows 11"]
+        },
+        "Sammenligning": {
+          "Nyt": ["nyt"],
+          "Brugt": ["brugt"],
+          "Leasing": ["leasing"],
+          "Pris pr. år": ["pr. år"]
+        },
+        "Vilkår": {
+          "Reklamationsret og garanti": ["reklamationsret", "garanti"]
+        }
+      }
     }
   }
 }
