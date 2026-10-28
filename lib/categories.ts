@@ -110,6 +110,13 @@ export const categories: Category[] = [
         label: { da: "Refurbished eller ny bærbar?", en: "Refurbished or new laptop?" },
       },
       {
+        href: "/vejledninger/thinkpad-elitebook-latitude",
+        label: {
+          da: "ThinkPad, EliteBook eller Latitude?",
+          en: "ThinkPad, EliteBook or Latitude?",
+        },
+      },
+      {
         href: "/vejledninger/hvor-meget-kan-en-baerbar-opgraderes",
         label: { da: "Kan den gamle bærbare opgraderes?", en: "Can the old laptop be upgraded?" },
       },
@@ -207,6 +214,13 @@ export const categories: Category[] = [
       {
         href: "/vejledninger/reparere-eller-koebe-ny",
         label: { da: "Reparere eller købe ny?", en: "Repair or replace?" },
+      },
+      {
+        href: "/vejledninger/tco-paa-firmacomputere",
+        label: {
+          da: "Hvad koster en pc over hele levetiden?",
+          en: "What a PC costs over its whole life",
+        },
       },
     ],
   },
@@ -508,6 +522,15 @@ export const categories: Category[] = [
       da: "Docking skal matche maskinens porte (USB-C, Thunderbolt eller ældre stik, der kun passer til ét mærke) – vi sikrer, at det passer til jeres enheder.",
       en: "A dock has to match the machine's ports (USB-C, Thunderbolt or an older connector that only fits one brand) — we make sure it fits the machines you have.",
     },
+    guides: [
+      {
+        href: "/vejledninger/thinkpad-elitebook-latitude",
+        label: {
+          da: "Hvilke docks passer til ThinkPad, EliteBook og Latitude",
+          en: "Which docks fit ThinkPad, EliteBook and Latitude",
+        },
+      },
+    ],
   },
 ];
 

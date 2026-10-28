@@ -547,6 +547,13 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
             label: { da: "Stand, test og garanti", en: "Condition, testing and warranty" },
           },
           {
+            href: "/vejledninger/standardiser-firmacomputere",
+            label: {
+              da: "Sådan standardiserer I firmaets computere",
+              en: "How to standardise your company's computers",
+            },
+          },
+          {
             href: "/ydelser",
             label: {
               da: "Alle ydelser fra indkøb til opstart",
