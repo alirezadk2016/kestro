@@ -67,7 +67,22 @@ const windowsMinimum: FaqItem = {
 type Extra = { faqs: FaqItem[]; sources: SourceId[] };
 
 const specific: Record<string, Extra> = {
-  batteriskift: { faqs: [compatibleParts], sources: ["repairDirective"] },
+  batteriskift: {
+    faqs: [
+      {
+        question: {
+          da: "Hvornår haster et batteriskift?",
+          en: "When is a battery replacement urgent?",
+        },
+        answer: {
+          da: "Når batteriet er opsvulmet – bunden buler, eller tastaturet løfter sig. Så stop med at bruge maskinen, og få batteriet skiftet sikkert. Slukker maskinen pludselig, selvom den viser strøm tilbage, er det også et typisk tegn på et slidt batteri.",
+          en: "When the battery is swollen — the base bulges or the keyboard lifts. Stop using the machine, and have the battery replaced safely. A machine that shuts down suddenly while it still shows charge left is another typical sign of a worn battery.",
+        },
+      },
+      compatibleParts,
+    ],
+    sources: ["repairDirective"],
+  },
   "ram-og-ssd-opgradering": {
     faqs: [
       {
@@ -100,12 +115,52 @@ const specific: Record<string, Extra> = {
           en: "Here, upgrading means hardware changes such as RAM or an SSD. Updating concerns Windows, drivers or applications. Investigate a slow machine before choosing between the two. Back up important files before changes, especially when replacing storage.",
         },
       },
+      {
+        question: {
+          da: "Hvilken SSD passer i min bærbare?",
+          en: "Which SSD fits my laptop?",
+        },
+        answer: {
+          da: "Det afgøres af den ledige plads i maskinen. En M.2-plads kan være til SATA eller NVMe, og nogle bærbare har i stedet en 2,5-tommer SATA-plads. Vi tjekker modellens specifikation, før vi bestiller en disk.",
+          en: "The free slot in the machine decides it. An M.2 slot can take SATA or NVMe, and some laptops have a 2.5-inch SATA bay instead. We check the model's specification before ordering a drive.",
+        },
+      },
       windowsMinimum,
     ],
     sources: ["windows11Requirements"],
   },
-  skaermskift: { faqs: [compatibleParts], sources: ["repairDirective"] },
-  "tastaturskift-og-nordisk-layout": { faqs: [compatibleParts], sources: ["repairDirective"] },
+  skaermskift: {
+    faqs: [
+      {
+        question: {
+          da: "Hvorfor skal I vide, præcis hvilket panel der sidder i?",
+          en: "Why do you need to know exactly which panel is fitted?",
+        },
+        answer: {
+          da: "Fordi samme model ofte er solgt med og uden touch og i flere opløsninger, og det nye panel skal matche det gamle. Er skærmen helt sort, mens maskinen kører, kan fejlen også sidde i kablet eller baglyset – det undersøger vi, før vi bestiller et panel.",
+          en: "Because the same model is often sold with and without touch and in several resolutions, and the new panel has to match the old one. If the screen is completely dark while the machine runs, the fault can also be in the cable or the backlight — we check that before ordering a panel.",
+        },
+      },
+      compatibleParts,
+    ],
+    sources: ["repairDirective"],
+  },
+  "tastaturskift-og-nordisk-layout": {
+    faqs: [
+      {
+        question: {
+          da: "Kan man ikke bare bruge klistermærker?",
+          en: "Couldn't you just use stickers?",
+        },
+        answer: {
+          da: "Det kan man, men klistermærker kan slides af og sidde skævt. Vi skifter det fysiske tastatur, så æ, ø og å er trykt på tasterne.",
+          en: "You could, but stickers can wear off and sit crooked. We replace the physical keyboard, so æ, ø and å are printed on the keys.",
+        },
+      },
+      compatibleParts,
+    ],
+    sources: ["repairDirective"],
+  },
   "reservedele-og-komponentskift": {
     faqs: [
       {
@@ -159,8 +214,8 @@ const specific: Record<string, Extra> = {
           en: "Do licences come with used hardware?",
         },
         answer: {
-          da: "Nej, ikke automatisk. Hardware og licenser købes hver for sig, så afklar, hvilke licenser du allerede har, før maskinerne står på skrivebordene. Vi siger til, hvis noget ikke kan overdrages.",
-          en: "No, not automatically. Hardware and licences are bought separately, so settle which licences you already have before the machines are on the desks. We tell you if something cannot be transferred.",
+          da: "Nej, ikke automatisk. Hardware og licenser købes hver for sig – både Windows og Office eller Microsoft 365 – så afklar, hvilke licenser du allerede har, før maskinerne står på skrivebordene. Vi siger til, hvis noget ikke kan overdrages.",
+          en: "No, not automatically. Hardware and licences are bought separately — Windows as well as Office or Microsoft 365 — so settle which licences you already have before the machines are on the desks. We tell you if something cannot be transferred.",
         },
       },
     ],
@@ -193,6 +248,16 @@ const specific: Record<string, Extra> = {
           en: "No. We find the cause first and come back with what a repair will cost before we fix anything — and say so if it is not worth it.",
         },
       },
+      {
+        question: {
+          da: "Hvad skal jeg skrive om fejlen?",
+          en: "What should I tell you about the fault?",
+        },
+        answer: {
+          da: "Hvad der sker, og hvornår: en blå skærm med en fejlkode, bip eller lyde ved opstart, en maskine, der genstarter af sig selv, eller en, der slet ikke starter. Har du et billede af fejlbeskeden, så send det med.",
+          en: "What happens, and when: a blue screen with an error code, beeps or noises at start-up, a machine that restarts on its own, or one that will not start at all. If you have a photo of the error message, send it along.",
+        },
+      },
     ],
     sources: [],
   },
@@ -206,6 +271,16 @@ const specific: Record<string, Extra> = {
         answer: {
           da: "Ja, hvis den kan bære det. Det, der afgør delene, er, hvad maskinen skal kunne – og om der allerede står en maskine, der kan bygges videre på i stedet for at starte forfra.",
           en: "Yes, if it can carry it. What decides the parts is what the machine has to do — and whether there is already a machine that can be built on instead of starting over.",
+        },
+      },
+      {
+        question: {
+          da: "Hvilke dele skal passe sammen?",
+          en: "Which parts have to match?",
+        },
+        answer: {
+          da: "Processoren skal passe til bundkortets sokkel, strømforsyningen skal kunne klare grafikkortet, og kabinettet skal have plads til både grafikkort og køler. Vi vælger dem efter, hvad maskinen skal bruges til.",
+          en: "The processor has to fit the motherboard's socket, the power supply has to handle the graphics card, and the case needs room for both the graphics card and the cooler. We choose them by what the machine will be used for.",
         },
       },
       windowsMinimum,

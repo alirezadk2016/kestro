@@ -56,8 +56,8 @@ const PREPARED: Record<string, { da: string; en: string }> = {
     en: "Ask for the function-test results and about pixel and panel defects, stand adjustment and included cables. A monitor without a stand or the right cable needs extra accessories.",
   },
   dockingstationer: {
-    da: "Få oplyst det præcise dock-modelnummer, strømforsyning, værtskabel og eventuelt behov for firmware eller drivere. Samme stikform betyder ikke nødvendigvis samme funktion.",
-    en: "Confirm the exact dock model number, power supply, host cable and any firmware or driver requirements. The same connector shape does not necessarily mean the same functionality.",
+    da: "Få oplyst det præcise dock-modelnummer, resultatet af funktionstesten, strømforsyning, værtskabel og eventuelt behov for firmware eller drivere. Samme stikform betyder ikke nødvendigvis samme funktion.",
+    en: "Confirm the exact dock model number, the function-test result, power supply, host cable and any firmware or driver requirements. The same connector shape does not necessarily mean the same functionality.",
   },
   tablets: {
     da: "Bed om batteritilstand, funktionstest af touchskærmen og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
@@ -86,8 +86,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "Should we choose a tower, SFF or mini PC?",
     },
     answer: {
-      da: "Et tårn giver typisk mest plads til udvidelser, mens et lille kabinet (SFF) fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads og skærmudgange på den konkrete model, især til CAD eller flere skærme.",
-      en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the actual chassis, power supply, card clearance and display outputs, especially for CAD or multiple monitors.",
+      da: "Et tårn giver typisk mest plads til udvidelser, mens et lille kabinet (SFF) fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads, porte og skærmudgange på den konkrete model, især til CAD eller flere skærme.",
+      en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the actual chassis, power supply, card clearance, ports and display outputs, especially for CAD or multiple monitors.",
     },
   },
   "mini-pc": {
@@ -96,8 +96,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "What should we check on an office mini PC?",
     },
     answer: {
-      da: "Se på antal skærmudgange, netværk, støjkrav og plads til RAM og lager. Et modelnavn kan dække flere kabinetter og valgfrie porte, så bed om billeder af de faktiske tilslutninger. Aftal strømforsyning og beslag, hvis pc'en skal monteres bag en skærm.",
-      en: "Check display outputs, networking, noise requirements and room for RAM and storage. A model name can cover different chassis and optional ports, so request photos of the actual connectors. Agree on the power supply and mount if the PC will sit behind a monitor.",
+      da: "Se på antal skærmudgange (DisplayPort eller HDMI), USB-porte, netværk, støjkrav og plads til RAM og lager. Et modelnavn kan dække flere kabinetter og valgfrie porte, så bed om billeder af de faktiske tilslutninger. Aftal strømforsyning og beslag, hvis pc'en skal monteres bag en skærm.",
+      en: "Check display outputs (DisplayPort or HDMI), USB ports, networking, noise requirements and room for RAM and storage. A model name can cover different chassis and optional ports, so request photos of the actual connectors. Agree on the power supply and mount if the PC will sit behind a monitor.",
     },
   },
   skaerme: {
@@ -106,8 +106,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "How do we match a used monitor to our workstation?",
     },
     answer: {
-      da: "Vælg størrelse og opløsning efter arbejdsopgaven og pladsen på bordet. Kontrollér derefter pc'ens eller dockens udgang, skærmens indgang og det nødvendige kabel. USB-C er ikke i sig selv en garanti for opladning eller billedsignal; få den konkrete models funktioner bekræftet.",
-      en: "Choose size and resolution around the work and desk space. Then check the PC or dock output, monitor input and required cable. USB-C alone does not guarantee charging or a video signal; confirm the capabilities of the exact model.",
+      da: "Vælg størrelse og opløsning efter arbejdsopgaven og pladsen på bordet, og om skærmen skal sidde på en arm (VESA-beslag). Kontrollér derefter pc'ens eller dockens udgang, skærmens indgang og det nødvendige kabel. USB-C er ikke i sig selv en garanti for opladning eller billedsignal; få den konkrete models funktioner bekræftet.",
+      en: "Choose size and resolution around the work and desk space, and whether the monitor goes on an arm (VESA mount). Then check the PC or dock output, monitor input and required cable. USB-C alone does not guarantee charging or a video signal; confirm the capabilities of the exact model.",
     },
   },
   dockingstationer: {
@@ -116,8 +116,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "How do we know whether a dock fits our laptops?",
     },
     answer: {
-      da: "Send modelnavnet på den bærbare og på docken samt skærmenes opløsning og tilslutninger. USB-C, Thunderbolt og USB-docks med DisplayLink stiller forskellige krav. Kontrollér både billedsignal, nødvendig opladningseffekt og eventuelle drivere; et USB-C-stik alene er ikke nok til at afgøre kompatibilitet.",
-      en: "Send the laptop model, dock model, and monitor resolutions and connections. USB-C, Thunderbolt and USB docks using DisplayLink have different requirements. Check video support, required charging power and any drivers; a USB-C connector alone cannot establish compatibility.",
+      da: "Send modelnavnet på den bærbare og på docken samt skærmenes opløsning og tilslutninger. USB-C, Thunderbolt og USB-docks med DisplayLink stiller forskellige krav. Kontrollér skærmudgangene (DisplayPort eller HDMI), nødvendig opladningseffekt og eventuelle drivere; et USB-C-stik alene er ikke nok til at afgøre kompatibilitet.",
+      en: "Send the laptop model, dock model, and monitor resolutions and connections. USB-C, Thunderbolt and USB docks using DisplayLink have different requirements. Check the display outputs (DisplayPort or HDMI), required charging power and any drivers; a USB-C connector alone cannot establish compatibility.",
     },
   },
   tablets: {
@@ -136,8 +136,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
       en: "What matters when choosing used business phones?",
     },
     answer: {
-      da: "Sammenlign præcis model, resterende sikkerhedsopdateringer, batteritilstand og lagerplads. Kontrollér jeres apps, MDM og behov for fysisk SIM eller eSIM på den konkrete variant. Bed om enheder uden tidligere ejers konto- eller administrationslås; en kosmetisk grad siger ikke noget om disse forhold.",
-      en: "Compare the exact model, remaining security updates, battery health and storage. Check your apps, MDM, and physical SIM or eSIM requirements against the specific variant. Request devices without a previous owner's account or management lock; a cosmetic grade does not establish any of these details.",
+      da: "Sammenlign præcis model, resterende sikkerhedsopdateringer, batteritilstand og lagerplads. Kontrollér jeres apps, MDM og behov for 5G og fysisk SIM eller eSIM på den konkrete variant. Bed om enheder uden tidligere ejers konto- eller administrationslås; en kosmetisk grad siger ikke noget om disse forhold.",
+      en: "Compare the exact model, remaining security updates, battery health and storage. Check your apps, MDM, and 5G and physical SIM or eSIM requirements against the specific variant. Request devices without a previous owner's account or management lock; a cosmetic grade does not establish any of these details.",
     },
   },
 };

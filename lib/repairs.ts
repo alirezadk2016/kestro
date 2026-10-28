@@ -322,7 +322,7 @@ export const repairs: Repair[] = [
       en: "Laptop spare parts: fans, hinges, charging ports | Kestro",
     },
     metaDescription: {
-      da: "Blæser, hængsler, ladestik, højttalere og kabler – delene, der slides, og som en ellers god maskine ofte bliver kasseret for. Vi skaffer og skifter dem.",
+      da: "Reservedele til bærbar: blæser, hængsler, ladestik, højttalere og kabler – delene, der slides. Vi skifter dem, så en ellers god maskine ikke kasseres.",
       en: "Fans, hinges, charging ports, speakers and cables — the parts that wear, and that a good machine otherwise gets scrapped over. We fit them.",
     },
     summary: {
@@ -650,12 +650,12 @@ export const repairs: Repair[] = [
       en: "Preparing and checking a used computer",
     },
     metaTitle: {
-      da: "Tjek af brugt computer: batteri, stand og opsætning | Kestro",
+      da: "Tjek af brugt computer: batteri, stand, klargøring | Kestro",
       en: "Used computer check-up: battery, condition, setup | Kestro",
     },
     metaDescription: {
-      da: "Har du købt en brugt computer? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, sætter den op og siger til, hvis noget skal skiftes.",
-      en: "Bought a used computer? We check it, state the battery's actual capacity in percent, set it up and tell you if anything needs replacing. Price first.",
+      da: "Har du købt en brugt computer? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, klargør den og siger til, hvis noget skal skiftes.",
+      en: "Bought a used computer? We check it, state the battery's actual capacity in percent, prepare it and tell you if anything needs replacing. Price first.",
     },
     summary: {
       da: "Købt en brugt maskine? Vi tjekker den igennem og gør den klar til brug.",

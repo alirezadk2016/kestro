@@ -103,8 +103,8 @@ export const practicalGuides: PracticalGuide[] = [
           en: "Capacity and charge are different figures",
         },
         body: {
-          da: "100 % opladet betyder fuldt i forhold til batteriets nuværende kapacitet. Det betyder ikke, at batteriet kan lagre lige så meget energi som fra nyt.",
-          en: "A 100% charge means full relative to the battery's current capacity. It does not mean the battery stores as much energy as when it was new.",
+          da: "100 % opladet betyder fuldt i forhold til batteriets nuværende kapacitet. Det betyder ikke, at batteriet kan lagre lige så meget energi som fra nyt. Kapaciteten er heller ingen garanti for batteritid: hvor længe en opladning holder, afhænger også af skærmens lysstyrke, og hvad der kører.",
+          en: "A 100% charge means full relative to the battery's current capacity. It does not mean the battery stores as much energy as when it was new. Nor is capacity a guarantee of battery life: how long a charge lasts also depends on screen brightness and what is running.",
         },
       },
       {
@@ -218,8 +218,8 @@ export const practicalGuides: PracticalGuide[] = [
       },
     ],
     limits: {
-      da: "Lukker programmer sig selv, eller får du blå skærm, kan der være en fejl – ikke bare for lidt RAM. Det kræver en egentlig fejlfinding, ikke en beregning.",
-      en: "If programs close by themselves or you get blue screens, there may be a fault — not just too little RAM. That calls for proper troubleshooting, not a calculation.",
+      da: "Tallene viser, hvor meget RAM der bruges, ikke RAM-hastigheden. Lukker programmer sig selv, eller får du blå skærm, kan der være en fejl – ikke bare for lidt RAM. Det kræver en egentlig fejlfinding, ikke en beregning.",
+      en: "The figures show how much memory is in use, not how fast it is. If programs close by themselves or you get blue screens, there may be a fault — not just too little RAM. That calls for proper troubleshooting, not a calculation.",
     },
     sourceIds: ["windowsPerformanceCheck", "memoryGenerations", "thinkpadT480Specs"],
     related: [

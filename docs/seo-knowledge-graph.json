@@ -92,7 +92,7 @@
           "ThinkCentre": ["thinkcentre"]
         },
         "Formfaktor": {
-          "tower": ["tower"],
+          "tower": ["tower", "tårn"],
           "SFF": ["sff", "small form", "lille kabinet"],
           "mini/tiny": ["mini", "tiny"]
         },
@@ -585,7 +585,7 @@
       }
     },
     "/reparation/ny-opsaetning-og-dataflytning": {
-      "main": ["dataflytning", "opsætning", "flytte"],
+      "main": ["dataflytning", "opsætning", "flytte", "flyt data"],
       "nodes": {
         "Penge": {
           "pris før arbejdet": ["pris", "koster"]
@@ -685,7 +685,7 @@
         "Arbejde": {
           "datasletning": ["slet", "slettes"],
           "Windows": ["windows"],
-          "test": ["test"],
+          "test": ["test", "tjek af brugt computer"],
           "batteri": ["batteri"],
           "tastatur": ["tastatur"]
         },
@@ -713,7 +713,7 @@
         "Afgrænsning": {
           "Kapacitet adskilt fra opladning": ["opladning", "opladet"],
           "Ikke en garanti for batteritid": ["ikke en fysisk", "garanti for batteritid"],
-          "Sikker hjælp ved opsvulmning": ["opsvulmning"]
+          "Sikker hjælp ved opsvulmning": ["opsvulmning", "opsvulmet"]
         }
       }
     },
@@ -734,7 +734,7 @@
         },
         "Afgrænsning": {
           "Ikke en hastighedsmåling": ["ram-hastighed"],
-          "Ikke en hukommelsesfejltest": ["hukommelsesfejl"],
+          "Ikke en hukommelsesfejltest": ["hukommelsesfejl", "ikke bare for lidt ram"],
           "Procent alene er ikke en diagnose": ["ikke en diagnose", "ikke, om du mangler"]
         }
       }
@@ -760,7 +760,10 @@
           "Sikkerhedskopi før skift": ["sikkerhedskopi"],
           "Dataflytning eller ny installation": ["dataflytning", "ny installation"],
           "Gendannelsesnøgler": ["gendannelsesnøgler"],
-          "Ikke en tilstandstest": ["tester ikke drevets tilstand"]
+          "Ikke en tilstandstest": [
+            "tester ikke drevets tilstand",
+            "tester ikke, om drevet er sundt"
+          ]
         }
       }
     },
@@ -782,12 +785,17 @@
           "Observeret behov før køb": ["observeret behov", "ikke automatisk løsningen"]
         },
         "Afgrænsning": {
-          "Ikke fuld hardwarediagnose": ["ikke en fuld hardwarediagnose"],
+          "Ikke fuld hardwarediagnose": ["ikke en fuld hardwarediagnose", "computerens helbred"],
           "Browseren isolerer ikke fysisk hastighed": [
             "browsermålinger",
-            "fysisk cpu- eller ram-hastighed"
+            "fysisk cpu- eller ram-hastighed",
+            "måler kun, hvor hurtigt browseren regner"
           ],
-          "Uforklarede fejl kræver undersøgelse": ["uforklarede udfald", "nærmere undersøgelse"]
+          "Uforklarede fejl kræver undersøgelse": [
+            "uforklarede udfald",
+            "nærmere undersøgelse",
+            "egentlig fejlfinding"
+          ]
         }
       }
     }
