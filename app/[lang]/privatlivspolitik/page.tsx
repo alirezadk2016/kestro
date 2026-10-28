@@ -23,7 +23,7 @@ const copy = {
   da: {
     metaTitle: "Privatlivspolitik | Kestro",
     metaDescription:
-      "Sådan behandler Kestro personoplysninger: kontaktformularerne, cookiefri besøgstal og den statistik fra Google, der kun kører, hvis I siger ja.",
+      "Sådan behandler Kestro personoplysninger: kontaktformularerne, cookiefri besøgstal og den statistik fra Google, der kun kører, hvis I selv siger ja.",
     title: "Privatlivspolitik",
     description:
       "Privatlivspolitikken for kestro.dk er de 12 punkter herunder: hvilke oplysninger vi behandler, hvorfor, og hvad I kan kræve. Kort version: ingen reklamer, ingen deling til markedsføring, og intet, der følger jer videre.",

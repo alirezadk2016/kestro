@@ -15,7 +15,7 @@ const copy = {
   da: {
     metaTitle: "Om Kestro – brugt erhvervs-IT fra Sydeuropa til Norden",
     metaDescription:
-      "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Danmark og Norge, der skal bruge testet IT-udstyr uden at købe nyt.",
+      "Kestro forbinder brugt erhvervshardware i Sydeuropa med virksomheder i Danmark og Norge, der vil bruge testet IT-udstyr i stedet for at købe nyt.",
     title: "Om Kestro",
     /* Answer first: what Kestro is, where, and for whom. */
     description:

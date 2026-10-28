@@ -224,7 +224,7 @@ export const categories: Category[] = [
       en: "Refurbished business monitors, 24 and 27 inch | Kestro",
     },
     metaDescription: {
-      da: "Refurbished kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, leveret sammen med maskiner og docks, så arbejdspladsen står komplet.",
+      da: "Brugte kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, tjekket for døde pixels og leveret sammen med maskiner og docks. Tilbud på skrift.",
       en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27", height-adjustable, with a USB hub. Sourced per order with your machines.',
     },
     intro: {
@@ -396,7 +396,7 @@ export const categories: Category[] = [
       en: "Refurbished business phones — iPhone and Samsung | Kestro",
     },
     metaDescription: {
-      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og de gamle telefoner kan hentes retur og slettes.",
+      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og jeres gamle telefoner kan hentes retur og slettes.",
       en: "Refurbished company phones and smartwatches — iPhone, Galaxy, Pixel, Apple Watch. Tested, reset and ready; old phones collected and erased.",
     },
     intro: {
@@ -465,7 +465,7 @@ export const categories: Category[] = [
       en: "Docking stations for business laptops, refurbished | Kestro",
     },
     metaDescription: {
-      da: "Brugte dockingstationer fra Lenovo, Dell og HP – plus kabler og tilbehør, der passer til maskinerne, så skærme og netværk virker fra første dag.",
+      da: "Brugte dockingstationer fra Lenovo, Dell og HP – plus kabler og tilbehør, der passer til jeres maskiner, så skærme og netværk virker fra første dag.",
       en: "Refurbished docking stations, monitors, keyboards and mice for business — ThinkPad Dock, Dell WD series, HP Thunderbolt Dock and more.",
     },
     intro: {

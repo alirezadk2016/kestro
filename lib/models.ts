@@ -102,7 +102,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkPad T480: specs, pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og batteri.',
+      da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og målt batteri.',
       en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Quote with battery.',
     },
     intro: {
@@ -346,7 +346,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkPad T14: specs, pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og udskiftelig SSD. Intel og AMD sammenlignet. Tilbud på skrift.',
+      da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og en udskiftelig SSD. Forskellen på Intel og AMD. Skriftligt tilbud.',
       en: 'Refurbished ThinkPad T14 Gen 1 and 2: 14" Full HD, Intel i5/i7 or AMD Ryzen PRO and a swappable SSD. The Intel and AMD versions compared.',
     },
     intro: {
@@ -463,7 +463,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkPad X1 Carbon: pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt ThinkPad X1 Carbon Gen 6–8: 14" på godt et kilo, men med loddet RAM – vælg hukommelsen rigtigt fra start. Tilbud med stand og batteri.',
+      da: "Brugt ThinkPad X1 Carbon Gen 6–8: 14\" på godt 1 kilo, men RAM'en er loddet fast, så vælg nok hukommelse fra start. Tilbud med stand og batteri.",
       en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over 1 kg, but the RAM is soldered — choose the memory right from the start. Written quote.',
     },
     intro: {
@@ -563,7 +563,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkPad L14: specs, pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt ThinkPad L14: samme tastatur og porte som T-serien til et strammere budget. Intel eller AMD og 14" Full HD. Tilbud med stand og batteri.',
+      da: 'Brugt ThinkPad L14: samme tastatur og porte som T-serien til et strammere budget. Intel eller AMD og 14" Full HD. Tilbud med stand og målt batteri.',
       en: 'Refurbished ThinkPad L14: the T series keyboard and ports on a tighter budget. Intel or AMD and 14" Full HD. Quote with condition and battery.',
     },
     intro: {
@@ -954,7 +954,7 @@ export const models: Model[] = [
       en: "Refurbished Dell Latitude 7490: specs, pros, cons | Kestro",
     },
     metaDescription: {
-      da: 'Brugt Dell Latitude 7490: let 14" på omkring 1,4 kg med Thunderbolt, HDMI og netværksstik i behold. Skriftligt tilbud med stand og målt batteri.',
+      da: 'Brugt Dell Latitude 7490: let 14" på cirka 1,4 kg med Thunderbolt, HDMI og netværksstik i behold. Skriftligt tilbud med stand og målt batteri i procent.',
       en: 'Refurbished Dell Latitude 7490: a light 14" at around 1.4 kg with Thunderbolt, HDMI and Ethernet kept. Quote with condition and measured battery.',
     },
     intro: {
@@ -1048,7 +1048,7 @@ export const models: Model[] = [
       en: "Refurbished HP ZBook 15: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt HP ZBook 15 G5 og G6: mobil workstation med NVIDIA Quadro, i7 med 6 kerner eller Xeon og op til 64 GB RAM – til CAD og 3D-arbejde.",
+      da: "Brugt HP ZBook 15 G5 og G6: en mobil workstation med NVIDIA Quadro, 6-kernet i7 eller Xeon og op til 64 GB RAM til CAD og 3D. Skriftligt tilbud.",
       en: "Refurbished HP ZBook 15 G5 and G6: a mobile workstation with NVIDIA Quadro, a 6-core i7 or Xeon and up to 64 GB RAM — for CAD and 3D.",
     },
     intro: {
@@ -1239,7 +1239,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkCentre M720q: pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt ThinkCentre M720q og M920q Tiny: 1-liters mini-pc, der kan sidde bag skærmen. To skærmudgange, lavt strømforbrug og tilbud på skrift.",
+      da: "Brugt ThinkCentre M720q og M920q Tiny: 1-liters mini-pc, der kan sidde bag skærmen, med to skærmudgange og lille strømforbrug. Skriftligt tilbud.",
       en: "Refurbished ThinkCentre M720q and M920q Tiny: a 1-litre mini PC that can mount behind the monitor, with two display outputs and low power draw.",
     },
     intro: {
@@ -1681,7 +1681,7 @@ export const models: Model[] = [
       en: "Refurbished Lenovo ThinkPad Ultra Dock: pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt ThinkPad Ultra Dock: klikker fast under maskinen og giver op til tre skærme, netværk og nøglelås. Passer kun til visse ThinkPad-modeller.",
+      da: "Brugt ThinkPad Ultra Dock: klikker fast under maskinen og giver op til tre skærme, netværk og nøglelås. Passer kun til bestemte ThinkPad-modeller.",
       en: "Refurbished ThinkPad Ultra Dock: clicks in under the laptop for up to three monitors, Ethernet and a key lock. Fits certain ThinkPad models only.",
     },
     intro: {

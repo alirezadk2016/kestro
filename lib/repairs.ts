@@ -75,7 +75,7 @@ export const repairs: Repair[] = [
       en: "Laptop battery replacement: check its health first | Kestro",
     },
     metaDescription: {
-      da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et nyt batteri kan betale sig. Pris, før vi går i gang.",
+      da: "Hvad batteriprocenten betyder, hvordan du selv måler den på Windows og Mac, og hvornår et nyt batteri betaler sig. Du får prisen, før vi går i gang.",
       en: "What the battery percentage means, how to measure it yourself on Windows and Mac, and when a new battery is worth it. A price before we start.",
     },
     summary: {
@@ -230,7 +230,7 @@ export const repairs: Repair[] = [
       en: "Screen replacement for laptops, tablets and phones | Kestro",
     },
     metaDescription: {
-      da: "Revnet eller defekt skærm? Samme model fås med flere paneler, så vi finder det panel, der sidder i netop din maskine. Pris, før vi går i gang.",
+      da: "Revnet eller defekt skærm? Samme model fås med flere paneler, så vi finder det, der sidder i netop din maskine. Du får prisen, før vi går i gang.",
       en: "Cracked or faulty screen? One model ships with several panels, so we identify the panel in your machine, not just the model. A price before we start.",
     },
     summary: {

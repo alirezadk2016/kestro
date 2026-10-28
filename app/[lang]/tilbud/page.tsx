@@ -27,7 +27,7 @@ const copy = {
   da: {
     metaTitle: "Få et tilbud på brugte computere til virksomheden | Kestro",
     metaDescription:
-      "Skriv antal, model og tidsramme for de brugte computere, I mangler. Vi afklarer det i en uforpligtende dialog; formularen er ikke en bestilling.",
+      "Skriv antal, model og tidsramme for de brugte computere, I mangler. Vi afklarer resten i en uforpligtende dialog; formularen er ikke en bestilling.",
     title: "Få et tilbud på brugte computere",
     /* Answer first: what a quote is, what it costs, and when it comes back. */
     lead: "Skriv antal, specifikation og ønsket tidsramme, så afklarer vi de indledende muligheder. Forespørgslen er gratis og uforpligtende. Udfyld det, I ved – resten kan stå som »ved ikke endnu«.",

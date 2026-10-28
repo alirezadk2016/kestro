@@ -935,7 +935,7 @@ export const guides: Guide[] = [
       en: "Windows 10 end of support: what companies do now | Kestro",
     },
     metaDescription: {
-      da: "Windows 10-support er slut. Se dine valg med ESU, LTSC og Windows 11, og hvad du bør tjekke, før du opgraderer eller udskifter din pc.",
+      da: "Windows 10-support er slut. Se jeres valg med ESU, LTSC og Windows 11, og hvad I bør tjekke, før I opgraderer eller udskifter firmaets computere.",
       en: "Windows 10 support has ended. Check ESU, LTSC and Windows 11 options for PCs, with a checklist for deciding what to upgrade, keep or replace.",
     },
     summary: {
@@ -1531,7 +1531,7 @@ export const guides: Guide[] = [
       en: "Repair or replace your computer? How to work it out | Kestro",
     },
     metaDescription: {
-      da: "En enkel måde at afgøre, om din computer kan betale sig at reparere: hvad delene koster, hvad maskinen er værd, og hvornår du skal lade være.",
+      da: "En enkel måde at afgøre, om det kan betale sig at reparere din computer: hvad delene koster, hvad maskinen er værd, og hvornår du bør lade være.",
       en: "A simple way to decide whether a computer is worth repairing or replacing: what the parts cost, what the machine is worth, and when to stop.",
     },
     summary: {
@@ -2165,7 +2165,7 @@ export const guides: Guide[] = [
       en: "Build your own PC: parts, order and common mistakes | Kestro",
     },
     metaDescription: {
-      da: "Sådan samler du din egen pc: hvilke dele skal passe sammen, i hvilken rækkefølge, og hvad går galt første gang? En gennemgang uden mystik.",
+      da: "Sådan samler du din egen pc: hvilke dele skal passe sammen, i hvilken rækkefølge, og hvad går ofte galt første gang? En gennemgang trin for trin.",
       en: "How to build your own PC: which parts must match, what order to assemble in, and what goes wrong the first time. A walkthrough without mystique.",
     },
     summary: {
@@ -2504,7 +2504,7 @@ export const guides: Guide[] = [
       en: "Secure data erasure before selling or scrapping PCs | Kestro",
     },
     metaDescription: {
-      da: "Sikker datasletning før salg: se forskellen på SSD, harddisk og Windows-nulstilling. Få råd om backup, valg af metode og sletterapporter.",
+      da: "Sikker datasletning før salg: se forskellen på SSD, harddisk og Windows-nulstilling. Få råd om backup, metode og sletterapport til firmaets pc'er.",
       en: "Erase PC data before selling: compare reset, SSD and hard drive sanitisation. See backups, choosing a method and records for company PCs.",
     },
     summary: {
