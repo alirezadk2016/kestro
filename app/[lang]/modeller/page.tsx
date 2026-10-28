@@ -15,7 +15,7 @@ const copy = {
     metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     metaDescription:
       "18 brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.",
-    title: "Brugte erhvervsmodeller: specifikationer og forskelle",
+    title: "Brugte erhvervsmodeller: ThinkPad, EliteBook, Latitude og OptiPlex",
     /* Answer first, with the counts the page actually shows. */
     description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konkret konfiguration bekræftet.`,
     noStockLine:
@@ -33,7 +33,7 @@ const copy = {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
     metaDescription:
       "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
-    title: "Used business models: specifications and differences",
+    title: "Used business models: ThinkPad, EliteBook, Latitude and OptiPlex",
     description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and actual configuration.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",

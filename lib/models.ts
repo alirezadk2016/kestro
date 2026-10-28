@@ -1752,7 +1752,8 @@ export const models: Model[] = [
   },
   {
     slug: "dell-wd19",
-    name: "Dell WD19",
+    /* Dell's own name for it, and the one that puts "dock" in the H1. */
+    name: "Dell Dock WD19",
     brand: "Dell",
     format: { da: "USB-C dock", en: "USB-C dock" },
     group: "docking",
