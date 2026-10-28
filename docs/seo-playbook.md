@@ -84,6 +84,41 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## `mak run` — 28 October 2026
+
+Run on a fresh build of the branch, then again after the fixes.
+
+| Measure                                           | Before   | After                 |
+| ------------------------------------------------- | -------- | --------------------- |
+| Descriptions at 145–160 characters (all ≤ 920 px) | 80 / 150 | 98 / 150              |
+| Danish descriptions under 145                     | 24       | 6, all bound by width |
+| H1s carrying the primary keyword                  | 80       | 83                    |
+| Pages with a warning                              | 88       | 73                    |
+| Topic pages missing graph nodes                   | 18       | 7                     |
+| FAIL, orphans, rule 9                             | 0        | 0                     |
+
+- **Rule 5.** 21 Danish descriptions redrafted from their own pages and
+  measured. The six left short are width-bound (model numbers and
+  capitals): X1 Carbon, ZBook, WD19, USB-C Dock G5, repair-or-replace,
+  Windows 11.
+- **H1s.** `/modeller` names the series it lists, `/kvalitet` names
+  warranty, and the WD19 takes Dell's own name, "Dell Dock WD19". The front
+  page, `/flaadeloesninger` and `/kontakt` are left on purpose (design,
+  and "aarhus" waits on an address); two guides already use the natural
+  form of their keyword.
+- **Rule 12.** New FAQ answers on battery, RAM/SSD, screen, keyboard,
+  troubleshooting and PC-building repairs, and buying details on five
+  category FAQs, all general facts or the pages' own. Seven graph terms
+  were widened where the page already said it in other words.
+- **Still questions for the owner:** warranty on a new battery; prices on
+  tablets and phones; recycling claims on five categories; data erasure
+  when preparing a bought machine; tablets for tills and booking.
+- **Rule 3 (unchanged):** 20 informational keywords sit on commercial
+  pages; each waits on a Danish results page, which cannot be read here.
+- **New guide topics in the map** (model comparison, standardising,
+  small-business IT, leasing or buying, TCO): each needs the owner's yes
+  before a route is made.
+
 ## Search Console — week to 24 October 2026
 
 Rule 14, read through Windsor for `sc-domain:kestro.dk`, 18–24 October
