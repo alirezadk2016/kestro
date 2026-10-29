@@ -3,14 +3,14 @@ import type { Lang } from "@/lib/i18n";
 
 const benefits = [
   {
-    title: { da: "Maskiner der bliver i brug", en: "Machines that stay in use" },
+    title: { da: "Maskiner, der bliver i brug", en: "Machines that stay in use" },
     description: {
       da: "Vi køber maskiner, der stadig kan arbejde, og sætter dem i drift igen i stedet for at de bliver skiftet ud efter tre år.",
       en: "We buy machines that can still do the work and put them back into service, rather than seeing them replaced after three years.",
     },
   },
   {
-    title: { da: "Kvalitet & tillid", en: "Quality and trust" },
+    title: { da: "Kvalitet og tillid", en: "Quality and trust" },
     description: {
       da: "Vi funktionstester og klargør maskinerne, før de sendes videre, og oplyser stand og batteritilstand skriftligt, før I bestiller.",
       en: "We function-test and prepare the machines before they go on, and put condition and battery state in writing before you order.",
@@ -34,12 +34,10 @@ const benefits = [
 
 const copy = {
   da: {
-    eyebrow: "Hvorfor Kestro",
     title: "Hvorfor virksomheder vælger Kestro",
     sub: "Vi køber brugt erhvervshardware i Sydeuropa, klargør det til nordisk brug og leverer det til virksomheder i Danmark og Norge.",
   },
   en: {
-    eyebrow: "Why Kestro",
     title: "Why companies choose Kestro",
     sub: "We buy used business hardware in southern Europe, prepare it for Nordic use and deliver it to companies in Denmark and Norway.",
   },
@@ -52,20 +50,23 @@ export default function WhyUs({ lang }: { lang: Lang }) {
     <section className="lit bg-brand-950 py-14 text-paper sm:py-20">
       <Container>
         <div className="max-w-3xl">
-          <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-          <h2 className="mt-5 text-balance font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-extrabold leading-[1.08] tracking-display text-paper">
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.title}
           </h2>
-          <p className="mt-5 text-base leading-7 text-paper/65">{c.sub}</p>
+          <p className="mt-5 text-base leading-[1.75] text-paper/75">{c.sub}</p>
         </div>
 
-        <dl className="mt-10 grid grid-cols-1 gap-x-12 border-t border-paper/15 sm:grid-cols-2">
+        {/* Parallel claims, not a sequence, so plates at every width. From
+            sm up these were hairline rows with the plate stripped off, which
+            read as a table — the one place on the page where four reasons
+            looked like four lines of a specification. */}
+        <dl className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {benefits.map((benefit) => (
-            <div key={benefit.title.da} className="border-b border-paper/10 py-6">
-              <dt className="font-display text-base font-bold tracking-tight text-paper sm:text-lg">
+            <div key={benefit.title.da} className="plate p-5 sm:p-6">
+              <dt className="font-display t-h3 font-bold tracking-tight text-paper">
                 {benefit.title[lang]}
               </dt>
-              <dd className="mt-2 text-sm leading-6 text-paper/65 sm:text-base sm:leading-7">
+              <dd className="mt-2 text-sm leading-6 text-paper/75 sm:text-base sm:leading-7">
                 {benefit.description[lang]}
               </dd>
             </div>

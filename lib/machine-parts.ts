@@ -46,12 +46,12 @@ export const exteriorViews: ExteriorView[] = [
     id: "overview",
     name: { da: "Hele maskinen", en: "The whole machine" },
     summary: {
-      da: "En 14-tommer erhvervsbærbar. Træk i den for at vende den – det er den samme model, du ser i toppen af forsiden.",
-      en: "A 14-inch business laptop. Drag it to turn it round — it is the same model you see at the top of the front page.",
+      da: "En 14-tommer erhvervsbærbar. Træk i den for at vende den.",
+      en: "A 14-inch business laptop. Drag it to turn it round.",
     },
     checks: [
       {
-        da: "Stand udvendigt vurderes først: ridser, buler og om skallen er skæv.",
+        da: "Stand udvendigt vurderes først: ridser og buler, og om skallen er skæv.",
         en: "Condition outside is judged first: scratches, dents, and whether the shell sits square.",
       },
       {
@@ -65,7 +65,7 @@ export const exteriorViews: ExteriorView[] = [
     id: "keyboard",
     name: { da: "Tastatur", en: "Keyboard" },
     summary: {
-      da: "Den del kunden rører ved hver dag – og den der afgør, om en maskine kan sælges i Norden.",
+      da: "Den del, kunden rører ved hver dag – og den, der afgør, om en maskine kan sælges i Norden.",
       en: "The part the user touches every day — and the part that decides whether a machine can be sold in the Nordics.",
     },
     checks: [
@@ -74,7 +74,7 @@ export const exteriorViews: ExteriorView[] = [
         en: "Machines from southern Europe come with Spanish or Italian layouts. We change them to Danish or Norwegian before delivery.",
       },
       {
-        da: "Hver enkelt tast trykkes igennem. Én tast, der hænger, er nok til at maskinen ikke går videre.",
+        da: "Hver enkelt tast trykkes igennem. Én tast, der hænger, er nok til, at maskinen ikke går videre.",
         en: "Every single key is pressed. One sticking key is enough for a machine not to go on.",
       },
       {
@@ -111,8 +111,8 @@ export const exteriorViews: ExteriorView[] = [
     id: "hinge",
     name: { da: "Hængsler", en: "Hinges" },
     summary: {
-      da: "Den mest oversete slitagedel på en brugt bærbar, og den dyreste at opdage for sent.",
-      en: "The most overlooked wear part on a used laptop, and the most expensive one to discover too late.",
+      da: "En slitagedel, der er let at overse på en brugt bærbar, og dyr at opdage for sent.",
+      en: "A wear part that is easy to overlook on a used laptop, and expensive to discover too late.",
     },
     checks: [
       {
@@ -216,12 +216,12 @@ export const interiorParts: InteriorPart[] = [
       en: "DDR4 SO-DIMM · typically 1–2 sockets · up to 32 GB",
     },
     what: {
-      da: "Den plads maskinen arbejder på lige nu. Har den for lidt, skriver Windows til disken i stedet, og alt bliver langsomt – også selvom processoren er fin.",
+      da: "Den plads, maskinen arbejder på lige nu. Har den for lidt, skriver Windows til disken i stedet, og alt bliver langsomt – også selvom processoren er fin.",
       en: "The space the machine works in right now. Too little of it and Windows writes to the disk instead, and everything slows down — even with a perfectly good processor.",
     },
     upgrade: {
-      da: "Den opgradering, der oftest kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
-      en: "The upgrade that most often makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
+      da: "Den opgradering, der som regel kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
+      en: "The upgrade that usually makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
     },
     swappable: "yes",
     region: { x: 372, y: 168, width: 236, height: 96 },
@@ -236,8 +236,8 @@ export const interiorParts: InteriorPart[] = [
       en: "M.2 NVMe or SATA · 256 GB – 2 TB",
     },
     what: {
-      da: "Der hvor Windows, programmerne og filerne ligger. En gammel harddisk med skiver er den enkeltdel, der gør en ellers udmærket maskine ubrugelig.",
-      en: "Where Windows, the programs and the files live. An old spinning hard disk is the single part that makes an otherwise decent machine unusable.",
+      da: "Der, hvor Windows, programmerne og filerne ligger. En gammel harddisk med skiver kan alene gøre en ellers udmærket maskine træg.",
+      en: "Where Windows, the programs and the files live. An old spinning hard disk can on its own make an otherwise decent machine sluggish.",
     },
     upgrade: {
       da: "Skiftes på få minutter. Maskinerne sendes som udgangspunkt videre med SSD – og er der data på den gamle disk, slettes den, før den forlader os. Vi oplyser, hvilken metode der er brugt.",
@@ -280,8 +280,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Moves heat away from the processor. Choked with dust, the machine throttles itself down rather than cook.",
     },
     upgrade: {
-      da: "Blæser og ribber renses, og kølepastaen skiftes, når maskinen har brug for det. Det er den mest oversete årsag til, at en brugt maskine føles træg.",
-      en: "Fan and fins are cleaned and the thermal paste replaced when the machine needs it. It is the most overlooked reason a used machine feels sluggish.",
+      da: "Blæser og ribber renses, og kølepastaen skiftes, når maskinen har brug for det. Det er en ofte overset årsag til, at en brugt maskine føles træg.",
+      en: "Fan and fins are cleaned and the thermal paste replaced when the machine needs it. It is an often overlooked reason a used machine feels sluggish.",
     },
     swappable: "yes",
     region: { x: 60, y: 60, width: 250, height: 210 },
@@ -296,8 +296,8 @@ export const interiorParts: InteriorPart[] = [
       en: "Intel Core i5 or i7 · soldered down",
     },
     what: {
-      da: "Maskinens regnekraft. Til kontorarbejde er en i5 fra en nyere generation næsten altid nok – generationen betyder mere end tallet.",
-      en: "The machine's computing power. For office work an i5 from a recent generation is nearly always enough — the generation matters more than the number.",
+      da: "Maskinens regnekraft. Til kontorarbejde er en i5 fra en nyere generation som regel nok – generationen betyder mere end tallet.",
+      en: "The machine's computing power. For office work an i5 from a recent generation is usually enough — the generation matters more than the number.",
     },
     upgrade: {
       da: "Kan ikke skiftes. Den sidder loddet på printet, og det er derfor, valget af model betyder noget fra starten.",
@@ -320,7 +320,7 @@ export const interiorParts: InteriorPart[] = [
       en: "The part that wears most over time. A battery loses capacity whether the machine is used or sits in a cupboard.",
     },
     upgrade: {
-      da: "Vi oplyser den faktiske kapacitet i procent af ny, ikke bare “batteri OK”. Skal maskinerne bruges ude af huset, kan der sættes nye i, før de leveres.",
+      da: "Vi oplyser den faktiske kapacitet i procent af ny, ikke bare »batteri OK«. Skal maskinerne bruges ude af huset, kan der sættes nye i, før de leveres.",
       en: "We report the actual capacity as a percentage of new, not just “battery OK”. If the machines are going out of the office, new ones can be fitted before delivery.",
     },
     swappable: "yes",
@@ -333,8 +333,8 @@ export const interiorParts: InteriorPart[] = [
     name: { da: "Bundkortbatteri", en: "Board battery" },
     spec: { da: "CR2032 knapcelle", en: "CR2032 coin cell" },
     what: {
-      da: "Holder ur og opsætning, når maskinen er helt slukket. Et fladt et giver forkert dato og klager ved opstart.",
-      en: "Keeps the clock and settings while the machine is fully off. A flat one gives the wrong date and complaints at start-up.",
+      da: "Holder ur og opsætning, når maskinen er helt slukket. Er det fladt, viser maskinen forkert dato og giver fejl ved opstart.",
+      en: "Keeps the clock and settings while the machine is fully off. When it is flat, the machine shows the wrong date and errors at start-up.",
     },
     upgrade: {
       da: "Koster nogle få kroner og skiftes på et minut. Vi skifter den, hvis maskinen har stået stille længe.",
