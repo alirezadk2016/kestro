@@ -84,6 +84,33 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## English descriptions — 29 October 2026
+
+Rule 5 on the English side, which the 28 October run left for later.
+
+| Measure                                     | Before | After   |
+| ------------------------------------------- | ------ | ------- |
+| Descriptions at 145–160 characters, ≤920 px | 104    | 135/156 |
+| English descriptions on target              | 32     | 62/78   |
+| Pages with a warning                        | 75     | 47      |
+| FAIL                                        | 0      | 0       |
+
+- **Method.** Each English description was redrafted from the reviewed
+  Danish one for the same page and measured with mak's metrics. English
+  sets wider (about 6.3 px a character at the limit), so commas replace
+  dashes and short words replace long ones.
+- **Five said more than the Danish:** desktops "function-tested",
+  smartphones "tested, reset and ready", a monitor size range and hub,
+  monitors and mice on docking, and digital signage on mini PCs. They now
+  say what the Danish says.
+- **Left, width-bound:** 16 English and 5 Danish descriptions, mostly
+  model pages and pages with Windows 11 or USB-C in the text. The
+  Danish repair guide keeps "computer", its keyword, rather than gain a
+  character.
+- **Titles at 61–63 characters** (`/produkter/baerbare-computere` and five
+  model pages) stay: all are under 580 px with the keyword in full, and
+  shortening them would drop "Lenovo".
+
 ## Three new guides — 28 October 2026
 
 The owner approved building the guide topics the map proposed. Three of the
