@@ -103,7 +103,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og målt batteri.',
-      en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy and easy to repair. Quote with battery.',
+      en: 'Refurbished ThinkPad T480: 14", Intel i5/i7 (8th gen), up to 32 GB RAM and a swappable SSD. Sturdy, easy to repair. Quote with the battery listed.',
     },
     intro: {
       da: "T480 er bygget til at blive slæbt rundt hver dag, der findes reservedele til den, og den kan udvides i stedet for at blive skiftet ud. For almindeligt kontorarbejde er den stadig rigeligt hurtig mange år efter, den kom på markedet.",
@@ -464,7 +464,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 6–8: 14\" på godt 1 kilo, men RAM'en er loddet fast, så vælg nok hukommelse fra start. Tilbud med stand og batteri.",
-      en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over 1 kg, but the RAM is soldered — choose the memory right from the start. Written quote.',
+      en: 'Refurbished ThinkPad X1 Carbon Gen 6–8: 14" at just over 1 kg, but its RAM is soldered, so pick the memory right from the start. A written quote.',
     },
     intro: {
       da: "X1 Carbon er ThinkPad-serien skåret ned til godt et kilo uden at give køb på tastatur eller skærm. Den er til sælgere, konsulenter og ledelse – dem, der har maskinen i tasken hver uge. Til gengæld er den mindre fleksibel end T-serien, og det skal med i beslutningen.",
@@ -564,7 +564,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt ThinkPad L14: samme tastatur og porte som T-serien til et strammere budget. Intel eller AMD og 14" Full HD. Tilbud med stand og målt batteri.',
-      en: 'Refurbished ThinkPad L14: the T series keyboard and ports on a tighter budget. Intel or AMD and 14" Full HD. Quote with condition and battery.',
+      en: 'Refurbished ThinkPad L14: the T series keyboard and ports on a tighter budget, Intel or AMD and 14" Full HD. A quote with its condition and battery.',
     },
     intro: {
       da: "L-serien er ThinkPad uden det dyre kabinet. Tastatur, porte og opgraderingsmuligheder følger stort set T-serien, men chassiset er enklere, og prisen ligger under. Skal I have mange maskiner ud på én gang, er det ofte her, regnestykket går op.",
@@ -661,7 +661,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt HP EliteBook 840 G5 og G6: 14" Full HD, Intel i5/i7 og op til 32 GB RAM i to sokler – fås med Sure View. Skriftligt tilbud med stand og batteri.',
-      en: 'Refurbished HP EliteBook 840 G5 and G6: 14" Full HD, Intel i5/i7, up to 32 GB RAM in two slots — available with Sure View. Quote with condition.',
+      en: 'Refurbished HP EliteBook 840 G5 and G6: 14" Full HD, Intel i5/i7, up to 32 GB RAM in two slots, available with Sure View. A quote with condition.',
     },
     intro: {
       da: "EliteBook 840 er HP's 14-tommers erhvervsbærbar og det nærmeste modstykke til Lenovos T-serie. Den har to hukommelsessokler, hvilket gør den nem at opgradere, og et fladt kabinet, der fylder lidt mindre i tasken end T-serien.",
@@ -1048,7 +1048,7 @@ export const models: Model[] = [
       en: "Refurbished HP ZBook 15: specs, pros and cons | Kestro",
     },
     metaDescription: {
-      da: "Brugt HP ZBook 15 G5 og G6: en mobil workstation med NVIDIA Quadro, 6-kernet i7 eller Xeon og op til 64 GB RAM til CAD og 3D. Skriftligt tilbud.",
+      da: "Brugt HP ZBook 15 G5 og G6: en mobil workstation med NVIDIA Quadro, 6-kernet i7 eller Xeon og op til 64 GB RAM, til CAD og 3D. Skriftligt tilbud.",
       en: "Refurbished HP ZBook 15 G5 and G6: a mobile workstation with NVIDIA Quadro, a 6-core i7 or Xeon and up to 64 GB RAM — for CAD and 3D.",
     },
     intro: {
@@ -1525,7 +1525,7 @@ export const models: Model[] = [
     },
     metaDescription: {
       da: 'Brugt HP EliteDisplay E243: 23,8" IPS i Full HD med DisplayPort, HDMI, VGA, USB-hub og fuldt justerbar fod. Skriftligt tilbud med stand pr. skærm.',
-      en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand. Quote with condition.',
+      en: 'Refurbished HP EliteDisplay E243: 23.8" IPS Full HD with DisplayPort, HDMI, VGA, a USB hub and a fully adjustable stand. Quote with its condition.',
     },
     intro: {
       da: "EliteDisplay E-serien er HP's svar på UltraSharp med de samme grundfunktioner: mat IPS-panel, højdejustering og USB-hub. Ud over DisplayPort og HDMI har den VGA til ældre maskiner.",

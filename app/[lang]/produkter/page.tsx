@@ -42,7 +42,7 @@ const copy = {
   en: {
     metaTitle: "Used and refurbished business computers and IT | Kestro",
     metaDescription:
-      "Refurbished laptops, desktops, mini PCs, monitors, tablets and docks for companies in Denmark and Norway — sourced per order, terms in writing.",
+      "Used computers for firms: laptops, desktops, mini PCs, screens, tablets and docks, sourced per order in Denmark and Norway, all terms in writing.",
     title: "Used business computers we source",
     description: `Find used IT equipment in ${categories.length} categories for office work, home working or a startup. Start with tasks, software and budget; then clarify monitors, a Danish or Norwegian keyboard and whether the old computer can be upgraded.`,
     noStockLine: "An equipment budget needs more than the price of the computer itself.",

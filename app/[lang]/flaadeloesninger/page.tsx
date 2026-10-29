@@ -50,7 +50,7 @@ const copy = {
   en: {
     metaTitle: "Business computers in bulk — fleet solutions | Kestro",
     metaDescription:
-      "From ten machines to the whole company: one configuration across the fleet, one delivery and the old machines collected. One combined quote.",
+      "From ten machines to the whole company: one configuration across the fleet, a single delivery and the old machines collected. All of it in one quote.",
     badge: "For larger companies",
     title: "Equip the whole company",
     intro:

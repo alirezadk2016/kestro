@@ -323,7 +323,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Reservedele til bærbar: blæser, hængsler, ladestik, højttalere og kabler – delene, der slides. Vi skifter dem, så en ellers god maskine ikke kasseres.",
-      en: "Fans, hinges, charging ports, speakers and cables — the parts that wear, and that a good machine otherwise gets scrapped over. We fit them.",
+      en: "Laptop spare parts: fans, hinges, charging ports, speakers and cables, the parts that wear. We fit them, so a good laptop is not scrapped over one.",
     },
     summary: {
       da: "Blæser, hængsler, ladestik, højttalere, kabler og andre slidte dele skiftes, så maskinen kan køre videre.",
@@ -505,7 +505,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Flyt data til ny computer: vi installerer styresystemet, flytter filer, profiler og programmer – og gennemgår listen med dig, før den gamle slettes.",
-      en: "New computer? We install the system and move files, profiles and software across — and go through the list with you before the old one is wiped.",
+      en: "New computer? We install the system and move your files, profiles and software, then go through the list with you before the old one is wiped clean.",
     },
     summary: {
       da: "Styresystemet installeres på ny, og dine filer og programmer flyttes med over.",
@@ -606,7 +606,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Få samlet en pc efter opgaven, ikke efter et datablad – fra bunden eller videre på din nuværende maskine. Samlet, installeret og belastningstestet.",
-      en: "Get a PC built to the job rather than a datasheet — from scratch, or on top of the machine you have. Assembled, installed and load-tested.",
+      en: "Get a PC built to the job rather than to a datasheet, from scratch or on top of the machine you already have. Assembled, installed and load-tested.",
     },
     summary: {
       da: "En maskine samlet efter dine ønsker – fra bunden eller ved at opgradere den, du har.",

@@ -49,7 +49,7 @@ export const services: Service[] = [
     },
     metaDescription: {
       da: "IT-indkøb til erhverv: vi finder det rigtige brugte IT-udstyr hos leverandører i Sydeuropa og køber først ind, når I ved, hvad I skal bruge – ikke før.",
-      en: "We find used business computers through suppliers in southern Europe to match what you need, rather than selling what happens to be in stock.",
+      en: "IT sourcing for firms: we find the right used IT with suppliers in southern Europe, and only buy it in once you know what you need, and not before.",
     },
     summary: {
       da: "Vi finder det rigtige IT-udstyr til jer – og køber først ind, når I ved, hvad I skal bruge.",
@@ -199,7 +199,7 @@ export const services: Service[] = [
     },
     metaDescription: {
       da: "Funktionstest af skærm, tastatur, batteri og ydeevne, opgradering efter behov og sletning af lagermediet, før maskinen sættes op til medarbejderen.",
-      en: "Function testing of screen, keyboard, battery and performance, upgrades where needed, and the storage erased before the machine is set up.",
+      en: "Function testing of screen, keyboard, battery and performance, upgrades if needed, and the storage erased before the machine is set up for staff.",
     },
     summary: {
       da: "Det, der sker, fra maskinen er købt, til den står på et skrivebord.",
@@ -380,7 +380,7 @@ export const services: Service[] = [
     },
     metaDescription: {
       da: "Overskudslager af IT: returvarer, demoenheder og udstyr fra aflyste ordrer taber værdi hver måned, det står stille. Vi finder køberne i stedet for jer.",
-      en: "Surplus IT stock and returns: demo units and equipment from cancelled orders lose value every month they sit unused. We find the buyers for you.",
+      en: "Surplus IT stock and returns: demo units and kit from cancelled orders lose value every month that they sit unused. We will find the buyers for you.",
     },
     summary: {
       da: "Udstyr, der aldrig nåede en kunde, taber værdi hver måned, det står stille.",

@@ -166,7 +166,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Refurbished stationære pc'er og workstations – OptiPlex, EliteDesk og ThinkCentre – i tårn, lille kabinet eller mini. Skaffet til ordren, stand på skrift.",
-      en: "Refurbished business desktops and workstations — Dell OptiPlex, HP EliteDesk, Lenovo ThinkCentre and more. Function-tested and prepared.",
+      en: "Refurbished desktops and workstations: OptiPlex, EliteDesk and ThinkCentre as tower, small or mini. Sourced per order, with condition in writing.",
     },
     intro: {
       da: "Til faste arbejdspladser er en renoveret stationær ofte den mest økonomiske løsning. Stationære erhvervsmaskiner er typisk bygget til lang levetid og nemme at opgradere, hvilket gør dem velegnede til genbrug.",
@@ -239,7 +239,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Brugte kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, tjekket for døde pixels og leveret sammen med maskiner og docks. Tilbud på skrift.",
-      en: 'Refurbished business monitors from Dell, HP and Lenovo — 24" and 27", height-adjustable, with a USB hub. Sourced per order with your machines.',
+      en: "Used office monitors from Dell, HP and Lenovo, 22 to 27 inch, checked for dead pixels and delivered with the machines and docks. A written quote.",
     },
     intro: {
       da: "En skærm holder som regel længere end den computer, der står ved siden af, og derfor er det ofte her, der er mest at hente. Vi skaffer erhvervsskærme med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har – og de bliver tjekket for døde pixels og indbrændinger, inden de sendes af sted.",
@@ -295,7 +295,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Brugte og refurbished mini-pc'er til reception, kasse og trange kontorpladser – fx Lenovo ThinkCentre Tiny og Dell OptiPlex Micro. Skaffet til ordren.",
-      en: "Refurbished mini PCs — ThinkCentre Tiny, OptiPlex Micro, HP Mini — for receptions, tills, digital signage and small desks. Sourced per order.",
+      en: "Refurbished mini PCs for reception, tills and tight office desks, such as the Lenovo ThinkCentre Tiny and Dell OptiPlex Micro. Sourced for the order.",
     },
     intro: {
       da: "En mini-pc klarer det samme kontorarbejde som en almindelig stationær, i et kabinet, der kan skjules bag skærmen eller monteres under bordet. Den passer, hvor der er begrænset plads, eller hvor et rent skrivebord er vigtigt.",
@@ -353,7 +353,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Brugte tablets til erhverv: iPad, Galaxy Tab og Surface til lager, service og møder. Skaffet per ordre, med stand og batteri oplyst, før I bestiller.",
-      en: "Refurbished iPad, Galaxy Tab, Surface and Lenovo tablets for warehouse, service and meeting rooms. Condition and battery stated up front.",
+      en: "Used tablets for business: iPad, Galaxy Tab and Surface for warehouse, service and meetings. Sourced per order, condition and battery stated first.",
     },
     intro: {
       da: "Tablets er velegnede til medarbejdere i marken, i butikken eller på lageret, hvor en bærbar er for tung og en telefon for lille. Vi klargør enhederne, så de er nulstillet og klar til jeres system til styring af enheder (MDM).",
@@ -411,7 +411,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og jeres gamle telefoner kan hentes retur og slettes.",
-      en: "Refurbished company phones and smartwatches — iPhone, Galaxy, Pixel, Apple Watch. Tested, reset and ready; old phones collected and erased.",
+      en: "Refurbished company phones sourced for each order. The condition and battery are stated per unit, and old phones can all be collected and erased.",
     },
     intro: {
       da: "Firmatelefoner udskiftes ofte, før de er slidt op. En renoveret telefon af en nyere model kan dække det samme behov, også når der skal udstyres flere medarbejdere på én gang.",
@@ -480,7 +480,7 @@ export const categories: Category[] = [
     },
     metaDescription: {
       da: "Brugte dockingstationer fra Lenovo, Dell og HP – plus kabler og tilbehør, der passer til jeres maskiner, så skærme og netværk virker fra første dag.",
-      en: "Refurbished docking stations, monitors, keyboards and mice for business — ThinkPad Dock, Dell WD series, HP Thunderbolt Dock and more.",
+      en: "Used docking stations from Lenovo, Dell and HP, plus cables and accessories that fit your machines, so screens and network work on the first day.",
     },
     intro: {
       da: "En komplet arbejdsplads er mere end maskinen. Vi leverer docking, skærme og tilbehør sammen med enhederne, så I kan sætte hele arbejdspladsen op i én leverance.",

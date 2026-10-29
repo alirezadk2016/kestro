@@ -46,7 +46,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     metaDescription: {
       da: "Lav en batterirapport i Windows, find designkapacitet og fuld opladningskapacitet, og beregn kapacitet i procent. Følg guiden, og forstå dine tal.",
-      en: "Check Windows battery capacity with a report and two figures, work out the percentage in our calculator and see what it means for battery life.",
+      en: "Check Windows battery capacity with a report and two figures, work out the percentage in our calculator, and see what it means for the battery life.",
     },
     summary: {
       da: "Find rapporten, og beregn kapaciteten med to tal fra Windows.",
@@ -155,7 +155,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     metaDescription: {
       da: "Tjek RAM-forbrug i Jobliste. Se brugt og ledig RAM, og find de apps, der fylder. Læs guiden trin for trin, før du beslutter, om du vil købe ny RAM.",
-      en: "Check RAM usage in Task Manager: see used and free RAM, find the apps that use it and work out the percentage before you buy more memory.",
+      en: "Check RAM use in Task Manager: see used and free RAM, find the apps that fill it, and then work out the percentage before you decide to buy more.",
     },
     summary: {
       da: "Se dit hukommelsesforbrug, før du beslutter at købe mere RAM.",

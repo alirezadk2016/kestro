@@ -1540,7 +1540,7 @@ export const guides: Guide[] = [
     },
     metaDescription: {
       da: "En enkel måde at afgøre, om det kan betale sig at reparere din computer: hvad delene koster, hvad maskinen er værd, og hvornår du bør lade være.",
-      en: "A simple way to decide whether a computer is worth repairing or replacing: what the parts cost, what the machine is worth, and when to stop.",
+      en: "A simple way to decide if a computer is worth repairing: what the parts cost, what the machine is worth, and when it is better to leave it alone.",
     },
     summary: {
       da: "Regnestykket, der afgør, om en langsom eller defekt maskine skal repareres eller skiftes ud.",
@@ -1720,7 +1720,7 @@ export const guides: Guide[] = [
     },
     metaDescription: {
       da: "Kan du opgradere RAM i din bærbare? Tjek type, sokler og kapacitet før et køb. Læs om sikkert skift, batteri og backup, og hvornår du bør få hjælp.",
-      en: "Upgrade laptop RAM safely: check slots, type and capacity before buying. Get backup and battery precautions, fitting advice and reasons to stop.",
+      en: "Upgrade laptop RAM safely: check slots, type and capacity before you buy. Get backup and battery precautions, fitting advice and reasons to stop.",
     },
     summary: {
       da: "Find den rigtige RAM, kontrollér, om den kan skiftes, og vurder, om opgaven er egnet til gør-det-selv.",
@@ -2188,7 +2188,7 @@ export const guides: Guide[] = [
     },
     metaDescription: {
       da: "Sådan samler du din egen pc: hvilke dele skal passe sammen, i hvilken rækkefølge, og hvad går ofte galt første gang? En gennemgang trin for trin.",
-      en: "How to build your own PC: which parts must match, what order to assemble in, and what goes wrong the first time. A walkthrough without mystique.",
+      en: "How to build your own PC: which parts must match, what order to put them in, and what often goes wrong the first time. A step-by-step walkthrough.",
     },
     summary: {
       da: "Rækkefølgen, de dele, der skal passe sammen, og de fejl, der er lette at lave første gang.",

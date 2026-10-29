@@ -26,7 +26,7 @@ const copy = {
   en: {
     metaTitle: "About Kestro — used business IT from southern Europe",
     metaDescription:
-      "Kestro connects used business hardware in southern Europe with companies in the Nordics that need tested IT equipment without buying new.",
+      "Kestro links used business hardware in southern Europe with firms in Denmark and Norway that would rather use tested IT kit than buy all of it new.",
     title: "About Kestro",
     description:
       "Kestro is a supplier of used business hardware in Aarhus. We find the machines through a network of suppliers in southern Europe and deliver them to companies in two countries, Denmark and Norway — a tested machine for the job rather than a new one at list price.",

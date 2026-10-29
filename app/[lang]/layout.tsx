@@ -90,7 +90,7 @@ const meta = {
   en: {
     title: "Refurbished business computers for companies | Kestro",
     description:
-      "Refurbished laptops, desktops and monitors for companies in Denmark and Norway — Danish or Norwegian keyboard, and the terms in writing first.",
+      "Refurbished laptops, desktops and screens for firms in Denmark and Norway. Danish or Norwegian keyboard, and condition and price in writing first.",
   },
 } satisfies Record<Lang, { title: string; description: string }>;
 

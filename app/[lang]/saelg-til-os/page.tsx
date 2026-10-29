@@ -51,7 +51,7 @@ const copy = {
   en: {
     metaTitle: "Sell used IT equipment — collection, data erasure | Kestro",
     metaDescription:
-      "Replacing company IT? Kestro buys used business computers, phones and tablets in Denmark and Norway, collects them and erases the storage.",
+      "We buy used computers, phones and tablets from firms in Denmark and Norway, collect them and erase all of their storage. You get a valuation first.",
     title: "Sell your company's used IT equipment to us",
     description:
       "We buy used business computers, phones and tablets from companies in Denmark and Norway. We collect them, erase the storage and give them a second life — and you get a valuation before you decide.",

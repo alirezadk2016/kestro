@@ -31,7 +31,7 @@ const copy = {
   en: {
     metaTitle: "What are RAM, SSD and cooling? See inside a laptop | Kestro",
     metaDescription:
-      "Turn a laptop round and see where the memory, SSD, wireless card, cooling and battery sit — what each part does, and what can be upgraded.",
+      "Turn a laptop round, and see where its memory, SSD, wireless card, cooling and battery sit: what each part does, and which parts can be upgraded.",
     title: "The machine, part by part",
     description:
       "Turn it round, and tap a part. Outside you see the machine we source. Inside is a drawing of where the parts sit, and what can be changed if you want another couple of years out of the equipment.",

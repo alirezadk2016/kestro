@@ -41,7 +41,7 @@ const copy = {
   en: {
     metaTitle: "Computer repairs and upgrades — individuals welcome | Kestro",
     metaDescription:
-      "Battery, screen, memory, SSD, keyboard and Windows on laptops and desktops. A price before we start, and an honest answer if it is not worth it.",
+      "Battery, screen, RAM, SSD, keyboard and Windows on laptops and desktops, with a price before we start and an honest answer if it is not worth it.",
     title: "Computer repairs and upgrades",
     description:
       "A small workshop for computers that do not need replacing yet. Kestro sources and supplies IT to companies — the workshop is the one exception, where individuals are welcome too.",
