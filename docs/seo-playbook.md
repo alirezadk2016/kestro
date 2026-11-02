@@ -84,6 +84,39 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Search Console — week to 31 October 2026
+
+Rule 14, read through Windsor for `sc-domain:kestro.dk`, 25–31 October
+against 18–24 October. No figure is recorded here; what the data led to is.
+
+- **Denmark moved up.** Danish impressions grew and their average position
+  improved; total impressions grew too. Clicks stay in
+  single figures, so no conclusion is drawn from CTR.
+- **The T480 model page is found.** `/modeller/lenovo-thinkpad-t480` drew
+  its first Danish searches ("lenovo t480", "lenovo thinkpad t480",
+  "thinkpad t480") at positions 10–15, with clicks. Its title keeps
+  "Lenovo", which those searches use. Rule 9: the ThinkPad, EliteBook and
+  Latitude guide, which discusses the T480 throughout, now links to it.
+- **Rule 5, `/en/knowledge/hdd-or-ssd`.** The most-shown page again, now
+  near page one, without clicks, across dozens of "how to know if I have an
+  SSD or HDD" searches. Most put SSD first and ask how to tell, so the
+  title became "SSD or HDD? How to tell which drive you have" (53
+  characters, 490 px) and the description leads with "SSD or HDD?". The
+  H1 and the URL are unchanged.
+- **`/en/knowledge/check-memory-usage` dropped out** from 25 October. The
+  page answers 200, is its own canonical and carries the da/en hreflang
+  pair; no commit touched its English text that week. The Danish
+  `/vejledninger/tjek-ram-forbrug` kept its impressions. An indexing
+  question for URL Inspection, not a rewrite.
+- **Old addresses still shown:** `/en/knowledge/slet-data-foer-du-saelger`,
+  `/en/produkter/*` (including the retired `gaming`) and other hybrid
+  `/en/` paths. Each answers one 301 to a live page. Nothing to do.
+- **Still no impressions** for `/produkter/baerbare-computere` and
+  `/produkter/skaerme`. The new English TCO guide was already shown.
+- **Sitemap:** 156 submitted, no errors or warnings, read by Google on 31
+  October.
+- **No query landed on two URLs** apart from the brand name.
+
 ## English descriptions — 29 October 2026
 
 Rule 5 on the English side, which the 28 October run left for later.

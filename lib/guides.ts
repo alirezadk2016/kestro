@@ -2931,6 +2931,13 @@ export const guides: Guide[] = [
         label: { da: "Modeller og specifikationer", en: "Models and specifications" },
       },
       {
+        href: "/modeller/lenovo-thinkpad-t480",
+        label: {
+          da: "ThinkPad T480: fordele og ulemper",
+          en: "ThinkPad T480: strengths and drawbacks",
+        },
+      },
+      {
         href: "/produkter/baerbare-computere",
         label: { da: "Brugte erhvervsbærbare, vi skaffer", en: "Used business laptops we source" },
       },

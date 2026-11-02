@@ -251,11 +251,11 @@ export const practicalGuides: PracticalGuide[] = [
     },
     metaTitle: {
       da: "HDD eller SSD: find dit drev og det rette format | Kestro",
-      en: "HDD or SSD: identify your drive and its format | Kestro",
+      en: "SSD or HDD? How to tell which drive you have | Kestro",
     },
     metaDescription: {
       da: "HDD eller SSD? Find dit drev i Windows og lær om M.2, SATA og NVMe. Tjek format, stik og filer før et nyt drev. Læs vores vejledning trin for trin.",
-      en: "HDD or SSD? Find the drive type in Windows, learn what M.2, SATA and NVMe mean, and check the format and your files before fitting a new one.",
+      en: "SSD or HDD? Find the drive type in Windows, learn what M.2, SATA and NVMe mean, and check the format and your files before fitting a new one.",
     },
     summary: {
       da: "Find drevtypen, og se, hvad en ny SSD skal passe til.",
