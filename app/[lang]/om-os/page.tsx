@@ -160,9 +160,14 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
 
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <figure className="max-w-3xl">
-            <blockquote className="text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
-              &ldquo;{c.quote}&rdquo;
+          {/* Centred: as one max-w-3xl column on the left it left the right
+              half of the band empty on every desktop. The marks follow the
+              language — Danish quotes »…«, and “…” is only right in English. */}
+          <figure className="mx-auto max-w-4xl lg:text-center">
+            <blockquote className="text-balance text-xl font-medium leading-9 text-paper sm:text-2xl sm:leading-10">
+              {lang === "da" ? "»" : "\u201C"}
+              {c.quote}
+              {lang === "da" ? "«" : "\u201D"}
             </blockquote>
             {/* The words are the company's, so the caption says so. It used to
                 name the market's sales contact, which put the same sentence in

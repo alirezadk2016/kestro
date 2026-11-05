@@ -174,8 +174,14 @@ export default function Footer({ lang }: { lang: Lang }) {
                   two, then three, so the eye had no edge to run down. */}
                 <ul
                   className={`mt-2 grid gap-x-4 [grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))] ${
+                    /* max-content, not two equal halves: at 1280–1500px each
+                       half was 153px and "Modeller og specifikationer" is
+                       181, so with nowrap it ran into "Maskinen indeni" beside
+                       it. The first column holds the long labels and the
+                       second the short ones; sized to them, both fit the
+                       322px the group has from 1280 up. */
                     gi === 0
-                      ? "xl:[grid-template-columns:repeat(2,minmax(0,1fr))]"
+                      ? "xl:[grid-template-columns:repeat(2,max-content)]"
                       : "xl:[grid-template-columns:minmax(0,1fr)]"
                   }`}
                 >

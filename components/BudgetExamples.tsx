@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { budgetExamples, budgetAmount, budgetReadOn, budgetSource, formatDkk } from "@/lib/pricing";
 import { company } from "@/lib/company";
 import { formatDate, localePath, type Lang } from "@/lib/i18n";
@@ -57,9 +57,16 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             {company.email}
           </a>
         </p>
-        <details className="mt-4 max-w-3xl border-t border-white/10 pt-2">
-          <summary className="cursor-pointer py-3 text-sm font-semibold text-paper/85">
+        <details className="group mt-4 max-w-3xl border-t border-white/10 pt-2">
+          {/* The FactNote disclosure's shape, so the page's two folds open the
+              same way rather than one with the browser's own triangle. */}
+          <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-3 py-3 text-sm font-semibold text-paper/85 [&::-webkit-details-marker]:hidden">
             {da ? "Kilder og beregningsgrundlag" : "Sources and calculation"}
+            <ChevronDown
+              aria-hidden="true"
+              className="h-4 w-4 flex-none text-paper/65 transition-transform duration-200 group-open:rotate-180"
+              strokeWidth={2}
+            />
           </summary>
           {/* How the figures were reached, folded with the sources it rests
               on. It was a six-line paragraph of small print above the cards,

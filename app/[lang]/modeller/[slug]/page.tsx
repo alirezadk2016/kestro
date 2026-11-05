@@ -354,7 +354,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   <li key={other.slug}>
                     <Link
                       href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center px-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
+                      className="plate-sm inline-flex min-h-[44px] items-center rounded-full px-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
                     >
                       {other.name}
                     </Link>

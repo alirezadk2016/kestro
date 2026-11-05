@@ -458,6 +458,24 @@ for (const file of [
     });
 }
 
+/* 7b. Quotation marks typed as entities into shared markup.
+ *
+ * The check above reads strings. The quote on /om-os was wrapped in
+ * &ldquo;…&rdquo; in the JSX around the string, so it rendered “…” on the
+ * Danish page too and no string ever contained the mark. A mark around copy
+ * that serves both languages has to follow `lang`. */
+for (const file of [...walkProse(join(root, "components")), ...walkProse(join(root, "app"))]) {
+  readFileSync(file, "utf8")
+    .split("\n")
+    .forEach((line, i) => {
+      if (/&[lr]dquo;/.test(line)) {
+        fail(
+          `${file.slice(root.length)}:${i + 1}: &ldquo;/&rdquo; in markup renders English quotes in Danish too — choose the mark by lang`,
+        );
+      }
+    });
+}
+
 /* 6. A meta description may not be the page's own summary.
  *
  * Two of the twelve repair entries had the two byte-identical. The meta
