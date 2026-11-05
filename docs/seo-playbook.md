@@ -114,6 +114,16 @@ crawl. What it found and what changed:
   comma, validation messages, commas and alt text).
 - **Early signal.** The English comparison guide already appears near page
   one for "thinkpad vs elitebook vs latitude".
+- **Second round, same day.** Model pages for monitors and docks showed the
+  laptop lists (memory, keyboard, battery); each kind now has its own. The
+  price box no longer explains budget figures that are not on the page, and
+  on the sixteen model pages without photographs it fills the header's empty
+  right column, as the intro now does on /produkter/tablets.
+  /tilbud-eksempel shows the document and its explanation side by side.
+  A contrast scan of all 156 pages at 390 and 1440 px found one label under
+  4.5:1 ("Videre herfra" on /tilbud-eksempel, 2.23:1), now fixed. Mobile
+  Lighthouse on six templates: performance 94–97, accessibility, best
+  practices and SEO 100.
 
 ## Search Console — week to 31 October 2026
 
