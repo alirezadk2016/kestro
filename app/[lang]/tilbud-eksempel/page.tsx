@@ -131,7 +131,7 @@ const copy = {
     priceLink: "Hvad der afgør prisen",
     whyTitle: "Hvorfor er alle felterne der?",
     whyBody:
-      "Hvert felt herover findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der klarer en test, kan stadig være slidt. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
+      "Hvert felt i tilbuddet findes, fordi det er et sted, en handel kan gå galt. »Grad B« uden en beskrivelse siger ingenting. Et batteri, der klarer en test, kan stadig være slidt. En garanti uden et navn på er svær at bruge. Vi skriver dem ned, så I kan holde os op på dem – og så I kan bede andre leverandører om det samme.",
     relatedTitle: "Videre herfra",
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
@@ -197,7 +197,7 @@ const copy = {
     priceLink: "What decides the price",
     whyTitle: "Why is every field there?",
     whyBody:
-      "Each field above exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can still be worn. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
+      "Each field in the quote exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can still be worn. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
     relatedTitle: "Where to go next",
     related: [
       { href: "/kvalitet", label: "Condition, testing and what to ask about" },
@@ -255,140 +255,145 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
             the corner is not decoration — nothing on this page may be
             mistaken for a live offer.
           */}
-          <article className="max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20">
-            <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/10 p-6 sm:p-8">
-              <div>
-                <p className="label text-brand-700">{company.name}</p>
-                <h2 className="mt-1 font-display text-2xl font-extrabold tracking-display text-ink-900">
-                  {c.docTitle}
-                </h2>
-              </div>
-              <span className="border border-brand-600 px-3 py-1 label text-brand-700">
-                {c.docLabel}
-              </span>
-            </header>
-
-            <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
-              {c.metaRows.map((row) => (
-                <div key={row.k} className="flex justify-between gap-4 py-1.5 text-sm">
-                  <dt className="text-ink-600">{row.k}</dt>
-                  <dd className="text-right font-medium text-ink-900">{row.v}</dd>
+          {/* The document on the left and why its fields are there on the
+              right, from lg. One under the other, the paper filled the left
+              half and the right half stood empty for its whole length. */}
+          <div className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-14">
+            <article className="max-w-3xl border border-ink-900/10 bg-white shadow-lg shadow-black/20 lg:col-span-7">
+              <header className="flex flex-wrap items-start justify-between gap-4 border-b border-ink-900/10 p-6 sm:p-8">
+                <div>
+                  <p className="label text-brand-700">{company.name}</p>
+                  <h2 className="mt-1 font-display text-2xl font-extrabold tracking-display text-ink-900">
+                    {c.docTitle}
+                  </h2>
                 </div>
-              ))}
-            </dl>
+                <span className="border border-brand-600 px-3 py-1 label text-brand-700">
+                  {c.docLabel}
+                </span>
+              </header>
 
-            <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-600">{c.specTitle}</h3>
-              <dl className="mt-4">
-                {lines.map((line) => (
-                  <div
-                    key={line.label.da}
-                    className="flex flex-wrap justify-between gap-x-6 gap-y-1 border-b border-ink-900/8 py-2.5 text-sm last:border-b-0"
-                  >
-                    <dt className="text-ink-600">{line.label[lang]}</dt>
-                    <dd className="font-medium text-ink-900">{line.value[lang]}</dd>
+              <dl className="grid grid-cols-1 gap-x-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
+                {c.metaRows.map((row) => (
+                  <div key={row.k} className="flex justify-between gap-4 py-1.5 text-sm">
+                    <dt className="text-ink-600">{row.k}</dt>
+                    <dd className="text-right font-medium text-ink-900">{row.v}</dd>
                   </div>
                 ))}
               </dl>
-            </div>
 
-            <div className="grid grid-cols-1 gap-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
-              <div>
-                <h3 className="label text-ink-600">{c.includedTitle}</h3>
-                <ul className="mt-4 space-y-2">
-                  {c.included.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-700">
-                      <span
-                        aria-hidden="true"
-                        className="mt-2.5 h-px w-3 flex-shrink-0 bg-brand-500"
-                      />
-                      {item}
-                    </li>
+              <div className="border-b border-ink-900/10 p-6 sm:p-8">
+                <h3 className="label text-ink-600">{c.specTitle}</h3>
+                <dl className="mt-4">
+                  {lines.map((line) => (
+                    <div
+                      key={line.label.da}
+                      className="flex flex-wrap justify-between gap-x-6 gap-y-1 border-b border-ink-900/8 py-2.5 text-sm last:border-b-0"
+                    >
+                      <dt className="text-ink-600">{line.label[lang]}</dt>
+                      <dd className="font-medium text-ink-900">{line.value[lang]}</dd>
+                    </div>
                   ))}
-                </ul>
+                </dl>
               </div>
-              <div>
-                <h3 className="label text-ink-600">{c.excludedTitle}</h3>
-                <ul className="mt-4 space-y-2">
-                  {c.excluded.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-600">
-                      <span
-                        aria-hidden="true"
-                        className="mt-2.5 h-px w-3 flex-shrink-0 bg-ink-300"
-                      />
-                      {item}
-                    </li>
+
+              <div className="grid grid-cols-1 gap-8 border-b border-ink-900/10 p-6 sm:grid-cols-2 sm:p-8">
+                <div>
+                  <h3 className="label text-ink-600">{c.includedTitle}</h3>
+                  <ul className="mt-4 space-y-2">
+                    {c.included.map((item) => (
+                      <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-700">
+                        <span
+                          aria-hidden="true"
+                          className="mt-2.5 h-px w-3 flex-shrink-0 bg-brand-500"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="label text-ink-600">{c.excludedTitle}</h3>
+                  <ul className="mt-4 space-y-2">
+                    {c.excluded.map((item) => (
+                      <li key={item} className="flex gap-2.5 text-sm leading-6 text-ink-600">
+                        <span
+                          aria-hidden="true"
+                          className="mt-2.5 h-px w-3 flex-shrink-0 bg-ink-300"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="border-b border-ink-900/10 p-6 sm:p-8">
+                <h3 className="label text-ink-600">{c.termsTitle}</h3>
+                <dl className="mt-4 space-y-4">
+                  {c.terms.map((term) => (
+                    <div key={term.k}>
+                      <dt className="font-display text-sm font-bold tracking-tight text-ink-900">
+                        {term.k}
+                      </dt>
+                      <dd className="mt-1 text-sm leading-6 text-ink-600">{term.v}</dd>
+                    </div>
                   ))}
-                </ul>
+                </dl>
               </div>
-            </div>
 
-            <div className="border-b border-ink-900/10 p-6 sm:p-8">
-              <h3 className="label text-ink-600">{c.termsTitle}</h3>
-              <dl className="mt-4 space-y-4">
-                {c.terms.map((term) => (
-                  <div key={term.k}>
-                    <dt className="font-display text-sm font-bold tracking-tight text-ink-900">
-                      {term.k}
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-ink-600">{term.v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+              <div className="bg-paper-dim p-6 sm:p-8">
+                <h3 className="label text-ink-600">{c.priceTitle}</h3>
+                <dl className="mt-4">
+                  {c.priceRows.map((row, i) => (
+                    <div
+                      key={row.k}
+                      className={`flex justify-between gap-6 py-2 ${
+                        i === c.priceRows.length - 1
+                          ? "border-t border-ink-900/10 pt-3 font-display text-base font-bold text-ink-900"
+                          : "text-sm text-ink-700"
+                      }`}
+                    >
+                      <dt>{row.k}</dt>
+                      <dd className="tabular-nums">{row.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-4 rounded-lg bg-ink-50 p-4 text-sm leading-[1.6] text-ink-600">
+                  {c.priceNote}
+                </p>
+                <Link
+                  href={localePath("/priser", lang)}
+                  className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
+                >
+                  {c.priceLink}
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                </Link>
+              </div>
+            </article>
 
-            <div className="bg-paper-dim p-6 sm:p-8">
-              <h3 className="label text-ink-600">{c.priceTitle}</h3>
-              <dl className="mt-4">
-                {c.priceRows.map((row, i) => (
-                  <div
-                    key={row.k}
-                    className={`flex justify-between gap-6 py-2 ${
-                      i === c.priceRows.length - 1
-                        ? "border-t border-ink-900/10 pt-3 font-display text-base font-bold text-ink-900"
-                        : "text-sm text-ink-700"
-                    }`}
-                  >
-                    <dt>{row.k}</dt>
-                    <dd className="tabular-nums">{row.v}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-4 rounded-lg bg-ink-50 p-4 text-sm leading-[1.6] text-ink-600">
-                {c.priceNote}
+            <div className="mt-12 max-w-3xl border-t border-white/15 pt-8 lg:sticky lg:top-28 lg:col-span-5 lg:mt-0 lg:border-t-0 lg:pt-0">
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.whyTitle}
+              </h2>
+              <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
+                {c.whyBody}
               </p>
-              <Link
-                href={localePath("/priser", lang)}
-                className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
-              >
-                {c.priceLink}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
-              </Link>
+
+              <p className="eyebrow mt-10 text-brand-300">{c.relatedTitle}</p>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {c.related.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={localePath(link.href, lang)}
+                      className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                    >
+                      {link.label}
+                      <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </article>
-
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.whyTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] sm:leading-[1.75] text-paper/75">
-              {c.whyBody}
-            </p>
-
-            <p className="eyebrow mt-10 text-brand-700">{c.relatedTitle}</p>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {c.related.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
-                  >
-                    {link.label}
-                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
         </Container>
       </section>

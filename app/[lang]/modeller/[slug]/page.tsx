@@ -234,8 +234,24 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 stock together: a "not in stock" plate stood above it saying
                 half the same thing, and an "Ask about this model" panel further
                 down said the rest again. */}
-                <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
+                {model.images && (
+                  <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
+                )}
               </div>
+
+              {/* Sixteen of the eighteen models have no photographs, and on a
+                  desktop their right five columns stood empty beside the text.
+                  The price box takes that column; after the text in the markup,
+                  so a phone still reads title, intro, then price. */}
+              {!model.images && (
+                <div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-start lg:pt-8">
+                  <PriceOnRequest
+                    lang={lang}
+                    equipment={model.name}
+                    accessory={model.group === "skaerme" || model.group === "docking"}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </Container>
@@ -267,7 +283,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               </dl>
             </div>
 
-            <WhatIsFixed lang={lang} className="mt-12" />
+            <WhatIsFixed lang={lang} group={model.group} className="mt-12" />
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
               <div>
