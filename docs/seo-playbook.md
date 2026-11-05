@@ -84,6 +84,37 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Site review — 5 November 2026
+
+Screenshots of 27 templates at 390, 1440 and 1920 px, a text-overlap scan at
+ten widths, hunspell over the visible text of all 156 pages, and a console
+crawl. What it found and what changed:
+
+- **Footer, 1280–1500 px.** "Modeller og specifikationer" ran into "Maskinen
+  indeni": two equal 153 px columns for a 181 px label with nowrap. The
+  products group's columns now size to their labels.
+- **/om-os.** The quote rendered “…” in Danish (an `&ldquo;` in the markup,
+  outside any string the gate read); it now follows the language, and the
+  content gate fails on the entity. "Hvorfor virksomheder vælger Kestro"
+  claimed customers a business that is not trading yet does not have; it is
+  "Sådan arbejder Kestro".
+- **Polish.** Model pages' sibling chips rounded like every other chip; the
+  sources fold on /priser has the site's chevron.
+- **Spelling.** No real errors in either language; every unknown word was a
+  product name, a technical compound or a proper name.
+- **Rule 9.** `/vejledninger/hdd-eller-ssd` and
+  `/vejledninger/tjek-batterikapacitet` had three content links in each; the
+  RAM-upgrade guide and /kvalitet now link them with new anchors.
+- **Dates.** `lib/page-dates.json` had not been regenerated since 22
+  October, so pages changed by the claims, H1 and FAQ commits of 24–28
+  October still showed older dates. Regenerated from the full history. A
+  shallow clone stamps every route as published 14 October, so the history
+  was fetched with `--unshallow` first. Four pushed commits that changed no
+  words on the page went into `page-dates-skip.txt` (meta descriptions, a
+  comma, validation messages, commas and alt text).
+- **Early signal.** The English comparison guide already appears near page
+  one for "thinkpad vs elitebook vs latitude".
+
 ## Search Console — week to 31 October 2026
 
 Rule 14, read through Windsor for `sc-domain:kestro.dk`, 25–31 October

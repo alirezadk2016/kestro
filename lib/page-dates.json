@@ -6,7 +6,7 @@
   },
   "/flaadeloesninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-15",
+    "modified": "2026-10-21",
     "files": 10
   },
   "/handelsbetingelser": {
@@ -21,32 +21,32 @@
   },
   "/kvalitet": {
     "published": "2026-08-23",
-    "modified": "2026-10-15",
+    "modified": "2026-10-28",
     "files": 6
   },
   "/maskinen": {
     "published": "2026-08-24",
-    "modified": "2026-10-14",
+    "modified": "2026-10-24",
     "files": 6
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-10-17",
+    "modified": "2026-10-28",
     "files": 6
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-17",
+    "modified": "2026-10-28",
     "files": 11
   },
   "/om-os": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-11-05",
     "files": 7
   },
   "/priser": {
     "published": "2026-08-29",
-    "modified": "2026-10-22",
+    "modified": "2026-10-24",
     "files": 7
   },
   "/privatlivspolitik": {
@@ -56,23 +56,23 @@
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-28",
     "files": 8
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-17",
+    "modified": "2026-10-28",
     "files": 12
   },
   "/reparation": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-28",
     "files": 9
   },
   "/reparation/[slug]": {
     "published": "2026-09-14",
-    "modified": "2026-10-16",
-    "files": 7
+    "modified": "2026-10-28",
+    "files": 8
   },
   "/saelg-til-os": {
     "published": "2026-08-23",
@@ -86,27 +86,27 @@
   },
   "/tilbud-eksempel": {
     "published": "2026-08-29",
-    "modified": "2026-10-17",
+    "modified": "2026-10-24",
     "files": 3
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-17",
-    "files": 4
+    "modified": "2026-10-28",
+    "files": 6
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
-    "files": 7
+    "modified": "2026-10-28",
+    "files": 9
   },
   "/ydelser": {
     "published": "2026-08-23",
-    "modified": "2026-10-16",
+    "modified": "2026-10-28",
     "files": 9
   },
   "/ydelser/[slug]": {
     "published": "2026-08-25",
-    "modified": "2026-10-17",
+    "modified": "2026-10-24",
     "files": 7
   }
 }
