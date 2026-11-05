@@ -1874,6 +1874,13 @@ export const guides: Guide[] = [
         label: { da: "Hvad påvirker RAM-prisen?", en: "What affects memory prices?" },
       },
       {
+        href: "/vejledninger/hdd-eller-ssd",
+        label: {
+          da: "Tjek, om der sidder en HDD eller SSD",
+          en: "Check whether it has an HDD or an SSD",
+        },
+      },
+      {
         href: "/modeller/lenovo-thinkpad-t14",
         label: {
           da: "ThinkPad T14: kontrollér generation og RAM-sokkel",

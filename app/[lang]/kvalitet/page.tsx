@@ -342,6 +342,10 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             label: { da: "Tjeklisten, I selv kan bruge", en: "The checklist you can use yourself" },
           },
           {
+            href: "/vejledninger/tjek-batterikapacitet",
+            label: { da: "Mål batteriets kapacitet selv", en: "Measure battery capacity yourself" },
+          },
+          {
             href: "/ydelser/klargoering-og-test",
             label: { da: "Sådan klargør og tester vi", en: "How we prepare and test" },
           },
