@@ -34,11 +34,11 @@ const benefits = [
 
 const copy = {
   da: {
-    title: "Hvorfor virksomheder vælger Kestro",
+    title: "Sådan arbejder Kestro",
     sub: "Vi køber brugt erhvervshardware i Sydeuropa, klargør det til nordisk brug og leverer det til virksomheder i Danmark og Norge.",
   },
   en: {
-    title: "Why companies choose Kestro",
+    title: "How Kestro works",
     sub: "We buy used business hardware in southern Europe, prepare it for Nordic use and deliver it to companies in Denmark and Norway.",
   },
 } satisfies Record<Lang, Record<string, string>>;
