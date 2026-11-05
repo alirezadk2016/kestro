@@ -361,7 +361,17 @@ export default async function CategoryPage(props: {
               />
             )}
 
-            <div className="max-w-3xl lg:col-span-7">
+            {/* With no picture (tablets) the right five columns stood empty:
+                half the header was dark glass on a desktop. The intro takes
+                that column instead, beside the title, rather than a borrowed
+                picture of something else. */}
+            <div
+              className={
+                CATEGORY_ART[category.slug] || isPhones
+                  ? "max-w-3xl lg:col-span-7"
+                  : "max-w-3xl lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end lg:[&>p:first-child]:mt-0"
+              }
+            >
               {!isPhones && (
                 <p className="mt-8 text-base leading-[1.75] text-paper/75">
                   {category.intro[lang]}
