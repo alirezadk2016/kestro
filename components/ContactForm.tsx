@@ -1,12 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { company } from "@/lib/company";
 import { events, track } from "@/lib/analytics";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
+import { buttonClass } from "./Button";
+import { projectNotice } from "@/lib/project";
+import {
+  CONTACT_LIMITS,
+  QUOTE_DETAIL_LIMIT,
+  composeEnquiryMessage,
+  validateContactPayload,
+  type ContactField,
+} from "@/lib/contact";
 
-const CONTACT_EMAIL = "info@kestro.dk";
+/* From lib/company.ts, so the fallback address in the "we could not send"
+   panel can never drift from the one the route delivers to. */
+const CONTACT_EMAIL = company.email;
 
 /*
  * The form posts to /api/kontakt, which sends the message and answers.
@@ -25,19 +37,18 @@ type Status = "idle" | "sending" | "sent" | "error" | "unavailable";
 const copy = {
   da: {
     name: "Navn",
-    namePlaceholder: "Dit fulde navn",
+    namePlaceholder: "Fulde navn",
     company: "Virksomhed",
     companyPlaceholder: "Firmanavn",
     optional: "(valgfrit)",
-    email: "Email",
-    emailPlaceholder: "dig@virksomhed.dk",
+    email: "E-mail",
+    emailPlaceholder: "navn@virksomhed.dk",
     phone: "Telefon",
     phonePlaceholder: "+45 12 34 56 78",
     message: "Besked",
     submit: "Send besked",
     unavailableTitle: "Formularen kan ikke sende lige nu",
-    unavailableBody:
-      "Send beskeden direkte til os i stedet – den står klar herunder. Vi svarer inden for én arbejdsdag.",
+    unavailableBody: "Send beskeden direkte til os i stedet – den står klar herunder.",
     openMail: "Åbn i mailprogram",
     copyMessage: "Kopiér beskeden",
     copied: "Kopieret",
@@ -45,7 +56,8 @@ const copy = {
     back: "Tilbage til formularen",
     sending: "Sender …",
     thanksTitle: "Tak for jeres henvendelse.",
-    thanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    thanksBody:
+      "Svaret kommer på e-mail til den adresse, I har skrevet – tjek også spam-mappen. Mangler vi noget, spørger vi ind. Henvendelsen binder jer ikke.",
     thanksAgain: "Send en besked mere",
     privacy: "Vi bruger kun oplysningerne til at besvare henvendelsen. Se",
     privacyLink: "privatlivspolitikken",
@@ -53,24 +65,39 @@ const copy = {
     quantityLegend: "Hvor mange maskiner?",
     quantityHelp: "Vælg det nærmeste – tallet må gerne ændre sig undervejs.",
     equipment: "Udstyr eller model",
-    equipmentPlaceholder: "Fx bærbare til kontorbrug, eller ThinkPad T14",
+    equipmentPlaceholder: "Fx bærbare til kontorbrug eller ThinkPad T14",
     ram: "Hukommelse",
     storage: "Lagerplads",
     keyboard: "Tastatur",
+    keyboardDa: "Dansk",
+    keyboardNo: "Norsk",
+    keyboardEn: "Engelsk (UK/US)",
     deadline: "Hvornår skal det stå klar?",
     deadlinePlaceholder: "Fx inden udgangen af oktober",
+    moreDetails: "Hukommelse, disk, tastatur og tidsramme",
     dontKnow: "Ved ikke endnu",
     quoteMessage: "Andet, vi skal vide",
     quoteMessagePlaceholder:
       "Fx: dockingstationer til alle pladser, vi skal samtidig af med 30 ældre maskiner, levering til to adresser.",
-    quoteSubmit: "Få et tilbud",
+    quoteSubmit: "Send en forespørgsel",
     quoteThanksTitle: "Tak – forespørgslen er sendt.",
-    quoteThanksBody: "Vi vender tilbage inden for én arbejdsdag.",
+    quoteThanksBody:
+      "Vi læser forespørgslen og vender tilbage om mulighederne. Den er ikke en ordre eller reservation.",
     nextTitle: "Hvad sker der nu?",
     defaultSubject: "Henvendelse",
     defaultPlaceholder: "Fortæl os om jeres behov – antal enheder, specifikationer, tidsramme m.m.",
     from: "fra",
     via: "via kestro.dk",
+    invalidName: "Skriv et navn, højst 120 tegn.",
+    invalidEmail: "Skriv en gyldig e-mailadresse, højst 200 tegn.",
+    invalidCompany: "Virksomhedsnavnet må højst være 160 tegn.",
+    invalidPhone: "Telefonnummeret må højst være 60 tegn.",
+    invalidMessage: "Skriv en besked, før den sendes.",
+    messageTooLong:
+      "Beskeden må højst være 5.000 tegn inklusive specifikationer. Forkort teksten; kladden er bevaret.",
+    invalidFields: "Kontrollér felterne, og send igen. Kladden er bevaret.",
+    messageCount: "tegn",
+    quoteCount: "tegn inklusive specifikationer",
   },
   en: {
     name: "Name",
@@ -85,8 +112,7 @@ const copy = {
     message: "Message",
     submit: "Send message",
     unavailableTitle: "The form cannot send right now",
-    unavailableBody:
-      "Send the message to us directly instead — it is ready below. We answer within one working day.",
+    unavailableBody: "Send the message to us directly instead — it is ready below.",
     openMail: "Open in mail app",
     copyMessage: "Copy the message",
     copied: "Copied",
@@ -94,7 +120,8 @@ const copy = {
     back: "Back to the form",
     sending: "Sending …",
     thanksTitle: "Thank you for getting in touch.",
-    thanksBody: "We will come back to you within one working day.",
+    thanksBody:
+      "The reply comes by email to the address you gave — check your spam folder too. If anything is missing, we ask. The enquiry does not bind you.",
     thanksAgain: "Send another message",
     privacy: "We use the details only to answer the enquiry. See the",
     privacyLink: "privacy policy",
@@ -106,21 +133,36 @@ const copy = {
     ram: "Memory",
     storage: "Storage",
     keyboard: "Keyboard",
+    keyboardDa: "Danish",
+    keyboardNo: "Norwegian",
+    keyboardEn: "English (UK/US)",
     deadline: "When does it need to be ready?",
     deadlinePlaceholder: "E.g. before the end of October",
+    moreDetails: "Memory, storage, keyboard and timing",
     dontKnow: "Not sure yet",
     quoteMessage: "Anything else we should know",
     quoteMessagePlaceholder:
       "E.g. docking stations for every desk, we also need to get rid of 30 older machines, delivery to two addresses.",
-    quoteSubmit: "Get a quote",
+    quoteSubmit: "Send an enquiry",
     quoteThanksTitle: "Thank you — your request is on its way.",
-    quoteThanksBody: "We will come back to you within one working day.",
+    quoteThanksBody:
+      "We will read the enquiry and discuss the options with you. It is not an order or reservation.",
     nextTitle: "What happens now?",
     defaultSubject: "Enquiry",
     defaultPlaceholder:
       "Tell us what you need — number of devices, specifications, timing and anything else.",
     from: "from",
     via: "via kestro.dk",
+    invalidName: "Enter your name, up to 120 characters.",
+    invalidEmail: "Enter a valid email address, up to 200 characters.",
+    invalidCompany: "The company name may contain up to 160 characters.",
+    invalidPhone: "The phone number may contain up to 60 characters.",
+    invalidMessage: "Write a message before sending.",
+    messageTooLong:
+      "The message may contain up to 5,000 characters including specifications. Shorten the text; your draft is preserved.",
+    invalidFields: "Check the fields before sending again. Your draft is preserved.",
+    messageCount: "characters",
+    quoteCount: "characters including specifications",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -130,13 +172,13 @@ const copy = {
 const nextSteps: Record<Lang, string[]> = {
   da: [
     "Vi læser forespørgslen og spørger ind, hvis noget mangler.",
-    "Vi finder maskinerne i leverandørnetværket og sender et tilbud med pris per enhed, stand, antal og leveringstid.",
-    "I godkender – eller siger nej. Der er ingen binding i at spørge.",
+    "Vi afklarer de indledende muligheder. Modeller og budgeteksempler er ikke bekræftet lager.",
+    "Før et eventuelt køb skal sælger, pris og vilkår være afklaret. At spørge er ikke at bestille.",
   ],
   en: [
     "We read the request and ask if anything is missing.",
-    "We find the machines in our supplier network and send a quote with price per unit, condition, quantity and lead time.",
-    "You approve — or you say no. Asking commits you to nothing.",
+    "We discuss the initial options. Models and budget examples are not confirmed stock.",
+    "Before any purchase, the seller, price and terms must be established. Asking is not ordering.",
   ],
 };
 
@@ -181,6 +223,38 @@ export default function ContactForm({
     messagePlaceholder?.[lang] ?? (quote ? c.quoteMessagePlaceholder : c.defaultPlaceholder);
   const [status, setStatus] = useState<Status>("idle");
   const [copied, setCopied] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [invalidFields, setInvalidFields] = useState<ContactField[]>([]);
+  const [validationError, setValidationError] = useState("");
+  const started = useRef(false);
+  useEffect(() => setReady(true), []);
+
+  /*
+   * Where submitting lands you.
+   *
+   * Pressing send replaces the whole form with an outcome panel. React does
+   * not move focus when it does that, so the button you just pressed stops
+   * existing and focus falls to <body> — a keyboard user is put back at the
+   * top of the document, and a screen reader says nothing at all. Whether the
+   * message was sent or failed is then the one thing on the page you cannot
+   * find out without going looking.
+   *
+   * So the panel is focused when it appears, and it carries a live role:
+   * alert when the send did not happen, status when it did.
+   *
+   * Focusing scrolls, and the header is sticky, so the panel landed with its
+   * top edge at the top of the viewport and its heading behind the header —
+   * "Tak for jeres henvendelse" half hidden, on the one screen that has to be
+   * unambiguous. Measured: the header is 65px on a 390px viewport and 81px
+   * from lg. scroll-mt-24 is 96px, so the heading clears it in both.
+   */
+  const outcomeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "sent" || status === "error" || status === "unavailable") {
+      outcomeRef.current?.focus();
+    }
+  }, [status]);
   const emptyValues = {
     navn: "",
     virksomhed: "",
@@ -198,6 +272,11 @@ export default function ContactForm({
     website: "",
   };
   const [values, setValues] = useState(emptyValues);
+  /* The four specification fields fold away on the quote form: three fields
+     are required and eleven were on screen, which on a phone read as a long
+     form to fill in. They open by themselves when something arrives filled
+     in, from the front page's mini form or a link. */
+  const [moreOpen, setMoreOpen] = useState(false);
 
   /*
    * Prefill from the link the buyer arrived on: /tilbud?model=…&antal=….
@@ -211,12 +290,18 @@ export default function ContactForm({
   useEffect(() => {
     if (!quote) return;
     const params = new URLSearchParams(window.location.search);
-    const model = params.get("model")?.slice(0, 120) ?? "";
+    const model = params.get("model")?.trim().slice(0, 120) ?? "";
     const band = params.get("antal") ?? "";
-    if (!model && !band) return;
+    /* "When" arrives from the front page's first step (TrustStrip), along
+       with the band and the model. Text only, capped, and bound as a value —
+       React escapes it, so a query string cannot become markup. */
+    const when = params.get("hvornaar")?.trim().slice(0, 120) ?? "";
+    if (!model && !band && !when) return;
+    if (when) setMoreOpen(true);
     setValues((prev) => ({
       ...prev,
       udstyr: prev.udstyr || model,
+      hvornaar: prev.hvornaar || when,
       antal: quantities.includes(band as (typeof quantities)[number]) ? band : prev.antal,
     }));
   }, [quote]);
@@ -226,6 +311,8 @@ export default function ContactForm({
   ) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
+    setInvalidFields([]);
+    setValidationError("");
   }
 
   /**
@@ -248,7 +335,44 @@ export default function ContactForm({
       values.hvornaar ? `${c.deadline} ${values.hvornaar}` : null,
     ].filter((line): line is string => line !== null);
 
-    return values.besked ? `${spec.join("\n")}\n\n${values.besked}` : spec.join("\n");
+    return composeEnquiryMessage(values.besked, spec);
+  }
+
+  const message = messageBody();
+  const specificationLength = quote ? message.length - values.besked.length : 0;
+  // Leave room for the blank line even before the optional message is typed.
+  const messageBudget = quote
+    ? Math.max(0, CONTACT_LIMITS.message - specificationLength - (values.besked ? 0 : 2))
+    : CONTACT_LIMITS.message;
+
+  function showValidation(fields: ContactField[]) {
+    setInvalidFields(fields);
+    const first = fields[0];
+    setValidationError(
+      first === "name"
+        ? c.invalidName
+        : first === "email"
+          ? c.invalidEmail
+          : first === "company"
+            ? c.invalidCompany
+            : first === "phone"
+              ? c.invalidPhone
+              : first === "message"
+                ? message.trim()
+                  ? c.messageTooLong
+                  : c.invalidMessage
+                : c.invalidFields,
+    );
+    const fieldId: Partial<Record<ContactField, string>> = {
+      name: "navn",
+      company: "virksomhed",
+      email: "email",
+      phone: "telefon",
+      message: "besked",
+    };
+    window.requestAnimationFrame(() => {
+      document.getElementById(fieldId[first] ?? "contact-validation")?.focus();
+    });
   }
 
   /** The finished message, for the visitor to copy or hand to their mail app. */
@@ -271,22 +395,31 @@ export default function ContactForm({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "sending") return;
+    const payload = {
+      name: values.navn,
+      company: values.virksomhed,
+      email: values.email,
+      phone: values.telefon,
+      message,
+      subject: subject_prefix,
+      page: window.location.pathname,
+      kind: quote ? "quote" : "contact",
+      website: values.website,
+    };
+    const validated = validateContactPayload(payload);
+    if (!validated.ok) {
+      showValidation(validated.fields);
+      return;
+    }
+    setInvalidFields([]);
+    setValidationError("");
     setStatus("sending");
 
     try {
       const response = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: values.navn,
-          company: values.virksomhed,
-          email: values.email,
-          phone: values.telefon,
-          message: messageBody(),
-          subject: subject_prefix,
-          page: window.location.pathname,
-          website: values.website,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -301,12 +434,27 @@ export default function ContactForm({
         return;
       }
 
+      if (response.status === 422) {
+        const result = await response.json().catch(() => null);
+        const fields = Array.isArray(result?.fields)
+          ? result.fields.filter(
+              (field: unknown): field is ContactField =>
+                typeof field === "string" && (field === "kind" || field in CONTACT_LIMITS),
+            )
+          : [];
+        setStatus("idle");
+        showValidation(fields);
+        return;
+      }
+
       /* 503 means the server has no mail credentials yet. That is ours to fix,
          not the visitor's, so it gets the same honest panel as a failure. */
       setStatus(response.status === 503 ? "unavailable" : "error");
+      track(events.formError, { form: quote ? "quote" : "contact", status: response.status });
     } catch {
       /* Offline, or the request was blocked. */
       setStatus("unavailable");
+      track(events.formError, { form: quote ? "quote" : "contact", reason: "network" });
     }
   }
 
@@ -321,8 +469,17 @@ export default function ContactForm({
     }
   }
 
+  /*
+   * min-h-11 is 44px, which is the floor for something you tap.
+   *
+   * The padding alone gave 42, and two pixels does not sound like a bug until
+   * it is a phone, a thumb and the field that turns a visitor into an enquiry.
+   * The text stays at 16px so iOS does not zoom the page when the field takes
+   * focus — a smaller size there is the other classic way a mobile form loses
+   * people.
+   */
   const inputClasses =
-    "w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-paper placeholder:text-paper/40 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40";
+    "w-full min-h-11 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-base sm:text-sm text-paper placeholder:text-paper/65 focus:border-paper focus:outline-none focus:ring-2 focus:ring-brand-400/40 aria-[invalid=true]:border-amber-300 [&:user-invalid]:border-red-300/80 [&:user-invalid]:ring-2 [&:user-invalid]:ring-red-400/25";
 
   if (status === "unavailable" || status === "error") {
     const { subject, body } = composed();
@@ -331,34 +488,39 @@ export default function ContactForm({
     )}&body=${encodeURIComponent(body)}`;
 
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="alert"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {c.unavailableTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">{c.unavailableBody}</p>
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.unavailableBody}</p>
 
         <pre className="mt-6 max-h-56 overflow-auto whitespace-pre-wrap border border-white/10 bg-ink-950/50 p-4 font-mono text-xs leading-6 text-paper/75">
           {body}
         </pre>
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={copyMessage}
-            className="inline-flex min-h-[44px] items-center bg-brand-600 px-6 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700"
-          >
+          <button type="button" onClick={copyMessage} className={buttonClass("primary")}>
             {copied ? c.copied : c.copyMessage}
           </button>
           <a
             href={mailHref}
-            className="inline-flex min-h-[44px] items-center border border-white/15 px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
+            className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 bg-white/[0.04] px-6 text-sm font-semibold text-paper/75 transition hover:border-white/40 hover:text-paper"
           >
             {c.openMail}
           </a>
         </div>
 
         {company.phoneHref && (
-          <p className="mt-5 text-sm leading-6 text-paper/55">
+          <p className="mt-5 text-sm leading-[1.6] text-paper/65">
             {c.orCall}{" "}
             <a
               href={`tel:${company.phoneHref}`}
@@ -373,7 +535,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/55 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+          className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-paper/65 underline decoration-paper/30 underline-offset-4 hover:text-paper"
         >
           {c.back}
         </button>
@@ -383,18 +545,27 @@ export default function ContactForm({
 
   if (status === "sent") {
     return (
-      <div className="border-l-2 border-brand-400 bg-white/5 p-6 sm:p-8">
-        <h3 className="font-display text-xl font-bold tracking-tight text-paper">
+      <div
+        ref={outcomeRef}
+        role="status"
+        tabIndex={-1}
+        aria-labelledby="kontakt-udfald"
+        className="plate scroll-mt-24 p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:p-8"
+      >
+        <h3
+          id="kontakt-udfald"
+          className="font-display text-xl font-bold tracking-tight text-paper"
+        >
           {quote ? c.quoteThanksTitle : c.thanksTitle}
         </h3>
-        <p className="mt-3 text-base leading-7 text-paper/65">
+        <p className="mt-3 text-base leading-[1.75] text-paper/75">
           {quote ? c.quoteThanksBody : c.thanksBody}
         </p>
 
         {quote && (
           <ol className="mt-6 space-y-3 border-t border-white/10 pt-5">
             {nextSteps[lang].map((step, i) => (
-              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/70">
+              <li key={step} className="flex gap-3 text-sm leading-6 text-paper/75">
                 <span
                   aria-hidden="true"
                   className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-600/25 text-xs font-bold text-brand-200"
@@ -410,6 +581,10 @@ export default function ContactForm({
           type="button"
           onClick={() => {
             setValues(emptyValues);
+            setMoreOpen(false);
+            setInvalidFields([]);
+            setValidationError("");
+            started.current = false;
             setStatus("idle");
           }}
           className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/60 decoration-2 underline-offset-4 hover:text-paper"
@@ -421,252 +596,358 @@ export default function ContactForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative space-y-5">
-      {quote && (
-        <fieldset>
-          <legend className="mb-2 text-sm font-medium text-paper/80">
-            {c.quantityLegend} <span className="text-brand-400">*</span>
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {quantities.map((band) => (
-              <label
-                key={band}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition ${
-                  values.antal === band
-                    ? "border-brand-400 bg-brand-600/20 text-paper"
-                    : "border-white/15 bg-white/5 text-paper/70 hover:border-white/35 hover:text-paper"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="antal"
-                  value={band}
-                  checked={values.antal === band}
-                  onChange={handleChange}
-                  className="sr-only"
-                />
-                {band}
-              </label>
-            ))}
-          </div>
-          <p className="mt-2 text-xs leading-5 text-paper/50">{c.quantityHelp}</p>
-        </fieldset>
-      )}
-
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/80">
-            {c.name} <span className="text-brand-400">*</span>
-          </label>
-          <input
-            id="navn"
-            name="navn"
-            type="text"
-            required
-            value={values.navn}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.namePlaceholder}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/80">
-            {c.company}{" "}
-            {companyRequired ? (
-              <span className="text-brand-400">*</span>
-            ) : (
-              <span className="text-paper/45">{c.optional}</span>
-            )}
-          </label>
-          <input
-            id="virksomhed"
-            name="virksomhed"
-            type="text"
-            required={companyRequired}
-            value={values.virksomhed}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.companyPlaceholder}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/80">
-            {c.email} <span className="text-brand-400">*</span>
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={values.email}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.emailPlaceholder}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/80">
-            {c.phone}
-          </label>
-          <input
-            id="telefon"
-            name="telefon"
-            type="tel"
-            value={values.telefon}
-            onChange={handleChange}
-            className={inputClasses}
-            placeholder={c.phonePlaceholder}
-          />
-        </div>
-      </div>
-
-      {quote && (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <div className="sm:col-span-2">
-            <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/80">
-              {c.equipment}
-            </label>
-            <input
-              id="udstyr"
-              name="udstyr"
-              type="text"
-              value={values.udstyr}
-              onChange={handleChange}
-              className={inputClasses}
-              placeholder={c.equipmentPlaceholder}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/80">
-              {c.ram}
-            </label>
-            <select
-              id="ram"
-              name="ram"
-              value={values.ram}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              <option value="8 GB">8 GB</option>
-              <option value="16 GB">16 GB</option>
-              <option value="32 GB+">32 GB+</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/80">
-              {c.storage}
-            </label>
-            <select
-              id="disk"
-              name="disk"
-              value={values.disk}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              <option value="256 GB SSD">256 GB SSD</option>
-              <option value="512 GB SSD">512 GB SSD</option>
-              <option value="1 TB SSD+">1 TB SSD+</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="tastatur" className="mb-1.5 block text-sm font-medium text-paper/80">
-              {c.keyboard}
-            </label>
-            <select
-              id="tastatur"
-              name="tastatur"
-              value={values.tastatur}
-              onChange={handleChange}
-              className={inputClasses}
-            >
-              <option value="">{c.dontKnow}</option>
-              <option value="Dansk">Dansk</option>
-              <option value="Norsk">Norsk</option>
-              <option value="Engelsk (UK/US)">Engelsk (UK/US)</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="hvornaar" className="mb-1.5 block text-sm font-medium text-paper/80">
-              {c.deadline}
-            </label>
-            <input
-              id="hvornaar"
-              name="hvornaar"
-              type="text"
-              value={values.hvornaar}
-              onChange={handleChange}
-              className={inputClasses}
-              placeholder={c.deadlinePlaceholder}
-            />
-          </div>
-        </div>
-      )}
-
-      <div>
-        <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/80">
-          {quote ? c.quoteMessage : c.message}{" "}
-          {quote ? (
-            <span className="text-paper/45">{c.optional}</span>
-          ) : (
-            <span className="text-brand-400">*</span>
-          )}
-        </label>
-        <textarea
-          id="besked"
-          name="besked"
-          required={!quote}
-          rows={quote ? 4 : 5}
-          value={values.besked}
-          onChange={handleChange}
-          className={inputClasses}
-          placeholder={placeholder}
-        />
-      </div>
-
-      {/* Hidden from people by position rather than display:none, which some
-          bots check for. Never focusable, never announced. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          name="website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          value={values.website}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="inline-flex min-h-[48px] items-center bg-brand-600 px-7 text-sm font-semibold tracking-tight text-paper transition hover:bg-brand-700 disabled:opacity-60"
-        >
-          {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
-        </button>
-
-        <p className="mt-3 text-xs leading-5 text-paper/50">
-          {c.privacy}{" "}
-          <Link
-            href={localePath("/privatlivspolitik", lang)}
-            className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
+    <form
+      action="/api/kontakt"
+      method="post"
+      onSubmit={handleSubmit}
+      onFocusCapture={() => {
+        if (started.current) return;
+        started.current = true;
+        track(events.formStart, { form: quote ? "quote" : "contact" });
+      }}
+      className="relative space-y-5"
+    >
+      <p className="border-l-2 border-brand-400 pl-4 text-sm leading-6 text-paper/85">
+        {projectNotice[lang].body}
+      </p>
+      <noscript>
+        <p className="text-sm leading-6 text-paper/85">
+          {lang === "da"
+            ? "Formularen kræver JavaScript. Skriv i stedet til "
+            : "This form requires JavaScript. Please email "}
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline"
           >
-            {c.privacyLink}
-          </Link>
+            {CONTACT_EMAIL}
+          </a>
           .
         </p>
-      </div>
+      </noscript>
+      <fieldset
+        disabled={!ready || status === "sending"}
+        className="min-w-0 space-y-5"
+        aria-label={lang === "da" ? "Kontaktformular" : "Enquiry form"}
+      >
+        {quote && (
+          <fieldset>
+            <legend className="mb-2 text-sm font-medium text-paper/85">
+              {c.quantityLegend} <span className="text-brand-400">*</span>
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {quantities.map((band) => (
+                <label
+                  key={band}
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-lg border px-5 text-sm font-semibold transition has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 ${
+                    values.antal === band
+                      ? "border-brand-400 bg-brand-600/20 text-paper"
+                      : "border-white/15 bg-white/5 text-paper/75 hover:border-white/35 hover:text-paper"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="antal"
+                    value={band}
+                    checked={values.antal === band}
+                    onChange={handleChange}
+                    className="sr-only"
+                  />
+                  {band}
+                </label>
+              ))}
+            </div>
+            <p className="mt-2 text-sm leading-[1.5] text-paper/75">{c.quantityHelp}</p>
+          </fieldset>
+        )}
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="navn" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.name} <span className="text-brand-400">*</span>
+            </label>
+            <input
+              id="navn"
+              name="navn"
+              type="text"
+              autoComplete="name"
+              required
+              maxLength={CONTACT_LIMITS.name}
+              aria-invalid={invalidFields.includes("name") || undefined}
+              aria-describedby={invalidFields.includes("name") ? "contact-validation" : undefined}
+              value={values.navn}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.namePlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="virksomhed" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.company}{" "}
+              {companyRequired ? (
+                <span className="text-brand-400">*</span>
+              ) : (
+                <span className="text-paper/65">{c.optional}</span>
+              )}
+            </label>
+            <input
+              id="virksomhed"
+              name="virksomhed"
+              type="text"
+              autoComplete="organization"
+              required={companyRequired}
+              maxLength={CONTACT_LIMITS.company}
+              aria-invalid={invalidFields.includes("company") || undefined}
+              aria-describedby={
+                invalidFields.includes("company") ? "contact-validation" : undefined
+              }
+              value={values.virksomhed}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.companyPlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.email} <span className="text-brand-400">*</span>
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              maxLength={CONTACT_LIMITS.email}
+              aria-invalid={invalidFields.includes("email") || undefined}
+              aria-describedby={invalidFields.includes("email") ? "contact-validation" : undefined}
+              value={values.email}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.emailPlaceholder}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="telefon" className="mb-1.5 block text-sm font-medium text-paper/85">
+              {c.phone}
+            </label>
+            <input
+              id="telefon"
+              name="telefon"
+              type="tel"
+              autoComplete="tel"
+              maxLength={CONTACT_LIMITS.phone}
+              aria-invalid={invalidFields.includes("phone") || undefined}
+              aria-describedby={invalidFields.includes("phone") ? "contact-validation" : undefined}
+              value={values.telefon}
+              onChange={handleChange}
+              className={inputClasses}
+              placeholder={c.phonePlaceholder}
+            />
+          </div>
+        </div>
+
+        {quote && (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <label htmlFor="udstyr" className="mb-1.5 block text-sm font-medium text-paper/85">
+                {c.equipment}
+              </label>
+              <input
+                id="udstyr"
+                name="udstyr"
+                type="text"
+                maxLength={QUOTE_DETAIL_LIMIT}
+                value={values.udstyr}
+                onChange={handleChange}
+                className={inputClasses}
+                placeholder={c.equipmentPlaceholder}
+              />
+            </div>
+
+            <details
+              open={moreOpen}
+              onToggle={(event) => setMoreOpen(event.currentTarget.open)}
+              className="group sm:col-span-2"
+            >
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper [&::-webkit-details-marker]:hidden">
+                <ChevronDown
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-open:rotate-180"
+                  strokeWidth={2}
+                />
+                {c.moreDetails} <span className="font-normal text-paper/65">{c.optional}</span>
+              </summary>
+              <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="ram" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.ram}
+                  </label>
+                  <select
+                    id="ram"
+                    name="ram"
+                    value={values.ram}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    <option value="8 GB">8 GB</option>
+                    <option value="16 GB">16 GB</option>
+                    <option value="32 GB+">32 GB+</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="disk" className="mb-1.5 block text-sm font-medium text-paper/85">
+                    {c.storage}
+                  </label>
+                  <select
+                    id="disk"
+                    name="disk"
+                    value={values.disk}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    <option value="256 GB SSD">256 GB SSD</option>
+                    <option value="512 GB SSD">512 GB SSD</option>
+                    <option value="1 TB SSD+">1 TB SSD+</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="tastatur"
+                    className="mb-1.5 block text-sm font-medium text-paper/85"
+                  >
+                    {c.keyboard}
+                  </label>
+                  <select
+                    id="tastatur"
+                    name="tastatur"
+                    value={values.tastatur}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">{c.dontKnow}</option>
+                    {/* The value is what lands in the enquiry, which is read in
+                      Danish; the label is in the reader's language. */}
+                    <option value="Dansk">{c.keyboardDa}</option>
+                    <option value="Norsk">{c.keyboardNo}</option>
+                    <option value="Engelsk (UK/US)">{c.keyboardEn}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="hvornaar"
+                    className="mb-1.5 block text-sm font-medium text-paper/85"
+                  >
+                    {c.deadline}
+                  </label>
+                  <input
+                    id="hvornaar"
+                    name="hvornaar"
+                    type="text"
+                    maxLength={QUOTE_DETAIL_LIMIT}
+                    value={values.hvornaar}
+                    onChange={handleChange}
+                    className={inputClasses}
+                    placeholder={c.deadlinePlaceholder}
+                  />
+                </div>
+              </div>
+            </details>
+          </div>
+        )}
+
+        <div>
+          <label htmlFor="besked" className="mb-1.5 block text-sm font-medium text-paper/85">
+            {quote ? c.quoteMessage : c.message}{" "}
+            {quote ? (
+              <span className="text-paper/65">{c.optional}</span>
+            ) : (
+              <span className="text-brand-400">*</span>
+            )}
+          </label>
+          <textarea
+            id="besked"
+            name="besked"
+            required={!quote}
+            maxLength={messageBudget}
+            aria-invalid={
+              invalidFields.includes("message") ||
+              message.length > CONTACT_LIMITS.message ||
+              undefined
+            }
+            aria-describedby={`contact-message-count${invalidFields.includes("message") ? " contact-validation" : ""}`}
+            rows={quote ? 4 : 5}
+            value={values.besked}
+            onChange={handleChange}
+            className={inputClasses}
+            placeholder={placeholder}
+          />
+          <p id="contact-message-count" className="mt-2 text-xs tabular-nums text-paper/75">
+            {message.length.toLocaleString(lang === "da" ? "da-DK" : "en-GB")} /{" "}
+            {CONTACT_LIMITS.message.toLocaleString(lang === "da" ? "da-DK" : "en-GB")}{" "}
+            {quote ? c.quoteCount : c.messageCount}
+          </p>
+        </div>
+
+        {/* Hidden from people by position rather than display:none, which some
+          bots check for. Never focusable, never announced, and deliberately
+          carries no visible text: search snippets have picked up off-screen
+          honeypot labels before, which makes a contact result look like a raw
+          form dump instead of a company page. */}
+        <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={values.website}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          {validationError && (
+            <p
+              id="contact-validation"
+              role="alert"
+              tabIndex={-1}
+              className="mb-4 text-sm leading-6 text-amber-100"
+            >
+              {validationError}
+            </p>
+          )}
+          {/* The site's one button, from the same string as the front page's
+            form: full width under the thumb on a phone, its own width on a
+            wide screen. It was a hand-written 44px pill a third of the
+            width, without the press state the real button has. */}
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            aria-busy={status === "sending"}
+            className={`${buttonClass("primary", "lg")} w-full sm:w-auto disabled:opacity-60`}
+          >
+            {status === "sending" ? c.sending : quote ? c.quoteSubmit : c.submit}
+          </button>
+
+          <p className="mt-3 text-sm leading-[1.5] text-paper/75">
+            {c.privacy}{" "}
+            <Link
+              href={localePath("/privatlivspolitik", lang)}
+              className="underline decoration-paper/30 underline-offset-2 hover:text-paper"
+            >
+              {c.privacyLink}
+            </Link>
+            .
+          </p>
+        </div>
+      </fieldset>
     </form>
   );
 }

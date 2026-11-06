@@ -5,6 +5,9 @@
  * changes address.
  */
 
+import { toDanishPath, toEnglishPath } from "./routes";
+import { absoluteUrl, SITE_ORIGIN } from "./site";
+
 export const langs = ["da", "en"] as const;
 
 export type Lang = (typeof langs)[number];
@@ -18,10 +21,22 @@ export function isLang(value: string): value is Lang {
   return (langs as readonly string[]).includes(value);
 }
 
-/** Prefix a site-internal path for the given language. */
+/**
+ * Render a site-internal path in the given language.
+ *
+ * Callers always pass the Danish path — that is the page's identity, the name
+ * of the route folder, and the key the sitemap uses. Danish returns it
+ * unchanged; English returns the translated address from lib/routes.ts.
+ *
+ * This is the one funnel. Canonical, hreflang, og:url, the sitemap and every
+ * link on the site resolve through here, so giving the English tree English
+ * addresses is a change to this function and nothing else — all 106 call
+ * sites keep passing exactly the Danish paths they always did.
+ */
 export function localePath(path: string, lang: Lang): string {
   const clean = path === "/" ? "" : path;
-  return lang === defaultLang ? clean || "/" : `/en${clean}`;
+  if (lang === defaultLang) return clean || "/";
+  return `/en${toEnglishPath(clean)}`;
 }
 
 /**
@@ -34,7 +49,14 @@ export function localePath(path: string, lang: Lang): string {
 export function stripLocale(pathname: string): string {
   for (const lang of langs) {
     if (pathname === `/${lang}`) return "/";
-    if (pathname.startsWith(`/${lang}/`)) return pathname.slice(lang.length + 1);
+    if (pathname.startsWith(`/${lang}/`)) {
+      const rest = pathname.slice(lang.length + 1);
+      /* An English URL carries the English address, so turn it back into the
+         Danish path before anything downstream looks it up or hands it to
+         localePath — otherwise the language switcher on /en/products would
+         build /en/products again instead of /produkter. */
+      return lang === "en" ? toDanishPath(rest) : rest;
+    }
   }
   return pathname;
 }
@@ -91,14 +113,15 @@ export function alternatesFor(path: string, lang: Lang) {
  * The image has to be named here even though app/opengraph-image.tsx already
  * generates it: a page that declares `openGraph` replaces the one Next
  * assembled from the file convention, so leaving it out silently drops
- * og:image and downgrades the Twitter card to the small one. Resolved against
- * metadataBase in the layout, so it comes out absolute on the canonical host.
+ * og:image and downgrades the Twitter card to the small one. It is absolute
+ * here, so isolated roots such as /admin and /_not-found cannot fall back to
+ * localhost while Next resolves social metadata.
  *
  * No title or description: Next fills those from the page's own metadata, and
  * repeating them would be two places to edit for one change.
  */
 const OG_IMAGE = {
-  url: "/opengraph-image",
+  url: absoluteUrl("/opengraph-image"),
   width: 1200,
   height: 630,
   type: "image/png",
@@ -108,7 +131,7 @@ export function openGraphFor(path: string, lang: Lang) {
   return {
     type: "website" as const,
     siteName: "Kestro",
-    url: localePath(path, lang),
+    url: absoluteUrl(localePath(path, lang)),
     locale: lang === "da" ? "da_DK" : "en_GB",
     alternateLocale: lang === "da" ? "en_GB" : "da_DK",
     images: [OG_IMAGE],
@@ -118,6 +141,7 @@ export function openGraphFor(path: string, lang: Lang) {
 /** Canonical, hreflang, Open Graph and the Twitter card for a page. */
 export function metaFor(path: string, lang: Lang) {
   return {
+    metadataBase: new URL(SITE_ORIGIN),
     alternates: alternatesFor(path, lang),
     openGraph: openGraphFor(path, lang),
     twitter: {
@@ -125,4 +149,51 @@ export function metaFor(path: string, lang: Lang) {
       images: [OG_IMAGE],
     },
   };
+}
+
+/**
+ * A date a person reads, not the ISO string it is stored as.
+ *
+ * There were two of these. The guides index formatted "31. aug. 2026" and
+ * every page using PageHeader printed the raw "2026-09-02" straight out of
+ * the data, on the same site, in the same language, four scroll positions
+ * apart. A machine timestamp on a page a customer reads is a tell.
+ */
+export function formatDate(iso: string, lang: Lang) {
+  if (!iso) return "";
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(lang === "da" ? "da-DK" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+const numberWords: Record<Lang, string[]> = {
+  da: ["nul", "én", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti"],
+  en: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"],
+};
+
+/**
+ * A small count as a word, the way it is written in running text: "ni i
+ * detaljer", not "9 i detaljer" — and never a digit at the start of a
+ * sentence. Above ten the digits stay, as both languages write them.
+ */
+export function countWord(n: number, lang: Lang, capital = false) {
+  const word = numberWords[lang][n] ?? String(n);
+  return capital ? word[0].toUpperCase() + word.slice(1) : word;
+}
+
+/* Words that keep their capital in the middle of a sentence. */
+const properFirst = /^(Nordic|Windows|Danish|Norwegian|Microsoft|Apple|Lenovo|Dell|HP)\b/;
+
+/**
+ * A name dropped into the middle of a sentence: "Mini-pc'er" → "mini-pc'er",
+ * "Mini PCs" → "mini PCs", but "Nordic preparation" keeps its capital.
+ * Lowercasing the whole string turned "PCs" into "pcs" in every heading
+ * that used it.
+ */
+export function lowerFirst(text: string) {
+  if (properFirst.test(text) || !/^[A-ZÆØÅ][a-zæøå]/.test(text)) return text;
+  return text[0].toLowerCase() + text.slice(1);
 }

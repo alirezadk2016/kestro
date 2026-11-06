@@ -1,102 +1,99 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Container from "./Container";
-import TeamAvatar from "./TeamAvatar";
-import { enquiryContacts } from "@/lib/company";
-import { localePath, type Lang } from "@/lib/i18n";
+import Button from "./Button";
+import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { ui } from "@/lib/nav";
 
 const copy = {
   da: {
     title: "Lad os finde den rigtige løsning til jer",
     body: "Fortæl os om jeres situation, så vender vi tilbage med et konkret oplæg – uforpligtende og uden salgstale.",
-    secondary: "Se flådeløsninger",
-    who: "Dem I kommer til at tale med",
-    meet: "Mød os",
+    write: "Skriv til os",
   },
   en: {
     title: "Let us find the right solution for you",
     body: "Tell us about your situation and we will come back with a concrete proposal — no obligation and no sales pitch.",
-    secondary: "See fleet solutions",
-    who: "The people you will be talking to",
-    meet: "Meet us",
+    write: "Write to us",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export default function CtaSection({
-  lang,
-  /*
-   * The band ends most pages on the site, so this is where the two names
-   * behind it belong: a buyer reading "tell us about your situation" gets to
-   * see who "us" is before writing. Turned off on the pages that already
-   * introduce the team a screen earlier.
-   */
-  people = true,
-}: {
-  lang: Lang;
-  people?: boolean;
-}) {
+type Intent = "purchase" | "repair" | "buyback";
+const taskCopy: Record<
+  Exclude<Intent, "purchase">,
+  { title: Localized; body: Localized; action: Localized; href: string }
+> = {
+  repair: {
+    title: { da: "Skal vi se på jeres computer?", en: "Need help with your computer?" },
+    body: {
+      da: "Skriv model og hvad der er galt i reparationsformularen, så afklarer vi næste skridt.",
+      en: "Tell us the model and what is wrong in the repair form, and we discuss the next step.",
+    },
+    action: { da: "Beskriv problemet", en: "Describe the problem" },
+    href: "/reparation#reparation-formular",
+  },
+  buyback: {
+    title: { da: "Hvilket udstyr skal I af med?", en: "What equipment are you getting rid of?" },
+    body: {
+      da: "Send modeller, antal og stand, så kan vi vurdere mulighederne.",
+      en: "Send the models, quantity and condition so we can assess the options.",
+    },
+    action: { da: "Beskriv jeres udstyr", en: "Describe your equipment" },
+    href: "/saelg-til-os#saelg-formular",
+  },
+};
+
+/*
+ * The close of a page: one glass band, one sentence, one action.
+ *
+ * It used to be a display-size heading, two full buttons and the two people
+ * behind the inbox with their photographs and titles — 786px on a phone, at
+ * the foot of sixteen pages, directly above a footer that offered "Talk to an
+ * adviser" and the address again. Read page after page it was the loudest
+ * repetition on the site. The people are on /om-os, /kontakt and /tilbud,
+ * where somebody deciding whether to write is looking for them; here the band
+ * says the one thing and gets out of the way.
+ *
+ * Glass on the stage's own light: the key light up and to the right shows
+ * through the panel, which is what makes it read as a pane and not a box.
+ */
+export default function CtaSection({ lang, intent = "purchase" }: { lang: Lang; intent?: Intent }) {
   const c = copy[lang];
-  const team = enquiryContacts(lang);
+  const task = intent === "purchase" ? null : taskCopy[intent];
 
   return (
-    <section className="stage py-12 sm:py-24" data-reveal>
+    <section className="stage py-10 sm:py-16">
       <Container>
-        <div className="max-w-3xl">
-          <span className="h-px w-8 bg-brand-400" />
-          <h2 className="mt-6 text-balance font-display text-[clamp(1.875rem,4vw,3rem)] font-extrabold leading-[1.05] tracking-display text-paper">
-            {c.title}
-          </h2>
-          <p className="mt-5 text-base leading-7 sm:leading-8 text-paper/60">{c.body}</p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={localePath("/tilbud", lang)}
-              className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-paper px-8 text-sm font-semibold tracking-tight text-brand-950 transition hover:bg-white"
+        <div className="glass-band flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+          <div className="max-w-2xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              {task?.title[lang] ?? c.title}
+            </h2>
+            <p className="mt-3 text-base leading-[1.65] text-paper/75">
+              {task?.body[lang] ?? c.body}
+            </p>
+          </div>
+          <div className="flex flex-none flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
+            <Button
+              href={localePath(task?.href ?? "/tilbud", lang)}
+              size="lg"
+              className="w-full sm:w-auto"
             >
-              {ui.bookCall[lang]}
+              {task?.action[lang] ?? ui.bookCall[lang]}
+            </Button>
+            <Link
+              href={localePath("/kontakt", lang)}
+              className="group inline-flex min-h-[44px] items-center justify-center gap-2 text-sm font-semibold text-paper/85 transition-colors hover:text-paper"
+            >
+              {c.write}
               <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                 strokeWidth={2}
               />
             </Link>
-            <Link
-              href={localePath("/flaadeloesninger", lang)}
-              className="inline-flex min-h-[52px] items-center justify-center border border-paper/25 px-8 text-sm font-semibold tracking-tight text-paper transition hover:border-paper/60"
-            >
-              {c.secondary}
-            </Link>
           </div>
         </div>
-
-        {people && (
-          <div className="mt-12 border-t border-paper/15 pt-8 lg:mt-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/60">
-              {c.who}
-            </p>
-            <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-10 sm:gap-y-5">
-              {team.map((member) => (
-                <div key={member.id} className="flex items-center gap-3">
-                  <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-paper">{member.name}</p>
-                    <p className="text-sm text-paper/60">{member.role[lang]}</p>
-                  </div>
-                </div>
-              ))}
-              <Link
-                href={localePath("/om-os", lang)}
-                className="group inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-paper/75 underline decoration-paper/30 underline-offset-4 transition hover:text-paper hover:decoration-paper sm:ml-auto"
-              >
-                {c.meet}
-                <ArrowRight
-                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                  strokeWidth={2}
-                />
-              </Link>
-            </div>
-          </div>
-        )}
       </Container>
     </section>
   );

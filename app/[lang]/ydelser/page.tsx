@@ -1,60 +1,57 @@
 import type { Metadata } from "next";
+import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
-import {
-  PackageSearch,
-  ShieldCheck,
-  Keyboard,
-  Truck,
-  Building2,
-  Wrench,
-  Recycle,
-  Boxes,
-  Rocket,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
+import { type CraftMarkName } from "@/components/CraftMark";
+import ServiceTile from "@/components/ServiceTile";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
 import Faq from "@/components/Faq";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
+import PageSchema from "@/components/PageSchema";
+import FactNote from "@/components/FactNote";
+import { services as serviceList } from "@/lib/services";
+import { repairs } from "@/lib/repairs";
 
 const copy = {
   da: {
-    metaTitle: "Ydelser: indkøb, flåder, opgradering og opkøb | Kestro",
+    metaTitle: "Ydelser: indkøb, klargøring, levering, opkøb af IT | Kestro",
     metaDescription:
-      "Indkøb af renoveret IT, flådeleverancer, opgradering og reparation, opkøb af brugt udstyr og opstart af nye arbejdspladser.",
+      "Alle Kestros ydelser: indkøb af renoveret IT, flådeleverancer, klargøring med dansk tastatur, reparation, opkøb af brugt udstyr og nye arbejdspladser.",
     stepLink: "Læs mere",
     title: "Det hjælper vi med",
-    description:
-      "Kestro er indkøbspartner på brugt erhvervs-IT. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.",
-    eyebrow: "Processen",
+    /* Answer first, with the two counts the page actually lists. */
+    description: `Kestro er leverandør af brugt erhvervs-IT: ${serviceList.length} ydelser fra indkøb til opstart af nye arbejdspladser og et værksted med ${repairs.length} slags reparationer. Vi køber ind, sælger videre, opgraderer og tager gammelt udstyr retur – og I skal kun forholde jer til ét sted.`,
     processTitle: "Sådan foregår en leverance",
-    processSub: "Fra brugt udstyr i Sydeuropa til testede, nordisk-klargjorte maskiner hos jer.",
+    processSub:
+      "Fra brugt udstyr i Sydeuropa til testede maskiner, klar til nordisk brug, hos jer.",
     qualityTitle: "Kvalitetssikring",
     qualityBody:
-      "Enhederne funktionstestes og nulstilles, før de sendes videre. Vi oplyser stand, batteritilstand, konfiguration og garantivilkår skriftligt, før I bestiller – og vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren bag den enkelte leverance.",
-    qualityLink: "Se hvordan vi vurderer stand og kvalitet",
+      "Stand, batteritilstand, konfiguration og garantivilkår står skriftligt, før I bestiller. Vi lover ikke et fast antal måneders garanti på forhånd, fordi det afhænger af udstyret og leverandøren.",
+    qualityLink: "Sådan vurderer vi stand",
   },
   en: {
-    metaTitle: "Services: sourcing, fleets, upgrades and buy-back | Kestro",
+    metaTitle: "Services: sourcing, setup, delivery, buy-back of IT | Kestro",
     metaDescription:
-      "Sourcing refurbished IT, fleet deliveries, upgrades and repairs, buying used equipment and setting up new workstations.",
+      "All Kestro services: sourcing refurbished IT, fleet deliveries, Nordic keyboards, repairs and upgrades, buying used equipment and new workstations.",
     stepLink: "Read more",
     title: "What we help with",
-    description:
-      "Kestro is a sourcing partner for used business IT. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.",
-    eyebrow: "The process",
+    description: `Kestro is a supplier of used business IT: ${serviceList.length} services from purchasing to setting up new workstations, and a workshop with ${repairs.length} kinds of repair. We buy in, sell on, upgrade and take old equipment back — and you only have one place to deal with.`,
     processTitle: "How a delivery works",
     processSub:
       "From used equipment in southern Europe to tested, Nordic-ready machines at your desks.",
     qualityTitle: "Quality assurance",
     qualityBody:
-      "The machines are function-tested and reset before they are passed on. We state condition, battery health, configuration and warranty terms in writing before you order — and we do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier behind the individual delivery.",
-    qualityLink: "See how we assess condition and quality",
+      "Condition, battery health, configuration and warranty terms are in writing before you order. We do not promise a fixed number of months of warranty up front, because that depends on the equipment and the supplier.",
+    qualityLink: "How we assess condition",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
-export function generateMetadata({ params }: { params: { lang: Lang } }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ lang: Lang }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const c = copy[params.lang];
   return {
     title: c.metaTitle,
@@ -65,17 +62,17 @@ export function generateMetadata({ params }: { params: { lang: Lang } }): Metada
 
 const services = [
   {
-    icon: PackageSearch,
+    mark: "network" as CraftMarkName,
     title: { da: "Indkøb og sourcing", en: "Sourcing and purchasing" },
     description: {
       da: "I fortæller, hvad I skal bruge. Vi finder maskinerne i vores leverandørnetværk, klargør dem og leverer dem – fra enkelte enheder til hele afdelinger.",
       en: "You tell us what you need. We find the machines in our supplier network, prepare them and deliver — from single units to whole departments.",
     },
     href: "/produkter",
-    linkLabel: { da: "Se hvad vi skaffer", en: "See what we source" },
+    linkLabel: { da: "Se produkterne", en: "See the products" },
   },
   {
-    icon: Building2,
+    mark: "who" as CraftMarkName,
     title: { da: "Flådeleverancer", en: "Fleet deliveries" },
     description: {
       da: "Samme konfiguration til alle medarbejdere, faste specifikationer og mulighed for at bytte det gamle udstyr ind som en del af aftalen.",
@@ -85,27 +82,27 @@ const services = [
     linkLabel: { da: "Se flådeløsninger", en: "See fleet solutions" },
   },
   {
-    icon: Wrench,
+    mark: "repair" as CraftMarkName,
     title: { da: "Opgradering og reparation", en: "Upgrades and repairs" },
     description: {
       da: "Mere hukommelse, ny disk, nyt batteri, nordisk tastatur, Windows og licenser. Ofte billigere end at udskifte maskinen – og vi siger til, hvis det ikke kan betale sig.",
-      en: "More memory, a new disk, a new battery, a Nordic keyboard, Windows and licences. Often cheaper than replacing the machine — and we say so when it is not worth it.",
+      en: "More memory, a new disk, a new battery, a Danish or Norwegian keyboard, Windows and licences. Often cheaper than replacing the machine — and we say so when it is not worth it.",
     },
     href: "/reparation",
     linkLabel: { da: "Se opgraderinger", en: "See upgrades" },
   },
   {
-    icon: Recycle,
+    mark: "sustainable" as CraftMarkName,
     title: { da: "Opkøb af brugt udstyr", en: "Buying used equipment" },
     description: {
-      da: "Skal I af med gamle maskiner, køber vi dem og henter dem. Er der data på enhederne, sletter vi dem og kan levere dokumentation per enhed. I får en vurdering, før I beslutter jer.",
-      en: "If you need to get rid of old machines, we buy them and collect them. If there is data on the units, we erase it and can provide documentation per device. You get a valuation before you decide.",
+      da: "Vi køber og henter gamle maskiner og sletter lagermedierne. I får en vurdering, før I beslutter jer.",
+      en: "We buy and collect old machines and erase the storage. You get a valuation before you decide.",
     },
     href: "/saelg-til-os",
     linkLabel: { da: "Få en vurdering", en: "Get a valuation" },
   },
   {
-    icon: Boxes,
+    mark: "batch" as CraftMarkName,
     title: { da: "Overskudslager og returvarer", en: "Overstock and returns" },
     description: {
       da: "Ligger der udstyr, der aldrig kom ud til kunderne – returvarer, demoenheder eller varer fra en aflyst ordre? Vi finder køberne i stedet for, at det står og taber værdi.",
@@ -115,7 +112,7 @@ const services = [
     linkLabel: { da: "Læs mere", en: "Read more" },
   },
   {
-    icon: Rocket,
+    mark: "install" as CraftMarkName,
     title: { da: "Opstart af nye arbejdspladser", en: "Setting up new workstations" },
     description: {
       da: "Skal alt stå klar til første arbejdsdag, hjælper vi med at vælge udstyret, klargøre det og få det leveret samlet – skærme, docks og kabler indregnet.",
@@ -128,48 +125,57 @@ const services = [
 
 const steps = [
   {
-    icon: PackageSearch,
+    mark: "network" as CraftMarkName,
     slug: "sourcing-og-indkoeb",
     title: { da: "Sourcing og indkøb", en: "Sourcing and purchasing" },
     description: {
-      da: "Vi arbejder som indkøbspartner og finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa – uden selv at binde kapital i fast lager. Det betyder, at vi kan tilpasse sourcingen til den enkelte ordre i stedet for at være begrænset af, hvad der tilfældigvis står på hylden.",
-      en: "We work as a sourcing partner and find used business laptops and desktops through suppliers in southern Europe — without tying up capital in stock of our own. That means we can shape the sourcing around the individual order instead of being limited by whatever happens to be on a shelf.",
+      da: "Vi finder brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa til den enkelte ordre – ikke ud fra, hvad der står på en hylde.",
+      en: "We find used business laptops and desktops through suppliers in southern Europe for the individual order — not from whatever is on a shelf.",
     },
   },
   {
-    icon: ShieldCheck,
+    mark: "tested" as CraftMarkName,
     slug: "klargoering-og-test",
     title: { da: "Klargøring, test og opgradering", en: "Preparation, testing and upgrades" },
     description: {
-      da: "Enhederne gennemgår en funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og tidligere data slettes, før enheden nulstilles.",
-      en: "The machines go through a function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk are upgraded where needed, and previous data is erased before the machine is reset.",
+      da: "Funktionstest af skærm, tastatur, batteri og ydeevne. Slidte dele skiftes, RAM og SSD opgraderes efter behov, og data slettes.",
+      en: "A function test of screen, keyboard, battery and performance. Worn parts are replaced, memory and disk upgraded where needed, and data erased.",
     },
   },
   {
-    icon: Keyboard,
+    mark: "nordic" as CraftMarkName,
     slug: "nordisk-tilpasning",
     title: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     description: {
-      da: "Tastaturet skiftes til dansk eller norsk layout, så æ, ø og å sidder korrekt. Windows installeres med drivere og sprogopsætning, og vi hjælper med at få licenserne på plads, så maskinerne kører lovligt fra dag ét.",
-      en: "The keyboard is changed to a Danish or Norwegian layout, so æ, ø and å sit where they should. Windows is installed with drivers and language settings, and we help get the licences in order so the machines run legally from day one.",
+      da: "Dansk eller norsk tastatur, Windows med drivere og sprogopsætning, og licenserne på plads fra dag ét.",
+      en: "A Danish or Norwegian keyboard, Windows with drivers and language settings, and the licences in order from day one.",
     },
   },
   {
-    icon: Truck,
+    mark: "delivery" as CraftMarkName,
     slug: "levering",
     title: { da: "Levering til virksomheden", en: "Delivery to the company" },
     description: {
-      da: "Vi leverer til virksomheder i Danmark og Norge i de mængder, I har brug for. Fordi vi sourcer per ordre, afhænger leveringstiden af den konkrete bestilling; vi oplyser en tidsramme, når vi har talt om jeres behov.",
-      en: "We deliver to companies in Denmark and Norway in whatever quantity you need. Because we source per order, lead time depends on the specific order; we give you a time frame once we have talked about what you need.",
+      da: "Til virksomheder i Danmark og Norge. Leveringstiden afhænger af ordren, og tidsrammen får I, før I bestiller.",
+      en: "To companies in Denmark and Norway. Lead time depends on the order, and you get the time frame before you order.",
     },
   },
 ];
 
-export default function YdelserPage({ params }: { params: { lang: Lang } }) {
+export default async function YdelserPage(props: { params: Promise<{ lang: Lang }> }) {
+  const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
   return (
     <>
+      <PageSchema
+        lang={lang}
+        type="CollectionPage"
+        route="/ydelser"
+        name={c.title}
+        description={c.description}
+      />
+
       <section className="py-10 sm:py-20">
         <Container>
           <PageHeader
@@ -178,32 +184,25 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
             lang={lang}
             href="/ydelser"
             crumb={lang === "da" ? "Ydelser" : "Services"}
+
+            updated="/ydelser"
           />
 
+          {/* Was a hand-rolled Link card with a .plate and an 11px chip. It is
+              the same object as the repair tiles — a card that goes somewhere,
+              with a mark naming what is there — so it is the same component,
+              and the site stops running two card languages on two pages. */}
           <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {services.map((service) => (
-              <Link
+              <ServiceTile
                 key={service.title.da}
                 href={localePath(service.href, lang)}
-                className="group flex h-full flex-col border border-white/10 bg-white/[0.04] p-5 transition hover:border-brand-300 hover:border-white/35 sm:p-6"
-              >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-brand-300">
-                  <service.icon className="h-5 w-5" strokeWidth={1.75} />
-                </span>
-                <h2 className="mt-4 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
-                  {service.title[lang]}
-                </h2>
-                <p className="mt-2 flex-1 text-sm leading-6 text-paper/65">
-                  {service.description[lang]}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
-                  {service.linkLabel[lang]}
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
-                </span>
-              </Link>
+                mark={service.mark}
+                title={service.title[lang]}
+                summary={service.description[lang]}
+                prompt={service.linkLabel[lang]}
+                headingLevel={2}
+              />
             ))}
           </div>
         </Container>
@@ -212,11 +211,10 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <span className="eyebrow text-brand-300">{c.eyebrow}</span>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
               {c.processTitle}
             </h2>
-            <p className="mt-3 text-base leading-7 text-paper/65">{c.processSub}</p>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
 
             <div className="mt-10 space-y-10">
               {steps.map((step) => (
@@ -225,14 +223,12 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
                   href={localePath(`/ydelser/${step.slug}`, lang)}
                   className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
                 >
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/10 text-brand-300 shadow-sm">
-                    <step.icon className="h-5 w-5" strokeWidth={1.75} />
-                  </span>
+                  <MarkTile name={step.mark} size="md" />
                   <div>
                     <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
                       {step.title[lang]}
                     </h3>
-                    <p className="mt-2 text-base leading-7 text-paper/65">
+                    <p className="mt-2 text-base leading-[1.75] text-paper/75">
                       {step.description[lang]}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
@@ -247,9 +243,9 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
               ))}
             </div>
 
-            <div className="mt-12 border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+            <div className="mt-12 plate p-6 sm:p-8">
               <h3 className="text-lg font-semibold text-paper">{c.qualityTitle}</h3>
-              <p className="mt-3 text-base leading-7 text-paper/65">{c.qualityBody}</p>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.qualityBody}</p>
               <Link
                 href={localePath("/kvalitet", lang)}
                 className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
@@ -263,6 +259,10 @@ export default function YdelserPage({ params }: { params: { lang: Lang } }) {
       </section>
 
       <Faq lang={lang} />
+
+      {/* The quality section says the machines are reset before they go on;
+          this is what the levels of "reset" actually are. */}
+      <FactNote lang={lang} ids={["nistSanitization"]} />
 
       <CtaSection lang={lang} />
     </>

@@ -1,0 +1,450 @@
+[
+  {
+    "src": "/cards/cat-desktops.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 164660,
+    "format": "webp"
+  },
+  {
+    "src": "/cards/cat-fleet.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 167068,
+    "format": "webp"
+  },
+  {
+    "src": "/cards/cat-laptops.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 180548,
+    "format": "webp"
+  },
+  {
+    "src": "/cards/cat-monitors.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 167376,
+    "format": "webp"
+  },
+  {
+    "src": "/cards/exploded.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 135272,
+    "format": "webp"
+  },
+  {
+    "src": "/cards/fleet-scene.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 188704,
+    "format": "webp"
+  },
+  {
+    "src": "/graphics/buyback.webp",
+    "width": 1440,
+    "height": 960,
+    "bytes": 148956,
+    "format": "webp"
+  },
+  {
+    "src": "/graphics/grade-a.webp",
+    "width": 720,
+    "height": 720,
+    "bytes": 42804,
+    "format": "webp"
+  },
+  {
+    "src": "/graphics/grade-b.webp",
+    "width": 720,
+    "height": 720,
+    "bytes": 44194,
+    "format": "webp"
+  },
+  {
+    "src": "/graphics/grade-c.webp",
+    "width": 720,
+    "height": 720,
+    "bytes": 46234,
+    "format": "webp"
+  },
+  {
+    "src": "/graphics/smartphones.webp",
+    "width": 1440,
+    "height": 960,
+    "bytes": 117026,
+    "format": "webp"
+  },
+  {
+    "src": "/hero/scene-mobile-portrait.avif",
+    "width": 820,
+    "height": 1458,
+    "bytes": 43157,
+    "format": "avif"
+  },
+  {
+    "src": "/hero/scene-mobile-portrait.webp",
+    "width": 820,
+    "height": 1458,
+    "bytes": 69362,
+    "format": "webp"
+  },
+  {
+    "src": "/hero/scene-mobile.avif",
+    "width": 820,
+    "height": 796,
+    "bytes": 49097,
+    "format": "avif"
+  },
+  {
+    "src": "/hero/scene-mobile.webp",
+    "width": 820,
+    "height": 796,
+    "bytes": 98714,
+    "format": "webp"
+  },
+  {
+    "src": "/hero/scene.avif",
+    "width": 1942,
+    "height": 800,
+    "bytes": 80611,
+    "format": "avif"
+  },
+  {
+    "src": "/hero/scene.webp",
+    "width": 1942,
+    "height": 800,
+    "bytes": 159964,
+    "format": "webp"
+  },
+  {
+    "src": "/images/practical/battery.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 150588,
+    "format": "webp"
+  },
+  {
+    "src": "/images/practical/performance.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 188136,
+    "format": "webp"
+  },
+  {
+    "src": "/images/practical/ram.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 248998,
+    "format": "webp"
+  },
+  {
+    "src": "/images/practical/ssd.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 196648,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-01-cover.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 177940,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-02-open.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 189366,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-03-removed.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 186022,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/ram-04-installed.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 164714,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-cover.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 137116,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-installed.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 158788,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-open.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 174888,
+    "format": "webp"
+  },
+  {
+    "src": "/images/repairs/workbench-removed.webp",
+    "width": 1983,
+    "height": 793,
+    "bytes": 159916,
+    "format": "webp"
+  },
+  {
+    "src": "/models/laptop-assembly.webp",
+    "width": 1200,
+    "height": 1200,
+    "bytes": 76632,
+    "format": "webp"
+  },
+  {
+    "src": "/models/laptop-repair.webp",
+    "width": 1200,
+    "height": 1200,
+    "bytes": 80576,
+    "format": "webp"
+  },
+  {
+    "src": "/models/laptop-service.webp",
+    "width": 1200,
+    "height": 1200,
+    "bytes": 42262,
+    "format": "webp"
+  },
+  {
+    "src": "/models/laptop-still.webp",
+    "width": 1200,
+    "height": 898,
+    "bytes": 22686,
+    "format": "webp"
+  },
+  {
+    "src": "/models/laptop-wallpaper.webp",
+    "width": 1536,
+    "height": 960,
+    "bytes": 192118,
+    "format": "webp"
+  },
+  {
+    "src": "/models/t14/gen2-intel-reference.webp",
+    "width": 1600,
+    "height": 1200,
+    "bytes": 137384,
+    "format": "webp"
+  },
+  {
+    "src": "/models/thinkpad-internals-texture.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 150324,
+    "format": "webp"
+  },
+  {
+    "src": "/models/thinkpad-keyboard-texture.webp",
+    "width": 1274,
+    "height": 1234,
+    "bytes": 70892,
+    "format": "webp"
+  },
+  {
+    "src": "/team/alireza.webp",
+    "width": 320,
+    "height": 320,
+    "bytes": 8540,
+    "format": "webp"
+  },
+  {
+    "src": "/team/ismail-masoumabadi.webp",
+    "width": 320,
+    "height": 320,
+    "bytes": 4066,
+    "format": "webp"
+  },
+  {
+    "src": "/team/mehdi.webp",
+    "width": 320,
+    "height": 320,
+    "bytes": 9732,
+    "format": "webp"
+  },
+  {
+    "src": "/thinkpad-t480-1.jpg",
+    "width": 1179,
+    "height": 1115,
+    "bytes": 68988,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-2-cutout.webp",
+    "width": 1179,
+    "height": 1120,
+    "bytes": 30418,
+    "format": "webp"
+  },
+  {
+    "src": "/thinkpad-t480-2.jpg",
+    "width": 1179,
+    "height": 1120,
+    "bytes": 66327,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-3.jpg",
+    "width": 1179,
+    "height": 1142,
+    "bytes": 96868,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-4.jpg",
+    "width": 1179,
+    "height": 1142,
+    "bytes": 92928,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-6-cutout.webp",
+    "width": 1179,
+    "height": 1115,
+    "bytes": 48604,
+    "format": "webp"
+  },
+  {
+    "src": "/thinkpad-t480-6.jpg",
+    "width": 1179,
+    "height": 1115,
+    "bytes": 116493,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-7.jpg",
+    "width": 1179,
+    "height": 1142,
+    "bytes": 147080,
+    "format": "jpeg"
+  },
+  {
+    "src": "/thinkpad-t480-8.jpg",
+    "width": 1179,
+    "height": 1117,
+    "bytes": 39782,
+    "format": "jpeg"
+  },
+  {
+    "src": "/viden/beslutning.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 156038,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/datasikkerhed.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 199530,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/inspektion.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 203398,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/k-buying.webp",
+    "width": 840,
+    "height": 560,
+    "bytes": 75528,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/k-hero.webp",
+    "width": 1600,
+    "height": 681,
+    "bytes": 65760,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/k-lifecycle.webp",
+    "width": 840,
+    "height": 560,
+    "bytes": 55084,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/k-memory.webp",
+    "width": 840,
+    "height": 560,
+    "bytes": 104920,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/k-other.webp",
+    "width": 840,
+    "height": 560,
+    "bytes": 93778,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/kompatibilitet.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 168172,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/levetid.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 144780,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/montering.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 265284,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/stand.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 137614,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/viden.webp",
+    "width": 1200,
+    "height": 800,
+    "bytes": 71176,
+    "format": "webp"
+  },
+  {
+    "src": "/viden/ydelse.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 306750,
+    "format": "webp"
+  },
+  {
+    "src": "/world-dots.svg",
+    "width": 1000,
+    "height": 500,
+    "bytes": 48758,
+    "format": "svg"
+  }
+]
