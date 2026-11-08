@@ -200,7 +200,7 @@ const copy = {
       "Each field in the quote exists because it is somewhere a deal goes wrong. “Grade B” with no description says nothing. A battery that passes a test can still be worn. A warranty with no name on it is hard to use. We write them down so you can hold us to them — and so you can ask other suppliers for the same.",
     relatedTitle: "Where to go next",
     related: [
-      { href: "/kvalitet", label: "Condition, testing and what to ask about" },
+      { href: "/kvalitet", label: "Condition, testing, what to ask" },
       { href: "/priser", label: "What does it cost?" },
       {
         href: "/tilbud",

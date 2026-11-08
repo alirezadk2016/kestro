@@ -549,8 +549,8 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
           {
             href: "/vejledninger/standardiser-firmacomputere",
             label: {
-              da: "Sådan standardiserer I firmaets computere",
-              en: "How to standardise your company's computers",
+              da: "Standardiser firmaets computere",
+              en: "Standardising company computers",
             },
           },
           {

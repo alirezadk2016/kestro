@@ -526,8 +526,8 @@ export const categories: Category[] = [
       {
         href: "/vejledninger/thinkpad-elitebook-latitude",
         label: {
-          da: "Hvilke docks passer til ThinkPad, EliteBook og Latitude",
-          en: "Which docks fit ThinkPad, EliteBook and Latitude",
+          da: "Hvilken dock passer til hvilket mærke?",
+          en: "Which dock fits which brand?",
         },
       },
     ],

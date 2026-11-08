@@ -137,7 +137,7 @@ const copy = {
     ],
     relatedTitle: "Where to go next",
     related: [
-      { href: "/kvalitet", label: "Condition, testing and what to ask about" },
+      { href: "/kvalitet", label: "Condition, testing, what to ask" },
       { href: "/ydelser/levering", label: "Delivery and timeframes" },
       { href: "/tilbud", label: "Get a quote for your fleet" },
     ],

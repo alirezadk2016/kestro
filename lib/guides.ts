@@ -1117,8 +1117,8 @@ export const guides: Guide[] = [
       {
         href: "/vejledninger/windows-11-paa-aeldre-maskine",
         label: {
-          da: "Kravene til Windows 11, og hvordan I tjekker dem",
-          en: "The Windows 11 requirements, and how to check them",
+          da: "Tjek kravene til Windows 11",
+          en: "Check the Windows 11 requirements",
         },
       },
       {
@@ -1638,8 +1638,8 @@ export const guides: Guide[] = [
       {
         href: "/vejledninger/tco-paa-firmacomputere",
         label: {
-          da: "Hvad maskinen koster over hele levetiden",
-          en: "What the machine costs over its whole life",
+          da: "Prisen over hele levetiden",
+          en: "What it costs over its whole life",
         },
       },
       {
@@ -1883,14 +1883,14 @@ export const guides: Guide[] = [
       {
         href: "/modeller/lenovo-thinkpad-t14",
         label: {
-          da: "ThinkPad T14: kontrollér generation og RAM-sokkel",
-          en: "ThinkPad T14: check the generation and RAM slot",
+          da: "ThinkPad T14: tjek generationen",
+          en: "ThinkPad T14: check the generation",
         },
       },
       {
         href: "/modeller/lenovo-thinkpad-x1-carbon",
         label: {
-          da: "X1 Carbon: vær opmærksom på fastloddet RAM",
+          da: "X1 Carbon: fastloddet RAM",
           en: "X1 Carbon: watch for soldered RAM",
         },
       },
@@ -2108,8 +2108,8 @@ export const guides: Guide[] = [
       {
         href: "/vejledninger/thinkpad-elitebook-latitude",
         label: {
-          da: "Sammenlign ThinkPad, EliteBook og Latitude",
-          en: "Compare ThinkPad, EliteBook and Latitude",
+          da: "ThinkPad vs EliteBook vs Latitude",
+          en: "ThinkPad vs EliteBook vs Latitude",
         },
       },
       {
@@ -2941,7 +2941,7 @@ export const guides: Guide[] = [
         href: "/modeller/lenovo-thinkpad-t480",
         label: {
           da: "ThinkPad T480: fordele og ulemper",
-          en: "ThinkPad T480: strengths and drawbacks",
+          en: "ThinkPad T480: pros and cons",
         },
       },
       {
@@ -2951,15 +2951,15 @@ export const guides: Guide[] = [
       {
         href: "/produkter/dockingstationer",
         label: {
-          da: "Dockingstationer, der passer til maskinerne",
+          da: "Docks, der passer til maskinerne",
           en: "Docks that fit the machines",
         },
       },
       {
         href: "/vejledninger/standardiser-firmacomputere",
         label: {
-          da: "Én model til hele gruppen: standardisering",
-          en: "One model for the whole group: standardising",
+          da: "Én model til hele gruppen",
+          en: "One model for the whole group",
         },
       },
     ],
@@ -3245,8 +3245,8 @@ export const guides: Guide[] = [
       {
         href: "/vejledninger/thinkpad-elitebook-latitude",
         label: {
-          da: "Forskellen på ThinkPad, EliteBook og Latitude",
-          en: "The difference between ThinkPad, EliteBook and Latitude",
+          da: "Sammenlign de tre erhvervsserier",
+          en: "Compare the three business lines",
         },
       },
       {

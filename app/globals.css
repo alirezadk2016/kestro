@@ -1375,6 +1375,23 @@ body {
   }
 
   /*
+   * Link chips below 360px. A pill whose label breaks onto two lines looks
+   * broken, and at 320 (the narrowest phone still in use) a 35-character label
+   * no longer fits beside its arrow. Labels are written to fit 360; here the
+   * pill gives up 8px of padding and a pixel of type instead of every label
+   * being cut down to the narrowest screen.
+   */
+  @media (max-width: 359px) {
+    a.plate-sm.rounded-full {
+      font-size: 0.8125rem;
+    }
+    a.plate-sm.rounded-full.px-5 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /*
    * A plate you can click. It lifts, the light on its top edge gets stronger
    * because it has moved closer to it, and the hairline turns to brand blue
    * with a glow that stays tucked under the panel.

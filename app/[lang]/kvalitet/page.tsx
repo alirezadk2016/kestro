@@ -46,7 +46,7 @@ const copy = {
     notIncludedTitle: "Det følger typisk ikke med som standard",
     notIncludedBody:
       "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er en klassisk grund til, at et billigt tilbud pludselig ikke er billigt. Sig til fra start, så regner vi det med.",
-    cta: "Få et tilbud, der er gennemskueligt",
+    cta: "Få et gennemskueligt tilbud",
   },
   en: {
     metaTitle: "Refurbished grades A, B, C and warranty explained | Kestro",
@@ -82,7 +82,7 @@ const copy = {
     notIncludedTitle: "What is usually not included as standard",
     notIncludedBody:
       "Power supplies, cables, docking stations, bags and mice rarely come with used equipment unless it has been agreed. That is a classic reason a cheap quote suddenly is not cheap. Say it up front and we will include it.",
-    cta: "Get a quote you can see through",
+    cta: "Get a transparent quote",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

@@ -59,7 +59,7 @@ const copy = {
     next: "Videre herfra",
     sources: "Kilder",
     more: "Flere fra Viden",
-    faq: "Spørgsmål, vi får om det her",
+    faq: "Spørgsmål om det her",
     contact: "Skriv til os",
   },
   en: {
@@ -71,7 +71,7 @@ const copy = {
     next: "Where to go next",
     sources: "Sources",
     more: "More from Knowledge",
-    faq: "Questions we get about this",
+    faq: "Questions about this",
     contact: "Write to us",
   },
 } satisfies Record<Lang, Record<string, string>>;

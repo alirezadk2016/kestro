@@ -124,6 +124,15 @@ crawl. What it found and what changed:
   4.5:1 ("Videre herfra" on /tilbud-eksempel, 2.23:1), now fixed. Mobile
   Lighthouse on six templates: performance 94–97, accessibility, best
   practices and SEO 100.
+- **Third round, 8 November.** A scan of all 156 pages at 390, 375, 360 and
+  320 px for link chips whose label breaks onto two lines inside the pill.
+  Twenty-one anchors were shortened to fit 360, each still unlike the other
+  anchors to the same page (rule 9); "ThinkPad vs EliteBook vs Latitude"
+  is now one of the comparison guide's anchors, from the used-laptop
+  checklist. Below 360 the chip gives up some padding and a pixel of type.
+  Two headings claimed a history a business that is not trading yet does
+  not have: the guides' FAQ was "Spørgsmål, vi får om det her" and model
+  pages said "Derfor peger vi ofte på denne model"; both now drop the claim.
 
 ## Search Console — week to 31 October 2026
 
