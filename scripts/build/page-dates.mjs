@@ -59,27 +59,38 @@ const APP = join(ROOT, "app", "[lang]");
 const SKIP_FILE = join(ROOT, "scripts", "build", "page-dates-skip.txt");
 /* "<hash>" skips the commit for every file; "<hash> <path> <path>…" skips it
    only for those files, for a commit that reworded some pages and only
-   restyled others. */
+   restyled others. A token that starts with "/" is a route instead:
+   "<hash> /produkter /modeller/[slug]" skips the commit for those routes only.
+   That is for a data file several routes import when only one of them shows
+   the words that changed — a category's intro lives in lib/categories.ts,
+   which the model pages also import for the category's name. */
 const skipList = existsSync(SKIP_FILE)
   ? readFileSync(SKIP_FILE, "utf8")
       .split("\n")
       .map((line) => line.replace(/#.*/, "").trim())
       .filter(Boolean)
       .map((line) => {
-        const [prefix, ...paths] = line.split(/\s+/);
-        return { prefix, paths };
+        const [prefix, ...tokens] = line.split(/\s+/);
+        return {
+          prefix,
+          paths: tokens.filter((t) => !t.startsWith("/")),
+          routes: tokens.filter((t) => t.startsWith("/")),
+        };
       })
   : [];
-const skipped = (hash, trailer, file) => {
+const skipped = (hash, trailer, file, route) => {
   if (/\bskip\b/i.test(trailer)) return true;
   const rel = file.slice(ROOT.length + 1).replaceAll("\\", "/");
   return skipList.some(
-    ({ prefix, paths }) => hash.startsWith(prefix) && (paths.length === 0 || paths.includes(rel)),
+    ({ prefix, paths, routes }) =>
+      hash.startsWith(prefix) &&
+      (paths.length === 0 || paths.includes(rel)) &&
+      (routes.length === 0 || routes.includes(route)),
   );
 };
 
 /** `git log` for one file, ISO date, newest content commit or first commit. */
-function commitDate(file, which) {
+function commitDate(file, which, route) {
   if (which === "first") {
     const out = execFileSync(
       "git",
@@ -101,7 +112,7 @@ function commitDate(file, which) {
   ).trim();
   for (const line of out.split("\n")) {
     const [hash, date, trailer = ""] = line.split("\t");
-    if (hash && date && !skipped(hash, trailer, file)) return date.slice(0, 10);
+    if (hash && date && !skipped(hash, trailer, file, route)) return date.slice(0, 10);
   }
   return null;
 }
@@ -212,7 +223,7 @@ for (const [route, rel] of Object.entries(routes)) {
   }
   const files = [...dependencies(entry)];
   const modified = files
-    .map((f) => commitDate(f, "last"))
+    .map((f) => commitDate(f, "last", route))
     .filter(Boolean)
     .sort()
     .pop();
