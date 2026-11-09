@@ -84,6 +84,38 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Search Console — week to 7 November 2026
+
+Rule 14, read through Windsor for `sc-domain:kestro.dk`, 1–7 November
+against 25–31 October. No figure is recorded here; what the data led to is.
+
+- **More of everything, from a small base.** Impressions, clicks and
+  Denmark's impressions grew; Denmark's share held. Clicks are still too few
+  to read CTR.
+- **Desktops are found in Danish.** `/produkter/stationaere-computere`
+  drew its first Danish searches, in the singular ("brugt stationær
+  computer", "brugt stationær pc"), on pages three to five. It is the
+  primary keyword's intent, so no new page (rule 1); the singular is in the
+  map as a secondary. The intro said a refurbished desktop is "ofte den mest
+  økonomiske løsning", which no source carries. The generated opening line
+  names the page and its series and the brands section says the machines
+  are sourced per order, so the intro now says only what nothing else on the
+  page does: each machine's condition is written into the quote.
+- **The RAM guide's wording.** The visible queries for
+  `/vejledninger/hvorfor-er-ram-blevet-dyrere` say "så dyrt", not
+  "dyrere". The variant is in the map; title and H1 keep the primary until
+  the variant holds for more than one week.
+- **Holding.** The T480 model page and the English HDD/SSD guide sit around
+  position nine. The HDD/SSD title changed on 29 October, too recently to
+  judge its click-through.
+- **Old URLs.** Mixed-language addresses from before the English routes
+  (`/en/produkter/…`, `/en/repairs/batteriskift`,
+  `/en/knowledge/slet-data-foer-du-saelger`) still collect impressions.
+  Each answers 301 to its English route; nothing to change.
+- **Sitemap and indexing.** Sitemap read by Google on 5 November, 156 URLs,
+  no errors. `/produkter/baerbare-computere` and `/produkter/skaerme` still
+  show no Danish impressions; URL Inspection for both is with the owner.
+
 ## Site review — 5 November 2026
 
 Screenshots of 27 templates at 390, 1440 and 1920 px, a text-overlap scan at

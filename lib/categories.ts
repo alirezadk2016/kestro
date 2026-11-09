@@ -169,8 +169,8 @@ export const categories: Category[] = [
       en: "Refurbished desktops and workstations: OptiPlex, EliteDesk and ThinkCentre as tower, small or mini. Sourced per order, with condition in writing.",
     },
     intro: {
-      da: "Til faste arbejdspladser er en renoveret stationær ofte den mest økonomiske løsning. Stationære erhvervsmaskiner er typisk bygget til lang levetid og nemme at opgradere, hvilket gør dem velegnede til genbrug.",
-      en: "For a desk that nobody carries anywhere, a refurbished desktop is usually the cheapest sensible answer. Business desktops are usually built to last and easy to upgrade, which is what makes them worth buying second-hand.",
+      da: "Standen på hver maskine står på skrift i tilbuddet, så I ved, hvad I får, før I siger ja.",
+      en: "The condition of each machine is written into the quote, so you know what you are getting before you say yes.",
     },
     brands: [
       "Dell OptiPlex",
