@@ -84,6 +84,36 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Site review and score — 11 November 2026
+
+A crawl of all 156 sitemap pages, mobile Lighthouse on twelve templates,
+`mak run`, `npm audit`, and a read of every category page's opening text.
+
+- **Technical SEO holds.** 212 internal link targets, none broken and none
+  redirecting; no duplicate titles or descriptions; every canonical points
+  at itself and every hreflang pair links back; sitemap read with no
+  errors. Lighthouse SEO and accessibility 100 on all twelve templates,
+  performance 91–99.
+- **Structured data.** Model pages put `seller` on a Product, where
+  schema.org does not define it; removed. The Product still carries no
+  offers, by decision, so Search Console will keep listing those items as
+  invalid product snippets. That costs a rich result and nothing else.
+- **Snippets.** The five Danish descriptions under 145 characters already
+  measure 900–920 px; they are short because the words are wide, and
+  stay.
+- **Category openings.** Each category page has a generated line under
+  the H1 and an intro under that. On /produkter/baerbare-computere the two
+  said the same thing twice (office, home, startup, budget, keyboard); the
+  intro now carries only the lead into the use cases. /produkter/skaerme
+  claimed a monitor "som regel" outlives its computer and that this is
+  where a company saves most, and /produkter/smartphones that company phones
+  are "ofte" replaced before they wear out; neither has a source, and both
+  are gone.
+- **`npm audit`.** A new advisory for `minimatch` below 11.0.1
+  (GHSA-g3hv-75wg-m249) reached the linter through
+  `@typescript-eslint/typescript-estree`, whose newest release still asks
+  for 10. Overridden to 11 for that package only; audit back at zero.
+
 ## Search Console — week to 7 November 2026
 
 Rule 14, read through Windsor for `sc-domain:kestro.dk`, 1–7 November

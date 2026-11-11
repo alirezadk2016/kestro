@@ -49,8 +49,8 @@ export const categories: Category[] = [
       en: "Find a used laptop for work, a startup or home office. Check budget, battery and Danish or Norwegian keys. Ask for advice before choosing a laptop.",
     },
     intro: {
-      da: "Den rigtige firmabærbare afhænger af opgaven. Til kontor, hjemmearbejde eller en nystartet virksomhed skal programmer, batteri, skærm og tastatur passe til hverdagen. Fortæl os jeres behov og budget, og om I ønsker dansk eller norsk tastatur; pris og muligheder afklares for den konkrete konfiguration.",
-      en: "The right company laptop depends on the work. For an office, home working or a startup, software, battery, display and keyboard need to fit the day. Tell us your requirements and budget, including a Danish or Norwegian keyboard; price and options are checked for the actual configuration.",
+      da: "Det er programmerne, batteriet, skærmen og tastaturet, der skal passe til hverdagen, så start med opgaven og ikke med modellen.",
+      en: "It is the software, battery, display and keyboard that have to fit the working day, so start with the work, not the model.",
     },
     brands: [
       "Lenovo ThinkPad",
@@ -242,8 +242,8 @@ export const categories: Category[] = [
       en: "Used office monitors from Dell, HP and Lenovo, 22 to 27 inch, checked for dead pixels and delivered with the machines and docks. A written quote.",
     },
     intro: {
-      da: "En skærm holder som regel længere end den computer, der står ved siden af, og derfor er det ofte her, der er mest at hente. Vi skaffer erhvervsskærme med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har – og de bliver tjekket for døde pixels og indbrændinger, inden de sendes af sted.",
-      en: "A monitor usually outlives the computer standing next to it, which is why this is often where a company saves the most. We source business monitors with matte panels, height adjustment and the connectors your machines actually have — and they are checked for dead pixels and burn-in before they ship.",
+      da: "Vi vælger modeller med matte paneler, højdejustering og de tilslutninger, jeres maskiner rent faktisk har, og skærmene tjekkes for døde pixels og indbrændinger, inden de sendes af sted.",
+      en: "We choose models with matte panels, height adjustment and the connectors your machines actually have, and the monitors are checked for dead pixels and burn-in before they ship.",
     },
     brands: ["Dell", "HP", "Lenovo", "Philips", "AOC", "Samsung", "EIZO"],
     useCases: [
@@ -414,8 +414,8 @@ export const categories: Category[] = [
       en: "Refurbished company phones sourced for each order. The condition and battery are stated per unit, and old phones can all be collected and erased.",
     },
     intro: {
-      da: "Firmatelefoner udskiftes ofte, før de er slidt op. En renoveret telefon af en nyere model kan dække det samme behov, også når der skal udstyres flere medarbejdere på én gang.",
-      en: "Company phones are often replaced before they are worn out. A refurbished phone of a newer model can meet the same need, including when a whole team has to be equipped at once.",
+      da: "En renoveret telefon af en nyere model kan dække det samme behov som en ny, også når der skal udstyres flere medarbejdere på én gang.",
+      en: "A refurbished phone of a recent model can meet the same need as a new one, including when a whole team has to be equipped at once.",
     },
     brands: [
       "Apple iPhone",
