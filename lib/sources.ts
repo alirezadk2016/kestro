@@ -123,7 +123,7 @@ export const sources = {
     accessed: "2026-10-16",
     claim: {
       da: "Servicevejledningen kræver frakobling af strømkilder før åbning, ESD-beskyttelse og forsigtig håndtering af stik og komponenter. Modellens egen manual bestemmer proceduren.",
-      en: "The service instructions require disconnecting power sources before opening, ESD protection and careful handling of connectors and components. The exact model's own manual determines the procedure.",
+      en: "The service instructions require disconnecting power sources before opening, ESD protection and careful handling of connectors and components. The model's own manual determines the procedure.",
     },
   },
   swollenBatterySafety: {

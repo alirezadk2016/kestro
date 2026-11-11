@@ -166,7 +166,7 @@ const quoteFaqs = [
     question: { da: "Har I maskinerne på lager?", en: "Do you hold the machines in stock?" },
     answer: {
       da: "Nej. Vi skaffer maskinerne til hver ordre i vores leverandørnetværk frem for at sælge fra et fast lager. Det er også derfor, tilbuddet oplyser stand og leveringstid på det enkelte parti frem for en listepris.",
-      en: "No. We source per order through our supplier network rather than selling from fixed stock. That is also why a quote states the condition and lead time of the actual batch rather than a list price.",
+      en: "No. We source per order through our supplier network rather than selling from fixed stock. That is also why a quote states the condition and lead time of the individual batch rather than a list price.",
     },
   },
   {

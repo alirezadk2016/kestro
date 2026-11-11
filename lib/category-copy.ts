@@ -87,7 +87,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
     },
     answer: {
       da: "Et tårn giver typisk mest plads til udvidelser, mens et lille kabinet (SFF) fylder mindre. En mini-pc passer til en kompakt arbejdsplads, men har færre muligheder for ekstra kort og drev. Kontrollér kabinet, strømforsyning, kortplads, porte og skærmudgange på modellen, især til CAD eller flere skærme.",
-      en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the actual chassis, power supply, card clearance, ports and display outputs, especially for CAD or multiple monitors.",
+      en: "A tower generally leaves the most room for expansion, while SFF takes less space. A mini PC suits a compact desk but offers fewer options for extra cards and drives. Check the chassis, power supply, card clearance, ports and display outputs, especially for CAD or multiple monitors.",
     },
   },
   "mini-pc": {
@@ -97,7 +97,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
     },
     answer: {
       da: "Se på antal skærmudgange (DisplayPort eller HDMI), USB-porte, netværk, støjkrav og plads til RAM og lager. Et modelnavn kan dække flere kabinetter og valgfrie porte, så bed om billeder af de faktiske tilslutninger. Aftal strømforsyning og beslag, hvis pc'en skal monteres bag en skærm.",
-      en: "Check display outputs (DisplayPort or HDMI), USB ports, networking, noise requirements and room for RAM and storage. A model name can cover different chassis and optional ports, so request photos of the actual connectors. Agree on the power supply and mount if the PC will sit behind a monitor.",
+      en: "Check display outputs (DisplayPort or HDMI), USB ports, networking, noise requirements and room for RAM and storage. A model name can cover different chassis and optional ports, so request photos of the connectors on the unit itself. Agree on the power supply and mount if the PC will sit behind a monitor.",
     },
   },
   skaerme: {
@@ -107,7 +107,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
     },
     answer: {
       da: "Vælg størrelse og opløsning efter arbejdsopgaven og pladsen på bordet, og om skærmen skal sidde på en arm (VESA-beslag). Kontrollér derefter pc'ens eller dockens udgang, skærmens indgang og det nødvendige kabel. USB-C er ikke i sig selv en garanti for opladning eller billedsignal; få modellens funktioner bekræftet.",
-      en: "Choose size and resolution around the work and desk space, and whether the monitor goes on an arm (VESA mount). Then check the PC or dock output, monitor input and required cable. USB-C alone does not guarantee charging or a video signal; confirm the capabilities of the exact model.",
+      en: "Choose size and resolution around the work and desk space, and whether the monitor goes on an arm (VESA mount). Then check the PC or dock output, monitor input and required cable. USB-C alone does not guarantee charging or a video signal; confirm the model's capabilities.",
     },
   },
   dockingstationer: {
@@ -137,7 +137,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
     },
     answer: {
       da: "Sammenlign præcis model, resterende sikkerhedsopdateringer, batteritilstand og lagerplads. Kontrollér jeres apps, MDM og behov for 5G og fysisk SIM eller eSIM på den variant, I får. Bed om enheder uden tidligere ejers konto- eller administrationslås; en kosmetisk grad siger ikke noget om disse forhold.",
-      en: "Compare the exact model, remaining security updates, battery health and storage. Check your apps, MDM, and 5G and physical SIM or eSIM requirements against the specific variant. Request devices without a previous owner's account or management lock; a cosmetic grade does not establish any of these details.",
+      en: "Compare the exact model, remaining security updates, battery health and storage. Check your apps, MDM, and 5G and physical SIM or eSIM requirements against the variant you will get. Request devices without a previous owner's account or management lock; a cosmetic grade does not establish any of these details.",
     },
   },
 };
@@ -194,7 +194,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
         },
         answer: {
           da: "Sæt et samlet budget, og vælg efter de programmer, du faktisk bruger. Sammenlign batteritilstand, skærm, tastatur, medfølgende oplader og muligheder for opgradering. En lav købspris er ikke nødvendigvis en lav samlet pris, hvis der mangler tilbehør eller skal skiftes batteri. Bed om en pris på løsningen.",
-          en: "Set a total budget and choose around the applications you actually use. Compare battery health, display, keyboard, included charger and upgrade options. A low purchase price is not necessarily a low total cost if accessories or a battery replacement are needed. Ask for a price for the specific setup.",
+          en: "Set a total budget and choose around the applications you actually use. Compare battery health, display, keyboard, included charger and upgrade options. A low purchase price is not necessarily a low total cost if accessories or a battery replacement are needed. Ask for a price for the setup.",
         },
       },
       {
@@ -214,7 +214,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
         },
         answer: {
           da: "Angiv dansk eller norsk fysisk tastaturlayout i forespørgslen, og bed om et billede af tasterne. Et nordisk kombinationslayout, et udskiftet tastatur og klistermærker er forskellige løsninger. Muligheden for et fysisk skift og eventuelt baggrundslys skal afklares for den enkelte maskine; Windows-sprog ændrer ikke tegnene på tasterne.",
-          en: "Specify a Danish or Norwegian physical keyboard layout in the enquiry and request a photo of the keys. A combined Nordic layout, replacement keyboard and stickers are different solutions. A physical swap and any backlight must be checked for the exact machine; changing Windows language does not change the printed keys.",
+          en: "Specify a Danish or Norwegian physical keyboard layout in the enquiry and request a photo of the keys. A combined Nordic layout, replacement keyboard and stickers are different solutions. A physical swap and any backlight must be checked for the individual machine; changing Windows language does not change the printed keys.",
         },
       },
     );
@@ -242,7 +242,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
       },
       answer: {
         da: "Aftal version, udgave og licens for den enkelte maskine. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot; et modelnavn alene er ikke nok. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
-        en: "Agree the version, edition and licence for the specific machine. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things; a model name alone is not enough. Microsoft's general Windows 10 support ended on 14 October 2025.",
+        en: "Agree the version, edition and licence for the individual machine. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things; a model name alone is not enough. Microsoft's general Windows 10 support ended on 14 October 2025.",
       },
     });
   }

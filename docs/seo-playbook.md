@@ -124,6 +124,13 @@ wrong:
   characters with the shorter words; /ydelser/nordisk-tilpasning was
   lengthened, and /priser keeps "konkret" because every 145-character
   alternative ran past 920 px.
+- **"Actual", "exact", "specific".** The English carried the same habit,
+  as translations of "konkret": 60 "actual(ly)", 34 "exact", 29
+  "specific". The places that mirrored the Danish fillers follow the
+  Danish ("the configuration", "the individual machine", "an order").
+  Where the word makes a contrast, it stays: the battery's actual capacity
+  against its design capacity, what was actually done to a machine, the
+  exact model number to look up.
 
 ## Site review and score — 11 November 2026
 

@@ -34,7 +34,7 @@ const copy = {
     metaDescription:
       "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
     title: "Used business models: ThinkPad, EliteBook, Latitude and OptiPlex",
-    description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and actual configuration.`,
+    description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and configuration.`,
     noStockLine: "No prices or stock levels here, because we source the machines for each order.",
     noStockLink: "How the price is set",
     byTypeLine: "Looking for a type of machine rather than a specific model?",
@@ -185,7 +185,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             },
             answer: {
               da: "Aftal version, udgave og licens for den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
-              en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
+              en: "Agree the version, edition and licence for the chosen configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },
         ]}

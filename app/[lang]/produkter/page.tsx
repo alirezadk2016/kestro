@@ -50,7 +50,7 @@ const copy = {
     noPrices1:
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
-      "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your specific needs — and if what you are after is not on the list, we can usually still get it.",
+      "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your needs — and if what you are after is not on the list, we can usually still get it.",
     categories: "Categories",
     seeCategory: "See category",
     modelsTitle: "Compare specifications",
@@ -351,7 +351,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             },
             answer: {
               da: "Aftal version, udgave og licens for den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
-              en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
+              en: "Agree the version, edition and licence for the chosen configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },
         ]}

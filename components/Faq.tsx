@@ -27,7 +27,7 @@ const defaultFaqs: FaqItem[] = [
     question: { da: "Hvor lang er leveringstiden?", en: "How long does delivery take?" },
     answer: {
       da: "Vi skaffer enhederne til hver ordre i stedet for at holde fast lager, så leveringstiden afhænger af den enkelte bestilling. Vi oplyser en tidsramme, så snart vi kender omfanget.",
-      en: "We source per order rather than holding stock, so delivery time depends on the specific order. We give you a time frame as soon as we know the scope.",
+      en: "We source per order rather than holding stock, so delivery time depends on the individual order. We give you a time frame as soon as we know the scope.",
     },
   },
   {

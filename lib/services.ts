@@ -57,7 +57,7 @@ export const services: Service[] = [
     },
     intro: {
       da: "Kestro holder ikke lager. Som jeres indkøbspartner finder vi brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
-      en: "Kestro holds no stock. As your sourcing partner we find used business laptops and desktops through suppliers in southern Europe once there is an actual order. That sounds like a shortcoming; it is the whole point. We are not tied to whatever we happened to buy in.",
+      en: "Kestro holds no stock. As your sourcing partner we find used business laptops and desktops through suppliers in southern Europe once there is an order. That sounds like a shortcoming; it is the whole point. We are not tied to whatever we happened to buy in.",
     },
     sections: [
       {
@@ -141,7 +141,7 @@ export const services: Service[] = [
         body: [
           {
             da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den for leverancen i stedet for at være et tal, der alligevel skal laves om.",
-            en: "We do not put list prices on machines we have not bought yet. The price comes once we know what the job needs — and then it holds for that actual delivery rather than being a figure that has to be revised anyway.",
+            en: "We do not put list prices on machines we have not bought yet. The price comes once we know what the job needs — and then it holds for that delivery rather than being a figure that has to be revised anyway.",
           },
         ],
         list: [
@@ -338,7 +338,7 @@ export const services: Service[] = [
         body: [
           {
             da: "Fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager, afhænger leveringstiden af den enkelte bestilling. Vi lover ikke en fast leveringstid på forhånd – vi oplyser en tidsramme, når vi har talt om, hvad I skal bruge, og den står i tilbuddet sammen med pris og stand.",
-            en: "Because we source per order rather than selling from stock, lead time depends on the specific order. We do not promise a fixed delivery time up front — we give you a time frame once we have talked about what you need, and it goes in the quote alongside price and condition.",
+            en: "Because we source per order rather than selling from stock, lead time depends on the individual order. We do not promise a fixed delivery time up front — we give you a time frame once we have talked about what you need, and it goes in the quote alongside price and condition.",
           },
         ],
       },

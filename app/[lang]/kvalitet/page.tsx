@@ -78,7 +78,7 @@ const copy = {
       "What we do is put the warranty period in writing in the quote, along with who to contact if something breaks. If you get a quote — from us or anyone else — where that is missing, ask before you sign.",
     disclosureTitle: "What are you told before you order?",
     disclosureBody:
-      "We source per order, so we know the specific equipment before you say yes. Everything below is in the quote:",
+      "We source per order, so we know the equipment before you say yes. Everything below is in the quote:",
     notIncludedTitle: "What is usually not included as standard",
     notIncludedBody:
       "Power supplies, cables, docking stations, bags and mice rarely come with used equipment unless it has been agreed. That is a classic reason a cheap quote suddenly is not cheap. Say it up front and we will include it.",
@@ -183,7 +183,7 @@ const disclosure = [
   },
   {
     da: "Den præcise konfiguration: processor, hukommelse, disk og skærm",
-    en: "The specific configuration: processor, memory, disk and screen",
+    en: "The exact configuration: processor, memory, disk and screen",
   },
   {
     da: "Hvilket tastaturlayout maskinerne leveres med",

@@ -54,7 +54,7 @@ const lines = [
     label: { da: "Batteri", en: "Battery" },
     value: {
       da: "Målt kapacitet i procent oplyses for den enkelte enhed",
-      en: "Measured capacity as a percentage is stated for the specific unit",
+      en: "Measured capacity as a percentage is stated for the individual unit",
     },
   },
   {
@@ -151,7 +151,7 @@ const copy = {
     metaRows: [
       { k: "Quote number", v: "K-0000 (example)" },
       { k: "Date", v: "Filled in when sent" },
-      { k: "Valid until", v: "Date stated in the actual quote" },
+      { k: "Valid until", v: "Date stated in the quote" },
       { k: "Quantity", v: "40 units" },
     ],
     specTitle: "Per unit",
@@ -175,7 +175,7 @@ const copy = {
     terms: [
       {
         k: "Warranty",
-        v: "The period goes here in months, together with who you contact if something breaks. It depends on the actual order, which is why we do not promise a fixed number in advance — but the number is here before you order.",
+        v: "The period goes here in months, together with who you contact if something breaks. It depends on the order, which is why we do not promise a fixed number in advance — but the number is here before you order.",
       },
       {
         k: "Time frame",

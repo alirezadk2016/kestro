@@ -28,7 +28,7 @@ export default function GradeComparison({
   const note =
     lang === "da"
       ? "Illustrative eksempler, ikke lagerfotos. Bed om billeder af den enkelte enhed."
-      : "Illustrative examples, not photos of available stock. Ask for photos of the actual unit.";
+      : "Illustrative examples, not photos of available stock. Ask for photos of the individual unit.";
   const alt = (grade: Grade) =>
     lang === "da"
       ? `Illustration af et lukket laptoplåg: ${grade.label.toLowerCase()}`

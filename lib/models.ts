@@ -1344,7 +1344,7 @@ export const models: Model[] = [
     },
     intro: {
       da: "OptiPlex 5060 findes som SFF og Micro, men indmaden er ikke identisk. SFF giver flere muligheder for udvidelseskort og diske; Micro fylder mindre og bruger strømbesparende processorvarianter. Kontrollér kabinet, processor og porte for den enkelte maskine, ikke kun serienavnet.",
-      en: "OptiPlex 5060 comes as SFF and Micro, but the internals are not identical. SFF offers more options for expansion cards and drives; Micro takes less space and uses lower-power processor variants. Check the case, processor and ports for the actual machine, not just the range name.",
+      en: "OptiPlex 5060 comes as SFF and Micro, but the internals are not identical. SFF offers more options for expansion cards and drives; Micro takes less space and uses lower-power processor variants. Check the case, processor and ports for the individual machine, not just the range name.",
     },
     goodFor: [
       {
@@ -1393,7 +1393,7 @@ export const models: Model[] = [
         label: { da: "Skærmudgange", en: "Display outputs" },
         value: {
           da: "2× DisplayPort som standard; HDMI er ekstraudstyr – kontrollér konfigurationen",
-          en: "2× DisplayPort as standard; HDMI is optional — check the actual configuration",
+          en: "2× DisplayPort as standard; HDMI is optional — check the configuration",
         },
       },
       {
@@ -1847,7 +1847,7 @@ export const models: Model[] = [
     },
     intro: {
       da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er bygget til HP's erhvervsbærbare med USB-C; kontrollér opladningseffekt og skærmudgange mod den enkelte maskine.",
-      en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is built for HP's USB-C business laptops; check charging power and display outputs against the actual machine.",
+      en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is built for HP's USB-C business laptops; check charging power and display outputs against the machine it will be used with.",
     },
     goodFor: [
       { da: "Arbejdspladser med HP-maskiner", en: "Desks running HP machines" },
