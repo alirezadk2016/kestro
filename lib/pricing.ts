@@ -1,15 +1,18 @@
-import type { Lang, Localized } from "./i18n";
+import { localePath, type Lang, type Localized } from "./i18n";
+import { QUOTE_DETAIL_LIMIT } from "./contact";
 import { sources, type SourceId } from "./sources";
 
 // Historical retail references, not our stock, offers, margins or a market-wide survey.
-export const budgetExamples: {
+export type BudgetExample = {
   model: string;
   name: string;
   configuration: Localized;
   observed: number;
   fee: number;
   source: SourceId;
-}[] = [
+};
+
+export const budgetExamples: BudgetExample[] = [
   {
     model: "lenovo-thinkpad-t480",
     name: "Lenovo ThinkPad T480",
@@ -68,3 +71,15 @@ export const formatDkk = (amount: number, lang: Lang) =>
   `${new Intl.NumberFormat(lang === "da" ? "da-DK" : "en-GB").format(amount)} DKK`;
 
 export const budgetSource = (item: (typeof budgetExamples)[number]) => sources[item.source];
+
+/** Preserve the historical example's exact configuration in a non-binding enquiry. */
+export function budgetEnquiryPath(item: BudgetExample, lang: Lang) {
+  const equipment = `${item.name} — ${item.configuration[lang]}`;
+  // The form caps this field at the same limit. Fail on a new oversized
+  // reference rather than silently dropping its generation, case or keyboard.
+  if (equipment.length > QUOTE_DETAIL_LIMIT)
+    throw new Error(
+      `Budget enquiry exceeds ${QUOTE_DETAIL_LIMIT} characters: ${item.model} (${lang})`,
+    );
+  return localePath(`/tilbud?model=${encodeURIComponent(equipment)}`, lang);
+}

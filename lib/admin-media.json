@@ -266,6 +266,20 @@
     "format": "webp"
   },
   {
+    "src": "/pricing/optiplex-5060-sff-illustration.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 4376,
+    "format": "svg"
+  },
+  {
+    "src": "/pricing/ultrasharp-u2419h-illustration.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3578,
+    "format": "svg"
+  },
+  {
     "src": "/team/alireza.webp",
     "width": 320,
     "height": 320,

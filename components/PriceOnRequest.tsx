@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
-import { localePath, type Lang } from "@/lib/i18n";
+import { formatDate, localePath, type Lang } from "@/lib/i18n";
 import { buttonClass } from "./Button";
-import { budgetExamples, budgetAmount, formatDkk } from "@/lib/pricing";
+import {
+  budgetExamples,
+  budgetAmount,
+  budgetReadOn,
+  budgetEnquiryPath,
+  formatDkk,
+} from "@/lib/pricing";
 import { getModel } from "@/lib/models";
 
 // Only documented external budget references; never a Kestro offer or stock claim.
@@ -46,7 +52,9 @@ export default function PriceOnRequest({
   const example = budgetExamples.find(
     (item) => item.name === equipment || getModel(item.model)?.name === equipment,
   );
-  const href = equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud";
+  const href = example
+    ? budgetEnquiryPath(example, lang)
+    : localePath(equipment ? `/tilbud?model=${encodeURIComponent(equipment)}` : "/tilbud", lang);
 
   return (
     <div className={`plate p-6 sm:p-7 ${className}`}>
@@ -62,6 +70,10 @@ export default function PriceOnRequest({
           <p className="font-display text-2xl font-bold tabular-nums text-paper">
             {lang === "da" ? "Budget ca." : "Budget approx."}{" "}
             {formatDkk(budgetAmount(example), lang)}
+          </p>
+          <p className="mt-1 text-xs leading-5 text-paper/65">
+            {lang === "da" ? "Prisreference læst" : "Price reference read"}{" "}
+            <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>
           </p>
           <p className="mt-2 text-sm leading-6 text-paper/75">
             {example.name} · {example.configuration[lang]}
@@ -82,10 +94,7 @@ export default function PriceOnRequest({
       {/* Wraps as a row, never inside a label: in the narrow right column
           of a model page the button read "Send en / forespørgsel". */}
       <div className="mt-5 flex flex-col gap-x-5 gap-y-3 sm:flex-row sm:flex-wrap sm:items-center">
-        <Link
-          href={localePath(href, lang)}
-          className={`${buttonClass("primary")} whitespace-nowrap`}
-        >
+        <Link href={href} className={`${buttonClass("primary")} whitespace-nowrap`}>
           {c.cta}
           <ArrowRight
             className="h-4 w-4 transition-transform group-hover:translate-x-1"

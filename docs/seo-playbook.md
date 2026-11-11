@@ -1002,3 +1002,19 @@ The model-photo notice distinguishes the image from the seller's particular
 unit, keyboard and condition; source, author and licence credits are available
 without JavaScript. No photograph is used to claim stock or a sales Offer.
 See `docs/media-licenses.md` and `design/art-direction/product-browsing-refresh.md`.
+
+# Pricing collection — 11 November 2026
+
+The four existing `/priser` references now form an image-led collection with
+explicit model-photo/illustration labels, a visible 14 October 2026 read date,
+and the VAT/service-fee/shipping basis beside the grid. These remain historical
+retail examples, not Kestro stock, selling prices or new sales Offers. The
+original amounts, fees, source URLs and H1/metadata/canonicals are preserved.
+
+Each non-binding enquiry carries the reference's full model and configuration,
+including generation, SFF case and keyboard, into the existing quote form.
+The model-page budget boxes now show the historical read date too. External
+source links are labelled historical because today's default variant may
+differ. Exact T480/T14 images and original, visibly schematic Dell artwork
+are documented in `docs/media-licenses.md`; no retailer image is hotlinked.
+The prelaunch notice and all existing model/specification links remain.

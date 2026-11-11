@@ -37,6 +37,7 @@ import { verifySiteInventory } from "./site-inventory.mjs";
 import { verifyRepairSequence } from "./repair-sequence.mjs";
 import { verifyExternalLaptops } from "./external-laptops.mjs";
 import { verifyProductBrowsing } from "./product-browsing.mjs";
+import { verifyPricingCollection } from "./pricing-collection.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -1437,6 +1438,7 @@ for (const [label, verify] of [
   ["site image framing", verifySiteImages],
   ["external laptop recommendations", verifyExternalLaptops],
   ["visual product browsing", verifyProductBrowsing],
+  ["pricing collection", verifyPricingCollection],
   ["site navigation", verifySiteUx],
   ["site forms", verifySiteForms],
 ]) {

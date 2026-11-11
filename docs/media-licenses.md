@@ -39,3 +39,29 @@ The laptop recommendations have a shared visible model-photo notice and a
 native photo-credit disclosure containing both authors, original file pages,
 licences and the processing note. The Dell Latitude 5420 recommendation uses
 no substituted photograph: no suitable exact-model licence was verified.
+
+## Original pricing illustrations
+
+- Assets: `public/pricing/optiplex-5060-sff-illustration.svg` and
+  `public/pricing/ultrasharp-u2419h-illustration.svg`.
+- Created for Kestro on 2026-11-11 as original code-native SVG artwork.
+- These are labelled illustrations, not photographs of actual stock, seller
+  units or evidence of a specific device's condition, accessories or ports.
+- No manufacturer/retailer image or manual drawing was copied, traced,
+  embedded or linked as an external image. No logos or operating-system
+  screenshots appear in the artwork.
+- OptiPlex: the thin SFF chassis uses the published approximate proportions
+  292 x 92.6 x 290 mm, distinct from the Micro or mini-tower. The front vent
+  pattern and I/O arrangement are an original schematic treatment, not an
+  assertion of exact component positions or included optional equipment.
+- U2419H: the screen treatment uses a 16:9 panel with a slim black frame and
+  silver pedestal; published body width/height are 538.5 x 313.7 mm. The
+  stand/base and reflections are original schematic artwork.
+- Factual references, checked 2026-11-11:
+  - https://www.dell.com/support/manuals/en-in/optiplex-5060-sff/optiplex_5060_sff_setup_and_specs/physical-system-dimensions?guid=guid-9a766954-743d-41f1-b3ce-8828e4297689&lang=en-us
+  - https://www.dell.com/support/manuals/en-in/optiplex-5060-sff/optiplex_5060_sff_setup_and_specs/front-view?guid=guid-cd24c6a2-daef-411f-8e94-0c7e9ff8d174&lang=en-us
+  - https://dl.dell.com/manuals/all-products/esuprt_display_projector/esuprt_display/dell-u2419h-monitor_user%27s-guide_en-us.pdf
+
+The factual references do not grant a licence to republish Dell's artwork.
+The price collection must retain a visible illustration label for these
+assets and its separate model-photo/individual-unit distinction.

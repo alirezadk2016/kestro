@@ -168,8 +168,8 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
   const range = `${nf.format(Math.min(...amounts))}–${nf.format(Math.max(...amounts))} DKK`;
   const lead =
     lang === "da"
-      ? `Ca. ${range} pr. enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Budgetreferencerne er ikke Kestros salgspriser eller en bekræftelse på lager.`
-      : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}. These budget references are not Kestro selling prices or confirmation of stock.`;
+      ? `Ca. ${range} pr. enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}.`
+      : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}.`;
 
   /* The two questions a buyer types into a search box before they trust a
      supplier enough to write to them. Marked up so the answers can appear
