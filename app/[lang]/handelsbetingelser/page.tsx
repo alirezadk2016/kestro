@@ -255,7 +255,7 @@ const copy = project.prelaunch
       en: {
         ...commercialCopy.en,
         metaDescription:
-          "Kestro is still in preparation. Read about non-binding enquiries, indicative budgets and contact. No orders or payments are accepted on the site.",
+          "Kestro is still being set up. Read about non-binding enquiries, indicative budgets and contact. No orders or payments are accepted on the site.",
         description: projectNotice.en.body,
         detailsTitle: "Project and contact",
       },

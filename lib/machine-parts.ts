@@ -220,7 +220,7 @@ export const interiorParts: InteriorPart[] = [
       en: "The space the machine works in right now. Too little of it and Windows writes to the disk instead, and everything slows down — even with a perfectly good processor.",
     },
     upgrade: {
-      da: "Den opgradering, der som regel kan mærkes mest. Prisen oplyses per maskine, og vi opgraderer som standard, før vi leverer.",
+      da: "Den opgradering, der som regel kan mærkes mest. Prisen oplyses pr. maskine, og vi opgraderer som standard, før vi leverer.",
       en: "The upgrade that usually makes the biggest difference. The price is quoted per machine, and we upgrade as standard before delivery.",
     },
     swappable: "yes",
@@ -312,7 +312,7 @@ export const interiorParts: InteriorPart[] = [
     short: { da: "Batteri", en: "Battery" },
     name: { da: "Batteri", en: "Battery" },
     spec: {
-      da: "Li-ion · kapacitet og opladningstal oplyses per maskine",
+      da: "Li-ion · kapacitet og opladningstal oplyses pr. maskine",
       en: "Li-ion · capacity and cycle count reported per machine",
     },
     what: {

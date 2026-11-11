@@ -71,7 +71,7 @@ export const sources = {
     published: "2026",
     accessed: "2026-10-16",
     claim: {
-      da: "Resuméet fra 30. september beskriver stabile kontraktpriser, pres på PC DRAM-udbuddet og kapacitet flyttet mod servere. Det er ikke danske detailpriser.",
+      da: "Resuméet fra 30. september beskriver stabile kontraktpriser, pres på udbuddet af DRAM til pc'er og kapacitet flyttet mod servere. Det er ikke danske detailpriser.",
       en: "The September 30 summary describes stable contract prices, constrained PC DRAM supply and capacity shifting to servers. These are not Danish retail prices.",
     },
   },
@@ -97,7 +97,7 @@ export const sources = {
     url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T480/ThinkPad_T480_Spec.PDF",
     accessed: "2026-10-16",
     claim: {
-      da: "T480 findes med 7. og 8. generations Intel Core. Lenovo angiver to DDR4 SO-DIMM-sokler og 32 GB maksimum; det primære lager er 2,5-tommer SATA eller M.2 NVMe afhængigt af konfiguration.",
+      da: "T480 findes med 7. og 8. generations Intel Core. Lenovo angiver to SO-DIMM-sokler til DDR4 og 32 GB maksimum; det primære lager er 2,5-tommer SATA eller M.2 NVMe afhængigt af konfiguration.",
       en: "T480 has 7th- and 8th-generation Intel Core variants. Lenovo lists two DDR4 SO-DIMM slots and a 32 GB maximum; primary storage is 2.5-inch SATA or M.2 NVMe depending on configuration.",
     },
   },
@@ -108,7 +108,7 @@ export const sources = {
     url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_P53/ThinkPad_P53_Spec.html",
     accessed: "2026-10-16",
     claim: {
-      da: "P53 har bl.a. 9. generations Core-processorer, fire DDR4 SO-DIMM-sokler og op til 128 GB. ECC kræver Xeon og ECC-moduler. Lageropsætningen afhænger af konfigurationen.",
+      da: "P53 har blandt andet 9. generations Core-processorer, fire SO-DIMM-sokler til DDR4 og op til 128 GB. ECC kræver Xeon og ECC-moduler. Lageropsætningen afhænger af konfigurationen.",
       en: "P53 includes 9th-generation Core processor options, four DDR4 SO-DIMM slots and up to 128 GB. ECC requires Xeon and ECC modules. Storage layout depends on configuration.",
     },
   },
@@ -197,7 +197,7 @@ export const sources = {
     url: "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14_Gen_2_Intel/ThinkPad_T14_Gen_2_Intel_Spec.pdf",
     accessed: "2026-10-16",
     claim: {
-      da: "T14 Gen 2 Intel har fastloddet RAM og én DDR4 SO-DIMM-sokkel. Iris Xe kræver dual-channel-hukommelse; med single-channel fungerer grafikken som Intel UHD.",
+      da: "T14 Gen 2 Intel har fastloddet RAM og én SO-DIMM-sokkel til DDR4. Iris Xe kræver dual-channel-hukommelse; med single-channel fungerer grafikken som Intel UHD.",
       en: "T14 Gen 2 Intel has soldered RAM and one DDR4 SO-DIMM slot. Iris Xe requires dual-channel memory; with single-channel memory the graphics function as Intel UHD.",
     },
   },
@@ -327,7 +327,7 @@ export const sources = {
     id: "windows10Eol",
     publisher: "Microsoft",
     title: {
-      da: "Windows 10 support er slut",
+      da: "Supporten til Windows 10 er slut",
       en: "Windows 10 support has ended",
     },
     url: "https://learn.microsoft.com/en-us/windows/release-health/release-information",

@@ -655,7 +655,7 @@ export const repairs: Repair[] = [
     },
     metaDescription: {
       da: "Har du købt en brugt computer? Vi gennemgår den, oplyser batteriets faktiske kapacitet i procent, klargør den og siger til, hvis noget skal skiftes.",
-      en: "Bought a used computer? We check it, state the battery's actual capacity in percent, prepare it and tell you if anything needs replacing. Price first.",
+      en: "Bought a used computer? We check it, give the battery's real capacity as a percentage, prepare it and say if anything needs replacing. Price first.",
     },
     summary: {
       da: "Købt en brugt maskine? Vi tjekker den igennem og gør den klar til brug.",

@@ -24,7 +24,7 @@ const taskCopy: Record<
   { title: Localized; body: Localized; action: Localized; href: string }
 > = {
   repair: {
-    title: { da: "Skal vi se på jeres computer?", en: "Need help with your computer?" },
+    title: { da: "Skal vi se på computeren?", en: "Need help with your computer?" },
     body: {
       da: "Skriv model og hvad der er galt i reparationsformularen, så afklarer vi næste skridt.",
       en: "Tell us the model and what is wrong in the repair form, and we discuss the next step.",

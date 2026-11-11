@@ -24,7 +24,7 @@ const features = [
   },
   {
     mark: "nordic",
-    title: { da: "Nordisk klar", en: "Nordic ready" },
+    title: { da: "Nordisk tilpasning", en: "Nordic preparation" },
     sub: {
       da: "Dansk eller norsk tastatur og sprog",
       en: "Danish or Norwegian keyboard and language",
@@ -38,7 +38,7 @@ const features = [
   {
     mark: "sustainable",
     title: { da: "Bæredygtigt valg", en: "Sustainable choice" },
-    sub: { da: "Færre nye maskiner skal produceres", en: "Fewer new machines need making" },
+    sub: { da: "Færre nye maskiner skal produceres", en: "Fewer new machines have to be made" },
   },
   {
     mark: "delivery",

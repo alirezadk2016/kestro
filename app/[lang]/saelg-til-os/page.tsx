@@ -35,7 +35,7 @@ const copy = {
     buyNote: "Er I i tvivl, om jeres udstyr er relevant? Spørg os – vi kigger gerne på det.",
     dataTitle: "Hvad sker der med vores data?",
     dataBody:
-      "Enhederne får slettet lagermedierne, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – f.eks. i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
+      "Enhederne får slettet lagermedierne, før de klargøres til videresalg. Har I særlige krav til dokumentation for datasletning – fx i forbindelse med jeres GDPR-procedurer – så sig til, når I kontakter os, så aftaler vi, hvordan det håndteres.",
     fleetTitle: "Skal hele flåden skiftes ud på én gang?",
     fleetBody:
       "Så kan vi håndtere begge ender: vi køber det gamle udstyr og leverer de nye enheder. Værdien af det brugte kan modregnes i det nye indkøb, så I får én aftale i stedet for to forløb.",

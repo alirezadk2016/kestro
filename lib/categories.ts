@@ -73,7 +73,7 @@ export const categories: Category[] = [
           en: "Laptops for startups and founders",
         },
         description: {
-          da: "Start med de programmer, I skal bruge nu, og plads til næste medarbejder. Oplys budget per arbejdsplads med skærm, dock, licenser og tilbehør.",
+          da: "Start med de programmer, I skal bruge nu, og plads til næste medarbejder. Oplys budget pr. arbejdsplads med skærm, dock, licenser og tilbehør.",
           en: "Start with the applications you need now and room for the next employee. State a budget per desk that includes monitor, dock, licences and accessories.",
         },
       },
@@ -248,7 +248,7 @@ export const categories: Category[] = [
     brands: ["Dell", "HP", "Lenovo", "Philips", "AOC", "Samsung", "EIZO"],
     useCases: [
       {
-        title: { da: "To skærme per arbejdsplads", en: "Two monitors per desk" },
+        title: { da: "To skærme pr. arbejdsplads", en: "Two monitors per desk" },
         description: {
           da: "En ekstra skærm giver plads til to programmer side om side, fx et regneark og mailen.",
           en: "A second monitor leaves room for two programs side by side, such as a spreadsheet and email.",
@@ -352,7 +352,7 @@ export const categories: Category[] = [
       en: "Refurbished business tablets — iPad, Galaxy, Surface | Kestro",
     },
     metaDescription: {
-      da: "Brugte tablets til erhverv: iPad, Galaxy Tab og Surface til lager, service og møder. Skaffet per ordre, med stand og batteri oplyst, før I bestiller.",
+      da: "Brugte tablets til erhverv: iPad, Galaxy Tab og Surface til lager, service og møder. Skaffet pr. ordre, med stand og batteri oplyst, før I bestiller.",
       en: "Used tablets for business: iPad, Galaxy Tab and Surface for warehouse, service and meetings. Sourced per order, condition and battery stated first.",
     },
     intro: {
@@ -410,7 +410,7 @@ export const categories: Category[] = [
       en: "Refurbished business phones — iPhone and Samsung | Kestro",
     },
     metaDescription: {
-      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses per enhed, og jeres gamle telefoner kan hentes retur og slettes.",
+      da: "Refurbished firmatelefoner skaffet til den enkelte ordre. Stand og batteri oplyses pr. enhed, og jeres gamle telefoner kan hentes retur og slettes.",
       en: "Refurbished company phones sourced for each order. The condition and battery are stated per unit, and old phones can all be collected and erased.",
     },
     intro: {

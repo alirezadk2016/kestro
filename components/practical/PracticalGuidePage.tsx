@@ -87,7 +87,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           related: "Dit næste skridt",
           source: "Kilder og dokumentation",
           image: "Illustration, AI-genereret.",
-          stepLink: "Se trinene",
+          stepLink: "Se trinnene",
           battery: "Beregn batteriets kapacitet",
           ram: "Beregn dit RAM-forbrug",
         }

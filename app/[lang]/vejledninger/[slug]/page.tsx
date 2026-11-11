@@ -55,7 +55,7 @@ const copy = {
     readingSuffix: "min. læsning",
     updated: "Opdateret",
     forWhom: "Til",
-    closingTitle: "Hvis du hellere vil have det gjort",
+    closingTitle: "Hjælp fra Kestro",
     next: "Videre herfra",
     sources: "Kilder",
     more: "Flere fra Viden",
@@ -67,7 +67,7 @@ const copy = {
     readingSuffix: "min read",
     updated: "Updated",
     forWhom: "For",
-    closingTitle: "If you would rather have it done",
+    closingTitle: "Help from Kestro",
     next: "Where to go next",
     sources: "Sources",
     more: "More from Knowledge",
@@ -581,7 +581,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       )}
 
       {/* No closing band on a guide. The article already ends on its own
-          offer of help ("Hvis du hellere vil have det gjort"), in context,
+          offer of help ("Hjælp fra Kestro"), in context,
           and a second, generic one after the reading list said it again. */}
     </>
   );

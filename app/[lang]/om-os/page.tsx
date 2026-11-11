@@ -67,7 +67,7 @@ const sections = [
     },
     description: {
       da: "Et stort lager skal afsættes, og så bliver I tilbudt det, der står på hylden. Vi skaffer til den enkelte ordre og går efter de specifikationer, opgaven kræver.",
-      en: "A big stock has to be sold, so you get offered what is on the shelf. We source for the individual order and go after the specifications the job needs.",
+      en: "A big stock has to be sold, so you get offered what is on the shelf. We source for the individual order and work from the specifications the job needs.",
     },
   },
   {

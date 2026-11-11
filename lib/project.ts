@@ -11,7 +11,7 @@ export const projectNotice: Record<Lang, { label: string; body: string; link: st
   },
   en: {
     label: "Pre-launch",
-    body: "Kestro is a project in preparation, not yet a registered business. This site is for presentation and non-binding enquiries; we do not accept orders or payments here.",
+    body: "Kestro is a project still being set up, not yet a registered business. This site is for presentation and non-binding enquiries; we do not accept orders or payments here.",
     link: "Status and terms",
   },
 };

@@ -203,7 +203,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
           en: "Which laptop suits a startup or new business?",
         },
         answer: {
-          da: "Skriv de første arbejdsopgaver ned: mail, regnskab, videomøder, udvikling eller design. Afklar derefter mobilitet, RAM, skærme, licenser og budget per medarbejder. Til en startup er det nyttigt at kunne genbruge skærme og docks og udvide løsningen, når næste medarbejder starter; dyrere hardware er ikke automatisk det rigtige valg.",
+          da: "Skriv de første arbejdsopgaver ned: mail, regnskab, videomøder, udvikling eller design. Afklar derefter mobilitet, RAM, skærme, licenser og budget pr. medarbejder. Til en startup er det nyttigt at kunne genbruge skærme og docks og udvide løsningen, når næste medarbejder starter; dyrere hardware er ikke automatisk det rigtige valg.",
           en: "List the initial tasks: email, accounting, video calls, development or design. Then clarify mobility, RAM, monitors, licences and budget per employee. A startup benefits from reusing monitors and docks and expanding the setup as staff join; more expensive hardware is not automatically the right choice.",
         },
       },

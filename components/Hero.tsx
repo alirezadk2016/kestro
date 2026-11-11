@@ -48,7 +48,7 @@ const copy = {
     stepsLabel: "Sådan foregår det",
     steps: [
       "Skriv, hvad I skal bruge",
-      "Få et skriftligt tilbud per enhed",
+      "Få et skriftligt tilbud pr. enhed",
       "Beslut jer – en forespørgsel binder ikke",
     ],
     secondary: "Se produkterne",
@@ -58,7 +58,7 @@ const copy = {
     headlineAccent: "Ready for the Nordics.",
     subLead: "Kestro sources used business computers for companies",
     sub: "in Denmark and Norway and gets them ready — tested, with a Nordic keyboard.",
-    status: "In preparation — not yet a registered business. We take enquiries, not orders.",
+    status: "Pre-launch — not yet a registered business. We take enquiries, not orders.",
     statusLink: "Status and terms",
     stepsLabel: "How it works",
     steps: [

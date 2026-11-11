@@ -48,7 +48,7 @@ const sections: Section[] = [
     body: [
       {
         da: `${company.name} er et projekt under etablering, endnu ikke en registreret virksomhed. Kontakt om siden og personoplysninger: ${company.email}.`,
-        en: `${company.name} is a project in preparation, not yet a registered business. Contact for this site and personal data: ${company.email}.`,
+        en: `${company.name} is a project still being set up, not yet a registered business. Contact for this site and personal data: ${company.email}.`,
       },
     ],
   },

@@ -120,7 +120,7 @@ const repairFaqs = [
   {
     question: { da: "Hvilke mærker arbejder I med?", en: "Which brands do you work on?" },
     answer: {
-      da: "Vi arbejder med de fleste gængse mærker – bl.a. Lenovo, Dell, HP, Apple, ASUS og Acer. Er du i tvivl om din model, så spørg.",
+      da: "Vi arbejder med de fleste gængse mærker – blandt andet Lenovo, Dell, HP, Apple, ASUS og Acer. Er du i tvivl om din model, så spørg.",
       en: "We work on most common brands — Lenovo, Dell, HP, Apple, ASUS and Acer among others. If you are unsure about your model, just ask.",
     },
   },

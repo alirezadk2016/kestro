@@ -74,7 +74,7 @@ const copy = {
     breadcrumbHub: "Products",
     brandsTitle: "Brands we usually work with",
     brandsBodyPre:
-      "We source per order, so we are not tied to particular brands. These are the ones we can normally get within",
+      "We source per order, so we are not tied to particular brands. These are the ones we can normally get for",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     imageNote: "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",

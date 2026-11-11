@@ -125,7 +125,7 @@ const people: TeamMember[] = [
     name: "Ismail Masoumabadi",
     role: {
       da: "Netværkssikkerhed og international salgsledelse",
-      en: "Network Security & International Sales Management",
+      en: "Network Security and International Sales Management",
     },
     bio: {
       da: "Han står for indkøbene i udlandet og for netværkssikkerheden i virksomheden. Han finder partierne hos leverandørerne i Sydeuropa, kontrollerer, hvad der reelt er i dem, og sørger for, at det, I sender os gennem siden, bliver håndteret forsvarligt.",

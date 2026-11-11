@@ -167,7 +167,7 @@ export const practicalGuides: PracticalGuide[] = [
     },
     image: "/images/practical/ram.webp",
     imageAlt: {
-      da: "Illustrativt foto af et SO-DIMM RAM-modul ved hukommelsessoklerne i en bærbar",
+      da: "Illustrativt foto af et SO-DIMM-modul ved hukommelsessoklerne i en bærbar",
       en: "Illustrative photograph of a SO-DIMM RAM module beside a laptop's memory sockets",
     },
     steps: [
@@ -263,19 +263,19 @@ export const practicalGuides: PracticalGuide[] = [
     },
     intro: {
       da: "Se efter drevtype og model under Ydeevne → Disk i Jobliste. Før et skift skal både drevets fysiske format og forbindelsen passe; M.2 beskriver formen og betyder ikke automatisk NVMe.",
-      en: "Look for the drive type and model under Performance → Disk in Task Manager. A replacement must match both the physical format and connection; M.2 describes the shape and does not automatically mean NVMe.",
+      en: "Look for the drive type and model under Performance → Disk in Task Manager. A replacement must match both the physical format and the connection; M.2 describes the shape and does not automatically mean NVMe.",
     },
     image: "/images/practical/ssd.webp",
     imageAlt: {
-      da: "Illustrativt foto af en 2,5-tommer SATA SSD og et M.2 SSD-modul",
+      da: "Illustrativt foto af en 2,5-tommer SATA-SSD og et M.2-SSD-modul",
       en: "Illustrative photograph of a 2.5-inch SATA SSD and an M.2 SSD module",
     },
     steps: [
       {
         title: { da: "Find drevet i Windows", en: "Find the drive in Windows" },
         body: {
-          da: "Tryk Ctrl + Shift + Esc, og vælg Ydeevne → Disk. Notér drevmodel og HDD eller SSD, hvis Windows viser typen; kontrollér hvert relevant drev, hvis du har flere.",
-          en: "Press Ctrl + Shift + Esc and select Performance → Disk. Note the model and HDD or SSD if Windows displays the type; check each relevant drive if you have more than one.",
+          da: "Tryk Ctrl + Shift + Esc, og vælg Ydeevne → Disk. Notér drevets model, og om Windows angiver det som HDD eller SSD; kontrollér hvert relevant drev, hvis du har flere.",
+          en: "Press Ctrl + Shift + Esc and select Performance → Disk. Note the drive's model, and whether Windows lists it as HDD or SSD; check each relevant drive if you have more than one.",
         },
       },
       {

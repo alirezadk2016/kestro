@@ -36,7 +36,7 @@ const copy = {
     nextSteps: [
       "Vi læser forespørgslen og spørger ind, hvis noget mangler, frem for at gætte på en pris.",
       "Vi søger i leverandørnetværket efter det, der reelt kan skaffes. Der er endnu ikke bekræftet lager eller en aftalt pris.",
-      "I får et tilbud per enhed. Før et eventuelt køb skal sælger, pris og vilkår være afklaret – en forespørgsel er ikke en bestilling.",
+      "I får et tilbud pr. enhed. Før et eventuelt køb skal sælger, pris og vilkår være afklaret – en forespørgsel er ikke en bestilling.",
     ],
     exampleTitle: "Se et tilbud, før I beder om et",
     exampleBody:
@@ -55,7 +55,7 @@ const copy = {
       },
       {
         title: "Hvornår det skal stå klar",
-        body: "Vi skaffer maskinerne per ordre, så tidsrammen er en del af opgaven. Har I en fast dato, så skriv den med det samme.",
+        body: "Vi skaffer maskinerne pr. ordre, så tidsrammen er en del af opgaven. Har I en fast dato, så skriv den med det samme.",
       },
       {
         title: "Om I samtidig skal af med noget",
@@ -172,7 +172,7 @@ const quoteFaqs = [
   {
     question: { da: "Hvad står der i tilbuddet?", en: "What is in the quote?" },
     answer: {
-      da: "Antal, pris per enhed og specifikationen på enhedsniveau – model, hukommelse, lagring, skærm, kosmetisk stand, tastaturlayout og styresystem. Siden med et eksempel på et tilbud viser, hvordan det ser ud udfyldt.",
+      da: "Antal, pris pr. enhed og specifikationen på enhedsniveau – model, hukommelse, lagring, skærm, kosmetisk stand, tastaturlayout og styresystem. Siden med et eksempel på et tilbud viser, hvordan det ser ud udfyldt.",
       en: "Quantity, price per unit and the specification written per unit — model, memory, storage, display, cosmetic condition, keyboard layout and operating system. The example quote page shows what that looks like filled in.",
     },
   },

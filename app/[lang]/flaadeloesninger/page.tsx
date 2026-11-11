@@ -32,7 +32,7 @@ const copy = {
     scaleLead:
       "Antallet ændrer ikke kun prisen, men også, hvordan indkøbet gribes an – fordi vi skaffer maskinerne til hver ordre i stedet for at sælge fra lager.",
     scaleClose:
-      "Prisen per enhed afhænger af model, stand og specifikation, og af, hvad der kan skaffes – ikke af antallet alene.",
+      "Prisen pr. enhed afhænger af model, stand og specifikation, og af, hvad der kan skaffes – ikke af antallet alene.",
     scaleCloseLink: "Hvad der afgør prisen",
     rolloutTitle: "Sådan forløber en flådeleverance, uge for uge",
     rolloutLead:
@@ -50,7 +50,7 @@ const copy = {
   en: {
     metaTitle: "Business computers in bulk — fleet solutions | Kestro",
     metaDescription:
-      "From ten machines to the whole company: one configuration across the fleet, a single delivery and the old machines collected. All of it in one quote.",
+      "From 10 machines to the whole company: one configuration across the fleet, a single delivery and the old machines collected. All of it in one quote.",
     badge: "For larger companies",
     title: "Equip the whole company",
     intro:
@@ -198,7 +198,7 @@ const rolloutPhases = [
   {
     when: { da: "Uge 1–2 · Sourcing og tilbud", en: "Week 1–2 · Sourcing and quote" },
     body: {
-      da: "Vi vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris per enhed og leveringstid – eller det nærmeste alternativ.",
+      da: "Vi vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris pr. enhed og leveringstid – eller det nærmeste alternativ.",
       en: "We come back with what can actually be sourced: model, condition, quantity, price per unit and delivery time — or the closest alternative.",
     },
     link: {
@@ -249,7 +249,7 @@ const enterpriseFaqs = [
     question: { da: "Kan vi købe bærbare i større antal?", en: "Can we buy laptops in bulk?" },
     answer: {
       da: "Ja – bærbare, stationære og skærme. Vi skaffer maskinerne til den enkelte ordre frem for at sælge fra et fast lager, så antallet afhænger af, hvad der kan skaffes til den ønskede specifikation og tidsramme. Fortæl os omfanget, så melder vi konkret tilbage på, hvad vi kan levere og hvornår.",
-      en: "Yes – laptops, desktops and monitors. We source per order rather than selling from fixed stock, so the number depends on what can be found at the specification and timing you want. Tell us the scope and we come back concretely on what we can deliver and when.",
+      en: "Yes — laptops, desktops and monitors. We source per order rather than selling from fixed stock, so the number depends on what can be found at the specification and timing you want. Tell us the scope and we come back concretely on what we can deliver and when.",
     },
   },
   {
@@ -288,7 +288,7 @@ const enterpriseFaqs = [
       en: "Do you do ongoing agreements rather than one-off orders?",
     },
     answer: {
-      da: "Ja, det kan vi aftale. Har I løbende behov – f.eks. maskiner til nye medarbejdere – kan vi holde en fast konfiguration ved lige, så I ikke skal specificere det forfra hver gang.",
+      da: "Ja, det kan vi aftale. Har I løbende behov – fx maskiner til nye medarbejdere – kan vi holde en fast konfiguration ved lige, så I ikke skal specificere det forfra hver gang.",
       en: "Yes, that can be arranged. If you have a continuing need — machines for new employees, for instance — we can keep a fixed configuration on file so you do not have to specify it again each time.",
     },
   },

@@ -95,7 +95,7 @@ export default function Faq({
             </h2>
             {contactLink && (
               <p className="mt-4 text-base leading-[1.65] text-ink-700">
-                {lang === "da" ? "Står jeres spørgsmål ikke her? " : "Is your question not here? "}
+                {lang === "da" ? "Mangler der et spørgsmål? " : "Don't see your question? "}
                 <Link
                   href={localePath("/kontakt", lang)}
                   className="font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"

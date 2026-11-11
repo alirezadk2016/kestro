@@ -32,7 +32,7 @@ const drivers = [
   {
     heading: { da: "Antal", en: "Quantity" },
     body: {
-      da: "Ti ens maskiner kan blive billigere per stk. end tre forskellige. Det er ikke en mængderabat – det er, at ens maskiner er lettere at skaffe og klargøre samlet.",
+      da: "Ti ens maskiner kan blive billigere pr. stk. end tre forskellige. Det er ikke en mængderabat – det er, at ens maskiner er lettere at skaffe og klargøre samlet.",
       en: "Ten identical machines can cost less each than three different ones. That is not a volume discount — identical machines are simply easier to source and prepare together.",
     },
   },
@@ -75,9 +75,9 @@ const copy = {
     quoteLead:
       "Prisen kommer aldrig alene. Alt herunder står skriftligt, før I bestiller noget som helst:",
     quotePoints: [
-      "Pris per enhed og samlet – ikke kun en totalsum.",
+      "Pris pr. enhed og samlet – ikke kun en totalsum.",
       "Præcis hvilken model og specifikation, I får.",
-      "Stand per enhed – og batteriets faktiske kapacitet i procent på de bærbare.",
+      "Stand pr. enhed – og batteriets faktiske kapacitet i procent på de bærbare.",
       "Garantivilkårene, og hvem I kontakter, hvis noget går i stykker.",
       "Hvad der følger med, og hvad der ikke gør.",
       "En tidsramme – ikke et løfte om en fast leveringstid, vi ikke kan holde.",
@@ -121,7 +121,7 @@ const copy = {
       "Condition per unit — and the battery's actual capacity as a percentage on the laptops.",
       "The warranty terms, and who you contact if something breaks.",
       "What comes with them, and what does not.",
-      "A timeframe — not a promise of a fixed delivery date we cannot keep.",
+      "A time frame — not a promise of a fixed delivery date we cannot keep.",
     ],
     freeTitle: "Does a quote cost anything?",
     freeBody:
@@ -138,7 +138,7 @@ const copy = {
     relatedTitle: "Where to go next",
     related: [
       { href: "/kvalitet", label: "Condition, testing, what to ask" },
-      { href: "/ydelser/levering", label: "Delivery and timeframes" },
+      { href: "/ydelser/levering", label: "Delivery and time frames" },
       { href: "/tilbud", label: "Get a quote for your fleet" },
     ],
   },
@@ -168,7 +168,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
   const range = `${nf.format(Math.min(...amounts))}–${nf.format(Math.max(...amounts))} DKK`;
   const lead =
     lang === "da"
-      ? `Ca. ${range} per enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Budgetreferencerne er ikke Kestros salgspriser eller en bekræftelse på lager.`
+      ? `Ca. ${range} pr. enhed for de brugte computere og skærme herunder, efter detailpriser hos eksterne forhandlere den ${formatDate(budgetReadOn, lang)}. Budgetreferencerne er ikke Kestros salgspriser eller en bekræftelse på lager.`
       : `Approx. ${range} per unit for the used computers and monitors below, from retail prices at external retailers on ${formatDate(budgetReadOn, lang)}. These budget references are not Kestro selling prices or confirmation of stock.`;
 
   /* The two questions a buyer types into a search box before they trust a

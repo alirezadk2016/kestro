@@ -67,7 +67,7 @@ const lines = [
   },
   {
     label: { da: "Serienummer", en: "Serial number" },
-    value: { da: "Oplyses per enhed ved levering", en: "Given per unit on delivery" },
+    value: { da: "Oplyses pr. enhed ved levering", en: "Given per unit on delivery" },
   },
 ];
 
@@ -79,7 +79,7 @@ const copy = {
     title: "Sådan ser et tilbud ud",
     /* Answer first: what a quote is made of, then why the example exists. */
     description:
-      "Et tilbud fra Kestro er et dokument i fem dele – maskinen per enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
+      "Et tilbud fra Kestro er et dokument i fem dele – maskinen pr. enhed, hvad der er med i prisen, hvad der ikke er, vilkårene og prisen – og alle felterne er udfyldt, før I bestiller. Her er et eksempel. Det er ikke et tilbud, men felterne er de samme.",
     docLabel: "Eksempel",
     docTitle: "Tilbud",
     metaRows: [
@@ -117,12 +117,12 @@ const copy = {
       },
       {
         k: "Dokumentation",
-        v: "Serienummer per maskine, og stand og batteritilstand per enhed – ikke per leverance.",
+        v: "Serienummer pr. maskine, og stand og batteritilstand pr. enhed – ikke pr. leverance.",
       },
     ],
     priceTitle: "Pris",
     priceRows: [
-      { k: "Pris per enhed", v: "—" },
+      { k: "Pris pr. enhed", v: "—" },
       { k: "Antal", v: "40 stk." },
       { k: "I alt ekskl. moms", v: "—" },
     ],
@@ -142,7 +142,7 @@ const copy = {
   en: {
     metaTitle: "Example quote for used business IT, field by field | Kestro",
     metaDescription:
-      "What a quote from Kestro looks like: model, condition, measured battery capacity, keyboard, warranty and timeframe, all explained field by field.",
+      "What a quote from Kestro looks like: model, condition, measured battery capacity, keyboard, warranty and time frame, all explained field by field.",
     title: "What a quote looks like",
     description:
       "A quote from Kestro is a document in five parts — the machine per unit, what the price includes, what it does not, the terms and the price — and every field is filled in before you order. Here is an example. It is not an offer, but the fields are the same.",

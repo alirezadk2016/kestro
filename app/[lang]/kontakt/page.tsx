@@ -110,7 +110,7 @@ const contactFaqs: FaqItem[] = [
       en: "We still run Windows 10 — what should we write?",
     },
     answer: {
-      da: "Skriv antal, modelnavne og den præcise konfiguration, hvis I kender den. Windows 11-egnethed skal kontrolleres per maskine; modelnavnet alene er ikke nok. Vi kan gennemgå mulighederne med jer. Ved et fremtidigt køb skal Windows-version, udgave og licens aftales skriftligt.",
+      da: "Skriv antal, modelnavne og den præcise konfiguration, hvis I kender den. Windows 11-egnethed skal kontrolleres pr. maskine; modelnavnet alene er ikke nok. Vi kan gennemgå mulighederne med jer. Ved et fremtidigt køb skal Windows-version, udgave og licens aftales skriftligt.",
       en: "Send the quantity, model names and exact configuration if you know it. Windows 11 eligibility must be checked per machine; the model name alone is not enough. We can discuss the options with you. For a future purchase, the Windows version, edition and licence must be agreed in writing.",
     },
   },

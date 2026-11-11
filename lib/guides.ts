@@ -231,7 +231,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "TrendForces resumé af DRAM Contract Price fra 30. september 2026 beskriver stabile kontraktpriser i perioden, samtidig med et stramt PC DRAM-udbud og producentkapacitet flyttet mod servere. Stabile priser i én periode og risiko for senere stigninger kan altså godt optræde samtidig.",
+            da: "TrendForces resumé af DRAM Contract Price fra 30. september 2026 beskriver stabile kontraktpriser i perioden, samtidig med et stramt udbud af DRAM til pc'er og producentkapacitet flyttet mod servere. Stabile priser i én periode og risiko for senere stigninger kan altså godt optræde samtidig.",
             en: "TrendForce's September 30, 2026 DRAM Contract Price summary describes stable contract prices during that period, alongside constrained PC DRAM supply and manufacturing capacity shifting to servers. Stable prices in one period and a risk of later increases can coexist.",
           },
           {
@@ -721,7 +721,7 @@ export const guides: Guide[] = [
                 en: "T480 with 8th-gen Core; 7th-gen variants also exist",
               },
               {
-                da: "To DDR4 SO-DIMM-sokler. Lenovo angiver 32 GB.",
+                da: "To SO-DIMM-sokler til DDR4. Lenovo angiver 32 GB.",
                 en: "Two DDR4 SO-DIMM slots. Lenovo lists 32 GB.",
               },
               {
@@ -743,7 +743,7 @@ export const guides: Guide[] = [
             [
               { da: "P53 med 9. gen. Core", en: "P53 with 9th-gen Core" },
               {
-                da: "Fire DDR4 SO-DIMM-sokler, op til 128 GB. ECC kræver særskilt Xeon-konfiguration.",
+                da: "Fire SO-DIMM-sokler til DDR4, op til 128 GB. ECC kræver særskilt Xeon-konfiguration.",
                 en: "Four DDR4 SO-DIMM slots, up to 128 GB. ECC needs a separate Xeon configuration.",
               },
               {
@@ -1318,7 +1318,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Refurbished er et markedsføringsord, ikke en mærkning, som nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer per maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
+            da: "Refurbished er et markedsføringsord, ikke en mærkning, som nogen kontrollerer. Der findes ikke en instans, der godkender, hvornår en sælger må bruge det, og der findes ikke ét sæt trin, alle følger. En sælger, der bruger tre timer pr. maskine, og en sælger, der bruger tre minutter, kan skrive det samme i annoncen.",
             en: "Refurbished is a marketing word, not a label anyone polices. There is no authority that approves when a seller may use it, and there is no single set of steps everyone follows. A seller who spends three hours per machine and a seller who spends three minutes can write the same thing in the advert.",
           },
           {
@@ -1608,7 +1608,7 @@ export const guides: Guide[] = [
         heading: { da: "Regn også tiden med", en: "Count the time too" },
         body: [
           {
-            da: "Både reparation og udskiftning kan give nedetid, opsætning og dataflytning. Brug jeres egen tidsvurdering, ikke en fast antagelse om timer pr. medarbejder. Vurder også software- og driversupport: en vellykket hardwareopgradering er ikke nok, hvis arbejdsprogrammerne eller styresystemet ikke kan understøttes.",
+            da: "Både reparation og udskiftning kan give nedetid, opsætning og dataflytning. Brug din egen tidsvurdering, ikke en fast antagelse om timer pr. medarbejder. Vurder også software- og driversupport: en vellykket hardwareopgradering er ikke nok, hvis arbejdsprogrammerne eller styresystemet ikke kan understøttes.",
             en: "Both repair and replacement can involve downtime, setup and migration. Use your own time estimate, not a fixed assumption about hours per employee. Also assess software and driver support: a successful hardware upgrade is insufficient if applications or the operating system cannot be supported.",
           },
         ],
@@ -1697,7 +1697,7 @@ export const guides: Guide[] = [
           en: "Should the setup time be counted?",
         },
         answer: {
-          da: "Ja. Regn opsætning, backup, dataflytning og nedetid med for begge alternativer. Tidsforbruget afhænger af jeres programmer og administration; det er ikke et fast antal timer pr. maskine.",
+          da: "Ja. Regn opsætning, backup, dataflytning og nedetid med for begge alternativer. Tidsforbruget afhænger af programmerne og administrationen; det er ikke et fast antal timer pr. maskine.",
           en: "Yes. Include setup, backup, migration and downtime for both options. The time depends on your applications and management; it is not a fixed number of hours per computer.",
         },
       },
@@ -2108,7 +2108,7 @@ export const guides: Guide[] = [
       {
         href: "/vejledninger/thinkpad-elitebook-latitude",
         label: {
-          da: "ThinkPad vs EliteBook vs Latitude",
+          da: "ThinkPad vs. EliteBook vs. Latitude",
           en: "ThinkPad vs EliteBook vs Latitude",
         },
       },
@@ -2666,7 +2666,7 @@ export const guides: Guide[] = [
       en: "ThinkPad, EliteBook or Latitude: what is the difference?",
     },
     metaTitle: {
-      da: "ThinkPad vs EliteBook vs Latitude: forskellene | Kestro",
+      da: "ThinkPad vs. EliteBook vs. Latitude: forskellene | Kestro",
       en: "ThinkPad vs EliteBook vs Latitude: the differences | Kestro",
     },
     metaDescription: {

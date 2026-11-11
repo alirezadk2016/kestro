@@ -44,8 +44,8 @@ const copy = {
     sub: "Et fremtidigt tilbud skal vise alt herunder, og pris og vilkår skal være afklaret, før I bestiller.",
     cta: "Se et eksempel på et tilbud",
     points: [
-      "Pris per enhed og samlet – ikke kun en totalsum",
-      "Stand og batterikapacitet per enhed",
+      "Pris pr. enhed og samlet – ikke kun en totalsum",
+      "Stand og batterikapacitet pr. enhed",
       "Garantivilkår, og hvem der håndterer en fejl",
       "En tidsramme, ikke et løfte, vi ikke kan holde",
     ],

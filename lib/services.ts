@@ -347,11 +347,11 @@ export const services: Service[] = [
         body: [],
         list: [
           {
-            da: "Serienummer per maskine, så I kan spore den enkelte enhed bagefter.",
+            da: "Serienummer pr. maskine, så I kan spore den enkelte enhed bagefter.",
             en: "A serial number per machine, so you can trace an individual unit afterwards.",
           },
           {
-            da: "Stand og batteritilstand oplyst skriftligt per enhed.",
+            da: "Stand og batteritilstand oplyst skriftligt pr. enhed.",
             en: "Condition and battery state reported in writing, per unit.",
           },
           {

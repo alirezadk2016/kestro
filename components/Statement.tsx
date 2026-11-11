@@ -31,7 +31,7 @@ const copy = {
   },
   en: {
     lead: "We hold no stock.",
-    body: "We buy only once you know what you need — and go after the specifications the job requires, not what happens to be on a shelf.",
+    body: "We buy only once you know what you need — and work from the specifications the job requires, not from what happens to be on a shelf.",
     kicker: "Which is why we can turn down a deal that is not good for you.",
     promisesLabel: "Hold us to these",
     explodedAlt: "A laptop separated into layers: screen, keyboard, mainboard and base plate",
@@ -68,7 +68,7 @@ const promises = [
     term: { da: "Testet enhed for enhed", en: "Tested unit by unit" },
     body: {
       da: "Hver tast trykkes igennem, og vi kan oplyse batteriets kapacitet i procent – ikke bare »OK«.",
-      en: "Every key is pressed through, and we can give the battery’s capacity as a percentage — not just “OK”.",
+      en: "We press every key, and we can give the battery’s capacity as a percentage — not just “OK”.",
     },
     link: { da: "Klargøring og test", en: "Preparation and testing" },
   },

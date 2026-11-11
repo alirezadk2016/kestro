@@ -84,6 +84,39 @@ Open, for the owner:
 Next reading: weekly while the site is this young; compare completed
 windows, not a partial week against a full one.
 
+## Language review — 11 November 2026
+
+Every visible string on all 156 pages (text, titles, descriptions, alt,
+aria-labels, placeholders, folded FAQs) read as one corpus per language:
+hunspell, rules for Danish compounds, number and unit style, quotes,
+pronoun case, r-errors, startkomma, address (du/I), and for English the
+UK spelling, Danish calques and article use; then the front pages and the
+most-seen guide read in full. The Danish was clean on grammar: no r-errors,
+startkomma used throughout, numbers and units in Danish style. What was
+wrong:
+
+- **Spelling and compounds.** "Se trinene" (trinnene); `14" skærmen`
+  (14"-skærmen); "USB-C dock", "SATA SSD", "M.2 SSD-modul", "PC
+  DRAM-udbud" and half-hyphenated "DDR4 SO-DIMM-sokkel" in running text;
+  "et NVMe SSD" where the site otherwise says "en SSD". Spec tables keep
+  the trade's "512 GB NVMe SSD".
+- **One form each.** "per" and "pr." were mixed 38 to 25; Danish now says
+  "pr." throughout. "f.eks." and "bl.a." became "fx" and "blandt andet",
+  as elsewhere on the site; "vs" became "vs.", including the comparison
+  guide's title (still 495 px).
+- **Address.** Shared templates spoke to "I" on pages written to "du":
+  the FAQ prompt ("Står jeres spørgsmål ikke her?"), the repair call to
+  action and the guides' closing heading, which on the RAM guide also
+  repeated its own paragraph. They are now neutral.
+- **Meaning.** The front page's definition read as if the companies were
+  tested ("udstyr fra virksomheder, som er testet"); it is two sentences.
+  "Nordisk klar" is the service's own name, "Nordisk tilpasning".
+- **English calques.** "also called renovated", "go after the
+  specifications", "every key is pressed through", "in preparation" for
+  "under etablering", "need making", "within" for "inden for", "when it
+  pays", "Is your question not here?"; plus one spaced en dash, "percent",
+  "timeframe" and "ten" against "10" on the same page.
+
 ## Site review and score — 11 November 2026
 
 A crawl of all 156 sitemap pages, mobile Lighthouse on twelve templates,

@@ -31,7 +31,7 @@ const services = [
     title: { da: "Levering til virksomheder", en: "Delivery to companies" },
     description: {
       da: "Fra én maskine til hele flåden, til virksomheder i Danmark og Norge. Tidsrammen oplyser vi, før I bestiller.",
-      en: "From one machine to the whole fleet, for companies in Denmark and Norway. We give you the timeframe before you order.",
+      en: "From one machine to the whole fleet, for companies in Denmark and Norway. We give you the time frame before you order.",
     },
   },
 ];

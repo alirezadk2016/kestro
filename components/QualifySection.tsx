@@ -13,8 +13,8 @@ const situations = [
       en: "Have your computers become too slow?",
     },
     answer: {
-      da: "Ofte er det batteriet, RAM eller disken. Vi opgraderer i stedet for at udskifte – når det kan betale sig.",
-      en: "Often it is the battery, the memory or the disk. We upgrade instead of replacing — when it pays.",
+      da: "Ofte er det batteriet, RAM'en eller disken. Vi opgraderer i stedet for at udskifte – når det kan betale sig.",
+      en: "Often it is the battery, the memory or the disk. We upgrade instead of replacing — when it is worth it.",
     },
     mark: "adjust" as CraftMarkName,
     href: "/reparation",
@@ -40,11 +40,11 @@ const situations = [
     },
     answer: {
       da: "Fra ti maskiner til hele flåden. Samme konfiguration hele vejen rundt, de specifikationer, opgaven kræver, og mulighed for at bytte det gamle ind.",
-      en: "From ten machines to the whole fleet. The same configuration throughout, the specifications the work actually needs, and the option to trade the old kit in.",
+      en: "From 10 machines to the whole fleet. The same configuration throughout, the specifications the work actually needs, and the option to trade the old kit in.",
     },
     /* The same three things as the answer, set as the list they are, for
        the large panel where a sentence would leave half of it empty. */
-    lead: { da: "Fra ti maskiner til hele flåden.", en: "From ten machines to the whole fleet." },
+    lead: { da: "Fra ti maskiner til hele flåden.", en: "From 10 machines to the whole fleet." },
     points: [
       { da: "Samme konfiguration på hver maskine", en: "The same configuration on every machine" },
       {

@@ -32,7 +32,7 @@ const copy = {
       "Batteriet er let at springe over, fordi et slidt batteri kan klare en kort test og alligevel ikke holde en arbejdsdag. Spørg til den målte kapacitet.",
     dataTitle: "Hvad med data på brugt udstyr?",
     dataBody1:
-      "Både når I køber og når I sælger, er data det punkt, der kan koste dyrt. En formateret disk er ikke en slettet disk. Data skal overskrives efter en anerkendt metode, eller disken skal destrueres fysisk, og der skal følge dokumentation med per enhed – ikke per leverance.",
+      "Både når I køber og når I sælger, er data det punkt, der kan koste dyrt. En formateret disk er ikke en slettet disk. Data skal overskrives efter en anerkendt metode, eller disken skal destrueres fysisk, og der skal følge dokumentation med pr. enhed – ikke pr. leverance.",
     dataBody2:
       "Sælger I jeres gamle maskiner, så bed om en sletterapport med serienummer for hver enkelt enhed. Det er det dokument, I skal kunne vise frem, hvis nogen spørger, hvor persondata fra de gamle computere blev af.",
     warrantyTitle: "Hvilken garanti følger med?",

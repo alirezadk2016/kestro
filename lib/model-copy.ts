@@ -240,7 +240,7 @@ export function modelFaqs(model: Model): FaqItem[] {
           en: "Can RAM be expanded in a T14 Gen 2 Intel?",
         },
         answer: {
-          da: "Ja. Gen 2 Intel har fastloddet RAM og én DDR4 SO-DIMM-sokkel ifølge Lenovo. Kontrollér, hvad der allerede sidder i soklen, før I aftaler en opgradering. Det er en oplysning om Gen 2 Intel, ikke alle T14-generationer og platforme.",
+          da: "Ja. Gen 2 Intel har fastloddet RAM og én SO-DIMM-sokkel til DDR4 ifølge Lenovo. Kontrollér, hvad der allerede sidder i soklen, før I aftaler en opgradering. Det er en oplysning om Gen 2 Intel, ikke alle T14-generationer og platforme.",
           en: "Yes. Lenovo lists soldered RAM and one DDR4 SO-DIMM slot for Gen 2 Intel. Check what is already in the slot before agreeing an upgrade. This describes Gen 2 Intel, not every T14 generation and platform.",
         },
       },

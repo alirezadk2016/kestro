@@ -245,7 +245,7 @@ export const models: Model[] = [
       {
         title: { da: "Én type dock til hele flåden", en: "One dock for the whole fleet" },
         description: {
-          da: "Med Thunderbolt 3 og ThinkPads eget dockstik kan I køre den samme dockingstation på tværs af arbejdspladserne i stedet for en løsning per maskine.",
+          da: "Med Thunderbolt 3 og ThinkPads eget dockstik kan I køre den samme dockingstation på tværs af arbejdspladserne i stedet for en løsning pr. maskine.",
           en: "With Thunderbolt 3 and ThinkPad's own dock connector you can run the same docking station across every desk instead of one solution per machine.",
         },
       },
@@ -266,7 +266,7 @@ export const models: Model[] = [
       {
         src: "/thinkpad-t480-4.jpg",
         alt: {
-          da: 'ThinkPad T480 åbnet i vinkel med 14" skærmen tændt',
+          da: 'ThinkPad T480 åbnet i vinkel med 14"-skærmen tændt',
           en: 'ThinkPad T480 open at an angle with the 14" screen switched on',
         },
       },
@@ -572,7 +572,7 @@ export const models: Model[] = [
     },
     goodFor: [
       {
-        da: "Store leverancer, hvor prisen per arbejdsplads afgør",
+        da: "Store leverancer, hvor prisen pr. arbejdsplads afgør",
         en: "Large deliveries where the price per desk decides",
       },
       {
@@ -1446,7 +1446,7 @@ export const models: Model[] = [
       en: "UltraSharp is Dell's business range, and the U2419H is a 23.8-inch office monitor from it, with an IPS panel, a USB hub and a stand that adjusts for height and turns portrait. If the whole office needs the same monitor, tell us how many; we check how many matching units can be sourced and what they cost used.",
     },
     goodFor: [
-      { da: "To skærme per arbejdsplads", en: "Two monitors per desk" },
+      { da: "To skærme pr. arbejdsplads", en: "Two monitors per desk" },
       {
         da: "Kontor, administration og sagsbehandling",
         en: "Office, administration and casework",
@@ -1755,7 +1755,7 @@ export const models: Model[] = [
     /* Dell's own name for it, and the one that puts "dock" in the H1. */
     name: "Dell Dock WD19",
     brand: "Dell",
-    format: { da: "USB-C dock", en: "USB-C dock" },
+    format: { da: "USB-C-dock", en: "USB-C dock" },
     group: "docking",
     category: "dockingstationer",
     tagline: {
@@ -1771,7 +1771,7 @@ export const models: Model[] = [
       en: "Refurbished Dell WD19 USB-C dock: monitors, network and power over one cable — it works with other brands too. 130 or 180 W. Written quote.",
     },
     intro: {
-      da: "WD19 kobles til med ét USB-C-kabel og giver skærme, netværk, USB og strøm på én gang. Fordi den bruger almindelig USB-C frem for et mærkespecifikt stik, kan den også bruges på maskiner fra andre producenter – praktisk hvis I har en blandet flåde.",
+      da: "WD19 kobles til med ét USB-C-kabel og giver skærme, netværk, USB og strøm på én gang. Fordi den bruger almindelig USB-C frem for et mærkespecifikt stik, kan den også bruges på maskiner fra andre producenter – praktisk, hvis I har en blandet flåde.",
       en: "The WD19 connects with a single USB-C cable and delivers monitors, network, USB and power at once. Because it uses ordinary USB-C rather than a brand-specific connector, it also works on machines from other manufacturers — handy with a mixed fleet.",
     },
     goodFor: [
@@ -1830,7 +1830,7 @@ export const models: Model[] = [
     slug: "hp-usb-c-dock-g5",
     name: "HP USB-C Dock G5",
     brand: "HP",
-    format: { da: "USB-C dock", en: "USB-C dock" },
+    format: { da: "USB-C-dock", en: "USB-C dock" },
     group: "docking",
     category: "dockingstationer",
     tagline: {

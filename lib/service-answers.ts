@@ -102,7 +102,7 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
       {
         question: { da: "Hvordan bliver batteriet vurderet?", en: "How is the battery assessed?" },
         answer: {
-          da: "Som den faktiske kapacitet i procent af ny – ikke bare »OK«. Stand og batteritilstand oplyses skriftligt per enhed.",
+          da: "Som den faktiske kapacitet i procent af ny – ikke bare »OK«. Stand og batteritilstand oplyses skriftligt pr. enhed.",
           en: "As its actual capacity as a percentage of new — not just “OK”. Condition and battery health are stated in writing per unit.",
         },
       },
@@ -179,7 +179,7 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
       {
         question: { da: "Hvad følger med leverancen?", en: "What comes with the delivery?" },
         answer: {
-          da: "Serienummer per maskine, stand og batteritilstand skriftligt per enhed, og garantivilkårene skriftligt, før I bestiller.",
+          da: "Serienummer pr. maskine, stand og batteritilstand skriftligt pr. enhed, og garantivilkårene skriftligt, før I bestiller.",
           en: "A serial number per machine, condition and battery health in writing per unit, and the warranty terms in writing before you order.",
         },
       },

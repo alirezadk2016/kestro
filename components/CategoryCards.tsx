@@ -58,7 +58,7 @@ const cards = [
     width: 1200,
     height: 675,
     title: { da: "Flådeløsninger", en: "Fleet solutions" },
-    brands: { da: "Fra 10 enheder til hele flåden", en: "From 10 devices to the whole fleet" },
+    brands: { da: "Fra ti enheder til hele flåden", en: "From 10 devices to the whole fleet" },
     alt: {
       da: "To stakke lukkede bærbare computere og én åben bærbar på et stenbord",
       en: "Two stacks of closed laptops and one open laptop on a stone desk",

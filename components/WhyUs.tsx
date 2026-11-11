@@ -19,7 +19,7 @@ const benefits = [
   {
     title: { da: "Prisen ligger fast, før I bestiller", en: "The price is fixed before you order" },
     description: {
-      da: "I får en pris per maskine i tilbuddet og kan holde den op mod et tilsvarende nyt indkøb. Vi regner ikke med besparelser, I ikke kan efterprøve.",
+      da: "I får en pris pr. maskine i tilbuddet og kan holde den op mod et tilsvarende nyt indkøb. Vi regner ikke med besparelser, I ikke kan efterprøve.",
       en: "You get a price per machine in the quote and can hold it against a comparable new purchase. We do not quote savings you cannot check.",
     },
   },

@@ -1987,7 +1987,7 @@ const artwork: Record<string, Art> = {
     height: 1024,
     neutral: true,
     alt: {
-      da: "Et RAM-modul og et NVMe SSD med synlige chips og kontakter på et arbejdsbord.",
+      da: "Et RAM-modul og en NVMe-SSD med synlige chips og kontakter på et arbejdsbord.",
       en: "A memory module and an NVMe SSD with visible chips and connectors on a workbench.",
     },
   },
