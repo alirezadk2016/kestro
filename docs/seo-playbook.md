@@ -968,3 +968,21 @@ Changed:
   battery guide.
 
 Waits on the owner, as before.
+
+### External laptop recommendations, 11 November 2026
+
+The existing laptop category now separates editorial recommendations with direct
+external purchase links from Kestro's own future range. Danish and English keep
+their existing URL, title, description, H1 and canonical. Three exact retailer
+configurations are documented in the source registry; merchant identity,
+business/personal purchasing and condition caveats are visible before leaving.
+There are no copied retailer photographs, persistent live-stock badges, invented
+prices or Kestro Offer markup. The future range is a plan with unconfirmed prices
+and timing. The keyword map and pillar routes are unchanged; no new search intent
+or page was created. The category's current content date is already 11 November.
+The date generator was not run against the shallow checkout.
+
+The implementation brief is `design/art-direction/external-laptop-recommendations.md`.
+The release gate includes a bilingual external-merchant handoff check, including
+native links without JavaScript and the exact seller destinations. Publication
+requires the full existing verification/security/admin-workflow gate.

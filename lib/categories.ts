@@ -100,8 +100,8 @@ export const categories: Category[] = [
       },
     ],
     specNote: {
-      da: "RAM, SSD-størrelse, skærmstørrelse og CPU-generation tilpasses den enkelte ordre – fortæl os, hvad maskinerne skal bruges til, så finder vi det rette match.",
-      en: "Memory, disk size, screen size and processor generation are matched to the individual order — tell us what the machines are for, and we will find the right fit.",
+      da: "Kontrollér RAM, SSD-størrelse, skærm, CPU-generation og fysisk tastaturlayout for den konkrete konfiguration hos sælgeren.",
+      en: "Check the memory, SSD capacity, display, processor generation and physical keyboard layout of the exact configuration with the seller.",
     },
     exampleModel: "lenovo-thinkpad-t480",
     guides: [

@@ -251,10 +251,16 @@ export function categoryFaqs(category: Category): FaqItem[] {
 
   items.push({
     question: { da: `Har I ${name.da} på lager?`, en: `Do you have ${name.en} in stock?` },
-    answer: {
-      da: "Nej. Vi skaffer udstyret til den enkelte ordre i stedet for at holde lager, så specifikationerne følger opgaven. Der er ingen minimumsordre.",
-      en: "No. We source per order rather than holding stock, so the specification follows the job. There is no minimum order.",
-    },
+    answer:
+      category.slug === "baerbare-computere"
+        ? {
+            da: "Nej. De anbefalede konfigurationer købes hos de navngivne eksterne forhandlere, som bekræfter pris, lager, levering og vilkår. Kestro planlægger sit eget udvalg; model, pris og levering vil skulle bekræftes særskilt før et eventuelt køb hos os.",
+            en: "No. Buy the recommended configurations from the named external retailers, who confirm price, stock, delivery and terms. Kestro plans its own selection; the model, price and delivery would need to be confirmed separately before any purchase from us.",
+          }
+        : {
+            da: "Nej. Vi skaffer udstyret til den enkelte ordre i stedet for at holde lager, så specifikationerne følger opgaven. Der er ingen minimumsordre.",
+            en: "No. We source per order rather than holding stock, so the specification follows the job. There is no minimum order.",
+          },
   });
 
   return items;

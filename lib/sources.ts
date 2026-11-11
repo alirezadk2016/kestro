@@ -478,6 +478,62 @@ export const sources = {
       en: "M.2 is a physical form factor. M.2 drives can use SATA or PCIe; NVMe is not a synonym for M.2.",
     },
   },
+  externalBusinessT14: {
+    id: "externalBusinessT14",
+    publisher: "Dustin",
+    title: {
+      da: "ThinkPad T14 G2: ekstern konfiguration",
+      en: "ThinkPad T14 G2: external configuration",
+    },
+    url: "https://www.dustin.dk/product/5020082334/thinkpad-t14-g2-pre-owned-meget-god-stand",
+    accessed: "2026-11-11",
+    claim: {
+      da: "Dustin viste en brugt ThinkPad T14 G2 i meget god stand med Core i5, 16 GB RAM, 256 GB SSD, 14-tommers skærm og Windows 11 Pro. Pris og lager skal kontrolleres hos forhandleren.",
+      en: "Dustin listed a pre-owned ThinkPad T14 G2 in very good condition with Core i5, 16 GB RAM, 256 GB SSD, a 14-inch display and Windows 11 Pro. Check price and stock with the retailer.",
+    },
+  },
+  dustinBusinessBuying: {
+    id: "dustinBusinessBuying",
+    publisher: "Dustin",
+    title: {
+      da: "Dustin Home er lukket; Dustin.dk fokuserer på erhverv",
+      en: "Dustin Home has closed; Dustin.dk focuses on business customers",
+    },
+    url: "https://www.dustin.dk/service/dh",
+    accessed: "2026-11-11",
+    claim: {
+      da: "Dustin oplyser, at Dustin Home og Home-konti er lukket, og henviser erhvervskunder til Dustin.dk. Anbefalingerne her mærker derfor Dustin som erhvervskøb.",
+      en: "Dustin states that Dustin Home and Home accounts have closed and directs business customers to Dustin.dk. These recommendations therefore label Dustin as business purchasing.",
+    },
+  },
+  externalBusinessEliteBook: {
+    id: "externalBusinessEliteBook",
+    publisher: "Dustin",
+    title: {
+      da: "EliteBook 840 G8: ekstern konfiguration",
+      en: "EliteBook 840 G8: external configuration",
+    },
+    url: "https://www.dustin.dk/product/5020100838/elitebook-840-g8-pre-owned-meget-god-stand",
+    accessed: "2026-11-11",
+    claim: {
+      da: "Dustin viste en brugt EliteBook 840 G8 i meget god stand med i5-1135G7, 16 GB RAM, 512 GB SSD, 14-tommers skærm, nordisk tastatur og Windows 11 Pro. Pris og lager skal kontrolleres hos forhandleren.",
+      en: "Dustin listed a pre-owned EliteBook 840 G8 in very good condition with i5-1135G7, 16 GB RAM, 512 GB SSD, a 14-inch display, Nordic keyboard and Windows 11 Pro. Check price and stock with the retailer.",
+    },
+  },
+  externalBusinessLatitude: {
+    id: "externalBusinessLatitude",
+    publisher: "Proshop",
+    title: {
+      da: "Latitude 5420, varenummer 3499860: ekstern konfiguration",
+      en: "Latitude 5420, item 3499860: external configuration",
+    },
+    url: "https://www.proshop.dk/Baerbar/Dell-Refurbished-Latitude-5420-14-Core-i5-16GB-256GB-B-Grade/3499860",
+    accessed: "2026-11-11",
+    claim: {
+      da: "Proshops titel og specifikationer angav Latitude 5420 med i5-1145G7, 16 GB RAM, 256 GB SSD, 14-tommers skærm, nordisk tastatur og Windows 11 Pro i Grade B. Sælgeren oplyste 70 % batterikapacitet og mulighed for skærmspor. Pris og lager skal kontrolleres hos forhandleren.",
+      en: "Proshop's title and specifications listed a Grade B Latitude 5420 with i5-1145G7, 16 GB RAM, 256 GB SSD, a 14-inch display, Nordic keyboard and Windows 11 Pro. The seller stated 70% battery capacity and possible screen marks. Check price and stock with the retailer.",
+    },
+  },
 } satisfies Record<string, Source>;
 
 export type SourceId = keyof typeof sources;

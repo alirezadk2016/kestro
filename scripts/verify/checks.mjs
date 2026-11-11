@@ -35,6 +35,7 @@ import { verifySiteUx } from "./site-ux.mjs";
 import { verifySiteForms } from "./site-forms.mjs";
 import { verifySiteInventory } from "./site-inventory.mjs";
 import { verifyRepairSequence } from "./repair-sequence.mjs";
+import { verifyExternalLaptops } from "./external-laptops.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -1085,14 +1086,14 @@ for (const [path, needs, brands, budget, guidePath] of [
   [
     "/produkter/baerbare-computere",
     "Hvilken firmabærbar passer til arbejdet?",
-    "Mærker vi typisk arbejder med",
+    "Andre erhvervsserier at sammenligne",
     "Hvordan vælger jeg en billig bærbar til arbejde?",
     "/vejledninger/tjek-brugt-baerbar-foer-koeb",
   ],
   [
     "/en/products/business-laptops",
     "Which company laptop fits the work?",
-    "Brands we usually work with",
+    "Other business ranges to compare",
     "How do I choose a low-cost laptop for work?",
     "/en/knowledge/check-a-used-laptop",
   ],
@@ -1433,6 +1434,7 @@ browser = await launchBrowser();
 
 for (const [label, verify] of [
   ["site image framing", verifySiteImages],
+  ["external laptop recommendations", verifyExternalLaptops],
   ["site navigation", verifySiteUx],
   ["site forms", verifySiteForms],
 ]) {

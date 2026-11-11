@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import HeaderArt from "@/components/HeaderArt";
+import ExternalLaptopRecommendations from "@/components/ExternalLaptopRecommendations";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
@@ -271,7 +272,17 @@ export default async function CategoryPage(props: {
         pagePath={pagePath}
         name={category.name[lang]}
         description={category.metaDescription[lang]}
-        sources={categorySources(category)}
+        sources={
+          isLaptops
+            ? [
+                ...categorySources(category),
+                "externalBusinessT14",
+                "externalBusinessEliteBook",
+                "externalBusinessLatitude",
+                "dustinBusinessBuying",
+              ]
+            : categorySources(category)
+        }
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
@@ -394,10 +405,17 @@ export default async function CategoryPage(props: {
                   {lang === "da" ? "Få et tilbud på firmatelefoner" : "Ask about business phones"}
                 </Button>
               )}
+              {isLaptops && (
+                <Button href="#external-laptop-recommendations" className="mt-7 w-full sm:w-auto">
+                  {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
+                </Button>
+              )}
             </div>
           </div>
         </Container>
       </section>
+
+      {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
 
       {isLaptops && useCasesSection}
 
@@ -410,10 +428,18 @@ export default async function CategoryPage(props: {
           )}
           <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.brandsTitle}
+              {isLaptops
+                ? lang === "da"
+                  ? "Andre erhvervsserier at sammenligne"
+                  : "Other business ranges to compare"
+                : c.brandsTitle}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">
-              {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
+              {isLaptops
+                ? lang === "da"
+                  ? "Sammenlign den konkrete konfiguration, batteriet og tastaturet. Et serienavn alene afgør ikke, om maskinen passer til arbejdet."
+                  : "Compare the exact configuration, battery and keyboard. A range name alone does not decide whether a laptop fits the job."
+                : `${c.brandsBodyPre} ${lowerFirst(category.name[lang])}:`}
             </p>
 
             <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
@@ -444,7 +470,9 @@ export default async function CategoryPage(props: {
               ))}
             </ul>
 
-            <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
+            {!isLaptops && (
+              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
+            )}
           </div>
         </Container>
       </section>
@@ -535,7 +563,9 @@ export default async function CategoryPage(props: {
                 {c.modelsTitle}
               </h2>
               <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
-              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+              {!isLaptops && (
+                <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+              )}
             </div>
 
             {/* A shelf to swipe on a phone (.rail), two columns from md, three
