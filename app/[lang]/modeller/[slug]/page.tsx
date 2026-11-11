@@ -111,12 +111,18 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   /*
    * The model as a product Google can recognise.
    *
-   * Deliberately carries no `offers`. Google wants a price there and will log
-   * the omission as a warning, but we hold no stock and price per order — the
-   * whole /priser page exists to say so. A made-up price would buy a rich
-   * result with a number the buyer cannot hold us to, which is the one thing
-   * this site has consistently refused to do. Everything here is a fact from
-   * lib/models.ts; add offers the day there is a real price to publish.
+   * Deliberately carries no `offers`. Google's product snippets need offers,
+   * a review or a rating, so Search Console lists these as invalid snippet
+   * items: no rich result, and no ranking penalty. We hold no stock and price
+   * per order — the whole /priser page exists to say so. A made-up price would
+   * buy a rich result with a number the buyer cannot hold us to, which is the
+   * one thing this site has consistently refused to do. The entity still tells
+   * search engines and answer engines what the page is about. Everything here
+   * is a fact from lib/models.ts; add offers the day there is a real price.
+   *
+   * No `seller` either: schema.org defines it on Offer, not on Product, so on
+   * a Product it is an unknown property. The organisation is the page's
+   * publisher already.
    */
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -137,7 +143,6 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
     })),
     itemCondition: "https://schema.org/RefurbishedCondition",
     manufacturer: { "@type": "Organization", name: model.brand },
-    seller: { "@id": `${SITE_ORIGIN}/#organization` },
   };
 
   return (
