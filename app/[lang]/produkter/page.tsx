@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ModelCard from "@/components/ModelCard";
+import { models } from "@/lib/models";
 import { ChevronDown } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -11,6 +13,10 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
 import { buttonClass } from "@/components/Button";
+
+/* One model from each kind of equipment, in catalogue order. Not a ranking:
+   the site has no sales to rank by. */
+const FEATURED = ["lenovo-thinkpad-t14", "dell-optiplex-5060", "dell-ultrasharp-u2419h", "dell-wd19"];
 
 const copy = {
   da: {
@@ -25,10 +31,10 @@ const copy = {
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
     noPrices2:
       "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
-    modelsTitle: "Sammenlign specifikationer",
+    modelsTitle: "Fra modelkataloget",
     modelsBody:
-      "Se forskelle i hukommelse, lager, skærm og muligheder for opgradering. Brug eksemplerne, når I afklarer kravene til jeres næste computer.",
-    modelsButton: "Se modeloversigten",
+      "Et udsnit af modellerne med fulde specifikationer: en bærbar, en stationær, en skærm og en dock. Kataloget sammenligner hukommelse, lager, porte og muligheder for opgradering.",
+    modelsButton: "Se alle modeller",
     choiceTitle: "Hvilken computer passer til jeres behov?",
     choiceLead:
       "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
@@ -49,10 +55,10 @@ const copy = {
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
       "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your needs — and if what you are after is not on the list, we can usually still get it.",
-    modelsTitle: "Compare specifications",
+    modelsTitle: "From the model catalogue",
     modelsBody:
-      "Compare memory, storage, display and upgrade options. Use the examples when clarifying requirements for your next computer.",
-    modelsButton: "See the model overview",
+      "A selection of the models with full specifications: a laptop, a desktop, a monitor and a dock. The catalogue compares memory, storage, ports and upgrade options.",
+    modelsButton: "See all models",
     choiceTitle: "Which computer fits your needs?",
     choiceLead:
       "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
@@ -294,22 +300,36 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             </details>
           </div>
 
-          {/* Left-aligned with the grid above it, heading and button on one
-              line on a wide screen. It was the one centred panel on the page,
-              floating in the middle of a left-aligned column. */}
-          <div className="mt-14 flex flex-col gap-6 border-y border-white/10 py-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
-            <div className="max-w-2xl">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                {c.modelsTitle}
-              </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+          {/* A shelf from the catalogue: one model from each kind of
+              equipment, with the same card as /modeller. It was a heading and
+              a button, which asked a buyer to leave the page to see any
+              hardware at all. */}
+          <div className="mt-14 border-t border-white/10 pt-10">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+              <div className="max-w-2xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                  {c.modelsTitle}
+                </h2>
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+              </div>
+              <Link
+                href={localePath("/modeller", lang)}
+                className={`${buttonClass("secondary")} flex-none self-start lg:self-end`}
+              >
+                {c.modelsButton}
+                <span className="tabular-nums text-paper/65">{models.length}</span>
+              </Link>
             </div>
-            <Link
-              href={localePath("/modeller", lang)}
-              className={`${buttonClass("primary")} flex-none self-start lg:self-center`}
-            >
-              {c.modelsButton}
-            </Link>
+            <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 xl:grid-cols-4">
+              {FEATURED.map((slug) => {
+                const model = models.find((m) => m.slug === slug);
+                return model ? (
+                  <li key={slug}>
+                    <ModelCard model={model} lang={lang} />
+                  </li>
+                ) : null;
+              })}
+            </ul>
           </div>
         </Container>
       </section>

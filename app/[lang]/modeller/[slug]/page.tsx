@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import ModelGallery from "@/components/ModelGallery";
+import ModelCard from "@/components/ModelCard";
+import { modelMedia } from "@/lib/model-media";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -94,6 +97,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const c = copy[lang];
   const model = getModel(params.slug);
   if (!model) notFound();
+  const media = modelMedia(model);
 
   const category = getCategory(model.category);
   /* Peers are the models in the same category, not the same group: the ZBook
@@ -210,7 +214,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </p>
               </div>
 
-              {model.images && (
+              {model.images ? (
                 <div className="space-y-3 sm:space-y-4 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
                   <ModelGallery
                     images={model.images}
@@ -219,6 +223,26 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                     note={c.imageNote}
                   />
                 </div>
+              ) : (
+                media && (
+                  /* The same studio frame as the catalogue card, so the model a
+                     buyer tapped is the picture the page opens on. A drawing of
+                     the format, and labelled as one. */
+                  <figure className="relative overflow-hidden rounded-xl bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-start">
+                    <Image
+                      src={media.src}
+                      alt={media.alt[lang]}
+                      width={media.width}
+                      height={media.height}
+                      priority
+                      sizes="(min-width: 1024px) 38vw, 92vw"
+                      className="h-auto w-full"
+                    />
+                    <figcaption className="absolute left-3 top-3 rounded bg-ink-950/90 px-2 py-0.5 text-xs font-semibold leading-5 text-paper">
+                      Illustration
+                    </figcaption>
+                  </figure>
+                )
               )}
 
               <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
@@ -244,12 +268,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 )}
               </div>
 
-              {/* Sixteen of the eighteen models have no photographs, and on a
-                  desktop their right five columns stood empty beside the text.
-                  The price box takes that column; after the text in the markup,
-                  so a phone still reads title, intro, then price. */}
+              {/* Sixteen of the eighteen models have no photographs. Their
+                  right column carries the illustration and, under it, the price
+                  box; after the text in the markup, so a phone still reads
+                  title, picture, intro, then price. */}
               {!model.images && (
-                <div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-start lg:pt-8">
+                <div className="lg:col-span-5 lg:col-start-8 lg:row-start-3 lg:mt-6 lg:self-start">
                   <PriceOnRequest
                     lang={lang}
                     equipment={model.name}
@@ -370,15 +394,12 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           <Container>
             <div className="max-w-6xl xl:max-w-none">
               <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
-              <ul className="mt-6 flex flex-wrap gap-3">
+              {/* The same product card as the catalogue, as a shelf: a row of
+                  names in pills told a buyer nothing about which one to open. */}
+              <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
                 {related.map((other) => (
                   <li key={other.slug}>
-                    <Link
-                      href={localePath(`/modeller/${other.slug}`, lang)}
-                      className="plate-sm inline-flex min-h-[44px] items-center rounded-full px-4 text-sm font-medium text-paper/85 transition-colors hover:text-brand-300"
-                    >
-                      {other.name}
-                    </Link>
+                    <ModelCard model={other} lang={lang} />
                   </li>
                 ))}
               </ul>

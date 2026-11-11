@@ -65,3 +65,22 @@ no substituted photograph: no suitable exact-model licence was verified.
 The factual references do not grant a licence to republish Dell's artwork.
 The price collection must retain a visible illustration label for these
 assets and its separate model-photo/individual-unit distinction.
+
+## Original product illustrations
+
+- Assets: `public/products/*.svg`, fourteen files, one per model without a
+  licensed photograph or a pricing illustration.
+- Generated for Kestro on 2026-11-11 by `scripts/build/product-art.mjs`
+  (deterministic; rerun after changing a definition). Code-native artwork in
+  the language of the pricing illustrations: pale studio field, soft floor
+  shadow, graphite hardware, empty screens, no logos.
+- They show a format, not a model's exact appearance: 14 or 15.6 inches, the
+  thin X1 profile, the TrackPoint on the ThinkPads, the ProBook 450's numeric
+  keypad, an upright SFF case, a one-litre case, a monitor on a
+  height-adjustable column, a mechanical dock and USB-C docks. Each of those
+  comes from lib/models.ts. Colour is not recorded there, so every machine
+  is the same neutral graphite.
+- No manufacturer or retailer image, drawing or manual was copied, traced or
+  referenced for proportions beyond those facts.
+- Every frame that shows one carries the label "Illustration", and each alt
+  text in `lib/model-media.ts` describes what is drawn.

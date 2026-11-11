@@ -20,7 +20,7 @@ import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
-import SpecChips from "@/components/SpecChips";
+import ModelCard from "@/components/ModelCard";
 import FactNote from "@/components/FactNote";
 
 /*
@@ -60,11 +60,10 @@ const copy = {
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     imageNote: "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
-    modelsTitle: "Eksempler på konfigurationer",
+    modelsTitle: "Modeller vi skaffer",
     modelsBody:
       "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne. Eksemplerne er ikke en lagerliste.",
     allModels: "Se hele modeloversigten",
-    cardAction: "Se specifikationer",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
     useCases: "Typiske anvendelser",
     specs: "Specifikationer",
@@ -80,11 +79,10 @@ const copy = {
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     imageNote: "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",
-    modelsTitle: "Example configurations",
+    modelsTitle: "Models we source",
     modelsBody:
       "Compare specifications and limitations once the work requirements are clear. These examples are not a stock list.",
     allModels: "See the full model overview",
-    cardAction: "See specifications",
     priceNote: "The price depends on configuration, condition and quantity.",
     useCases: "Typical uses",
     specs: "Specifications",
@@ -276,6 +274,48 @@ export default async function CategoryPage(props: {
       </section>
     </ProductDisclosure>
   );
+
+  /* The range as a product grid, in the open. On the laptop page it sat in a
+     closed fold under "Sammenlign andre modeller og serier", which hid the
+     machines Kestro sources behind a click; with a picture on every card it
+     belongs straight after the external recommendations. */
+  const modelsSection =
+    categoryModels.length > 0 ? (
+      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
+            <Container>
+              <div className="split max-w-3xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                  {c.modelsTitle}
+                </h2>
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+                {!isLaptops && (
+                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+                )}
+              </div>
+
+              {/* A shelf to swipe on a phone (.rail), two columns from md, three
+                from lg across the full container — nine laptops ran as one
+                long two-column list beside an empty half of the page. */}
+              <div>
+                <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
+                  {categoryModels.map((model, index) => (
+                    <li key={model.slug}>
+                      <ModelCard model={model} lang={lang} priority={index < 2} />
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href={localePath("/modeller", lang)}
+                  className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+                >
+                  {c.allModels}
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+            </Container>
+          </section>
+    ) : null;
 
   return (
     <>
@@ -479,6 +519,8 @@ export default async function CategoryPage(props: {
 
       {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
 
+      {isLaptops && modelsSection}
+
       {isLaptops && useCasesSection}
 
       <ProductDisclosure
@@ -624,64 +666,9 @@ export default async function CategoryPage(props: {
           </section>
         )}
 
-        {categoryModels.length > 0 && (
-          <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
-            <Container>
-              <div className="split max-w-3xl">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {c.modelsTitle}
-                </h2>
-                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
-                {!isLaptops && (
-                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
-                )}
-              </div>
-
-              {/* A shelf to swipe on a phone (.rail), two columns from md, three
-                from lg across the full container — nine laptops ran as one
-                long two-column list beside an empty half of the page. */}
-              <div>
-                <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
-                  {categoryModels.map((model) => (
-                    <li key={model.slug}>
-                      <Link
-                        href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="plate plate-lift group flex h-full flex-col p-5"
-                      >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
-                          {model.format[lang]}
-                        </span>
-                        <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
-                          {model.name}
-                        </span>
-                        <span className="mt-1.5 text-sm leading-6 text-paper/75">
-                          {model.tagline[lang]}
-                        </span>
-                        <SpecChips model={model} lang={lang} />
-                        <span className="flex-1" />
-                        {/* What tapping the card does. It said "Få et tilbud" here,
-                          as plain text on a card that opens the model page. */}
-                        <span className="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
-                          {c.cardAction}
-                          <span aria-hidden="true">&rarr;</span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href={localePath("/modeller", lang)}
-                  className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
-                >
-                  {c.allModels}
-                  <span aria-hidden="true">&rarr;</span>
-                </Link>
-              </div>
-            </Container>
-          </section>
-        )}
       </ProductDisclosure>
+
+      {!isLaptops && modelsSection}
 
       {!isLaptops && useCasesSection}
 

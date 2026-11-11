@@ -8,7 +8,7 @@ import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
-import SpecChips from "@/components/SpecChips";
+import ModelCard from "@/components/ModelCard";
 
 const copy = {
   da: {
@@ -27,7 +27,6 @@ const copy = {
       "Vi holder ikke lager, og der står ingen priser her. Listen viser modeltyper, ikke varer på hylden. Når I ved, hvad I skal bruge, finder vi maskinerne i vores leverandørnetværk og vender tilbage med pris, stand, antal og leveringstid.",
     noShopBody2:
       "Send det præcise modelnummer, antal og de vigtigste krav. Vi kan undersøge mulighederne og relevante alternativer; listen er ikke en garanti for, hvad der er tilgængeligt.",
-    seeSpecs: "Se specifikationer",
   },
   en: {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
@@ -43,7 +42,6 @@ const copy = {
       "We do not hold stock, and there are no prices here. The list shows types of machine, not goods on a shelf. Once you know what you need, we find the machines in our supplier network and come back with price, condition, quantity and lead time.",
     noShopBody2:
       "Send the exact model number, quantity and main requirements. We can investigate options and relevant alternatives; the list does not guarantee availability.",
-    seeSpecs: "See specifications",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -112,12 +110,39 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             </Link>
           </p>
 
+          {/* The catalogue's own index: each group with its count, one tap
+              from the top on a phone, where five groups are a long scroll. */}
+          <nav
+            aria-label={lang === "da" ? "Grupper i kataloget" : "Groups in the catalogue"}
+            className="mt-10 flex flex-wrap gap-2"
+          >
+            {modelGroups.map((group) => {
+              const count = models.filter((model) => model.group === group.id).length;
+              if (count === 0) return null;
+              return (
+                <a
+                  key={group.id}
+                  href={`#${group.id}`}
+                  className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 text-sm font-semibold text-paper/85 transition hover:text-paper"
+                >
+                  {group.name[lang]}
+                  <span className="tabular-nums text-paper/65">{count}</span>
+                </a>
+              );
+            })}
+          </nav>
+          <p className="mt-4 text-sm leading-[1.6] text-paper/65">
+            {lang === "da"
+              ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får."
+              : "The pictures are model photos or illustrations of the format — not the machine you get."}
+          </p>
+
           {modelGroups.map((group) => {
             const groupModels = models.filter((model) => model.group === group.id);
             if (groupModels.length === 0) return null;
 
             return (
-              <div key={group.id} className="mt-14">
+              <div key={group.id} id={group.id} className="mt-14 scroll-mt-28">
                 <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {group.name[lang]}
                 </h2>
@@ -126,34 +151,10 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
                 </p>
 
                 {/* A shelf to swipe on a phone (.rail), the grid from md. */}
-                <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
-                  {groupModels.map((model) => (
+                <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
+                  {groupModels.map((model, index) => (
                     <li key={model.slug}>
-                      <Link
-                        href={localePath(`/modeller/${model.slug}`, lang)}
-                        className="plate plate-lift group flex h-full flex-col p-5 sm:p-6"
-                      >
-                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
-                          {model.brand} · {model.format[lang]}
-                        </span>
-                        <h3 className="mt-2 text-base font-semibold text-paper group-hover:text-paper sm:text-lg">
-                          {model.name}
-                        </h3>
-                        <p className="mt-2 text-sm leading-[1.6] text-paper/75">
-                          {model.tagline[lang]}
-                        </p>
-                        <SpecChips model={model} lang={lang} />
-                        {/* Pushes the footer row down so every card in a row ends
-                            level, whether it got three chips, two or none. */}
-                        <span className="flex-1" />
-                        {/* The card's one action, which is what tapping it does. It
-                            also said "Få et tilbud" in white beside it: not a
-                            link, on every card, five groups down the page. */}
-                        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
-                          {c.seeSpecs}
-                          <span aria-hidden="true">&rarr;</span>
-                        </span>
-                      </Link>
+                      <ModelCard model={model} lang={lang} priority={group.id === "baerbare" && index < 2} />
                     </li>
                   ))}
                 </ul>

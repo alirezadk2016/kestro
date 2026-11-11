@@ -280,6 +280,104 @@
     "format": "svg"
   },
   {
+    "src": "/products/dell-latitude-5410.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14235,
+    "format": "svg"
+  },
+  {
+    "src": "/products/dell-latitude-7490.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14235,
+    "format": "svg"
+  },
+  {
+    "src": "/products/dell-wd19.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3006,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-elitebook-840.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14235,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-elitedesk-800.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 10065,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-elitedisplay-e243.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3029,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-probook-450.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 17537,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-usb-c-dock-g5.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3006,
+    "format": "svg"
+  },
+  {
+    "src": "/products/hp-zbook-15.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14193,
+    "format": "svg"
+  },
+  {
+    "src": "/products/lenovo-thinkcentre-m720q.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 5354,
+    "format": "svg"
+  },
+  {
+    "src": "/products/lenovo-thinkpad-l14.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14534,
+    "format": "svg"
+  },
+  {
+    "src": "/products/lenovo-thinkpad-ultra-dock.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3248,
+    "format": "svg"
+  },
+  {
+    "src": "/products/lenovo-thinkpad-x1-carbon.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 14590,
+    "format": "svg"
+  },
+  {
+    "src": "/products/lenovo-thinkvision-t24i.svg",
+    "width": 1200,
+    "height": 900,
+    "bytes": 3029,
+    "format": "svg"
+  },
+  {
     "src": "/team/alireza.webp",
     "width": 320,
     "height": 320,
