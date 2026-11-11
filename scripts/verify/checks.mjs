@@ -36,6 +36,7 @@ import { verifySiteForms } from "./site-forms.mjs";
 import { verifySiteInventory } from "./site-inventory.mjs";
 import { verifyRepairSequence } from "./repair-sequence.mjs";
 import { verifyExternalLaptops } from "./external-laptops.mjs";
+import { verifyProductBrowsing } from "./product-browsing.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -1435,6 +1436,7 @@ browser = await launchBrowser();
 for (const [label, verify] of [
   ["site image framing", verifySiteImages],
   ["external laptop recommendations", verifyExternalLaptops],
+  ["visual product browsing", verifyProductBrowsing],
   ["site navigation", verifySiteUx],
   ["site forms", verifySiteForms],
 ]) {

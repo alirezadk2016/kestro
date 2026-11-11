@@ -1,4 +1,7 @@
 import assert from "node:assert/strict";
+import { mkdir } from "node:fs/promises";
+import { isAbsolute, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920];
 const SECTION = "#external-laptop-recommendations";
@@ -6,6 +9,26 @@ const TARGETS = new Set([
   "www.dustin.dk/product/5020082334/thinkpad-t14-g2-pre-owned-meget-god-stand",
   "www.dustin.dk/product/5020100838/elitebook-840-g8-pre-owned-meget-god-stand",
   "www.proshop.dk/Baerbar/Dell-Refurbished-Latitude-5420-14-Core-i5-16GB-256GB-B-Grade/3499860",
+]);
+const MODEL_PHOTOS = {
+  "thinkpad-t14-g2": {
+    source: "/models/t14/gen2-intel-reference.webp",
+    width: 1600,
+    height: 1200,
+    alt: /ThinkPad\s+T14.*(?:Gen\s*2|G2)/i,
+  },
+  "elitebook-840-g8": {
+    source: "/models/elitebook/840-g8-reference.webp",
+    width: 1280,
+    height: 1182,
+    alt: /EliteBook\s+840\s+G8/i,
+  },
+};
+const PHOTO_CREDITS = new Set([
+  "https://commons.wikimedia.org/wiki/File:ThinkPad_T14.jpg",
+  "https://creativecommons.org/publicdomain/zero/1.0/",
+  "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
+  "https://creativecommons.org/licenses/by-sa/4.0/",
 ]);
 
 /** Recommendations send the buyer to another merchant, never to a Kestro checkout. */
@@ -16,6 +39,16 @@ export async function verifyExternalLaptops(browser, base, fail) {
     ["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname),
     "external laptop verification is local only",
   );
+  const directory = process.env.VERIFY_ARTIFACT_DIR && resolve(process.env.VERIFY_ARTIFACT_DIR);
+  if (directory) {
+    const repository = fileURLToPath(new URL("../../", import.meta.url));
+    const fromRepository = relative(repository, directory);
+    assert.ok(
+      fromRepository.startsWith("..") || isAbsolute(fromRepository),
+      "laptop screenshots must stay outside the repository",
+    );
+    await mkdir(directory, { recursive: true });
+  }
 
   // Retain local optimizer sockets independently of the visitor. Closing a
   // scenario must not strand a resize that a later scenario needs.
@@ -102,12 +135,23 @@ export async function verifyExternalLaptops(browser, base, fail) {
       const section = page.locator(SECTION);
       assert.equal(await section.count(), 1, "one recommendations section is server-rendered");
       assert.ok(await section.isVisible(), "recommendations are not hidden");
-      const cards = section.locator("ul > li");
+      const cards = section.locator("[data-external-laptop]");
       assert.equal(await cards.count(), 3, "three distinct recommendations are available");
+      const featured = section.locator("[data-featured-laptop]");
       assert.equal(
-        await section.locator("img,picture,canvas").count(),
+        await featured.count(),
+        2,
+        "two primary choices have accurate model photography",
+      );
+      assert.equal(
+        await section.locator("img").count(),
+        2,
+        "featured recommendations each show one licensed model photograph",
+      );
+      assert.equal(
+        await section.locator("canvas").count(),
         0,
-        "editorial recommendations do not copy or hotlink retailer product pictures",
+        "a synthetic rotating model does not replace product photography",
       );
       assert.equal(
         await section.locator("form,button,input,select,textarea").count(),
@@ -128,6 +172,11 @@ export async function verifyExternalLaptops(browser, base, fail) {
           : /purchases\s+are\s+made\s+with\s+the\s+retailer/i,
         "the buyer is told who handles the purchase",
       );
+      assert.match(
+        text,
+        language === "da" ? /modelfotos/i : /model\s+photos/i,
+        "model photography is distinguished from seller unit photography",
+      );
       assert.doesNotMatch(
         text,
         /\b(?:\d[\d.,\s]*\s*(?:DKK|kr\.?)|DKK\s*\d)\b/i,
@@ -140,13 +189,18 @@ export async function verifyExternalLaptops(browser, base, fail) {
       );
 
       const actualTargets = new Set();
-      const links = section.locator("a[href]");
+      const links = section.locator("a[data-merchant-link]");
       assert.equal(await links.count(), 3, "each card has one clear merchant destination");
       for (const card of await cards.all()) {
         const heading = card.getByRole("heading", { level: 3 });
         assert.equal(await heading.count(), 1, "each recommendation names its model");
         assert.ok((await heading.innerText()).trim(), "a model title is readable");
-        const link = card.locator("a[href]");
+        const link = card.locator("a[data-merchant-link]");
+        assert.equal(
+          await link.count(),
+          1,
+          "each recommendation keeps a single buying destination",
+        );
         assert.ok(await link.isVisible(), "the merchant link is visible without a hover");
         const href = new URL(await link.getAttribute("href"));
         assert.equal(href.protocol, "https:", "merchant links use HTTPS");
@@ -177,8 +231,189 @@ export async function verifyExternalLaptops(browser, base, fail) {
           "each card fits its viewport",
         );
         assert.equal(layout.clipped, false, "card titles and actions are not clipped or too small");
+        const id = await card.getAttribute("data-external-laptop");
+        const expectedPhoto = MODEL_PHOTOS[id];
+        if (expectedPhoto) {
+          const image = card.locator("img");
+          assert.equal(await image.count(), 1, "the featured model has one real photo");
+          await image.scrollIntoViewIfNeeded();
+          const handle = await image.elementHandle();
+          try {
+            await page.waitForFunction(async (element) => {
+              if (!element?.complete || !element.naturalWidth) return false;
+              await element.decode();
+              return true;
+            }, handle);
+          } finally {
+            await handle?.dispose();
+          }
+          const photo = await image.evaluate((element) => {
+            const box = element.getBoundingClientRect();
+            const frame = element.parentElement.getBoundingClientRect();
+            const source = new URL(element.currentSrc);
+            return {
+              source: source.searchParams.get("url") || source.pathname,
+              width: Number(element.getAttribute("width")),
+              height: Number(element.getAttribute("height")),
+              alt: element.alt,
+              fit: getComputedStyle(element).objectFit,
+              fits:
+                box.width > 0 &&
+                box.height > 0 &&
+                box.left >= frame.left - 1 &&
+                box.right <= frame.right + 1 &&
+                box.top >= frame.top - 1 &&
+                box.bottom <= frame.bottom + 1,
+            };
+          });
+          assert.equal(
+            photo.source,
+            expectedPhoto.source,
+            "the photograph is the verified exact model",
+          );
+          assert.equal(photo.width, expectedPhoto.width, "photo width matches the licensed asset");
+          assert.equal(
+            photo.height,
+            expectedPhoto.height,
+            "photo height matches the licensed asset",
+          );
+          assert.match(
+            photo.alt,
+            expectedPhoto.alt,
+            "the alternative text identifies the real model",
+          );
+          assert.equal(photo.fit, "contain", "the product photograph is not cropped or distorted");
+          assert.ok(photo.fits, "the photo fits its frame");
+        } else {
+          assert.equal(id, "latitude-5420", "an unpictured alternative is the checked Dell model");
+          assert.equal(
+            await card.locator("img").count(),
+            0,
+            "a different Dell generation is not used as a fake photo",
+          );
+          const detail = card.locator("details");
+          if (await detail.count()) {
+            const summary = detail.locator("summary");
+            const target = await summary.boundingBox();
+            assert.ok(
+              target && target.width >= 44 && target.height >= 44,
+              "alternative specifications have a touch-sized disclosure",
+            );
+            await summary.click();
+            assert.notEqual(
+              await detail.getAttribute("open"),
+              null,
+              "the alternative specifications can be read without JavaScript",
+            );
+          }
+          const detailText = await card.innerText();
+          assert.match(
+            detailText,
+            /(?:i5-1145G7)/i,
+            "the compact alternative preserves its exact processor",
+          );
+          assert.match(
+            detailText,
+            /256\s*GB/i,
+            "the compact alternative preserves its checked SSD size",
+          );
+          assert.match(
+            detailText,
+            /70\s*%/i,
+            "the compact alternative preserves its battery limitation",
+          );
+          assert.match(
+            detailText,
+            language === "da" ? /skærmspor/i : /marks\s+on\s+the\s+screen/i,
+            "the compact alternative preserves its visible wear limitation",
+          );
+        }
       }
       assert.equal(actualTargets.size, 3, "recommendations point to three different products");
+
+      const credits = section.locator("details[data-photo-credits]");
+      assert.equal(await credits.count(), 1, "photo attribution has one native disclosure");
+      const creditSummary = credits.locator("summary");
+      const creditTarget = await creditSummary.boundingBox();
+      assert.ok(
+        creditTarget && creditTarget.width >= 44 && creditTarget.height >= 44,
+        "photo credits are accessible by touch",
+      );
+      await creditSummary.click();
+      assert.notEqual(
+        await credits.getAttribute("open"),
+        null,
+        "photo credits open without JavaScript",
+      );
+      const creditText = await credits.innerText();
+      assert.match(creditText, /Edvard10/, "the T14 photographer is credited");
+      assert.match(creditText, /Infinatious/, "the EliteBook photographer is credited");
+      const creditLinks = await credits
+        .locator("a[href]")
+        .evaluateAll((nodes) => nodes.map((node) => node.href));
+      assert.deepEqual(
+        new Set(creditLinks),
+        PHOTO_CREDITS,
+        "both model photos retain their source and licence links",
+      );
+      for (const link of await credits.locator("a[href]").all()) {
+        assert.ok(await link.isVisible(), "the attribution link is readable when opened");
+        const target = await link.boundingBox();
+        assert.ok(
+          target && target.width >= 44 && target.height >= 44,
+          "attribution links are touch-sized",
+        );
+      }
+      await creditSummary.click();
+
+      // Detailed comparison remains a deliberate second step, including in a
+      // script-disabled browser, rather than disappearing when the page is simplified.
+      if ([390, 1440].includes(width)) {
+        for (const [id, content] of [
+          [
+            "laptop-buying-help",
+            "a[href*='check-a-used-laptop'],a[href*='tjek-brugt-baerbar-foer-koeb']",
+          ],
+          ["laptop-model-library", "a[href*='lenovo-thinkpad-t480']"],
+        ]) {
+          const detail = page.locator(`#${id}`);
+          assert.equal(await detail.count(), 1, "secondary buying guidance remains available");
+          assert.equal(
+            await detail.evaluate((element) => element.tagName),
+            "DETAILS",
+            "secondary guidance uses a native disclosure",
+          );
+          assert.equal(await detail.getAttribute("open"), null, "secondary guidance starts closed");
+          const summary = detail.locator(":scope > summary");
+          const target = await summary.boundingBox();
+          assert.ok(
+            target && target.width >= 44 && target.height >= 44,
+            "secondary guidance is touch-sized",
+          );
+          await summary.click();
+          assert.notEqual(
+            await detail.getAttribute("open"),
+            null,
+            "secondary guidance opens without JavaScript",
+          );
+          assert.ok(
+            await detail.locator(content).first().isVisible(),
+            "comparison links remain usable when requested",
+          );
+          await summary.click();
+          assert.equal(await detail.getAttribute("open"), null, "secondary guidance closes again");
+        }
+      }
+
+      if (directory) {
+        await section.screenshot({
+          path: join(
+            directory,
+            `laptop-recommendations-${language}-${width}-${javaScriptEnabled ? "js" : "nojs"}.png`,
+          ),
+          animations: "disabled",
+        });
+      }
 
       const offers = await page
         .locator("script[type='application/ld+json']")

@@ -14,11 +14,34 @@ export type ExternalLaptopRecommendation = {
   buyerLabel: Localized;
   source: SourceId;
   checkedOn: string;
+  photo?: {
+    src: string;
+    width: number;
+    height: number;
+    alt: Localized;
+    author: string;
+    source: string;
+    licence: string;
+    licenceUrl: string;
+  };
 };
 
 export const externalLaptops: ExternalLaptopRecommendation[] = [
   {
     id: "thinkpad-t14-g2",
+    photo: {
+      src: "/models/t14/gen2-intel-reference.webp",
+      width: 1600,
+      height: 1200,
+      alt: {
+        da: "Modelfoto af en åben Lenovo ThinkPad T14 Gen 2 Intel på et træbord",
+        en: "Model photo of an open Lenovo ThinkPad T14 Gen 2 Intel on a wooden desk",
+      },
+      author: "Edvard10",
+      source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T14.jpg",
+      licence: "CC0 1.0",
+      licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    },
     name: "Lenovo ThinkPad T14 Gen 2",
     useCase: { da: "Kontor og hybridarbejde", en: "Office and hybrid work" },
     configuration: {
@@ -41,6 +64,19 @@ export const externalLaptops: ExternalLaptopRecommendation[] = [
   },
   {
     id: "elitebook-840-g8",
+    photo: {
+      src: "/models/elitebook/840-g8-reference.webp",
+      width: 1280,
+      height: 1182,
+      alt: {
+        da: "Modelfoto af en åben sølvfarvet HP EliteBook 840 G8 med sort skærm",
+        en: "Model photo of an open silver HP EliteBook 840 G8 with a black screen",
+      },
+      author: "Infinatious",
+      source: "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
+      licence: "CC BY-SA 4.0",
+      licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    },
     name: "HP EliteBook 840 G8",
     useCase: { da: "Mere plads til arbejdsfiler", en: "More room for work files" },
     configuration: {

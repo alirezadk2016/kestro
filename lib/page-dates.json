@@ -56,13 +56,13 @@
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-10-28",
-    "files": 8
+    "modified": "2026-11-11",
+    "files": 6
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
     "modified": "2026-11-11",
-    "files": 12
+    "files": 14
   },
   "/reparation": {
     "published": "2026-08-23",

@@ -986,3 +986,19 @@ The implementation brief is `design/art-direction/external-laptop-recommendation
 The release gate includes a bilingual external-merchant handoff check, including
 native links without JavaScript and the exact seller destinations. Publication
 requires the full existing verification/security/admin-workflow gate.
+
+# Product browsing and model photographs — 11 November 2026
+
+The product hub now has one visual directory of the same seven categories.
+Its title, description, H1, canonical, hreflang and URLs are unchanged; the
+opening copy is shorter and existing buying guidance remains server-rendered
+inside native disclosures. Category and guide destinations are preserved.
+
+The laptop category reaches exact licensed model photographs without a large
+generic hero ahead of them. T14 Gen 2 and EliteBook 840 G8 are the two visual
+starting points; Latitude 5420 remains a secondary external comparison.
+Their exact retailer destinations and purchase/condition notices are intact.
+The model-photo notice distinguishes the image from the seller's particular
+unit, keyboard and condition; source, author and licence credits are available
+without JavaScript. No photograph is used to claim stock or a sales Offer.
+See `docs/media-licenses.md` and `design/art-direction/product-browsing-refresh.md`.

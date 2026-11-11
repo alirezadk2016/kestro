@@ -203,6 +203,13 @@
     "format": "webp"
   },
   {
+    "src": "/models/elitebook/840-g8-reference.webp",
+    "width": 1280,
+    "height": 1182,
+    "bytes": 72368,
+    "format": "webp"
+  },
+  {
     "src": "/models/laptop-assembly.webp",
     "width": 1200,
     "height": 1200,

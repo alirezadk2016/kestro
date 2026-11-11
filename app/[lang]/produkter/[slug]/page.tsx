@@ -8,6 +8,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import HeaderArt from "@/components/HeaderArt";
 import ExternalLaptopRecommendations from "@/components/ExternalLaptopRecommendations";
+import ProductDisclosure from "@/components/ProductDisclosure";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModel, getModelsForCategory } from "@/lib/models";
@@ -217,50 +218,63 @@ export default async function CategoryPage(props: {
     : null;
 
   const useCasesSection = (
-    <section className="border-t border-white/10 py-10 sm:py-20">
-      <Container>
-        <div className="split max-w-3xl">
-          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-            {isLaptops
-              ? lang === "da"
-                ? "Hvilken firmabærbar passer til arbejdet?"
-                : "Which company laptop fits the work?"
-              : c.useCases}
-          </h2>
-          <dl className="mt-8 space-y-6">
-            {category.useCases.map((useCase) => (
-              <div key={useCase.title.da} className="relative pl-8">
-                <dt className="text-base font-semibold leading-6 text-paper">
-                  <Check
-                    aria-hidden="true"
-                    className="absolute left-0 top-1 h-4 w-4 text-brand-300"
-                    strokeWidth={2}
-                  />
-                  {useCase.title[lang]}
-                </dt>
-                <dd className="mt-1 text-base leading-7 text-paper/75">
-                  {useCase.description[lang]}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <div className="plate mt-10 p-6">
-            <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
-            <p className="mt-2 text-base leading-[1.75] text-paper/75">{category.specNote[lang]}</p>
+    <ProductDisclosure
+      enabled={isLaptops}
+      id="laptop-buying-help"
+      title={
+        lang === "da"
+          ? "Hvilken firmabærbar passer til arbejdet?"
+          : "Which company laptop fits the work?"
+      }
+    >
+      <section className="border-t border-white/10 py-10 sm:py-20">
+        <Container>
+          <div className={isLaptops ? "" : "split max-w-3xl"}>
+            {!isLaptops && (
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.useCases}
+              </h2>
+            )}
+            {isLaptops && (
+              <p className="mb-6 text-base leading-7 text-paper/85">{category.intro[lang]}</p>
+            )}
+            <dl className={isLaptops ? "grid gap-6 md:grid-cols-2" : "mt-8 space-y-6"}>
+              {category.useCases.map((useCase) => (
+                <div key={useCase.title.da} className="relative pl-8">
+                  <dt className="text-base font-semibold leading-6 text-paper">
+                    <Check
+                      aria-hidden="true"
+                      className="absolute left-0 top-1 h-4 w-4 text-brand-300"
+                      strokeWidth={2}
+                    />
+                    {useCase.title[lang]}
+                  </dt>
+                  <dd className="mt-1 text-base leading-7 text-paper/75">
+                    {useCase.description[lang]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <div className="plate mt-10 p-6">
+              <h3 className="text-base font-semibold text-paper">{c.specs}</h3>
+              <p className="mt-2 text-base leading-[1.75] text-paper/75">
+                {category.specNote[lang]}
+              </p>
+            </div>
+            {isLaptops && (
+              <Link
+                href={localePath("/vejledninger/tjek-brugt-baerbar-foer-koeb", lang)}
+                className="mt-5 inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+              >
+                {lang === "da"
+                  ? "Vælg efter behov og budget: læs købsguiden"
+                  : "Choose around needs and budget: read the buying guide"}
+              </Link>
+            )}
           </div>
-          {isLaptops && (
-            <Link
-              href={localePath("/vejledninger/tjek-brugt-baerbar-foer-koeb", lang)}
-              className="mt-5 inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
-            >
-              {lang === "da"
-                ? "Vælg efter behov og budget: læs købsguiden"
-                : "Choose around needs and budget: read the buying guide"}
-            </Link>
-          )}
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </ProductDisclosure>
   );
 
   return (
@@ -286,332 +300,388 @@ export default async function CategoryPage(props: {
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
-      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
+      {isLaptops ? (
+        <section className="bg-brand-950 pb-8 pt-6 sm:pb-10 sm:pt-10">
+          <Container>
+            <Breadcrumbs
+              lang={lang}
+              trail={[
+                { name: c.breadcrumbHub, href: "/produkter" },
+                { name: category.name[lang], href: `/produkter/${category.slug}` },
+              ]}
+            />
+            {collectionJsonLd && (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+                }}
+              />
+            )}
+            <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-start lg:gap-12">
+              <div className="lg:col-span-6">
+                <h1 className="t-h1 font-display font-extrabold tracking-display text-paper">
+                  {(category.h1 ?? category.name)[lang]}
+                </h1>
+                <p className="mt-4 text-xs leading-5 text-paper/65">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time dateTime={pageUpdated("/produkter/[slug]")}>
+                    {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+                  </time>
+                </p>
+              </div>
+              <div className="lg:col-span-6">
+                <p className="hidden text-base leading-7 text-paper/85 sm:block">
+                  {categoryLead(category, lang)}
+                </p>
+                <p className="text-base leading-7 text-paper/85 sm:hidden">
+                  {lang === "da"
+                    ? "Til kontor, hjemmearbejde og startup."
+                    : "For office work, home working and startup teams."}
+                </p>
+                <Button href="#external-laptop-recommendations" className="mt-5 w-full sm:w-auto">
+                  {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </section>
+      ) : (
+        /* Lit by the site's own wash. Two blurred orbs sat here: one was
           bg-brand-950 on bg-brand-950 and drew nothing, the other was the
-          generic glow every generated page has. */}
-      <section
-        className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
-          isPhones
-            ? "product-phone-hero"
-            : CATEGORY_ART[category.slug]
-              ? "max-md:-mt-[65px] max-md:pt-0"
-              : ""
-        }`}
-      >
-        {isPhones && (
-          <Image
-            src={CATEGORY_ART.smartphones.src}
-            width={1440}
-            height={960}
-            priority
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            alt={CATEGORY_ART.smartphones.alt[lang]}
-            className="product-phone-image"
-          />
-        )}
-        <Container className="relative">
-          {/* Text in the left seven columns, the category's picture in the
+          generic glow every generated page has. */
+        <section
+          className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
+            isPhones
+              ? "product-phone-hero"
+              : CATEGORY_ART[category.slug]
+                ? "max-md:-mt-[65px] max-md:pt-0"
+                : ""
+          }`}
+        >
+          {isPhones && (
+            <Image
+              src={CATEGORY_ART.smartphones.src}
+              width={1440}
+              height={960}
+              priority
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              alt={CATEGORY_ART.smartphones.alt[lang]}
+              className="product-phone-image"
+            />
+          )}
+          <Container className="relative">
+            {/* Text in the left seven columns, the category's picture in the
               right five from lg. On a phone the picture is the header's
               ground, from under the glass bar, and the trail, title and lead
               sit on glass over its foot, as the front page's words sit over
               the room. */}
-          <div
-            className={
-              isPhones ? "product-phone-copy" : "grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14"
-            }
-          >
             <div
-              className={`max-w-3xl lg:col-span-7 ${
-                CATEGORY_ART[category.slug] && !isPhones
-                  ? "glass-card relative z-10 max-md:-mt-14"
-                  : ""
-              }`}
+              className={
+                isPhones ? "product-phone-copy" : "grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14"
+              }
             >
-              {/* The shared trail: "Forside / Produkter / Bærbare
+              <div
+                className={`max-w-3xl lg:col-span-7 ${
+                  CATEGORY_ART[category.slug] && !isPhones
+                    ? "glass-card relative z-10 max-md:-mt-14"
+                    : ""
+                }`}
+              >
+                {/* The shared trail: "Forside / Produkter / Bærbare
                 computere", visible and marked up from one list. The schema
                 here already began at Forside while the visible trail did not,
                 which is the mismatch BreadcrumbSchema warns about. */}
-              <Breadcrumbs
-                lang={lang}
-                trail={[
-                  { name: c.breadcrumbHub, href: "/produkter" },
-                  { name: category.name[lang], href: `/produkter/${category.slug}` },
-                ]}
-              />
-              {collectionJsonLd && (
-                <script
-                  type="application/ld+json"
-                  dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
-                  }}
+                <Breadcrumbs
+                  lang={lang}
+                  trail={[
+                    { name: c.breadcrumbHub, href: "/produkter" },
+                    { name: category.name[lang], href: `/produkter/${category.slug}` },
+                  ]}
                 />
-              )}
-              {/* Mark and title on one row at every width, on the type scale.
+                {collectionJsonLd && (
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+                    }}
+                  />
+                )}
+                {/* Mark and title on one row at every width, on the type scale.
                 Stacked on a phone the 56px tile cost the first screen 80px,
                 and the title was 3xl/4xl/5xl — 48px on a desktop, off the
                 scale every other page title is on. */}
-              <div className="mt-5 flex items-center gap-4 sm:gap-5">
-                <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
-                <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                  {(category.h1 ?? category.name)[lang]}
-                </h1>
+                <div className="mt-5 flex items-center gap-4 sm:gap-5">
+                  <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
+                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                    {(category.h1 ?? category.name)[lang]}
+                  </h1>
+                </div>
+                <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
+                  {categoryLead(category, lang)}
+                </p>
               </div>
-              <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
-                {categoryLead(category, lang)}
-              </p>
-            </div>
 
-            {CATEGORY_ART[category.slug] && !isPhones && (
-              <HeaderArt
-                src={CATEGORY_ART[category.slug].src}
-                width={1200}
-                height={675}
-                alt={CATEGORY_ART[category.slug].alt[lang]}
-                className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
-                bleed
-              />
-            )}
+              {CATEGORY_ART[category.slug] && !isPhones && (
+                <HeaderArt
+                  src={CATEGORY_ART[category.slug].src}
+                  width={1200}
+                  height={675}
+                  alt={CATEGORY_ART[category.slug].alt[lang]}
+                  className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
+                  bleed
+                />
+              )}
 
-            {/* With no picture (tablets) the right five columns stood empty:
+              {/* With no picture (tablets) the right five columns stood empty:
                 half the header was dark glass on a desktop. The intro takes
                 that column instead, beside the title, rather than a borrowed
                 picture of something else. */}
-            <div
-              className={
-                CATEGORY_ART[category.slug] || isPhones
-                  ? "max-w-3xl lg:col-span-7"
-                  : "max-w-3xl lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end lg:[&>p:first-child]:mt-0"
-              }
-            >
-              {!isPhones && (
-                <p className="mt-8 text-base leading-[1.75] text-paper/75">
-                  {category.intro[lang]}
+              <div
+                className={
+                  CATEGORY_ART[category.slug] || isPhones
+                    ? "max-w-3xl lg:col-span-7"
+                    : "max-w-3xl lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end lg:[&>p:first-child]:mt-0"
+                }
+              >
+                {!isPhones && (
+                  <p className="mt-8 text-base leading-[1.75] text-paper/75">
+                    {category.intro[lang]}
+                  </p>
+                )}
+                <p className="label mt-6 text-paper/65">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time
+                    dateTime={pageUpdated("/produkter/[slug]")}
+                    className="tabular-nums text-paper/85"
+                  >
+                    {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+                  </time>
                 </p>
-              )}
-              <p className="label mt-6 text-paper/65">
-                {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                <time
-                  dateTime={pageUpdated("/produkter/[slug]")}
-                  className="tabular-nums text-paper/85"
-                >
-                  {formatDate(pageUpdated("/produkter/[slug]"), lang)}
-                </time>
-              </p>
-              {isPhones && (
-                <Button
-                  href={localePath("/tilbud?model=Smartphones", lang)}
-                  className="mt-7 w-full sm:w-auto"
-                >
-                  {lang === "da" ? "Få et tilbud på firmatelefoner" : "Ask about business phones"}
-                </Button>
-              )}
-              {isLaptops && (
-                <Button href="#external-laptop-recommendations" className="mt-7 w-full sm:w-auto">
-                  {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
-                </Button>
-              )}
+                {isPhones && (
+                  <Button
+                    href={localePath("/tilbud?model=Smartphones", lang)}
+                    className="mt-7 w-full sm:w-auto"
+                  >
+                    {lang === "da" ? "Få et tilbud på firmatelefoner" : "Ask about business phones"}
+                  </Button>
+                )}
+                {isLaptops && (
+                  <Button href="#external-laptop-recommendations" className="mt-7 w-full sm:w-auto">
+                    {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
+                  </Button>
+                )}
+              </div>
             </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
       {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
 
       {isLaptops && useCasesSection}
 
-      <section className="bg-ink-900 py-10 sm:py-20">
-        <Container>
-          {isPhones && (
-            <p className="mb-8 max-w-3xl text-base leading-[1.75] text-paper/75">
-              {category.intro[lang]}
-            </p>
-          )}
-          <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {isLaptops
-                ? lang === "da"
-                  ? "Andre erhvervsserier at sammenligne"
-                  : "Other business ranges to compare"
-                : c.brandsTitle}
-            </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">
-              {isLaptops
-                ? lang === "da"
-                  ? "Sammenlign den konkrete konfiguration, batteriet og tastaturet. Et serienavn alene afgør ikke, om maskinen passer til arbejdet."
-                  : "Compare the exact configuration, battery and keyboard. A range name alone does not decide whether a laptop fits the job."
-                : `${c.brandsBodyPre} ${lowerFirst(category.name[lang])}:`}
-            </p>
-
-            <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
-              {category.brands.map((brand) => (
-                <li
-                  key={brand}
-                  className={
-                    isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
-                  }
-                >
-                  {isPhones ? (
-                    <Link
-                      href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
-                      aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}
-                    >
-                      {brand.includes("Watch") ? (
-                        <Watch size={22} strokeWidth={1.6} aria-hidden="true" />
-                      ) : (
-                        <Smartphone size={22} strokeWidth={1.6} aria-hidden="true" />
-                      )}
-                      <span>{brand}</span>
-                      <ArrowUpRight size={18} aria-hidden="true" />
-                    </Link>
-                  ) : (
-                    brand
-                  )}
-                </li>
-              ))}
-            </ul>
-
-            {!isLaptops && (
-              <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
+      <ProductDisclosure
+        enabled={isLaptops}
+        id="laptop-model-library"
+        title={
+          lang === "da" ? "Sammenlign andre modeller og serier" : "Compare other models and ranges"
+        }
+      >
+        <section className="bg-ink-900 py-10 sm:py-20">
+          <Container>
+            {isPhones && (
+              <p className="mb-8 max-w-3xl text-base leading-[1.75] text-paper/75">
+                {category.intro[lang]}
+              </p>
             )}
-          </div>
-        </Container>
-      </section>
-
-      {exampleModel?.images && (
-        <section className="py-10 sm:py-20">
-          <Container>
-            {/* Machine on one side, what it is on the other. Stacked, the
-                gallery alone was a screen and a half with the right half of
-                the window empty. */}
-            <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12 xl:max-w-none">
-              <div className="lg:col-span-6">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {exampleModel.name}
-                </h2>
-                <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                  {exampleModel.intro[lang]}
-                </p>
-
-                <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
-
-                <Link
-                  href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                  className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
-                >
-                  {/* The model without its brand: with "Lenovo" in it the label
-                      ran to two lines at 375px, and the brand is in the heading
-                      directly above. */}
-                  {c.seeAllSpecs.replace(
-                    "{model}",
-                    exampleModel.name.replace(`${exampleModel.brand} `, ""),
-                  )}{" "}
-                  <span aria-hidden="true">&rarr;</span>
-                </Link>
-              </div>
-
-              {/*
-                Lead image, then the rest in an even grid – the renders sit on
-                white, so object-contain keeps ports and keyboard uncropped,
-                which is the part a buyer actually looks at.
-              */}
-              <div className="space-y-3 sm:space-y-4 lg:col-span-6">
-                {/* The photographs are studio shots on white. On a navy page a pure
-                    white tile was the brightest thing on screen; on the brand's light
-                    neutral, with the photo multiplied in, the studio white becomes
-                    the paper the site's answers already sit on. */}
-                <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
-                  <Image
-                    src={exampleModel.images[0].src}
-                    quality={90}
-                    alt={exampleModel.images[0].alt[lang]}
-                    width={1179}
-                    height={1120}
-                    className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
-                    sizes="(max-width: 1024px) 92vw, 550px"
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                  {exampleModel.images.slice(1).map((img) => (
-                    <div
-                      key={img.src}
-                      className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
-                    >
-                      <Image
-                        src={img.src}
-                        quality={90}
-                        alt={img.alt[lang]}
-                        width={1179}
-                        height={1120}
-                        className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
-                        sizes="(max-width: 640px) 30vw, 175px"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {categoryModels.length > 0 && (
-        <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
-          <Container>
-            <div className="split max-w-3xl">
+            <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
               <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                {c.modelsTitle}
+                {isLaptops
+                  ? lang === "da"
+                    ? "Andre erhvervsserier at sammenligne"
+                    : "Other business ranges to compare"
+                  : c.brandsTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
-              {!isLaptops && (
-                <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
-              )}
-            </div>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">
+                {isLaptops
+                  ? lang === "da"
+                    ? "Sammenlign den konkrete konfiguration, batteriet og tastaturet. Et serienavn alene afgør ikke, om maskinen passer til arbejdet."
+                    : "Compare the exact configuration, battery and keyboard. A range name alone does not decide whether a laptop fits the job."
+                  : `${c.brandsBodyPre} ${lowerFirst(category.name[lang])}:`}
+              </p>
 
-            {/* A shelf to swipe on a phone (.rail), two columns from md, three
-                from lg across the full container — nine laptops ran as one
-                long two-column list beside an empty half of the page. */}
-            <div>
-              <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
-                {categoryModels.map((model) => (
-                  <li key={model.slug}>
-                    <Link
-                      href={localePath(`/modeller/${model.slug}`, lang)}
-                      className="plate plate-lift group flex h-full flex-col p-5"
-                    >
-                      <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
-                        {model.format[lang]}
-                      </span>
-                      <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
-                        {model.name}
-                      </span>
-                      <span className="mt-1.5 text-sm leading-6 text-paper/75">
-                        {model.tagline[lang]}
-                      </span>
-                      <SpecChips model={model} lang={lang} />
-                      <span className="flex-1" />
-                      {/* What tapping the card does. It said "Få et tilbud" here,
-                          as plain text on a card that opens the model page. */}
-                      <span className="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
-                        {c.cardAction}
-                        <span aria-hidden="true">&rarr;</span>
-                      </span>
-                    </Link>
+              <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
+                {category.brands.map((brand) => (
+                  <li
+                    key={brand}
+                    className={
+                      isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
+                    }
+                  >
+                    {isPhones ? (
+                      <Link
+                        href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
+                        aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}
+                      >
+                        {brand.includes("Watch") ? (
+                          <Watch size={22} strokeWidth={1.6} aria-hidden="true" />
+                        ) : (
+                          <Smartphone size={22} strokeWidth={1.6} aria-hidden="true" />
+                        )}
+                        <span>{brand}</span>
+                        <ArrowUpRight size={18} aria-hidden="true" />
+                      </Link>
+                    ) : (
+                      brand
+                    )}
                   </li>
                 ))}
               </ul>
 
-              <Link
-                href={localePath("/modeller", lang)}
-                className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
-              >
-                {c.allModels}
-                <span aria-hidden="true">&rarr;</span>
-              </Link>
+              {!isLaptops && (
+                <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
+              )}
             </div>
           </Container>
         </section>
-      )}
+
+        {exampleModel?.images && (
+          <section className="py-10 sm:py-20">
+            <Container>
+              {/* Machine on one side, what it is on the other. Stacked, the
+                gallery alone was a screen and a half with the right half of
+                the window empty. */}
+              <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12 xl:max-w-none">
+                <div className="lg:col-span-6">
+                  <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                    {exampleModel.name}
+                  </h2>
+                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
+                    {exampleModel.intro[lang]}
+                  </p>
+
+                  <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
+
+                  <Link
+                    href={localePath(`/modeller/${exampleModel.slug}`, lang)}
+                    className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
+                  >
+                    {/* The model without its brand: with "Lenovo" in it the label
+                      ran to two lines at 375px, and the brand is in the heading
+                      directly above. */}
+                    {c.seeAllSpecs.replace(
+                      "{model}",
+                      exampleModel.name.replace(`${exampleModel.brand} `, ""),
+                    )}{" "}
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </div>
+
+                {/*
+                Lead image, then the rest in an even grid – the renders sit on
+                white, so object-contain keeps ports and keyboard uncropped,
+                which is the part a buyer actually looks at.
+              */}
+                <div className="space-y-3 sm:space-y-4 lg:col-span-6">
+                  {/* The photographs are studio shots on white. On a navy page a pure
+                    white tile was the brightest thing on screen; on the brand's light
+                    neutral, with the photo multiplied in, the studio white becomes
+                    the paper the site's answers already sit on. */}
+                  <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
+                    <Image
+                      src={exampleModel.images[0].src}
+                      quality={90}
+                      alt={exampleModel.images[0].alt[lang]}
+                      width={1179}
+                      height={1120}
+                      className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
+                      sizes="(max-width: 1024px) 92vw, 550px"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                    {exampleModel.images.slice(1).map((img) => (
+                      <div
+                        key={img.src}
+                        className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
+                      >
+                        <Image
+                          src={img.src}
+                          quality={90}
+                          alt={img.alt[lang]}
+                          width={1179}
+                          height={1120}
+                          className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
+                          sizes="(max-width: 640px) 30vw, 175px"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Container>
+          </section>
+        )}
+
+        {categoryModels.length > 0 && (
+          <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
+            <Container>
+              <div className="split max-w-3xl">
+                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                  {c.modelsTitle}
+                </h2>
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+                {!isLaptops && (
+                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+                )}
+              </div>
+
+              {/* A shelf to swipe on a phone (.rail), two columns from md, three
+                from lg across the full container — nine laptops ran as one
+                long two-column list beside an empty half of the page. */}
+              <div>
+                <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
+                  {categoryModels.map((model) => (
+                    <li key={model.slug}>
+                      <Link
+                        href={localePath(`/modeller/${model.slug}`, lang)}
+                        className="plate plate-lift group flex h-full flex-col p-5"
+                      >
+                        <span className="text-xs font-semibold uppercase tracking-wider text-paper/65">
+                          {model.format[lang]}
+                        </span>
+                        <span className="mt-1.5 text-base font-semibold text-paper group-hover:text-paper">
+                          {model.name}
+                        </span>
+                        <span className="mt-1.5 text-sm leading-6 text-paper/75">
+                          {model.tagline[lang]}
+                        </span>
+                        <SpecChips model={model} lang={lang} />
+                        <span className="flex-1" />
+                        {/* What tapping the card does. It said "Få et tilbud" here,
+                          as plain text on a card that opens the model page. */}
+                        <span className="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 text-sm font-semibold text-brand-300">
+                          {c.cardAction}
+                          <span aria-hidden="true">&rarr;</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href={localePath("/modeller", lang)}
+                  className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+                >
+                  {c.allModels}
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+            </Container>
+          </section>
+        )}
+      </ProductDisclosure>
 
       {!isLaptops && useCasesSection}
 
