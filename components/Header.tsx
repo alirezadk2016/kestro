@@ -276,7 +276,6 @@ export default function Header({ lang }: { lang: Lang }) {
           */}
           <div
             className="relative"
-            onMouseEnter={() => setProductsOpen(true)}
             onMouseLeave={() => setProductsOpen(false)}
             onBlur={(event) => {
               if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
@@ -325,7 +324,11 @@ export default function Header({ lang }: { lang: Lang }) {
                 id="header-products"
                 className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
               >
-                <div className="glass-panel rounded-xl p-2 shadow-xl shadow-black/40">
+                {/* A disclosure opens on activation. Opening it on pointer enter
+                    first made the same click immediately toggle it shut. Keep
+                    the list inside short viewports and give it an opaque ground:
+                    page headings must not show through its link labels. */}
+                <div className="glass-panel max-h-[calc(100svh-10rem)] overflow-y-auto overscroll-contain rounded-xl bg-ink-950 p-2 shadow-xl shadow-black/40">
                   {productPages.map((link) => (
                     <Link
                       key={link.href}

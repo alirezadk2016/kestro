@@ -210,38 +210,47 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
 
       <section className="border-y border-white/10 bg-ink-900 py-10 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.processTitle}
-            </h2>
-            <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
-
-            <div className="mt-10 space-y-10">
-              {steps.map((step) => (
-                <Link
-                  key={step.title.da}
-                  href={localePath(`/ydelser/${step.slug}`, lang)}
-                  className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
-                >
-                  <MarkTile name={step.mark} size="md" />
-                  <div>
-                    <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
-                      {step.title[lang]}
-                    </h3>
-                    <p className="mt-2 text-base leading-[1.75] text-paper/75">
-                      {step.description[lang]}
-                    </p>
-                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
-                      {c.stepLink}
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                        strokeWidth={2}
-                      />
-                    </span>
-                  </div>
-                </Link>
-              ))}
+          <div className="split">
+            <div>
+              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+                {c.processTitle}
+              </h2>
+              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.processSub}</p>
             </div>
+
+            <ol className="mt-8 space-y-2">
+              {steps.map((step, index) => (
+                <li key={step.title.da} className="relative">
+                  {index < steps.length - 1 && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -bottom-3 left-[22px] top-[68px] w-px bg-gradient-to-b from-brand-400/60 to-paper/10"
+                    />
+                  )}
+                  <Link
+                    href={localePath(`/ydelser/${step.slug}`, lang)}
+                    className="group -mx-4 flex gap-5 rounded-xl px-4 py-4 transition-colors hover:bg-white/5 sm:gap-6"
+                  >
+                    <MarkTile name={step.mark} size="md" className="relative flex-none" />
+                    <div className="min-w-0">
+                      <h3 className="text-lg font-semibold text-paper transition-colors group-hover:text-brand-300">
+                        {step.title[lang]}
+                      </h3>
+                      <p className="mt-2 text-base leading-[1.75] text-paper/75">
+                        {step.description[lang]}
+                      </p>
+                      <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
+                        {c.stepLink}
+                        <ArrowRight
+                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                          strokeWidth={2}
+                        />
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ol>
 
             <div className="mt-12 plate p-6 sm:p-8">
               <h3 className="text-lg font-semibold text-paper">{c.qualityTitle}</h3>

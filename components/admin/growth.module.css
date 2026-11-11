@@ -203,6 +203,12 @@
 .button:hover {
   background: var(--growth-inset);
 }
+.button[aria-pressed="true"] {
+  border-color: var(--growth-blue);
+  color: var(--growth-blue);
+  background: var(--growth-blue-wash);
+  box-shadow: inset 0 0 0 1px var(--growth-blue);
+}
 .button:disabled {
   cursor: not-allowed;
   color: var(--growth-secondary);

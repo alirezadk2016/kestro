@@ -190,7 +190,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                       <Link
                         href={localePath(link.href, lang)}
                         rel={link.rel}
-                        className="inline-flex min-h-[44px] items-center text-sm text-paper/65 transition hover:text-paper sm:whitespace-nowrap"
+                        className="inline-flex min-h-[44px] min-w-[44px] max-w-full items-center text-sm text-paper/65 transition hover:text-paper"
                       >
                         {link.label[lang]}
                       </Link>

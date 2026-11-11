@@ -144,53 +144,82 @@ export default async function RepairPage(props: Params) {
               list. This was a one-link tracked-caps label, 15px tall. */}
           <Breadcrumbs lang={lang} trail={trail} className="mb-5" />
 
-          <div className="mt-6 flex items-start gap-5">
-            <MarkTile name={repair.mark} size="lg" />
-            <div className="min-w-0">
-              <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
-                {(repair.h1 ?? repair.name)[lang]}
-              </h1>
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="min-w-0 lg:col-span-7">
+              <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
+                <MarkTile name={repair.mark} size="lg" className="flex-none" />
+                <h1 className="t-h1 min-w-0 text-balance font-display font-extrabold tracking-display text-paper">
+                  {(repair.h1 ?? repair.name)[lang]}
+                </h1>
+              </div>
+
+              {/* Keep the answer first; the existing service checklist gives
+                  the desktop's second column a useful purpose. */}
+              <p className="mt-6 max-w-2xl text-base leading-[1.7] text-paper/85 sm:text-lg">
+                {repair.answer[lang]}
+              </p>
+              <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
+                {repair.intro[lang]}
+              </p>
+              <div className="mt-6 flex flex-col gap-x-6 gap-y-2 sm:flex-row sm:flex-wrap sm:items-center">
+                <Button
+                  href={localePath("/reparation#reparation-formular", lang)}
+                  className="w-full sm:w-auto"
+                >
+                  {c.enquire}
+                </Button>
+                {/* The battery guide stays beside its capacity bands below. */}
+                {repair.tool && !repair.bands && (
+                  <Link
+                    href={localePath(repair.tool.href, lang)}
+                    className="group inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
+                  >
+                    {repair.tool.label[lang]}
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      strokeWidth={2}
+                    />
+                  </Link>
+                )}
+              </div>
+              <p className="label mt-6 text-paper/65">
+                {c.updated}{" "}
+                <time dateTime={updated} className="tabular-nums text-paper/85">
+                  {formatDate(updated, lang)}
+                </time>
+              </p>
+            </div>
+            <div className="plate space-y-7 self-start p-6 sm:p-8 lg:col-span-5 lg:mt-6">
+              {(
+                [
+                  [c.does, repair.does],
+                  [c.needs, repair.needs],
+                ] as const
+              ).map(([heading, items]) => (
+                <div
+                  key={heading}
+                  className="border-t border-white/10 pt-7 first:border-t-0 first:pt-0"
+                >
+                  <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                    {heading}
+                  </h2>
+                  <ul className="mt-5 space-y-3">
+                    {items.map((item) => (
+                      <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
+                        <Check
+                          aria-hidden="true"
+                          className="mt-[3px] h-4 w-4 flex-none text-brand-300"
+                          strokeWidth={2}
+                        />
+                        <span className="min-w-0">{item[lang]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
-
-          {/* The answer first, then the context.
-           *
-           * Both paragraphs were already written; they were in the wrong
-           * order. A reader skimming and a model quoting both take the first
-           * one, and the first one used to be the throat-clearing. */}
-          <p className="mt-6 max-w-2xl text-base leading-[1.7] text-paper/85 sm:text-lg">
-            {repair.answer[lang]}
-          </p>
-          <p className="mt-6 max-w-2xl text-base leading-[1.75] text-paper/75">
-            {repair.intro[lang]}
-          </p>
-          <Button
-            href={localePath("/reparation#reparation-formular", lang)}
-            className="mt-6 w-full sm:w-auto"
-          >
-            {c.enquire}
-          </Button>
-          {/* The guide that measures the problem first. On the battery page
-              it sits beside the bands instead, where the number is read. */}
-          {repair.tool && !repair.bands && (
-            <Link
-              href={localePath(repair.tool.href, lang)}
-              className="group mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
-            >
-              {repair.tool.label[lang]}
-              <ArrowRight
-                aria-hidden="true"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2}
-              />
-            </Link>
-          )}
-          <p className="label mt-6 text-paper/65">
-            {c.updated}{" "}
-            <time dateTime={updated} className="tabular-nums text-paper/85">
-              {formatDate(updated, lang)}
-            </time>
-          </p>
         </Container>
       </section>
 
@@ -269,35 +298,6 @@ export default async function RepairPage(props: Params) {
           </Container>
         </section>
       )}
-
-      <section className="border-t border-white/10 py-10 sm:py-20">
-        <Container>
-          <div className="grid max-w-4xl gap-10 sm:grid-cols-2 sm:gap-14">
-            {(
-              [
-                [c.does, repair.does],
-                [c.needs, repair.needs],
-              ] as const
-            ).map(([heading, items]) => (
-              <div key={heading}>
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{heading}</h2>
-                <ul className="mt-5 space-y-3">
-                  {items.map((item) => (
-                    <li key={item.da} className="flex gap-3 text-sm leading-[1.6] text-paper/75">
-                      <Check
-                        aria-hidden="true"
-                        className="mt-[3px] h-4 w-4 flex-none text-brand-300"
-                        strokeWidth={2}
-                      />
-                      <span className="min-w-0">{item[lang]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>

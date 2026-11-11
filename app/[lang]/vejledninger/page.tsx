@@ -383,7 +383,9 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         of 0 made this block's intrinsic width its longest
                         word, and from sm the title broke after every word in
                         a hundred-pixel column beside the picture. */}
-                    <div className="flex min-w-0 flex-1 flex-col gap-x-8 gap-y-2 sm:flex-row sm:items-baseline">
+                    {/* Keep reading time under the copy on small tablets: a
+                        third column at 640px leaves only 156px for the title. */}
+                    <div className="flex min-w-0 flex-1 flex-col gap-x-8 gap-y-2 lg:flex-row lg:items-baseline">
                       <div className="min-w-0 flex-1">
                         <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
                           {guide.title[lang]}
@@ -400,7 +402,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                       {/* A duration reads as a duration: "7 min." in the same
                         case as everything else, not "7 MIN." letterspaced like
                         a category tag. */}
-                      <span className="flex flex-none items-center gap-3.5 sm:w-24 sm:justify-end">
+                      <span className="flex flex-none items-center gap-3.5 lg:w-24 lg:justify-end">
                         <span className="whitespace-nowrap text-sm tabular-nums text-paper/65">
                           {guide.readingMinutes} {c.readingSuffix}
                         </span>

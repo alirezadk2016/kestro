@@ -188,6 +188,15 @@ export async function verifySiteUx(browser, base, fail) {
             "the product section marks the current location",
           );
           const trigger = header.locator("button[aria-controls='header-products']");
+          // Start outside the disclosure: pointer-enter used to open it before
+          // this click toggled it straight back shut. Test real activation as
+          // well as the keyboard path below.
+          await page.mouse.move(1400, 800);
+          await trigger.click();
+          await header.locator("#header-products").waitFor({ state: "visible" });
+          assert.equal(await trigger.getAttribute("aria-expanded"), "true");
+          await trigger.click();
+          await header.locator("#header-products").waitFor({ state: "hidden" });
           await trigger.focus();
           await page.keyboard.press("Enter");
           const panel = header.locator("#header-products");
@@ -219,6 +228,82 @@ export async function verifySiteUx(browser, base, fail) {
           await focused(trigger, "Escape returns focus to the products control");
         },
       );
+    }
+
+    for (const width of [1024, 1440]) {
+      for (const language of ["da", "en"]) {
+        await scenario(
+          `short desktop products ${language} ${width}`,
+          { viewport: { width, height: 500 } },
+          async (page) => {
+            // Retain the English-language offer above the Danish header too:
+            // a dropdown must fit from its actual position, not only at y=0.
+            await page.addInitScript(() => localStorage.removeItem("kestro-lang-hint"));
+            await visit(page, language === "da" ? "/kontakt" : "/en/contact");
+            const header = page.locator("body > header");
+            const trigger = header.locator("button[aria-controls='header-products']");
+            await trigger.click();
+            const panel = header.locator("#header-products > div");
+            await panel.waitFor({ state: "visible" });
+            const dimensions = await panel.evaluate((element) => ({
+              bounds: element.getBoundingClientRect().toJSON(),
+              viewport: window.innerHeight,
+              client: element.clientHeight,
+              scroll: element.scrollHeight,
+              background: getComputedStyle(element).backgroundColor,
+            }));
+            assert.ok(
+              dimensions.bounds.top >= 0 && dimensions.bounds.bottom <= dimensions.viewport - 8,
+              "the product list stays within the short viewport with breathing room",
+            );
+            assert.ok(
+              dimensions.scroll > dimensions.client,
+              "long product lists scroll internally",
+            );
+            assert.ok(
+              /^rgb\(/.test(dimensions.background),
+              "an opaque dropdown keeps underlying page text out of the link labels",
+            );
+            const last = panel.locator("a").last();
+            await last.focus();
+            const finalBounds = await last.boundingBox();
+            assert.ok(
+              finalBounds &&
+                finalBounds.y >= dimensions.bounds.top &&
+                finalBounds.y + finalBounds.height <= dimensions.bounds.bottom,
+              "focusing the final category scrolls it fully into view",
+            );
+            const destination = await last.getAttribute("href");
+            await last.click();
+            await page.waitForURL((url) => url.pathname === destination);
+            await header.locator("#header-products").waitFor({ state: "hidden" });
+          },
+        );
+      }
+    }
+
+    for (const width of [320, 390, 704, 720, 768, 1024, 1280, 1920]) {
+      for (const language of ["da", "en"]) {
+        await scenario(
+          `footer columns ${language} ${width}`,
+          { viewport: { width, height: 900 } },
+          async (page) => {
+            await visit(page, language === "da" ? "/kontakt" : "/en/contact");
+            const links = page.locator("footer nav li a");
+            for (const link of await links.all()) {
+              const label = await link.innerText();
+              const bounds = await target(link, `footer link ${label}`);
+              const item = await link.locator("..").boundingBox();
+              assert.ok(
+                item &&
+                  bounds.x >= item.x - 1 &&
+                  bounds.x + bounds.width <= item.x + item.width + 1,
+                `${label} stays in its footer column instead of colliding with the next link`,
+              );
+            }
+          },
+        );
+      }
     }
 
     for (const width of [320, 390]) {

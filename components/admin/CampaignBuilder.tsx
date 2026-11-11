@@ -17,6 +17,7 @@ export default function CampaignBuilder({ modelPaths = [] }: { modelPaths?: stri
   const [values, setValues] = useState<CampaignLinkInput>(initial);
   const [status, setStatus] = useState("");
   const [manual, setManual] = useState(false);
+  const [edited, setEdited] = useState(false);
   const output = useRef<HTMLTextAreaElement>(null);
   const result = buildCampaignLink(values, modelPaths);
   const activePreset = campaignPresets.find(
@@ -28,6 +29,7 @@ export default function CampaignBuilder({ modelPaths = [] }: { modelPaths?: stri
   );
 
   function change(key: keyof CampaignLinkInput, value: string) {
+    setEdited(true);
     setValues((current) => ({ ...current, [key]: value }));
     setStatus("");
     setManual(false);
@@ -199,7 +201,10 @@ export default function CampaignBuilder({ modelPaths = [] }: { modelPaths?: stri
             if (manual) event.currentTarget.select();
           }}
         />
-        <p id="campaign-validation" className={result.error ? styles.error : styles.status}>
+        <p
+          id="campaign-validation"
+          className={result.error && edited ? styles.error : styles.status}
+        >
           {result.error ?? "Klar til at dele. Linket indeholder kun dine valgte kampagnemærker."}
         </p>
         <div className={styles.outputActions}>
