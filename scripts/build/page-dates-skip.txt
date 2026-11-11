@@ -26,3 +26,4 @@ d49b4ac  # one comma in the privacy policy; what it says is unchanged
 dfa41e0 components/ContactForm.tsx  # validation messages only: form feedback, not what the pages say
 573f37d  # commas and the Danish word for laptops in alt text; no fact or answer changed
 0452813 /produkter /modeller/[slug]  # the desktop intro, 9 November: only /produkter/[slug] shows it
+1950ea9 /produkter /modeller/[slug]  # category intros, 11 November: only /produkter/[slug] shows them
