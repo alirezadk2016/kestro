@@ -31,13 +31,13 @@
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-10-28",
+    "modified": "2026-11-11",
     "files": 6
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
     "modified": "2026-11-11",
-    "files": 11
+    "files": 13
   },
   "/om-os": {
     "published": "2026-08-23",
@@ -57,7 +57,7 @@
   "/produkter": {
     "published": "2026-08-23",
     "modified": "2026-11-11",
-    "files": 6
+    "files": 8
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
