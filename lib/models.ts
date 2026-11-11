@@ -1343,7 +1343,7 @@ export const models: Model[] = [
       en: "Refurbished Dell OptiPlex 5060 as SFF or Micro with 8th-gen Intel i5/i7. See port and expansion differences, and contact us to discuss your needs.",
     },
     intro: {
-      da: "OptiPlex 5060 findes som SFF og Micro, men indmaden er ikke identisk. SFF giver flere muligheder for udvidelseskort og diske; Micro fylder mindre og bruger strømbesparende processorvarianter. Kontrollér kabinet, processor og porte for den konkrete maskine, ikke kun serienavnet.",
+      da: "OptiPlex 5060 findes som SFF og Micro, men indmaden er ikke identisk. SFF giver flere muligheder for udvidelseskort og diske; Micro fylder mindre og bruger strømbesparende processorvarianter. Kontrollér kabinet, processor og porte for den enkelte maskine, ikke kun serienavnet.",
       en: "OptiPlex 5060 comes as SFF and Micro, but the internals are not identical. SFF offers more options for expansion cards and drives; Micro takes less space and uses lower-power processor variants. Check the case, processor and ports for the actual machine, not just the range name.",
     },
     goodFor: [
@@ -1392,7 +1392,7 @@ export const models: Model[] = [
       {
         label: { da: "Skærmudgange", en: "Display outputs" },
         value: {
-          da: "2× DisplayPort som standard; HDMI er ekstraudstyr – kontrollér den konkrete konfiguration",
+          da: "2× DisplayPort som standard; HDMI er ekstraudstyr – kontrollér konfigurationen",
           en: "2× DisplayPort as standard; HDMI is optional — check the actual configuration",
         },
       },
@@ -1846,7 +1846,7 @@ export const models: Model[] = [
       en: "Refurbished HP USB-C Dock G5: two monitors over DisplayPort and HDMI, network and charging through one USB-C cable. Quote with condition.",
     },
     intro: {
-      da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er bygget til HP's erhvervsbærbare med USB-C; kontrollér opladningseffekt og skærmudgange mod den konkrete maskine.",
+      da: "G5-docken samler skærme, netværk og opladning i ét USB-C-kabel. Den er bygget til HP's erhvervsbærbare med USB-C; kontrollér opladningseffekt og skærmudgange mod den enkelte maskine.",
       en: "The G5 dock puts monitors, network and charging on one USB-C cable. It is built for HP's USB-C business laptops; check charging power and display outputs against the actual machine.",
     },
     goodFor: [

@@ -305,7 +305,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Dyrere komponenter kan lægge pres på en ny computers samlede pris. Vores vurdering er, at lager, kampagner, modelskifte, valutakurser og sælgerens vilkår også skal med i en konkret sammenligning. Et lavere RAM-niveau kan desuden skjule en ændring i værdi, selv når prisskiltet er uændret.",
+            da: "Dyrere komponenter kan lægge pres på en ny computers samlede pris. Vores vurdering er, at lager, kampagner, modelskifte, valutakurser og sælgerens vilkår også skal med i en sammenligning. Et lavere RAM-niveau kan desuden skjule en ændring i værdi, selv når prisskiltet er uændret.",
             en: "More expensive components can put pressure on a new computer's total price. In our assessment, stock, promotions, model changes, exchange rates and seller terms also belong in an actual comparison. A lower memory specification can hide a change in value even when the price tag stays the same.",
           },
           {
@@ -368,7 +368,7 @@ export const guides: Guide[] = [
           en: "Do higher chip prices make every laptop more expensive?",
         },
         answer: {
-          da: "Nej. Det kan give prispres, men en konkret pris afhænger også af konfiguration, lager, kampagner og vilkår. Sammenlign aktuelle tilbud på samme specifikationer; en global prognose er ikke et dansk detailprisindeks.",
+          da: "Nej. Det kan give prispres, men en præcis pris afhænger også af konfiguration, lager, kampagner og vilkår. Sammenlign aktuelle tilbud på samme specifikationer; en global prognose er ikke et dansk detailprisindeks.",
           en: "No. It can create price pressure, but an actual price also depends on configuration, stock, promotions and terms. Compare current quotes for equivalent specifications; a global forecast is not a Danish retail price index.",
         },
       },
@@ -427,7 +427,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Til mail, dokumenter, browserbaserede systemer og videomøder kan en passende ældre erhvervsmaskine være tilstrækkelig. Det er vores vurdering, ikke et løfte om alle modeller: afprøv dine programmer, skærme og mødeopsætning på den konkrete konfiguration.",
+            da: "Til mail, dokumenter, browserbaserede systemer og videomøder kan en passende ældre erhvervsmaskine være tilstrækkelig. Det er vores vurdering, ikke et løfte om alle modeller: afprøv dine programmer, skærme og mødeopsætning på den konfiguration, du overvejer.",
             en: "For email, documents, browser-based systems and video calls, a suitable older business machine may be sufficient. That is our assessment, not a promise about every model: test your applications, monitors and meeting setup on the actual configuration.",
           },
         ],
@@ -524,7 +524,7 @@ export const guides: Guide[] = [
                 en: "Get testing scope, condition, licence and terms in writing.",
               },
               {
-                da: "Kontrollér de konkrete servicevilkår, ikke en antaget garanti.",
+                da: "Kontrollér de faktiske servicevilkår, ikke en antaget garanti.",
                 en: "Verify the specific service terms, not an assumed warranty.",
               },
             ],
@@ -575,7 +575,7 @@ export const guides: Guide[] = [
       },
     ],
     closing: {
-      da: "Beskriv opgaver, antal og budget, så mulighederne kan sammenlignes på samme grundlag. Pris og tilgængelighed bekræftes ved en konkret forespørgsel.",
+      da: "Beskriv opgaver, antal og budget, så mulighederne kan sammenlignes på samme grundlag. Pris og tilgængelighed bekræftes ved en forespørgsel.",
       en: "Describe workloads, quantity and budget so the options can be compared on the same basis. Price and availability are confirmed for a specific enquiry.",
     },
     related: [
@@ -695,12 +695,12 @@ export const guides: Guide[] = [
       },
       {
         heading: {
-          da: "8., 9. eller 11. generation: konkrete forskelle",
+          da: "8., 9. eller 11. generation: forskellene",
           en: "8th, 9th or 11th generation: real differences",
         },
         body: [
           {
-            da: "Tabellen gengiver Lenovos angivne konfigurationer og testede RAM-maksima. Det er ikke en garanti for alle varianter eller en påstand om den absolutte elektriske grænse. Kontrollér altid det konkrete produktnummer før køb.",
+            da: "Tabellen gengiver Lenovos angivne konfigurationer og testede RAM-maksima. Det er ikke en garanti for alle varianter eller en påstand om den absolutte elektriske grænse. Kontrollér altid det præcise produktnummer før køb.",
             en: "This table follows Lenovo's listed configurations and tested RAM maxima. It is not a guarantee for every variant or a claim about the absolute electrical limit. Always check the exact product number before buying.",
           },
         ],
@@ -736,7 +736,7 @@ export const guides: Guide[] = [
                 en: "8 or 16 GB soldered LPDDR3. No memory slot.",
               },
               {
-                da: "Én M.2 2280 SSD. PSREF angiver SATA- og NVMe-varianter; kontrollér den konkrete del.",
+                da: "Én M.2 2280 SSD. PSREF angiver SATA- og NVMe-varianter; kontrollér den del, der sidder i maskinen.",
                 en: "One M.2 2280 SSD. PSREF lists SATA and NVMe variants; verify the actual part.",
               },
             ],
@@ -907,7 +907,7 @@ export const guides: Guide[] = [
           en: "Can every 8th-generation laptop take 32 GB RAM?",
         },
         answer: {
-          da: "Nej. Som konkrete eksempler har T480 to DDR4-sokler og et Lenovo-angivet maksimum på 32 GB, mens X1 Carbon Gen 7 har 8 eller 16 GB fastloddet LPDDR3 uden RAM-sokler. Den præcise model er afgørende.",
+          da: "Nej. For eksempel har T480 to DDR4-sokler og et Lenovo-angivet maksimum på 32 GB, mens X1 Carbon Gen 7 har 8 eller 16 GB fastloddet LPDDR3 uden RAM-sokler. Den præcise model er afgørende.",
           en: "No. As concrete examples, T480 has two DDR4 slots and a Lenovo-listed 32 GB maximum, whereas X1 Carbon Gen 7 has 8 or 16 GB soldered LPDDR3 without memory slots. The exact model is decisive.",
         },
       },
@@ -973,7 +973,7 @@ export const guides: Guide[] = [
             en: "Microsoft ended general updates and technical support for Windows 10 version 22H2. ESU provides separate access to security fixes, and LTSC has different support dates. The end date did not switch machines off, invalidate licences or remove files.",
           },
           {
-            da: "Uden relevant ESU-dækning eller en fortsat understøttet LTSC-udgave kan I ikke regne med fortsatte sikkerhedsrettelser. Kontrollér den konkrete udgave og tilmelding; en computer, der starter normalt, dokumenterer ikke, at den er dækket.",
+            da: "Uden relevant ESU-dækning eller en fortsat understøttet LTSC-udgave kan I ikke regne med fortsatte sikkerhedsrettelser. Kontrollér udgaven og tilmeldingen; en computer, der starter normalt, dokumenterer ikke, at den er dækket.",
             en: "Without relevant ESU coverage or a still-supported LTSC edition, you cannot rely on continued security fixes. Check the actual edition and enrolment; a computer starting normally does not demonstrate coverage.",
           },
           {
@@ -993,7 +993,7 @@ export const guides: Guide[] = [
             en: "The two often get mixed together when this comes up, and that leads to wrong decisions in both directions. The questions are independent.",
           },
           {
-            da: "Det første handler om styresystemet: får den konkrete maskine stadig sikkerhedsrettelser? Kontrollér Windows-udgave og supportdato, og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
+            da: "Det første handler om styresystemet: får maskinen stadig sikkerhedsrettelser? Kontrollér Windows-udgave og supportdato, og om en gyldig ESU-tilmelding faktisk er aktiveret. En nyere maskine med Windows 10 version 22H2 uden ESU får ikke almindelige sikkerhedsopdateringer alene på grund af sin alder.",
             en: "The first concerns the operating system: does this particular device still receive security fixes? Check the Windows edition, support date and whether valid ESU enrolment is actually active. A newer device running Windows 10 version 22H2 without ESU does not receive general security updates simply because it is newer.",
           },
           {
@@ -1079,7 +1079,7 @@ export const guides: Guide[] = [
             en: "Upgrade. If the machine meets the requirements and is otherwise good enough for the job, upgrading to Windows 11 is the cheapest route. Microsoft has so far made the upgrade available at no charge for machines with a valid Windows 10 licence that meet the requirements — confirm the current terms before planning around it. For many fleets this is where most machines end up.",
           },
           {
-            da: "Udskift. Undersøg erstatning, når nødvendig software ikke kan understøttes, eller maskinen ikke kan løse opgaven efter en rimelig forbedring. Det behøver ikke være nyt udstyr: en egnet refurbished konfiguration kan også vurderes. Bekræft kompatibilitet, stand og tilgængelighed konkret.",
+            da: "Udskift. Undersøg erstatning, når nødvendig software ikke kan understøttes, eller maskinen ikke kan løse opgaven efter en rimelig forbedring. Det behøver ikke være nyt udstyr: en egnet refurbished konfiguration kan også vurderes. Få kompatibilitet, stand og tilgængelighed bekræftet.",
             en: "Replace. Investigate replacement when necessary software cannot be supported or the computer cannot do the job after a reasonable improvement. Replacement need not be new: a suitable refurbished configuration can also be assessed. Confirm compatibility, condition and availability specifically.",
           },
           {
@@ -1326,7 +1326,7 @@ export const guides: Guide[] = [
             en: "That does not make the word worthless. It just moves where you have to look: away from the word and onto the description of what was done. A seller who has done real work usually has no objection to saying exactly what — and one who has not will answer in generalities.",
           },
           {
-            da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en konkret sælger følger dem, er noget, man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
+            da: "Der findes brancheordninger og standarder for dele af arbejdet, især for datasletning, hvor der findes anerkendte metodebeskrivelser. Om en bestemt sælger følger dem, er noget, man skal spørge om og få skriftligt. Vi henviser ikke til en bestemt standard her, fordi vi ikke kan bekræfte, hvilken en given leverandør arbejder efter.",
             en: "There are industry schemes and standards for parts of the work, particularly for data erasure, where recognised method descriptions exist. Whether a given seller follows them is something to ask about and get in writing. We do not point to a specific standard here, because we cannot confirm which one any given supplier works to.",
           },
         ],
@@ -1439,7 +1439,7 @@ export const guides: Guide[] = [
         heading: { da: "Sådan ser vi på det hos Kestro", en: "How we see it at Kestro" },
         body: [
           {
-            da: "Vi bruger ordet refurbished, fordi det er det ord, markedet bruger, og fordi en indkøber leder efter det. Men vi går ikke ud fra, at ordet i sig selv fortæller jer noget. Vi holder ikke lager: vi skaffer maskinerne til hver ordre i vores leverandørnetværk, og det betyder, at vi kender det konkrete parti frem for at beskrive en generel proces.",
+            da: "Vi bruger ordet refurbished, fordi det er det ord, markedet bruger, og fordi en indkøber leder efter det. Men vi går ikke ud fra, at ordet i sig selv fortæller jer noget. Vi holder ikke lager: vi skaffer maskinerne til hver ordre i vores leverandørnetværk, og det betyder, at vi kender det enkelte parti frem for at beskrive en generel proces.",
             en: "We use the word refurbished because it is the word the market uses, and because a buyer looks for it. But we do not assume the word tells you anything by itself. We hold no stock: we source per order through our supplier network, which means we know the actual batch rather than describing a general process.",
           },
           {
@@ -1551,7 +1551,7 @@ export const guides: Guide[] = [
     published: "2026-08-23",
     updated: "2026-10-16",
     tldr: {
-      da: "Sammenlign reparation eller opgradering med en passende erstatning, inklusive dele, arbejde, dataflytning og nedetid. Behold maskinen, hvis en konkret fejl kan løses, og den fortsat passer til opgaver og understøttet software. Vælg udskiftning, når nødvendige forbedringer ikke er mulige eller samlet er et dårligere køb. Der findes ingen universel procentgrænse.",
+      da: "Sammenlign reparation eller opgradering med en passende erstatning, inklusive dele, arbejde, dataflytning og nedetid. Behold maskinen, hvis fejlen kan løses, og den fortsat passer til opgaver og understøttet software. Vælg udskiftning, når nødvendige forbedringer ikke er mulige eller samlet er et dårligere køb. Der findes ingen universel procentgrænse.",
       en: "Compare repair or upgrading with a suitable replacement, including parts, labour, migration and downtime. Keep the machine when a specific fault can be fixed and it still suits your work and supported software. Replace it when necessary improvements are impossible or worse value overall. There is no universal percentage threshold.",
     },
     intro: {
@@ -1731,7 +1731,7 @@ export const guides: Guide[] = [
     published: "2026-08-23",
     updated: "2026-10-16",
     tldr: {
-      da: "RAM kan kun opgraderes, hvis den konkrete bærbare har en understøttet udvidelsesmulighed. Kontrollér sokler, type og maksimum i producentens dokumentation, og mål først, om hukommelsen er flaskehalsen. Før åbning: sikkerhedskopi, BitLocker-nøgle, korrekt strømafbrydelse og ESD-beskyttelse. Følg servicemanualen, og stop ved batteriskade eller en del, der ikke passer uden kraft.",
+      da: "RAM kan kun opgraderes, hvis din bærbare har en understøttet udvidelsesmulighed. Kontrollér sokler, type og maksimum i producentens dokumentation, og mål først, om hukommelsen er flaskehalsen. Før åbning: sikkerhedskopi, BitLocker-nøgle, korrekt strømafbrydelse og ESD-beskyttelse. Følg servicemanualen, og stop ved batteriskade eller en del, der ikke passer uden kraft.",
       en: "Memory can only be upgraded if the exact laptop has a supported expansion option. Check slots, type and maximum capacity in manufacturer documentation, and first measure whether memory is the bottleneck. Before opening: backup, BitLocker key, correct power isolation and ESD protection. Follow the service manual and stop for battery damage or a part that needs forcing.",
     },
     intro: {
@@ -1828,7 +1828,7 @@ export const guides: Guide[] = [
         heading: { da: "Selve skiftet", en: "The swap itself" },
         body: [
           {
-            da: "Tag sikkerhedskopi og find BitLocker-genoprettelsesnøglen først. Sluk, frakobl oplader og tilbehør, og følg den konkrete manuals procedure for at deaktivere eller frakoble både internt og eventuelt eksternt batteri. Brug korrekt ESD-beskyttelse og værktøj; en slukket computer er ikke nødvendigvis strømløs.",
+            da: "Tag sikkerhedskopi og find BitLocker-genoprettelsesnøglen først. Sluk, frakobl oplader og tilbehør, og følg manualens procedure for at deaktivere eller frakoble både internt og eventuelt eksternt batteri. Brug korrekt ESD-beskyttelse og værktøj; en slukket computer er ikke nødvendigvis strømløs.",
             en: "Back up and locate the BitLocker recovery key first. Shut down, disconnect the charger and peripherals, and follow the exact manual for disabling or disconnecting the internal and any external battery. Use proper ESD protection and tools; a shut-down computer is not necessarily without power.",
           },
           {
@@ -1982,11 +1982,11 @@ export const guides: Guide[] = [
     published: "2026-08-23",
     updated: "2026-10-16",
     tldr: {
-      da: "Vælg en brugt bærbar efter arbejdsopgaver, mobilitet og samlet budget, før du vælger mærke. Kontrollér derefter batteri, skærm, tastatur, porte og lager samt understøttelse af styresystemet. Afklar dansk eller norsk tastatur, oplader, licenser og eventuelle fejl på den konkrete enhed; en kosmetisk grad erstatter ikke disse oplysninger.",
+      da: "Vælg en brugt bærbar efter arbejdsopgaver, mobilitet og samlet budget, før du vælger mærke. Kontrollér derefter batteri, skærm, tastatur, porte og lager samt understøttelse af styresystemet. Afklar dansk eller norsk tastatur, oplader, licenser og eventuelle fejl på den enkelte enhed; en kosmetisk grad erstatter ikke disse oplysninger.",
       en: "Choose a used laptop around tasks, mobility and total budget before picking a brand. Then check battery, display, keyboard, ports, storage and operating system support. Clarify a Danish or Norwegian keyboard, charger, licences and any faults on the actual device; a cosmetic grade does not replace these details.",
     },
     intro: {
-      da: "Spørgsmålet er først: hvilken bærbar passer til mit behov? Når kravene er afklaret, hjælper tjeklisten dig med at vurdere den konkrete brugte computer. Den erstatter ikke en diagnose eller skriftlige oplysninger fra sælgeren.",
+      da: "Spørgsmålet er først: hvilken bærbar passer til mit behov? Når kravene er afklaret, hjælper tjeklisten dig med at vurdere en bestemt brugt computer. Den erstatter ikke en diagnose eller skriftlige oplysninger fra sælgeren.",
       en: "First ask: which laptop fits my needs? Once the requirements are clear, the checklist helps you assess the actual used computer. It does not replace a diagnosis or written details from the seller.",
     },
     sections: [
@@ -2014,7 +2014,7 @@ export const guides: Guide[] = [
             en: "Add the computer, charger, required Danish or Norwegian keyboard, licences and any dock and monitor. Also ask about the battery and known faults so a low purchase price does not hide necessary costs. A higher cosmetic grade does not by itself mean higher performance.",
           },
           {
-            da: "Har du allerede en gammel bærbar, bør du undersøge, om en relevant RAM- eller SSD-opgradering kan løse problemet, før du erstatter den. Sammenlign de konkrete muligheder og priser; budgeteksempler er ikke dokumentation for lager eller en aktuel salgspris.",
+            da: "Har du allerede en gammel bærbar, bør du undersøge, om en relevant RAM- eller SSD-opgradering kan løse problemet, før du erstatter den. Sammenlign de faktiske muligheder og priser; budgeteksempler er ikke dokumentation for lager eller en aktuel salgspris.",
             en: "If you already have an old laptop, check whether a relevant RAM or SSD upgrade could solve the problem before replacing it. Compare actual options and prices; budget examples are not evidence of stock or a current selling price.",
           },
         ],
@@ -2383,7 +2383,7 @@ export const guides: Guide[] = [
     published: "2026-08-23",
     updated: "2026-10-16",
     tldr: {
-      da: "Brug Microsofts PC Health Check til den konkrete computer. Processoren, TPM 2.0, UEFI/Secure Boot og de øvrige krav skal passe; generationen alene afgør det ikke. Kontrollér også drivere og arbejdsprogrammer. Tag backup og find BitLocker-nøglen før firmwareændringer. En installation, der omgår kravene, er ikke en understøttet løsning.",
+      da: "Kør Microsofts PC Health Check på computeren. Processoren, TPM 2.0, UEFI/Secure Boot og de øvrige krav skal passe; generationen alene afgør det ikke. Kontrollér også drivere og arbejdsprogrammer. Tag backup og find BitLocker-nøglen før firmwareændringer. En installation, der omgår kravene, er ikke en understøttet løsning.",
       en: "Use Microsoft's PC Health Check for the actual computer. The processor, TPM 2.0, UEFI/Secure Boot and other requirements must match; generation alone does not decide it. Also check drivers and work applications. Back up and locate the BitLocker key before firmware changes. Bypassing the requirements does not produce a supported installation.",
     },
     intro: {
@@ -2471,7 +2471,7 @@ export const guides: Guide[] = [
           en: "What does Windows 11 require of the machine?",
         },
         answer: {
-          da: "Blandt andet en kompatibel processor, TPM 2.0, UEFI/Secure Boot-egnethed samt Microsofts krav til RAM, lager, grafik og skærm. Brug PC Health Check til vurdering af den konkrete pc; et enkelt generationsnummer er ikke nok.",
+          da: "Blandt andet en kompatibel processor, TPM 2.0, UEFI/Secure Boot-egnethed samt Microsofts krav til RAM, lager, grafik og skærm. Brug PC Health Check til vurdering af pc'en; et enkelt generationsnummer er ikke nok.",
           en: "Among other requirements, a compatible processor, TPM 2.0, UEFI/Secure Boot capability and Microsoft's memory, storage, graphics and display requirements. Use PC Health Check to assess the actual PC; a generation number alone is not enough.",
         },
       },
@@ -2570,7 +2570,7 @@ export const guides: Guide[] = [
         heading: { da: "SSD og harddisk er ikke ens", en: "SSDs and hard disks are not the same" },
         body: [
           {
-            da: "Valget afhænger af mediet, den konkrete enhed, dens tilstand og den nødvendige sikkerhed. NIST skelner mellem Clear, Purge og Destroy; det er ikke tre udskiftelige knapper. Følg drevproducentens dokumentation for en understøttet metode og kontrollér resultatet. Et værktøj med navnet Secure Erase er ikke i sig selv en certificering. Fysisk destruktion bør overlades til en egnet faglig proces, ikke improviseres derhjemme.",
+            da: "Valget afhænger af mediet, den enkelte enhed, dens tilstand og den nødvendige sikkerhed. NIST skelner mellem Clear, Purge og Destroy; det er ikke tre udskiftelige knapper. Følg drevproducentens dokumentation for en understøttet metode og kontrollér resultatet. Et værktøj med navnet Secure Erase er ikke i sig selv en certificering. Fysisk destruktion bør overlades til en egnet faglig proces, ikke improviseres derhjemme.",
             en: "The choice depends on the medium, exact device, its condition and required assurance. NIST distinguishes Clear, Purge and Destroy; these are not three interchangeable buttons. Follow drive-manufacturer documentation for a supported method and verify the result. A tool labelled Secure Erase is not itself certification. Physical destruction should use a suitable professional process, not an improvised home method.",
           },
         ],
@@ -2628,7 +2628,7 @@ export const guides: Guide[] = [
           en: "How is data erased on an SSD?",
         },
         answer: {
-          da: "Brug drevproducentens understøttede metode til den konkrete SSD og det krævede sikkerhedsniveau, og kontrollér resultatet. Antag ikke, at en almindelig overskrivning eller sletning af en BitLocker-nøgle er tilstrækkelig.",
+          da: "Brug drevproducentens understøttede metode til SSD'en og det krævede sikkerhedsniveau, og kontrollér resultatet. Antag ikke, at en almindelig overskrivning eller sletning af en BitLocker-nøgle er tilstrækkelig.",
           en: "Use the drive manufacturer's supported method for the exact SSD and required assurance, and verify the result. Do not assume ordinary overwriting or deleting a BitLocker key is sufficient.",
         },
       },
@@ -2720,7 +2720,7 @@ export const guides: Guide[] = [
         },
         body: [
           {
-            da: "Tabellen samler det, der adskiller modellerne i praksis. Oplysningerne kommer fra producenternes specifikationer og vores modelsider; den konkrete konfiguration skal altid bekræftes, før I bestiller.",
+            da: "Tabellen samler det, der adskiller modellerne i praksis. Oplysningerne kommer fra producenternes specifikationer og vores modelsider; konfigurationen skal altid bekræftes, før I bestiller.",
             en: "The table brings together what separates the models in practice. The details come from the manufacturers' specifications and our model pages; the exact configuration should always be confirmed before you order.",
           },
         ],

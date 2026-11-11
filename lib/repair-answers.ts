@@ -101,7 +101,7 @@ const specific: Record<string, Extra> = {
           en: "Is upgrading an old laptop worthwhile?",
         },
         answer: {
-          da: "Sammenhold pris på dele og arbejde med batteri, skærm, hængsler og understøttelse af styresystemet. Hvis flere dele er slidte, bør du også sammenligne med en anden computer. En opgradering giver kun mening, hvis den løser den konkrete begrænsning; der loves ikke en bestemt hastighedsforbedring.",
+          da: "Sammenhold pris på dele og arbejde med batteri, skærm, hængsler og understøttelse af styresystemet. Hvis flere dele er slidte, bør du også sammenligne med en anden computer. En opgradering giver kun mening, hvis den løser den begrænsning, maskinen faktisk har; der loves ikke en bestemt hastighedsforbedring.",
           en: "Compare parts and labour cost against the battery, screen, hinges and operating system support. If several parts are worn, compare a replacement computer too. An upgrade only makes sense if it addresses the actual limitation; no particular speed improvement is promised.",
         },
       },

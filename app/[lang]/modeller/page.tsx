@@ -17,7 +17,7 @@ const copy = {
       "18 brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.",
     title: "Brugte erhvervsmodeller: ThinkPad, EliteBook, Latitude og OptiPlex",
     /* Answer first, with the counts the page actually shows. */
-    description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konkret konfiguration bekræftet.`,
+    description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konfiguration bekræftet.`,
     noStockLine:
       "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
     noStockLink: "Sådan bliver prisen til",
@@ -184,7 +184,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
               en: "Which version of Windows do the computers come with?",
             },
             answer: {
-              da: "Aftal version, udgave og licens for den konkrete konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              da: "Aftal version, udgave og licens for den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
               en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },

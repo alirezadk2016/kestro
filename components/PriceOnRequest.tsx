@@ -13,7 +13,7 @@ const copy = {
        on the sixteen model pages that show no figure, it explained prices
        that were not there. Without a figure, the box says how a price for
        this model is reached instead. */
-    body: "Prisen på denne model afhænger af stand, konfiguration og antal. Skriv, hvad I skal bruge, så vender vi tilbage med muligheder og en konkret pris.",
+    body: "Prisen på denne model afhænger af stand, konfiguration og antal. Skriv, hvad I skal bruge, så vender vi tilbage med muligheder og en præcis pris.",
     volume: "Skriv antal, specifikationer og ønsket tastatur.",
     volumeAccessory: "Skriv antal og hvilke maskiner, udstyret skal bruges med.",
     cta: "Send en forespørgsel",

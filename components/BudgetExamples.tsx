@@ -49,7 +49,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
           ))}
         </ul>
         <p className="mt-6 text-sm leading-6 text-paper/85">
-          {da ? "Spørg om muligheder og konkret pris:" : "Ask about options and a specific price:"}{" "}
+          {da ? "Spørg om muligheder og en præcis pris:" : "Ask about options and a specific price:"}{" "}
           <a
             href={`mailto:${company.email}`}
             className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4"

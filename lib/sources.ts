@@ -122,7 +122,7 @@ export const sources = {
     url: "https://www.dell.com/support/manuals/en-ca/xps-13-7390-2-in-1-laptop/xps-13-7390-2-in-1-servicemanual/safety-instructions?guid=guid-71128823-ce64-4e17-9439-dee95af668c4&lang=en-us",
     accessed: "2026-10-16",
     claim: {
-      da: "Servicevejledningen kræver frakobling af strømkilder før åbning, ESD-beskyttelse og forsigtig håndtering af stik og komponenter. Den konkrete models egen manual bestemmer proceduren.",
+      da: "Servicevejledningen kræver frakobling af strømkilder før åbning, ESD-beskyttelse og forsigtig håndtering af stik og komponenter. Modellens egen manual bestemmer proceduren.",
       en: "The service instructions require disconnecting power sources before opening, ESD protection and careful handling of connectors and components. The exact model's own manual determines the procedure.",
     },
   },

@@ -216,7 +216,7 @@ export function modelFaqs(model: Model): FaqItem[] {
           en: "Can RAM be upgraded in an X1 Carbon Gen 7?",
         },
         answer: {
-          da: "Nej. Lenovo angiver 8 eller 16 GB fastloddet RAM uden sokler i Gen 7. Vælg derfor hukommelse ved køb; en større SSD ændrer ikke RAM-kapaciteten. Siden omfatter flere generationer, så få den konkrete generation og hukommelse bekræftet.",
+          da: "Nej. Lenovo angiver 8 eller 16 GB fastloddet RAM uden sokler i Gen 7. Vælg derfor hukommelse ved køb; en større SSD ændrer ikke RAM-kapaciteten. Siden omfatter flere generationer, så få generation og hukommelse bekræftet.",
           en: "No. Lenovo specifies 8 or 16 GB of soldered RAM without slots in Gen 7. Choose memory when buying; a larger SSD does not increase RAM. This page covers several generations, so confirm the exact generation and installed memory.",
         },
       },

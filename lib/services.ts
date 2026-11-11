@@ -56,7 +56,7 @@ export const services: Service[] = [
       en: "We find the right IT equipment for you — and buy only once you know what you need.",
     },
     intro: {
-      da: "Kestro holder ikke lager. Som jeres indkøbspartner finder vi brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en konkret ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
+      da: "Kestro holder ikke lager. Som jeres indkøbspartner finder vi brugte erhvervsbærbare og -stationære hos leverandører i Sydeuropa, når der ligger en ordre. Det lyder som en mangel, men det er hele pointen: vi er ikke bundet af, hvad vi tilfældigvis har købt hjem.",
       en: "Kestro holds no stock. As your sourcing partner we find used business laptops and desktops through suppliers in southern Europe once there is an actual order. That sounds like a shortcoming; it is the whole point. We are not tied to whatever we happened to buy in.",
     },
     sections: [
@@ -140,7 +140,7 @@ export const services: Service[] = [
         heading: { da: "Hvad prisen afhænger af", en: "What the price depends on" },
         body: [
           {
-            da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den for den konkrete leverance i stedet for at være et tal, der alligevel skal laves om.",
+            da: "Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu. Prisen kommer, når vi ved, hvad opgaven kræver – og så gælder den for leverancen i stedet for at være et tal, der alligevel skal laves om.",
             en: "We do not put list prices on machines we have not bought yet. The price comes once we know what the job needs — and then it holds for that actual delivery rather than being a figure that has to be revised anyway.",
           },
         ],
@@ -265,7 +265,7 @@ export const services: Service[] = [
       en: "Danish and Norwegian laptop keyboards and setup | Kestro",
     },
     metaDescription: {
-      da: "Dansk eller norsk tastatur til din bærbare: afklar fysisk layout, taster og sprog i Windows. Send dine krav og få svar om tilpasning af den konkrete pc.",
+      da: "Dansk eller norsk tastatur til din bærbare: afklar fysisk layout, taster og sprog i Windows. Send dine krav, og få svar om tilpasning af din egen pc.",
       en: "Need Danish or Norwegian keys on your laptop? Check the printed layout and Windows options. Send us your details to discuss a keyboard that fits.",
     },
     summary: {
@@ -337,7 +337,7 @@ export const services: Service[] = [
         heading: { da: "Om leveringstid", en: "About lead time" },
         body: [
           {
-            da: "Fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager, afhænger leveringstiden af den konkrete bestilling. Vi lover ikke en fast leveringstid på forhånd – vi oplyser en tidsramme, når vi har talt om, hvad I skal bruge, og den står i tilbuddet sammen med pris og stand.",
+            da: "Fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager, afhænger leveringstiden af den enkelte bestilling. Vi lover ikke en fast leveringstid på forhånd – vi oplyser en tidsramme, når vi har talt om, hvad I skal bruge, og den står i tilbuddet sammen med pris og stand.",
             en: "Because we source per order rather than selling from stock, lead time depends on the specific order. We do not promise a fixed delivery time up front — we give you a time frame once we have talked about what you need, and it goes in the quote alongside price and condition.",
           },
         ],

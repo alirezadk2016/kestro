@@ -53,7 +53,7 @@ const lines = [
   {
     label: { da: "Batteri", en: "Battery" },
     value: {
-      da: "Målt kapacitet i procent oplyses for den konkrete enhed",
+      da: "Målt kapacitet i procent oplyses for den enkelte enhed",
       en: "Measured capacity as a percentage is stated for the specific unit",
     },
   },
@@ -85,7 +85,7 @@ const copy = {
     metaRows: [
       { k: "Tilbudsnummer", v: "K-0000 (eksempel)" },
       { k: "Dato", v: "Udfyldes ved afsendelse" },
-      { k: "Gyldigt til", v: "Dato oplyses i det konkrete tilbud" },
+      { k: "Gyldigt til", v: "Dato oplyses i tilbuddet" },
       { k: "Antal", v: "40 stk." },
     ],
     specTitle: "Per enhed",
@@ -109,7 +109,7 @@ const copy = {
     terms: [
       {
         k: "Garanti",
-        v: "Perioden står her i måneder, sammen med hvem I kontakter, hvis noget går i stykker. Den afhænger af den konkrete leverance, og derfor lover vi ikke et fast tal på forhånd – men tallet står her, før I bestiller.",
+        v: "Perioden står her i måneder, sammen med hvem I kontakter, hvis noget går i stykker. Den afhænger af leverancen, og derfor lover vi ikke et fast tal på forhånd – men tallet står her, før I bestiller.",
       },
       {
         k: "Tidsramme",

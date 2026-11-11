@@ -31,7 +31,7 @@ const copy = {
     pick: "Vælg en del i tegningen",
     pickBody:
       "Tegningen viser, hvor delene sidder i en typisk 14-tommer erhvervsbærbar. Tryk på en del for at se, hvad den gør, og om den kan skiftes.",
-    note: "Tegningen er en principskitse. Den præcise placering varierer fra model til model – spørg os om en konkret maskine.",
+    note: "Tegningen er en principskitse. Den præcise placering varierer fra model til model – spørg os om en bestemt maskine.",
   },
   en: {
     diagram: "The inside of a typical 14-inch business laptop",

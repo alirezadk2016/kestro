@@ -8,7 +8,7 @@ import { ui } from "@/lib/nav";
 const copy = {
   da: {
     title: "Lad os finde den rigtige løsning til jer",
-    body: "Fortæl os om jeres situation, så vender vi tilbage med et konkret oplæg – uforpligtende og uden salgstale.",
+    body: "Fortæl os om jeres situation, så vender vi tilbage med et forslag – uforpligtende og uden salgstale.",
     write: "Skriv til os",
   },
   en: {

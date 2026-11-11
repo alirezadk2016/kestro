@@ -23,7 +23,7 @@ const noStock: FaqItem = {
     en: "Does Kestro hold the machines in stock?",
   },
   answer: {
-    da: "Nej. Vi holder ikke lager og køber først ind, når der ligger en konkret ordre. Derfor følger specifikationerne opgaven i stedet for det, der tilfældigvis står på en hylde.",
+    da: "Nej. Vi holder ikke lager og køber først ind, når der ligger en ordre. Derfor følger specifikationerne opgaven i stedet for det, der tilfældigvis står på en hylde.",
     en: "No. We hold no stock and buy only once there is an actual order. That is why the specification follows the job rather than whatever happens to be on a shelf.",
   },
 };
@@ -45,7 +45,7 @@ const windows: FaqItem = {
     en: "Which version of Windows do the machines come with?",
   },
   answer: {
-    da: "Windows 11 er udgangspunktet, hvis den konkrete konfiguration opfylder kravene. Version, udgave, licens og drivere skal aftales for den enkelte leverance; et modelnavn alene bekræfter ikke kompatibiliteten.",
+    da: "Windows 11 er udgangspunktet, hvis konfigurationen opfylder kravene. Version, udgave, licens og drivere skal aftales for den enkelte leverance; et modelnavn alene bekræfter ikke kompatibiliteten.",
     en: "Windows 11 is the starting point if the actual configuration meets the requirements. Agree the version, edition, licence and drivers for each delivery; a model name alone does not confirm compatibility.",
   },
 };
@@ -53,7 +53,7 @@ const windows: FaqItem = {
 export const serviceAnswers: Record<string, ServiceAnswers> = {
   "sourcing-og-indkoeb": {
     lead: {
-      da: "Sourcing er, at vi finder brugte erhvervsmaskiner hos leverandører i Sydeuropa til jeres konkrete ordre – fra én maskine til en hel flåde – og først køber ind, når I ved, hvad I skal bruge.",
+      da: "Sourcing er, at vi finder brugte erhvervsmaskiner hos leverandører i Sydeuropa til jeres ordre – fra én maskine til en hel flåde – og først køber ind, når I ved, hvad I skal bruge.",
       en: "Sourcing means we find used business machines through suppliers in southern Europe for your specific order — from one machine to a whole fleet — and buy only once you know what you need.",
     },
     faqs: [
@@ -68,7 +68,7 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
       {
         question: { da: "Hvad afhænger prisen af?", en: "What does the price depend on?" },
         answer: {
-          da: "Specifikationerne, standen, antallet og tilbehøret. Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu – prisen står i tilbuddet og gælder den konkrete leverance.",
+          da: "Specifikationerne, standen, antallet og tilbehøret. Vi sætter ikke listepriser på maskiner, vi ikke har købt endnu – prisen står i tilbuddet og gælder leverancen.",
           en: "The specification, the condition, the quantity and the accessories. We do not put list prices on machines we have not bought yet — the price is in the quote and holds for that delivery.",
         },
       },
@@ -120,7 +120,7 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
 
   "nordisk-tilpasning": {
     lead: {
-      da: "Dansk eller norsk tastatur på en bærbar handler både om de fysiske taster og indtastningssproget. Afklar layout, eventuelt tastaturskift og opsætning af Windows for den konkrete computer.",
+      da: "Dansk eller norsk tastatur på en bærbar handler både om de fysiske taster og indtastningssproget. Afklar layout, eventuelt tastaturskift og opsætning af Windows for computeren.",
       en: "A Danish or Norwegian laptop keyboard involves both the physical keys and the input language. Clarify the layout, any keyboard replacement and Windows setup for the specific computer.",
     },
     faqs: [
@@ -172,7 +172,7 @@ export const serviceAnswers: Record<string, ServiceAnswers> = {
       {
         question: { da: "Hvor lang er leveringstiden?", en: "How long is the lead time?" },
         answer: {
-          da: "Det afhænger af den konkrete bestilling, fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager. Vi lover ikke en fast leveringstid på forhånd – tidsrammen står i tilbuddet sammen med pris og stand.",
+          da: "Det afhænger af den enkelte bestilling, fordi vi skaffer maskinerne til hver ordre og ikke sælger fra et lager. Vi lover ikke en fast leveringstid på forhånd – tidsrammen står i tilbuddet sammen med pris og stand.",
           en: "It depends on the specific order, because we source per order rather than selling from stock. We do not promise a fixed lead time up front — the time frame is in the quote, with the price and condition.",
         },
       },

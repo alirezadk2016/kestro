@@ -153,7 +153,7 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-paper/85">
             {lang === "da"
-              ? "Find et konkret svar, forstå din computer, og vælg dit næste skridt."
+              ? "Find et svar, forstå din computer, og vælg dit næste skridt."
               : "Find a practical answer, understand your computer and choose your next step."}
           </p>
           <nav

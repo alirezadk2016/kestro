@@ -77,7 +77,7 @@ const faqs: FaqEntry[] = [
   {
     question: { da: "Hvor lang er garantien?", en: "How long is the warranty?" },
     answer: {
-      da: "Der er endnu ingen salgs- eller garantivilkår for konkrete leverancer fra projektet. Før eventuelt salg skal reklamation, garanti og den ansvarlige sælger oplyses skriftligt. Private kunders ufravigelige rettigheder kan ikke erstattes af erhvervsvilkår.",
+      da: "Der er endnu ingen salgs- eller garantivilkår for leverancer fra projektet. Før eventuelt salg skal reklamation, garanti og den ansvarlige sælger oplyses skriftligt. Private kunders ufravigelige rettigheder kan ikke erstattes af erhvervsvilkår.",
       en: "There are no sale or warranty terms for specific deliveries from the project yet. Before any sale, complaint rights, warranty and the responsible seller must be stated in writing. Private customers' mandatory rights cannot be replaced by business-only terms.",
     },
   },
@@ -87,7 +87,7 @@ const faqs: FaqEntry[] = [
       en: "Are the prices on the site binding?",
     },
     answer: {
-      da: "Nej. På prissiden vises daterede, eksterne detailreferencer som omtrentlige budgeteksempler, ikke Kestros salgspriser eller bekræftet lager. Kontakt os om muligheder, tilgængelighed og en konkret pris. En forespørgsel er ikke en bestilling.",
+      da: "Nej. På prissiden vises daterede, eksterne detailreferencer som omtrentlige budgeteksempler, ikke Kestros salgspriser eller bekræftet lager. Kontakt os om muligheder, tilgængelighed og en præcis pris. En forespørgsel er ikke en bestilling.",
       en: "No. The pricing page shows dated external retail references as approximate budget examples, not Kestro selling prices or confirmed stock. Contact us about options, availability and a specific price. An enquiry is not an order.",
     },
   },
@@ -101,7 +101,7 @@ const faqs: FaqEntry[] = [
   {
     question: { da: "Kører maskinerne Windows 11?", en: "Do the machines run Windows 11?" },
     answer: {
-      da: `Udgangspunktet er Windows 11, men den konkrete konfiguration skal afklares. Den almindelige support til Windows 10 version 22H2 sluttede ${formatDate("2025-10-14", "da")}; ESU og LTSC har særskilte opdateringsvilkår.`,
+      da: `Udgangspunktet er Windows 11, men konfigurationen skal afklares. Den almindelige support til Windows 10 version 22H2 sluttede ${formatDate("2025-10-14", "da")}; ESU og LTSC har særskilte opdateringsvilkår.`,
       en: `Windows 11 is the intended starting point, but the actual configuration must be confirmed. General support for Windows 10 version 22H2 ended on ${formatDate("2025-10-14", "en")}; ESU and LTSC have separate update terms.`,
     },
   },

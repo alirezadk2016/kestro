@@ -116,6 +116,14 @@ wrong:
   "under etablering", "need making", "within" for "inden for", "when it
   pays", "Is your question not here?"; plus one spaced en dash, "percent",
   "timeframe" and "ten" against "10" on the same page.
+- **"Konkret".** The Danish used it 79 times, mostly as filler ("den
+  konkrete maskine", "en konkret pris"). Now twelve: the terms of sale,
+  which stay as written, and the places where it carries the point ("hvad
+  der konkret blev gjort"). The rest became the definite form, "den
+  enkelte", "præcis" or nothing. Two descriptions fell under 145
+  characters with the shorter words; /ydelser/nordisk-tilpasning was
+  lengthened, and /priser keeps "konkret" because every 145-character
+  alternative ran past 920 px.
 
 ## Site review and score — 11 November 2026
 

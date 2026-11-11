@@ -24,7 +24,7 @@ const copy = {
     noPrices1:
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
     noPrices2:
-      "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres konkrete behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
+      "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
     categories: "Kategorier",
     seeCategory: "Se kategori",
     modelsTitle: "Sammenlign specifikationer",
@@ -350,7 +350,7 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               en: "Which version of Windows do the computers come with?",
             },
             answer: {
-              da: "Aftal version, udgave og licens for den konkrete konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              da: "Aftal version, udgave og licens for den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
               en: "Agree the version, edition and licence for the actual configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },

@@ -42,7 +42,7 @@ const copy = {
       "Til gengæld står garantiperioden skriftligt i tilbuddet, sammen med hvem I skal kontakte, hvis noget går i stykker. Får I et tilbud – fra os eller fra andre – hvor det ikke fremgår, så spørg, inden I skriver under.",
     disclosureTitle: "Hvad får I oplyst, før I bestiller?",
     disclosureBody:
-      "Vi skaffer udstyret til hver ordre, så vi kender det konkrete udstyr, før I siger ja. Alt herunder står i tilbuddet:",
+      "Vi skaffer til hver ordre, så vi kender udstyret, før I siger ja. Alt herunder står i tilbuddet:",
     notIncludedTitle: "Det følger typisk ikke med som standard",
     notIncludedBody:
       "Strømforsyninger, kabler, dockingstationer, tasker og mus følger sjældent med brugt udstyr, medmindre det er aftalt. Det er en klassisk grund til, at et billigt tilbud pludselig ikke er billigt. Sig til fra start, så regner vi det med.",
@@ -182,7 +182,7 @@ const disclosure = [
     en: "The battery's condition as a percentage of new capacity",
   },
   {
-    da: "Den konkrete konfiguration: processor, hukommelse, disk og skærm",
+    da: "Den præcise konfiguration: processor, hukommelse, disk og skærm",
     en: "The specific configuration: processor, memory, disk and screen",
   },
   {

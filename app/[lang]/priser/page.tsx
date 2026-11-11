@@ -68,7 +68,7 @@ const copy = {
     whyTitle: "Hvorfor er priserne vejledende?",
     whyBody1: "Model, stand, antal, tastatur og klargøring kan ændre beløbet.",
     whyBody2:
-      "Vi afklarer muligheder, tilgængelighed og en konkret pris med jer, før I lægger et indkøbsbudget fast.",
+      "Vi afklarer muligheder, tilgængelighed og en præcis pris med jer, før I lægger et indkøbsbudget fast.",
     driversTitle: "Hvad afgør jeres pris?",
     driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",

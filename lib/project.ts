@@ -17,6 +17,6 @@ export const projectNotice: Record<Lang, { label: string; body: string; link: st
 };
 
 export const priceDisclaimer: Record<Lang, string> = {
-  da: "Priserne er omtrentlige budgeteksempler, ikke bindende tilbud eller en bekræftelse på lager. Kontakt os for at afklare muligheder, tilgængelighed og en konkret pris, før I planlægger et køb.",
+  da: "Priserne er omtrentlige budgeteksempler, ikke bindende tilbud eller en bekræftelse på lager. Kontakt os for at afklare muligheder, tilgængelighed og en præcis pris, før I planlægger et køb.",
   en: "Prices are approximate budget examples, not binding offers or confirmation of stock. Contact us to discuss options, availability and a specific price before planning a purchase.",
 };

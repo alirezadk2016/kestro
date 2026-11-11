@@ -27,7 +27,7 @@ export default function GradeComparison({
   const label = lang === "da" ? "Sammenlign kosmetisk stand" : "Compare cosmetic condition";
   const note =
     lang === "da"
-      ? "Illustrative eksempler, ikke lagerfotos. Bed om billeder af den konkrete enhed."
+      ? "Illustrative eksempler, ikke lagerfotos. Bed om billeder af den enkelte enhed."
       : "Illustrative examples, not photos of available stock. Ask for photos of the actual unit.";
   const alt = (grade: Grade) =>
     lang === "da"
