@@ -9,6 +9,7 @@ import PageSchema from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
 import ModelCard from "@/components/ModelCard";
+import { picturesFirst } from "@/lib/model-order";
 
 const copy = {
   da: {
@@ -138,7 +139,7 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
           </p>
 
           {modelGroups.map((group) => {
-            const groupModels = models.filter((model) => model.group === group.id);
+            const groupModels = picturesFirst(models.filter((model) => model.group === group.id));
             if (groupModels.length === 0) return null;
 
             return (
