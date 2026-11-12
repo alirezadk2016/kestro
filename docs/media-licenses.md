@@ -177,8 +177,11 @@ desktops, monitors and docks keep their labelled illustration.
 
 - ThinkPad X1 Carbon (Gen 6-8): the only exact-generation files are four
   IAEA Imagebank meeting photographs named "ThinkPad X1 Carbon gen7
-  (0)-(3)", CC BY 2.0. People are in each frame and the generation comes
-  from the Commons file name alone. Not used. A CC BY-SA file by
+  (0)-(3)", CC BY 2.0, downloaded and viewed on 2026-11-12. Every one shows
+  a video call with identifiable people filling the laptop's screen, and one
+  has a person's hand in the frame; no crop shows the laptop without a
+  person. The generation also comes from the Commons file name alone. Not
+  used. A CC BY-SA file by
   AnVuong1222004 found through Openverse has been deleted from Commons.
   The rest are Gen 1, 2 and 5.
 - ThinkPad L14, ProBook 450 G7/G8, ZBook 15 G5/G6, Latitude 5420 (also
