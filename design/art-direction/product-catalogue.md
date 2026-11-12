@@ -13,7 +13,10 @@ range hidden in a closed fold, and model pages that opened on an icon.
   filled in.
 - Every model has a picture: the owner's T480 photographs, the CC0 T14
   photograph, the two pricing illustrations, and fourteen new studio
-  illustrations in the same language (`docs/media-licenses.md`). Each frame
+  illustrations in the same language (`docs/media-licenses.md`). Later the
+  same day the owner ruled out artificial pictures of laptops: the seven
+  laptop drawings were deleted, and a laptop without a real photograph of
+  that model shows no picture. Each frame
   is labelled "Modelfoto" or "Illustration"; one line per page says the
   pictures are not the unit a buyer gets.
 - /modeller opens on an index of its five groups with counts. Four columns

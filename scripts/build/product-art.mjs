@@ -11,11 +11,14 @@
  * content, and the word "Illustration" on every frame that shows one.
  *
  * A drawing may only show what lib/models.ts says. So the variables are the
- * documented ones — 14 or 15.6 inches, the X1's thin profile, the ThinkPad
- * TrackPoint, the ProBook's numeric keypad, the workstation's depth, SFF and
- * one-litre cases, the monitors' height-adjustable stand, and the three dock
- * types — and colour is not one of them: the data does not record it, so
+ * documented ones — SFF and one-litre cases, the monitors' height-adjustable
+ * stand, and the three dock types — and colour is not one of them: the data does not record it, so
  * every machine is the same neutral graphite.
+ *
+ * No laptops. On 11 November 2026 the owner asked that every laptop shown be
+ * a real photograph of that model, never an artificial picture, so the seven
+ * laptop drawings this script made were removed with their files. A laptop
+ * without a licensed or owner-supplied photograph shows no picture.
  *
  * Output is deterministic; re-running it changes nothing unless the
  * definitions below change.
@@ -84,114 +87,8 @@ ${inner}
 </svg>
 `;
 
-/* ------------------------------------------------------------------ laptop */
+/* -------------------------------------------------------------- desktops */
 
-/*
- * An open laptop seen from the front and a little above: the lid upright,
- * the deck as a trapezoid that widens toward the viewer.
- */
-function laptop({ inch = 14, thin = false, workstation = false, trackpoint = false, numpad = false }) {
-  const scale = inch >= 15 ? 1.08 : thin ? 0.97 : 1;
-  const lidW = 600 * scale;
-  const lidH = lidW * 0.62;
-  const cx = 600;
-  const lidTop = 118 + (1 - scale) * 160;
-  const lidX = cx - lidW / 2;
-  const hingeY = lidTop + lidH;
-  const deckTopW = lidW * 1.0;
-  const deckBotW = lidW * 1.32;
-  const deckH = 250 * scale;
-  const deckBot = hingeY + deckH;
-  const edge = workstation ? 22 : thin ? 9 : 15; // front edge thickness
-  const bezel = thin ? 14 : 18;
-
-  // deck corners
-  const tl = [cx - deckTopW / 2, hingeY];
-  const tr = [cx + deckTopW / 2, hingeY];
-  const br = [cx + deckBotW / 2, deckBot];
-  const bl = [cx - deckBotW / 2, deckBot];
-  // bilinear point on deck: u across (0..1), v down (0..1)
-  const at = (u, v) => {
-    const xT = tl[0] + (tr[0] - tl[0]) * u;
-    const xB = bl[0] + (br[0] - bl[0]) * u;
-    return [xT + (xB - xT) * v, hingeY + deckH * v];
-  };
-
-  // keyboard field
-  const kbU0 = numpad ? 0.07 : 0.11;
-  const kbU1 = numpad ? 0.93 : 0.89;
-  const kbV0 = 0.08;
-  const kbV1 = 0.56;
-  const rows = 6;
-  const mainCols = 14;
-  const padCols = numpad ? 4 : 0;
-  const totalCols = mainCols + padCols + (numpad ? 0.6 : 0);
-  let keys = "";
-  for (let r = 0; r < rows; r++) {
-    const v0 = kbV0 + ((kbV1 - kbV0) * r) / rows;
-    const v1 = kbV0 + ((kbV1 - kbV0) * (r + 1)) / rows;
-    const gapV = (v1 - v0) * 0.16;
-    const colUnits = [];
-    // main block; the space bar on the last row spans six keys
-    for (let c = 0; c < mainCols; c++) colUnits.push([c, c + 1]);
-    if (r === rows - 1) {
-      colUnits.splice(4, 6, [4, 10]);
-    }
-    if (numpad) for (let c = 0; c < padCols; c++) colUnits.push([mainCols + 0.6 + c, mainCols + 0.6 + c + 1]);
-    for (const [a, b] of colUnits) {
-      const u0 = kbU0 + ((kbU1 - kbU0) * a) / totalCols;
-      const u1 = kbU0 + ((kbU1 - kbU0) * b) / totalCols;
-      const gapU = ((kbU1 - kbU0) / totalCols) * 0.14;
-      const q = [at(u0 + gapU, v0 + gapV), at(u1 - gapU, v0 + gapV), at(u1 - gapU, v1 - gapV), at(u0 + gapU, v1 - gapV)];
-      keys += `    <polygon points="${pts(q)}" fill="#151B23" stroke="#4B5560" stroke-opacity=".35" stroke-width="1"/>\n`;
-    }
-  }
-
-  // touchpad
-  const tpU0 = numpad ? 0.33 : 0.36;
-  const tpU1 = numpad ? 0.59 : 0.64;
-  const tp = [at(tpU0, 0.64), at(tpU1, 0.64), at(tpU1 + 0.005, 0.93), at(tpU0 - 0.005, 0.93)];
-  let extras = `    <polygon points="${pts(tp)}" fill="#323A44" stroke="#59636E" stroke-opacity=".5" stroke-width="1.2"/>\n`;
-  if (trackpoint) {
-    // the red stick sits between G, H and B; its buttons above the touchpad
-    const mainSpan = (kbU1 - kbU0) * (mainCols / totalCols);
-    const u = kbU0 + mainSpan * (6.05 / mainCols);
-    const v = kbV0 + ((kbV1 - kbV0) * 4.0) / rows;
-    const [x, y] = at(u, v);
-    extras += `    <ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(5.5 * scale)}" ry="${f(4.4 * scale)}" fill="#D7262E"/>\n`;
-    const b = [at(tpU0, 0.585), at(tpU1, 0.585), at(tpU1, 0.625), at(tpU0, 0.625)];
-    extras += `    <polygon points="${pts(b)}" fill="#1C232C" stroke="#59636E" stroke-opacity=".45" stroke-width="1"/>\n`;
-    const mid = [at((tpU0 + tpU1) / 2, 0.585), at((tpU0 + tpU1) / 2, 0.625)];
-    extras += `    <line x1="${f(mid[0][0])}" y1="${f(mid[0][1])}" x2="${f(mid[1][0])}" y2="${f(mid[1][1])}" stroke="#59636E" stroke-opacity=".6"/>\n`;
-  }
-
-  const lid = `
-    <rect x="${f(lidX)}" y="${f(lidTop)}" width="${f(lidW)}" height="${f(lidH)}" rx="14" fill="url(#body)"/>
-    <rect x="${f(lidX + 1.5)}" y="${f(lidTop + 1.5)}" width="${f(lidW - 3)}" height="${f(lidH - 3)}" rx="13" stroke="#6B7580" stroke-opacity=".35" stroke-width="1.5"/>
-    <rect x="${f(lidX + bezel)}" y="${f(lidTop + bezel)}" width="${f(lidW - 2 * bezel)}" height="${f(lidH - 2 * bezel - 10)}" rx="3" fill="url(#panel)"/>
-    <rect x="${f(lidX + bezel)}" y="${f(lidTop + bezel)}" width="${f(lidW - 2 * bezel)}" height="${f(lidH - 2 * bezel - 10)}" rx="3" fill="url(#glare)"/>
-    <circle cx="${cx}" cy="${f(lidTop + bezel / 2)}" r="2.6" fill="#0B1118"/>`;
-
-  const hinge = `
-    <rect x="${f(cx - lidW * 0.42)}" y="${f(hingeY - 6)}" width="${f(lidW * 0.84)}" height="12" rx="6" fill="#151B23"/>`;
-
-  const deck = `
-    <polygon points="${pts([tl, tr, br, bl])}" fill="url(#deck)"/>
-    <polygon points="${pts([tl, tr, br, bl])}" stroke="#6E7883" stroke-opacity=".35" stroke-width="1.5"/>
-    <polygon points="${pts([bl, br, [br[0] - 6, deckBot + edge], [bl[0] + 6, deckBot + edge]])}" fill="#141A21"/>
-    <line x1="${f(bl[0] + 4)}" y1="${f(deckBot + 1)}" x2="${f(br[0] - 4)}" y2="${f(deckBot + 1)}" stroke="#7C8692" stroke-opacity=".5" stroke-width="1.5"/>`;
-
-  return frame(`${lid}${deck}${hinge}\n${keys}${extras}`, {
-    cx,
-    cy: deckBot + edge + 10,
-    rx: deckBotW * 0.6,
-    ry: 40,
-  });
-}
-
-/* ----------------------------------------------------------------- desktop */
-
-/* A small-form-factor case standing on its side, three-quarter view. */
 function sff({ label = "sff" }) {
   const x = 370;
   const y = 210;
@@ -328,19 +225,10 @@ function usbcDock({ shape = "long" } = {}) {
 /* ------------------------------------------------------------------ models */
 
 /*
- * Only facts lib/models.ts records: the TrackPoint on the ThinkPads (their
- * notes discuss it), the numeric keypad on the ProBook 450, 15.6 inches on
- * the ProBook and ZBook, the X1's ultralight profile, SFF and one-litre
- * cases, height-adjustable monitor stands, and the dock types.
+ * Only facts lib/models.ts records: SFF and one-litre cases,
+ * height-adjustable monitor stands, and the dock types.
  */
 const art = {
-  "lenovo-thinkpad-x1-carbon": laptop({ inch: 14, thin: true, trackpoint: true }),
-  "lenovo-thinkpad-l14": laptop({ inch: 14, trackpoint: true }),
-  "hp-elitebook-840": laptop({ inch: 14 }),
-  "hp-probook-450": laptop({ inch: 15.6, numpad: true }),
-  "dell-latitude-5410": laptop({ inch: 14 }),
-  "dell-latitude-7490": laptop({ inch: 14 }),
-  "hp-zbook-15": laptop({ inch: 15.6, workstation: true }),
   "hp-elitedesk-800": sff({ label: "sff" }),
   "lenovo-thinkcentre-m720q": tiny(),
   "hp-elitedisplay-e243": monitor(),

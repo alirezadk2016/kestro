@@ -10,6 +10,11 @@ import { pricingMedia } from "./pricing-media";
  * pricing collection already drew). Every frame says which it is, and each
  * alt describes what is drawn — the format and the documented features — not
  * the model's exact appearance, which a drawing does not claim.
+ *
+ * Laptops are the exception: they show a real photograph of that model or
+ * nothing. The owner asked on 11 November 2026 that no laptop be shown with
+ * an artificial picture, so a laptop without a licensed or owner-supplied
+ * photograph has no entry below and its card and page open without one.
  */
 export type ModelMedia = {
   src: string;
@@ -25,10 +30,6 @@ const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
 };
 
-const laptop14: Localized = {
-  da: "Illustration: åben 14-tommer bærbar",
-  en: "Illustration: an open 14-inch laptop",
-};
 const monitor24: Localized = {
   da: "Illustration: 24-tommer skærm på højdejusterbar fod",
   en: "Illustration: a 24-inch monitor on a height-adjustable stand",
@@ -39,25 +40,6 @@ const usbcDock: Localized = {
 };
 
 const ILLUSTRATION_ALT: Record<string, Localized> = {
-  "lenovo-thinkpad-x1-carbon": {
-    da: "Illustration: åben, tynd 14-tommer bærbar med TrackPoint",
-    en: "Illustration: an open, thin 14-inch laptop with a TrackPoint",
-  },
-  "lenovo-thinkpad-l14": {
-    da: "Illustration: åben 14-tommer bærbar med TrackPoint",
-    en: "Illustration: an open 14-inch laptop with a TrackPoint",
-  },
-  "hp-elitebook-840": laptop14,
-  "dell-latitude-5410": laptop14,
-  "dell-latitude-7490": laptop14,
-  "hp-probook-450": {
-    da: "Illustration: åben 15,6-tommer bærbar med numerisk tastatur",
-    en: "Illustration: an open 15.6-inch laptop with a numeric keypad",
-  },
-  "hp-zbook-15": {
-    da: "Illustration: åben 15,6-tommer mobil workstation",
-    en: "Illustration: an open 15.6-inch mobile workstation",
-  },
   "hp-elitedesk-800": {
     da: "Illustration: stationær pc i et stående SFF-kabinet",
     en: "Illustration: a desktop PC in an upright SFF case",

@@ -1018,3 +1018,15 @@ source links are labelled historical because today's default variant may
 differ. Exact T480/T14 images and original, visibly schematic Dell artwork
 are documented in `docs/media-licenses.md`; no retailer image is hotlinked.
 The prelaunch notice and all existing model/specification links remain.
+
+# Laptop pictures: real photographs only — 11 November 2026
+
+The owner ruled that every laptop shown must be a real photograph of that
+model. The seven laptop illustrations (X1 Carbon, L14, EliteBook 840,
+ProBook 450, Latitude 5410, Latitude 7490, ZBook 15) were deleted; those
+cards and model pages now open without a picture, and their image alt texts
+are gone with them. Only the T480 (owner photos) and T14 (CC0) carry a
+model photo. Commons candidates for the 7490 and X1 Carbon are listed in
+`docs/media-licenses.md`; the other five need the owner's own photographs.
+Image search for these pages waits on real photos; no URL, title, H1 or
+canonical changed.

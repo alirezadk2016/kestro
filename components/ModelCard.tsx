@@ -14,7 +14,8 @@ import { buttonClass } from "./Button";
  * range of business hardware shown without one picture of the hardware is
  * what made the product pages read as a draft. Every card now opens on the
  * same studio frame (public/products, public/pricing, or a licensed photo),
- * labelled so a drawing is never taken for the unit a buyer gets.
+ * labelled so a drawing is never taken for the unit a buyer gets. A laptop
+ * is never drawn: without a real photograph its frame stays empty.
  *
  * The name is the card's link and stretches over the whole card; "Få pris"
  * sits above it as a second, separate target, so a buyer can ask for a price
@@ -40,7 +41,7 @@ export default function ModelCard({
 
   return (
     <article className="plate plate-lift group relative flex h-full min-w-0 flex-col overflow-hidden">
-      {media && (
+      {media ? (
         <figure className="relative aspect-[4/3] overflow-hidden bg-paper-dim">
           <Image
             src={media.src}
@@ -57,6 +58,15 @@ export default function ModelCard({
             {media.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
           </figcaption>
         </figure>
+      ) : (
+        /* A laptop without a real photograph of that model shows none — the
+           owner ruled out drawings of laptops. The empty well keeps the row
+           even beside cards that have one, and says why it is empty. */
+        <div className="flex aspect-[4/3] items-center justify-center bg-paper-dim px-6 text-center">
+          <p className="text-sm font-medium text-ink-600">
+            {da ? "Intet modelfoto endnu" : "No model photo yet"}
+          </p>
+        </div>
       )}
 
       <div className="flex flex-1 flex-col p-5">

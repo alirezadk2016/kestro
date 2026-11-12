@@ -268,12 +268,17 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 )}
               </div>
 
-              {/* Sixteen of the eighteen models have no photographs. Their
-                  right column carries the illustration and, under it, the price
-                  box; after the text in the markup, so a phone still reads
-                  title, picture, intro, then price. */}
+              {/* Models without photographs: the right column carries the
+                  illustration and, under it, the price box; after the text in
+                  the markup, so a phone still reads title, picture, intro,
+                  then price. A laptop without a photograph has no picture at
+                  all, so its price box moves up to the top of the column. */}
               {!model.images && (
-                <div className="lg:col-span-5 lg:col-start-8 lg:row-start-3 lg:mt-6 lg:self-start">
+                <div
+                  className={`lg:col-span-5 lg:col-start-8 lg:self-start ${
+                    media ? "lg:row-start-3 lg:mt-6" : "lg:row-span-2 lg:row-start-1"
+                  }`}
+                >
                   <PriceOnRequest
                     lang={lang}
                     equipment={model.name}
