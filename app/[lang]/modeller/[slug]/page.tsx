@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ModelGallery from "@/components/ModelGallery";
 import ModelCard from "@/components/ModelCard";
+import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
 import { modelMedia } from "@/lib/model-media";
 import { Check, Info } from "lucide-react";
@@ -291,6 +292,10 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           </div>
         </Container>
       </section>
+
+      {/* Kestro stocks none of the catalogue yet: say so under the product,
+          and where it can be found meanwhile (components/RetailLinks.tsx). */}
+      <RetailLinks model={model} lang={lang} />
 
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
