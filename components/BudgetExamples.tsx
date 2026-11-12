@@ -50,47 +50,45 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
               <li
                 key={item.model}
                 data-budget-model={item.model}
-                className="plate flex min-w-0 flex-col overflow-hidden"
+                className="plate grid min-w-0 grid-cols-[104px_minmax(0,1fr)] gap-x-4 overflow-hidden p-4 sm:flex sm:flex-col sm:p-0"
               >
-                <figure className="relative aspect-[4/3] overflow-hidden bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10">
+                <figure className="relative aspect-[4/3] self-center overflow-hidden rounded-lg bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10 sm:self-auto sm:rounded-none">
                   <Image
                     src={media.src}
                     alt={media.alt[lang]}
                     width={media.width}
                     height={media.height}
                     priority={index === 0}
-                    sizes="(min-width: 1536px) 21vw, (min-width: 1280px) 24vw, (min-width: 640px) 46vw, 92vw"
+                    sizes="(min-width: 1536px) 21vw, (min-width: 1280px) 24vw, (min-width: 640px) 46vw, 104px"
                     className="h-full w-full object-contain"
                   />
-                  <figcaption className="absolute left-3 top-3 rounded bg-ink-950/95 px-2.5 py-1 text-xs font-semibold leading-5 text-paper">
-                    {media.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
-                  </figcaption>
                 </figure>
-                <div className="flex flex-1 flex-col p-5">
+                <div className="self-center sm:self-stretch sm:px-5 sm:pt-5">
                   <p className="text-xs font-semibold uppercase tracking-wider text-brand-300">
                     {media.category[lang]}
                   </p>
                   <h3 className="mt-2 font-display text-lg font-bold leading-snug text-paper">
                     {item.name}
                   </h3>
+                  <p className="mt-1 text-xs leading-5 text-paper/65">
+                    {media.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
+                  </p>
+                </div>
+                <div className="col-span-2 flex flex-1 flex-col pt-2 sm:px-5 sm:pb-5 sm:pt-0">
                   <p className="mt-2 text-sm leading-6 text-paper/75 sm:min-h-12">
                     {item.configuration[lang]}
                   </p>
-                  <p className="mt-5 text-xs font-semibold text-paper/65">
+                  <p className="mt-3 text-xs font-semibold text-paper/65 sm:mt-5">
                     {da ? "Budget pr. enhed" : "Budget per unit"}
                   </p>
                   <p className="mt-1 font-display text-2xl font-bold tabular-nums text-paper md:text-3xl xl:text-2xl 2xl:text-3xl">
                     {da ? "Ca." : "Approx."} {formatDkk(budgetAmount(item), lang)}
                   </p>
-                  <p className="mt-3 text-xs leading-5 text-paper/75">
-                    {da ? "Reference:" : "Reference:"} {formatDkk(item.observed, lang)} +{" "}
-                    {formatDkk(item.fee, lang)} {da ? "servicegebyr." : "service fee."}
-                  </p>
-                  <div className="mt-auto pt-5">
+                  <div className="mt-auto pt-4 sm:pt-5">
                     <Link
                       data-budget-enquiry
                       href={budgetEnquiryPath(item, lang)}
-                      aria-label={`${da ? "Spørg om konfigurationen" : "Ask about this configuration"}: ${item.name}`}
+                      aria-label={`${da ? "Spørg om modellen" : "Ask about this model"}: ${item.name}`}
                       className={`${buttonClass("primary")} w-full px-3 py-2 text-center`}
                     >
                       <span>{da ? "Spørg om modellen" : "Ask about this model"}</span>
@@ -100,13 +98,17 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
                         strokeWidth={2}
                       />
                     </Link>
-                    <div className="mt-3 flex flex-col border-t border-white/10 pt-2">
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 border-t border-white/10 pt-1 sm:flex-col sm:items-stretch sm:justify-start sm:pt-2">
                       <Link
                         data-budget-model-link
                         href={localePath(`/modeller/${item.model}`, lang)}
                         className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
                       >
-                        {da ? "Model og specifikationer" : "Model and specifications"}
+                        <span className="sm:hidden">{da ? "Detaljer" : "Details"}</span>
+                        <span className="hidden sm:inline">
+                          {da ? "Model og specifikationer" : "Model and specifications"}
+                        </span>
+                        <span className="sr-only">: {item.name}</span>
                         <ArrowRight aria-hidden="true" className="h-4 w-4" />
                       </Link>
                       <a
@@ -163,15 +165,14 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             </a>
           </div>
         </details>
-        <details className="group mt-4 max-w-3xl border-t border-white/10 pt-2">
-          {/* The FactNote disclosure's shape, so the page's two folds open the
-              same way rather than one with the browser's own triangle. */}
-          <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-3 py-3 text-sm font-semibold text-paper/85 [&::-webkit-details-marker]:hidden">
+        <details data-budget-basis className="group mt-4 border-t border-white/10">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-3 text-sm font-semibold text-paper/85 [&::-webkit-details-marker]:hidden">
             {da ? "Kilder og beregningsgrundlag" : "Sources and calculation"}
             <ChevronDown
               aria-hidden="true"
-              className="h-4 w-4 flex-none text-paper/65 transition-transform duration-200 group-open:rotate-180"
+              size={18}
               strokeWidth={2}
+              className="flex-none transition-transform group-open:rotate-180 motion-reduce:transition-none"
             />
           </summary>
           {/* How the figures were reached, folded with the sources it rests
@@ -191,6 +192,17 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
               ? "Priskilderne kan vise andre priser eller standardkonfigurationer i dag. Kontrollér de aktuelle valg og vilkår hos forhandleren."
               : "Price sources may show different prices or default configurations today. Check the retailer’s current selections and terms."}
           </p>
+          <dl className="mt-5 grid gap-x-8 gap-y-4 md:grid-cols-2">
+            {budgetExamples.map((item) => (
+              <div key={item.model} data-budget-calculation={item.model}>
+                <dt className="text-sm font-semibold text-paper">{item.name}</dt>
+                <dd className="mt-1 text-sm leading-6 text-paper/75">
+                  {formatDkk(item.observed, lang)} + {formatDkk(item.fee, lang)}{" "}
+                  {da ? "servicegebyr" : "service fee"} → {formatDkk(budgetAmount(item), lang)}
+                </dd>
+              </div>
+            ))}
+          </dl>
           <SourceList
             lang={lang}
             ids={[...budgetExamples.map((item) => item.source), "budgetRetailTerms"]}

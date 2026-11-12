@@ -51,3 +51,17 @@ JS in the existing static quote page and is not falsely promised without it.
 Preview and iterate before the full `npm run verify` gate. Freeze runtime
 code once the release gate starts. Publish only after success, confirm the
 production SHA and check the live collection. Do not promise a perfect score.
+
+## Mobile refinement, 12 November
+
+On phones use a complete 104px 4:3 image beside the category and model name,
+then the configuration, budget and enquiry. Put the two secondary destinations
+on one row with a shorter visible details label; accessible names retain the
+model and purpose. Move reference arithmetic into the existing calculation
+disclosure, preserving every amount. Retain the larger image stages from sm.
+
+An attempted background extraction of the CC0 T14 photo altered product
+details and was rejected. No generated derivative is used as a real model
+photograph. Exact-model identity is preferred over synthetic visual uniformity.
+Keep the documented mixed-source photo limitation, with consistent frames and
+quiet media labels outside the image rather than badges over the product.

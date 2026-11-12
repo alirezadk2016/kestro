@@ -351,6 +351,28 @@ export async function verifyPricingCollection(browser, base, fail) {
           const box = await link.boundingBox();
           assert.ok(box && box.width >= 44 && box.height >= 44, "actions are at least 44px");
         }
+        for (const [link, visibleLabel] of [
+          [enquiry, language === "da" ? "Spørg om modellen" : "Ask about this model"],
+          [
+            model,
+            width < 640
+              ? language === "da"
+                ? "Detaljer"
+                : "Details"
+              : language === "da"
+                ? "Model og specifikationer"
+                : "Model and specifications",
+          ],
+        ]) {
+          const namedLink = card.getByRole("link", {
+            name: new RegExp(`^${visibleLabel}(?:\\s|:|$)`, "i"),
+          });
+          assert.equal(
+            await link.and(namedLink).count(),
+            1,
+            "the accessible action name begins with its visible label for speech-input users",
+          );
+        }
         const enquiryUrl = new URL(await enquiry.getAttribute("href"), origin);
         const configuration = `${expected.name} — ${expected.configuration[language]}`;
         assert.equal(enquiryUrl.origin, origin.origin, "an enquiry stays on Kestro");
@@ -399,6 +421,7 @@ export async function verifyPricingCollection(browser, base, fail) {
           return {
             left: bounds.left,
             right: bounds.right,
+            height: bounds.height,
             clipped: [...card.querySelectorAll("h3,p,a")]
               .filter((node) => {
                 const box = node.getBoundingClientRect();
@@ -423,12 +446,70 @@ export async function verifyPricingCollection(browser, base, fail) {
           };
         });
         assert.ok(layout.left >= -1 && layout.right <= width + 1, "each card fits its viewport");
+        if (width < 640)
+          assert.ok(
+            layout.height > 0 && layout.height <= 440,
+            "mobile reference cards remain compact without sacrificing their existing readable content or actions",
+          );
         assert.deepEqual(
           layout.clipped,
           [],
           "model names, prices and actions remain readable without clipping",
         );
       }
+
+      const basis = section.locator("details[data-budget-basis]");
+      assert.equal(await basis.count(), 1, "the arithmetic has one native calculation disclosure");
+      assert.equal(
+        await basis.getAttribute("open"),
+        null,
+        "detailed calculations do not expand the initial collection",
+      );
+      const basisSummary = basis.locator(":scope > summary");
+      const basisTarget = await basisSummary.boundingBox();
+      assert.ok(
+        basisTarget && basisTarget.width >= 44 && basisTarget.height >= 44,
+        "the calculation basis has a touch-sized control",
+      );
+      await basisSummary.click();
+      assert.notEqual(
+        await basis.getAttribute("open"),
+        null,
+        "the calculation basis opens natively, including without JavaScript",
+      );
+      assert.equal(
+        await basis.locator("[data-budget-calculation]").count(),
+        4,
+        "all four historical calculations remain available",
+      );
+      const numberFormat = new Intl.NumberFormat(language === "da" ? "da-DK" : "en-GB");
+      for (const expected of EXAMPLES) {
+        const row = basis.locator(`[data-budget-calculation='${expected.model}']`);
+        assert.equal(await row.count(), 1, "each model has its own calculation row");
+        assert.equal(
+          (await row.locator("dt").innerText()).trim(),
+          expected.name,
+          "the calculation names the exact reference model",
+        );
+        const amounts = [
+          expected.observed,
+          expected.fee,
+          Math.ceil((expected.observed + expected.fee) / 100) * 100,
+        ].map((amount) => `${numberFormat.format(amount)} DKK`);
+        const equation = `${amounts[0]} + ${amounts[1]} ${language === "da" ? "servicegebyr" : "service fee"} → ${amounts[2]}`;
+        assert.equal(
+          (await row.locator("dd").innerText()).replace(/\s+/g, " ").trim(),
+          equation,
+          "the observed price, fee and correctly rounded budget are all formatted and associated accurately",
+        );
+        assert.ok(await row.isVisible(), "the model's calculation is readable when opened");
+      }
+      await basisSummary.click();
+      assert.equal(
+        await basis.getAttribute("open"),
+        null,
+        "the native calculation basis can be closed again",
+      );
 
       const credits = section.locator("details[data-budget-credits]");
       assert.equal(
