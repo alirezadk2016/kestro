@@ -1042,3 +1042,8 @@ what it shows and a visible credit; the files and their changes are in
 `docs/media-licenses.md`, which also lists every model still without a
 photograph and where it was looked for. No URL, title, H1, description or
 canonical changed.
+
+The ThinkPad Ultra Dock gained one too (Paowee, CC BY-SA 4.0, margins
+trimmed, shown whole at about 2:1); its illustration was removed. The X1
+Carbon candidate on Flickr stays unused: only its 1024 px size is reachable
+from here, under the 1200 px minimum. No URL, title, H1 or canonical changed.

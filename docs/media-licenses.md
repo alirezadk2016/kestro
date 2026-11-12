@@ -68,9 +68,10 @@ assets and its separate model-photo/individual-unit distinction.
 
 ## Original product illustrations
 
-- Assets: `public/products/*.svg`, six files since 2026-11-12 (the WD19's
-  was replaced by a photograph): the desktops, monitors and docks without a
-  licensed photograph or a pricing illustration.
+- Assets: `public/products/*.svg`, five files since 2026-11-12 (the WD19's
+  and the ThinkPad Ultra Dock's were replaced by photographs): the desktops,
+  monitors and the dock without a licensed photograph or a pricing
+  illustration.
 - Laptops have none. On 2026-11-11 the owner asked that every laptop shown
   be a real photograph of that model, so the seven laptop drawings (X1
   Carbon, L14, EliteBook 840, ProBook 450, Latitude 5410, Latitude 7490,
@@ -82,8 +83,8 @@ assets and its separate model-photo/individual-unit distinction.
   the language of the pricing illustrations: pale studio field, soft floor
   shadow, graphite hardware, empty screens, no logos.
 - They show a format, not a model's exact appearance: an upright SFF case,
-  a one-litre case, a monitor on a height-adjustable column, a mechanical
-  dock and a USB-C dock. Each of those
+  a one-litre case, a monitor on a height-adjustable column and a USB-C
+  dock. Each of those
   comes from lib/models.ts. Colour is not recorded there, so every machine
   is the same neutral graphite.
 - No manufacturer or retailer image, drawing or manual was copied, traced or
@@ -137,6 +138,33 @@ the page says "cropped".
 The WD19 illustration (`public/products/dell-wd19.svg`) was deleted with its
 entry in `scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
 
+## Lenovo ThinkPad Ultra Dock
+
+A trimmed derivative; it stays under CC BY-SA 4.0. The credit on the page says
+"trimmed".
+
+- File: `public/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp`
+  (1600 x 777)
+- Source page: https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG
+- Author: Paowee (own work, taken 2023-11-18)
+- Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+- Accessed: 2026-11-12, from the 3840 px Commons thumbnail of the 4191 x
+  2115 original; licence and author re-checked through the Commons API the
+  same day. Commons describes it as "A Lenovo ThinkPad Ultra docking
+  station". Viewed at 8-bit: the dock alone from above on a white surface,
+  docking connector, guides, Lenovo and ThinkPad logos and the side tower
+  all in frame. Chosen over "ThinkPad T470 docked in the Ultra docking
+  station" (same author and licence), where the laptop covers the dock
+  except for its tower.
+- Changes: only the empty margins trimmed (the whole device stays in frame,
+  natural aspect about 2.06:1, not cropped to 4:3) and resized to 1600 px
+  wide; WebP quality 82, metadata removed. No straightening, exposure or
+  other edits.
+
+The Ultra Dock illustration (`public/products/lenovo-thinkpad-ultra-dock.svg`)
+was deleted with its entry (and the now unused drawing function) in
+`scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
+
 ## Models still without a photograph (searched 2026-11-12)
 
 Searched: Wikimedia Commons full-text and title search per model and
@@ -154,7 +182,12 @@ Laptops and the workstation (each keeps its empty dark well):
   generation" by pedrik, CC BY 2.0,
   https://www.flickr.com/photos/24388834@N04/39826813730 (licence, author
   and 6th-generation title confirmed on the Flickr page; 4151 x 3916
-  original). Not downloaded: Flickr is blocked here. The four IAEA
+  original). Tried again on 2026-11-12: Openverse's record
+  (be28099e-3133-4452-9aa5-e4e9b7efb3d8) and its image proxy hold only the
+  1024 x 966 size, below the 1200 px minimum, and every size on
+  live.staticflickr.com (and the farm/c1 static hosts) is refused by this
+  environment's proxy. Not used; it needs the 1600 px or larger file
+  downloaded from somewhere Flickr is reachable. The four IAEA
   Imagebank "ThinkPad X1 Carbon gen7 (0)-(3)" files (CC BY 2.0) were
   viewed and rejected: each screen shows a video call with identifiable
   people, and one has a person's hand in frame. Other Commons X1 Carbon
@@ -182,10 +215,7 @@ Desktops, monitors and docks (each keeps its labelled illustration):
   and the monitor. Kept the pricing illustration.
 - UltraSharp U2419H, EliteDisplay E243, ThinkVision T24i: nothing; Commons
   and Openverse have other UltraSharp and ThinkVision models.
-- ThinkPad Ultra Dock: two exact files by Paowee, CC BY-SA 4.0, "ThinkPad
-  Ultra docking station" and "ThinkPad T470 docked in the Ultra docking
-  station". Viewed and not used: the dock fills the whole width of both,
-  so no 4:3 frame shows the whole device, and cropping cuts the side
-  tower that makes it recognisable.
+- ThinkPad Ultra Dock: photographed since 2026-11-12 (above), shown whole
+  at its natural aspect now that the card frames wide photos uncropped.
 - HP USB-C Dock G5: nothing; "USB-C dock front/back" on Commons is a
   third-party dock.

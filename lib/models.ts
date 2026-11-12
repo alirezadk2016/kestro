@@ -1685,6 +1685,22 @@ export const models: Model[] = [
     slug: "lenovo-thinkpad-ultra-dock",
     name: "Lenovo ThinkPad Ultra Dock",
     brand: "Lenovo",
+    images: [
+      {
+        src: "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp",
+        alt: {
+          da: "Lenovo ThinkPad Ultra Dock set ovenfra på en hvid flade: den flade dockplade med dockstikket og styretappene, Lenovo- og ThinkPad-logo og det høje tårn i venstre ende; referencefoto, ikke en lagerført enhed",
+          en: "Lenovo ThinkPad Ultra Dock seen from above on a white surface: the flat dock plate with its docking connector and guide pins, the Lenovo and ThinkPad logos and the tall tower at the left end; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Paowee",
+          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG",
+          licence: "CC BY-SA 4.0 (trimmed)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+    ],
     format: { da: "Dockingstation", en: "Docking station" },
     group: "docking",
     category: "dockingstationer",

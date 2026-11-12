@@ -266,6 +266,13 @@
     "format": "webp"
   },
   {
+    "src": "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp",
+    "width": 1600,
+    "height": 777,
+    "bytes": 32252,
+    "format": "webp"
+  },
+  {
     "src": "/models/t14/gen2-intel-reference.webp",
     "width": 1600,
     "height": 1200,
@@ -326,13 +333,6 @@
     "width": 1200,
     "height": 900,
     "bytes": 5354,
-    "format": "svg"
-  },
-  {
-    "src": "/products/lenovo-thinkpad-ultra-dock.svg",
-    "width": 1200,
-    "height": 900,
-    "bytes": 3248,
     "format": "svg"
   },
   {

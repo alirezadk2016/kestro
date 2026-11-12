@@ -30,6 +30,7 @@ const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
   "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1200 },
   "/models/dell-wd19/rear-ports-reference.webp": { width: 1600, height: 1200 },
+  "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp": { width: 1600, height: 777 },
 };
 
 const monitor24: Localized = {
@@ -52,10 +53,6 @@ const ILLUSTRATION_ALT: Record<string, Localized> = {
   },
   "hp-elitedisplay-e243": monitor24,
   "lenovo-thinkvision-t24i": monitor24,
-  "lenovo-thinkpad-ultra-dock": {
-    da: "Illustration: mekanisk dockingstation med dockstik på oversiden",
-    en: "Illustration: a mechanical docking station with its connector on top",
-  },
   "hp-usb-c-dock-g5": usbcDock,
 };
 
