@@ -946,8 +946,8 @@ export const models: Model[] = [
       {
         src: "/models/latitude-7490/front-open-reference.webp",
         alt: {
-          da: "Dell Latitude 7490 set forfra med åben skærm og tastatur på et træbord, skærmen viser et Linux-skrivebord; referencefoto, ikke en lagerført enhed",
-          en: "Dell Latitude 7490 viewed from the front with its screen open and keyboard visible on a wooden table, the screen showing a Linux desktop; reference photo, not a stocked unit",
+          da: "Dell Latitude 7490 set forfra på et træbord med åben skærm og sort tastatur; skærmen viser et Linux-skrivebord; referencefoto, ikke en lagerført enhed",
+          en: "Dell Latitude 7490 viewed from the front on a wooden table, screen open above the black keyboard and showing a Linux desktop; reference photo, not a stocked unit",
         },
         photographic: true,
         credit: {
@@ -1343,22 +1343,6 @@ export const models: Model[] = [
     slug: "dell-optiplex-5060",
     name: "Dell OptiPlex 5060",
     brand: "Dell",
-    images: [
-      {
-        src: "/models/dell-optiplex-5060/micro-front-reference.webp",
-        alt: {
-          da: "Dell OptiPlex 5060 Micro set forfra, monteret lodret bag en skærm, med tænd-knap, lydstik, USB-C og USB-A på fronten; referencefoto, ikke en lagerført enhed",
-          en: "Dell OptiPlex 5060 Micro seen from the front, mounted upright behind a monitor, with power button, audio jacks, USB-C and USB-A on the front; reference photo, not a stocked unit",
-        },
-        photographic: true,
-        credit: {
-          author: "Jackpen7 (cropped)",
-          source: "https://commons.wikimedia.org/wiki/File:Dell_OptiPlex_5060_Micro.jpg",
-          licence: "CC BY-SA 4.0",
-          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-        },
-      },
-    ],
     format: { da: "Stationær (SFF og Micro)", en: "Desktop (SFF and Micro)" },
     group: "stationaere",
     category: "stationaere-computere",
@@ -1710,9 +1694,9 @@ export const models: Model[] = [
         },
         photographic: true,
         credit: {
-          author: "Paowee (resized)",
+          author: "Paowee",
           source: "https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG",
-          licence: "CC BY-SA 4.0",
+          licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },
@@ -1724,9 +1708,9 @@ export const models: Model[] = [
         },
         photographic: true,
         credit: {
-          author: "Paowee (resized)",
+          author: "Paowee",
           source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG",
-          licence: "CC BY-SA 4.0",
+          licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },
@@ -1819,6 +1803,34 @@ export const models: Model[] = [
     brand: "Dell",
     images: [
       {
+        src: "/models/dell-wd19/rear-ports-reference.webp",
+        alt: {
+          da: "Bagsiden af en Dell WD19 med lydstik, to DisplayPort, HDMI, USB-C, to USB-A, netværksstik og strømindgang; referencefoto, ikke en lagerført enhed",
+          en: "The back of a Dell WD19 with audio jack, two DisplayPort, HDMI, USB-C, two USB-A, Ethernet and power input; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5814.jpg",
+          licence: "CC BY-SA 4.0 (cropped)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/dell-wd19/vent-end-reference.webp",
+        alt: {
+          da: "Dell WD19 set skråt fra enden med ventilationsristen og portene langs siden; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 at an angle from one end, showing the ventilation grille and the ports along the side; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
+          licence: "CC BY-SA 4.0 (cropped)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
         src: "/models/dell-wd19/front-reference.webp",
         alt: {
           da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
@@ -1826,37 +1838,9 @@ export const models: Model[] = [
         },
         photographic: true,
         credit: {
-          author: "Raimond Spekking (resized)",
+          author: "Raimond Spekking",
           source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
-          licence: "CC BY-SA 4.0",
-          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-        },
-      },
-      {
-        src: "/models/dell-wd19/rear-ports-reference.webp",
-        alt: {
-          da: "Dell WD19 USB-C-dock set skråt bagfra med skærmudgange, netværksstik og USB-porte på bagsiden og ventilationsrist på siden; referencefoto, ikke en lagerført enhed",
-          en: "Dell WD19 USB-C dock seen at an angle from the back, with display outputs, network port and USB ports on the back and a vent on the side; reference photo, not a stocked unit",
-        },
-        photographic: true,
-        credit: {
-          author: "Raimond Spekking (resized)",
-          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
-          licence: "CC BY-SA 4.0",
-          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-        },
-      },
-      {
-        src: "/models/dell-wd19/with-cable-reference.webp",
-        alt: {
-          da: "Dell WD19 USB-C-dock set skråt ovenfra med det fastmonterede USB-C-kabel; referencefoto, ikke en lagerført enhed",
-          en: "Dell WD19 USB-C dock seen at an angle from above with its attached USB-C cable; reference photo, not a stocked unit",
-        },
-        photographic: true,
-        credit: {
-          author: "Raimond Spekking (resized)",
-          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5809.jpg",
-          licence: "CC BY-SA 4.0",
+          licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },

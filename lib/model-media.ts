@@ -28,10 +28,9 @@ export type ModelMedia = {
 const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/thinkpad-t480-4.jpg": { width: 1179, height: 1142 },
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
-  "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1502 },
-  "/models/dell-optiplex-5060/micro-front-reference.webp": { width: 1200, height: 1600 },
+  "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1200 },
+  "/models/dell-wd19/rear-ports-reference.webp": { width: 1600, height: 1200 },
   "/models/lenovo-thinkpad-ultra-dock/top-reference.webp": { width: 1600, height: 808 },
-  "/models/dell-wd19/front-reference.webp": { width: 1600, height: 900 },
 };
 
 const monitor24: Localized = {

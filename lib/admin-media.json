@@ -203,13 +203,6 @@
     "format": "webp"
   },
   {
-    "src": "/models/dell-optiplex-5060/micro-front-reference.webp",
-    "width": 1200,
-    "height": 1600,
-    "bytes": 109752,
-    "format": "webp"
-  },
-  {
     "src": "/models/dell-wd19/front-reference.webp",
     "width": 1600,
     "height": 900,
@@ -218,16 +211,16 @@
   },
   {
     "src": "/models/dell-wd19/rear-ports-reference.webp",
-    "width": 1200,
+    "width": 1600,
     "height": 1200,
-    "bytes": 27358,
+    "bytes": 69568,
     "format": "webp"
   },
   {
-    "src": "/models/dell-wd19/with-cable-reference.webp",
+    "src": "/models/dell-wd19/vent-end-reference.webp",
     "width": 1600,
-    "height": 900,
-    "bytes": 28614,
+    "height": 1200,
+    "bytes": 99662,
     "format": "webp"
   },
   {
@@ -275,8 +268,8 @@
   {
     "src": "/models/latitude-7490/front-open-reference.webp",
     "width": 1600,
-    "height": 1502,
-    "bytes": 149438,
+    "height": 1200,
+    "bytes": 126392,
     "format": "webp"
   },
   {

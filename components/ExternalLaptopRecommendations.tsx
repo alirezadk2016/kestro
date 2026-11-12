@@ -82,7 +82,7 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
               className="plate flex min-w-0 flex-col overflow-hidden"
             >
               {item.photo && (
-                <div className="relative aspect-[4/3] overflow-hidden bg-ink-900 outline outline-1 -outline-offset-1 outline-white/10 sm:aspect-[16/10]">
+                <div className="relative aspect-[4/3] overflow-hidden bg-ink-900 outline outline-1 -outline-offset-1 outline-white/10">
                   <Image
                     src={item.photo.src}
                     width={item.photo.width}

@@ -40,76 +40,6 @@ native photo-credit disclosure containing both authors, original file pages,
 licences and the processing note. The Dell Latitude 5420 recommendation uses
 no substituted photograph: no suitable exact-model licence was verified.
 
-# Model photographs added 12 November 2026
-
-Each file was downloaded from upload.wikimedia.org with the bot User-Agent
-the owner approved, viewed at 8-bit after processing, and checked against
-its Commons page for author, licence and model. A CC BY-SA derivative is
-available under the same CC BY-SA 4.0 licence.
-
-## Dell Latitude 7490
-
-- Asset: `public/models/latitude-7490/front-open-reference.webp`
-- Photographer: Ahunt (own work)
-- Source: https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg
-- Licence: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
-- Accessed: 2026-11-12. A photograph of the open machine on a wooden table, not a screenshot;
-  the screen shows an Ubuntu Cinnamon desktop.
-- Changed: not cropped (a 4:3 crop would cut the lid or the base); resized from
-  2071 x 1944 to 1600 x 1502 and converted to WebP. Metadata removed. No retouching, recolouring,
-  background change or change to the product.
-
-## Dell OptiPlex 5060 Micro
-
-- Asset: `public/models/dell-optiplex-5060/micro-front-reference.webp`
-- Photographer: Jackpen7 (own work)
-- Source: https://commons.wikimedia.org/wiki/File:Dell_OptiPlex_5060_Micro.jpg
-- Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
-- Accessed: 2026-11-12. "OptiPlex 5060" is printed on the front; mounted on a Dell P2219H
-  monitor stand per the file description. The model page covers SFF and
-  Micro; `/priser` keeps its SFF illustration, which this photo does not
-  replace.
-- Changed: cropped to the computer and part of the monitor behind it (3:4 portrait;
-  the unit stands upright, so a 4:3 landscape crop cannot hold it), resized
-  to 1200 x 1600 from the 1920 x 2560 Commons thumbnail, converted to WebP. Metadata removed. No retouching, recolouring,
-  background change or change to the product.
-
-## ThinkPad Ultra Dock (two files)
-
-- Asset: `public/models/lenovo-thinkpad-ultra-dock/top-reference.webp` and
-  `public/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp`
-- Photographer: Paowee (own work)
-- Source: https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG and
-  https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG
-- Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
-- Accessed: 2026-11-12. The uploader names it the ThinkPad Ultra docking station; the second
-  file shows it with a ThinkPad T470, the T480's predecessor and a 40A2
-  machine.
-- Changed: not cropped; resized from the 1920 px Commons thumbnails to 1600 x 808
-  and 1600 x 1057, converted to WebP. Metadata removed. No retouching, recolouring,
-  background change or change to the product.
-
-## Dell WD19 (three files)
-
-- Asset: `public/models/dell-wd19/front-reference.webp`,
-  `public/models/dell-wd19/rear-ports-reference.webp` and
-  `public/models/dell-wd19/with-cable-reference.webp`
-- Photographer: Raimond Spekking (own work)
-- Source: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg,
-  https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg and
-  https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5809.jpg
-- Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
-- Accessed: 2026-11-12. Model K20A, Dell's regulatory model for the WD19. The same author's
-  label photo (-5810) was not used: it shows the unit's service tag and
-  MAC address and not the device.
-- Changed: not cropped; resized to 1600 x 900, 1200 x 1200 and 1600 x 900,
-  converted to WebP. Metadata removed. No retouching, recolouring,
-  background change or change to the product.
-
-Photographs that are not 4:3 keep the whole device rather than cut it. The
-model card crops them to its 4:3 frame in CSS, as it already does the
-owner's near-square T480 photo; the model-page gallery shows them whole.
-
 ## Original pricing illustrations
 
 - Assets: `public/pricing/optiplex-5060-sff-illustration.svg` and
@@ -138,22 +68,22 @@ assets and its separate model-photo/individual-unit distinction.
 
 ## Original product illustrations
 
-- Assets: `public/products/*.svg`, five files: the desktops, monitors and
-  docks without a licensed photograph or a pricing illustration. The
-  ThinkPad Ultra Dock and Dell WD19 drawings were deleted on 2026-11-12
-  when licensed photographs replaced them.
+- Assets: `public/products/*.svg`, five files since 2026-11-12 (the WD19's
+  and the ThinkPad Ultra Dock's were replaced by photographs): the desktops,
+  monitors and docks without a licensed photograph or a pricing illustration.
 - Laptops have none. On 2026-11-11 the owner asked that every laptop shown
   be a real photograph of that model, so the seven laptop drawings (X1
   Carbon, L14, EliteBook 840, ProBook 450, Latitude 5410, Latitude 7490,
   ZBook 15) were deleted. Those models show no picture until a licensed
-  exact-model or owner-supplied photograph is added.
+  exact-model or owner-supplied photograph is added; the Latitude 7490 got
+  one on 2026-11-12.
 - Generated for Kestro on 2026-11-11 by `scripts/build/product-art.mjs`
   (deterministic; rerun after changing a definition). Code-native artwork in
   the language of the pricing illustrations: pale studio field, soft floor
   shadow, graphite hardware, empty screens, no logos.
 - They show a format, not a model's exact appearance: an upright SFF case,
   a one-litre case, a monitor on a height-adjustable column, a mechanical
-  dock and USB-C docks. Each of those
+  dock and a USB-C dock. Each of those
   comes from lib/models.ts. Colour is not recorded there, so every machine
   is the same neutral graphite.
 - No manufacturer or retailer image, drawing or manual was copied, traced or
@@ -161,43 +91,135 @@ assets and its separate model-photo/individual-unit distinction.
 - Every frame that shows one carries the label "Illustration", and each alt
   text in `lib/model-media.ts` describes what is drawn.
 
-## Models searched for, still without a photograph (2026-11-12)
+## Dell Latitude 7490
 
-Searched on 2026-11-12: Openverse (licence filter cc0, pdm, by, by-sa; which
-covers Flickr and Commons) for each model name and generation, and Wikimedia
-Commons categories (ThinkPad X1 Carbon and its 6th-8th generation
-subcategories, ThinkPad L14, HP EliteBook 840, HP ProBook 450, Dell
-Latitude, Dell Latitude 5410/5420, HP ZBook 15, HP EliteDesk, Lenovo
-ThinkCentre, Dell OptiPlex, Dell UltraSharp, HP EliteDisplay, Lenovo
-ThinkVision, ThinkPad docking stations, Docking stations) plus Commons
-full-text search per model and generation. Commons rate-limited the build
-environment throughout (HTTP 429); the full-text query for the ZBook 15 was
-refused, so that model rests on Openverse and the categories. X1 Carbon
-files that name no generation (Elroygoh, Mariofan13 and others) were not
-used. Nothing was
-substituted; a laptop without a photograph keeps its empty well, and the
-desktops, monitors and docks keep their labelled illustration.
+- File: `public/models/latitude-7490/front-open-reference.webp` (1600 x 1200)
+- Source page: https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg
+- Author: Ahunt (own work, taken 2024-03-14)
+- Licence: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
+- Accessed: 2026-11-12, from the Commons 1920 px thumbnail of the 2071 x 1944
+  original. Viewed at 8-bit: a photograph of the machine itself (open on a
+  wooden table, Dell logo, 8th-generation Intel sticker), not a screenshot,
+  although Commons also files it under free screenshots. The screen shows an
+  Ubuntu Cinnamon desktop; the alt text says it shows a Linux desktop.
+- Changes: cropped to 4:3 and resized to 1600 x 1200; WebP quality 82;
+  metadata removed. The whole screen and keyboard are in frame; the lower
+  palm rest is cut because the open laptop is taller than a 4:3 frame. No
+  retouching, recolouring or other edits.
 
-- ThinkPad X1 Carbon (Gen 6-8): the only exact-generation files are four
-  IAEA Imagebank meeting photographs named "ThinkPad X1 Carbon gen7
-  (0)-(3)", CC BY 2.0, downloaded and viewed on 2026-11-12. Every one shows
-  a video call with identifiable people filling the laptop's screen, and one
-  has a person's hand in the frame; no crop shows the laptop without a
-  person. The generation also comes from the Commons file name alone. Not
-  used. A CC BY-SA file by
-  AnVuong1222004 found through Openverse has been deleted from Commons.
-  The rest are Gen 1, 2 and 5.
-- ThinkPad L14, ProBook 450 G7/G8, ZBook 15 G5/G6, Latitude 5420 (also
-  the `lib/external-laptops.ts` recommendation): no licensed file of these
-  models on Commons or Openverse. Only other generations exist (ZBook 15
-  G3, L15 Gen 3).
-- EliteBook 840 G5/G6: only G1, G3, G4 and G8 photographs, and a CC0 rating
-  plate of an unnamed generation.
-- Latitude 5410: only a LaptopMedia "360 degrees" video, CC BY 3.0 per the
-  uploader but marked "License review needed". Not usable until reviewed.
-- HP EliteDesk 800 G4/G5: only an EliteDesk 800 G2 mini.
-- Lenovo ThinkCentre M720q/M920q: only an M75q-1 Tiny.
-- Dell UltraSharp U2419H, HP EliteDisplay E243, Lenovo ThinkVision T24i:
-  nothing. The ThinkVision category has an X24q-10, another model.
-- HP USB-C Dock G5: nothing. The "USB-C dock front/back" files on Commons
-  show a third-party dock.
+## Dell Dock WD19
+
+All three files are derivatives and stay under CC BY-SA 4.0. The credit on
+the page says "cropped" or "resized".
+
+- File: `public/models/dell-wd19/rear-ports-reference.webp` (1600 x 1200,
+  the card image)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5814.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 3840 px Commons thumbnail of the 5768 x
+    3245 original. Commons names the model as WD19, type K20A; the rating
+    label in the same series (file -5810) reads "WD19 / K20A".
+  - Changes: cropped to 4:3 around the rear port row (audio, two
+    DisplayPort, HDMI, USB-C, two USB-A, Ethernet, power) and resized to
+    1600 x 1200; the cable end of the dock falls outside the frame. WebP
+    quality 82, metadata removed. No other edits.
+- File: `public/models/dell-wd19/vent-end-reference.webp` (1600 x 1200)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 1920 px Commons thumbnail of the 3377 x
+    3377 original.
+  - Changes: cropped to 4:3 (the far end of the dock falls outside the frame)
+    and resized to 1600 x 1200; WebP quality 82, metadata removed. No other
+    edits.
+
+- File: `public/models/dell-wd19/front-reference.webp` (1600 x 900, third
+  in the gallery)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 1920 px Commons thumbnail of the 5578 x
+    3138 original. Front face: power button, USB-C, USB-A, audio jack.
+  - Changes: not cropped (the dock spans the frame); resized to 1600 x 900,
+    WebP quality 82, metadata removed. The credit on the page says
+    "resized". No other edits.
+
+The WD19 illustration (`public/products/dell-wd19.svg`) was deleted with its
+entry in `scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
+
+## ThinkPad Ultra Dock
+
+Both files are resized derivatives and stay under CC BY-SA 4.0. The credit on
+the page says "resized".
+
+- File: `public/models/lenovo-thinkpad-ultra-dock/top-reference.webp`
+  (1600 x 808, the card image)
+  - Source page: https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG
+  - Author: Paowee (own work, taken 2023-11-18)
+- File: `public/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp`
+  (1600 x 1057)
+  - Source page: https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG
+  - Author: Paowee (own work, taken 2023-11-18)
+- Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+- Accessed: 2026-11-12, from the 1920 px Commons thumbnails of the 4191 x
+  2115 and 3910 x 2582 originals. The uploader names it the ThinkPad Ultra
+  docking station; the second shows it with a ThinkPad T470, a 40A2-era
+  machine like the T480. Both viewed at 8-bit.
+- Changes: not cropped: the dock fills the width of both frames and
+  cropping would cut its side tower. Resized to 1600 x 808 and 1600 x 1057,
+  WebP quality 82, metadata removed. No other edits. The model card shows a
+  photograph wider than 1.42:1 whole on its grey (`components/ModelCard.tsx`,
+  since a5cb8a4), so the card shows the whole dock.
+
+The Ultra Dock illustration (`public/products/lenovo-thinkpad-ultra-dock.svg`)
+was deleted with its entry and the then-unused `mechanicalDock()` drawing in
+`scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
+
+## Models still without a photograph (searched 2026-11-12)
+
+Searched: Wikimedia Commons full-text and title search per model and
+generation (the API rate-limited this environment repeatedly, so some
+queries ran two or three times), plus Openverse (licences CC0, PDM, BY,
+BY-SA), which also indexes Commons and Flickr. Flickr's image server
+(live.staticflickr.com) is blocked by this build environment's network
+policy, so a photo hosted only on Flickr cannot be downloaded here; those
+are listed as candidates. Nothing was substituted, and no drawing, render or
+generated image was added.
+
+Laptops and the workstation (each keeps its empty dark well):
+
+- ThinkPad X1 Carbon (page: Gen 6-8). Candidate: "Lenovo X1 carbon 6th
+  generation" by pedrik, CC BY 2.0,
+  https://www.flickr.com/photos/24388834@N04/39826813730 (licence, author
+  and 6th-generation title confirmed on the Flickr page; 4151 x 3916
+  original). Not downloaded: Flickr is blocked here. The four IAEA
+  Imagebank "ThinkPad X1 Carbon gen7 (0)-(3)" files (CC BY 2.0) were
+  viewed and rejected: each screen shows a video call with identifiable
+  people, and one has a person's hand in frame. Other Commons X1 Carbon
+  files are Gen 1, 2 or 5.
+- ThinkPad L14: nothing on Commons or Openverse.
+- EliteBook 840 (page: G5 and G6): Commons has G1, G3, G4 and G8 only.
+- ProBook 450 (page: G7 and G8): nothing; Commons has a ProBook 640 G1.
+- Latitude 5410: nothing; the LaptopMedia video on Commons is still
+  "License review needed".
+- Latitude 5420 (`lib/external-laptops.ts`): nothing on Commons or
+  Openverse.
+- ZBook 15 (page: G5 and G6): Commons and Openverse have G3, ZBook 14/17
+  and an older "ZBook Mobile 15" press photo only.
+
+Desktops, monitors and docks (each keeps its labelled illustration):
+
+- EliteDesk 800 (page: G4 and G5 SFF): Commons has the 800 G2 mini and 705
+  G1 only.
+- ThinkCentre M720q Tiny: Commons has the M715q and M75q-1, other models.
+- OptiPlex 5060 (SFF and Micro): one exact file, "Dell OptiPlex 5060
+  Micro" by Jackpen7, CC BY-SA 4.0,
+  https://commons.wikimedia.org/wiki/File:Dell_OptiPlex_5060_Micro.jpg.
+  Viewed and not used: an upright Micro mounted behind a monitor, so a 4:3
+  frame cuts the machine in half and the background is a desk, cables
+  and the monitor. Kept the pricing illustration.
+- UltraSharp U2419H, EliteDisplay E243, ThinkVision T24i: nothing; Commons
+  and Openverse have other UltraSharp and ThinkVision models.
+- HP USB-C Dock G5: nothing; "USB-C dock front/back" on Commons is a
+  third-party dock.

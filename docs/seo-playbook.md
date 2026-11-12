@@ -1031,14 +1031,24 @@ model photo. Commons candidates for the 7490 and X1 Carbon are listed in
 Image search for these pages waits on real photos; no URL, title, H1 or
 canonical changed.
 
-# Model photographs from Commons — 12 November 2026
+# Model photographs: a second search — 12 November 2026
 
-Four model pages gained licensed photographs of the exact model: Latitude
-7490 (CC0), OptiPlex 5060 Micro, ThinkPad Ultra Dock (two views) and Dell
-WD19 (three views), the last three CC BY-SA 4.0. Each carries an alt that
-describes what the photo shows and says it is a reference photo, not a
-stocked unit, plus a visible author and licence credit. The Ultra Dock and
-WD19 illustrations were deleted with their files. Image search now has a
-real picture for these pages; no URL, title, description, H1, canonical or
-word of page copy changed. Every model still without a photograph, and
-where it was looked for, is listed in `docs/media-licenses.md`.
+Every catalogue model and the Latitude 5420 recommendation was searched
+again on Wikimedia Commons and Openverse. Two models gained real, licensed
+photographs of the exact model: the Dell Latitude 7490 (Ahunt, CC0) and the
+Dell Dock WD19 (Raimond Spekking, CC BY-SA 4.0, two views, cropped). The
+WD19's illustration was removed. Each photo carries an alt text describing
+what it shows and a visible credit; the files and their changes are in
+`docs/media-licenses.md`, which also lists every model still without a
+photograph and where it was looked for. No URL, title, H1, description or
+canonical changed.
+
+# Model photographs: the ThinkPad Ultra Dock — 12 November 2026
+
+The ThinkPad Ultra Dock page gained two licensed photographs of the exact
+dock (Paowee, CC BY-SA 4.0): alone from above, and with a ThinkPad T470
+docked. Its illustration was removed. The WD19 gallery gained a third view,
+the front. The card now shows wide photographs whole, which is what made
+the Ultra Dock usable. The OptiPlex 5060 Micro photograph stays unused: the
+card's 4:3 crop cuts the upright machine in half. No URL, title, H1,
+description, canonical or word of page copy changed.
