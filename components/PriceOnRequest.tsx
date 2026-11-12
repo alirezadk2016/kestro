@@ -31,7 +31,7 @@ const copy = {
     volume: "Tell us the quantity, specifications and keyboard you need.",
     volumeAccessory: "Tell us the quantity and which machines it will be used with.",
     cta: "Send an enquiry",
-    secondary: "Budget examples and price references",
+    secondary: "Budget examples and pricing",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

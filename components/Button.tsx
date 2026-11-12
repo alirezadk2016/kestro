@@ -51,7 +51,9 @@ const sizes: Record<Size, string> = {
   lg: "min-h-[52px] text-sm sm:text-base",
 };
 
-const padding: Record<Size, string> = { md: "px-6", lg: "px-8" };
+/* lg gives up 8px a side below 360px: "Describe your equipment" on a full-width
+   button at 320 was 4px wider than the phone. */
+const padding: Record<Size, string> = { md: "px-6", lg: "px-6 min-[360px]:px-8" };
 
 /*
  * The same classes, for the places that cannot use the component.

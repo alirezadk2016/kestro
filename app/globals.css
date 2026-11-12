@@ -1379,7 +1379,9 @@ body {
    * broken, and at 320 (the narrowest phone still in use) a 35-character label
    * no longer fits beside its arrow. Labels are written to fit 360; here the
    * pill gives up 8px of padding and a pixel of type instead of every label
-   * being cut down to the narrowest screen.
+   * being cut down to the narrowest screen. That still left the longest
+   * labels 2-11px over at 320, so the trailing arrow goes too: it is
+   * aria-hidden decoration, and the pill shape already says "link".
    */
   @media (max-width: 359px) {
     a.plate-sm.rounded-full {
@@ -1388,6 +1390,9 @@ body {
     a.plate-sm.rounded-full.px-5 {
       padding-left: 1rem;
       padding-right: 1rem;
+    }
+    a.plate-sm.rounded-full > span[aria-hidden="true"]:last-child {
+      display: none;
     }
   }
 
