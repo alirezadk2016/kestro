@@ -170,8 +170,11 @@ subcategories, ThinkPad L14, HP EliteBook 840, HP ProBook 450, Dell
 Latitude, Dell Latitude 5410/5420, HP ZBook 15, HP EliteDesk, Lenovo
 ThinkCentre, Dell OptiPlex, Dell UltraSharp, HP EliteDisplay, Lenovo
 ThinkVision, ThinkPad docking stations, Docking stations) plus Commons
-full-text search. Commons rate-limited the build environment throughout
-(HTTP 429), which slowed but did not stop these searches. Nothing was
+full-text search per model and generation. Commons rate-limited the build
+environment throughout (HTTP 429); the full-text query for the ZBook 15 was
+refused, so that model rests on Openverse and the categories. X1 Carbon
+files that name no generation (Elroygoh, Mariofan13 and others) were not
+used. Nothing was
 substituted; a laptop without a photograph keeps its empty well, and the
 desktops, monitors and docks keep their labelled illustration.
 
