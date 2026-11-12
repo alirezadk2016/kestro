@@ -22,7 +22,8 @@ range hidden in a closed fold, and model pages that opened on an icon.
 - /modeller opens on an index of its five groups with counts. Four columns
   from 2xl, so a 1920 screen is not half empty.
 - The laptop page shows its models in the open, after the external
-  recommendations; the brand list stays in its fold.
+  recommendations; the brand list stays in its fold. (Superseded 12
+  November, below.)
 - The products hub shows one model of each kind instead of a button that
   sent the buyer elsewhere to see any hardware.
 - Model pages without photographs open on their illustration, with the
@@ -31,3 +32,21 @@ range hidden in a closed fold, and model pages that opened on an icon.
 Not done here: new models. They need specifications from the makers' own
 documents and licensed photographs, and this session's network could not
 reach them. A personal environment "kestro" with those hosts now exists.
+
+## 12 November: models first, as a list
+
+The owner asked for a product section that is simpler and more useful.
+
+- Category pages show their models first, as a list rather than cards
+  (`components/ModelList.tsx`): picture, name and use, then processor,
+  memory and storage in fixed columns under one header (screens: panel and
+  resolution), and "Få pris" in a fixed 7rem column so the figures line up
+  on every row. Below lg each row stacks with its labels shown.
+- On the laptop page the external recommendations follow the models, and
+  the header button reads "Se modellerne".
+- /modeller keeps the card grid: it is the overview, the category is where
+  a buyer compares.
+- A model page's related row is three models, photographed first, with a
+  link to the whole category.
+- Every model page says it is not in stock yet and where it can be found
+  meanwhile ("Har I brug for den nu?", `components/RetailLinks.tsx`).

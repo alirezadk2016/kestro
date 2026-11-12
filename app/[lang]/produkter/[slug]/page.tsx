@@ -380,9 +380,19 @@ export default async function CategoryPage(props: {
                     ? "Til kontor, hjemmearbejde og startup."
                     : "For office work, home working and startup teams."}
                 </p>
-                <Button href="#models" className="mt-5 w-full sm:w-auto">
-                  {lang === "da" ? "Se modellerne" : "See the models"}
-                </Button>
+                {/* The models first; the way to buy one elsewhere today stays
+                    one tap away, beside it. */}
+                <div className="mt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
+                  <Button href="#models" className="w-full sm:w-auto">
+                    {lang === "da" ? "Se modellerne" : "See the models"}
+                  </Button>
+                  <a
+                    href="#external-laptop-recommendations"
+                    className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
+                  >
+                    {lang === "da" ? "Brug for en nu? Køb hos andre" : "Need one now? Buy elsewhere"}
+                  </a>
+                </div>
               </div>
             </div>
           </Container>
