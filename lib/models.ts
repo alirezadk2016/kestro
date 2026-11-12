@@ -1700,6 +1700,20 @@ export const models: Model[] = [
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },
+      {
+        src: "/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp",
+        alt: {
+          da: "ThinkPad Ultra Dock set ovenfra med en lukket ThinkPad T470 sat i docken; referencefoto, ikke en lagerført enhed",
+          en: "ThinkPad Ultra Dock seen from above with a closed ThinkPad T470 docked on it; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Paowee",
+          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG",
+          licence: "CC BY-SA 4.0 (resized)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
     ],
     format: { da: "Dockingstation", en: "Docking station" },
     group: "docking",
@@ -1813,6 +1827,20 @@ export const models: Model[] = [
           author: "Raimond Spekking",
           source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
           licence: "CC BY-SA 4.0 (cropped)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/dell-wd19/front-reference.webp",
+        alt: {
+          da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock viewed from the front with power button, USB-C, USB-A and audio jack on the front; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
+          licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },

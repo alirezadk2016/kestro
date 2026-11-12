@@ -20,6 +20,10 @@
  * laptop drawings this script made were removed with their files. A laptop
  * without a licensed or owner-supplied photograph shows no picture.
  *
+ * A model that gets a licensed photograph loses its drawing here, with its
+ * file: on 12 November 2026 the ThinkPad Ultra Dock and the Dell WD19 did
+ * (docs/media-licenses.md).
+ *
  * Output is deterministic; re-running it changes nothing unless the
  * definitions below change.
  */

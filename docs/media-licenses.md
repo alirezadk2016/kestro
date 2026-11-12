@@ -110,8 +110,8 @@ assets and its separate model-photo/individual-unit distinction.
 
 ## Dell Dock WD19
 
-Both files are cropped derivatives and stay under CC BY-SA 4.0. The credit on
-the page says "cropped".
+All three files are derivatives and stay under CC BY-SA 4.0. The credit on
+the page says "cropped" or "resized".
 
 - File: `public/models/dell-wd19/rear-ports-reference.webp` (1600 x 1200,
   the card image)
@@ -134,6 +134,17 @@ the page says "cropped".
   - Changes: cropped to 4:3 (the far end of the dock falls outside the frame)
     and resized to 1600 x 1200; WebP quality 82, metadata removed. No other
     edits.
+
+- File: `public/models/dell-wd19/front-reference.webp` (1600 x 900, third
+  in the gallery)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 1920 px Commons thumbnail of the 5578 x
+    3138 original. Front face: power button, USB-C, USB-A, audio jack.
+  - Changes: not cropped (the dock spans the frame); resized to 1600 x 900,
+    WebP quality 82, metadata removed. The credit on the page says
+    "resized". No other edits.
 
 The WD19 illustration (`public/products/dell-wd19.svg`) was deleted with its
 entry in `scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
@@ -160,6 +171,14 @@ A trimmed derivative; it stays under CC BY-SA 4.0. The credit on the page says
   natural aspect about 2.06:1, not cropped to 4:3) and resized to 1600 px
   wide; WebP quality 82, metadata removed. No straightening, exposure or
   other edits.
+- Second gallery view: `public/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp`
+  (1600 x 1057), from https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG,
+  Paowee (own work, taken 2023-11-18), CC BY-SA 4.0,
+  https://creativecommons.org/licenses/by-sa/4.0/. Accessed 2026-11-12
+  from the 1920 px Commons thumbnail of the 3910 x 2582 original; viewed at
+  8-bit. It shows how the dock is used, with a T470 (a T480-era machine)
+  clicked onto it. Not cropped; resized to 1600 x 1057, WebP quality 82,
+  metadata removed, no other edits. The credit on the page says "resized".
 
 The Ultra Dock illustration (`public/products/lenovo-thinkpad-ultra-dock.svg`)
 was deleted with its entry (and the now unused drawing function) in

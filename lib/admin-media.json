@@ -203,6 +203,13 @@
     "format": "webp"
   },
   {
+    "src": "/models/dell-wd19/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 57388,
+    "format": "webp"
+  },
+  {
     "src": "/models/dell-wd19/rear-ports-reference.webp",
     "width": 1600,
     "height": 1200,
@@ -263,6 +270,13 @@
     "width": 1600,
     "height": 1200,
     "bytes": 126392,
+    "format": "webp"
+  },
+  {
+    "src": "/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp",
+    "width": 1600,
+    "height": 1057,
+    "bytes": 39826,
     "format": "webp"
   },
   {

@@ -1063,3 +1063,12 @@ How the catalogue uses them (12 November 2026):
   retouched product image. The X1 Carbon, L14, EliteBook 840 G5/G6, ProBook
   450 G7/G8, Latitude 5410, ZBook 15 G5/G6 and the Latitude 5420 wait for
   the owner's own photographs.
+
+# Model photographs: more views — 12 November 2026
+
+Two galleries gained a second or third licensed view of the exact model: the
+ThinkPad Ultra Dock with a ThinkPad T470 docked (Paowee, CC BY-SA 4.0) and
+the Dell WD19 from the front (Raimond Spekking, CC BY-SA 4.0). The card image
+of each is unchanged. The OptiPlex 5060 Micro photograph on Commons stays
+unused: the card's 4:3 crop cuts the upright machine in half. No URL, title,
+H1, description, canonical or word of page copy changed.
