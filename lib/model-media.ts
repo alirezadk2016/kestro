@@ -30,7 +30,7 @@ const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
   "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1200 },
   "/models/dell-wd19/rear-ports-reference.webp": { width: 1600, height: 1200 },
-  "/models/lenovo-thinkpad-ultra-dock/top-reference.webp": { width: 1600, height: 808 },
+  "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp": { width: 1600, height: 777 },
 };
 
 const monitor24: Localized = {

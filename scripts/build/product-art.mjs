@@ -209,7 +209,7 @@ function usbcDock({ shape = "long" } = {}) {
 
 /*
  * Only facts lib/models.ts records: SFF and one-litre cases,
- * height-adjustable monitor stands, and the dock types.
+ * height-adjustable monitor stands, and the USB-C dock.
  */
 const art = {
   "hp-elitedesk-800": sff({ label: "sff" }),

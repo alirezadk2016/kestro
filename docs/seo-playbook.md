@@ -1043,12 +1043,16 @@ what it shows and a visible credit; the files and their changes are in
 photograph and where it was looked for. No URL, title, H1, description or
 canonical changed.
 
-# Model photographs: the ThinkPad Ultra Dock — 12 November 2026
+The ThinkPad Ultra Dock gained one too (Paowee, CC BY-SA 4.0, margins
+trimmed, shown whole at about 2:1); its illustration was removed. The X1
+Carbon candidate on Flickr stays unused: only its 1024 px size is reachable
+from here, under the 1200 px minimum. No URL, title, H1 or canonical changed.
 
-The ThinkPad Ultra Dock page gained two licensed photographs of the exact
-dock (Paowee, CC BY-SA 4.0): alone from above, and with a ThinkPad T470
-docked. Its illustration was removed. The WD19 gallery gained a third view,
-the front. The card now shows wide photographs whole, which is what made
-the Ultra Dock usable. The OptiPlex 5060 Micro photograph stays unused: the
-card's 4:3 crop cuts the upright machine in half. No URL, title, H1,
-description, canonical or word of page copy changed.
+# Model photographs: more views — 12 November 2026
+
+Two galleries gained a second or third licensed view of the exact model: the
+ThinkPad Ultra Dock with a ThinkPad T470 docked (Paowee, CC BY-SA 4.0) and
+the Dell WD19 from the front (Raimond Spekking, CC BY-SA 4.0). The card image
+of each is unchanged. The OptiPlex 5060 Micro photograph on Commons stays
+unused: the card's 4:3 crop cuts the upright machine in half. No URL, title,
+H1, description, canonical or word of page copy changed.

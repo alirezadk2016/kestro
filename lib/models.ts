@@ -1687,16 +1687,16 @@ export const models: Model[] = [
     brand: "Lenovo",
     images: [
       {
-        src: "/models/lenovo-thinkpad-ultra-dock/top-reference.webp",
+        src: "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp",
         alt: {
-          da: "ThinkPad Ultra Dock set ovenfra uden maskine, med dockstikket midt på pladen og tårnet med tænd-knap og nøglelås til venstre; referencefoto, ikke en lagerført enhed",
-          en: "ThinkPad Ultra Dock seen from above without a laptop, with the docking connector in the middle of the plate and the tower with power button and key lock on the left; reference photo, not a stocked unit",
+          da: "Lenovo ThinkPad Ultra Dock set ovenfra på en hvid flade: den flade dockplade med dockstikket og styretappene, Lenovo- og ThinkPad-logo og det høje tårn i venstre ende; referencefoto, ikke en lagerført enhed",
+          en: "Lenovo ThinkPad Ultra Dock seen from above on a white surface: the flat dock plate with its docking connector and guide pins, the Lenovo and ThinkPad logos and the tall tower at the left end; reference photo, not a stocked unit",
         },
         photographic: true,
         credit: {
           author: "Paowee",
           source: "https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG",
-          licence: "CC BY-SA 4.0 (resized)",
+          licence: "CC BY-SA 4.0 (trimmed)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },
