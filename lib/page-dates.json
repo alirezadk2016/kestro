@@ -31,12 +31,12 @@
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-11-11",
+    "modified": "2026-11-12",
     "files": 6
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-11-11",
+    "modified": "2026-11-12",
     "files": 13
   },
   "/om-os": {
@@ -56,12 +56,12 @@
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-11-11",
+    "modified": "2026-11-12",
     "files": 8
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-11-11",
+    "modified": "2026-11-12",
     "files": 14
   },
   "/reparation": {
