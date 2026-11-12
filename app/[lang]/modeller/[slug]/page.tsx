@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ModelGallery from "@/components/ModelGallery";
 import ModelCard from "@/components/ModelCard";
+import { picturesFirst } from "@/lib/model-order";
 import { modelMedia } from "@/lib/model-media";
 import { Check, Info } from "lucide-react";
 import Container from "@/components/Container";
@@ -107,7 +108,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const sameGroup = models.filter(
     (m) => m.group === model.group && m.slug !== model.slug && !sameCategory.includes(m),
   );
-  const related = [...sameCategory, ...sameGroup];
+  const related = picturesFirst([...sameCategory, ...sameGroup]);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const productId = `${pageUrl}#product`;

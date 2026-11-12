@@ -21,6 +21,7 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
 import ModelCard from "@/components/ModelCard";
+import { picturesFirst } from "@/lib/model-order";
 import FactNote from "@/components/FactNote";
 
 /*
@@ -62,7 +63,8 @@ const copy = {
     seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi skaffer",
     modelsBody:
-      "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne. Eksemplerne er ikke en lagerliste.",
+      "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne.",
+    stockNote: "Eksemplerne er ikke en lagerliste.",
     allModels: "Se hele modeloversigten",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
     useCases: "Typiske anvendelser",
@@ -81,7 +83,8 @@ const copy = {
     seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we source",
     modelsBody:
-      "Compare specifications and limitations once the work requirements are clear. These examples are not a stock list.",
+      "Compare specifications and limitations once the work requirements are clear.",
+    stockNote: "These examples are not a stock list.",
     allModels: "See the full model overview",
     priceNote: "The price depends on configuration, condition and quantity.",
     useCases: "Typical uses",
@@ -287,7 +290,13 @@ export default async function CategoryPage(props: {
                 <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {c.modelsTitle}
                 </h2>
-                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
+                {/* On the laptop page the recommendations above already say, once,
+                    that nothing shown is Kestro stock; the second "not a stock
+                    list" is left off there. */}
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">
+                  {c.modelsBody}
+                  {!isLaptops && ` ${c.stockNote}`}
+                </p>
                 {!isLaptops && (
                   <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
                 )}
@@ -298,7 +307,7 @@ export default async function CategoryPage(props: {
                 long two-column list beside an empty half of the page. */}
               <div>
                 <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
-                  {categoryModels.map((model, index) => (
+                  {picturesFirst(categoryModels).map((model, index) => (
                     <li key={model.slug}>
                       <ModelCard model={model} lang={lang} priority={index < 2} />
                     </li>

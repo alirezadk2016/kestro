@@ -13,10 +13,26 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
 import { buttonClass } from "@/components/Button";
+import { modelMedia } from "@/lib/model-media";
+import { picturesFirst } from "@/lib/model-order";
 
 /* One model from each kind of equipment, in catalogue order. Not a ranking:
-   the site has no sales to rank by. */
+   the site has no sales to rank by. Each is a preference, not a fixture:
+   where the preferred model has no photograph and another model of the same
+   kind has one, the shelf shows that one instead, so a row of four does not
+   set one photograph beside three drawings when a fourth photo exists. */
 const FEATURED = ["lenovo-thinkpad-t14", "dell-optiplex-5060", "dell-ultrasharp-u2419h", "dell-wd19"];
+
+function featuredModels() {
+  const isPhoto = (model: (typeof models)[number]) => modelMedia(model)?.kind === "photo";
+  return FEATURED.flatMap((slug) => {
+    const preferred = models.find((m) => m.slug === slug);
+    if (!preferred) return [];
+    if (isPhoto(preferred)) return [preferred];
+    const [first] = picturesFirst(models.filter((m) => m.group === preferred.group));
+    return [first && isPhoto(first) ? first : preferred];
+  });
+}
 
 const copy = {
   da: {
@@ -321,14 +337,11 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               </Link>
             </div>
             <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 xl:grid-cols-4">
-              {FEATURED.map((slug) => {
-                const model = models.find((m) => m.slug === slug);
-                return model ? (
-                  <li key={slug}>
-                    <ModelCard model={model} lang={lang} />
-                  </li>
-                ) : null;
-              })}
+              {featuredModels().map((model) => (
+                <li key={model.slug}>
+                  <ModelCard model={model} lang={lang} />
+                </li>
+              ))}
             </ul>
           </div>
         </Container>

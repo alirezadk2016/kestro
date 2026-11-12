@@ -19,7 +19,7 @@ function absolute(path: string, lang: "da" | "en"): string {
   return p === "/" ? BASE_URL : `${BASE_URL}${p}`;
 }
 
-type Route = { path: string; lastModified?: string };
+type Route = { path: string; lastModified?: string; images?: string[] };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: Route[] = [
@@ -49,8 +49,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     path: `/produkter/${category.slug}`,
   }));
 
+  /* A model page with photographs lists them as image entries, so Google
+     Images can find the photo on the page that is about that model. Only
+     photographs (model.images) are listed; the labelled illustrations are
+     not a picture of the model and are left out. */
   const modelRoutes: Route[] = models.map((model) => ({
     path: `/modeller/${model.slug}`,
+    ...(model.images?.length
+      ? { images: model.images.map((image) => `${BASE_URL}${image.src}`) }
+      : {}),
   }));
 
   /*
@@ -99,7 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * hreflang is "da", not "da-DK": the region subtag would target Danish
    * speakers in Denmark only, and the same pages serve Norway.
    */
-  return routes.flatMap(({ path, lastModified }) => {
+  return routes.flatMap(({ path, lastModified, images }) => {
     const da = absolute(path, "da");
     const en = absolute(path, "en");
     const languages = { da, en, "x-default": da };
@@ -109,11 +116,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: da,
         ...(lastModified ? { lastModified } : {}),
         alternates: { languages },
+        ...(images ? { images } : {}),
       },
       {
         url: en,
         ...(lastModified ? { lastModified } : {}),
         alternates: { languages },
+        ...(images ? { images } : {}),
       },
     ];
   });
