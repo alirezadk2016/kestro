@@ -1689,7 +1689,7 @@ export const models: Model[] = [
       {
         src: "/models/lenovo-thinkpad-ultra-dock/top-view-reference.webp",
         alt: {
-          da: "Lenovo ThinkPad Ultra Dock set ovenfra på en hvid flade: den flade dockplade med dockstikket og styretappene, Lenovo- og ThinkPad-logo og det høje tårn i venstre ende; referencefoto, ikke en lagerført enhed",
+          da: "Lenovo ThinkPad Ultra Dock set ovenfra på en hvid overflade: den flade dockplade med dockstikket og styretappene, Lenovo- og ThinkPad-logoerne og det høje tårn i venstre ende; referencefoto, ikke en lagerført enhed",
           en: "Lenovo ThinkPad Ultra Dock seen from above on a white surface: the flat dock plate with its docking connector and guide pins, the Lenovo and ThinkPad logos and the tall tower at the left end; reference photo, not a stocked unit",
         },
         photographic: true,
@@ -1805,8 +1805,8 @@ export const models: Model[] = [
       {
         src: "/models/dell-wd19/front-reference.webp",
         alt: {
-          da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
-          en: "Dell WD19 USB-C dock viewed from the front with power button, USB-C, USB-A and audio jack on the front; reference photo, not a stocked unit",
+          da: "Dell WD19 USB-C-dock set forfra: tænd/sluk-knap, USB-C, USB-A og lydstik; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock from the front: power button, USB-C, USB-A and audio jack; reference photo, not a stocked unit",
         },
         photographic: true,
         credit: {
