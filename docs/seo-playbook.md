@@ -1047,3 +1047,19 @@ The ThinkPad Ultra Dock gained one too (Paowee, CC BY-SA 4.0, margins
 trimmed, shown whole at about 2:1); its illustration was removed. The X1
 Carbon candidate on Flickr stays unused: only its 1024 px size is reachable
 from here, under the 1200 px minimum. No URL, title, H1 or canonical changed.
+
+How the catalogue uses them (12 November 2026):
+
+- **Image sitemap.** Every model page with photographs lists them as
+  `<image:image>` entries in `app/sitemap.ts`, read from `model.images`, so
+  a new photograph is listed without another edit. Illustrations are left
+  out: they are not a picture of the model.
+- **Photographs first.** Every shelf of model cards (the catalogue groups,
+  a category's models, a model page's related row, the four-model shelf on
+  /produkter) shows photographed models first (`lib/model-order.ts`). The
+  ItemList structured data keeps the catalogue's order.
+- **The X1 Carbon candidate is closed.** Its screen shows personal data,
+  and blurring a stranger's screen to use the photo is not worth a
+  retouched product image. The X1 Carbon, L14, EliteBook 840 G5/G6, ProBook
+  450 G7/G8, Latitude 5410, ZBook 15 G5/G6 and the Latitude 5420 wait for
+  the owner's own photographs.
