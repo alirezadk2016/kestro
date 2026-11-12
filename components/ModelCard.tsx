@@ -35,6 +35,10 @@ export default function ModelCard({
   priority?: boolean;
   headingLevel?: "h2" | "h3";
 }) {
+  /* A photograph fills the 4:3 frame when it is 4:3 or taller (a near-square
+     shot loses a strip top and bottom). A wider one, such as a long dock
+     photographed whole, is shown entire on the frame's own grey, because
+     cropping it to 4:3 would cut off the device. */
   const media = modelMedia(model);
   const da = lang === "da";
   const Heading = headingLevel;
@@ -52,7 +56,9 @@ export default function ModelCard({
             priority={priority}
             sizes="(min-width: 1536px) 22vw, (min-width: 1024px) 30vw, (min-width: 768px) 45vw, 80vw"
             className={`h-full w-full ${
-              media.kind === "photo" ? "object-cover" : "object-contain"
+              media.kind === "photo" && media.width / media.height <= 1.42
+                ? "object-cover"
+                : "object-contain"
             } transition-transform duration-300 motion-safe:group-hover:scale-[1.02]`}
           />
           <figcaption className="absolute left-3 top-3 rounded bg-ink-950/90 px-2 py-0.5 text-xs font-semibold leading-5 text-paper">
