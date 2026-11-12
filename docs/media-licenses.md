@@ -68,20 +68,22 @@ assets and its separate model-photo/individual-unit distinction.
 
 ## Original product illustrations
 
-- Assets: `public/products/*.svg`, seven files: the desktops, monitors and
-  docks without a licensed photograph or a pricing illustration.
+- Assets: `public/products/*.svg`, six files since 2026-11-12 (the WD19's
+  was replaced by a photograph): the desktops, monitors and docks without a
+  licensed photograph or a pricing illustration.
 - Laptops have none. On 2026-11-11 the owner asked that every laptop shown
   be a real photograph of that model, so the seven laptop drawings (X1
   Carbon, L14, EliteBook 840, ProBook 450, Latitude 5410, Latitude 7490,
   ZBook 15) were deleted. Those models show no picture until a licensed
-  exact-model or owner-supplied photograph is added.
+  exact-model or owner-supplied photograph is added; the Latitude 7490 got
+  one on 2026-11-12.
 - Generated for Kestro on 2026-11-11 by `scripts/build/product-art.mjs`
   (deterministic; rerun after changing a definition). Code-native artwork in
   the language of the pricing illustrations: pale studio field, soft floor
   shadow, graphite hardware, empty screens, no logos.
 - They show a format, not a model's exact appearance: an upright SFF case,
   a one-litre case, a monitor on a height-adjustable column, a mechanical
-  dock and USB-C docks. Each of those
+  dock and a USB-C dock. Each of those
   comes from lib/models.ts. Colour is not recorded there, so every machine
   is the same neutral graphite.
 - No manufacturer or retailer image, drawing or manual was copied, traced or
@@ -89,29 +91,101 @@ assets and its separate model-photo/individual-unit distinction.
 - Every frame that shows one carries the label "Illustration", and each alt
   text in `lib/model-media.ts` describes what is drawn.
 
-## Laptop photographs searched for, not yet added (2026-11-11)
+## Dell Latitude 7490
 
-Wikimedia Commons was searched (categories ThinkPad X1 Carbon, ThinkPad L
-series, HP EliteBook, HP EliteBook 840, HP ProBook, HP ZBook, Dell Latitude,
-Dell Latitude 7490, and full-text search for each model and generation).
-The image server (upload.wikimedia.org) then refused every download from
-the build environment with HTTP 429 for more than fifteen minutes, so no
-file below has been downloaded, viewed or checked against its page. Nothing
-was substituted.
+- File: `public/models/latitude-7490/front-open-reference.webp` (1600 x 1200)
+- Source page: https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg
+- Author: Ahunt (own work, taken 2024-03-14)
+- Licence: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
+- Accessed: 2026-11-12, from the Commons 1920 px thumbnail of the 2071 x 1944
+  original. Viewed at 8-bit: a photograph of the machine itself (open on a
+  wooden table, Dell logo, 8th-generation Intel sticker), not a screenshot,
+  although Commons also files it under free screenshots. The screen shows an
+  Ubuntu Cinnamon desktop; the alt text says it shows a Linux desktop.
+- Changes: cropped to 4:3 and resized to 1600 x 1200; WebP quality 82;
+  metadata removed. The whole screen and keyboard are in frame; the lower
+  palm rest is cut because the open laptop is taller than a 4:3 frame. No
+  retouching, recolouring or other edits.
 
-- Latitude 7490: https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg
-  by Ahunt, CC0, own work, 2071 x 1944, described as "A Dell Latitude 7490
-  running Ubuntu Cinnamon 23.10". Best candidate; view it first (it is also
-  filed under free screenshots, so confirm it is a photograph of the
-  machine).
-- X1 Carbon (page covers Gen 6-8): four files named "ThinkPad X1 Carbon
-  gen7 (0)-(3)", IAEA Imagebank, CC BY 2.0. They are meeting photographs
-  of named people with the laptop on the table; the generation comes only
-  from the Commons file name. Usable only if the laptop can be shown
-  without the people and the generation can be confirmed.
-- Latitude 5410 and X1 Carbon Gen 8: LaptopMedia "360 degrees" videos,
-  CC BY 3.0 per the uploader, but marked "License review needed". Not
-  usable until the licence review passes.
-- L14, EliteBook 840 G5/G6, ProBook 450 G7/G8, ZBook 15 G5/G6, Latitude
-  5420: no file on Commons identifies these models (other generations
-  only: EliteBook 840 G1/G3/G4/G8, ZBook 15 G3, L15 Gen 3).
+## Dell Dock WD19
+
+Both files are cropped derivatives and stay under CC BY-SA 4.0. The credit on
+the page says "cropped".
+
+- File: `public/models/dell-wd19/rear-ports-reference.webp` (1600 x 1200,
+  the card image)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5814.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 3840 px Commons thumbnail of the 5768 x
+    3245 original. Commons names the model as WD19, type K20A; the rating
+    label in the same series (file -5810) reads "WD19 / K20A".
+  - Changes: cropped to 4:3 around the rear port row (audio, two
+    DisplayPort, HDMI, USB-C, two USB-A, Ethernet, power) and resized to
+    1600 x 1200; the cable end of the dock falls outside the frame. WebP
+    quality 82, metadata removed. No other edits.
+- File: `public/models/dell-wd19/vent-end-reference.webp` (1600 x 1200)
+  - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg
+  - Author: Raimond Spekking (own work, taken 2025-11-13)
+  - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+  - Accessed: 2026-11-12, from the 1920 px Commons thumbnail of the 3377 x
+    3377 original.
+  - Changes: cropped to 4:3 (the far end of the dock falls outside the frame)
+    and resized to 1600 x 1200; WebP quality 82, metadata removed. No other
+    edits.
+
+The WD19 illustration (`public/products/dell-wd19.svg`) was deleted with its
+entry in `scripts/build/product-art.mjs` and its alt in `lib/model-media.ts`.
+
+## Models still without a photograph (searched 2026-11-12)
+
+Searched: Wikimedia Commons full-text and title search per model and
+generation (the API rate-limited this environment repeatedly, so some
+queries ran two or three times), plus Openverse (licences CC0, PDM, BY,
+BY-SA), which also indexes Commons and Flickr. Flickr's image server
+(live.staticflickr.com) is blocked by this build environment's network
+policy, so a photo hosted only on Flickr cannot be downloaded here; those
+are listed as candidates. Nothing was substituted, and no drawing, render or
+generated image was added.
+
+Laptops and the workstation (each keeps its empty dark well):
+
+- ThinkPad X1 Carbon (page: Gen 6-8). Candidate: "Lenovo X1 carbon 6th
+  generation" by pedrik, CC BY 2.0,
+  https://www.flickr.com/photos/24388834@N04/39826813730 (licence, author
+  and 6th-generation title confirmed on the Flickr page; 4151 x 3916
+  original). Not downloaded: Flickr is blocked here. The four IAEA
+  Imagebank "ThinkPad X1 Carbon gen7 (0)-(3)" files (CC BY 2.0) were
+  viewed and rejected: each screen shows a video call with identifiable
+  people, and one has a person's hand in frame. Other Commons X1 Carbon
+  files are Gen 1, 2 or 5.
+- ThinkPad L14: nothing on Commons or Openverse.
+- EliteBook 840 (page: G5 and G6): Commons has G1, G3, G4 and G8 only.
+- ProBook 450 (page: G7 and G8): nothing; Commons has a ProBook 640 G1.
+- Latitude 5410: nothing; the LaptopMedia video on Commons is still
+  "License review needed".
+- Latitude 5420 (`lib/external-laptops.ts`): nothing on Commons or
+  Openverse.
+- ZBook 15 (page: G5 and G6): Commons and Openverse have G3, ZBook 14/17
+  and an older "ZBook Mobile 15" press photo only.
+
+Desktops, monitors and docks (each keeps its labelled illustration):
+
+- EliteDesk 800 (page: G4 and G5 SFF): Commons has the 800 G2 mini and 705
+  G1 only.
+- ThinkCentre M720q Tiny: Commons has the M715q and M75q-1, other models.
+- OptiPlex 5060 (SFF and Micro): one exact file, "Dell OptiPlex 5060
+  Micro" by Jackpen7, CC BY-SA 4.0,
+  https://commons.wikimedia.org/wiki/File:Dell_OptiPlex_5060_Micro.jpg.
+  Viewed and not used: an upright Micro mounted behind a monitor, so a 4:3
+  frame cuts the machine in half and the background is a desk, cables
+  and the monitor. Kept the pricing illustration.
+- UltraSharp U2419H, EliteDisplay E243, ThinkVision T24i: nothing; Commons
+  and Openverse have other UltraSharp and ThinkVision models.
+- ThinkPad Ultra Dock: two exact files by Paowee, CC BY-SA 4.0, "ThinkPad
+  Ultra docking station" and "ThinkPad T470 docked in the Ultra docking
+  station". Viewed and not used: the dock fills the whole width of both,
+  so no 4:3 frame shows the whole device, and cropping cuts the side
+  tower that makes it recognisable.
+- HP USB-C Dock G5: nothing; "USB-C dock front/back" on Commons is a
+  third-party dock.

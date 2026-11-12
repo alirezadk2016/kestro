@@ -234,7 +234,6 @@ const art = {
   "hp-elitedisplay-e243": monitor(),
   "lenovo-thinkvision-t24i": monitor(),
   "lenovo-thinkpad-ultra-dock": mechanicalDock(),
-  "dell-wd19": usbcDock({ shape: "long" }),
   "hp-usb-c-dock-g5": usbcDock({ shape: "square" }),
 };
 

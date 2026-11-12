@@ -942,6 +942,22 @@ export const models: Model[] = [
     slug: "dell-latitude-7490",
     name: "Dell Latitude 7490",
     brand: "Dell",
+    images: [
+      {
+        src: "/models/latitude-7490/front-open-reference.webp",
+        alt: {
+          da: "Dell Latitude 7490 set forfra på et træbord med åben skærm og sort tastatur; skærmen viser et Linux-skrivebord; referencefoto, ikke en lagerført enhed",
+          en: "Dell Latitude 7490 viewed from the front on a wooden table, screen open above the black keyboard and showing a Linux desktop; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Ahunt",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg",
+          licence: "CC0",
+          licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+        },
+      },
+    ],
     format: { da: '14" bærbar', en: '14" laptop' },
     group: "baerbare",
     category: "baerbare-computere",
@@ -1755,6 +1771,36 @@ export const models: Model[] = [
     /* Dell's own name for it, and the one that puts "dock" in the H1. */
     name: "Dell Dock WD19",
     brand: "Dell",
+    images: [
+      {
+        src: "/models/dell-wd19/rear-ports-reference.webp",
+        alt: {
+          da: "Bagsiden af en Dell WD19 med lydstik, to DisplayPort, HDMI, USB-C, to USB-A, netværksstik og strømindgang; referencefoto, ikke en lagerført enhed",
+          en: "The back of a Dell WD19 with audio jack, two DisplayPort, HDMI, USB-C, two USB-A, Ethernet and power input; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5814.jpg",
+          licence: "CC BY-SA 4.0 (cropped)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/dell-wd19/vent-end-reference.webp",
+        alt: {
+          da: "Dell WD19 set skråt fra enden med ventilationsristen og portene langs siden; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 at an angle from one end, showing the ventilation grille and the ports along the side; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
+          licence: "CC BY-SA 4.0 (cropped)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+    ],
     format: { da: "USB-C-dock", en: "USB-C dock" },
     group: "docking",
     category: "dockingstationer",

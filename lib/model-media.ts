@@ -28,6 +28,8 @@ export type ModelMedia = {
 const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/thinkpad-t480-4.jpg": { width: 1179, height: 1142 },
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
+  "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1200 },
+  "/models/dell-wd19/rear-ports-reference.webp": { width: 1600, height: 1200 },
 };
 
 const monitor24: Localized = {
@@ -54,7 +56,6 @@ const ILLUSTRATION_ALT: Record<string, Localized> = {
     da: "Illustration: mekanisk dockingstation med dockstik på oversiden",
     en: "Illustration: a mechanical docking station with its connector on top",
   },
-  "dell-wd19": usbcDock,
   "hp-usb-c-dock-g5": usbcDock,
 };
 

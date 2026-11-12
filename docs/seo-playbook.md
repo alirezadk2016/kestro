@@ -1030,3 +1030,15 @@ model photo. Commons candidates for the 7490 and X1 Carbon are listed in
 `docs/media-licenses.md`; the other five need the owner's own photographs.
 Image search for these pages waits on real photos; no URL, title, H1 or
 canonical changed.
+
+# Model photographs: a second search — 12 November 2026
+
+Every catalogue model and the Latitude 5420 recommendation was searched
+again on Wikimedia Commons and Openverse. Two models gained real, licensed
+photographs of the exact model: the Dell Latitude 7490 (Ahunt, CC0) and the
+Dell Dock WD19 (Raimond Spekking, CC BY-SA 4.0, two views, cropped). The
+WD19's illustration was removed. Each photo carries an alt text describing
+what it shows and a visible credit; the files and their changes are in
+`docs/media-licenses.md`, which also lists every model still without a
+photograph and where it was looked for. No URL, title, H1, description or
+canonical changed.

@@ -203,6 +203,20 @@
     "format": "webp"
   },
   {
+    "src": "/models/dell-wd19/rear-ports-reference.webp",
+    "width": 1600,
+    "height": 1200,
+    "bytes": 69568,
+    "format": "webp"
+  },
+  {
+    "src": "/models/dell-wd19/vent-end-reference.webp",
+    "width": 1600,
+    "height": 1200,
+    "bytes": 99662,
+    "format": "webp"
+  },
+  {
     "src": "/models/elitebook/840-g8-reference.webp",
     "width": 1280,
     "height": 1182,
@@ -245,6 +259,13 @@
     "format": "webp"
   },
   {
+    "src": "/models/latitude-7490/front-open-reference.webp",
+    "width": 1600,
+    "height": 1200,
+    "bytes": 126392,
+    "format": "webp"
+  },
+  {
     "src": "/models/t14/gen2-intel-reference.webp",
     "width": 1600,
     "height": 1200,
@@ -277,13 +298,6 @@
     "width": 1200,
     "height": 900,
     "bytes": 3578,
-    "format": "svg"
-  },
-  {
-    "src": "/products/dell-wd19.svg",
-    "width": 1200,
-    "height": 900,
-    "bytes": 3006,
     "format": "svg"
   },
   {
