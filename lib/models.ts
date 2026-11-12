@@ -1803,6 +1803,20 @@ export const models: Model[] = [
     brand: "Dell",
     images: [
       {
+        src: "/models/dell-wd19/front-reference.webp",
+        alt: {
+          da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock viewed from the front with power button, USB-C, USB-A and audio jack on the front; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
+          licence: "CC BY-SA 4.0 (resized)",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
         src: "/models/dell-wd19/rear-ports-reference.webp",
         alt: {
           da: "Bagsiden af en Dell WD19 med lydstik, to DisplayPort, HDMI, USB-C, to USB-A, netværksstik og strømindgang; referencefoto, ikke en lagerført enhed",
@@ -1827,20 +1841,6 @@ export const models: Model[] = [
           author: "Raimond Spekking",
           source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
           licence: "CC BY-SA 4.0 (cropped)",
-          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-        },
-      },
-      {
-        src: "/models/dell-wd19/front-reference.webp",
-        alt: {
-          da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
-          en: "Dell WD19 USB-C dock viewed from the front with power button, USB-C, USB-A and audio jack on the front; reference photo, not a stocked unit",
-        },
-        photographic: true,
-        credit: {
-          author: "Raimond Spekking",
-          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
-          licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },
       },

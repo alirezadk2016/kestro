@@ -114,7 +114,7 @@ All three files are derivatives and stay under CC BY-SA 4.0. The credit on
 the page says "cropped" or "resized".
 
 - File: `public/models/dell-wd19/rear-ports-reference.webp` (1600 x 1200,
-  the card image)
+  second in the gallery)
   - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5814.jpg
   - Author: Raimond Spekking (own work, taken 2025-11-13)
   - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
@@ -135,8 +135,9 @@ the page says "cropped" or "resized".
     and resized to 1600 x 1200; WebP quality 82, metadata removed. No other
     edits.
 
-- File: `public/models/dell-wd19/front-reference.webp` (1600 x 900, third
-  in the gallery)
+- File: `public/models/dell-wd19/front-reference.webp` (1600 x 900, the
+  card image and first in the gallery since 2026-11-12: it is the one view
+  that shows the whole dock, shown uncropped on the card)
   - Source page: https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg
   - Author: Raimond Spekking (own work, taken 2025-11-13)
   - Licence: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
