@@ -20,7 +20,7 @@ import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
-import ModelCard from "@/components/ModelCard";
+import ModelList from "@/components/ModelList";
 import { picturesFirst } from "@/lib/model-order";
 import FactNote from "@/components/FactNote";
 
@@ -278,19 +278,20 @@ export default async function CategoryPage(props: {
     </ProductDisclosure>
   );
 
-  /* The range as a product grid, in the open. On the laptop page it sat in a
-     closed fold under "Sammenlign andre modeller og serier", which hid the
-     machines Kestro sources behind a click; with a picture on every card it
-     belongs straight after the external recommendations. */
+  /* The range, in the open and first: what Kestro sources, as a list a
+     buyer compares down the page (components/ModelList.tsx). On the laptop
+     page it used to follow the external recommendations, so the first thing
+     a buyer met was where else to buy; now the models come first and "buy
+     elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
+      <section id="models" className="scroll-mt-24 border-t border-white/10 bg-ink-900 py-10 sm:py-20">
             <Container>
               <div className="split max-w-3xl">
                 <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {c.modelsTitle}
                 </h2>
-                {/* On the laptop page the recommendations above already say, once,
+                {/* On the laptop page the recommendations below already say, once,
                     that nothing shown is Kestro stock; the second "not a stock
                     list" is left off there. */}
                 <p className="mt-3 text-base leading-[1.75] text-paper/75">
@@ -302,17 +303,8 @@ export default async function CategoryPage(props: {
                 )}
               </div>
 
-              {/* A shelf to swipe on a phone (.rail), two columns from md, three
-                from lg across the full container — nine laptops ran as one
-                long two-column list beside an empty half of the page. */}
               <div>
-                <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
-                  {picturesFirst(categoryModels).map((model, index) => (
-                    <li key={model.slug}>
-                      <ModelCard model={model} lang={lang} priority={index < 2} />
-                    </li>
-                  ))}
-                </ul>
+                <ModelList models={picturesFirst(categoryModels)} lang={lang} />
 
                 <Link
                   href={localePath("/modeller", lang)}
@@ -388,8 +380,8 @@ export default async function CategoryPage(props: {
                     ? "Til kontor, hjemmearbejde og startup."
                     : "For office work, home working and startup teams."}
                 </p>
-                <Button href="#external-laptop-recommendations" className="mt-5 w-full sm:w-auto">
-                  {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
+                <Button href="#models" className="mt-5 w-full sm:w-auto">
+                  {lang === "da" ? "Se modellerne" : "See the models"}
                 </Button>
               </div>
             </div>
@@ -526,9 +518,9 @@ export default async function CategoryPage(props: {
         </section>
       )}
 
-      {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
-
       {isLaptops && modelsSection}
+
+      {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
 
       {isLaptops && useCasesSection}
 

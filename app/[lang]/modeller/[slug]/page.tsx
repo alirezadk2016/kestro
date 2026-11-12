@@ -109,7 +109,11 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const sameGroup = models.filter(
     (m) => m.group === model.group && m.slug !== model.slug && !sameCategory.includes(m),
   );
-  const related = picturesFirst([...sameCategory, ...sameGroup]);
+  /* Three, photographed first: eight cards in three rows was the longest
+     section on the page and repeated the category page below a model. The
+     rest are one link away, on the category page. */
+  const peers = picturesFirst([...sameCategory, ...sameGroup]);
+  const related = peers.slice(0, 3);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const productId = `${pageUrl}#product`;
@@ -407,13 +411,24 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
               {/* The same product card as the catalogue, as a shelf: a row of
                   names in pills told a buyer nothing about which one to open. */}
-              <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 2xl:grid-cols-4">
+              <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
                 {related.map((other) => (
                   <li key={other.slug}>
                     <ModelCard model={other} lang={lang} />
                   </li>
                 ))}
               </ul>
+              {category && peers.length > related.length && (
+                <Link
+                  href={localePath(`/produkter/${category.slug}`, lang)}
+                  className="mt-6 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+                >
+                  {lang === "da"
+                    ? `Se alle ${lowerFirst(category.name.da)}`
+                    : `See all ${lowerFirst(category.name.en)}`}
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              )}
             </div>
           </Container>
         </section>
