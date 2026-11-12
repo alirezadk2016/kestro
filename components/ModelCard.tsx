@@ -5,6 +5,7 @@ import type { Model } from "@/lib/models";
 import { modelMedia } from "@/lib/model-media";
 import SpecChips from "./SpecChips";
 import { buttonClass } from "./Button";
+import Logo from "./Logo";
 
 /*
  * A model in the catalogue: picture, maker and format, name, one line, the
@@ -60,12 +61,16 @@ export default function ModelCard({
         </figure>
       ) : (
         /* A laptop without a real photograph of that model shows none — the
-           owner ruled out drawings of laptops. The empty well keeps the row
-           even beside cards that have one, and says why it is empty. */
-        <div className="flex aspect-[4/3] items-center justify-center bg-paper-dim px-6 text-center">
-          <p className="text-sm font-medium text-ink-600">
-            {da ? "Intet modelfoto endnu" : "No model photo yet"}
-          </p>
+           owner ruled out drawings of laptops. The well keeps the row even
+           beside cards that have one. It is dark and carries only the mark:
+           a pale box with "no photo yet" in it, seven times down one page,
+           read as an unfinished catalogue, and the page says it once
+           instead (/modeller). */
+        <div
+          aria-hidden="true"
+          className="relative flex aspect-[4/3] items-center justify-center border-b border-white/[0.06] bg-ink-950/70 bg-[radial-gradient(ellipse_at_50%_35%,rgb(46_121_255/0.10),transparent_65%)]"
+        >
+          <Logo tone="light" className="h-10 w-auto opacity-[0.14]" />
         </div>
       )}
 
