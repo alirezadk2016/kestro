@@ -1072,3 +1072,23 @@ the Dell WD19 from the front (Raimond Spekking, CC BY-SA 4.0). The card image
 of each is unchanged. The OptiPlex 5060 Micro photograph on Commons stays
 unused: the card's 4:3 crop cuts the upright machine in half. No URL, title,
 H1, description, canonical or word of page copy changed.
+
+# "Har I brug for den nu?" on every model page — 12 November 2026
+
+The owner asked that each model say Kestro does not have it yet and point to
+where it can be bought meanwhile. Every model page now has that section under
+its header (`components/RetailLinks.tsx`): "Vi har ikke {model} på lager
+endnu", the retailers whose own search showed that exact model, and a link to
+ask Kestro to source it.
+
+- The links come from `lib/retail-links.ts`, checked on 12 November. Only
+  refurbed could be checked; Proshop and Dustin (Cloudflare 403), Amazon.de
+  (refuses automated search) and Elgiganten (results never render for an
+  automated client) are left out until someone checks them by hand
+  (`docs/retail-links.md`).
+- Outbound links carry `rel="noopener noreferrer nofollow"`: a search page
+  is not a source the page vouches for.
+- No retailer photo, price or "best price" claim is shown. The footnote says
+  the shops are independent and Kestro earns nothing from the link.
+- The FAQ answer "Har I {model} på lager?" stays: it answers a question
+  buyers type, which is a different job from the section's notice.

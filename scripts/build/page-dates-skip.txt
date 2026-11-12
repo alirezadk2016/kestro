@@ -29,3 +29,6 @@ dfa41e0 components/ContactForm.tsx  # validation messages only: form feedback, n
 1950ea9 /produkter /modeller/[slug]  # category intros, 11 November: only /produkter/[slug] shows them
 cc59ef4 /produkter /modeller/[slug]  # external laptop recommendations, 11 November: only /produkter/[slug] shows them
 9b4456e  # laptop drawings removed, 12 November: pictures and alt text only, no fact or answer changed
+cd25463  # merge of the model-photo sessions, 12 November: pictures only
+bedb521  # merge of the Ultra Dock photographs, 12 November: pictures only
+630449f  # model photographs, 12 November: its Page-Dates trailer sits apart from the last paragraph, so git does not read it
