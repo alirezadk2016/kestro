@@ -131,10 +131,10 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
               );
             })}
           </nav>
-          <p className="mt-4 text-sm leading-[1.6] text-paper/65">
+          <p className="mt-4 max-w-3xl text-sm leading-[1.6] text-paper/65">
             {lang === "da"
-              ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får."
-              : "The pictures are model photos or illustrations of the format — not the machine you get."}
+              ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får. En bærbar vises kun med et rigtigt foto af netop den model, så nogle står endnu uden billede."
+              : "The pictures are model photos or illustrations of the format — not the machine you get. A laptop is only shown with a real photo of that exact model, so some have no picture yet."}
           </p>
 
           {modelGroups.map((group) => {
