@@ -12,13 +12,17 @@
  *
  * A drawing may only show what lib/models.ts says. So the variables are the
  * documented ones — SFF and one-litre cases, the monitors' height-adjustable
- * stand, and the three dock types — and colour is not one of them: the data does not record it, so
+ * stand, and the USB-C dock — and colour is not one of them: the data does not record it, so
  * every machine is the same neutral graphite.
  *
  * No laptops. On 11 November 2026 the owner asked that every laptop shown be
  * a real photograph of that model, never an artificial picture, so the seven
  * laptop drawings this script made were removed with their files. A laptop
  * without a licensed or owner-supplied photograph shows no picture.
+ *
+ * A model that gets a licensed photograph loses its drawing here, with its
+ * file: on 12 November 2026 the ThinkPad Ultra Dock and the Dell WD19 did
+ * (docs/media-licenses.md).
  *
  * Output is deterministic; re-running it changes nothing unless the
  * definitions below change.
@@ -176,27 +180,6 @@ function monitor({ stand = "column" } = {}) {
 
 /* ------------------------------------------------------------------- docks */
 
-/* A mechanical dock the laptop clicks down onto: a flat plate seen from the
-   front and above, its docking connector and two guides on top. */
-function mechanicalDock() {
-  const topFace = [[360, 470], [840, 470], [930, 610], [270, 610]];
-  const frontFace = [[270, 610], [930, 610], [930, 660], [270, 660]];
-  return frame(`
-    <polygon points="${pts(topFace)}" fill="url(#top)"/>
-    <polygon points="${pts(topFace)}" stroke="#6B7580" stroke-opacity=".4" stroke-width="1.5"/>
-    <polygon points="${pts(frontFace)}" fill="url(#body)"/>
-    <line x1="272" y1="611" x2="928" y2="611" stroke="#7C8692" stroke-opacity=".5" stroke-width="1.5"/>
-    <polygon points="${pts([[560, 520], [640, 520], [646, 548], [554, 548]])}" fill="#141A21" stroke="#56606B" stroke-width="1.5"/>
-    <rect x="574" y="528" width="52" height="10" rx="3" fill="#0A0F15"/>
-    <polygon points="${pts([[392, 500], [432, 500], [428, 530], [384, 530]])}" fill="#262D36" stroke="#56606B" stroke-opacity=".7"/>
-    <polygon points="${pts([[768, 500], [808, 500], [816, 530], [772, 530]])}" fill="#262D36" stroke="#56606B" stroke-opacity=".7"/>
-    <polygon points="${pts([[300, 590], [900, 590], [912, 606], [288, 606]])}" fill="#2A323C"/>
-    <circle cx="880" cy="635" r="11" stroke="#8F99A4" stroke-width="2.5"/>
-    <path d="M880 628v7" stroke="#8F99A4" stroke-width="2.5" stroke-linecap="round"/>
-    <rect x="300" y="628" width="30" height="13" rx="2.5" stroke="#8F99A4" stroke-width="2"/>
-    <rect x="342" y="628" width="30" height="13" rx="2.5" stroke="#8F99A4" stroke-width="2"/>`, { cx: 600, cy: 678, rx: 420, ry: 36 });
-}
-
 /* A USB-C dock: a low block with its host cable. */
 function usbcDock({ shape = "long" } = {}) {
   const w = shape === "long" ? 470 : 340;
@@ -233,8 +216,6 @@ const art = {
   "lenovo-thinkcentre-m720q": tiny(),
   "hp-elitedisplay-e243": monitor(),
   "lenovo-thinkvision-t24i": monitor(),
-  "lenovo-thinkpad-ultra-dock": mechanicalDock(),
-  "dell-wd19": usbcDock({ shape: "long" }),
   "hp-usb-c-dock-g5": usbcDock({ shape: "square" }),
 };
 

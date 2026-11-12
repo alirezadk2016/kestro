@@ -942,6 +942,22 @@ export const models: Model[] = [
     slug: "dell-latitude-7490",
     name: "Dell Latitude 7490",
     brand: "Dell",
+    images: [
+      {
+        src: "/models/latitude-7490/front-open-reference.webp",
+        alt: {
+          da: "Dell Latitude 7490 set forfra med åben skærm og tastatur på et træbord, skærmen viser et Linux-skrivebord; referencefoto, ikke en lagerført enhed",
+          en: "Dell Latitude 7490 viewed from the front with its screen open and keyboard visible on a wooden table, the screen showing a Linux desktop; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Ahunt",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg",
+          licence: "CC0",
+          licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+        },
+      },
+    ],
     format: { da: '14" bærbar', en: '14" laptop' },
     group: "baerbare",
     category: "baerbare-computere",
@@ -1327,6 +1343,22 @@ export const models: Model[] = [
     slug: "dell-optiplex-5060",
     name: "Dell OptiPlex 5060",
     brand: "Dell",
+    images: [
+      {
+        src: "/models/dell-optiplex-5060/micro-front-reference.webp",
+        alt: {
+          da: "Dell OptiPlex 5060 Micro set forfra, monteret lodret bag en skærm, med tænd-knap, lydstik, USB-C og USB-A på fronten; referencefoto, ikke en lagerført enhed",
+          en: "Dell OptiPlex 5060 Micro seen from the front, mounted upright behind a monitor, with power button, audio jacks, USB-C and USB-A on the front; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Jackpen7 (cropped)",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_OptiPlex_5060_Micro.jpg",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+    ],
     format: { da: "Stationær (SFF og Micro)", en: "Desktop (SFF and Micro)" },
     group: "stationaere",
     category: "stationaere-computere",
@@ -1669,6 +1701,36 @@ export const models: Model[] = [
     slug: "lenovo-thinkpad-ultra-dock",
     name: "Lenovo ThinkPad Ultra Dock",
     brand: "Lenovo",
+    images: [
+      {
+        src: "/models/lenovo-thinkpad-ultra-dock/top-reference.webp",
+        alt: {
+          da: "ThinkPad Ultra Dock set ovenfra uden maskine, med dockstikket midt på pladen og tårnet med tænd-knap og nøglelås til venstre; referencefoto, ikke en lagerført enhed",
+          en: "ThinkPad Ultra Dock seen from above without a laptop, with the docking connector in the middle of the plate and the tower with power button and key lock on the left; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Paowee (resized)",
+          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_Ultra_docking_station.JPG",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp",
+        alt: {
+          da: "ThinkPad Ultra Dock set ovenfra med en lukket ThinkPad T470 sat i docken; referencefoto, ikke en lagerført enhed",
+          en: "ThinkPad Ultra Dock seen from above with a closed ThinkPad T470 docked on it; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Paowee (resized)",
+          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+    ],
     format: { da: "Dockingstation", en: "Docking station" },
     group: "docking",
     category: "dockingstationer",
@@ -1755,6 +1817,50 @@ export const models: Model[] = [
     /* Dell's own name for it, and the one that puts "dock" in the H1. */
     name: "Dell Dock WD19",
     brand: "Dell",
+    images: [
+      {
+        src: "/models/dell-wd19/front-reference.webp",
+        alt: {
+          da: "Dell WD19 USB-C-dock set forfra med tænd-knap, USB-C, USB-A og lydstik på fronten; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock viewed from the front with power button, USB-C, USB-A and audio jack on the front; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking (resized)",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/dell-wd19/rear-ports-reference.webp",
+        alt: {
+          da: "Dell WD19 USB-C-dock set skråt bagfra med skærmudgange, netværksstik og USB-porte på bagsiden og ventilationsrist på siden; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock seen at an angle from the back, with display outputs, network port and USB ports on the back and a vent on the side; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking (resized)",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5815.jpg",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+      {
+        src: "/models/dell-wd19/with-cable-reference.webp",
+        alt: {
+          da: "Dell WD19 USB-C-dock set skråt ovenfra med det fastmonterede USB-C-kabel; referencefoto, ikke en lagerført enhed",
+          en: "Dell WD19 USB-C dock seen at an angle from above with its attached USB-C cable; reference photo, not a stocked unit",
+        },
+        photographic: true,
+        credit: {
+          author: "Raimond Spekking (resized)",
+          source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5809.jpg",
+          licence: "CC BY-SA 4.0",
+          licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+        },
+      },
+    ],
     format: { da: "USB-C-dock", en: "USB-C dock" },
     group: "docking",
     category: "dockingstationer",

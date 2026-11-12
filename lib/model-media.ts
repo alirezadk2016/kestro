@@ -28,6 +28,10 @@ export type ModelMedia = {
 const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
   "/thinkpad-t480-4.jpg": { width: 1179, height: 1142 },
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
+  "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1502 },
+  "/models/dell-optiplex-5060/micro-front-reference.webp": { width: 1200, height: 1600 },
+  "/models/lenovo-thinkpad-ultra-dock/top-reference.webp": { width: 1600, height: 808 },
+  "/models/dell-wd19/front-reference.webp": { width: 1600, height: 900 },
 };
 
 const monitor24: Localized = {
@@ -50,11 +54,6 @@ const ILLUSTRATION_ALT: Record<string, Localized> = {
   },
   "hp-elitedisplay-e243": monitor24,
   "lenovo-thinkvision-t24i": monitor24,
-  "lenovo-thinkpad-ultra-dock": {
-    da: "Illustration: mekanisk dockingstation med dockstik på oversiden",
-    en: "Illustration: a mechanical docking station with its connector on top",
-  },
-  "dell-wd19": usbcDock,
   "hp-usb-c-dock-g5": usbcDock,
 };
 

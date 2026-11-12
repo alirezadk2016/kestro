@@ -1030,3 +1030,15 @@ model photo. Commons candidates for the 7490 and X1 Carbon are listed in
 `docs/media-licenses.md`; the other five need the owner's own photographs.
 Image search for these pages waits on real photos; no URL, title, H1 or
 canonical changed.
+
+# Model photographs from Commons — 12 November 2026
+
+Four model pages gained licensed photographs of the exact model: Latitude
+7490 (CC0), OptiPlex 5060 Micro, ThinkPad Ultra Dock (two views) and Dell
+WD19 (three views), the last three CC BY-SA 4.0. Each carries an alt that
+describes what the photo shows and says it is a reference photo, not a
+stocked unit, plus a visible author and licence credit. The Ultra Dock and
+WD19 illustrations were deleted with their files. Image search now has a
+real picture for these pages; no URL, title, description, H1, canonical or
+word of page copy changed. Every model still without a photograph, and
+where it was looked for, is listed in `docs/media-licenses.md`.
