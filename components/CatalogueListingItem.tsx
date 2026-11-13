@@ -152,17 +152,14 @@ export default function CatalogueListingItem({
             <ArrowRight size={12} className="shrink-0 text-brand-700" aria-hidden="true" />
           </Link>
         </h3>
-        <p className="text-xs leading-4 text-ink-600">
-          {entry.image
-            ? entry.image.kind === "photo"
-              ? da
-                ? "Modelfoto"
-                : "Model photo"
-              : "Illustration"
-            : da
-              ? "Modelreference"
-              : "Model reference"}
-        </p>
+        {/* What the picture is. A row without one says nothing here: the
+            frame already shows the brand, and "Modelreference" under six
+            laptops read as a term to look up. */}
+        {entry.image && (
+          <p className="text-xs leading-4 text-ink-600">
+            {entry.image.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
+          </p>
+        )}
       </div>
 
       {budget ? (

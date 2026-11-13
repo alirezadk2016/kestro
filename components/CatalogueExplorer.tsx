@@ -415,7 +415,7 @@ export default function CatalogueExplorer({
               onChange={(event) =>
                 setState((previous) => ({ ...previous, query: event.target.value }))
               }
-              placeholder={da ? "Søg efter model eller mærke" : "Search by model or brand"}
+              placeholder={da ? "Model eller mærke" : "Model or brand"}
               className={`${control} w-full pl-10`}
             />
           </div>

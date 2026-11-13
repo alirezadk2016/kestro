@@ -316,16 +316,18 @@ export default async function CategoryPage(props: {
             </h1>
             <div className="lg:col-span-6">
               <p className="text-sm leading-6 text-paper/85 sm:text-base">
-                {category.tagline[lang]}.{" "}
-                {isLaptops && (
-                  <a
-                    href="#external-laptop-recommendations"
-                    className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-brand-300 hover:text-paper"
-                  >
-                    {lang === "da" ? "Køb hos andre" : "Buy elsewhere"}
-                  </a>
-                )}
+                {category.tagline[lang]}.
               </p>
+              {/* On its own line: inside the sentence its 44px tap height
+                  pushed the paragraph's lines 20px apart on a phone. */}
+              {isLaptops && (
+                <a
+                  href="#external-laptop-recommendations"
+                  className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-brand-300 hover:text-paper"
+                >
+                  {lang === "da" ? "Køb hos andre" : "Buy elsewhere"}
+                </a>
+              )}
               <p className="mt-1 text-xs leading-5 text-paper/65">
                 {categoryModels.length > 0
                   ? c.modelsBody
@@ -391,15 +393,34 @@ export default async function CategoryPage(props: {
                 <p className="mt-3 text-base leading-[1.75] text-paper/75">
                   {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
                 </p>
-                <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
+                {/* Brands were lit pills: the same capsule as the clickable
+                    category links further down, but not links, so each looked
+                    like a button that did nothing. Where the category has models
+                    they are a plain list of names; where it has none (tablets),
+                    each name asks for a price on that brand, as phones do. */}
+                <ul
+                  className={
+                    isPhones
+                      ? "phone-brand-links"
+                      : categoryModels.length === 0
+                        ? "mt-6 flex flex-wrap gap-2"
+                        : "mt-5 flex flex-wrap gap-x-5 gap-y-2 text-base font-medium text-paper/85"
+                  }
+                >
                   {category.brands.map((brand) => (
-                    <li
-                      key={brand}
-                      className={
-                        isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
-                      }
-                    >
-                      {isPhones ? (
+                    <li key={brand}>
+                      {!isPhones && categoryModels.length === 0 ? (
+                        <Link
+                          href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
+                          aria-label={`${lang === "da" ? "Få pris på" : "Get a price for"} ${brand}`}
+                          className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 text-sm font-semibold text-paper/85 transition-colors hover:text-brand-300"
+                        >
+                          {brand}
+                          <span aria-hidden="true" className="text-brand-300">
+                            &rarr;
+                          </span>
+                        </Link>
+                      ) : isPhones ? (
                         <Link
                           href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
                           aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}

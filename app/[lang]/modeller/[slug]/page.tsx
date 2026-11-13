@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ModelGallery from "@/components/ModelGallery";
-import ModelCard from "@/components/ModelCard";
+import RelatedModelRows from "@/components/RelatedModelRows";
+import { modelCatalogueEntries } from "@/components/ModelCatalogue";
 import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
 import { modelMedia } from "@/lib/model-media";
@@ -423,15 +424,15 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           <Container>
             <div className="max-w-6xl xl:max-w-none">
               <h2 className="font-display t-h3 font-bold tracking-tight text-paper">{c.related}</h2>
-              {/* The same product card as the catalogue, as a shelf: a row of
-                  names in pills told a buyer nothing about which one to open. */}
-              <ul className="rail mt-6 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3">
-                {related.map((other) => (
-                  <li key={other.slug}>
-                    <ModelCard model={other} lang={lang} />
-                  </li>
-                ))}
-              </ul>
+              {/* The catalogue's own rows, so a model looks the same here as in
+                  the list the buyer came from. */}
+              <RelatedModelRows
+                lang={lang}
+                entries={modelCatalogueEntries(related, lang).map((entry) => ({
+                  ...entry,
+                  fragmentId: undefined,
+                }))}
+              />
               {category && peers.length > related.length && (
                 <Link
                   href={localePath(`/produkter/${category.slug}`, lang)}
