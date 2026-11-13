@@ -594,6 +594,149 @@ body {
     line-height: 1.35;
   }
 
+  .hero-title {
+    font-size: 1.625rem;
+  }
+
+  /* Portrait art direction is isolated from the desktop hero and other pages.
+     Fixed type steps accommodate the long Danish word without viewport scaling. */
+  @media (max-width: 767px) {
+    .home-hero {
+      --hero-hint-height: 0px;
+      --hero-header-height: 65px;
+      margin-top: calc(-1 * var(--hero-header-height));
+      background-color: #060b16;
+    }
+
+    html[data-lang-hint="on"] .home-hero {
+      --hero-hint-height: 53px;
+    }
+
+    .home-hero-frame {
+      min-height: max(
+        700px,
+        calc(100svh - 52px - var(--hero-hint-height)),
+        calc(min(100vw, 480px) * 1.778)
+      );
+      justify-content: flex-start;
+    }
+
+    .home-hero .hero-scene-mobile {
+      background-size: min(100%, 480px) auto;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+
+    .home-hero .home-hero-copy-wrap {
+      position: static;
+      padding-top: calc(var(--hero-header-height) + 28px);
+      padding-bottom: 24px;
+      align-items: flex-start;
+    }
+
+    .home-hero-copy-container {
+      padding-inline: 20px;
+    }
+
+    .home-hero-copy {
+      max-width: 24rem;
+    }
+
+    .home-hero .hero-title {
+      font-size: 1.625rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.5rem;
+    }
+
+    .home-hero .home-hero-lead {
+      margin-top: 14px;
+      font-size: 1rem;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .home-hero-detail {
+      display: none;
+    }
+
+    .home-hero .home-hero-status {
+      position: absolute;
+      inset-inline: 20px;
+      bottom: 14px;
+      margin: 0;
+      max-width: 24rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+
+    .home-hero .hero-scene-mobile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgb(6 11 22 / 0.95), transparent 26%);
+    }
+
+    .home-hero .home-hero-actions {
+      margin-top: 20px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+    }
+
+    .home-hero-actions > a {
+      letter-spacing: 0;
+    }
+
+    .home-hero-actions > a:first-child {
+      justify-content: space-between;
+      padding-inline: 20px;
+    }
+
+    .home-hero-actions > a:nth-child(2) {
+      align-self: flex-start;
+      color: #fff;
+      min-height: 44px;
+      justify-content: flex-start;
+      border-color: transparent;
+      background: none;
+      padding-inline: 0;
+    }
+
+    .home-hero .rise {
+      animation: none;
+    }
+  }
+
+  @media (min-width: 360px) and (max-width: 767px) {
+    .home-hero .hero-title {
+      font-size: 1.875rem;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.75rem;
+    }
+  }
+
+  @media (min-width: 390px) and (max-width: 767px) {
+    .home-hero .hero-title {
+      font-size: 2rem;
+    }
+
+    :lang(en) .home-hero .hero-title {
+      font-size: 1.875rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    .home-hero {
+      --hero-header-height: 81px;
+    }
+  }
+
   /*
    * The closing band's pane (components/CtaSection.tsx).
    *
@@ -746,6 +889,12 @@ body {
         0 24px 60px -24px rgb(0 0 0 / 0.7);
       -webkit-backdrop-filter: blur(22px) saturate(150%);
       backdrop-filter: blur(22px) saturate(150%);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: clamp(1.85rem, 2.63vw, 3.25rem);
     }
   }
 

@@ -1,85 +1,148 @@
-import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Container from "./Container";
-import CategoryArtwork from "./CategoryArtwork";
 import { localePath, type Lang } from "@/lib/i18n";
+import ForgedPanel from "@/components/ForgedPanel";
 
+/*
+ * The four things a buyer is most often after, as picture cards.
+ *
+ * The captions are rendered here rather than baked into the images, so they
+ * exist in both languages, a screen reader reads them, and a search engine
+ * indexes them — the same reason the burnt-in captions came off the old hero
+ * frames. The images carry the product and nothing else.
+ *
+ * Every card links to a page that already exists and already describes what it
+ * claims; nothing here introduces a category the site cannot back.
+ */
 const cards = [
   {
-    slug: "baerbare-computere",
-    title: { da: "Bærbare", en: "Laptops" },
-    purpose: { da: "Arbejde på kontoret og på farten", en: "For the office and work on the move" },
+    href: "/produkter/baerbare-computere",
+    image: "/cards/cat-laptops.webp",
+    width: 1200,
+    height: 675,
+    title: { da: "Bærbare computere", en: "Business laptops" },
+    brands: "Lenovo · HP · Dell",
+    alt: {
+      da: "Åben bærbar erhvervscomputer set fra siden",
+      en: "An open business laptop seen from the side",
+    },
   },
   {
-    slug: "stationaere-computere",
-    title: { da: "Stationære", en: "Desktop PCs" },
-    purpose: { da: "En fast arbejdsplads", en: "For a fixed workstation" },
+    href: "/produkter/stationaere-computere",
+    image: "/cards/cat-desktops.webp",
+    width: 1200,
+    height: 675,
+    title: { da: "Stationære computere", en: "Desktop PCs" },
+    brands: "HP · Dell · Lenovo",
+    alt: {
+      da: "Stationær computer og en mini-pc side om side",
+      en: "A desktop tower and a mini PC side by side",
+    },
   },
   {
-    slug: "skaerme",
-    title: { da: "Skærme", en: "Monitors" },
-    purpose: { da: "Mere plads til arbejdet", en: "More room for your work" },
+    href: "/produkter/skaerme",
+    image: "/cards/cat-monitors.webp",
+    width: 1200,
+    height: 675,
+    title: { da: "Skærme og docking", en: "Monitors and docks" },
+    brands: "Dell · Lenovo · HP",
+    alt: {
+      da: "Bredformatskærm med tastatur og en dockingstation",
+      en: "A widescreen monitor with a keyboard and a docking station",
+    },
   },
   {
-    slug: "mini-pc",
-    title: { da: "Mini-pc'er", en: "Mini PCs" },
-    purpose: { da: "Et kompakt skrivebord", en: "For a compact desk setup" },
+    href: "/produkter",
+    image: "/cards/cat-fleet.webp",
+    width: 1200,
+    height: 675,
+    title: { da: "Alle produkter", en: "All products" },
+    brands: { da: "Bærbare · skærme · tilbehør", en: "Laptops · monitors · accessories" },
+    alt: {
+      da: "To stakke lukkede bærbare computere og én åben bærbar på et stenbord",
+      en: "Two stacks of closed laptops and one open laptop on a stone desk",
+    },
   },
 ];
 
+const copy = {
+  da: { title: "Refurbished computere og skærme, vi skaffer" },
+  en: { title: "Refurbished computers and monitors we source" },
+} satisfies Record<Lang, Record<string, string>>;
+
 export default function CategoryCards({ lang }: { lang: Lang }) {
-  const da = lang === "da";
+  const c = copy[lang];
+
   return (
-    <section className="border-b border-white/10 py-6 sm:py-14">
+    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-16">
       <Container>
-        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
-          <div>
-            <h2 className="font-display t-h2 font-extrabold tracking-display text-paper">
-              {da ? "Vælg udstyrstype" : "Choose your equipment"}
-            </h2>
-          </div>
-          <Link
-            href={localePath("/produkter", lang)}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
-          >
-            {da ? "Se alle 7 kategorier" : "See all 7 categories"}
-            <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-        </div>
-        <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+        {/* A heading that reads as one. It was an h2 set as a tracked-caps
+            label ("HVAD VI SKAFFER") with a rule beside it — a heading in the
+            outline and a caption on the screen, and an audit counting the
+            page's h2s found a row of labels among them. Now it is set on the
+            type scale like every other section heading, and it says what the
+            cards are in the words a buyer searches with. */}
+        <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+          {c.title}
+        </h2>
+
+        {/* Two up on a phone. Six full-bleed cards stacked was most of a
+            metre of scrolling for what is a menu — as a compact grid the
+            whole range is one screen, which is what a menu is for. */}
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {cards.map((card) => (
-            <li key={card.slug}>
-              <Link
-                href={localePath(`/produkter/${card.slug}`, lang)}
-                className="group block h-full overflow-hidden rounded-xl bg-paper-dim text-ink-900 ring-1 ring-inset ring-white/10 transition-shadow hover:ring-2 hover:ring-brand-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-              >
-                <CategoryArtwork
-                  slug={card.slug}
-                  lang={lang}
-                  sizes="(min-width: 1024px) 24vw, 46vw"
-                />
-                <div className="flex items-start justify-between gap-2 border-t border-ink-200 p-3 sm:p-4">
-                  <div className="min-w-0">
-                    <h3 className="text-sm font-bold leading-snug text-ink-900 group-hover:text-brand-700 sm:text-base">
-                      {card.title[lang]}
-                    </h3>
-                    <p className="mt-1 text-xs leading-5 text-ink-600">{card.purpose[lang]}</p>
-                  </div>
-                  <ArrowRight
-                    size={15}
-                    className="mt-0.5 shrink-0 text-brand-700"
-                    aria-hidden="true"
+            <li key={card.href}>
+              <ForgedPanel href={localePath(card.href, lang)} faceClassName="p-0 overflow-hidden">
+                <div className="plate-well tile-z tile-z-near aspect-[16/9] overflow-hidden rounded-t-[7px] bg-ink-950/50">
+                  <Image
+                    src={card.image}
+                    alt={card.alt[lang]}
+                    width={card.width}
+                    height={card.height}
+                    quality={88}
+                    sizes="(min-width: 1024px) 24vw, (min-width: 640px) 46vw, 46vw"
+                    className="h-full w-full object-cover"
                   />
                 </div>
-              </Link>
+
+                <div className="tile-z tile-z-far flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-bold leading-snug text-paper sm:text-base">
+                      {card.title[lang]}
+                    </h3>
+                    <p className="mt-0.5 text-xs text-paper/65 leading-[1.45]">
+                      {typeof card.brands === "string" ? card.brands : card.brands[lang]}
+                    </p>
+                  </div>
+                  {/*
+                    The whole card is the link; on a phone the badge is one
+                    more thing competing for 150 px of width.
+
+                    It was a solid brand-600 disc, and it was the only thing on
+                    a card of machined panels that had no material at all — a
+                    flat circle of primary blue, heavier on the eye than the
+                    heading beside it, and the one element that looked picked
+                    out of a component library rather than made for this site.
+
+                    .plate-sm is the control-size plate: the same lit top lip
+                    and inner ring every other control here has, at the size a
+                    control is. The blue moves off the disc and into the mark,
+                    so the badge stops shouting and the arrow is what is blue.
+                    Hovering the card lights the ring — plate-sm already does
+                    that — and walks the arrow a pixel to the right.
+                  */}
+                  <span className="plate-sm hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-brand-300 transition-colors duration-200 group-hover:text-paper sm:flex">
+                    <ArrowRight
+                      className="h-[14px] w-[14px] transition-transform duration-200 group-hover:translate-x-px"
+                      strokeWidth={1.75}
+                    />
+                  </span>
+                </div>
+              </ForgedPanel>
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-xs leading-5 text-paper/65">
-          {da
-            ? "Billederne viser udstyrstyper og modelreferencer, ikke enheder på lager."
-            : "Images show equipment types and model references, not units in stock."}
-        </p>
       </Container>
     </section>
   );

@@ -16,12 +16,8 @@ export type NavLink = { href: string; label: Localized; rel?: string; wide?: boo
  * rather than the fourth row of the products menu.
  */
 export const mainNav: NavLink[] = [
-  { href: "/priser", label: { da: "Budgeteksempler", en: "Budget examples" } },
-  {
-    href: "/flaadeloesninger",
-    label: { da: "Flådeløsninger", en: "Fleet solutions" },
-    wide: true,
-  },
+  { href: "/priser", label: { da: "Priser", en: "Pricing" } },
+  { href: "/flaadeloesninger", label: { da: "Flådeløsninger", en: "Fleet solutions" } },
   { href: "/saelg-til-os", label: { da: "Sælg til os", en: "Sell to us" } },
   { href: "/reparation", label: { da: "Reparation", en: "Repairs" } },
   { href: "/vejledninger", label: { da: "Viden", en: "Guides" }, wide: true },
@@ -32,10 +28,10 @@ export const productsNav = {
   /* "Produkter", the word a buyer scans a menu for. It was "Hvad vi skaffer",
      which is accurate and which nobody looks for. */
   hub: { href: "/produkter", label: { da: "Produkter", en: "Products" } },
-  overview: { da: "Vælg udstyrstype", en: "Choose equipment type" } as Localized,
+  overview: { da: "Oversigt", en: "Overview" } as Localized,
   models: {
     href: "/modeller",
-    label: { da: "Sammenlign modeller", en: "Compare models" },
+    label: { da: "Modeller og specifikationer", en: "Models and specifications" },
   },
   machine: { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
   quality: { href: "/kvalitet", label: { da: "Stand og kvalitet", en: "Condition and quality" } },
@@ -54,13 +50,13 @@ export const productsNav = {
 export const productExtras: NavLink[] = [
   {
     href: "/modeller",
-    label: { da: "Sammenlign modeller", en: "Compare models" },
+    label: { da: "Modeller og specifikationer", en: "Models and specifications" },
   },
   { href: "/maskinen", label: { da: "Maskinen indeni", en: "Inside the machine" } },
 ];
 
 export const buyNav: NavLink[] = [
-  { href: "/priser", label: { da: "Budgeteksempler", en: "Budget examples" } },
+  { href: "/priser", label: { da: "Priser", en: "Pricing" } },
   { href: "/tilbud", label: { da: "Få et tilbud", en: "Get a quote" } },
   {
     href: "/tilbud-eksempel",

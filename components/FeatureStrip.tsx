@@ -1,50 +1,98 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import Container from "./Container";
-import { localePath, type Lang } from "@/lib/i18n";
+import Ticker from "./Ticker";
+import MarkTile from "@/components/MarkTile";
+import { type CraftMarkName } from "./CraftMark";
+import type { Lang } from "@/lib/i18n";
 
+/*
+ * The five-second version of the argument, right under the hero: a row of
+ * facts a buyer can scan before deciding whether to keep reading. Every
+ * claim here is already written out in full somewhere else on the site
+ * (Statement, WhyUs, the /ydelser pages) — this is not a fourth version of
+ * the pitch, it is a index into the ones that already exist.
+ *
+ * The marks are drawn for this site rather than picked from an icon set —
+ * see components/CraftMark.tsx for why, and for the rules they share. This is
+ * the first row below the hero, so it is where a visitor decides whether the
+ * site was made or assembled.
+ */
 const features = [
   {
-    href: "/kvalitet",
-    title: { da: "Stand og funktionstest", en: "Condition and testing" },
-    sub: { da: "Se, hvad der skal afklares", en: "See what needs to be checked" },
+    mark: "tested",
+    title: { da: "Funktionstestet", en: "Function-tested" },
+    sub: { da: "Før maskinen sendes videre", en: "Before the machine ships" },
   },
   {
-    href: "/ydelser/nordisk-tilpasning",
-    title: { da: "Nordisk tastatur og sprog", en: "Nordic keyboard and language" },
-    sub: { da: "Tilpasning til jeres arbejdsplads", en: "Preparation for your workplace" },
+    mark: "nordic",
+    title: { da: "Nordisk tilpasning", en: "Nordic preparation" },
+    sub: {
+      da: "Dansk eller norsk tastatur og sprog",
+      en: "Danish or Norwegian keyboard and language",
+    },
   },
   {
-    href: "/tilbud-eksempel",
-    title: { da: "Pris og vilkår på skrift", en: "Price and terms in writing" },
-    sub: { da: "Se et tydeligt mærket eksempel", en: "View a clearly labelled example" },
+    mark: "business",
+    title: { da: "Erhvervsklasse", en: "Business grade" },
+    sub: { da: "Ikke forbrugermodeller", en: "Not consumer models" },
   },
-];
+  {
+    mark: "sustainable",
+    title: { da: "Bæredygtigt valg", en: "Sustainable choice" },
+    sub: { da: "Færre nye maskiner skal produceres", en: "Fewer new machines have to be made" },
+  },
+  {
+    mark: "delivery",
+    title: { da: "Levering i Norden", en: "Delivery across the Nordics" },
+    sub: { da: "Til Danmark og Norge", en: "To Denmark and Norway" },
+  },
+] satisfies {
+  mark: CraftMarkName;
+  title: Record<Lang, string>;
+  sub: Record<Lang, string>;
+}[];
 
 export default function FeatureStrip({ lang }: { lang: Lang }) {
+  /*
+   * On a phone, all five facts in one line that runs by itself and stops
+   * under a finger (components/Ticker.tsx). They were two tiles stacked on
+   * top of each other with the other three hidden, which read as a leftover
+   * list rather than as the strip it is on a wide screen. Each fact sits on
+   * the site's own plate there, so the row reads as five things passing
+   * rather than as text sliding over a band.
+   *
+   * The second list is the same five again for the loop: hidden from
+   * assistive technology, unreachable by keyboard, and not drawn at all from
+   * md, where the first list is the grid it always was.
+   */
+  const items = features.map((feature) => (
+    <li
+      key={feature.title.da}
+      className="flex items-center gap-3.5 max-md:plate max-md:mr-3 max-md:shrink-0 max-md:rounded-2xl max-md:py-2.5 max-md:pl-2.5 max-md:pr-5"
+    >
+      {/* In the site's one mark tile. Bare on the bar, the five marks
+          were line drawings floating on a strip of navy — the row a
+          buyer sees first, reading as a system icon font. The tile is
+          lit from the top left and has no hard border, so five of
+          them read as a set of facts rather than as five buttons. */}
+      <MarkTile name={feature.mark} size="md" />
+      <div className="min-w-0 max-md:whitespace-nowrap">
+        <p className="text-[13px] font-semibold leading-5 text-paper">{feature.title[lang]}</p>
+        <p className="mt-0.5 text-[13px] leading-[1.35] text-paper/75">{feature.sub[lang]}</p>
+      </div>
+    </li>
+  ));
+
   return (
-    <div className="relative z-10 border-y border-white/10 bg-ink-950/85">
-      <Container>
-        <ul className="grid divide-y divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
-          {features.map((feature) => (
-            <li key={feature.href} className="md:px-5 md:first:pl-0 md:last:pr-0">
-              <Link
-                href={localePath(feature.href, lang)}
-                className="group flex min-h-16 items-center justify-between gap-4 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 md:min-h-24"
-              >
-                <span>
-                  <span className="block text-sm font-semibold text-paper group-hover:text-brand-200">
-                    {feature.title[lang]}
-                  </span>
-                  <span className="mt-1 hidden text-xs leading-5 text-paper/65 md:block">
-                    {feature.sub[lang]}
-                  </span>
-                </span>
-                <ArrowUpRight size={16} className="shrink-0 text-brand-300" aria-hidden="true" />
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <div className="relative z-10 shrink-0 border-y border-white/10 bg-ink-950/70">
+      <Container className="max-md:px-0">
+        <Ticker>
+          <ul className="flex py-4 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-6 md:py-8 lg:grid-cols-5 lg:gap-x-7">
+            {items}
+          </ul>
+          <ul aria-hidden="true" inert className="flex py-4 md:hidden">
+            {items}
+          </ul>
+        </Ticker>
       </Container>
     </div>
   );

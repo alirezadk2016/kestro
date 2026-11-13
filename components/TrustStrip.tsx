@@ -40,43 +40,45 @@ import { localePath, type Lang } from "@/lib/i18n";
  */
 const copy = {
   da: {
-    title: "Et klart grundlag for jeres valg",
-    sub: "Se, hvilke oplysninger et fremtidigt tilbud skal indeholde. Eksemplet er en skabelon med de felter, I skal kunne gennemgå.",
+    title: "Alt står skriftligt, mens I stadig kan sige nej",
+    sub: "Et fremtidigt tilbud skal vise alt herunder, og pris og vilkår skal være afklaret, før I bestiller.",
     cta: "Se et eksempel på et tilbud",
     points: [
-      "Præcis konfiguration, stand og batterikapacitet",
-      "Samlet pris, tilbehør og aftalt tidsramme",
-      "Ansvarlig sælger og skriftlige garantivilkår",
+      "Pris pr. enhed og samlet – ikke kun en totalsum",
+      "Stand og batterikapacitet pr. enhed",
+      "Garantivilkår, og hvem der håndterer en fejl",
+      "En tidsramme, ikke et løfte, vi ikke kan holde",
     ],
-    formTitle: "Fortæl os, hvad I skal bruge",
+    formTitle: "Få en pris på jeres opsætning",
     quantity: "Hvor mange maskiner?",
     model: "Udstyr eller model",
     modelPlaceholder: "Fx bærbare til kontorbrug eller ThinkPad T14",
     when: "Hvornår skal det stå klar?",
-    whenPlaceholder: "Fx en måned eller en aftalt dato",
+    whenPlaceholder: "Fx inden udgangen af november",
     optional: "(valgfrit)",
-    submit: "Fortsæt med forespørgslen",
+    submit: "Fortsæt til tilbuddet",
     next: "Næste trin er navn, virksomhed og e-mail. Det er uforpligtende.",
     who: "Dem, I kommer til at tale med",
     meet: "Mød os",
   },
   en: {
-    title: "A clear basis for your decision",
-    sub: "See what a future quote needs to contain. The example is a template showing the fields you need to be able to review.",
+    title: "It is all in writing while you can still say no",
+    sub: "A future quote must show everything below, and the price and terms must be settled before you order.",
     cta: "See an example quote",
     points: [
-      "Exact configuration, condition and battery capacity",
-      "Total price, accessories and agreed timing",
-      "Responsible seller and written warranty terms",
+      "Price per unit and in total — not just a lump sum",
+      "Condition and battery capacity per unit",
+      "Warranty terms, and who handles a fault",
+      "A time frame, not a promise we cannot keep",
     ],
-    formTitle: "Tell us what you need",
+    formTitle: "Get a price for your setup",
     quantity: "How many machines?",
     model: "Equipment or model",
     modelPlaceholder: "E.g. laptops for office use, or ThinkPad T14",
     when: "When does it need to be ready?",
-    whenPlaceholder: "E.g. a month or an agreed date",
+    whenPlaceholder: "E.g. before the end of November",
     optional: "(optional)",
-    submit: "Continue with your enquiry",
+    submit: "Continue to the quote",
     next: "The next step is your name, company and email. Nothing is binding.",
     who: "The people you will be talking to",
     meet: "Meet us",
@@ -113,7 +115,7 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
   const team = enquiryContacts(lang);
 
   return (
-    <section className="border-y border-ink-200 bg-paper-dim py-12 text-ink-900 sm:py-16">
+    <section className="border-y border-ink-200 bg-paper-dim py-14 text-ink-900 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
@@ -153,9 +155,9 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
                 "Få et tilbud" a screen below this form; the band is gone from
                 this page and the faces moved here, where a buyer deciding
                 whether to write actually is. */}
-            <div className="mt-6 border-t border-ink-200 pt-5">
+            <div className="mt-10 border-t border-ink-200 pt-6">
               <p className="text-sm font-semibold text-ink-700">{c.who}</p>
-              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-3">
+              <ul className="mt-4 space-y-4">
                 {team.map((member) => (
                   <li key={member.id} className="flex items-center gap-3">
                     <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
