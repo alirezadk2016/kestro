@@ -26,6 +26,7 @@ export type ModelMedia = {
 
 /* Intrinsic sizes of the photographs, so the frame never shifts. */
 const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
+  "/thinkpad-t480-6.jpg": { width: 1179, height: 1115 },
   "/thinkpad-t480-4.jpg": { width: 1179, height: 1142 },
   "/models/t14/gen2-intel-reference.webp": { width: 1600, height: 1200 },
   "/models/latitude-7490/front-open-reference.webp": { width: 1600, height: 1200 },
@@ -73,5 +74,11 @@ export function modelMedia(model: Model): ModelMedia | null {
   }
   const alt = ILLUSTRATION_ALT[model.slug];
   if (!alt) return null;
-  return { src: `/products/${model.slug}.svg`, width: 1200, height: 900, kind: "illustration", alt };
+  return {
+    src: `/products/${model.slug}.svg`,
+    width: 1200,
+    height: 900,
+    kind: "illustration",
+    alt,
+  };
 }

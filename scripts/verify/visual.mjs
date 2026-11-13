@@ -24,52 +24,126 @@ export async function verifyVisualPolish(browser, base, fail) {
         locale: "en-GB",
       });
       const page = await visit(context, path, false);
-      const action = await page.locator(".home-hero-actions > a").first().boundingBox();
+      const equipmentHref = path === "/" ? "/produkter" : "/en/products";
+      const hero = page.locator("main section").first();
+      const action = await hero.locator(`a[href="${equipmentHref}"]`).boundingBox();
       const modal = await page.locator('[role="dialog"]').first().boundingBox();
-      if (action.y + action.height > (modal?.y ?? 844))
-        fail(`${path} ${width}`, "mobile hero action obscured on first visit");
-      if (await page.locator(".home-hero .glass-card").count())
-        fail(path, "mobile hero has a decorative text card");
+      if (!action || action.y < 0 || action.y + action.height > (modal?.y ?? 844))
+        fail(`${path} ${width}`, "equipment selection link obscured on first visit");
       if (await overflow(page)) fail(`${path} ${width}`, "mobile hero overflows");
       await context.close();
     }
   }
 
-  // A wide fixed-ratio hero once clipped all five labels below its own box.
+  // Longer budget labels must not merge with the brand or wrap the quote.
+  for (const path of ["/produkter", "/en/products"]) {
+    const context = await browser.newContext({
+      viewport: { width: 1024, height: 800 },
+      reducedMotion: "reduce",
+    });
+    const page = await visit(context, path);
+    const header = page.locator("header");
+    const brand = await header
+      .locator("a")
+      .filter({ hasText: /^Kestro$/ })
+      .boundingBox();
+    const navigation = await header.locator("nav").first().boundingBox();
+    if (!brand || !navigation || navigation.x - (brand.x + brand.width) < 12)
+      fail(`${path} 1024`, "desktop navigation touches the brand");
+    const quoteHref = path.startsWith("/en") ? "/en/get-a-quote" : "/tilbud";
+    const quoteLines = await header
+      .locator(`a[href="${quoteHref}"]`)
+      .first()
+      .evaluate((link) => {
+        const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT);
+        let node;
+        let lines = 0;
+        while ((node = walker.nextNode())) {
+          if (!node.textContent.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          lines = Math.max(lines, range.getClientRects().length);
+        }
+        return lines;
+      });
+    if (quoteLines !== 1) fail(`${path} 1024`, "desktop quote action wraps onto multiple lines");
+    if (await overflow(page)) fail(`${path} 1024`, "desktop navigation page overflows");
+    await context.close();
+  }
+
+  // The natural-height hero leads to equipment, then three static evidence
+  // links. Keep both the normal and enlarged-text layouts inside their bands.
   for (const path of ["/", "/en"]) {
     const context = await browser.newContext({
       viewport: { width: 1920, height: 1080 },
       reducedMotion: "reduce",
     });
     const page = await visit(context, path);
+    const proofHrefs =
+      path === "/"
+        ? ["/kvalitet", "/ydelser/nordisk-tilpasning", "/tilbud-eksempel"]
+        : ["/en/condition-and-quality", "/en/services/nordic-preparation", "/en/sample-quote"];
+    async function homepageClipping() {
+      return page.evaluate((hrefs) => {
+        const main = document.querySelector("main");
+        const hero = main.querySelector("section");
+        const gateway = hero.nextElementSibling;
+        const strip = [...main.children].find(
+          (element) =>
+            element.tagName === "DIV" &&
+            hrefs.every((href) => element.querySelector(`a[href="${href}"]`)),
+        );
+        if (!strip || !gateway || gateway.tagName !== "SECTION")
+          return ["equipment gateway or evidence links missing"];
+        const issues = [];
+        const stripBounds = strip.getBoundingClientRect();
+        const items = [...strip.querySelectorAll("li")];
+        if (hero.contains(strip) || strip.previousElementSibling !== gateway || items.length !== 3)
+          issues.push("evidence links must follow the equipment gateway once");
+        if (strip.querySelector('[aria-hidden="true"][inert]'))
+          issues.push("evidence links must not be a duplicated ticker");
+        if (
+          gateway.getBoundingClientRect().top < hero.getBoundingClientRect().bottom - 1 ||
+          stripBounds.top < gateway.getBoundingClientRect().bottom - 1 ||
+          strip.nextElementSibling.getBoundingClientRect().top < stripBounds.bottom - 1 ||
+          items.some((item) => item.getBoundingClientRect().bottom > stripBounds.bottom + 1)
+        )
+          issues.push("homepage bands overlap or clip their content");
+        for (const band of [hero, strip]) {
+          const bandBounds = band.getBoundingClientRect();
+          const walker = document.createTreeWalker(band, NodeFilter.SHOW_TEXT);
+          let node;
+          while ((node = walker.nextNode())) {
+            if (!node.textContent.trim() || !node.parentElement.getClientRects().length) continue;
+            const parentBounds = node.parentElement.getBoundingClientRect();
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            if (
+              [...range.getClientRects()].some(
+                (rect) =>
+                  rect.left < parentBounds.left - 1 ||
+                  rect.right > parentBounds.right + 1 ||
+                  rect.top < bandBounds.top - 1 ||
+                  rect.bottom > bandBounds.bottom + 1,
+              )
+            )
+              issues.push(`text escapes its frame: ${node.textContent.trim().slice(0, 60)}`);
+          }
+        }
+        return issues;
+      }, proofHrefs);
+    }
     for (const width of [1920, 1785, 1536, 1460, 1440]) {
       await page.setViewportSize({ width, height: 1080 });
       await page.evaluate(() => document.fonts.ready);
-      const clipped = await page.locator(".home-hero").evaluate((hero) => {
-        const strip = hero.lastElementChild;
-        const items = [...strip.querySelectorAll("ul:first-child > li")];
-        const bottom = hero.getBoundingClientRect().bottom;
-        return (
-          items.length !== 5 ||
-          strip.getBoundingClientRect().bottom > bottom + 1 ||
-          items.some((item) => item.getBoundingClientRect().bottom > bottom + 1) ||
-          hero.nextElementSibling.getBoundingClientRect().top <
-            strip.getBoundingClientRect().bottom - 1
-        );
-      });
-      if (clipped) fail(`${path} ${width}`, "homepage feature labels clipped or covered");
+      const clipped = await homepageClipping();
+      if (clipped.length) fail(`${path} ${width}`, clipped.join("; "));
     }
     await page.evaluate(() => {
       document.documentElement.style.fontSize = "200%";
     });
-    const enlargedClipped = await page
-      .locator(".home-hero")
-      .evaluate(
-        (hero) =>
-          hero.lastElementChild.getBoundingClientRect().bottom >
-          hero.getBoundingClientRect().bottom + 1,
-      );
-    if (enlargedClipped) fail(path, "enlarged text clips homepage feature strip");
+    const enlargedClipped = await homepageClipping();
+    if (enlargedClipped.length) fail(path, `enlarged text: ${enlargedClipped.join("; ")}`);
     await context.close();
   }
 

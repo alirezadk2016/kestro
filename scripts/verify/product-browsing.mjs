@@ -25,6 +25,49 @@ const CATEGORIES = {
   ],
 };
 
+// Independently identify the devices shown, rather than accepting whatever
+// the component happens to label a photograph. Tablet/phone marks deliberately
+// represent a format; none of this media represents an available stock unit.
+const ARTWORK = [
+  {
+    kind: "photo",
+    src: "/thinkpad-t480-6.jpg",
+    width: 1179,
+    height: 1115,
+    subject: /ThinkPad T480/i,
+  },
+  {
+    kind: "illustration",
+    src: "/pricing/optiplex-5060-sff-illustration.svg",
+    width: 1200,
+    height: 900,
+    subject: /SFF/i,
+  },
+  {
+    kind: "illustration",
+    src: "/pricing/ultrasharp-u2419h-illustration.svg",
+    width: 1200,
+    height: 900,
+    subject: /skærm|monitor/i,
+  },
+  {
+    kind: "illustration",
+    src: "/products/lenovo-thinkcentre-m720q.svg",
+    width: 1200,
+    height: 900,
+    subject: /mini.?pc/i,
+  },
+  { kind: "illustration", subject: /tablet/i },
+  { kind: "illustration", subject: /smartphone/i },
+  {
+    kind: "photo",
+    src: "/models/dell-wd19/front-reference.webp",
+    width: 1600,
+    height: 900,
+    subject: /Dell WD19/i,
+  },
+];
+
 /** A category can be recognised and reached without working through buying advice. */
 export async function verifyProductBrowsing(browser, base, fail) {
   console.log("verify: visual product categories and direct browsing journeys");
@@ -132,7 +175,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
       assert.equal(await page.locator("main h1").count(), 1, "the hub has one primary heading");
       const gallery = page.locator(GALLERY);
       assert.equal(await gallery.count(), 1, "one primary category gallery is available");
-      const links = gallery.locator("a[href]");
+      const links = gallery.locator("ul > li > a[href]");
       assert.equal(
         await links.count(),
         7,
@@ -143,6 +186,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
         const href = new URL(await link.getAttribute("href"), origin);
         assert.equal(href.origin, origin.origin, "a category stays on Kestro");
         assert.ok(CATEGORIES[language].includes(href.pathname), "the category keeps its real URL");
+        const expected = ARTWORK[CATEGORIES[language].indexOf(href.pathname)];
         actualTargets.add(href.pathname);
         assert.ok(await link.isVisible(), "every category has a visible control");
         const heading = link.getByRole("heading", { level: 3 });
@@ -151,42 +195,43 @@ export async function verifyProductBrowsing(browser, base, fail) {
         const box = await link.boundingBox();
         assert.ok(box && box.width >= 44 && box.height >= 44, "a category is touch-sized");
         assert.ok(box.x >= -1 && box.x + box.width <= width + 1, "the category fits the viewport");
-        const image = link.locator("img");
-        assert.equal(await image.count(), 1, "a category has one recognisable image");
-        await image.scrollIntoViewIfNeeded();
-        const handle = await image.elementHandle();
-        try {
-          await page.waitForFunction(async (element) => {
-            if (!element?.complete || !element.naturalWidth) return false;
-            await element.decode();
-            return true;
-          }, handle);
-        } finally {
-          await handle?.dispose();
-        }
-        const photo = await image.evaluate((element) => {
-          const painted = element.getBoundingClientRect();
-          const well = element.parentElement;
-          const frame = well.getBoundingClientRect();
+        const well = link.locator("[data-category-artwork]");
+        assert.equal(await well.count(), 1, "each category has one deliberate media frame");
+        assert.equal(
+          await well.getAttribute("data-category-artwork"),
+          expected.kind,
+          "the displayed media type matches the actual source",
+        );
+        const media = well.getByRole("img");
+        assert.equal(
+          await media.count(),
+          1,
+          "each category has one accessible device representation",
+        );
+        assert.ok(await media.isVisible(), "the category representation is visible");
+        const label =
+          expected.kind === "photo"
+            ? language === "da"
+              ? "Referencefoto"
+              : "Reference photo"
+            : "Illustration";
+        assert.ok(
+          await link.getByText(label, { exact: true }).isVisible(),
+          "the visible label distinguishes model references from drawings",
+        );
+        await media.scrollIntoViewIfNeeded();
+        const frame = await well.evaluate((element) => {
+          const frame = element.getBoundingClientRect();
           const control = element.closest("a");
           const card = control.getBoundingClientRect();
-          const src = new URL(element.currentSrc);
           return {
-            source: src.searchParams.get("url") || src.pathname,
-            alt: element.alt,
             wellFits:
               frame.left >= card.left - 1 &&
               frame.right <= card.right + 1 &&
               frame.top >= card.top - 1 &&
               frame.bottom <= card.bottom + 1,
-            overflow: getComputedStyle(well).overflow,
-            coversWell:
-              painted.width > 0 &&
-              painted.height > 0 &&
-              painted.left <= frame.left + 1 &&
-              painted.right >= frame.right - 1 &&
-              painted.top <= frame.top + 1 &&
-              painted.bottom >= frame.bottom - 1,
+            overflow: getComputedStyle(element).overflow,
+            ratio: frame.width / frame.height,
             clippedText: [...control.querySelectorAll("h3,p")]
               .filter((child) => {
                 const box = child.getBoundingClientRect();
@@ -208,22 +253,172 @@ export async function verifyProductBrowsing(browser, base, fail) {
               .map((child) => child.textContent.trim()),
           };
         });
-        assert.ok(photo.source.startsWith("/"), "category artwork is delivered locally");
-        assert.match(
-          photo.alt,
-          /illustration|illustrative/i,
-          "category artwork is honestly labelled",
+        assert.ok(frame.wellFits, "the media frame stays within its category card");
+        assert.equal(frame.overflow, "hidden", "the neutral media frame contains its contents");
+        assert.ok(
+          Math.abs(frame.ratio - 4 / 3) < 0.03,
+          "the media frames keep a consistent 4:3 shape",
         );
-        assert.ok(photo.wellFits, "the image well stays within its category card");
-        assert.equal(photo.overflow, "hidden", "the image well clips intentional focus crops");
-        assert.ok(photo.coversWell, "the loaded artwork covers the whole image well");
+        if (expected.src) {
+          assert.equal(
+            await media.evaluate((element) => element.tagName),
+            "IMG",
+            "photographs and full-device drawings are delivered as image assets",
+          );
+          const handle = await media.elementHandle();
+          try {
+            await page.waitForFunction(async (element) => {
+              if (!element?.complete || !element.naturalWidth) return false;
+              await element.decode();
+              return true;
+            }, handle);
+          } finally {
+            await handle?.dispose();
+          }
+          const image = await media.evaluate((element) => {
+            const box = element.getBoundingClientRect();
+            const frame = element.closest("[data-category-artwork]").getBoundingClientRect();
+            const src = new URL(element.currentSrc);
+            return {
+              source: src.searchParams.get("url") || src.pathname,
+              alt: element.alt,
+              width: Number(element.getAttribute("width")),
+              height: Number(element.getAttribute("height")),
+              ratio: element.naturalWidth / element.naturalHeight,
+              fit: getComputedStyle(element).objectFit,
+              transform: getComputedStyle(element).transform,
+              fits:
+                box.width > 0 &&
+                box.height > 0 &&
+                box.left >= frame.left - 1 &&
+                box.right <= frame.right + 1 &&
+                box.top >= frame.top - 1 &&
+                box.bottom <= frame.bottom + 1,
+            };
+          });
+          assert.equal(
+            image.source,
+            expected.src,
+            "the category shows the intended local reference, not an unrelated device or scene crop",
+          );
+          assert.equal(image.width, expected.width, "declared image width matches its asset");
+          assert.equal(image.height, expected.height, "declared image height matches its asset");
+          assert.ok(
+            Math.abs(image.ratio - expected.width / expected.height) < 0.015,
+            "the delivered image preserves its natural aspect ratio",
+          );
+          assert.equal(
+            image.fit,
+            "contain",
+            "the full device remains visible without a cover crop",
+          );
+          assert.equal(image.transform, "none", "the device is not zoomed beyond its frame");
+          assert.ok(image.fits, "the device image stays within its frame");
+          assert.match(
+            image.alt,
+            expected.subject,
+            "the accessible description identifies the actual device or format shown",
+          );
+          assert.match(
+            image.alt,
+            expected.kind === "photo" ? /referencefoto|reference photo/i : /illustration/i,
+            "the accessible description tells the truth about the media type",
+          );
+        } else {
+          assert.equal(
+            await well.locator("img").count(),
+            0,
+            "a format mark is not replaced by a misleading product photograph",
+          );
+          const vector = await media.evaluate((element) => {
+            const svg = element.matches("svg") ? element : element.querySelector("svg");
+            const box = svg?.getBoundingClientRect();
+            const frame = element.closest("[data-category-artwork]").getBoundingClientRect();
+            const viewBox = svg?.viewBox.baseVal;
+            return {
+              label: element.getAttribute("aria-label"),
+              valid: Boolean(svg && viewBox && viewBox.width > 0 && viewBox.height > 0),
+              fits: Boolean(
+                box &&
+                box.width > 0 &&
+                box.height > 0 &&
+                box.left >= frame.left - 1 &&
+                box.right <= frame.right + 1 &&
+                box.top >= frame.top - 1 &&
+                box.bottom <= frame.bottom + 1,
+              ),
+            };
+          });
+          assert.ok(
+            vector.valid && vector.fits,
+            "the complete vector format illustration renders within its frame",
+          );
+          assert.match(
+            vector.label || "",
+            /illustration/i,
+            "the format mark is announced as an illustration",
+          );
+          assert.match(
+            vector.label || "",
+            expected.subject,
+            "the format mark names the right equipment type",
+          );
+        }
         assert.deepEqual(
-          photo.clippedText,
+          frame.clippedText,
           [],
           "category titles and descriptions fit without clipping",
         );
       }
       assert.deepEqual(actualTargets, new Set(CATEGORIES[language]), "every category appears once");
+
+      assert.match(
+        await gallery.innerText(),
+        language === "da"
+          ? /ikke lager eller den enkelte enheds stand/i
+          : /not stock or the condition of an individual unit/i,
+        "reference media does not claim stock availability or individual condition",
+      );
+      const credits = gallery.locator("[data-category-photo-credit]");
+      assert.equal(
+        await credits.count(),
+        1,
+        "licensed category photography has an accessible provenance disclosure",
+      );
+      assert.equal(
+        await credits.evaluate((element) => element.tagName),
+        "DETAILS",
+        "photo provenance uses a native disclosure",
+      );
+      assert.equal(await credits.getAttribute("open"), null, "photo provenance is initially quiet");
+      const creditSummary = credits.locator("summary");
+      const creditBox = await creditSummary.boundingBox();
+      assert.ok(
+        creditBox && creditBox.width >= 44 && creditBox.height >= 44,
+        "photo credit has a touch-sized disclosure target",
+      );
+      await creditSummary.click();
+      assert.ok(
+        await credits.getByText("Dell WD19 · Raimond Spekking", { exact: true }).isVisible(),
+        "the licensed photograph credits its real author",
+      );
+      assert.equal(
+        await credits.locator('a[href^="https://commons.wikimedia.org/"]').getAttribute("href"),
+        "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
+        "the credit links the exact source photograph",
+      );
+      const licence = credits.locator('a[rel~="license"]');
+      assert.equal(
+        await licence.getAttribute("href"),
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+        "the reused photograph preserves its licence",
+      );
+      assert.match(
+        await licence.innerText(),
+        /CC BY-SA 4\.0/,
+        "the licence is visible after opening provenance",
+      );
+      await creditSummary.click();
 
       const modelIndex = language === "da" ? "/modeller" : "/en/models";
       const modelEntry = page.locator("main [data-model-index-entry]");
@@ -400,7 +595,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
       await page.goBack({ waitUntil: "networkidle" });
       await page.waitForURL((url) => url.pathname === path);
       assert.equal(
-        await page.locator(`${GALLERY} a[href]`).count(),
+        await page.locator(`${GALLERY} ul > li > a[href]`).count(),
         7,
         "Back restores the full category gallery",
       );

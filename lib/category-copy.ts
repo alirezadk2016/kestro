@@ -142,10 +142,12 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
   },
 };
 
-export function categoryFaqs(category: Category): FaqItem[] {
+type CategoryFaq = FaqItem & { primary?: boolean };
+
+export function categoryFaqs(category: Category): CategoryFaq[] {
   const name = { da: lc(category.name.da), en: lc(category.name.en) };
   const known = models.filter((m) => m.category === category.slug).map((m) => m.name);
-  const items: FaqItem[] = [
+  const items: CategoryFaq[] = [
     {
       question: {
         da: `Hvilke mærker af ${name.da} skaffer I?`,
@@ -173,6 +175,7 @@ export function categoryFaqs(category: Category): FaqItem[] {
   }
 
   items.push({
+    primary: true,
     question: {
       da: `Hvad skal vi oplyse for at få et tilbud på ${name.da}?`,
       en: `What should we tell you to get a quote on ${name.en}?`,
@@ -184,10 +187,11 @@ export function categoryFaqs(category: Category): FaqItem[] {
   });
 
   const buyingQuestion = BUYING_QUESTIONS[category.slug];
-  if (buyingQuestion) items.push(buyingQuestion);
+  if (buyingQuestion) items.push({ ...buyingQuestion, primary: true });
   if (category.slug === "baerbare-computere") {
     items.push(
       {
+        primary: true,
         question: {
           da: "Hvordan vælger jeg en billig bærbar til arbejde?",
           en: "How do I choose a low-cost laptop for work?",

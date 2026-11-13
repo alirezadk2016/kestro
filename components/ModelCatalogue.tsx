@@ -67,14 +67,21 @@ export function modelCatalogueEntries(models: readonly Model[], lang: Lang): Cat
       },
       format: model.format[lang],
       description: model.tagline[lang],
+      application: model.goodFor[0]?.[lang],
       facts,
-      comparisonFacts: model.specs
-        .filter((spec) => spec.label.en !== "Model")
-        .slice(0, 6)
-        .map((spec) => ({
-          label: spec.label[lang],
-          value: spec.value[lang],
-        })),
+      comparisonFacts: [
+        {
+          label: lang === "da" ? "Anvendelse" : "Use",
+          value: model.goodFor[0]?.[lang] || model.tagline[lang],
+        },
+        ...model.specs
+          .filter((spec) => spec.label.en !== "Model")
+          .slice(0, 6)
+          .map((spec) => ({
+            label: spec.label[lang],
+            value: spec.value[lang],
+          })),
+      ],
       detailHref: localePath(`/modeller/${model.slug}`, lang),
       enquiryHref: localePath(`/tilbud?model=${encodeURIComponent(model.name)}`, lang),
       image: media

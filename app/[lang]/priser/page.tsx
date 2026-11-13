@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Container from "@/components/Container";
 import FaqSchema from "@/components/FaqSchema";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import CtaSection from "@/components/CtaSection";
+import { buttonClass } from "@/components/Button";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
@@ -18,43 +18,43 @@ const drivers = [
   {
     heading: { da: "Model og specifikation", en: "Model and specification" },
     body: {
-      da: "Hvilken serie, hvor gammel en generation, og hvor meget hukommelse og disk der skal i. En maskine, der skal opgraderes til 32 GB, koster mere end den samme maskine med 8 GB.",
-      en: "Which range, how old a generation, and how much memory and storage go in. A machine upgraded to 32 GB costs more than the same machine at 8 GB.",
+      da: "Modelserie, generation, processor, hukommelse og lager skal afklares for den konkrete konfiguration.",
+      en: "Clarify the model range, generation, processor, memory and storage for the specific configuration.",
     },
   },
   {
     heading: { da: "Stand", en: "Condition" },
     body: {
-      da: "Kosmetisk stand flytter prisen mærkbart. Skal maskinerne stå på et mødebord hos jeres kunder, betaler I for det; skal de på et lager, gør I ikke.",
-      en: "Cosmetic condition moves the price noticeably. If the machines sit in front of your customers you pay for that; if they sit in a warehouse you do not.",
+      da: "Aftal kosmetisk stand og beskrivelse af brugsspor. Batteriets kapacitet skal afklares særskilt på bærbare.",
+      en: "Agree the cosmetic condition and description of wear. Clarify battery capacity separately for laptops.",
     },
   },
   {
     heading: { da: "Antal", en: "Quantity" },
     body: {
-      da: "Ti ens maskiner kan blive billigere pr. stk. end tre forskellige. Det er ikke en mængderabat – det er, at ens maskiner er lettere at skaffe og klargøre samlet.",
-      en: "Ten identical machines can cost less each than three different ones. That is not a volume discount — identical machines are simply easier to source and prepare together.",
+      da: "Oplys antal enheder, og om model, konfiguration og stand skal være ens på tværs af leverancen.",
+      en: "State the number of units and whether the model, configuration and condition must match across the delivery.",
     },
   },
   {
     heading: { da: "Hvad der skal med", en: "What goes with them" },
     body: {
-      da: "Dockingstationer, skærme, kabler og strømforsyninger følger sjældent med brugt udstyr. Det er en klassisk grund til, at et billigt tilbud pludselig ikke er billigt.",
-      en: "Docks, monitors, cables and power supplies rarely come with used equipment. That is a classic reason a cheap quote suddenly stops being cheap.",
+      da: "Afklar skærme, dockingstationer, kabler og strømforsyninger, så tilbuddet omfatter det udstyr, I faktisk skal bruge.",
+      en: "Clarify monitors, docks, cables and power supplies so the quote covers the equipment you actually need.",
     },
   },
   {
     heading: { da: "Nordisk tilpasning og software", en: "Nordic preparation and software" },
     body: {
-      da: "Tastaturet skiftes fysisk, og Windows sættes op. Har I egne licensaftaler eller et image, I ruller ud, bruger vi dem – det er billigere end at købe licenser med.",
-      en: "The keyboard is physically swapped and Windows is set up. If you have your own licence agreements or an image you roll out, we use them — that costs less than buying licences with the machines.",
+      da: "Aftal fysisk tastaturlayout, Windows-udgave og klargøring. Oplys, hvis I har egne licensaftaler eller et image til udrulning.",
+      en: "Agree the physical keyboard layout, Windows edition and preparation. Mention existing licence agreements or an image for deployment.",
     },
   },
   {
     heading: { da: "Om I skal af med noget", en: "Whether you have kit to clear" },
     body: {
-      da: "Skal jeres gamle maskiner væk samtidig, regner vi på begge dele. Det trækker som regel ned i den samlede pris.",
-      en: "If your old machines need to go at the same time, we price both sides. That usually brings the total down.",
+      da: "Oplys model, antal og stand på det gamle udstyr, hvis I ønsker en vurdering sammen med forespørgslen.",
+      en: "Include the model, quantity and condition of old equipment if you want an assessment alongside the enquiry.",
     },
   },
 ];
@@ -70,35 +70,29 @@ const copy = {
     whyBody2:
       "Vi afklarer muligheder, tilgængelighed og en præcis pris med jer, før I lægger et indkøbsbudget fast.",
     driversTitle: "Hvad afgør jeres pris?",
-    driversLead: "Seks ting flytter tallet. De første tre flytter det mest.",
     quoteTitle: "Det står i tilbuddet",
-    quoteLead:
-      "Prisen kommer aldrig alene. Alt herunder står skriftligt, før I bestiller noget som helst:",
+    quoteLead: "Se, hvad der skal være afklaret på skrift:",
     quotePoints: [
-      "Pris pr. enhed og samlet – ikke kun en totalsum.",
-      "Præcis hvilken model og specifikation, I får.",
-      "Stand pr. enhed – og batteriets faktiske kapacitet i procent på de bærbare.",
-      "Garantivilkårene, og hvem I kontakter, hvis noget går i stykker.",
-      "Hvad der følger med, og hvad der ikke gør.",
-      "En tidsramme – ikke et løfte om en fast leveringstid, vi ikke kan holde.",
+      "Model, specifikation, stand og målt batterikapacitet pr. bærbar.",
+      "Pris pr. enhed og samlet samt medfølgende tilbehør.",
+      "Garantivilkår og kontakt ved fejl.",
+      "Tidsramme og leveringsvilkår.",
     ],
     freeTitle: "Koster et tilbud noget?",
     freeBody:
       "Nej. Det koster intet at spørge, og svaret forpligter jer ikke. Passer intet til opgaven, siger vi det.",
-    fastTitle: "Hvordan får I et realistisk tal hurtigt?",
-    fastLead: "Jo mere af det her, I skriver med det samme, jo færre runder frem og tilbage:",
+    fastTitle: "Send os jeres behov",
+    fastLead: "I behøver ikke kende modelnavnet. Start med:",
     fastPoints: [
-      "Hvor mange maskiner, og om de skal være ens.",
-      "Hvad de skal bruges til – kontorarbejde, konstruktion, billedarbejde.",
-      "Om der skal skærme, docks eller kabler med.",
-      "Hvornår det skal stå klar.",
-      "Om I samtidig skal af med ældre udstyr.",
+      "Antal maskiner og programmerne, I arbejder i.",
+      "Behov for skærme, docks og andet tilbehør.",
+      "Ønsket tidspunkt og eventuelt gammelt udstyr til vurdering.",
     ],
-    relatedTitle: "Videre herfra",
+    enquiry: "Spørg om en konkret pris",
+    example: "Se et tilbud felt for felt",
     related: [
       { href: "/kvalitet", label: "Stand, test og hvad I bør spørge om" },
       { href: "/ydelser/levering", label: "Levering og tidsrammer" },
-      { href: "/tilbud", label: "Få et tilbud på jeres flåde" },
     ],
   },
   en: {
@@ -111,35 +105,29 @@ const copy = {
     whyBody2:
       "We discuss the options, availability and a specific price with you before you fix a purchasing budget.",
     driversTitle: "What decides your price?",
-    driversLead: "Six things move the figure. The first three move it most.",
     quoteTitle: "What the quote contains",
-    quoteLead:
-      "The price never arrives on its own. All of this is in writing before you order anything:",
+    quoteLead: "See what needs to be agreed in writing:",
     quotePoints: [
-      "Price per unit and in total — not just a lump sum.",
-      "Exactly which model and specification you are getting.",
-      "Condition per unit — and the battery's actual capacity as a percentage on the laptops.",
-      "The warranty terms, and who you contact if something breaks.",
-      "What comes with them, and what does not.",
-      "A time frame — not a promise of a fixed delivery date we cannot keep.",
+      "Model, specification, condition and measured battery capacity per laptop.",
+      "Price per unit and in total, plus included accessories.",
+      "Warranty terms and who to contact about faults.",
+      "Time frame and delivery terms.",
     ],
     freeTitle: "Does a quote cost anything?",
     freeBody:
       "No. Asking costs nothing, and the answer does not commit you. If nothing suits the job, we say so.",
-    fastTitle: "How do you get a realistic figure quickly?",
-    fastLead: "The more of this you write straight away, the fewer rounds back and forth:",
+    fastTitle: "Send us your requirements",
+    fastLead: "You do not need to know the model name. Start with:",
     fastPoints: [
-      "How many machines, and whether they need to be identical.",
-      "What they are for — office work, engineering, image work.",
-      "Whether monitors, docks or cables go with them.",
-      "When it has to be ready.",
-      "Whether you are clearing out older equipment at the same time.",
+      "The number of machines and applications you work in.",
+      "Monitors, docks and other accessories you need.",
+      "Your preferred timing and any old equipment to assess.",
     ],
-    relatedTitle: "Where to go next",
+    enquiry: "Ask for a specific price",
+    example: "See a quote field by field",
     related: [
       { href: "/kvalitet", label: "Condition, testing, what to ask" },
       { href: "/ydelser/levering", label: "Delivery and time frames" },
-      { href: "/tilbud", label: "Get a quote for your fleet" },
     ],
   },
 };
@@ -214,141 +202,111 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           </h1>
           <p className="text-sm leading-6 text-paper/85 sm:text-base">{lead}</p>
         </div>
-        <p className="mt-4 text-xs leading-5 text-paper/65">
+      </Container>
+
+      <BudgetExamples lang={lang} />
+
+      <Container className="py-3">
+        <p className="text-xs leading-5 text-paper/65">
           {lang === "da" ? "Opdateret" : "Updated"}{" "}
           <time dateTime={pageUpdated("/priser")}>{formatDate(pageUpdated("/priser"), lang)}</time>
         </p>
       </Container>
 
-      <BudgetExamples lang={lang} />
-
       <ProjectNotice lang={lang} />
 
-      <section className="lit lit-paper py-10 sm:py-20">
+      <section className="lit lit-paper py-8 sm:py-12">
         <Container>
-          {/* The page's two short questions side by side from lg. Each was a
-              600px column with the right half of the screen empty beside it,
-              and the second sat four sections further down. */}
-          <div className="grid max-w-3xl gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.whyTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody1}</p>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.whyBody2}</p>
+              <p className="mt-2 text-sm leading-6 text-paper/75">
+                {c.whyBody1} {c.whyBody2}
+              </p>
             </div>
-            <div className="border-t border-white/15 pt-8 lg:border-t-0 lg:pt-0">
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+            <div>
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.freeTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.freeBody}</p>
+              <p className="mt-2 text-sm leading-6 text-paper/75">{c.freeBody}</p>
             </div>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-              {c.driversTitle}
-            </h2>
-            <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.driversLead}</p>
-          </div>
-
-          {/*
-           * A spine below md, two columns from md.
-           *
-           * Six numbered rows separated by hairlines read as a table, and
-           * these are not rows — they are the six things that move a price,
-           * in order. One line down through all six with the numeral as the
-           * station says so. From md the grid splits in two and a spine
-           * through a two-column grid would be drawing a route that does not
-           * exist, so it stops there and the numerals go back to being
-           * numerals.
-           */}
-          <ol className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2 md:border-t md:border-white/15">
-            {drivers.map((driver, i) => (
-              <li
-                key={driver.heading.da}
-                className="relative flex gap-5 pb-8 last:pb-0 md:border-b md:border-white/10 md:py-6 md:last:pb-6"
-              >
-                <div aria-hidden="true" className="relative w-10 flex-none">
-                  {i < drivers.length - 1 && (
-                    <span className="absolute left-1/2 top-11 h-[calc(100%-2.25rem)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/45 via-paper/12 to-paper/5 md:hidden" />
-                  )}
-                  <span className="plate-sm relative flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/[0.12] font-display text-sm font-bold tabular-nums text-brand-200 md:h-auto md:w-auto md:justify-start md:bg-none md:pt-1 md:text-paper/65 md:shadow-none">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-base font-bold tracking-tight text-paper">
-                    {driver.heading[lang]}
-                  </h3>
-                  <p className="mt-2 text-sm leading-[1.6] text-paper/75">{driver.body[lang]}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          {/* What the quote holds, and what to send to get it: the two halves
-              of one exchange, so they sit as a pair from lg. */}
-          <div className="mt-12 grid max-w-3xl items-start gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
-            <div className="plate p-6 sm:p-8">
-              <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+          <div className="mt-8 grid items-start gap-6 lg:grid-cols-2 lg:gap-12">
+            <div>
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.quoteTitle}
               </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.quoteLead}</p>
-              <ul className="mt-5 space-y-3">
+              <p className="mt-2 text-sm leading-6 text-paper/75">{c.quoteLead}</p>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-paper/85 marker:text-brand-300">
                 {c.quotePoints.map((point) => (
-                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/85">
-                    <Check
-                      aria-hidden="true"
-                      className="mt-1.5 h-4 w-4 flex-none text-brand-300"
-                      strokeWidth={2}
-                    />
-                    {point}
-                  </li>
+                  <li key={point}>{point}</li>
                 ))}
               </ul>
+              <Link
+                href={localePath("/tilbud-eksempel", lang)}
+                className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+              >
+                {c.example}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
             </div>
 
-            {/* t-h3 like the plate beside it, and lg:pt-8 is the plate's own
-                padding, so the two headings sit on one line. */}
-            <div className="lg:pt-8">
-              <h2 className="text-balance font-display t-h3 font-bold tracking-tight text-paper">
+            <div>
+              <h2 className="font-display text-xl font-bold tracking-tight text-paper">
                 {c.fastTitle}
               </h2>
-              <p className="mt-4 text-base leading-[1.75] text-paper/75">{c.fastLead}</p>
-              <ul className="mt-5 space-y-2.5">
+              <p className="mt-2 text-sm leading-6 text-paper/75">{c.fastLead}</p>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-paper/85 marker:text-brand-300">
                 {c.fastPoints.map((point) => (
-                  <li key={point} className="flex gap-3 text-sm leading-7 text-paper/75">
-                    <span aria-hidden="true" className="mt-3 h-px w-4 flex-shrink-0 bg-brand-400" />
-                    {point}
-                  </li>
+                  <li key={point}>{point}</li>
                 ))}
               </ul>
+              <Link href={localePath("/tilbud", lang)} className={`${buttonClass("primary")} mt-4`}>
+                {c.enquiry}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
             </div>
           </div>
 
-          <div className="mt-12 max-w-3xl border-t border-white/15 pt-8">
-            <p className="eyebrow text-brand-300">{c.relatedTitle}</p>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {c.related.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={localePath(link.href, lang)}
-                    className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
-                  >
-                    {link.label}
-                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                  </Link>
+          <details className="group mt-8 border-y border-white/15">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+              <h2 className="font-display text-lg font-bold text-paper">{c.driversTitle}</h2>
+              <ChevronDown
+                size={20}
+                aria-hidden="true"
+                className="flex-none text-brand-300 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+              />
+            </summary>
+            <ul className="grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-3">
+              {drivers.map((driver) => (
+                <li key={driver.heading.da}>
+                  <h3 className="text-sm font-bold text-paper">{driver.heading[lang]}</h3>
+                  <p className="mt-1 text-sm leading-6 text-paper/75">{driver.body[lang]}</p>
                 </li>
               ))}
             </ul>
-          </div>
+          </details>
+
+          <ul className="mt-3 flex flex-wrap gap-x-6">
+            {c.related.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={localePath(link.href, lang)}
+                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                >
+                  {link.label}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
       <FactNote lang={lang} ids={["dkWarranty"]} />
-
-      <CtaSection lang={lang} />
     </>
   );
 }

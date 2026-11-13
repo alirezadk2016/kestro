@@ -304,19 +304,23 @@ export default function WhatIsFixed({
   lang,
   group,
   className = "",
+  headingLevel = "h2",
 }: {
   lang: Lang;
   group: ModelGroup;
   className?: string;
+  headingLevel?: "h2" | "h3";
 }) {
   const c = copy[lang];
   const columns = c.kinds[kindOf(group)];
+  const Heading = headingLevel;
+  const Subheading = headingLevel === "h2" ? "h3" : "h4";
 
   return (
     <div className={className}>
-      <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
+      <Heading className="text-balance font-display t-h3 font-bold tracking-display text-paper">
         {c.title}
-      </h2>
+      </Heading>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {columns.map((column) => (
@@ -324,9 +328,9 @@ export default function WhatIsFixed({
             {/* Mark and heading on one line, like the site's other cards. */}
             <div className="flex items-center gap-3">
               <MarkTile name={column.mark} size="sm" className="flex-none" />
-              <h3 className="font-display t-h3 font-bold tracking-tight text-paper">
+              <Subheading className="font-display text-base font-bold tracking-tight text-paper">
                 {column.heading}
-              </h3>
+              </Subheading>
             </div>
             <ul className="mt-3 space-y-2">
               {column.points.map((point) => (

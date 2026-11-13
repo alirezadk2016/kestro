@@ -6,6 +6,8 @@ export type CatalogueEntry = {
   category: { id: string; label: string };
   format: string;
   description: string;
+  /** Existing, researched practical use, shown before technical detail. */
+  application?: string;
   facts: { label: string; value: string }[];
   comparisonFacts?: { label: string; value: string }[];
   detailHref: string;

@@ -1,12 +1,11 @@
 import Hero from "@/components/Hero";
 import AnswerBlock from "@/components/AnswerBlock";
 import CategoryCards from "@/components/CategoryCards";
+import FeatureStrip from "@/components/FeatureStrip";
 import QualifySection from "@/components/QualifySection";
-import Services from "@/components/Services";
 import TrustStrip from "@/components/TrustStrip";
 import type { Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
-import FactNote from "@/components/FactNote";
 
 /*
  * The front page is the one route a junk first segment can still reach.
@@ -30,24 +29,13 @@ export default async function Home(props: { params: Promise<{ lang: Lang }> }) {
 
   return (
     <>
-      {/* Windows 10's end of support is the one sourced fact the front
-          page still states, in the Windows answer. The e-waste and repair
-          directive figures moved to /vejledninger with the panel that
-          carried them. */}
-      <PageSchema lang={lang} route="/" sources={["windows10Eol"]} />
+      <PageSchema lang={lang} route="/" />
 
       <Hero lang={lang} />
-      {/* What we source straight after the hero. A visitor had to scroll
-          past the definition and eight questions to see a single machine;
-          the answer block follows, still the second band a crawler reads. */}
       <CategoryCards lang={lang} />
+      <FeatureStrip lang={lang} />
       <AnswerBlock lang={lang} />
       <QualifySection lang={lang} />
-      <Services lang={lang} />
-      {/* The source behind the Windows answer, in the same folded line the
-          other pages close on. It was only a link inside a closed answer,
-          so the page cited nothing a reader or a crawler could see. */}
-      <FactNote lang={lang} ids={["windows10Eol"]} />
       <TrustStrip lang={lang} />
     </>
   );

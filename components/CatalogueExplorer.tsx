@@ -325,7 +325,7 @@ export default function CatalogueExplorer({
       aria-controls={prefix + "-filters"}
       onClick={() => setFiltersOpen((open) => !open)}
       className={
-        buttonClass("secondary") + " justify-between " + (budget ? "" : "w-full lg:hidden")
+        buttonClass("secondary") + " shrink-0 justify-between !px-3 " + (budget ? "" : "lg:hidden")
       }
     >
       <span className="inline-flex items-center gap-2">
@@ -383,7 +383,7 @@ export default function CatalogueExplorer({
   );
 
   return (
-    <div ref={explorer} data-catalogue={mode} className="mt-7 min-w-0 scroll-mt-28">
+    <div ref={explorer} data-catalogue={mode} className="mt-5 min-w-0 scroll-mt-28">
       {heading && <h2 className="sr-only">{heading}</h2>}
       <noscript>
         <p className="mb-4 text-sm leading-6 text-paper/85">
@@ -392,12 +392,125 @@ export default function CatalogueExplorer({
             : "All models and links are shown here. Search, filters and comparison require JavaScript."}
         </p>
       </noscript>
+      <div className="border-b border-white/15 pb-4">
+        <label htmlFor={`${prefix}-search`} className="sr-only">
+          {da ? "Søg efter model eller mærke" : "Search by model or brand"}
+        </label>
+        <div className="flex items-center gap-2">
+          <div className="relative min-w-0 flex-1">
+            <Search
+              size={18}
+              aria-hidden="true"
+              className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
+            />
+            <input
+              ref={search}
+              id={`${prefix}-search`}
+              data-catalogue-search
+              disabled={!ready}
+              type="search"
+              value={state.query}
+              maxLength={120}
+              autoComplete="off"
+              onChange={(event) =>
+                setState((previous) => ({ ...previous, query: event.target.value }))
+              }
+              placeholder={da ? "Søg efter model eller mærke" : "Search by model or brand"}
+              className={`${control} w-full pl-10`}
+            />
+          </div>
+          {hasFacets && filterButton}
+        </div>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p
+            data-catalogue-count
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="text-sm font-semibold tabular-nums text-paper/85"
+          >
+            {filtered.length} {da ? "af" : "of"} {entries.length}{" "}
+            {budget ? (da ? "budgetreferencer" : "budget references") : da ? "modeller" : "models"}
+          </p>
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
+            {canReset && (
+              <button
+                type="button"
+                disabled={!ready}
+                data-catalogue-clear
+                onClick={clear}
+                className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+              >
+                {da ? "Nulstil filtre" : "Reset filters"}
+              </button>
+            )}
+            <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
+              <span className="sr-only sm:not-sr-only">{da ? "Sortér" : "Sort"}</span>
+              <select
+                data-catalogue-sort
+                disabled={!ready}
+                value={state.sort}
+                onChange={(event) =>
+                  setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
+                }
+                className={`${control} w-28 max-w-full text-xs sm:w-auto`}
+              >
+                <option value="default">{da ? "Standard" : "Default"}</option>
+                <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
+                <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
+                {budget && (
+                  <>
+                    <option value="budget-asc">
+                      {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
+                    </option>
+                    <option value="budget-desc">
+                      {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
+                    </option>
+                  </>
+                )}
+              </select>
+            </label>
+            {!budget && (
+              <div
+                className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
+                role="group"
+                aria-label={da ? "Visning" : "View"}
+              >
+                {(["grid", "list"] as const).map((view) => {
+                  const Icon = view === "grid" ? LayoutGrid : List;
+                  return (
+                    <button
+                      key={view}
+                      data-catalogue-view={view}
+                      type="button"
+                      disabled={!ready}
+                      aria-pressed={state.view === view}
+                      aria-label={
+                        view === "grid"
+                          ? da
+                            ? "Vis som gitter"
+                            : "Grid view"
+                          : da
+                            ? "Vis som liste"
+                            : "List view"
+                      }
+                      onClick={() => setState((previous) => ({ ...previous, view }))}
+                      className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
+                    >
+                      <Icon size={18} aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       <div
-        className={`grid min-w-0 gap-6 ${hasFacets && !budget ? "lg:grid-cols-[184px_minmax(0,1fr)] xl:gap-7 2xl:grid-cols-[200px_minmax(0,1fr)]" : ""}`}
+        className={`grid min-w-0 gap-3 lg:gap-6 ${hasFacets && !budget ? "lg:grid-cols-[184px_minmax(0,1fr)] xl:gap-7 2xl:grid-cols-[200px_minmax(0,1fr)]" : ""}`}
       >
         {hasFacets && !budget && (
-          <div className="min-w-0">
-            {filterButton}
+          <div className={`${filtersOpen ? "block" : "hidden"} min-w-0 lg:block`}>
             <aside
               id={prefix + "-filters"}
               aria-label={da ? "Filtre" : "Filters"}
@@ -412,126 +525,6 @@ export default function CatalogueExplorer({
         )}
 
         <div className="min-w-0">
-          <div className="border-b border-white/15 pb-4">
-            <label htmlFor={`${prefix}-search`} className="sr-only">
-              {da ? "Søg efter model eller mærke" : "Search by model or brand"}
-            </label>
-            <div className="relative">
-              <Search
-                size={18}
-                aria-hidden="true"
-                className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
-              />
-              <input
-                ref={search}
-                id={`${prefix}-search`}
-                data-catalogue-search
-                disabled={!ready}
-                type="search"
-                value={state.query}
-                maxLength={120}
-                autoComplete="off"
-                onChange={(event) =>
-                  setState((previous) => ({ ...previous, query: event.target.value }))
-                }
-                placeholder={da ? "Søg efter model eller mærke" : "Search by model or brand"}
-                className={`${control} w-full pl-10`}
-              />
-            </div>
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-              <p
-                data-catalogue-count
-                role="status"
-                aria-live="polite"
-                aria-atomic="true"
-                className="text-sm font-semibold tabular-nums text-paper/85"
-              >
-                {filtered.length} {da ? "af" : "of"} {entries.length}{" "}
-                {budget
-                  ? da
-                    ? "budgetreferencer"
-                    : "budget references"
-                  : da
-                    ? "modeller"
-                    : "models"}
-              </p>
-              <div className="flex min-w-0 flex-wrap items-center gap-3">
-                {budget && hasFacets && filterButton}
-                {canReset && (
-                  <button
-                    type="button"
-                    disabled={!ready}
-                    data-catalogue-clear
-                    onClick={clear}
-                    className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
-                  >
-                    {da ? "Nulstil filtre" : "Reset filters"}
-                  </button>
-                )}
-                <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
-                  <span>{da ? "Sortér" : "Sort"}</span>
-                  <select
-                    data-catalogue-sort
-                    disabled={!ready}
-                    value={state.sort}
-                    onChange={(event) =>
-                      setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
-                    }
-                    className={`${control} max-w-full text-xs`}
-                  >
-                    <option value="default">
-                      {da ? "Katalogets rækkefølge" : "Catalogue order"}
-                    </option>
-                    <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
-                    <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
-                    {budget && (
-                      <>
-                        <option value="budget-asc">
-                          {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
-                        </option>
-                        <option value="budget-desc">
-                          {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
-                        </option>
-                      </>
-                    )}
-                  </select>
-                </label>
-                {!budget && (
-                  <div
-                    className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
-                    role="group"
-                    aria-label={da ? "Visning" : "View"}
-                  >
-                    {(["grid", "list"] as const).map((view) => {
-                      const Icon = view === "grid" ? LayoutGrid : List;
-                      return (
-                        <button
-                          key={view}
-                          data-catalogue-view={view}
-                          type="button"
-                          disabled={!ready}
-                          aria-pressed={state.view === view}
-                          aria-label={
-                            view === "grid"
-                              ? da
-                                ? "Vis som gitter"
-                                : "Grid view"
-                              : da
-                                ? "Vis som liste"
-                                : "List view"
-                          }
-                          onClick={() => setState((previous) => ({ ...previous, view }))}
-                          className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
-                        >
-                          <Icon size={18} aria-hidden="true" />
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
           {budget && hasFacets && (
             <aside
               id={prefix + "-filters"}

@@ -261,8 +261,15 @@ export const models: Model[] = [
       },
     ],
     images: [
-      /* The angled shot leads: the straight-on one shows a Windows 10 start
-         menu, and this page says the machine ships with Windows 11. */
+      /* One owner-supplied front reference across category, budget and model.
+         Its screen is not evidence of the software agreed for an enquiry. */
+      {
+        src: "/thinkpad-t480-6.jpg",
+        alt: {
+          da: "Lenovo ThinkPad T480 set forfra med skærmen åben; modelfoto, ikke en lagervare",
+          en: "Lenovo ThinkPad T480 viewed from the front with the screen open; model reference, not a stocked unit",
+        },
+      },
       {
         src: "/thinkpad-t480-4.jpg",
         alt: {
@@ -303,13 +310,6 @@ export const models: Model[] = [
         alt: {
           da: "ThinkPad T480 set fra siden, næsten lukket, med portene synlige",
           en: "ThinkPad T480 from the side, almost closed, with the ports visible",
-        },
-      },
-      {
-        src: "/thinkpad-t480-6.jpg",
-        alt: {
-          da: "Lenovo ThinkPad T480 set forfra med Windows installeret og klar til brug",
-          en: "Lenovo ThinkPad T480 seen from the front with Windows installed and ready to use",
         },
       },
     ],
@@ -952,7 +952,8 @@ export const models: Model[] = [
         photographic: true,
         credit: {
           author: "Ahunt",
-          source: "https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg",
+          source:
+            "https://commons.wikimedia.org/wiki/File:Dell_Latitude_7490_running_Ubuntu_Cinnamon_23.10.jpg",
           licence: "CC0",
           licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
         },
@@ -1709,7 +1710,8 @@ export const models: Model[] = [
         photographic: true,
         credit: {
           author: "Paowee",
-          source: "https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG",
+          source:
+            "https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG",
           licence: "CC BY-SA 4.0 (resized)",
           licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
         },

@@ -132,40 +132,34 @@ export async function verifyExternalLaptops(browser, base, fail) {
       const response = await page.goto(base + path, { waitUntil: "networkidle" });
       assert.equal(response?.status(), 200, "the laptop category is available");
       await page.evaluate(() => document.fonts.ready);
-      const primaryModelsAction = page
-        .locator("main > section")
-        .first()
-        .locator("a[href='#models']");
+      const introduction = page.locator("main > section").first();
       assert.equal(
-        await primaryModelsAction.count(),
-        1,
-        "the introduction has one primary route to Kestro model comparisons",
+        await introduction.locator("a[href='#models']").count(),
+        0,
+        "a redundant jump control does not push the directly following models further down",
       );
+      const catalogue = page.locator("#models [data-catalogue='models']");
+      assert.equal(await catalogue.count(), 1, "one primary Kestro model catalogue is available");
       assert.ok(
-        await primaryModelsAction.isVisible(),
-        "the primary model action is visible on phones as well as desktop",
+        await introduction.evaluate((element) => element.nextElementSibling?.id === "models"),
+        "the actual model collection follows the introduction without an intervening product shelf",
       );
-      const primaryModelsTarget = await primaryModelsAction.boundingBox();
+      const firstModel = catalogue.locator("li[data-catalogue-item]").first();
       assert.ok(
-        primaryModelsTarget &&
-          primaryModelsTarget.width >= 44 &&
-          primaryModelsTarget.height >= 44 &&
-          primaryModelsTarget.x >= -1 &&
-          primaryModelsTarget.x + primaryModelsTarget.width <= width + 1,
-        "the primary model action remains a complete touch target within the viewport",
+        await firstModel.isVisible(),
+        "model choices are rendered on arrival, including without JavaScript",
       );
-      assert.ok(
-        await primaryModelsAction.evaluate((element) => {
-          const secondary = element
-            .closest("section")
-            ?.querySelector("a[href='#external-laptop-recommendations']");
-          return (
-            secondary &&
-            Boolean(element.compareDocumentPosition(secondary) & Node.DOCUMENT_POSITION_FOLLOWING)
-          );
-        }),
-        "model comparisons come before the secondary external buying action",
-      );
+      if (width < 640) {
+        const position = await firstModel.evaluate((element) => ({
+          top: element.getBoundingClientRect().top + window.scrollY,
+          scroll: window.scrollY,
+        }));
+        assert.ok(position.scroll <= 1, "the first model is measured before any browsing scroll");
+        assert.ok(
+          position.top > 0 && position.top <= 600,
+          `a phone visitor reaches the first real model within 600px of the document: ${position.top}px`,
+        );
+      }
       const section = page.locator(SECTION);
       assert.equal(await section.count(), 1, "one recommendations section is server-rendered");
       const retailerOptions = page.locator("#laptop-retailer-options");
@@ -181,11 +175,7 @@ export async function verifyExternalLaptops(browser, base, fail) {
         "a second product collection is not expanded by default",
       );
       assert.equal(await section.isVisible(), false, "retailer cards wait for an explicit choice");
-      assert.equal(
-        await page.locator("#models [data-catalogue='models']").count(),
-        1,
-        "the category has one main model catalogue",
-      );
+      assert.equal(await catalogue.count(), 1, "the category has one main model catalogue");
       assert.equal(
         await page.locator("#models #laptop-model-library").count(),
         1,

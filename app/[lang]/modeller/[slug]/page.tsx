@@ -7,7 +7,7 @@ import ModelCard from "@/components/ModelCard";
 import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
 import { modelMedia } from "@/lib/model-media";
-import { Check, Info } from "lucide-react";
+import { Check, ChevronDown, Info } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import PriceOnRequest from "@/components/PriceOnRequest";
@@ -55,7 +55,7 @@ const copy = {
     breadcrumb: "Modeller",
     imageNote:
       "Billederne viser modeltypen. Stand, specifikationer og antal aftales for den enkelte ordre.",
-    configTitle: "Typisk konfiguration",
+    configTitle: "Specifikationer for modelserien",
     configBody:
       "Brugt hardware findes i mange sammensætninger. Tallene her viser, hvad modellen som regel er bygget med – den præcise konfiguration aftaler vi for jeres ordre.",
     goodFor: "God til",
@@ -68,7 +68,7 @@ const copy = {
     breadcrumb: "Models",
     imageNote:
       "The photos show the model type. Condition, specifications and quantity are agreed per order.",
-    configTitle: "Typical configuration",
+    configTitle: "Model family specifications",
     configBody:
       "Used hardware turns up in many configurations. The figures here show how the model is usually built — the exact configuration is agreed for your order.",
     goodFor: "Good for",
@@ -177,7 +177,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
       {/* Lit by the site's own wash. Two blurred orbs sat here: one was
           bg-brand-950 on bg-brand-950 and drew nothing, the other was the
           generic glow every generated page has. */}
-      <section className="lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20">
+      <section className="overflow-hidden bg-brand-950 py-6 text-white sm:py-12">
         <Container className="relative">
           {/* One shell width for the whole page, so every section starts at the
               same left edge. Inside it the machine and what we say about it sit
@@ -252,8 +252,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               )}
 
               <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
-                <p className="text-base leading-[1.75] text-paper/75">{model.intro[lang]}</p>
-                <p className="label mt-6 text-paper/65">
+                <p className="label text-paper/65">
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
                   <time
                     dateTime={pageUpdated("/modeller/[slug]")}
@@ -304,32 +303,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
           <div className="max-w-6xl xl:max-w-none">
-            <div className="plate overflow-hidden">
-              <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
-                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
-                  {c.configTitle}
-                </h2>
-                <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
-              </div>
-
-              <dl className="lg:grid lg:grid-cols-2">
-                {model.specs.map((spec) => (
-                  <div
-                    key={spec.label.da}
-                    className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
-                  >
-                    <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-paper/75 sm:col-span-2 sm:mt-0">
-                      {spec.value[lang]}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            <WhatIsFixed lang={lang} group={model.group} className="mt-12" />
-
-            <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
+            <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
               <div>
                 <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
                   {c.goodFor}
@@ -362,6 +336,46 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </ul>
               </div>
             </div>
+
+            <div className="plate overflow-hidden">
+              <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
+                <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
+                  {c.configTitle}
+                </h2>
+                <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
+              </div>
+
+              <dl className="lg:grid lg:grid-cols-2">
+                {model.specs.map((spec) => (
+                  <div
+                    key={spec.label.da}
+                    className="border-b border-white/10 px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-4 lg:border-b lg:[&:nth-child(odd)]:border-r lg:[&:nth-child(odd)]:border-white/10"
+                  >
+                    <dt className="text-sm font-semibold text-paper">{spec.label[lang]}</dt>
+                    <dd className="mt-1 text-sm leading-6 text-paper/75 sm:col-span-2 sm:mt-0">
+                      {spec.value[lang]}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <details className="group mt-8 border-y border-white/15">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 py-4 [&::-webkit-details-marker]:hidden">
+                <h2 className="text-base font-semibold text-paper">
+                  {lang === "da"
+                    ? "Om modellen og den konkrete konfiguration"
+                    : "About the model and your configuration"}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  aria-hidden="true"
+                  className="shrink-0 text-brand-300 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <p className="pb-5 text-sm leading-6 text-paper/75">{model.intro[lang]}</p>
+              <WhatIsFixed lang={lang} group={model.group} headingLevel="h3" className="pb-6" />
+            </details>
 
             {model.why && (
               <>

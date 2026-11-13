@@ -17,6 +17,16 @@ The model gallery carries a visible source and licence credit.
 
 Existing owner-supplied ThinkPad T480 photographs remain unchanged.
 
+### Category and homepage reuse (13 November 2026)
+
+The equipment gateway and category collection reuse the unchanged owner-supplied
+T480 front photo. The category collection also reuses the licensed WD19 front
+reference documented below, with its author, source and CC BY-SA link available
+in the collection's native photo-credit disclosure. These show equipment types,
+not available inventory or the condition of a unit. Other category references
+use the site's existing labelled vector illustrations and format marks; no new
+photographs or generated product images were introduced.
+
 ## HP EliteBook 840 G8
 
 - Asset: `public/models/elitebook/840-g8-reference.webp`

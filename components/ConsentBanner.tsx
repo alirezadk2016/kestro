@@ -20,16 +20,16 @@ import { localePath, type Lang } from "@/lib/i18n";
  */
 const copy = {
   da: {
-    title: "Må vi måle, hvordan siden bruges?",
-    body: "Google Analytics er valgfrit og uden annoncer. Valget kan ændres nederst på siden.",
+    title: "Valgfri Google Analytics.",
+    body: "Ingen annoncer. Skift i sidefoden.",
     accept: "Accepter statistik",
     reject: "Kun nødvendige",
     more: "Privatlivspolitik",
     label: "Samtykke til statistik",
   },
   en: {
-    title: "May we measure how the site is used?",
-    body: "Google Analytics is optional and carries no advertising. Change your choice in the footer.",
+    title: "Optional Google Analytics.",
+    body: "No ads. Change in the footer.",
     accept: "Accept statistics",
     reject: "Necessary only",
     more: "Privacy policy",
@@ -71,7 +71,7 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
       aria-label={c.label}
       className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
     >
-      <Container className="flex flex-col gap-3 py-3 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
+      <Container className="flex flex-col gap-2 py-2.5 sm:gap-3 sm:py-3 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
           <p className="text-sm leading-[1.55] text-paper/75">
             <span className="font-semibold text-paper">{c.title}</span> {c.body}{" "}

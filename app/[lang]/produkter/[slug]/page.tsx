@@ -1,25 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { Check, Smartphone, Watch, ArrowUpRight } from "lucide-react";
+import { Check, Smartphone, Watch, ArrowUpRight, ChevronDown } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import HeaderArt from "@/components/HeaderArt";
 import ExternalLaptopRecommendations from "@/components/ExternalLaptopRecommendations";
 import ProductDisclosure from "@/components/ProductDisclosure";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
 import { getModelsForCategory } from "@/lib/models";
 import { getCategoryMark } from "@/lib/category-marks";
-import MarkTile from "@/components/MarkTile";
 import CraftMark from "@/components/CraftMark";
 import { formatDate, localePath, metaFor, langs, type Lang, lowerFirst } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
-import Faq from "@/components/Faq";
-import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
+import FaqSchema from "@/components/FaqSchema";
+import { categoryFaqs, categorySources } from "@/lib/category-copy";
 import ModelCatalogue from "@/components/ModelCatalogue";
 import { catalogueOrder } from "@/lib/model-order";
 import FactNote from "@/components/FactNote";
@@ -59,10 +56,10 @@ const copy = {
       "Vi skaffer udstyret til hver ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
-    modelsTitle: "Modeller vi skaffer",
-    modelsBody: "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne.",
+    modelsTitle: "Sammenlign modelserier",
+    modelsBody: "Modelreferencer · konfiguration og stand afklares ved forespørgsel.",
     stockNote: "Eksemplerne er ikke en lagerliste.",
-    allModels: "Se hele modeloversigten",
+    allModels: "Sammenlign på tværs af udstyrstyper",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
     useCases: "Typiske anvendelser",
     specs: "Specifikationer",
@@ -76,10 +73,10 @@ const copy = {
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get for",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
-    modelsTitle: "Models we source",
-    modelsBody: "Compare specifications and limitations once the work requirements are clear.",
+    modelsTitle: "Compare model ranges",
+    modelsBody: "Model references · configuration and condition are clarified on enquiry.",
     stockNote: "These examples are not a stock list.",
-    allModels: "See the full model overview",
+    allModels: "Compare across equipment types",
     priceNote: "The price depends on configuration, condition and quantity.",
     useCases: "Typical uses",
     specs: "Specifications",
@@ -102,58 +99,6 @@ export async function generateMetadata(props: {
   };
 }
 
-/*
- * The artwork the site already has for a category, with the alt text the
- * front page's cards use for the same picture. Mini PCs share the desktop
- * render (it shows a tower and a mini PC side by side) and docks share the
- * monitor one (a monitor, a keyboard and a dock). Tablets and phones have
- * none, and get no picture rather than a borrowed one.
- */
-const CATEGORY_ART: Record<string, { src: string; alt: { da: string; en: string } }> = {
-  "baerbare-computere": {
-    src: "/cards/cat-laptops.webp",
-    alt: {
-      da: "Åben bærbar erhvervscomputer set fra siden",
-      en: "An open business laptop seen from the side",
-    },
-  },
-  "stationaere-computere": {
-    src: "/cards/cat-desktops.webp",
-    alt: {
-      da: "Stationær computer og en mini-pc side om side",
-      en: "A desktop tower and a mini PC side by side",
-    },
-  },
-  "mini-pc": {
-    src: "/cards/cat-desktops.webp",
-    alt: {
-      da: "Stationær computer og en mini-pc side om side",
-      en: "A desktop tower and a mini PC side by side",
-    },
-  },
-  skaerme: {
-    src: "/cards/cat-monitors.webp",
-    alt: {
-      da: "Bredformatskærm med tastatur og en dockingstation",
-      en: "A widescreen monitor with a keyboard and a docking station",
-    },
-  },
-  dockingstationer: {
-    src: "/cards/cat-monitors.webp",
-    alt: {
-      da: "Bredformatskærm med tastatur og en dockingstation",
-      en: "A widescreen monitor with a keyboard and a docking station",
-    },
-  },
-  smartphones: {
-    src: "/graphics/smartphones.webp",
-    alt: {
-      da: "Illustration af smartphones og et smartwatch på et arbejdsbord",
-      en: "Illustrative smartphones and a smartwatch on a workbench",
-    },
-  },
-};
-
 export default async function CategoryPage(props: {
   params: Promise<{ lang: Lang; slug: string }>;
 }) {
@@ -170,6 +115,24 @@ export default async function CategoryPage(props: {
   const pagePath = `/produkter/${category.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const collectionId = `${pageUrl}#collection`;
+  const faqItems = categoryFaqs(category);
+  const primaryFaqs = faqItems.filter((faq) => faq.primary);
+  const secondaryFaqs = faqItems.filter((faq) => !faq.primary);
+  const renderQuestion = (faq: (typeof faqItems)[number]) => (
+    <details key={faq.question.da} className="sheet group/question px-5 sm:px-6">
+      <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3.5 [&::-webkit-details-marker]:hidden">
+        <h3 className="text-base font-semibold leading-snug text-ink-900 group-open/question:text-brand-700 group-hover/question:text-brand-700">
+          {faq.question[lang]}
+        </h3>
+        <ChevronDown
+          className="h-5 w-5 flex-none text-ink-600 transition-transform duration-150 group-open/question:rotate-180"
+          strokeWidth={2}
+          aria-hidden="true"
+        />
+      </summary>
+      <p className="pb-5 pr-2 text-base leading-[1.7] text-ink-700 sm:pr-9">{faq.answer[lang]}</p>
+    </details>
+  );
 
   /*
    * The category as a collection, not just a page with a breadcrumb.
@@ -229,7 +192,7 @@ export default async function CategoryPage(props: {
                 {c.useCases}
               </h2>
             )}
-            {isLaptops && (
+            {!isPhones && (
               <p className="mb-6 text-base leading-7 text-paper/85">{category.intro[lang]}</p>
             )}
             <dl className={isLaptops ? "grid gap-6 md:grid-cols-2" : "mt-8 space-y-6"}>
@@ -278,34 +241,18 @@ export default async function CategoryPage(props: {
      elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section
-        id="models"
-        className={`scroll-mt-24 border-t border-white/10 bg-ink-900 ${isLaptops ? "py-6" : "py-10"} sm:py-20`}
-      >
+      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:py-10">
         <Container>
-          <div
-            id={isLaptops ? "laptop-model-library" : undefined}
-            className="split max-w-3xl scroll-mt-28"
-          >
-            <h2
-              className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} text-balance font-display t-h2 font-extrabold tracking-display text-paper`}
-            >
+          <div id={isLaptops ? "laptop-model-library" : undefined} className="scroll-mt-28">
+            <h2 className="sr-only font-display t-h2 font-extrabold text-paper sm:not-sr-only">
               {c.modelsTitle}
             </h2>
-            <p
-              className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} mt-3 text-base leading-[1.75] text-paper/75`}
-            >
-              {c.modelsBody}
-            </p>
-            {!isLaptops && (
-              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
-            )}
           </div>
 
           <div>
-            <p className="mt-3 text-sm leading-6 text-paper/65">{c.stockNote}</p>
             <ModelCatalogue models={categoryModels} lang={lang} />
             <p className="mt-4 text-sm leading-6 text-paper/65">
+              {c.stockNote}{" "}
               {lang === "da"
                 ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får."
                 : "The pictures are model photos or illustrations of the format — not the machine you get."}
@@ -346,192 +293,63 @@ export default async function CategoryPage(props: {
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
-      {isLaptops ? (
-        <section className="bg-brand-950 pb-8 pt-6 sm:pb-10 sm:pt-10">
-          <Container>
-            <Breadcrumbs
-              lang={lang}
-              trail={[
-                { name: c.breadcrumbHub, href: "/produkter" },
-                { name: category.name[lang], href: `/produkter/${category.slug}` },
-              ]}
+      <section className="border-b border-white/10 bg-brand-950 pb-5 pt-3 sm:pb-7 sm:pt-6">
+        <Container>
+          <Breadcrumbs
+            lang={lang}
+            trail={[
+              { name: c.breadcrumbHub, href: "/produkter" },
+              { name: category.name[lang], href: `/produkter/${category.slug}` },
+            ]}
+          />
+          {collectionJsonLd && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
+              }}
             />
-            {collectionJsonLd && (
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                  __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
-                }}
-              />
-            )}
-            <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-start lg:gap-12">
-              <div className="lg:col-span-6">
-                <h1 className="t-h1 font-display font-extrabold tracking-display text-paper">
-                  {(category.h1 ?? category.name)[lang]}
-                </h1>
-                <p className="mt-4 text-xs leading-5 text-paper/65">
-                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                  <time dateTime={pageUpdated("/produkter/[slug]")}>
-                    {formatDate(pageUpdated("/produkter/[slug]"), lang)}
-                  </time>
-                </p>
-              </div>
-              <div className="lg:col-span-6">
-                <p className="hidden text-base leading-7 text-paper/85 sm:block">
-                  {categoryLead(category, lang)}
-                </p>
-                <p className="text-base leading-7 text-paper/85 sm:hidden">
-                  {lang === "da"
-                    ? "Til kontor, hjemmearbejde og startup."
-                    : "For office work, home working and startup teams."}
-                </p>
-                {/* The models first; the way to buy one elsewhere today stays
-                    one tap away, beside it. */}
-                <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <Button href="#models" className="w-auto">
-                    {lang === "da" ? "Se modellerne" : "See the models"}
-                  </Button>
+          )}
+          <div className="mt-3 grid gap-3 lg:grid-cols-12 lg:items-center lg:gap-12">
+            <h1 className="t-h1 font-display font-extrabold tracking-display text-paper lg:col-span-6">
+              {(category.h1 ?? category.name)[lang]}
+            </h1>
+            <div className="lg:col-span-6">
+              <p className="text-sm leading-6 text-paper/85 sm:text-base">
+                {category.tagline[lang]}.{" "}
+                {isLaptops && (
                   <a
                     href="#external-laptop-recommendations"
-                    className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
+                    className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-brand-300 hover:text-paper"
                   >
                     {lang === "da" ? "Køb hos andre" : "Buy elsewhere"}
                   </a>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-      ) : (
-        /* Lit by the site's own wash. Two blurred orbs sat here: one was
-          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
-          generic glow every generated page has. */
-        <section
-          className={`lit overflow-hidden bg-brand-950 py-12 text-white sm:py-20 ${
-            isPhones
-              ? "product-phone-hero"
-              : CATEGORY_ART[category.slug]
-                ? "max-md:-mt-[65px] max-md:pt-0"
-                : ""
-          }`}
-        >
-          {isPhones && (
-            <Image
-              src={CATEGORY_ART.smartphones.src}
-              width={1440}
-              height={960}
-              priority
-              sizes="(min-width: 1024px) 60vw, 100vw"
-              alt={CATEGORY_ART.smartphones.alt[lang]}
-              className="product-phone-image"
-            />
-          )}
-          <Container className="relative">
-            {/* Text in the left seven columns, the category's picture in the
-              right five from lg. On a phone the picture is the header's
-              ground, from under the glass bar, and the trail, title and lead
-              sit on glass over its foot, as the front page's words sit over
-              the room. */}
-            <div
-              className={
-                isPhones ? "product-phone-copy" : "grid grid-cols-1 lg:grid-cols-12 lg:gap-x-14"
-              }
-            >
-              <div
-                className={`max-w-3xl lg:col-span-7 ${
-                  CATEGORY_ART[category.slug] && !isPhones
-                    ? "glass-card relative z-10 max-md:-mt-14"
-                    : ""
-                }`}
-              >
-                {/* The shared trail: "Forside / Produkter / Bærbare
-                computere", visible and marked up from one list. The schema
-                here already began at Forside while the visible trail did not,
-                which is the mismatch BreadcrumbSchema warns about. */}
-                <Breadcrumbs
-                  lang={lang}
-                  trail={[
-                    { name: c.breadcrumbHub, href: "/produkter" },
-                    { name: category.name[lang], href: `/produkter/${category.slug}` },
-                  ]}
-                />
-                {collectionJsonLd && (
-                  <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                      __html: JSON.stringify(collectionJsonLd).replace(/</g, "\\u003c"),
-                    }}
-                  />
                 )}
-                {/* Mark and title on one row at every width, on the type scale.
-                Stacked on a phone the 56px tile cost the first screen 80px,
-                and the title was 3xl/4xl/5xl — 48px on a desktop, off the
-                scale every other page title is on. */}
-                <div className="mt-5 flex items-center gap-4 sm:gap-5">
-                  <MarkTile name={getCategoryMark(category.slug)} size="lg" className="flex-none" />
-                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                    {(category.h1 ?? category.name)[lang]}
-                  </h1>
-                </div>
-                <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
-                  {categoryLead(category, lang)}
-                </p>
-              </div>
-
-              {CATEGORY_ART[category.slug] && !isPhones && (
-                <HeaderArt
-                  src={CATEGORY_ART[category.slug].src}
-                  width={1200}
-                  height={675}
-                  alt={CATEGORY_ART[category.slug].alt[lang]}
-                  className="mt-8 aspect-[16/9] lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:mt-16 lg:self-start"
-                  bleed
-                />
-              )}
-
-              {/* With no picture (tablets) the right five columns stood empty:
-                half the header was dark glass on a desktop. The intro takes
-                that column instead, beside the title, rather than a borrowed
-                picture of something else. */}
-              <div
-                className={
-                  CATEGORY_ART[category.slug] || isPhones
-                    ? "max-w-3xl lg:col-span-7"
-                    : "max-w-3xl lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end lg:[&>p:first-child]:mt-0"
-                }
-              >
-                {!isPhones && (
-                  <p className="mt-8 text-base leading-[1.75] text-paper/75">
-                    {category.intro[lang]}
-                  </p>
-                )}
-                <p className="label mt-6 text-paper/65">
-                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                  <time
-                    dateTime={pageUpdated("/produkter/[slug]")}
-                    className="tabular-nums text-paper/85"
-                  >
-                    {formatDate(pageUpdated("/produkter/[slug]"), lang)}
-                  </time>
-                </p>
-                {isPhones && (
+              </p>
+              <p className="mt-1 text-xs leading-5 text-paper/65">
+                {categoryModels.length > 0
+                  ? c.modelsBody
+                  : lang === "da"
+                    ? "Fortæl os om antal, apps og budget. Vi afklarer mulighederne i et skriftligt tilbud."
+                    : "Tell us your quantity, apps and budget. We clarify the options in a written quote."}
+              </p>
+              {categoryModels.length === 0 && (
+                <div className="mt-3">
                   <Button
-                    href={localePath("/tilbud?model=Smartphones", lang)}
-                    className="mt-7 w-full sm:w-auto"
+                    href={localePath(
+                      `/tilbud?model=${encodeURIComponent(category.name[lang])}`,
+                      lang,
+                    )}
+                    className="w-auto"
                   >
-                    {lang === "da" ? "Få et tilbud på firmatelefoner" : "Ask about business phones"}
+                    {lang === "da" ? "Beskriv jeres behov" : "Describe your needs"}
                   </Button>
-                )}
-                {isLaptops && (
-                  <Button href="#external-laptop-recommendations" className="mt-7 w-full sm:w-auto">
-                    {lang === "da" ? "Se anbefalingerne" : "See recommendations"}
-                  </Button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-          </Container>
-        </section>
-      )}
+          </div>
+        </Container>
+      </section>
 
       {modelsSection}
 
@@ -628,14 +446,26 @@ export default async function CategoryPage(props: {
               })}
             </ul>
 
-            {/* The guides that belong to this category, in the same band as
-                the other categories. They were a second band of their own
-                ("Videre herfra") straight after this one: two rows of chips in
-                two sections, each with its own heading and padding. */}
+            {/* Secondary reading remains one deliberate step away, with every
+                established guide link in the server-rendered document. */}
             {category.guides && category.guides.length > 0 && (
-              <>
-                <p className="eyebrow mt-10 text-brand-300">{c.readMore}</p>
-                <ul className="mt-4 flex flex-wrap gap-2">
+              <details
+                id="category-buying-guides"
+                className="group/guides mt-6 border-t border-white/10"
+              >
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3 [&::-webkit-details-marker]:hidden">
+                  <h3 className="text-base font-semibold text-paper">
+                    {lang === "da"
+                      ? "Købsguider og kompatibilitet"
+                      : "Buying guides and compatibility"}
+                  </h3>
+                  <ChevronDown
+                    aria-hidden="true"
+                    size={18}
+                    className="shrink-0 text-brand-300 transition-transform duration-150 group-open/guides:rotate-180"
+                  />
+                </summary>
+                <ul className="flex flex-wrap gap-2 pb-3">
                   {category.guides.map((link) => (
                     <li key={link.href}>
                       <Link
@@ -648,20 +478,60 @@ export default async function CategoryPage(props: {
                     </li>
                   ))}
                 </ul>
-              </>
+              </details>
             )}
           </div>
         </Container>
       </section>
 
-      <Faq
-        lang={lang}
-        items={categoryFaqs(category)}
-        title={{
-          da: `Spørgsmål om ${lowerFirst(category.name.da)}`,
-          en: `Questions about ${lowerFirst(category.name.en)}`,
-        }}
-      />
+      <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
+        <FaqSchema lang={lang} items={faqItems} />
+        <Container>
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-4">
+              <h2 className="t-h2 text-balance font-display font-extrabold tracking-display text-ink-900">
+                {lang === "da"
+                  ? `Spørgsmål om ${lowerFirst(category.name.da)}`
+                  : `Questions about ${lowerFirst(category.name.en)}`}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-ink-700">
+                {lang === "da" ? "Mangler der et spørgsmål? " : "Don't see your question? "}
+                <Link
+                  href={localePath("/kontakt", lang)}
+                  className="inline-flex min-h-11 items-center font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600"
+                >
+                  {lang === "da" ? "Skriv til os" : "Write to us"}
+                </Link>
+              </p>
+            </div>
+            <div className="space-y-2.5 lg:col-span-8">
+              {primaryFaqs.map(renderQuestion)}
+              {secondaryFaqs.length > 0 && (
+                <details data-category-more-faq className="group/more border-t border-ink-200 pt-1">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3 text-sm font-semibold text-brand-700 [&::-webkit-details-marker]:hidden">
+                    <span>{lang === "da" ? "Flere spørgsmål" : "More questions"}</span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      size={18}
+                      className="shrink-0 transition-transform duration-150 group-open/more:rotate-180"
+                    />
+                  </summary>
+                  <div className="space-y-2.5 pb-2">{secondaryFaqs.map(renderQuestion)}</div>
+                </details>
+              )}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <Container>
+        <p className="pb-3 text-xs leading-5 text-paper/65">
+          {lang === "da" ? "Opdateret" : "Updated"}{" "}
+          <time dateTime={pageUpdated("/produkter/[slug]")} className="tabular-nums">
+            {formatDate(pageUpdated("/produkter/[slug]"), lang)}
+          </time>
+        </p>
+      </Container>
 
       {/* Windows sources only on the categories that run it. */}
       <FactNote lang={lang} ids={categorySources(category)} />

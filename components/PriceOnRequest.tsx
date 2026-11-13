@@ -19,7 +19,7 @@ const copy = {
        on the sixteen model pages that show no figure, it explained prices
        that were not there. Without a figure, the box says how a price for
        this model is reached instead. */
-    body: "Prisen på denne model afhænger af stand, konfiguration og antal. Skriv, hvad I skal bruge, så vender vi tilbage med muligheder og en præcis pris.",
+    body: "Dette er en modelreference. Fortæl os antal og behov; vi undersøger tilgængelighed og en konkret konfiguration med stand og pris.",
     volume: "Skriv antal, specifikationer og ønsket tastatur.",
     volumeAccessory: "Skriv antal og hvilke maskiner, udstyret skal bruges med.",
     cta: "Send en forespørgsel",
@@ -27,7 +27,7 @@ const copy = {
   },
   en: {
     heading: "Ask about pricing and options",
-    body: "The price of this model depends on condition, configuration and quantity. Tell us what you need, and we will come back with options and a specific price.",
+    body: "This is a model reference. Tell us the quantity and your needs; we check availability and a specific configuration with condition and pricing.",
     volume: "Tell us the quantity, specifications and keyboard you need.",
     volumeAccessory: "Tell us the quantity and which machines it will be used with.",
     cta: "Send an enquiry",
@@ -85,6 +85,16 @@ export default function PriceOnRequest({
           </p>
         </div>
       )}
+
+      <Link
+        href={localePath("/tilbud-eksempel", lang)}
+        className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+      >
+        {lang === "da"
+          ? "Se et eksempel på oplysningerne i et tilbud"
+          : "See the information in a sample quote"}
+        <ArrowRight size={14} aria-hidden="true" className="shrink-0" />
+      </Link>
 
       <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">
         <Layers className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-300" strokeWidth={1.75} />

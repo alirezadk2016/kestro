@@ -37,8 +37,8 @@ function Media({
       aria-hidden={entry.image ? undefined : true}
       className={`relative aspect-[4/3] self-start overflow-hidden rounded-lg ${budget ? "w-[104px]" : "w-20 sm:w-[104px]"} ${
         entry.image
-          ? "bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10"
-          : "border border-white/10 bg-ink-950"
+          ? "bg-paper-dim ring-1 ring-inset ring-ink-900/5"
+          : "border border-ink-200 bg-paper-dim"
       } ${
         grid
           ? entry.image
@@ -60,7 +60,7 @@ function Media({
       ) : (
         <div
           data-catalogue-placeholder
-          className={`flex h-full items-center justify-center px-2 text-center font-display text-sm font-bold text-paper/85 ${grid ? "sm:justify-start sm:px-4 sm:text-base" : ""}`}
+          className={`flex h-full items-center justify-center px-2 text-center font-display text-sm font-bold text-ink-700 ${grid ? "sm:justify-start sm:px-4 sm:text-base" : ""}`}
         >
           {entry.brand}
         </div>
@@ -84,9 +84,15 @@ export default function CatalogueListingItem({
   const da = lang === "da";
   const budget = mode === "budget";
   const grid = view === "grid";
-  const enquiry = budget ? (da ? "Spørg om pris" : "Enquire") : da ? "Få pris" : "Get a price";
+  const enquiry = budget
+    ? da
+      ? "Spørg om pris"
+      : "Enquire"
+    : da
+      ? "Spørg om modellen"
+      : "Enquire";
   const compare = canCompare && (
-    <label className="inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-sm text-paper/85">
+    <label className="inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-sm text-ink-700">
       <input
         data-catalogue-compare={entry.id}
         type="checkbox"
@@ -107,7 +113,7 @@ export default function CatalogueListingItem({
       data-budget-enquiry={budget ? "" : undefined}
       href={entry.enquiryHref}
       aria-label={`${enquiry}: ${entry.name}`}
-      className={`${buttonClass(budget ? "primary" : "secondary")} shrink-0 whitespace-nowrap !px-2.5`}
+      className={`${buttonClass("primary")} shrink-0 whitespace-nowrap !px-3`}
     >
       {enquiry}
       {!budget && <ArrowRight size={14} aria-hidden="true" />}
@@ -119,7 +125,7 @@ export default function CatalogueListingItem({
       id={entry.fragmentId}
       data-catalogue-item={entry.id}
       data-budget-model={budget ? entry.id : undefined}
-      className={`plate grid min-w-0 scroll-mt-28 gap-y-3 overflow-hidden ${
+      className={`sheet grid min-w-0 scroll-mt-28 gap-y-3 overflow-hidden ${
         budget
           ? "grid-cols-[104px_minmax(0,1fr)] gap-x-4 p-4"
           : `grid-cols-[80px_minmax(0,1fr)] gap-x-3 p-3 sm:grid-cols-[104px_minmax(0,1fr)] ${grid ? "" : "sm:p-4"}`
@@ -135,20 +141,18 @@ export default function CatalogueListingItem({
       <div
         className={`min-w-0 self-center ${grid ? `sm:w-full sm:px-4 sm:pt-3 ${budget ? "sm:min-h-24" : ""}` : "xl:col-start-2 xl:row-start-1"}`}
       >
-        <p className="text-xs font-semibold uppercase leading-4 tracking-wider text-brand-300">
-          {entry.format}
-        </p>
-        <h3 className="font-display text-base font-bold leading-snug text-paper sm:text-lg">
+        <p className="text-xs font-medium leading-4 text-ink-600">{entry.format}</p>
+        <h3 className="font-display text-base font-bold leading-snug text-ink-900 sm:text-lg">
           <Link
             data-catalogue-detail
             href={entry.detailHref}
-            className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-brand-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 ${budget && grid ? "sm:min-h-14" : ""}`}
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${budget && grid ? "sm:min-h-14" : ""}`}
           >
             <span>{entry.name}</span>
-            <ArrowRight size={12} className="shrink-0 text-brand-300" aria-hidden="true" />
+            <ArrowRight size={12} className="shrink-0 text-brand-700" aria-hidden="true" />
           </Link>
         </h3>
-        <p className="text-xs leading-4 text-paper/65">
+        <p className="text-xs leading-4 text-ink-600">
           {entry.image
             ? entry.image.kind === "photo"
               ? da
@@ -165,15 +169,15 @@ export default function CatalogueListingItem({
         <div
           className={`col-span-2 flex min-w-0 flex-1 flex-col ${grid ? "sm:px-4 sm:pb-3" : "xl:col-span-1 xl:col-start-2 xl:row-start-2"}`}
         >
-          <p className="text-sm leading-6 text-paper/75 sm:mt-2 sm:min-h-20 xl:min-h-24 min-[1440px]:min-h-20 min-[1800px]:min-h-12">
+          <p className="text-sm leading-6 text-ink-700 sm:mt-2 sm:min-h-20 xl:min-h-24 min-[1440px]:min-h-20 min-[1800px]:min-h-12">
             {entry.configuration}
           </p>
           {entry.budget && (
             <div className="mt-3">
-              <p className="text-xs font-semibold leading-4 text-paper/65">
+              <p className="text-xs font-semibold leading-4 text-ink-600">
                 {da ? "Historisk budget pr. enhed" : "Historical budget per unit"}
               </p>
-              <p className="mt-1 font-display text-2xl font-bold leading-7 tabular-nums text-paper">
+              <p className="mt-1 font-display text-2xl font-bold leading-7 tabular-nums text-ink-900">
                 {da ? "Ca." : "Approx."} {entry.budget.formatted}
               </p>
             </div>
@@ -187,7 +191,7 @@ export default function CatalogueListingItem({
               <Link
                 data-budget-model-link
                 href={entry.detailHref}
-                className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-ink-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
               >
                 {da ? "Detaljer" : "Details"}
                 <span className="sr-only">: {entry.name}</span>
@@ -200,7 +204,7 @@ export default function CatalogueListingItem({
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label={`${da ? "Historisk priskilde" : "Historical price source"}: ${entry.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
-                  className="inline-flex min-h-11 items-center gap-1.5 text-xs text-paper/75 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                  className="inline-flex min-h-11 items-center gap-1.5 text-xs text-ink-600 underline underline-offset-4 hover:text-ink-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
                 >
                   {da ? "Historisk priskilde" : "Historical price source"}
                   <ArrowUpRight size={12} className="shrink-0" aria-hidden="true" />
@@ -211,17 +215,25 @@ export default function CatalogueListingItem({
         </div>
       ) : (
         <>
+          {entry.application && (
+            <p
+              data-catalogue-application
+              className={`col-span-2 text-sm leading-5 text-ink-700 ${grid ? "sm:px-4 sm:pt-2" : "xl:col-span-1 xl:col-start-2 xl:row-start-2"}`}
+            >
+              {entry.application}
+            </p>
+          )}
           <dl
-            className={`col-span-2 grid min-w-0 gap-3 border-t border-white/10 pt-3 ${entry.facts.length === 2 ? "grid-cols-2" : "grid-cols-3"} ${
+            className={`col-span-2 grid min-w-0 gap-3 border-t border-ink-200 pt-3 ${entry.facts.length === 2 ? "grid-cols-2" : "grid-cols-3"} ${
               grid
                 ? "sm:mx-4 sm:mt-3"
-                : "xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:self-center xl:border-0 xl:pt-0"
+                : "xl:col-span-1 xl:col-start-3 xl:row-span-2 xl:row-start-1 xl:self-center xl:border-0 xl:pt-0"
             }`}
           >
             {entry.facts.slice(0, 3).map((fact) => (
               <div key={fact.label} className="min-w-0">
-                <dt className="text-xs leading-4 text-paper/65">{fact.label}</dt>
-                <dd className="mt-1 break-words text-sm font-medium leading-5 text-paper/85">
+                <dt className="text-xs leading-4 text-ink-600">{fact.label}</dt>
+                <dd className="mt-1 break-words text-sm font-medium leading-5 text-ink-900">
                   {fact.value}
                 </dd>
               </div>
@@ -231,7 +243,7 @@ export default function CatalogueListingItem({
             className={`col-span-2 flex flex-wrap items-center justify-between gap-x-3 ${
               grid
                 ? "sm:mt-auto sm:px-4 sm:pb-3 sm:pt-3"
-                : "xl:col-span-1 xl:col-start-4 xl:row-start-1 xl:flex-col xl:items-end xl:justify-center"
+                : "xl:col-span-1 xl:col-start-4 xl:row-span-2 xl:row-start-1 xl:flex-col xl:items-end xl:justify-center"
             }`}
           >
             {compare}

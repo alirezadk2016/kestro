@@ -286,16 +286,28 @@ export async function verifyCatalogueExplorer(
       assert.ok(await panel.isVisible(), "the controlled filter panel is visible");
       const searchBox = await root().locator("[data-catalogue-search]").boundingBox();
       const panelBox = await panel.boundingBox();
-      if (budget)
+      assert.ok(
+        searchBox && panelBox && searchBox.y + searchBox.height <= panelBox.y + 1,
+        "the filter panel follows the shared search toolbar",
+      );
+      if (hasToggle) {
+        const toggleBox = await toggle.boundingBox();
         assert.ok(
-          searchBox && panelBox && searchBox.y + searchBox.height <= panelBox.y + 1,
-          "the budget filter panel follows its search toolbar",
+          searchBox &&
+            toggleBox &&
+            Math.abs(searchBox.y - toggleBox.y) <= 1 &&
+            searchBox.x + searchBox.width <= toggleBox.x + 1,
+          "compact filters share the search row without covering the input",
         );
-      else if (width >= 1024)
+      } else if (width >= 1024) {
+        const resultColumn = await root()
+          .locator("ul")
+          .evaluate((element) => element.parentElement.getBoundingClientRect().toJSON());
         assert.ok(
-          searchBox && panelBox && panelBox.x + panelBox.width <= searchBox.x + 1,
-          "the desktop model sidebar stays beside the search and result column",
+          resultColumn.width > 0 && panelBox && panelBox.x + panelBox.width <= resultColumn.x + 1,
+          "the desktop model sidebar stays beside the result column beneath the shared toolbar",
         );
+      }
       assert.notEqual(
         await page.evaluate(() => document.body.style.overflow),
         "hidden",

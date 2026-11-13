@@ -20,7 +20,7 @@ const copy = {
     /* Answer first, with the counts the page actually shows. */
     description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konfiguration bekræftet.`,
     noStockLine:
-      "Ingen priser og ingen lagerstatus her, fordi vi skaffer maskinerne til den enkelte ordre.",
+      "Modelserier til sammenligning. Præcis konfiguration, stand og tilgængelighed afklares ved forespørgsel.",
     noStockLink: "Sådan bliver prisen til",
     byTypeLine: "Leder I efter en type maskine frem for en bestemt model?",
     byTypeLink: "Se computere til erhverv efter kategori",
@@ -35,7 +35,8 @@ const copy = {
       "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
     title: "Used business models: ThinkPad, EliteBook, Latitude and OptiPlex",
     description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and configuration.`,
-    noStockLine: "No prices or stock levels here, because we source the machines for each order.",
+    noStockLine:
+      "Model families for comparison. Exact configuration, condition and availability are confirmed on enquiry.",
     noStockLink: "How the price is set",
     byTypeLine: "Looking for a type of machine rather than a specific model?",
     byTypeLink: "See business computers by category",
@@ -88,12 +89,6 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             </h1>
             <div>
               <p className="text-sm leading-6 text-paper/85">{introduction}</p>
-              <p className="mt-2 text-xs leading-5 text-paper/65">
-                {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                <time dateTime={pageUpdated("/modeller")} className="tabular-nums text-paper/85">
-                  {formatDate(pageUpdated("/modeller"), lang)}
-                </time>
-              </p>
             </div>
           </div>
 
@@ -115,6 +110,13 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             lang={lang}
             heading={lang === "da" ? "Find og sammenlign modeller" : "Find and compare models"}
           />
+
+          <p className="mt-5 text-xs leading-5 text-paper/65">
+            {lang === "da" ? "Opdateret" : "Updated"}{" "}
+            <time dateTime={pageUpdated("/modeller")} className="tabular-nums">
+              {formatDate(pageUpdated("/modeller"), lang)}
+            </time>
+          </p>
 
           {/* Preserve the category route for a buyer arriving without a model name. */}
           <p className="mt-6 max-w-3xl text-sm leading-[1.6] text-paper/65">

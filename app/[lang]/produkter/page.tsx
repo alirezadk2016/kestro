@@ -17,14 +17,14 @@ const copy = {
     metaDescription:
       "Brugte computere til erhverv: bærbare, stationære, mini-pc'er, skærme, tablets og docks – skaffet til ordren i Danmark og Norge, med vilkår på skrift.",
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
-    description: `Find brugt IT-udstyr i ${categories.length} kategorier til kontor, hjemmearbejde eller en nystartet virksomhed. Vælg en kategori for at se mulighederne.`,
+    description: `Vælg mellem ${categories.length} udstyrstyper til jeres arbejdsplads. Vi skaffer efter behov og afklarer konfiguration, stand og pris i et skriftligt tilbud.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
     noStockLink: "Se budgeteksempler og prisgrundlag",
     noPrices1:
-      "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
+      "Nej. Vi skaffer udstyret til den enkelte ordre. Konfiguration, stand, pris og levering skal afklares i tilbuddet, før I tager stilling.",
     noPrices2:
-      "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
-    modelsButton: "Sammenlign alle modeller",
+      "Send modelnavn eller beskriv opgaven, antal og budget. Vi undersøger mulighederne; kataloget er eksempler på udstyrstyper og modelserier.",
+    modelsButton: "Sammenlign specifikationer",
     modelHint: "Kender I allerede modellen?",
     choiceTitle: "Hvilken computer passer til jeres behov?",
     choiceLead:
@@ -39,14 +39,14 @@ const copy = {
     metaDescription:
       "Used computers for firms: laptops, desktops, mini PCs, screens, tablets and docks, sourced per order in Denmark and Norway, all terms in writing.",
     title: "Used business computers we source",
-    description: `Find used IT equipment in ${categories.length} categories for office work, home working or a startup. Choose a category to explore the options.`,
+    description: `Choose from ${categories.length} equipment types for your workplace. We source around your needs and clarify configuration, condition and price in a written quote.`,
     noStockLine: "An equipment budget needs more than the price of the computer itself.",
     noStockLink: "See budget examples and their basis",
     noPrices1:
-      "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
+      "No. We source equipment for the individual order. Configuration, condition, price and delivery need to be clarified in the quote before you decide.",
     noPrices2:
-      "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your needs — and if what you are after is not on the list, we can usually still get it.",
-    modelsButton: "Compare all models",
+      "Send a model name or describe the work, quantity and budget. We investigate the options; the catalogue illustrates equipment types and model ranges.",
+    modelsButton: "Compare specifications",
     modelHint: "Already know the model?",
     choiceTitle: "Which computer fits your needs?",
     choiceLead:
@@ -183,12 +183,12 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
         description={c.description}
       />
 
-      <section className="py-8 sm:py-12">
+      <section className="pb-8 pt-3 sm:py-8">
         <Container>
           <Breadcrumbs
             lang={lang}
             trail={[{ name: lang === "da" ? "Produkter" : "Products", href: "/produkter" }]}
-            className="mb-5"
+            className="mb-3"
           />
           <div className="grid gap-6 lg:grid-cols-12 lg:items-start lg:gap-12">
             <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper lg:col-span-6">
@@ -196,32 +196,28 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             </h1>
             <div className="lg:col-span-6 lg:pt-1">
               <p className="text-base leading-[1.65] text-paper/85 sm:text-lg">{c.description}</p>
-              <Link
-                href={localePath("/priser", lang)}
-                className="mt-3 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 hover:text-paper"
-              >
-                {c.noStockLink}
-              </Link>
-              <p className="mt-2 text-xs leading-5 text-paper/65">
-                {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                <time dateTime={pageUpdated("/produkter")} className="tabular-nums">
-                  {formatDate(pageUpdated("/produkter"), lang)}
-                </time>
-              </p>
             </div>
           </div>
 
           <ProductCategoryGallery lang={lang} />
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-            <p className="text-paper/75">{c.modelHint}</p>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-y border-white/10 py-3 text-sm">
+            <div className="flex flex-wrap items-center gap-x-4">
+              <p className="text-paper/75">{c.modelHint}</p>
+              <Link
+                href={localePath("/modeller", lang)}
+                data-model-index-entry
+                className="inline-flex min-h-11 items-center gap-2 font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+              >
+                {c.modelsButton}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
             <Link
-              href={localePath("/modeller", lang)}
-              data-model-index-entry
-              className="inline-flex min-h-11 items-center gap-2 font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+              href={localePath("/priser", lang)}
+              className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
             >
-              {c.modelsButton}
-              <ArrowRight size={16} aria-hidden="true" />
+              {c.noStockLink}
             </Link>
           </div>
 
@@ -286,6 +282,12 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               </div>
             </div>
           </details>
+          <p className="mt-5 text-xs leading-5 text-paper/65">
+            {lang === "da" ? "Opdateret" : "Updated"}{" "}
+            <time dateTime={pageUpdated("/produkter")} className="tabular-nums">
+              {formatDate(pageUpdated("/produkter"), lang)}
+            </time>
+          </p>
         </Container>
       </section>
 

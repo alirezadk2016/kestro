@@ -43,7 +43,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
   return (
     <section
       id="budget-collection"
-      className="border-y border-white/10 py-10 sm:py-16"
+      className="border-y border-white/10 py-6 sm:py-12"
       aria-labelledby="budget-heading"
     >
       <Container>

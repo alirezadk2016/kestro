@@ -232,7 +232,7 @@ export default function Header({ lang }: { lang: Lang }) {
         {ui.skipToContent[lang]}
       </a>
 
-      <Container className="flex h-16 items-center justify-between sm:h-20">
+      <Container className="flex h-16 items-center justify-between sm:h-20 lg:gap-5 xl:gap-6">
         <Link
           href={localePath("/", lang)}
           onClick={closeMobile}
@@ -249,15 +249,14 @@ export default function Header({ lang }: { lang: Lang }) {
           row taller. That is the whole of tablet landscape and every small
           laptop.
 
-          Fixed by giving the row less to carry rather than by pushing the
-          breakpoint up and sending laptops back to the burger menu. The items
-          are told not to wrap, the gap tightens below xl, and "Viden" waits
-          for xl (lib/nav.ts, `wide`). The quote button stays at every width:
-          at 1024 px the row has about 16 px to spare, measured.
+          The row reserves physical gaps around the brand and controls.
+          Fleet solutions and Guides wait for xl (lib/nav.ts, `wide`),
+          while the complete navigation remains in the mobile menu. The
+          quote action cannot shrink until its label wraps onto two lines.
         */}
         <nav
           aria-label={ui.mainNav[lang]}
-          className="hidden items-center gap-4 whitespace-nowrap lg:flex xl:gap-7"
+          className="hidden shrink-0 items-center gap-4 whitespace-nowrap lg:flex xl:gap-7"
         >
           {/*
             A link and a disclosure, not a link pretending to be one.
@@ -377,7 +376,7 @@ export default function Header({ lang }: { lang: Lang }) {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden shrink-0 items-center gap-4 lg:flex">
           <button
             type="button"
             onClick={openSearch}
@@ -388,7 +387,10 @@ export default function Header({ lang }: { lang: Lang }) {
             <Search className="h-[18px] w-[18px]" strokeWidth={1.9} />
           </button>
           <LanguageSwitcher lang={lang} basePath={basePath} />
-          <Link href={localePath("/tilbud", lang)} className={buttonClass("primary")}>
+          <Link
+            href={localePath("/tilbud", lang)}
+            className={`${buttonClass("primary")} shrink-0 whitespace-nowrap`}
+          >
             {ui.bookCall[lang]}
             <ArrowRight
               className="h-4 w-4 transition-transform group-hover:translate-x-1"
