@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import Container from "@/components/Container";
 import FaqSchema from "@/components/FaqSchema";
-import PageHeader from "@/components/PageHeader";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
-import PageSchema from "@/components/PageSchema";
+import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import BudgetExamples from "@/components/BudgetExamples";
 import ProjectNotice from "@/components/ProjectNotice";
@@ -202,21 +202,27 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
       {/* In the shared Container like every other page's header. Without it
           the breadcrumb and the h1 started at x=0 while the rest of the site
           sat on the container inset. */}
-      <Container>
-        <PageHeader
-          title={c.title}
-          description={lead}
+      <Container className="pb-6 pt-4">
+        <Breadcrumbs
           lang={lang}
-          href="/priser"
-          crumb={lang === "da" ? "Priser" : "Pricing"}
-
-          updated="/priser"
+          trail={[{ name: lang === "da" ? "Priser" : "Pricing", href: "/priser" }]}
+          className="mb-4"
         />
+        <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-12">
+          <h1 className="t-h2 font-display font-extrabold tracking-display text-paper">
+            {c.title}
+          </h1>
+          <p className="text-sm leading-6 text-paper/85 sm:text-base">{lead}</p>
+        </div>
+        <p className="mt-4 text-xs leading-5 text-paper/65">
+          {lang === "da" ? "Opdateret" : "Updated"}{" "}
+          <time dateTime={pageUpdated("/priser")}>{formatDate(pageUpdated("/priser"), lang)}</time>
+        </p>
       </Container>
 
-      <ProjectNotice lang={lang} />
-
       <BudgetExamples lang={lang} />
+
+      <ProjectNotice lang={lang} />
 
       <section className="lit lit-paper py-10 sm:py-20">
         <Container>

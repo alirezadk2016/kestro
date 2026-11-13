@@ -2410,3 +2410,14 @@ main .fleet-rollout-steps > li {
     url(/hero/scene.webp) type("image/webp")
   );
 }
+
+/* A comparison shortlist must leave the final footer/privacy controls
+   reachable as well as the catalogue's own last card. */
+body:has([data-catalogue-tray]) {
+  padding-bottom: 11rem;
+}
+@media (min-width: 640px) {
+  body:has([data-catalogue-tray]) {
+    padding-bottom: 8rem;
+  }
+}

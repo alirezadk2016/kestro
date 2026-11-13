@@ -192,9 +192,25 @@ export async function verifyPricingCollection(browser, base, fail) {
       assert.equal(await cards.count(), 4, "four distinct dated budget examples remain");
       assert.equal(await section.locator("img").count(), 4, "every reference has an image");
       assert.equal(
-        await section.locator("canvas,form,input,select,textarea,button").count(),
+        await section
+          .locator("canvas,[data-checkout],a[href*='/checkout'],a[href*='/cart']")
+          .count(),
         0,
-        "the collection is not a checkout or rotating scene",
+        "catalogue controls do not introduce a checkout, basket or rotating scene",
+      );
+      for (const form of await section.locator("form").all()) {
+        assert.equal(
+          ((await form.getAttribute("method")) || "get").toLowerCase(),
+          "get",
+          "any native catalogue form is read-only filtering, not order submission",
+        );
+      }
+      assert.equal(
+        await section
+          .getByRole("button", { name: /(?:læg i kurv|add to cart|køb nu|buy now)/i })
+          .count(),
+        0,
+        "filtering and comparison never become purchase controls",
       );
 
       const text = (await section.innerText()).replace(/\s+/g, " ");
@@ -353,16 +369,7 @@ export async function verifyPricingCollection(browser, base, fail) {
         }
         for (const [link, visibleLabel] of [
           [enquiry, language === "da" ? "Spørg om modellen" : "Ask about this model"],
-          [
-            model,
-            width < 640
-              ? language === "da"
-                ? "Detaljer"
-                : "Details"
-              : language === "da"
-                ? "Model og specifikationer"
-                : "Model and specifications",
-          ],
+          [model, language === "da" ? "Detaljer" : "Details"],
         ]) {
           const namedLink = card.getByRole("link", {
             name: new RegExp(`^${visibleLabel}(?:\\s|:|$)`, "i"),

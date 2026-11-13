@@ -20,7 +20,7 @@ import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
-import ModelList from "@/components/ModelList";
+import ModelCatalogue from "@/components/ModelCatalogue";
 import { picturesFirst } from "@/lib/model-order";
 import FactNote from "@/components/FactNote";
 
@@ -62,8 +62,7 @@ const copy = {
     imageNote: "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
     seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi skaffer",
-    modelsBody:
-      "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne.",
+    modelsBody: "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne.",
     stockNote: "Eksemplerne er ikke en lagerliste.",
     allModels: "Se hele modeloversigten",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -82,8 +81,7 @@ const copy = {
     imageNote: "The photos show the model type; condition and specification are agreed per order.",
     seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we source",
-    modelsBody:
-      "Compare specifications and limitations once the work requirements are clear.",
+    modelsBody: "Compare specifications and limitations once the work requirements are clear.",
     stockNote: "These examples are not a stock list.",
     allModels: "See the full model overview",
     priceNote: "The price depends on configuration, condition and quantity.",
@@ -173,7 +171,7 @@ export default async function CategoryPage(props: {
 
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
-  const categoryModels = getModelsForCategory(category.slug);
+  const categoryModels = picturesFirst(getModelsForCategory(category.slug));
   const pagePath = `/produkter/${category.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const collectionId = `${pageUrl}#collection`;
@@ -278,44 +276,56 @@ export default async function CategoryPage(props: {
     </ProductDisclosure>
   );
 
-  /* The range, in the open and first: what Kestro sources, as a list a
-     buyer compares down the page (components/ModelList.tsx). On the laptop
+  /* The range, in the open and first: what Kestro sources, as a catalogue a
+     buyer can search, filter and compare (components/ModelCatalogue.tsx). On the laptop
      page it used to follow the external recommendations, so the first thing
      a buyer met was where else to buy; now the models come first and "buy
      elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section id="models" className="scroll-mt-24 border-t border-white/10 bg-ink-900 py-10 sm:py-20">
-            <Container>
-              <div className="split max-w-3xl">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {c.modelsTitle}
-                </h2>
-                {/* On the laptop page the recommendations below already say, once,
+      <section
+        id="models"
+        className={`scroll-mt-24 border-t border-white/10 bg-ink-900 ${isLaptops ? "py-6" : "py-10"} sm:py-20`}
+      >
+        <Container>
+          <div className="split max-w-3xl">
+            <h2
+              className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} text-balance font-display t-h2 font-extrabold tracking-display text-paper`}
+            >
+              {c.modelsTitle}
+            </h2>
+            {/* On the laptop page the recommendations below already say, once,
                     that nothing shown is Kestro stock; the second "not a stock
                     list" is left off there. */}
-                <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                  {c.modelsBody}
-                  {!isLaptops && ` ${c.stockNote}`}
-                </p>
-                {!isLaptops && (
-                  <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
-                )}
-              </div>
+            <p
+              className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} mt-3 text-base leading-[1.75] text-paper/75`}
+            >
+              {c.modelsBody}
+              {!isLaptops && ` ${c.stockNote}`}
+            </p>
+            {!isLaptops && (
+              <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
+            )}
+          </div>
 
-              <div>
-                <ModelList models={picturesFirst(categoryModels)} lang={lang} />
+          <div>
+            <ModelCatalogue models={categoryModels} lang={lang} />
+            <p className="mt-4 text-sm leading-6 text-paper/65">
+              {lang === "da"
+                ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får."
+                : "The pictures are model photos or illustrations of the format — not the machine you get."}
+            </p>
 
-                <Link
-                  href={localePath("/modeller", lang)}
-                  className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
-                >
-                  {c.allModels}
-                  <span aria-hidden="true">&rarr;</span>
-                </Link>
-              </div>
-            </Container>
-          </section>
+            <Link
+              href={localePath("/modeller", lang)}
+              className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
+            >
+              {c.allModels}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </Container>
+      </section>
     ) : null;
 
   return (
@@ -383,14 +393,16 @@ export default async function CategoryPage(props: {
                 {/* The models first; the way to buy one elsewhere today stays
                     one tap away, beside it. */}
                 <div className="mt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
-                  <Button href="#models" className="w-full sm:w-auto">
+                  <Button href="#models" className="hidden w-full sm:inline-flex sm:w-auto">
                     {lang === "da" ? "Se modellerne" : "See the models"}
                   </Button>
                   <a
                     href="#external-laptop-recommendations"
                     className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
                   >
-                    {lang === "da" ? "Brug for en nu? Køb hos andre" : "Need one now? Buy elsewhere"}
+                    {lang === "da"
+                      ? "Brug for en nu? Køb hos andre"
+                      : "Need one now? Buy elsewhere"}
                   </a>
                 </div>
               </div>
@@ -676,7 +688,6 @@ export default async function CategoryPage(props: {
             </Container>
           </section>
         )}
-
       </ProductDisclosure>
 
       {!isLaptops && modelsSection}

@@ -1,6 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import {
   budgetExamples,
   budgetAmount,
@@ -10,13 +8,38 @@ import {
   budgetEnquiryPath,
 } from "@/lib/pricing";
 import { pricingMedia } from "@/lib/pricing-media";
-import { formatDate, localePath, type Lang } from "@/lib/i18n";
+import { formatDate, type Lang } from "@/lib/i18n";
+import { getModel, modelGroups } from "@/lib/models";
+import type { CatalogueEntry } from "@/lib/catalogue-types";
 import SourceList from "./SourceList";
 import Container from "./Container";
-import { buttonClass } from "./Button";
+import CatalogueExplorer from "./CatalogueExplorer";
 
 export default function BudgetExamples({ lang }: { lang: Lang }) {
   const da = lang === "da";
+  const entries: CatalogueEntry[] = budgetExamples.map((item) => {
+    const model = getModel(item.model);
+    if (!model) throw new Error(`Unknown budget model: ${item.model}`);
+    const media = pricingMedia[item.model];
+    return {
+      id: item.model,
+      name: item.name,
+      brand: model.brand,
+      category: {
+        id: model.group,
+        label: modelGroups.find((group) => group.id === model.group)!.name[lang],
+      },
+      format: media.category[lang],
+      description: "",
+      configuration: item.configuration[lang],
+      facts: [{ label: da ? "Konfiguration" : "Configuration", value: item.configuration[lang] }],
+      detailHref: `${lang === "da" ? "/modeller" : "/en/models"}/${item.model}`,
+      enquiryHref: budgetEnquiryPath(item, lang),
+      image: { ...media, alt: media.alt[lang] },
+      budget: { amount: budgetAmount(item), formatted: formatDkk(budgetAmount(item), lang) },
+      sourceHref: budgetSource(item).url,
+    };
+  });
   return (
     <section
       id="budget-collection"
@@ -25,7 +48,10 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
     >
       <Container>
         <div className="grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
-          <h2 id="budget-heading" className="t-h2 font-display font-extrabold text-paper">
+          <h2
+            id="budget-heading"
+            className="sr-only font-display font-extrabold text-paper sm:not-sr-only sm:t-h2"
+          >
             {da ? "Modeller og budgetter" : "Models and budgets"}
           </h2>
           <div>
@@ -43,92 +69,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             </p>
           </div>
         </div>
-        <ul className="mt-7 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {budgetExamples.map((item, index) => {
-            const media = pricingMedia[item.model];
-            return (
-              <li
-                key={item.model}
-                data-budget-model={item.model}
-                className="plate grid min-w-0 grid-cols-[104px_minmax(0,1fr)] gap-x-4 overflow-hidden p-4 sm:flex sm:flex-col sm:p-0"
-              >
-                <figure className="relative aspect-[4/3] self-center overflow-hidden rounded-lg bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10 sm:self-auto sm:rounded-none">
-                  <Image
-                    src={media.src}
-                    alt={media.alt[lang]}
-                    width={media.width}
-                    height={media.height}
-                    priority={index === 0}
-                    sizes="(min-width: 1536px) 21vw, (min-width: 1280px) 24vw, (min-width: 640px) 46vw, 104px"
-                    className="h-full w-full object-contain"
-                  />
-                </figure>
-                <div className="self-center sm:self-stretch sm:px-5 sm:pt-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brand-300">
-                    {media.category[lang]}
-                  </p>
-                  <h3 className="mt-2 font-display text-lg font-bold leading-snug text-paper">
-                    {item.name}
-                  </h3>
-                  <p className="mt-1 text-xs leading-5 text-paper/65">
-                    {media.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
-                  </p>
-                </div>
-                <div className="col-span-2 flex flex-1 flex-col pt-2 sm:px-5 sm:pb-5 sm:pt-0">
-                  <p className="mt-2 text-sm leading-6 text-paper/75 sm:min-h-12">
-                    {item.configuration[lang]}
-                  </p>
-                  <p className="mt-3 text-xs font-semibold text-paper/65 sm:mt-5">
-                    {da ? "Budget pr. enhed" : "Budget per unit"}
-                  </p>
-                  <p className="mt-1 font-display text-2xl font-bold tabular-nums text-paper md:text-3xl xl:text-2xl 2xl:text-3xl">
-                    {da ? "Ca." : "Approx."} {formatDkk(budgetAmount(item), lang)}
-                  </p>
-                  <div className="mt-auto pt-4 sm:pt-5">
-                    <Link
-                      data-budget-enquiry
-                      href={budgetEnquiryPath(item, lang)}
-                      aria-label={`${da ? "Spørg om modellen" : "Ask about this model"}: ${item.name}`}
-                      className={`${buttonClass("primary")} w-full px-3 py-2 text-center`}
-                    >
-                      <span>{da ? "Spørg om modellen" : "Ask about this model"}</span>
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="h-4 w-4 flex-none"
-                        strokeWidth={2}
-                      />
-                    </Link>
-                    <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 border-t border-white/10 pt-1 sm:flex-col sm:items-stretch sm:justify-start sm:pt-2">
-                      <Link
-                        data-budget-model-link
-                        href={localePath(`/modeller/${item.model}`, lang)}
-                        className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
-                      >
-                        <span className="sm:hidden">{da ? "Detaljer" : "Details"}</span>
-                        <span className="hidden sm:inline">
-                          {da ? "Model og specifikationer" : "Model and specifications"}
-                        </span>
-                        <span className="sr-only">: {item.name}</span>
-                        <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                      </Link>
-                      <a
-                        data-budget-source
-                        href={budgetSource(item).url}
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        aria-label={`${da ? "Historisk priskilde" : "Historical price source"}: ${item.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
-                        className="inline-flex min-h-11 items-center gap-2 text-xs text-paper/75 underline underline-offset-4 hover:text-paper"
-                      >
-                        {da ? "Historisk priskilde" : "Historical price source"}
-                        <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={2} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <CatalogueExplorer entries={entries} lang={lang} mode="budget" />
         <p className="mt-5 text-sm leading-6 text-paper/75">
           {da
             ? "Billederne viser modeltypen. Fotos og illustrationer viser ikke en bestemt vare hos forhandleren; stand og tastatur kan afvige."
