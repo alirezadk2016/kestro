@@ -88,7 +88,6 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
                     width={item.photo.width}
                     height={item.photo.height}
                     alt={item.photo.alt[lang]}
-                    priority={item.id === "thinkpad-t14-g2"}
                     sizes="(min-width: 1536px) 42vw, (min-width: 768px) 46vw, 92vw"
                     className="h-full w-full object-contain"
                   />

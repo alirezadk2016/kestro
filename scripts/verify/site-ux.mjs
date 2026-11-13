@@ -3,6 +3,27 @@ import { mkdir } from "node:fs/promises";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+const PRODUCT_CATEGORIES = {
+  da: [
+    "/produkter/baerbare-computere",
+    "/produkter/stationaere-computere",
+    "/produkter/skaerme",
+    "/produkter/mini-pc",
+    "/produkter/tablets",
+    "/produkter/smartphones",
+    "/produkter/dockingstationer",
+  ],
+  en: [
+    "/en/products/business-laptops",
+    "/en/products/desktop-computers",
+    "/en/products/monitors",
+    "/en/products/mini-pc",
+    "/en/products/tablets",
+    "/en/products/smartphones",
+    "/en/products/docking-stations",
+  ],
+};
+
 /** Public navigation and enquiry journeys against the local production build. */
 export async function verifySiteUx(browser, base, fail) {
   console.log("verify: public navigation, mobile menu and enquiry journeys");
@@ -201,6 +222,35 @@ export async function verifySiteUx(browser, base, fail) {
           await page.keyboard.press("Enter");
           const panel = header.locator("#header-products");
           await panel.waitFor({ state: "visible" });
+          assert.deepEqual(
+            await panel
+              .locator("a[href]")
+              .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href"))),
+            [...PRODUCT_CATEGORIES[language.code], language.models],
+            "the products menu leads with seven equipment categories and one model-comparison entrance",
+          );
+          const about = language.code === "da" ? "/om-os" : "/en/about-us";
+          const guides = language.code === "da" ? "/vejledninger" : "/en/knowledge";
+          assert.equal(
+            await header.locator(`nav a[href='${about}']`).count(),
+            0,
+            "secondary company information does not crowd the primary navigation",
+          );
+          assert.equal(
+            await page.locator(`footer nav a[href='${about}']`).count(),
+            1,
+            "company information remains reachable from the footer",
+          );
+          assert.equal(
+            await page.locator(`footer nav a[href='${guides}']`).count(),
+            1,
+            "the footer keeps one clear guides entrance",
+          );
+          assert.equal(
+            await page.locator(`footer nav a[href='${guides}#praktiske-guides']`).count(),
+            0,
+            "the same guides destination is not repeated beside its hub",
+          );
           for (const link of await panel.locator("a").all())
             await target(link, "desktop product link");
           assert.equal(
@@ -251,15 +301,17 @@ export async function verifySiteUx(browser, base, fail) {
               client: element.clientHeight,
               scroll: element.scrollHeight,
               background: getComputedStyle(element).backgroundColor,
+              overflowY: getComputedStyle(element).overflowY,
             }));
             assert.ok(
               dimensions.bounds.top >= 0 && dimensions.bounds.bottom <= dimensions.viewport - 8,
               "the product list stays within the short viewport with breathing room",
             );
-            assert.ok(
-              dimensions.scroll > dimensions.client,
-              "long product lists scroll internally",
-            );
+            if (dimensions.scroll > dimensions.client + 1)
+              assert.ok(
+                ["auto", "scroll"].includes(dimensions.overflowY),
+                "a product list that exceeds its frame scrolls internally",
+              );
             assert.ok(
               /^rgb\(/.test(dimensions.background),
               "an opaque dropdown keeps underlying page text out of the link labels",
@@ -271,7 +323,7 @@ export async function verifySiteUx(browser, base, fail) {
               finalBounds &&
                 finalBounds.y >= dimensions.bounds.top &&
                 finalBounds.y + finalBounds.height <= dimensions.bounds.bottom,
-              "focusing the final category scrolls it fully into view",
+              "focusing the final product link keeps it fully in view",
             );
             const destination = await last.getAttribute("href");
             await last.click();
@@ -338,6 +390,21 @@ export async function verifySiteUx(browser, base, fail) {
             await burger.click();
             const menu = header.locator("#mobile-menu");
             await menu.waitFor({ state: "visible" });
+            const products = header.locator("button[aria-controls='mobile-products']");
+            await products.click();
+            const productLinks = header.locator("#mobile-products a[href]");
+            const hub = language === "da" ? "/produkter" : "/en/products";
+            const models = language === "da" ? "/modeller" : "/en/models";
+            assert.deepEqual(
+              await productLinks.evaluateAll((nodes) =>
+                nodes.map((node) => node.getAttribute("href")),
+              ),
+              [hub, ...PRODUCT_CATEGORIES[language], models],
+              "mobile Products offers the overview, seven categories and one model-comparison entrance",
+            );
+            for (const link of await productLinks.all()) await target(link, "mobile product link");
+            await products.click();
+            await header.locator("#mobile-products").waitFor({ state: "hidden" });
             const bottom = await menu.evaluate((element) => element.getBoundingClientRect().bottom);
             assert.ok(
               await page.evaluate(() => {

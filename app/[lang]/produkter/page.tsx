@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import ModelCard from "@/components/ModelCard";
-import { models } from "@/lib/models";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCategoryGallery from "@/components/ProductCategoryGallery";
@@ -12,27 +10,6 @@ import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
-import { buttonClass } from "@/components/Button";
-import { modelMedia } from "@/lib/model-media";
-import { picturesFirst } from "@/lib/model-order";
-
-/* One model from each kind of equipment, in catalogue order. Not a ranking:
-   the site has no sales to rank by. Each is a preference, not a fixture:
-   where the preferred model has no photograph and another model of the same
-   kind has one, the shelf shows that one instead, so a row of four does not
-   set one photograph beside three drawings when a fourth photo exists. */
-const FEATURED = ["lenovo-thinkpad-t14", "dell-optiplex-5060", "dell-ultrasharp-u2419h", "dell-wd19"];
-
-function featuredModels() {
-  const isPhoto = (model: (typeof models)[number]) => modelMedia(model)?.kind === "photo";
-  return FEATURED.flatMap((slug) => {
-    const preferred = models.find((m) => m.slug === slug);
-    if (!preferred) return [];
-    if (isPhoto(preferred)) return [preferred];
-    const [first] = picturesFirst(models.filter((m) => m.group === preferred.group));
-    return [first && isPhoto(first) ? first : preferred];
-  });
-}
 
 const copy = {
   da: {
@@ -47,10 +24,8 @@ const copy = {
       "Vi køber ikke ind på forhånd og sidder ikke med et fast lager, I skal vælge fra. I stedet skaffer vi udstyret til den enkelte ordre. Fordelen for jer er, at I får de specifikationer, opgaven kræver – ikke bare det, der tilfældigvis står på hylden – og at prisen ikke skal dække et lager, der venter på at blive solgt.",
     noPrices2:
       "Kategorierne ovenfor viser, hvad vi typisk kan skaffe, og hvilke mærker vi arbejder med. Pris og leveringstid aftaler vi ud fra jeres behov – og står det, I søger, ikke på listen, kan vi som regel skaffe det alligevel.",
-    modelsTitle: "Fra modelkataloget",
-    modelsBody:
-      "Et udsnit af modellerne med fulde specifikationer: en bærbar, en stationær, en skærm og en dock. Kataloget sammenligner hukommelse, lager, porte og muligheder for opgradering.",
-    modelsButton: "Se alle modeller",
+    modelsButton: "Sammenlign alle modeller",
+    modelHint: "Kender I allerede modellen?",
     choiceTitle: "Hvilken computer passer til jeres behov?",
     choiceLead:
       "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
@@ -71,10 +46,8 @@ const copy = {
       "We do not buy ahead, and we do not sit on a fixed stock for you to choose from. We source for the individual order instead. The advantage for you is that you get the specifications the job needs — not simply what happens to be on a shelf — and you are not paying for inventory somebody else has to clear.",
     noPrices2:
       "The categories above show what we can normally get and which brands we work with. Price and lead time are agreed from your needs — and if what you are after is not on the list, we can usually still get it.",
-    modelsTitle: "From the model catalogue",
-    modelsBody:
-      "A selection of the models with full specifications: a laptop, a desktop, a monitor and a dock. The catalogue compares memory, storage, ports and upgrade options.",
-    modelsButton: "See all models",
+    modelsButton: "Compare all models",
+    modelHint: "Already know the model?",
     choiceTitle: "Which computer fits your needs?",
     choiceLead:
       "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
@@ -240,33 +213,43 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
 
           <ProductCategoryGallery lang={lang} />
 
-          <div className="mt-10 grid items-start gap-4 sm:mt-14 lg:grid-cols-2 lg:gap-5">
-            <details id="product-buying-choices" className="plate group">
-              <summary className="flex min-h-[88px] cursor-pointer list-none items-center justify-between gap-5 p-5 marker:content-none sm:p-6 [&::-webkit-details-marker]:hidden">
-                <h2 className="t-h3 font-display font-bold text-paper">{c.choiceTitle}</h2>
-                <ChevronDown
-                  aria-hidden="true"
-                  className="h-5 w-5 flex-none text-brand-300 transition-transform duration-150 group-open:rotate-180"
-                  strokeWidth={2}
-                />
-              </summary>
-              <div className="border-t border-white/10 p-5 sm:p-6">
-                <p className="text-base leading-[1.75] text-paper/75">{c.choiceLead}</p>
-                <div className="mt-6 grid gap-6">
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+            <p className="text-paper/75">{c.modelHint}</p>
+            <Link
+              href={localePath("/modeller", lang)}
+              data-model-index-entry
+              className="inline-flex min-h-11 items-center gap-2 font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+            >
+              {c.modelsButton}
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <details id="product-buying-help" className="plate group mt-8">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 p-5 marker:content-none sm:px-6 [&::-webkit-details-marker]:hidden">
+              <h2 className="text-lg font-bold text-paper">{c.choiceTitle}</h2>
+              <ChevronDown
+                aria-hidden="true"
+                className="h-5 w-5 flex-none text-brand-300 transition-transform duration-150 group-open:rotate-180"
+                strokeWidth={2}
+              />
+            </summary>
+            <div className="grid gap-8 border-t border-white/10 p-5 sm:p-6 lg:grid-cols-2 lg:gap-12">
+              <div>
+                <p className="text-sm leading-6 text-paper/75">{c.choiceLead}</p>
+                <div className="mt-5 grid gap-6">
                   {buyingChoices.map((choice) => (
                     <article key={choice.title.da}>
-                      <h3 className="font-display text-lg font-bold text-paper">
+                      <h3 className="font-display text-base font-bold text-paper">
                         {choice.title[lang]}
                       </h3>
-                      <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                        {choice.body[lang]}
-                      </p>
-                      <ul className="mt-auto pt-4">
+                      <p className="mt-2 text-sm leading-6 text-paper/75">{choice.body[lang]}</p>
+                      <ul className="mt-2">
                         {choice.links.map((link) => (
                           <li key={link.href}>
                             <Link
                               href={localePath(link.href, lang)}
-                              className="inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 hover:text-paper"
+                              className="inline-flex min-h-11 items-center text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
                             >
                               {link[lang]}
                             </Link>
@@ -277,73 +260,32 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                   ))}
                 </div>
               </div>
-            </details>
-
-            <details id="product-purchase-checks" className="plate group">
-              <summary className="flex min-h-[88px] cursor-pointer list-none items-center justify-between gap-5 p-5 marker:content-none sm:p-6 [&::-webkit-details-marker]:hidden">
-                <h2 className="t-h3 font-display font-bold text-paper">{c.requirementsTitle}</h2>
-                <ChevronDown
-                  aria-hidden="true"
-                  className="h-5 w-5 flex-none text-brand-300 transition-transform duration-150 group-open:rotate-180"
-                  strokeWidth={2}
-                />
-              </summary>
-              <div className="border-t border-white/10 p-5 sm:p-6">
-                <p className="text-base leading-[1.75] text-paper/75">{c.requirementsLead}</p>
-                <dl className="mt-6 grid gap-6">
+              <div>
+                <h3 className="font-display text-base font-bold text-paper">
+                  {c.requirementsTitle}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-paper/75">{c.requirementsLead}</p>
+                <dl className="mt-5 grid gap-5">
                   {purchaseChecks.map((check) => (
                     <div key={check.href}>
-                      <dt className="text-base font-semibold text-paper">{check.title[lang]}</dt>
-                      <dd className="mt-2 text-base leading-[1.75] text-paper/75">
+                      <dt className="text-sm font-semibold text-paper">{check.title[lang]}</dt>
+                      <dd className="mt-1 text-sm leading-6 text-paper/75">
                         {check.body[lang]}
-                        <Link
-                          href={localePath(check.href, lang)}
-                          className="mt-2 flex min-h-[44px] items-center text-sm font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 hover:text-paper"
-                        >
-                          {check.link[lang]}
-                        </Link>
+                        {check.href !== "/modeller" && (
+                          <Link
+                            href={localePath(check.href, lang)}
+                            className="mt-1 flex min-h-11 items-center text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+                          >
+                            {check.link[lang]}
+                          </Link>
+                        )}
                       </dd>
                     </div>
                   ))}
                 </dl>
-                <Link
-                  href={localePath("/tilbud", lang)}
-                  className={`${buttonClass("primary")} mt-8`}
-                >
-                  {c.enquiry}
-                </Link>
               </div>
-            </details>
-          </div>
-
-          {/* A shelf from the catalogue: one model from each kind of
-              equipment, with the same card as /modeller. It was a heading and
-              a button, which asked a buyer to leave the page to see any
-              hardware at all. */}
-          <div className="mt-14 border-t border-white/10 pt-10">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
-              <div className="max-w-2xl">
-                <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                  {c.modelsTitle}
-                </h2>
-                <p className="mt-3 text-base leading-[1.75] text-paper/75">{c.modelsBody}</p>
-              </div>
-              <Link
-                href={localePath("/modeller", lang)}
-                className={`${buttonClass("secondary")} flex-none self-start lg:self-end`}
-              >
-                {c.modelsButton}
-                <span className="tabular-nums text-paper/65">{models.length}</span>
-              </Link>
             </div>
-            <ul className="rail mt-8 md:grid md:grid-cols-2 md:gap-5 xl:grid-cols-4">
-              {featuredModels().map((model) => (
-                <li key={model.slug}>
-                  <ModelCard model={model} lang={lang} />
-                </li>
-              ))}
-            </ul>
-          </div>
+          </details>
         </Container>
       </section>
 

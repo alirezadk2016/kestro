@@ -1,10 +1,8 @@
 import Hero from "@/components/Hero";
 import AnswerBlock from "@/components/AnswerBlock";
 import CategoryCards from "@/components/CategoryCards";
-import Statement from "@/components/Statement";
 import QualifySection from "@/components/QualifySection";
 import Services from "@/components/Services";
-import ExampleMachine from "@/components/ExampleMachine";
 import TrustStrip from "@/components/TrustStrip";
 import type { Lang } from "@/lib/i18n";
 import PageSchema from "@/components/PageSchema";
@@ -44,10 +42,8 @@ export default async function Home(props: { params: Promise<{ lang: Lang }> }) {
           the answer block follows, still the second band a crawler reads. */}
       <CategoryCards lang={lang} />
       <AnswerBlock lang={lang} />
-      <Statement lang={lang} />
       <QualifySection lang={lang} />
       <Services lang={lang} />
-      <ExampleMachine lang={lang} />
       {/* The source behind the Windows answer, in the same folded line the
           other pages close on. It was only a link inside a closed answer,
           so the page cited nothing a reader or a crawler could see. */}

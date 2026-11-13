@@ -11,7 +11,7 @@ import ExternalLaptopRecommendations from "@/components/ExternalLaptopRecommenda
 import ProductDisclosure from "@/components/ProductDisclosure";
 import CtaSection from "@/components/CtaSection";
 import { categories, getCategory } from "@/lib/categories";
-import { getModel, getModelsForCategory } from "@/lib/models";
+import { getModelsForCategory } from "@/lib/models";
 import { getCategoryMark } from "@/lib/category-marks";
 import MarkTile from "@/components/MarkTile";
 import CraftMark from "@/components/CraftMark";
@@ -59,8 +59,6 @@ const copy = {
       "Vi skaffer udstyret til hver ordre og er derfor ikke bundet til bestemte mærker. Det er typisk disse, vi kan skaffe inden for",
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
-    imageNote: "Billederne viser modeltypen; stand og specifikation aftales for den enkelte ordre.",
-    seeAllSpecs: "Specifikationer for {model}",
     modelsTitle: "Modeller vi skaffer",
     modelsBody: "Sammenlign specifikationer og begrænsninger, når I har afklaret arbejdsopgaverne.",
     stockNote: "Eksemplerne er ikke en lagerliste.",
@@ -78,8 +76,6 @@ const copy = {
     brandsBodyPre:
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get for",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
-    imageNote: "The photos show the model type; condition and specification are agreed per order.",
-    seeAllSpecs: "{model} specifications",
     modelsTitle: "Models we source",
     modelsBody: "Compare specifications and limitations once the work requirements are clear.",
     stockNote: "These examples are not a stock list.",
@@ -170,7 +166,6 @@ export default async function CategoryPage(props: {
   const isLaptops = category.slug === "baerbare-computere";
 
   const others = categories.filter((c) => c.slug !== category.slug);
-  const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
   const categoryModels = catalogueOrder(getModelsForCategory(category.slug));
   const pagePath = `/produkter/${category.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
@@ -288,20 +283,19 @@ export default async function CategoryPage(props: {
         className={`scroll-mt-24 border-t border-white/10 bg-ink-900 ${isLaptops ? "py-6" : "py-10"} sm:py-20`}
       >
         <Container>
-          <div className="split max-w-3xl">
+          <div
+            id={isLaptops ? "laptop-model-library" : undefined}
+            className="split max-w-3xl scroll-mt-28"
+          >
             <h2
               className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} text-balance font-display t-h2 font-extrabold tracking-display text-paper`}
             >
               {c.modelsTitle}
             </h2>
-            {/* On the laptop page the recommendations below already say, once,
-                    that nothing shown is Kestro stock; the second "not a stock
-                    list" is left off there. */}
             <p
               className={`${isLaptops ? "sr-only sm:not-sr-only" : ""} mt-3 text-base leading-[1.75] text-paper/75`}
             >
               {c.modelsBody}
-              {!isLaptops && ` ${c.stockNote}`}
             </p>
             {!isLaptops && (
               <p className="mt-1.5 text-sm leading-[1.6] text-paper/65">{c.priceNote}</p>
@@ -309,6 +303,7 @@ export default async function CategoryPage(props: {
           </div>
 
           <div>
+            <p className="mt-3 text-sm leading-6 text-paper/65">{c.stockNote}</p>
             <ModelCatalogue models={categoryModels} lang={lang} />
             <p className="mt-4 text-sm leading-6 text-paper/65">
               {lang === "da"
@@ -392,17 +387,15 @@ export default async function CategoryPage(props: {
                 </p>
                 {/* The models first; the way to buy one elsewhere today stays
                     one tap away, beside it. */}
-                <div className="mt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-5">
-                  <Button href="#models" className="hidden w-full sm:inline-flex sm:w-auto">
+                <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <Button href="#models" className="w-auto">
                     {lang === "da" ? "Se modellerne" : "See the models"}
                   </Button>
                   <a
                     href="#external-laptop-recommendations"
                     className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap text-sm font-semibold text-brand-300 transition-colors hover:text-paper"
                   >
-                    {lang === "da"
-                      ? "Brug for en nu? Køb hos andre"
-                      : "Need one now? Buy elsewhere"}
+                    {lang === "da" ? "Køb hos andre" : "Buy elsewhere"}
                   </a>
                 </div>
               </div>
@@ -540,158 +533,79 @@ export default async function CategoryPage(props: {
         </section>
       )}
 
-      {isLaptops && modelsSection}
+      {modelsSection}
 
-      {isLaptops && <ExternalLaptopRecommendations lang={lang} />}
+      {isLaptops && (
+        <ProductDisclosure
+          enabled
+          id="laptop-retailer-options"
+          title={
+            lang === "da"
+              ? "Brug for en nu? Se eksterne forhandlere"
+              : "Need one now? See external retailers"
+          }
+        >
+          <ExternalLaptopRecommendations lang={lang} />
+        </ProductDisclosure>
+      )}
 
       {isLaptops && useCasesSection}
 
-      <ProductDisclosure
-        enabled={isLaptops}
-        id="laptop-model-library"
-        title={
-          lang === "da" ? "Sammenlign andre modeller og serier" : "Compare other models and ranges"
-        }
-      >
-        <section className="bg-ink-900 py-10 sm:py-20">
-          <Container>
-            {isPhones && (
-              <p className="mb-8 max-w-3xl text-base leading-[1.75] text-paper/75">
-                {category.intro[lang]}
-              </p>
-            )}
-            <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
-              <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                {isLaptops
-                  ? lang === "da"
-                    ? "Andre erhvervsserier at sammenligne"
-                    : "Other business ranges to compare"
-                  : c.brandsTitle}
-              </h2>
-              <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                {isLaptops
-                  ? lang === "da"
-                    ? "Sammenlign den konkrete konfiguration, batteriet og tastaturet. Et serienavn alene afgør ikke, om maskinen passer til arbejdet."
-                    : "Compare the exact configuration, battery and keyboard. A range name alone does not decide whether a laptop fits the job."
-                  : `${c.brandsBodyPre} ${lowerFirst(category.name[lang])}:`}
-              </p>
-
-              <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
-                {category.brands.map((brand) => (
-                  <li
-                    key={brand}
-                    className={
-                      isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
-                    }
-                  >
-                    {isPhones ? (
-                      <Link
-                        href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
-                        aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}
-                      >
-                        {brand.includes("Watch") ? (
-                          <Watch size={22} strokeWidth={1.6} aria-hidden="true" />
-                        ) : (
-                          <Smartphone size={22} strokeWidth={1.6} aria-hidden="true" />
-                        )}
-                        <span>{brand}</span>
-                        <ArrowUpRight size={18} aria-hidden="true" />
-                      </Link>
-                    ) : (
-                      brand
-                    )}
-                  </li>
-                ))}
-              </ul>
-
-              {!isLaptops && (
-                <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
-              )}
-            </div>
-          </Container>
-        </section>
-
-        {exampleModel?.images && (
-          <section className="py-10 sm:py-20">
+      {!isLaptops && (
+        <ProductDisclosure
+          enabled={categoryModels.length > 0}
+          id={category.slug + "-brands"}
+          title={c.brandsTitle}
+        >
+          <section className="bg-ink-900 py-10 sm:py-20">
             <Container>
-              {/* Machine on one side, what it is on the other. Stacked, the
-                gallery alone was a screen and a half with the right half of
-                the window empty. */}
-              <div className="grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-12 xl:max-w-none">
-                <div className="lg:col-span-6">
+              {isPhones && (
+                <p className="mb-8 max-w-3xl text-base leading-[1.75] text-paper/75">
+                  {category.intro[lang]}
+                </p>
+              )}
+              <div className={isPhones ? "phone-brands" : "split max-w-3xl"}>
+                {categoryModels.length === 0 && (
                   <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
-                    {exampleModel.name}
+                    {c.brandsTitle}
                   </h2>
-                  <p className="mt-3 text-base leading-[1.75] text-paper/75">
-                    {exampleModel.intro[lang]}
-                  </p>
-
-                  <p className="mt-5 text-sm leading-[1.6] text-paper/65">{c.imageNote}</p>
-
-                  <Link
-                    href={localePath(`/modeller/${exampleModel.slug}`, lang)}
-                    className="mt-5 inline-block py-2.5 text-base font-semibold leading-7 text-brand-300 transition hover:text-paper"
-                  >
-                    {/* The model without its brand: with "Lenovo" in it the label
-                      ran to two lines at 375px, and the brand is in the heading
-                      directly above. */}
-                    {c.seeAllSpecs.replace(
-                      "{model}",
-                      exampleModel.name.replace(`${exampleModel.brand} `, ""),
-                    )}{" "}
-                    <span aria-hidden="true">&rarr;</span>
-                  </Link>
-                </div>
-
-                {/*
-                Lead image, then the rest in an even grid – the renders sit on
-                white, so object-contain keeps ports and keyboard uncropped,
-                which is the part a buyer actually looks at.
-              */}
-                <div className="space-y-3 sm:space-y-4 lg:col-span-6">
-                  {/* The photographs are studio shots on white. On a navy page a pure
-                    white tile was the brightest thing on screen; on the brand's light
-                    neutral, with the photo multiplied in, the studio white becomes
-                    the paper the site's answers already sit on. */}
-                  <div className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-lg shadow-black/25">
-                    <Image
-                      src={exampleModel.images[0].src}
-                      quality={90}
-                      alt={exampleModel.images[0].alt[lang]}
-                      width={1179}
-                      height={1120}
-                      className="h-full w-full object-contain mix-blend-multiply p-3 sm:p-6"
-                      sizes="(max-width: 1024px) 92vw, 550px"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                    {exampleModel.images.slice(1).map((img) => (
-                      <div
-                        key={img.src}
-                        className="aspect-[4/3] overflow-hidden rounded-xl bg-paper-dim ring-1 ring-white/10 shadow-md shadow-black/25"
-                      >
-                        <Image
-                          src={img.src}
-                          quality={90}
-                          alt={img.alt[lang]}
-                          width={1179}
-                          height={1120}
-                          className="h-full w-full object-contain mix-blend-multiply p-2 sm:p-3"
-                          sizes="(max-width: 640px) 30vw, 175px"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                )}
+                <p className="mt-3 text-base leading-[1.75] text-paper/75">
+                  {c.brandsBodyPre} {lowerFirst(category.name[lang])}:
+                </p>
+                <ul className={isPhones ? "phone-brand-links" : "mt-6 flex flex-wrap gap-2"}>
+                  {category.brands.map((brand) => (
+                    <li
+                      key={brand}
+                      className={
+                        isPhones ? "" : "plate-sm rounded-full px-3.5 py-1.5 text-sm text-paper/85"
+                      }
+                    >
+                      {isPhones ? (
+                        <Link
+                          href={localePath(`/tilbud?model=${encodeURIComponent(brand)}`, lang)}
+                          aria-label={`${lang === "da" ? "Spørg om" : "Ask about"} ${brand}`}
+                        >
+                          {brand.includes("Watch") ? (
+                            <Watch size={22} strokeWidth={1.6} aria-hidden="true" />
+                          ) : (
+                            <Smartphone size={22} strokeWidth={1.6} aria-hidden="true" />
+                          )}
+                          <span>{brand}</span>
+                          <ArrowUpRight size={18} aria-hidden="true" />
+                        </Link>
+                      ) : (
+                        brand
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 max-w-2xl text-sm leading-[1.6] text-paper/65">{c.brandsNote}</p>
               </div>
             </Container>
           </section>
-        )}
-      </ProductDisclosure>
-
-      {!isLaptops && modelsSection}
-
+        </ProductDisclosure>
+      )}
       {!isLaptops && useCasesSection}
 
       <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">

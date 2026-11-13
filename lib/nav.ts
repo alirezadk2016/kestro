@@ -21,7 +21,6 @@ export const mainNav: NavLink[] = [
   { href: "/saelg-til-os", label: { da: "Sælg til os", en: "Sell to us" } },
   { href: "/reparation", label: { da: "Reparation", en: "Repairs" } },
   { href: "/vejledninger", label: { da: "Viden", en: "Guides" }, wide: true },
-  { href: "/om-os", label: { da: "Om os", en: "About us" } },
   { href: "/kontakt", label: { da: "Kontakt", en: "Contact" } },
 ];
 
@@ -72,10 +71,6 @@ export const serviceNav: NavLink[] = [
   { href: "/reparation", label: { da: "Reparation", en: "Repairs" } },
   { href: "/ydelser", label: { da: "Alle ydelser", en: "All services" } },
   { href: "/vejledninger", label: { da: "Artikler og guides", en: "Articles and guides" } },
-  {
-    href: "/vejledninger#praktiske-guides",
-    label: { da: "Praktiske guides", en: "Practical guides" },
-  },
 ];
 
 /*

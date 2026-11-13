@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
-import { VidenClusterPlate } from "@/components/VidenPlate";
 import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
@@ -177,68 +176,25 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
       </section>
       <PracticalGuides lang={lang} />
 
-      {/* The index: four plates in a folder. Each is a real link to the anchor
-          its section carries, which is also what an article links back to. */}
-      <section id="artikler" className="scroll-mt-28 border-b border-white/10 py-10 sm:py-20">
+      {/* Compact navigation to the topic sections, without repeating their artwork and descriptions. */}
+      <section id="artikler" className="scroll-mt-28 border-b border-white/10 py-8 sm:py-10">
         <Container>
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
             {c.indexTitle}
           </h2>
           <nav aria-label={c.jump}>
-            {/* Four cards, not four cells.
-             *
-             * This was a `gap-px` grid inside a bordered box — the trick where
-             * the container's background shows through one-pixel gaps to draw
-             * the rules. It is cheap to write and it reads as a spreadsheet:
-             * four compartments of one table, every rule the same weight, no
-             * card with an edge of its own. Separate plates on a real gap read
-             * as four things you can pick up, which is what a jump list is.
-             */}
-            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-              {groups.map(({ cluster, articles }, i) => (
+            <ul className="mt-5 flex flex-wrap gap-2 sm:gap-3">
+              {groups.map(({ cluster, articles }) => (
                 <li key={cluster.id}>
                   <a
-                    href={`#${cluster.anchor}`}
-                    /* The picture runs to the card's own edge. Inset inside
-                       the padding it was a framed rectangle sitting inside a
-                       framed rectangle, and the eye counts both. */
-                    className="plate plate-lift group flex h-full flex-col overflow-hidden"
+                    href={"#" + cluster.anchor}
+                    className="plate-sm inline-flex min-h-11 items-center gap-3 rounded-lg px-4 py-3 text-sm text-paper/85 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                   >
-                    {/*
-                     * The drawing and the description are for a wide screen.
-                     *
-                     * On a phone this index sat directly above the same four
-                     * topics as full sections, so four illustrated cards with
-                     * the same names and the same descriptions were eight
-                     * hundred pixels the reader scrolled past to reach a copy
-                     * of what they had just read. What is left is a jump list,
-                     * which is the one thing the index does that the sections
-                     * below cannot. The drawing carried no `hidden` and was on
-                     * the phone after all, four 250px pictures in a column;
-                     * now the four names sit two by two in one screen.
-                     */}
-                    <VidenClusterPlate
-                      cluster={cluster.id}
-                      index={String(i + 1).padStart(2, "0")}
-                      className="plate-well hidden transition-opacity group-hover:opacity-100 sm:block sm:opacity-90"
-                    />
-                    <div className="flex flex-1 flex-col px-5 py-4 sm:p-5">
-                      <h3 className="text-balance font-display text-base font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-lg">
-                        {cluster.name[lang]}
-                      </h3>
-                      <p className="mt-2 hidden flex-1 text-sm leading-[1.6] text-paper/65 sm:block">
-                        {cluster.description[lang]}
-                      </p>
-                      {/* On its own rule at the foot of the card, so four cards
-                          with descriptions of four different lengths still end
-                          on one line across the row. The rule fades out rather
-                          than running the full width at one value — a hairline
-                          that stops dead is the loudest thing on a quiet
-                          card. */}
-                      <p className="label relative mt-2 text-paper/65 sm:mt-5 sm:pt-4 sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-px sm:before:bg-gradient-to-r sm:before:from-white/20 sm:before:to-transparent">
-                        {articles.length} {articles.length === 1 ? c.article : c.articles}
-                      </p>
-                    </div>
+                    <span className="font-semibold">{cluster.name[lang]}</span>
+                    <span className="text-xs tabular-nums text-paper/65">
+                      {articles.length} {articles.length === 1 ? c.article : c.articles}
+                    </span>
+                    <ArrowRight size={14} aria-hidden="true" className="shrink-0 text-brand-300" />
                   </a>
                 </li>
               ))}

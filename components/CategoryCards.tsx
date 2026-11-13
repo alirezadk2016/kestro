@@ -53,12 +53,12 @@ const cards = [
     },
   },
   {
-    href: "/flaadeloesninger",
+    href: "/produkter",
     image: "/cards/cat-fleet.webp",
     width: 1200,
     height: 675,
-    title: { da: "Flådeløsninger", en: "Fleet solutions" },
-    brands: { da: "Fra ti enheder til hele flåden", en: "From 10 devices to the whole fleet" },
+    title: { da: "Alle produkter", en: "All products" },
+    brands: { da: "Bærbare · skærme · tilbehør", en: "Laptops · monitors · accessories" },
     alt: {
       da: "To stakke lukkede bærbare computere og én åben bærbar på et stenbord",
       en: "Two stacks of closed laptops and one open laptop on a stone desk",

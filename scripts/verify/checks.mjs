@@ -890,8 +890,12 @@ console.log("verify: navigation and shared layouts");
   await readThrough("direct load of /");
 
   /* Check the visible labels; the knowledge URL is unchanged. */
-  for (const label of ["Reparation", "Om os", "Viden"]) {
-    await page.click(`header nav a:has-text("${label}")`);
+  for (const [label, selector] of [
+    ["Reparation", "header nav a[href='/reparation']"],
+    ["Om os", "footer nav a[href='/om-os']"],
+    ["Viden", "header nav a[href='/vejledninger']"],
+  ]) {
+    await page.click(selector);
     await page.waitForTimeout(1100);
     await readThrough(`after clicking ${label}`);
   }
@@ -1085,18 +1089,16 @@ for (const [width, height] of [
 
 /* ----------------------------------------------------- needs-led buying paths */
 
-for (const [path, needs, brands, budget, guidePath] of [
+for (const [path, needs, budget, guidePath] of [
   [
     "/produkter/baerbare-computere",
     "Hvilken firmabærbar passer til arbejdet?",
-    "Andre erhvervsserier at sammenligne",
     "Hvordan vælger jeg en billig bærbar til arbejde?",
     "/vejledninger/tjek-brugt-baerbar-foer-koeb",
   ],
   [
     "/en/products/business-laptops",
     "Which company laptop fits the work?",
-    "Other business ranges to compare",
     "How do I choose a low-cost laptop for work?",
     "/en/knowledge/check-a-used-laptop",
   ],
@@ -1104,11 +1106,63 @@ for (const [path, needs, brands, budget, guidePath] of [
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(BASE + path, { waitUntil: "networkidle" });
-  const titles = await page.locator("main h2").allTextContents();
-  const needsIndex = titles.findIndex((text) => text.trim() === needs);
-  const brandIndex = titles.findIndex((text) => text.trim() === brands);
-  if (needsIndex < 0 || brandIndex < 0 || needsIndex >= brandIndex)
-    fail("needs-led category", `buying needs do not precede brands on ${path}`);
+  const models = page.locator("main #models");
+  if (
+    (await models.count()) !== 1 ||
+    (await models.locator("[data-catalogue='models']").count()) !== 1 ||
+    (await page.locator("main [data-catalogue='models']").count()) !== 1
+  )
+    fail("needs-led category", `expected one primary model catalogue on ${path}`);
+  const modelsBeforeHelp = await page.evaluate(() => {
+    const models = document.querySelector("main #models");
+    const help = document.querySelector("main #laptop-buying-help");
+    const entries = models ? [...models.querySelectorAll("[data-catalogue-item]")] : [];
+    return (
+      Boolean(help) &&
+      entries.length > 0 &&
+      entries.every(
+        (entry) => entry.compareDocumentPosition(help) & Node.DOCUMENT_POSITION_FOLLOWING,
+      )
+    );
+  });
+  if (!modelsBeforeHelp)
+    fail(
+      "needs-led category",
+      `actual model choices do not precede secondary buying help on ${path}`,
+    );
+  const libraryAlias = page.locator("main #laptop-model-library");
+  if (
+    (await libraryAlias.count()) !== 1 ||
+    (await models.locator("#laptop-model-library").count()) !== 1 ||
+    !(await libraryAlias.evaluate(
+      (element) => element.tagName !== "DETAILS" && !element.closest("details"),
+    ))
+  )
+    fail(
+      "needs-led category",
+      `the legacy library anchor is not part of the single visible catalogue on ${path}`,
+    );
+  const help = page.locator("main #laptop-buying-help");
+  if ((await help.count()) !== 1)
+    fail("needs-led category", `expected one native buying-help disclosure on ${path}`);
+  else {
+    const summary = help.locator(":scope > summary");
+    if (
+      (await help.evaluate((element) => element.tagName)) !== "DETAILS" ||
+      (await help.getAttribute("open")) !== null ||
+      (await summary.getByRole("heading", { name: needs, exact: true }).count()) !== 1
+    )
+      fail(
+        "needs-led category",
+        `buying help is not correctly titled and initially closed on ${path}`,
+      );
+    const target = await summary.boundingBox();
+    if (!target || target.width < 44 || target.height < 44)
+      fail("needs-led category", `buying help lacks a 44px native summary on ${path}`);
+    await summary.click();
+    if ((await help.getAttribute("open")) === null)
+      fail("needs-led category", `buying help does not open without JavaScript on ${path}`);
+  }
   if (!(await page.getByRole("heading", { name: budget, exact: true }).count()))
     fail("needs-led category", `missing budget answer on ${path}`);
   if (!(await page.locator(`main a[href='${guidePath}']`).count()))

@@ -225,50 +225,121 @@ export async function verifyProductBrowsing(browser, base, fail) {
       }
       assert.deepEqual(actualTargets, new Set(CATEGORIES[language]), "every category appears once");
 
-      const disclosures = [
-        [
-          "product-buying-choices",
-          language === "da"
-            ? "Kontor, hjemmearbejde og startup"
-            : "Office, home working and startups",
-        ],
-        [
-          "product-purchase-checks",
-          language === "da" ? "Stand og batteri" : "Condition and battery",
-        ],
-      ];
-      for (const [id, heading] of disclosures) {
-        const detail = page.locator(`#${id}`);
-        assert.equal(await detail.count(), 1, "detailed buying help remains available");
-        assert.equal(
-          await detail.evaluate((element) => element.tagName),
-          "DETAILS",
-          "help uses native disclosure",
-        );
-        assert.equal(
-          await detail.getAttribute("open"),
-          null,
-          "long buying help is initially quiet",
-        );
-        const summary = detail.locator("summary");
-        const target = await summary.boundingBox();
-        assert.ok(
-          target && target.width >= 44 && target.height >= 44,
-          "help opens with a touch-sized control",
-        );
-        await summary.click();
-        assert.notEqual(await detail.getAttribute("open"), null, "the native disclosure opens");
+      const modelIndex = language === "da" ? "/modeller" : "/en/models";
+      const modelEntry = page.locator("main [data-model-index-entry]");
+      assert.equal(
+        await modelEntry.count(),
+        1,
+        "one clear entrance leads to cross-category model comparison",
+      );
+      assert.equal(
+        await modelEntry.getAttribute("href"),
+        modelIndex,
+        "the model entrance retains its established route",
+      );
+      assert.equal(
+        await page.locator("main a[href='" + modelIndex + "']").count(),
+        1,
+        "the hub does not repeat the same model-index action",
+      );
+      const modelEntryBox = await modelEntry.boundingBox();
+      assert.ok(
+        modelEntryBox && modelEntryBox.width >= 44 && modelEntryBox.height >= 44,
+        "the model-comparison entrance is touch-sized",
+      );
+      assert.equal(
+        await page.locator("main a[href^='" + modelIndex + "/']").count(),
+        0,
+        "individual model cards are not repeated below the category gallery",
+      );
+
+      const detail = page.locator("#product-buying-help");
+      assert.equal(
+        await detail.count(),
+        1,
+        "one consolidated buying-help disclosure remains available",
+      );
+      assert.equal(
+        await page.locator("#product-buying-choices,#product-purchase-checks").count(),
+        0,
+        "the former parallel buying-help panels are consolidated",
+      );
+      assert.equal(
+        await detail.evaluate((element) => element.tagName),
+        "DETAILS",
+        "buying help uses native disclosure",
+      );
+      assert.equal(await detail.getAttribute("open"), null, "long buying help is initially quiet");
+      const summary = detail.locator("summary");
+      const helpTarget = await summary.boundingBox();
+      assert.ok(
+        helpTarget && helpTarget.width >= 44 && helpTarget.height >= 44,
+        "buying help opens with a touch-sized control",
+      );
+      await summary.click();
+      assert.notEqual(
+        await detail.getAttribute("open"),
+        null,
+        "the native buying-help disclosure opens",
+      );
+      const advice =
+        language === "da"
+          ? [
+              "Kontor, hjemmearbejde og startup",
+              "CAD og krævende programmer",
+              "Nordisk tastatur og tilbehør",
+              "Konfiguration og tilbehør",
+              "Stand og batteri",
+              "Software og licenser",
+              "Samlet pris og ansvar",
+            ]
+          : [
+              "Office, home working and startups",
+              "CAD and demanding software",
+              "Nordic keyboards and accessories",
+              "Configuration and accessories",
+              "Condition and battery",
+              "Software and licences",
+              "Total cost and responsibility",
+            ];
+      for (const heading of advice) {
         assert.ok(
           await detail.getByText(heading, { exact: true }).isVisible(),
-          "the preserved advice is readable",
+          "the consolidated help preserves every buying topic: " + heading,
         );
-        assert.ok(
-          await detail.locator("a[href]").count(),
-          "advice preserves its further reading links",
-        );
-        await summary.click();
-        assert.equal(await detail.getAttribute("open"), null, "the advice can be closed again");
       }
+      const adviceDestinations =
+        language === "da"
+          ? [
+              "/produkter/baerbare-computere",
+              "/produkter/mini-pc",
+              "/produkter/stationaere-computere",
+              "/produkter/dockingstationer",
+              "/ydelser/nordisk-tilpasning",
+              "/kvalitet",
+              "/saelg-til-os",
+            ]
+          : [
+              "/en/products/business-laptops",
+              "/en/products/mini-pc",
+              "/en/products/desktop-computers",
+              "/en/products/docking-stations",
+              "/en/services/nordic-preparation",
+              "/en/condition-and-quality",
+              "/en/sell-to-us",
+            ];
+      const adviceLinks = new Set(
+        await detail
+          .locator("a[href]")
+          .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href"))),
+      );
+      assert.deepEqual(
+        adviceLinks,
+        new Set(adviceDestinations),
+        "the consolidated advice preserves its category and further-reading links",
+      );
+      await summary.click();
+      assert.equal(await detail.getAttribute("open"), null, "the buying help can be closed again");
 
       if (directory) {
         await gallery.screenshot({
@@ -292,9 +363,39 @@ export async function verifyProductBrowsing(browser, base, fail) {
         1,
         "one click reaches the laptop category",
       );
+      const retailerOptions = page.locator("#laptop-retailer-options");
+      const recommendations = page.locator("#external-laptop-recommendations");
+      assert.equal(await retailerOptions.count(), 1, "external buying options remain available");
+      assert.equal(
+        await retailerOptions.evaluate((element) => element.tagName),
+        "DETAILS",
+        "secondary retailer options use native disclosure",
+      );
+      assert.equal(
+        await retailerOptions.getAttribute("open"),
+        null,
+        "secondary retailer options are initially quiet after choosing a category",
+      );
+      assert.equal(
+        await recommendations.isVisible(),
+        false,
+        "external listings do not compete with the primary Kestro model list",
+      );
+      const retailerSummary = retailerOptions.locator(":scope > summary");
+      const retailerTarget = await retailerSummary.boundingBox();
       assert.ok(
-        await page.locator("#external-laptop-recommendations").isVisible(),
-        "recommendations are available after choosing laptops",
+        retailerTarget && retailerTarget.width >= 44 && retailerTarget.height >= 44,
+        "external retailer options have a touch-sized disclosure control",
+      );
+      await retailerSummary.click();
+      assert.notEqual(
+        await retailerOptions.getAttribute("open"),
+        null,
+        "external buying options open on demand",
+      );
+      assert.ok(
+        await recommendations.isVisible(),
+        "recommendations remain readable after the visitor chooses them",
       );
       await page.goBack({ waitUntil: "networkidle" });
       await page.waitForURL((url) => url.pathname === path);

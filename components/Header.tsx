@@ -193,6 +193,8 @@ export default function Header({ lang }: { lang: Lang }) {
     productsNav.quality,
     productsNav.sampleQuote,
   ];
+  // Buying guidance still belongs to Products for orientation; the menu itself
+  // leads with equipment categories and one model-comparison entrance.
   const productsCurrent = [productsNav.hub, ...productPages].some((link) => isCurrent(link.href));
 
   function closeProducts() {
@@ -329,18 +331,6 @@ export default function Header({ lang }: { lang: Lang }) {
                     the list inside short viewports and give it an opaque ground:
                     page headings must not show through its link labels. */}
                 <div className="glass-panel max-h-[calc(100svh-10rem)] overflow-y-auto overscroll-contain rounded-xl bg-ink-950 p-2 shadow-xl shadow-black/40">
-                  {productPages.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={localePath(link.href, lang)}
-                      onClick={closeProducts}
-                      aria-current={isCurrent(link.href) ? "page" : undefined}
-                      className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10 ${isCurrent(link.href) ? "bg-white/[0.08]" : ""}`}
-                    >
-                      {link.label[lang]}
-                    </Link>
-                  ))}
-                  <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
@@ -352,6 +342,15 @@ export default function Header({ lang }: { lang: Lang }) {
                       {category.name[lang]}
                     </Link>
                   ))}
+                  <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
+                  <Link
+                    href={localePath(productsNav.models.href, lang)}
+                    onClick={closeProducts}
+                    aria-current={isCurrent(productsNav.models.href) ? "page" : undefined}
+                    className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-semibold text-paper transition hover:bg-white/10 ${isCurrent(productsNav.models.href) ? "bg-white/[0.08]" : ""}`}
+                  >
+                    {productsNav.models.label[lang]}
+                  </Link>
                 </div>
               </div>
             )}
@@ -518,21 +517,14 @@ export default function Header({ lang }: { lang: Lang }) {
                 most often hit with a thumb. */}
             {mobileProductsOpen && (
               <div id="mobile-products" className="mb-1 border-l border-white/10 pl-3">
-                {[{ href: productsNav.hub.href, label: productsNav.overview }, ...productPages].map(
-                  (item) => (
-                    <Link
-                      key={item.href}
-                      href={localePath(item.href, lang)}
-                      onClick={closeMobile}
-                      aria-current={basePath === item.href ? "page" : undefined}
-                      className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${
-                        basePath === item.href ? "text-paper" : "text-paper/85"
-                      }`}
-                    >
-                      {item.label[lang]}
-                    </Link>
-                  ),
-                )}
+                <Link
+                  href={localePath(productsNav.hub.href, lang)}
+                  onClick={closeMobile}
+                  aria-current={basePath === productsNav.hub.href ? "page" : undefined}
+                  className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${basePath === productsNav.hub.href ? "text-paper" : "text-paper/85"}`}
+                >
+                  {productsNav.overview[lang]}
+                </Link>
                 <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
                 {categories.map((category) => {
                   const href = `/produkter/${category.slug}`;
@@ -550,6 +542,15 @@ export default function Header({ lang }: { lang: Lang }) {
                     </Link>
                   );
                 })}
+                <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
+                <Link
+                  href={localePath(productsNav.models.href, lang)}
+                  onClick={closeMobile}
+                  aria-current={isCurrent(productsNav.models.href) ? "page" : undefined}
+                  className={`flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-white/10 hover:text-paper ${isCurrent(productsNav.models.href) ? "text-paper" : "text-paper/85"}`}
+                >
+                  {productsNav.models.label[lang]}
+                </Link>
               </div>
             )}
 

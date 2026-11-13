@@ -132,9 +132,93 @@ export async function verifyExternalLaptops(browser, base, fail) {
       const response = await page.goto(base + path, { waitUntil: "networkidle" });
       assert.equal(response?.status(), 200, "the laptop category is available");
       await page.evaluate(() => document.fonts.ready);
+      const primaryModelsAction = page
+        .locator("main > section")
+        .first()
+        .locator("a[href='#models']");
+      assert.equal(
+        await primaryModelsAction.count(),
+        1,
+        "the introduction has one primary route to Kestro model comparisons",
+      );
+      assert.ok(
+        await primaryModelsAction.isVisible(),
+        "the primary model action is visible on phones as well as desktop",
+      );
+      const primaryModelsTarget = await primaryModelsAction.boundingBox();
+      assert.ok(
+        primaryModelsTarget &&
+          primaryModelsTarget.width >= 44 &&
+          primaryModelsTarget.height >= 44 &&
+          primaryModelsTarget.x >= -1 &&
+          primaryModelsTarget.x + primaryModelsTarget.width <= width + 1,
+        "the primary model action remains a complete touch target within the viewport",
+      );
+      assert.ok(
+        await primaryModelsAction.evaluate((element) => {
+          const secondary = element
+            .closest("section")
+            ?.querySelector("a[href='#external-laptop-recommendations']");
+          return (
+            secondary &&
+            Boolean(element.compareDocumentPosition(secondary) & Node.DOCUMENT_POSITION_FOLLOWING)
+          );
+        }),
+        "model comparisons come before the secondary external buying action",
+      );
       const section = page.locator(SECTION);
       assert.equal(await section.count(), 1, "one recommendations section is server-rendered");
-      assert.ok(await section.isVisible(), "recommendations are not hidden");
+      const retailerOptions = page.locator("#laptop-retailer-options");
+      assert.equal(await retailerOptions.count(), 1, "external buying has one optional entry");
+      assert.equal(
+        await retailerOptions.evaluate((element) => element.tagName),
+        "DETAILS",
+        "retailer choices use a native disclosure",
+      );
+      assert.equal(
+        await retailerOptions.getAttribute("open"),
+        null,
+        "a second product collection is not expanded by default",
+      );
+      assert.equal(await section.isVisible(), false, "retailer cards wait for an explicit choice");
+      assert.equal(
+        await page.locator("#models [data-catalogue='models']").count(),
+        1,
+        "the category has one main model catalogue",
+      );
+      assert.equal(
+        await page.locator("#models #laptop-model-library").count(),
+        1,
+        "the old library fragment aliases the actual model collection",
+      );
+      assert.equal(
+        await page.locator("details#laptop-model-library").count(),
+        0,
+        "the duplicate model library is removed",
+      );
+      assert.ok(
+        await page.locator("#models").evaluate((element) => {
+          const external = document.querySelector("#laptop-retailer-options");
+          return (
+            external &&
+            Boolean(element.compareDocumentPosition(external) & Node.DOCUMENT_POSITION_FOLLOWING)
+          );
+        }),
+        "the actual catalogue precedes optional retailer choices",
+      );
+      const retailerSummary = retailerOptions.locator(":scope > summary");
+      const retailerTarget = await retailerSummary.boundingBox();
+      assert.ok(
+        retailerTarget && retailerTarget.width >= 44 && retailerTarget.height >= 44,
+        "retailer choices open with a touch-sized summary",
+      );
+      await retailerSummary.click();
+      assert.notEqual(
+        await retailerOptions.getAttribute("open"),
+        null,
+        "one click reveals retailer choices",
+      );
+      assert.ok(await section.isVisible(), "recommendations remain accessible when requested");
       const cards = section.locator("[data-external-laptop]");
       assert.equal(await cards.count(), 3, "three distinct recommendations are available");
       const featured = section.locator("[data-featured-laptop]");
@@ -374,7 +458,6 @@ export async function verifyExternalLaptops(browser, base, fail) {
             "laptop-buying-help",
             "a[href*='check-a-used-laptop'],a[href*='tjek-brugt-baerbar-foer-koeb']",
           ],
-          ["laptop-model-library", "a[href*='lenovo-thinkpad-t480']"],
         ]) {
           const detail = page.locator(`#${id}`);
           assert.equal(await detail.count(), 1, "secondary buying guidance remains available");
@@ -447,15 +530,53 @@ export async function verifyExternalLaptops(browser, base, fail) {
         anchorBox && anchorBox.width >= 44 && anchorBox.height >= 44,
         "the jump action is touch-sized",
       );
+      await retailerSummary.click();
+      assert.equal(
+        await retailerOptions.getAttribute("open"),
+        null,
+        "retailer choices can be closed before using the direct jump",
+      );
       await anchor.click();
       await page.waitForURL((url) => url.pathname === path && url.hash === SECTION);
       await page.waitForFunction(() => {
+        if (!document.querySelector("#laptop-retailer-options")?.open) return false;
         const heading = document.querySelector("#external-laptops-heading");
         if (!heading) return false;
         const box = heading.getBoundingClientRect();
         const header = document.querySelector("body > header")?.getBoundingClientRect();
         return box.top >= (header?.bottom ?? 0) - 1 && box.bottom <= innerHeight;
       });
+      assert.ok(
+        await section.isVisible(),
+        "the header jump reveals the closed disclosure in one click, including without JavaScript",
+      );
+      if ([390, 1440].includes(width)) {
+        const fresh = await context.newPage();
+        fresh.on("pageerror", (error) => pageErrors.push(error.message));
+        try {
+          const direct = await fresh.goto(base + path + SECTION, { waitUntil: "networkidle" });
+          assert.equal(
+            direct?.status(),
+            200,
+            "a shared retailer fragment keeps its existing route",
+          );
+          await fresh.evaluate(() => document.fonts.ready);
+          await fresh.waitForFunction(() => {
+            const disclosure = document.querySelector("#laptop-retailer-options");
+            const heading = document.querySelector("#external-laptops-heading");
+            if (!disclosure?.open || !heading) return false;
+            const box = heading.getBoundingClientRect();
+            const header = document.querySelector("body > header")?.getBoundingClientRect();
+            return box.top >= (header?.bottom ?? 0) - 1 && box.bottom <= innerHeight;
+          });
+          assert.ok(
+            await fresh.locator(SECTION).isVisible(),
+            "a fresh fragment URL natively reveals recommendations with or without JavaScript",
+          );
+        } finally {
+          await fresh.close();
+        }
+      }
       assert.ok(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
         "the category has no horizontal overflow",
