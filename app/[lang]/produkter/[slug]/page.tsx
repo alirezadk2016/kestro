@@ -21,7 +21,7 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import { categoryFaqs, categoryLead, categorySources } from "@/lib/category-copy";
 import ModelCatalogue from "@/components/ModelCatalogue";
-import { picturesFirst } from "@/lib/model-order";
+import { catalogueOrder } from "@/lib/model-order";
 import FactNote from "@/components/FactNote";
 
 /*
@@ -171,7 +171,7 @@ export default async function CategoryPage(props: {
 
   const others = categories.filter((c) => c.slug !== category.slug);
   const exampleModel = category.exampleModel ? getModel(category.exampleModel) : undefined;
-  const categoryModels = picturesFirst(getModelsForCategory(category.slug));
+  const categoryModels = catalogueOrder(getModelsForCategory(category.slug));
   const pagePath = `/produkter/${category.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const collectionId = `${pageUrl}#collection`;

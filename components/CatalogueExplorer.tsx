@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
-  ArrowRight,
-  ArrowUpRight,
   ChevronDown,
   Columns3,
   LayoutGrid,
@@ -17,6 +14,7 @@ import {
 import type { CatalogueEntry } from "@/lib/catalogue-types";
 import { localePath, type Lang } from "@/lib/i18n";
 import { buttonClass } from "./Button";
+import CatalogueListingItem from "./CatalogueListingItem";
 
 type Sort = "default" | "name-asc" | "name-desc" | "budget-asc" | "budget-desc";
 type State = {
@@ -32,11 +30,28 @@ const INITIAL: State = {
   brands: [],
   types: [],
   sort: "default",
-  view: "grid",
+  view: "list",
   compare: [],
 };
 const control =
   "min-h-11 rounded-lg border border-white/20 bg-ink-950 px-3 text-sm text-paper outline-none transition-colors focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
+
+function keepComparisonFocusVisible(event: React.FocusEvent<HTMLAnchorElement>) {
+  const link = event.currentTarget;
+  requestAnimationFrame(() => {
+    if (!link.isConnected) return;
+    const region = link.closest('[role="region"]');
+    if (!(region instanceof HTMLElement)) return;
+    const sticky = region.querySelector("thead th");
+    const bounds = region.getBoundingClientRect();
+    const target = link.getBoundingClientRect();
+    const left = bounds.left + (sticky?.getBoundingClientRect().width || 0) + 6;
+    const right = bounds.right - 6;
+    if (target.left < left || target.right > right) {
+      region.scrollLeft += target.left - (left + Math.max(0, (right - left - target.width) / 2));
+    }
+  });
+}
 
 export default function CatalogueExplorer({
   entries,
@@ -51,8 +66,9 @@ export default function CatalogueExplorer({
 }) {
   const da = lang === "da";
   const budget = mode === "budget";
+  const defaultView = budget ? "grid" : "list";
   const prefix = useId();
-  const [state, setState] = useState<State>(INITIAL);
+  const [state, setState] = useState<State>({ ...INITIAL, view: defaultView });
   const [ready, setReady] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [comparisonOpen, setComparisonOpen] = useState(false);
@@ -60,6 +76,11 @@ export default function CatalogueExplorer({
   const comparisonButton = useRef<HTMLButtonElement>(null);
   const search = useRef<HTMLInputElement>(null);
   const legacyTarget = useRef<string | null>(null);
+  const explorer = useRef<HTMLDivElement>(null);
+  const returnPosition = useRef<number | null>(null);
+  const restoreBrowsing = useRef(false);
+  const pendingSelectionFocus = useRef<string | null>(null);
+  const selectionButtons = useRef(new Map<string, HTMLButtonElement>());
   const brands = useMemo(() => [...new Set(entries.map((entry) => entry.brand))].sort(), [entries]);
   const categories = useMemo(
     () => [...new Map(entries.map((entry) => [entry.category.id, entry.category])).values()],
@@ -79,11 +100,8 @@ export default function CatalogueExplorer({
         categories.map((category) => category.id),
       );
       const fragment = url.hash.slice(1);
-      if (
-        !url.searchParams.has("type") &&
-        categories.some((category) => category.id === fragment)
-      ) {
-        types.push(fragment);
+      if (categories.some((category) => category.id === fragment)) {
+        if (!types.length) types.push(fragment);
         legacyTarget.current = fragment;
       }
       const sorts: Sort[] = budget
@@ -95,7 +113,7 @@ export default function CatalogueExplorer({
         brands: list("brand", brands),
         types,
         sort: sorts.includes(requestedSort) ? requestedSort : "default",
-        view: url.searchParams.get("view") === "list" ? "list" : "grid",
+        view: !budget && url.searchParams.get("view") === "grid" ? "grid" : defaultView,
         compare:
           entries.length > 1
             ? list(
@@ -113,7 +131,7 @@ export default function CatalogueExplorer({
       window.removeEventListener("popstate", readLocation);
       window.removeEventListener("hashchange", readLocation);
     };
-  }, [entries, categories, brands, budget]);
+  }, [entries, categories, brands, budget, defaultView]);
 
   useEffect(() => {
     if (!ready) return;
@@ -123,17 +141,17 @@ export default function CatalogueExplorer({
       brand: state.brands.join(","),
       type: state.types.join(","),
       sort: state.sort === "default" ? "" : state.sort,
-      view: state.view === "grid" ? "" : state.view,
+      view: budget || state.view === defaultView ? "" : state.view,
       compare: state.compare.join(","),
     };
     for (const [key, value] of Object.entries(values)) {
       if (value) url.searchParams.set(key, value);
       else url.searchParams.delete(key);
     }
-    if (!state.types.length && categories.some((category) => `#${category.id}` === url.hash))
-      url.hash = "";
+    const anchoredCategory = categories.find((category) => `#${category.id}` === url.hash);
+    if (anchoredCategory && !state.types.includes(anchoredCategory.id)) url.hash = "";
     if (url.href !== window.location.href) window.history.replaceState(null, "", url);
-  }, [state, ready, categories]);
+  }, [state, ready, categories, budget, defaultView]);
 
   // A fragment can initially scroll far down the unfiltered HTML. Keep its
   // real model in view after React commits the shorter filtered result.
@@ -141,25 +159,48 @@ export default function CatalogueExplorer({
     if (!ready || !legacyTarget.current) return;
     const target = legacyTarget.current;
     legacyTarget.current = null;
-    document.getElementById(target)?.scrollIntoView({ behavior: "auto", block: "start" });
+    const frame = requestAnimationFrame(() => {
+      (document.getElementById(target) || explorer.current)?.scrollIntoView({
+        behavior: "auto",
+        block: "start",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
   }, [ready, state]);
 
+  const comparisonVisible = comparisonOpen && state.compare.length >= 2;
   useEffect(() => {
-    if (comparisonOpen) {
+    if (comparisonVisible) {
       comparisonHeading.current?.focus({ preventScroll: true });
       comparisonHeading.current?.scrollIntoView({ behavior: "auto", block: "start" });
     }
-  }, [comparisonOpen]);
+  }, [comparisonVisible]);
   useEffect(() => {
     if (state.compare.length < 2) setComparisonOpen(false);
   }, [state.compare.length]);
+  useEffect(() => {
+    if (comparisonVisible || !restoreBrowsing.current) return;
+    restoreBrowsing.current = false;
+    comparisonButton.current?.focus({ preventScroll: true });
+    window.scrollTo({ top: returnPosition.current ?? 0, behavior: "instant" });
+  }, [comparisonVisible]);
+  useEffect(() => {
+    const target = pendingSelectionFocus.current;
+    if (!target) return;
+    pendingSelectionFocus.current = null;
+    if (target === "search") search.current?.focus();
+    else selectionButtons.current.get(target)?.focus({ preventScroll: true });
+  }, [state.compare, comparisonVisible]);
 
   const query = state.query.trim().toLocaleLowerCase(lang);
-  const textMatches = (entry: CatalogueEntry) =>
-    !query ||
-    `${entry.name} ${entry.brand} ${entry.format} ${entry.description} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`
-      .toLocaleLowerCase(lang)
-      .includes(query);
+  const tokens = query.split(/\s+/).filter(Boolean);
+  const textMatches = (entry: CatalogueEntry) => {
+    const text =
+      `${entry.name} ${entry.brand} ${entry.format} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`.toLocaleLowerCase(
+        lang,
+      );
+    return tokens.every((token) => text.includes(token));
+  };
   const brandMatches = (entry: CatalogueEntry) =>
     !state.brands.length || state.brands.includes(entry.brand);
   const typeMatches = (entry: CatalogueEntry) =>
@@ -190,6 +231,7 @@ export default function CatalogueExplorer({
     ),
   ];
   const active = state.brands.length + state.types.length + (query ? 1 : 0);
+  const canReset = active > 0 || state.sort !== "default";
   const isList = state.view === "list";
   const toggle = (key: "brands" | "types" | "compare", value: string) =>
     setState((previous) => ({
@@ -202,17 +244,147 @@ export default function CatalogueExplorer({
     }));
   const clear = () =>
     setState((previous) => ({ ...previous, query: "", brands: [], types: [], sort: "default" }));
+  const removeSelection = (id: string) => {
+    const index = state.compare.indexOf(id);
+    const remaining = state.compare.filter((value) => value !== id);
+    pendingSelectionFocus.current = remaining[Math.min(index, remaining.length - 1)] || "search";
+    toggle("compare", id);
+  };
+
+  const filterPanel = (
+    <div className={budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : ""}>
+      <fieldset className="min-w-0">
+        <legend className="text-sm font-semibold text-paper">{da ? "Mærke" : "Brand"}</legend>
+        {brands.map((brand) => (
+          <label
+            key={brand}
+            className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
+          >
+            <input
+              data-catalogue-brand={brand}
+              type="checkbox"
+              checked={state.brands.includes(brand)}
+              disabled={!ready}
+              onChange={() => toggle("brands", brand)}
+              className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+            />
+            <span className="flex-1">{brand}</span>
+            <span className="text-xs tabular-nums text-paper/65">
+              {
+                entries.filter(
+                  (entry) => entry.brand === brand && textMatches(entry) && typeMatches(entry),
+                ).length
+              }
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      {categories.length > 1 && (
+        <fieldset className={budget ? "min-w-0" : "mt-4 border-t border-white/10 pt-5"}>
+          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
+            {da ? "Type" : "Type"}
+          </legend>
+          <div className="clear-both">
+            {categories.map((category) => (
+              <label
+                key={category.id}
+                className="flex min-h-11 cursor-pointer items-center gap-3 py-1 text-sm leading-5 text-paper/85"
+              >
+                <input
+                  data-catalogue-category={category.id}
+                  type="checkbox"
+                  checked={state.types.includes(category.id)}
+                  disabled={!ready}
+                  onChange={() => toggle("types", category.id)}
+                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                />
+                <span className="flex-1">{category.label}</span>
+                <span className="text-xs tabular-nums text-paper/65">
+                  {
+                    entries.filter(
+                      (entry) =>
+                        entry.category.id === category.id &&
+                        textMatches(entry) &&
+                        brandMatches(entry),
+                    ).length
+                  }
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
+    </div>
+  );
+  const filterButton = (
+    <button
+      type="button"
+      data-catalogue-filter-toggle
+      disabled={!ready}
+      aria-expanded={filtersOpen}
+      aria-controls={prefix + "-filters"}
+      onClick={() => setFiltersOpen((open) => !open)}
+      className={
+        buttonClass("secondary") + " justify-between " + (budget ? "" : "w-full lg:hidden")
+      }
+    >
+      <span className="inline-flex items-center gap-2">
+        <SlidersHorizontal size={18} aria-hidden="true" />
+        {da ? "Filtre" : "Filters"}
+        {active > 0 && " (" + active + ")"}
+      </span>
+      <ChevronDown size={18} aria-hidden="true" className={filtersOpen ? "rotate-180" : ""} />
+    </button>
+  );
+  const selectionControls = (
+    <>
+      <div className="min-w-0 max-w-full">
+        <p
+          role="status"
+          aria-live="polite"
+          className="flex items-center gap-2 text-sm font-semibold text-paper"
+        >
+          <Columns3 size={18} aria-hidden="true" />
+          {selected.length} / 3 {da ? "valgt til sammenligning" : "selected to compare"}
+        </p>
+        <div className="mt-1 flex max-w-full gap-x-4 overflow-x-auto">
+          {selected.map((entry) => (
+            <button
+              key={entry.id}
+              ref={(node) => {
+                if (node) selectionButtons.current.set(entry.id, node);
+                else selectionButtons.current.delete(entry.id);
+              }}
+              data-catalogue-remove={entry.id}
+              type="button"
+              onClick={() => removeSelection(entry.id)}
+              aria-label={(da ? "Fjern: " : "Remove: ") + entry.name}
+              className="inline-flex min-h-11 max-w-56 shrink-0 items-center gap-2 rounded-sm text-xs text-paper/85 hover:text-paper focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-300"
+            >
+              <span className="truncate">{entry.name}</span>
+              <X size={14} className="shrink-0" aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      </div>
+      <button
+        type="button"
+        data-catalogue-compare-clear
+        onClick={() => {
+          setComparisonOpen(false);
+          setState((previous) => ({ ...previous, compare: [] }));
+          pendingSelectionFocus.current = "search";
+        }}
+        className="inline-flex min-h-11 items-center text-sm text-paper/75 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+      >
+        {da ? "Ryd udvalg" : "Clear selection"}
+      </button>
+    </>
+  );
 
   return (
-    <div
-      data-catalogue={mode}
-      className={`mt-7 min-w-0 ${selected.length ? "pb-48 sm:pb-36" : ""}`}
-    >
-      {heading && (
-        <h2 className="sr-only font-display font-extrabold text-paper sm:not-sr-only sm:mb-6 sm:t-h2">
-          {heading}
-        </h2>
-      )}
+    <div ref={explorer} data-catalogue={mode} className="mt-7 min-w-0 scroll-mt-28">
+      {heading && <h2 className="sr-only">{heading}</h2>}
       <noscript>
         <p className="mb-4 text-sm leading-6 text-paper/85">
           {da
@@ -221,111 +393,26 @@ export default function CatalogueExplorer({
         </p>
       </noscript>
       <div
-        className={`grid min-w-0 gap-6 ${hasFacets ? "lg:grid-cols-[208px_minmax(0,1fr)] xl:gap-8 2xl:grid-cols-[224px_minmax(0,1fr)]" : ""}`}
+        className={`grid min-w-0 gap-6 ${hasFacets && !budget ? "lg:grid-cols-[184px_minmax(0,1fr)] xl:gap-7 2xl:grid-cols-[200px_minmax(0,1fr)]" : ""}`}
       >
-        <div className={hasFacets ? "min-w-0" : "hidden"}>
-          <button
-            type="button"
-            data-catalogue-filter-toggle
-            disabled={!ready}
-            aria-expanded={filtersOpen}
-            aria-controls={`${prefix}-filters`}
-            onClick={() => setFiltersOpen(!filtersOpen)}
-            className={`${buttonClass("secondary")} w-full justify-between lg:hidden`}
-          >
-            <span className="inline-flex items-center gap-2">
-              <SlidersHorizontal size={18} aria-hidden="true" />
-              {da ? "Filtre" : "Filters"}
-              {active > 0 && ` (${active})`}
-            </span>
-            <ChevronDown size={18} aria-hidden="true" className={filtersOpen ? "rotate-180" : ""} />
-          </button>
-          <aside
-            id={`${prefix}-filters`}
-            aria-label={da ? "Filtre" : "Filters"}
-            className={`${filtersOpen ? "block" : "hidden"} plate mt-3 p-4 lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:p-5`}
-          >
-            <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
-              <p className="font-display text-base font-bold text-paper">
-                {da ? "Afgræns dit valg" : "Narrow your selection"}
-              </p>
-            </div>
-            <fieldset className="mt-5">
-              <legend className="text-sm font-semibold text-paper">{da ? "Mærke" : "Brand"}</legend>
-              {brands.map((brand) => (
-                <label
-                  key={brand}
-                  className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
-                >
-                  <input
-                    data-catalogue-brand={brand}
-                    type="checkbox"
-                    checked={state.brands.includes(brand)}
-                    disabled={!ready}
-                    onChange={() => toggle("brands", brand)}
-                    className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-                  />
-                  <span className="flex-1">{brand}</span>
-                  <span className="text-xs tabular-nums text-paper/65">
-                    {
-                      entries.filter(
-                        (entry) =>
-                          entry.brand === brand && textMatches(entry) && typeMatches(entry),
-                      ).length
-                    }
-                  </span>
-                </label>
-              ))}
-            </fieldset>
-            {categories.length > 1 && (
-              <fieldset className="mt-4 border-t border-white/10 pt-5">
-                <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
-                  {da ? "Type" : "Type"}
-                </legend>
-                <div className="clear-both">
-                  {categories.map((category) => (
-                    <label
-                      key={category.id}
-                      className="flex min-h-11 cursor-pointer items-center gap-3 py-1 text-sm leading-5 text-paper/85"
-                    >
-                      <input
-                        data-catalogue-category={category.id}
-                        type="checkbox"
-                        checked={state.types.includes(category.id)}
-                        disabled={!ready}
-                        onChange={() => toggle("types", category.id)}
-                        className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-                      />
-                      <span className="flex-1">{category.label}</span>
-                      <span className="text-xs tabular-nums text-paper/65">
-                        {
-                          entries.filter(
-                            (entry) =>
-                              entry.category.id === category.id &&
-                              textMatches(entry) &&
-                              brandMatches(entry),
-                          ).length
-                        }
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-            )}
-            <button
-              type="button"
-              disabled={!ready}
-              data-catalogue-clear
-              onClick={clear}
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-white/20 px-3 text-sm font-semibold text-paper/85 transition-colors hover:border-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+        {hasFacets && !budget && (
+          <div className="min-w-0">
+            {filterButton}
+            <aside
+              id={prefix + "-filters"}
+              aria-label={da ? "Filtre" : "Filters"}
+              className={
+                (filtersOpen ? "block" : "hidden") +
+                " plate mt-3 p-4 lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto"
+              }
             >
-              {da ? "Nulstil filtre" : "Reset filters"}
-            </button>
-          </aside>
-        </div>
+              {filterPanel}
+            </aside>
+          </div>
+        )}
 
         <div className="min-w-0">
-          <div className="plate p-3 sm:p-4">
+          <div className="border-b border-white/15 pb-4">
             <label htmlFor={`${prefix}-search`} className="sr-only">
               {da ? "Søg efter model eller mærke" : "Search by model or brand"}
             </label>
@@ -344,7 +431,9 @@ export default function CatalogueExplorer({
                 value={state.query}
                 maxLength={120}
                 autoComplete="off"
-                onChange={(event) => setState({ ...state, query: event.target.value })}
+                onChange={(event) =>
+                  setState((previous) => ({ ...previous, query: event.target.value }))
+                }
                 placeholder={da ? "Søg efter model eller mærke" : "Search by model or brand"}
                 className={`${control} w-full pl-10`}
               />
@@ -367,13 +456,27 @@ export default function CatalogueExplorer({
                     : "models"}
               </p>
               <div className="flex min-w-0 flex-wrap items-center gap-3">
+                {budget && hasFacets && filterButton}
+                {canReset && (
+                  <button
+                    type="button"
+                    disabled={!ready}
+                    data-catalogue-clear
+                    onClick={clear}
+                    className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+                  >
+                    {da ? "Nulstil filtre" : "Reset filters"}
+                  </button>
+                )}
                 <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
                   <span>{da ? "Sortér" : "Sort"}</span>
                   <select
                     data-catalogue-sort
                     disabled={!ready}
                     value={state.sort}
-                    onChange={(event) => setState({ ...state, sort: event.target.value as Sort })}
+                    onChange={(event) =>
+                      setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
+                    }
                     className={`${control} max-w-full text-xs`}
                   >
                     <option value="default">
@@ -393,40 +496,51 @@ export default function CatalogueExplorer({
                     )}
                   </select>
                 </label>
-                <div
-                  className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
-                  role="group"
-                  aria-label={da ? "Visning" : "View"}
-                >
-                  {(["grid", "list"] as const).map((view) => {
-                    const Icon = view === "grid" ? LayoutGrid : List;
-                    return (
-                      <button
-                        key={view}
-                        data-catalogue-view={view}
-                        type="button"
-                        disabled={!ready}
-                        aria-pressed={state.view === view}
-                        aria-label={
-                          view === "grid"
-                            ? da
-                              ? "Vis som gitter"
-                              : "Grid view"
-                            : da
-                              ? "Vis som liste"
-                              : "List view"
-                        }
-                        onClick={() => setState({ ...state, view })}
-                        className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
-                      >
-                        <Icon size={18} aria-hidden="true" />
-                      </button>
-                    );
-                  })}
-                </div>
+                {!budget && (
+                  <div
+                    className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
+                    role="group"
+                    aria-label={da ? "Visning" : "View"}
+                  >
+                    {(["grid", "list"] as const).map((view) => {
+                      const Icon = view === "grid" ? LayoutGrid : List;
+                      return (
+                        <button
+                          key={view}
+                          data-catalogue-view={view}
+                          type="button"
+                          disabled={!ready}
+                          aria-pressed={state.view === view}
+                          aria-label={
+                            view === "grid"
+                              ? da
+                                ? "Vis som gitter"
+                                : "Grid view"
+                              : da
+                                ? "Vis som liste"
+                                : "List view"
+                          }
+                          onClick={() => setState((previous) => ({ ...previous, view }))}
+                          className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
+                        >
+                          <Icon size={18} aria-hidden="true" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </div>
+          {budget && hasFacets && (
+            <aside
+              id={prefix + "-filters"}
+              aria-label={da ? "Filtre" : "Filters"}
+              className={`${filtersOpen ? "block" : "hidden"} plate mt-4 p-4 sm:p-5`}
+            >
+              {filterPanel}
+            </aside>
+          )}
 
           {active > 0 && (
             <div
@@ -447,7 +561,7 @@ export default function CatalogueExplorer({
                   type="button"
                   onClick={() =>
                     chip.key === "query"
-                      ? setState({ ...state, query: "" })
+                      ? setState((previous) => ({ ...previous, query: "" }))
                       : toggle(chip.key as "brands" | "types", chip.value)
                   }
                   aria-label={`${da ? "Fjern filter" : "Remove filter"}: ${chip.label}`}
@@ -461,179 +575,22 @@ export default function CatalogueExplorer({
           )}
 
           <ul
-            className={`mt-4 grid min-w-0 gap-4 ${isList ? "" : budget ? "sm:grid-cols-2 2xl:grid-cols-4" : "sm:grid-cols-2 2xl:grid-cols-3"}`}
+            className={`mt-4 grid min-w-0 gap-4 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 2xl:grid-cols-3"}`}
           >
             {filtered.map((entry, index) => (
-              <li
+              <CatalogueListingItem
                 key={entry.id}
-                id={entry.fragmentId}
-                data-catalogue-item={entry.id}
-                data-budget-model={budget ? entry.id : undefined}
-                className={`plate grid min-w-0 scroll-mt-28 grid-cols-[104px_minmax(0,1fr)] gap-x-4 overflow-hidden p-4 ${isList ? "sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-x-5" : "sm:flex sm:flex-col sm:p-0"}`}
-              >
-                <figure
-                  className={`relative aspect-[4/3] self-center overflow-hidden rounded-lg outline outline-1 -outline-offset-1 outline-white/10 ${entry.image ? "bg-paper-dim" : "border border-white/10 bg-ink-950"} ${isList ? "sm:row-span-2 sm:self-start" : "sm:self-auto sm:rounded-none"}`}
-                >
-                  {entry.image ? (
-                    <Image
-                      src={entry.image.src}
-                      width={entry.image.width}
-                      height={entry.image.height}
-                      alt={entry.image.alt}
-                      priority={index === 0}
-                      sizes={
-                        isList
-                          ? "(min-width: 640px) 160px, 104px"
-                          : "(min-width: 1536px) 22vw, (min-width: 1024px) 32vw, (min-width: 640px) 46vw, 104px"
-                      }
-                      className="h-full w-full object-contain"
-                    />
-                  ) : (
-                    <div className="flex h-full min-h-16 flex-col items-center justify-center gap-1 px-2 py-4 text-center">
-                      <span className="font-display text-lg font-bold text-paper/85 sm:text-2xl">
-                        {entry.brand}
-                      </span>
-                      <span className="text-xs text-paper/65">
-                        {da ? "Modelguide" : "Model guide"}
-                      </span>
-                    </div>
-                  )}
-                </figure>
-                <div
-                  className={`min-w-0 self-center ${isList ? "sm:self-start" : "sm:self-stretch sm:px-5 sm:pt-5"}`}
-                >
-                  <p className="text-xs font-semibold uppercase leading-5 tracking-wider text-brand-300">
-                    {entry.format}
-                  </p>
-                  <h3 className="mt-1 font-display text-lg font-bold leading-snug text-paper">
-                    <Link
-                      data-catalogue-detail
-                      href={entry.detailHref}
-                      className="inline-flex min-h-11 items-center rounded-sm hover:text-brand-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-                    >
-                      {entry.name}
-                    </Link>
-                  </h3>
-                  <p className="mt-1 text-xs leading-5 text-paper/65">
-                    {entry.image
-                      ? entry.image.kind === "photo"
-                        ? da
-                          ? "Modelfoto"
-                          : "Model photo"
-                        : "Illustration"
-                      : da
-                        ? "Foto ikke tilgængeligt"
-                        : "Photo unavailable"}
-                  </p>
-                </div>
-                <div
-                  className={`col-span-2 flex min-w-0 flex-1 flex-col pt-2 ${isList ? "sm:col-span-1 sm:col-start-2 sm:pt-0" : "sm:px-5 sm:pb-5 sm:pt-0"}`}
-                >
-                  {entry.configuration ? (
-                    <p className="mt-2 text-sm leading-6 text-paper/75 sm:min-h-12">
-                      {entry.configuration}
-                    </p>
-                  ) : (
-                    <>
-                      <p className="mt-2 text-sm leading-6 text-paper/75 sm:min-h-12">
-                        {entry.description}
-                      </p>
-                      <dl className="mt-4 grid gap-3 border-y border-white/10 py-3">
-                        {entry.facts.slice(0, 3).map((fact) => (
-                          <div
-                            key={fact.label}
-                            className="grid grid-cols-[88px_minmax(0,1fr)] gap-x-3 gap-y-1 text-sm"
-                          >
-                            <dt className="text-paper/65">{fact.label}</dt>
-                            <dd className="text-right font-medium text-paper/85">{fact.value}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </>
-                  )}
-                  {entry.budget && (
-                    <div className="mt-3">
-                      <p className="text-xs font-semibold text-paper/65">
-                        {da ? "Historisk budget pr. enhed" : "Historical budget per unit"}
-                      </p>
-                      <p className="mt-1 font-display text-2xl font-bold tabular-nums text-paper">
-                        {da ? "Ca." : "Approx."} {entry.budget.formatted}
-                      </p>
-                    </div>
-                  )}
-                  <div className="mt-auto pt-4">
-                    <Link
-                      data-catalogue-enquiry
-                      data-budget-enquiry={budget ? "" : undefined}
-                      href={entry.enquiryHref}
-                      aria-label={`${budget ? (da ? "Spørg om modellen" : "Ask about this model") : da ? "Få pris" : "Get a price"}: ${entry.name}`}
-                      className={`${buttonClass("primary")} w-full px-3 py-2 text-center`}
-                    >
-                      <span>
-                        {budget
-                          ? da
-                            ? "Spørg om modellen"
-                            : "Ask about this model"
-                          : da
-                            ? "Få pris"
-                            : "Get a price"}
-                      </span>
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
-                    <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3">
-                      <Link
-                        data-budget-model-link={budget ? "" : undefined}
-                        href={entry.detailHref}
-                        className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper"
-                      >
-                        <span>
-                          {budget
-                            ? da
-                              ? "Detaljer"
-                              : "Details"
-                            : da
-                              ? "Specifikationer"
-                              : "Specifications"}
-                        </span>
-                        <span className="sr-only">: {entry.name}</span>
-                        <ArrowRight size={14} aria-hidden="true" />
-                      </Link>
-                      {entries.length > 1 && (
-                        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm text-paper/85">
-                          <input
-                            data-catalogue-compare={entry.id}
-                            type="checkbox"
-                            checked={state.compare.includes(entry.id)}
-                            disabled={
-                              !ready ||
-                              (state.compare.length >= 3 && !state.compare.includes(entry.id))
-                            }
-                            onChange={() => toggle("compare", entry.id)}
-                            className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-                          />
-                          <span>
-                            {da ? "Sammenlign" : "Compare"}
-                            <span className="sr-only">: {entry.name}</span>
-                          </span>
-                        </label>
-                      )}
-                    </div>
-                    {entry.sourceHref && (
-                      <a
-                        data-budget-source
-                        href={entry.sourceHref}
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        aria-label={`${da ? "Historisk priskilde" : "Historical price source"}: ${entry.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
-                        className="inline-flex min-h-11 items-center gap-2 text-xs text-paper/75 underline underline-offset-4 hover:text-paper"
-                      >
-                        {da ? "Historisk priskilde" : "Historical price source"}
-                        <ArrowUpRight size={14} aria-hidden="true" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </li>
+                entry={entry}
+                lang={lang}
+                mode={mode}
+                view={state.view}
+                ready={ready}
+                selected={state.compare.includes(entry.id)}
+                selectionFull={state.compare.length >= 3}
+                canCompare={entries.length > 1}
+                priority={index === 0}
+                onCompare={() => toggle("compare", entry.id)}
+              />
             ))}
           </ul>
           {filtered.length === 0 && (
@@ -659,7 +616,7 @@ export default function CatalogueExplorer({
         </div>
       </div>
 
-      {comparisonOpen && selected.length >= 2 && (
+      {comparisonVisible && (
         <section
           data-catalogue-comparison
           className="mt-10 scroll-mt-28 border-t border-white/10 pt-8"
@@ -687,14 +644,20 @@ export default function CatalogueExplorer({
               type="button"
               data-catalogue-compare-close
               onClick={() => {
+                restoreBrowsing.current = true;
                 setComparisonOpen(false);
-                comparisonButton.current?.focus();
               }}
               aria-label={da ? "Luk sammenligning" : "Close comparison"}
               className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/20 text-paper/85 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
             >
               <X size={18} aria-hidden="true" />
             </button>
+          </div>
+          <div
+            data-catalogue-selection
+            className="mt-5 flex min-w-0 flex-wrap items-center justify-between gap-3 border-y border-white/10 py-3"
+          >
+            {selectionControls}
           </div>
           <p className="mt-4 text-xs text-paper/75 sm:hidden">
             {da
@@ -715,7 +678,7 @@ export default function CatalogueExplorer({
                 <tr className="bg-ink-950">
                   <th
                     scope="col"
-                    className="sticky left-0 z-10 min-w-28 bg-ink-950 p-4 text-paper/75"
+                    className="sticky left-0 z-10 w-24 min-w-24 max-w-24 break-words bg-ink-950 p-3 text-paper/75 sm:w-40 sm:min-w-40 sm:max-w-40 sm:p-4"
                   >
                     {da ? "Model" : "Model"}
                   </th>
@@ -727,7 +690,8 @@ export default function CatalogueExplorer({
                     >
                       <Link
                         href={entry.detailHref}
-                        className="inline-flex min-h-11 items-center underline decoration-brand-300/40 underline-offset-4 hover:text-brand-200"
+                        onFocus={keepComparisonFocusVisible}
+                        className="inline-flex min-h-11 max-w-full items-center rounded-sm underline decoration-brand-300/40 underline-offset-4 hover:text-brand-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                       >
                         {entry.name}
                       </Link>
@@ -739,7 +703,7 @@ export default function CatalogueExplorer({
                 <tr className="border-t border-white/10">
                   <th
                     scope="row"
-                    className="sticky left-0 bg-ink-900 p-4 font-medium text-paper/75"
+                    className="sticky left-0 w-24 min-w-24 max-w-24 break-words bg-ink-900 p-3 font-medium text-paper/75 sm:w-40 sm:min-w-40 sm:max-w-40 sm:p-4"
                   >
                     {da ? "Format" : "Format"}
                   </th>
@@ -753,7 +717,7 @@ export default function CatalogueExplorer({
                   <tr key={label} className="border-t border-white/10">
                     <th
                       scope="row"
-                      className="sticky left-0 bg-ink-900 p-4 font-medium text-paper/75"
+                      className="sticky left-0 w-24 min-w-24 max-w-24 break-words bg-ink-900 p-3 font-medium text-paper/75 sm:w-40 sm:min-w-40 sm:max-w-40 sm:p-4"
                     >
                       {label}
                     </th>
@@ -769,7 +733,7 @@ export default function CatalogueExplorer({
                   <tr className="border-t border-white/10">
                     <th
                       scope="row"
-                      className="sticky left-0 bg-ink-900 p-4 font-medium text-paper/75"
+                      className="sticky left-0 w-24 min-w-24 max-w-24 break-words bg-ink-900 p-3 font-medium text-paper/75 sm:w-40 sm:min-w-40 sm:max-w-40 sm:p-4"
                     >
                       {da ? "Historisk budget" : "Historical budget"}
                     </th>
@@ -783,7 +747,7 @@ export default function CatalogueExplorer({
                 <tr className="border-t border-white/10">
                   <th
                     scope="row"
-                    className="sticky left-0 bg-ink-900 p-4 font-medium text-paper/75"
+                    className="sticky left-0 w-24 min-w-24 max-w-24 break-words bg-ink-900 p-3 font-medium text-paper/75 sm:w-40 sm:min-w-40 sm:max-w-40 sm:p-4"
                   >
                     {da ? "Næste skridt" : "Next step"}
                   </th>
@@ -791,8 +755,9 @@ export default function CatalogueExplorer({
                     <td key={entry.id} className="p-4">
                       <Link
                         href={entry.enquiryHref}
+                        onFocus={keepComparisonFocusVisible}
                         aria-label={`${da ? "Spørg om modellen" : "Ask about this model"}: ${entry.name}`}
-                        className={`${buttonClass("primary")} whitespace-nowrap px-3`}
+                        className={`${buttonClass("primary")} max-w-36 px-3 text-center sm:max-w-none`}
                       >
                         {da ? "Spørg om modellen" : "Ask about this model"}
                       </Link>
@@ -805,60 +770,26 @@ export default function CatalogueExplorer({
         </section>
       )}
 
-      {selected.length > 0 && (
+      {selected.length > 0 && !comparisonVisible && (
         <div
           data-catalogue-tray
           className="fixed inset-x-0 bottom-0 z-40 border-t border-white/20 bg-ink-950 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 shadow-xl sm:inset-x-6 sm:bottom-4 sm:rounded-xl sm:border sm:px-5"
         >
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
-            <div className="min-w-0 max-w-full">
-              <p
-                role="status"
-                aria-live="polite"
-                className="flex items-center gap-2 text-sm font-semibold text-paper"
-              >
-                <Columns3 size={18} aria-hidden="true" />
-                {selected.length} / 3 {da ? "valgt til sammenligning" : "selected to compare"}
-              </p>
-              <div className="mt-1 flex max-w-full gap-x-4 overflow-x-auto">
-                {selected.map((entry) => (
-                  <button
-                    key={entry.id}
-                    data-catalogue-remove={entry.id}
-                    type="button"
-                    onClick={() => toggle("compare", entry.id)}
-                    aria-label={`${da ? "Fjern" : "Remove"}: ${entry.name}`}
-                    className="inline-flex min-h-11 max-w-56 shrink-0 items-center gap-2 text-xs text-paper/85 hover:text-paper"
-                  >
-                    <span className="truncate">{entry.name}</span>
-                    <X size={14} className="shrink-0" aria-hidden="true" />
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                data-catalogue-compare-clear
-                onClick={() => {
-                  setState({ ...state, compare: [] });
-                  search.current?.focus();
-                }}
-                className="inline-flex min-h-11 items-center text-sm text-paper/75 underline underline-offset-4 hover:text-paper"
-              >
-                {da ? "Ryd udvalg" : "Clear selection"}
-              </button>
-              <button
-                ref={comparisonButton}
-                type="button"
-                data-catalogue-compare-open
-                disabled={selected.length < 2}
-                onClick={() => setComparisonOpen(true)}
-                className={`${buttonClass("primary")} px-4`}
-              >
-                {da ? "Sammenlign" : "Compare"} ({selected.length})
-              </button>
-            </div>
+            {selectionControls}
+            <button
+              ref={comparisonButton}
+              type="button"
+              data-catalogue-compare-open
+              disabled={selected.length < 2}
+              onClick={() => {
+                returnPosition.current = window.scrollY;
+                setComparisonOpen(true);
+              }}
+              className={buttonClass("primary") + " px-4"}
+            >
+              {da ? "Sammenlign" : "Compare"} ({selected.length})
+            </button>
           </div>
         </div>
       )}

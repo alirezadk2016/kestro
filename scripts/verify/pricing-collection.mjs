@@ -368,7 +368,7 @@ export async function verifyPricingCollection(browser, base, fail) {
           assert.ok(box && box.width >= 44 && box.height >= 44, "actions are at least 44px");
         }
         for (const [link, visibleLabel] of [
-          [enquiry, language === "da" ? "Spørg om modellen" : "Ask about this model"],
+          [enquiry, language === "da" ? "Spørg om pris" : "Enquire"],
           [model, language === "da" ? "Detaljer" : "Details"],
         ]) {
           const namedLink = card.getByRole("link", {
