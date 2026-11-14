@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-08-23",
-    "modified": "2026-10-17",
-    "files": 10
+    "modified": "2026-11-13",
+    "files": 8
   },
   "/flaadeloesninger": {
     "published": "2026-08-23",
@@ -31,13 +31,13 @@
   },
   "/modeller": {
     "published": "2026-08-23",
-    "modified": "2026-11-12",
-    "files": 7
+    "modified": "2026-11-14",
+    "files": 5
   },
   "/modeller/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-11-12",
-    "files": 15
+    "modified": "2026-11-14",
+    "files": 16
   },
   "/om-os": {
     "published": "2026-08-23",
@@ -46,7 +46,7 @@
   },
   "/priser": {
     "published": "2026-08-29",
-    "modified": "2026-11-11",
+    "modified": "2026-11-13",
     "files": 7
   },
   "/privatlivspolitik": {
@@ -56,13 +56,13 @@
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-11-11",
-    "files": 10
+    "modified": "2026-11-13",
+    "files": 5
   },
   "/produkter/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-11-12",
-    "files": 15
+    "modified": "2026-11-14",
+    "files": 13
   },
   "/reparation": {
     "published": "2026-08-23",
@@ -92,7 +92,7 @@
   "/vejledninger": {
     "published": "2026-08-23",
     "modified": "2026-10-28",
-    "files": 6
+    "files": 5
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
