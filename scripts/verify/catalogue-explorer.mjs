@@ -106,6 +106,9 @@ const BUDGET = [
 ];
 const LAPTOPS = MODELS.filter((model) => ["baerbare", "workstations"].includes(model.type));
 const WORKSTATIONS = MODELS.filter((model) => model.type === "workstations");
+/* "T14" is a substring of every T14 and T14s generation's name, so the literal
+   search returns the whole family, not only the original T14 page. */
+const T14_FAMILY = MODELS.filter((model) => model.name.includes("T14")).map((model) => model.id);
 const escaped = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Real filters operate on model references; comparison never creates stock or an offer. */
@@ -1090,10 +1093,7 @@ export async function verifyCatalogueExplorer(
             "multiword search uses AND rather than admitting partial token matches",
           );
           await search.fill("T14");
-          await results(
-            ["lenovo-thinkpad-t14"],
-            "literal model search returns the existing T14 reference",
-          );
+          await results(T14_FAMILY, "literal model search returns every T14 and T14s reference");
           assert.equal(
             new URL(page.url()).searchParams.get("q"),
             "T14",
@@ -1170,10 +1170,7 @@ export async function verifyCatalogueExplorer(
           }
           await sort.selectOption("name-desc");
           await search.fill("T14");
-          await results(
-            ["lenovo-thinkpad-t14"],
-            "filtering can hide selected cards without losing selection",
-          );
+          await results(T14_FAMILY, "filtering can hide selected cards without losing selection");
           sameSet(
             queryValues("compare"),
             selected,
@@ -1389,7 +1386,7 @@ export async function verifyCatalogueExplorer(
             );
           }
           await search.fill("T14");
-          await results(["lenovo-thinkpad-t14"], "view changes do not change filter meaning");
+          await results(T14_FAMILY, "view changes do not change filter meaning");
           const filteredUrl = page.url();
           const filteredResponse = await page.reload({ waitUntil: "networkidle" });
           assert.ok(

@@ -289,8 +289,10 @@ export async function verifySiteInventory(base, fail) {
     }
     checkedLinks = links.length;
     if (!next.size) break;
-    if (records.size + next.size > 400) {
-      problem("links", "inventory exceeds 400 distinct route/query targets");
+    /* A runaway guard, not a budget: 256 sitemap pages since the Lenovo
+       generation pages, so the ceiling sits well above the real count. */
+    if (records.size + next.size > 800) {
+      problem("links", "inventory exceeds 800 distinct route/query targets");
       break;
     }
     await mapFour([...next.values()], (url) => readPage(url));
