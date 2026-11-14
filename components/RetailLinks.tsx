@@ -55,7 +55,12 @@ const copy = {
 
 export default function RetailLinks({ model, lang }: { model: Model; lang: Lang }) {
   const c = copy[lang];
-  const links = retailLinks[model.slug] ?? [];
+  /* No entry means nobody has looked yet (the 50 Lenovo generations), and
+     "none of the shops we checked" would then be a claim about a check that
+     never happened. An empty array is a real check that found nothing. */
+  const checked = retailLinks[model.slug];
+  if (!checked) return null;
+  const links = checked;
   const checkedOn = links.map((link) => link.checkedOn).sort().at(-1);
   const names = links.map((link) => retailers[link.retailer].name);
   const stores =
