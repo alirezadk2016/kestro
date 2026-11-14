@@ -113,7 +113,17 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   /* Three, photographed first: eight cards in three rows was the longest
      section on the page and repeated the category page below a model. The
      rest are one link away, on the category page. */
-  const peers = picturesFirst([...sameCategory, ...sameGroup]);
+  /* Other generations of the same series come first: with one page per
+     generation, the T14 Gen 4 reader's next question is Gen 3 or Gen 5, not
+     whichever model happens to have a photograph. */
+  const series = (name: string) => name.replace(/ Gen \d+$/, "");
+  const siblings = [...sameCategory, ...sameGroup].filter(
+    (m) => series(m.name) === series(model.name),
+  );
+  const peers = [
+    ...siblings,
+    ...picturesFirst([...sameCategory, ...sameGroup]).filter((m) => !siblings.includes(m)),
+  ];
   const related = peers.slice(0, 3);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;

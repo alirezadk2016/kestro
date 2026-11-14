@@ -23,6 +23,57 @@ const MODELS = [
   ["lenovo-thinkpad-ultra-dock", "Lenovo ThinkPad Ultra Dock", "Lenovo", "docking"],
   ["dell-wd19", "Dell Dock WD19", "Dell", "docking"],
   ["hp-usb-c-dock-g5", "HP USB-C Dock G5", "HP", "docking"],
+  /* lib/models-lenovo-business.ts, in its own order. */
+  ["lenovo-thinkpad-t14-gen-3", "Lenovo ThinkPad T14 Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14-gen-4", "Lenovo ThinkPad T14 Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14-gen-5", "Lenovo ThinkPad T14 Gen 5", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14s-gen-2", "Lenovo ThinkPad T14s Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14s-gen-3", "Lenovo ThinkPad T14s Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14s-gen-4", "Lenovo ThinkPad T14s Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t14s-gen-5", "Lenovo ThinkPad T14s Gen 5", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t16-gen-1", "Lenovo ThinkPad T16 Gen 1", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t16-gen-2", "Lenovo ThinkPad T16 Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-t16-gen-3", "Lenovo ThinkPad T16 Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-carbon-gen-9", "Lenovo ThinkPad X1 Carbon Gen 9", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-carbon-gen-10", "Lenovo ThinkPad X1 Carbon Gen 10", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-carbon-gen-11", "Lenovo ThinkPad X1 Carbon Gen 11", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-carbon-gen-12", "Lenovo ThinkPad X1 Carbon Gen 12", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-yoga-gen-6", "Lenovo ThinkPad X1 Yoga Gen 6", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-yoga-gen-7", "Lenovo ThinkPad X1 Yoga Gen 7", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-yoga-gen-8", "Lenovo ThinkPad X1 Yoga Gen 8", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-2-in-1-gen-9", "Lenovo ThinkPad X1 2-in-1 Gen 9", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-nano-gen-1", "Lenovo ThinkPad X1 Nano Gen 1", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-nano-gen-2", "Lenovo ThinkPad X1 Nano Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x1-nano-gen-3", "Lenovo ThinkPad X1 Nano Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-gen-2", "Lenovo ThinkPad X13 Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-gen-3", "Lenovo ThinkPad X13 Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-gen-4", "Lenovo ThinkPad X13 Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-gen-5", "Lenovo ThinkPad X13 Gen 5", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-yoga-gen-2", "Lenovo ThinkPad X13 Yoga Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-yoga-gen-3", "Lenovo ThinkPad X13 Yoga Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-x13-yoga-gen-4", "Lenovo ThinkPad X13 Yoga Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l14-gen-3", "Lenovo ThinkPad L14 Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l14-gen-4", "Lenovo ThinkPad L14 Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l14-gen-5", "Lenovo ThinkPad L14 Gen 5", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l13-gen-3", "Lenovo ThinkPad L13 Gen 3", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l13-gen-4", "Lenovo ThinkPad L13 Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-l16-gen-1", "Lenovo ThinkPad L16 Gen 1", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-e14-gen-4", "Lenovo ThinkPad E14 Gen 4", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-e14-gen-5", "Lenovo ThinkPad E14 Gen 5", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-e14-gen-6", "Lenovo ThinkPad E14 Gen 6", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-e16-gen-1", "Lenovo ThinkPad E16 Gen 1", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-e16-gen-2", "Lenovo ThinkPad E16 Gen 2", "Lenovo", "baerbare"],
+  ["lenovo-thinkpad-p14s-gen-3", "Lenovo ThinkPad P14s Gen 3", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p14s-gen-4", "Lenovo ThinkPad P14s Gen 4", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p14s-gen-5", "Lenovo ThinkPad P14s Gen 5", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p16s-gen-1", "Lenovo ThinkPad P16s Gen 1", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p16s-gen-2", "Lenovo ThinkPad P16s Gen 2", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p16s-gen-3", "Lenovo ThinkPad P16s Gen 3", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p1-gen-5", "Lenovo ThinkPad P1 Gen 5", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p1-gen-6", "Lenovo ThinkPad P1 Gen 6", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p1-gen-7", "Lenovo ThinkPad P1 Gen 7", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p16-gen-1", "Lenovo ThinkPad P16 Gen 1", "Lenovo", "workstations"],
+  ["lenovo-thinkpad-p16-gen-2", "Lenovo ThinkPad P16 Gen 2", "Lenovo", "workstations"],
 ].map(([id, name, brand, type]) => ({ id, name, brand, type }));
 
 const BUDGET = [
@@ -54,6 +105,7 @@ const BUDGET = [
   },
 ];
 const LAPTOPS = MODELS.filter((model) => ["baerbare", "workstations"].includes(model.type));
+const WORKSTATIONS = MODELS.filter((model) => model.type === "workstations");
 const escaped = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Real filters operate on model references; comparison never creates stock or an offer. */
@@ -88,7 +140,7 @@ export async function verifyCatalogueExplorer(
     const mini = mode === "mini";
     const fixtures =
       fragment && javaScriptEnabled
-        ? [MODELS[8]]
+        ? WORKSTATIONS
         : mini
           ? [MODELS[10]]
           : budget
@@ -729,20 +781,23 @@ export async function verifyCatalogueExplorer(
             );
             await direct.goto(generated, { waitUntil: "networkidle" });
             await direct.waitForFunction(
-              () => {
+              (count) => {
                 const cards = document.querySelectorAll("[data-catalogue-item]");
                 const box = document
                   .querySelector("[data-catalogue-item='hp-zbook-15']")
                   ?.getBoundingClientRect();
-                return cards.length === 1 && box && box.top >= 80 && box.top <= 700;
+                return cards.length === count && box && box.top >= 80 && box.top <= 700;
               },
-              undefined,
+              WORKSTATIONS.length,
               { timeout: 3000, polling: 100 },
             );
             assert.equal(
-              await direct.locator("[data-catalogue-item]").getAttribute("data-catalogue-item"),
+              await direct
+                .locator("[data-catalogue-item]")
+                .first()
+                .getAttribute("data-catalogue-item"),
               "hp-zbook-15",
-              "a fresh open of the generated type-plus-hash URL selects and shows the actual ZBook",
+              "a fresh open of the generated type-plus-hash URL selects the workstations and leads with the ZBook",
             );
             if (directory)
               await direct.screenshot({
@@ -768,8 +823,8 @@ export async function verifyCatalogueExplorer(
             );
             assert.equal(
               laptops.length,
-              8,
-              "the laptop group contains eight actual reference models",
+              47,
+              "the laptop group contains forty-seven actual reference models",
             );
             await expectIds(direct, laptops);
             await direct.waitForFunction(

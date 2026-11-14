@@ -97,6 +97,7 @@ const routeExists = (href) => {
     }[source];
     return (
       read(file).includes(`slug: "${last}"`) ||
+      (parent === "modeller" && read("lib/models-lenovo-business.ts").includes(`slug: "${last}"`)) ||
       (parent === "vejledninger" && read("lib/practical-guides.ts").includes(`slug: "${last}"`))
     );
   }
@@ -322,8 +323,10 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
  * failure that matters here, because a card claiming 32 GB on a machine that
  * tops out at 16 is a specification a customer would order on.
  */
-{
-  const source = readFileSync(join(root, "lib", "models.ts"), "utf8");
+/* lib/models-lenovo-business.ts holds the Lenovo generations and their chips
+   in the same shape, so the same check runs over both files. */
+for (const file of ["models.ts", "models-lenovo-business.ts"]) {
+  const source = readFileSync(join(root, "lib", file), "utf8");
   const flat = (text) => text.replace(/[\u2013\u2014]/g, "-");
 
   /* Each model is one contiguous object, so the text from its slug to the next
@@ -338,21 +341,21 @@ for (const file of [...walk(join(root, "components")), ...walk(join(root, "app")
 
   const chipBlock = source.match(/const CARD_CHIPS[^=]*= \{([\s\S]*?)\n\};/);
   if (!chipBlock) {
-    fail("lib/models.ts: CARD_CHIPS not found — the catalogue cards have no specs to check");
+    fail(`lib/${file}: CARD_CHIPS not found — the catalogue cards have no specs to check`);
   } else {
     const perSlug = [...chipBlock[1].matchAll(/"([a-z0-9-]+)": \[([\s\S]*?)\n  \],/g)];
-    if (perSlug.length === 0) fail("lib/models.ts: CARD_CHIPS parsed to nothing");
+    if (perSlug.length === 0) fail(`lib/${file}: CARD_CHIPS parsed to nothing`);
     for (const [, slug, body] of perSlug) {
       const entry = entries.get(slug);
       if (!entry) {
-        fail(`lib/models.ts: CARD_CHIPS has "${slug}", which is not a model`);
+        fail(`lib/${file}: CARD_CHIPS has "${slug}", which is not a model`);
         continue;
       }
       for (const [, chip] of body.matchAll(/(?:da|en): "([^"]*)"/g)) {
         for (const figure of flat(chip).match(/\d+(?:[.,]\d+)?/g) ?? []) {
           if (!entry.includes(figure)) {
             fail(
-              `lib/models.ts: ${slug} chip "${chip}" says ${figure}, which is nowhere in that model`,
+              `lib/${file}: ${slug} chip "${chip}" says ${figure}, which is nowhere in that model`,
             );
           }
         }
