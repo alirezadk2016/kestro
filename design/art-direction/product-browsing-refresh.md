@@ -1,5 +1,15 @@
 # Product browsing refresh
 
+> **2026-11-14 — five categories, laptops leading.** The owner read the
+> seven-tile hub as confusing and artificial and asked for tablets and
+> smartphones to leave it: they had no model and no picture, only a mark in an
+> empty frame. Their pages and URLs stay, linked from the header and footer.
+> Laptops (59 of 68 models, and the one category with a real photograph) take a
+> large card; desktops, monitors, mini PCs and docks sit beside it. Each card
+> gives its model count. The photo/drawing label is said once under the grid,
+> and photos multiply into the same pale well as the drawings so the set reads
+> as one. Everything below describes the seven-tile version.
+
 ## Product and scope
 
 Kestro helps Danish and Norwegian businesses compare refurbished IT. The

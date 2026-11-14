@@ -10,8 +10,6 @@ const CATEGORIES = {
     "/produkter/stationaere-computere",
     "/produkter/skaerme",
     "/produkter/mini-pc",
-    "/produkter/tablets",
-    "/produkter/smartphones",
     "/produkter/dockingstationer",
   ],
   en: [
@@ -19,8 +17,6 @@ const CATEGORIES = {
     "/en/products/desktop-computers",
     "/en/products/monitors",
     "/en/products/mini-pc",
-    "/en/products/tablets",
-    "/en/products/smartphones",
     "/en/products/docking-stations",
   ],
 };
@@ -57,8 +53,6 @@ const ARTWORK = [
     height: 900,
     subject: /mini.?pc/i,
   },
-  { kind: "illustration", subject: /tablet/i },
-  { kind: "illustration", subject: /smartphone/i },
   {
     kind: "photo",
     src: "/models/dell-wd19/front-reference.webp",
@@ -176,10 +170,12 @@ export async function verifyProductBrowsing(browser, base, fail) {
       const gallery = page.locator(GALLERY);
       assert.equal(await gallery.count(), 1, "one primary category gallery is available");
       const links = gallery.locator("ul > li > a[href]");
+      /* Tablets and smartphones left the directory on the owner's word
+         (2026-11-14): no models, no picture. Their pages remain. */
       assert.equal(
         await links.count(),
-        7,
-        "the gallery contains seven clear category destinations",
+        5,
+        "the gallery contains five clear category destinations",
       );
       const actualTargets = new Set();
       for (const link of await links.all()) {
@@ -209,16 +205,12 @@ export async function verifyProductBrowsing(browser, base, fail) {
           "each category has one accessible device representation",
         );
         assert.ok(await media.isVisible(), "the category representation is visible");
-        const label =
-          expected.kind === "photo"
-            ? language === "da"
-              ? "Referencefoto"
-              : "Reference photo"
-            : "Illustration";
-        assert.ok(
-          await link.getByText(label, { exact: true }).isVisible(),
-          "the visible label distinguishes model references from drawings",
+        assert.match(
+          await link.innerText(),
+          language === "da" ? /\d+ modell?(er)?/ : /\d+ models?/,
+          "every category says how many models it holds",
         );
+        const lead = CATEGORIES[language].indexOf(href.pathname) === 0;
         await media.scrollIntoViewIfNeeded();
         const frame = await well.evaluate((element) => {
           const frame = element.getBoundingClientRect();
@@ -255,10 +247,17 @@ export async function verifyProductBrowsing(browser, base, fail) {
         });
         assert.ok(frame.wellFits, "the media frame stays within its category card");
         assert.equal(frame.overflow, "hidden", "the neutral media frame contains its contents");
-        assert.ok(
-          Math.abs(frame.ratio - 4 / 3) < 0.03,
-          "the media frames keep a consistent 4:3 shape",
-        );
+        /* Beside two rows of cards the lead frame takes the card's height. */
+        if (lead && width >= 1024)
+          assert.ok(
+            frame.ratio > 0.8 && frame.ratio < 1.6,
+            "the lead frame fills its card without becoming a strip",
+          );
+        else
+          assert.ok(
+            Math.abs(frame.ratio - 4 / 3) < 0.03,
+            "the media frames keep a consistent 4:3 shape",
+          );
         if (expected.src) {
           assert.equal(
             await media.evaluate((element) => element.tagName),
@@ -596,7 +595,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
       await page.waitForURL((url) => url.pathname === path);
       assert.equal(
         await page.locator(`${GALLERY} ul > li > a[href]`).count(),
-        7,
+        5,
         "Back restores the full category gallery",
       );
       assert.ok(

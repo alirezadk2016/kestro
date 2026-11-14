@@ -21,7 +21,7 @@ export default function CategoryArtwork({
   return (
     <div
       data-category-artwork={media.kind}
-      className={`relative flex aspect-[4/3] flex-none items-center justify-center overflow-hidden ${media.kind === "photo" ? "bg-paper" : "bg-paper-dim"} ${className}`}
+      className={`relative flex aspect-[4/3] flex-none items-center justify-center overflow-hidden bg-paper-dim ${className}`}
     >
       {media.src ? (
         <Image
@@ -31,7 +31,9 @@ export default function CategoryArtwork({
           alt={media.alt[lang]}
           sizes={sizes}
           priority={priority}
-          className={`h-full w-full object-contain ${media.kind === "photo" ? "p-2" : ""}`}
+          /* A photo's white studio ground multiplies into the same pale well
+             the drawings stand on, so a photo is not a white card on grey. */
+          className={`h-full w-full object-contain ${media.kind === "photo" ? "p-2 mix-blend-multiply" : ""}`}
         />
       ) : (
         <div role="img" aria-label={media.alt[lang]}>

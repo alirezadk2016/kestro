@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCategoryGallery from "@/components/ProductCategoryGallery";
 import CtaSection from "@/components/CtaSection";
-import { categories } from "@/lib/categories";
+import { models } from "@/lib/models";
 import { formatDate, localePath, metaFor, type Lang } from "@/lib/i18n";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
@@ -15,9 +15,9 @@ const copy = {
   da: {
     metaTitle: "Brugt IT-udstyr til virksomheder: pc, skærm og dock | Kestro",
     metaDescription:
-      "Brugte computere til erhverv: bærbare, stationære, mini-pc'er, skærme, tablets og docks – skaffet til ordren i Danmark og Norge, med vilkår på skrift.",
+      "Brugte computere til erhverv: bærbare, stationære, mini-pc'er, skærme og docks, skaffet til ordren i Danmark og Norge – med alle vilkår på skrift.",
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
-    description: `Vælg mellem ${categories.length} udstyrstyper til jeres arbejdsplads. Vi skaffer efter behov og afklarer konfiguration, stand og pris i et skriftligt tilbud.`,
+    description: `Vi skaffer brugte bærbare, stationære, mini-pc'er, skærme og docks til virksomheder – ${models.length} modeller at sammenligne. Konfiguration, stand og pris afklares i et skriftligt tilbud.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
     noStockLink: "Se budgeteksempler og prisgrundlag",
     noPrices1:
@@ -37,9 +37,9 @@ const copy = {
   en: {
     metaTitle: "Used and refurbished business computers and IT | Kestro",
     metaDescription:
-      "Used computers for firms: laptops, desktops, mini PCs, screens, tablets and docks, sourced per order in Denmark and Norway, all terms in writing.",
+      "Used computers for business: laptops, desktops, mini PCs, monitors and docks, sourced per order in Denmark and Norway, with all terms in writing.",
     title: "Used business computers we source",
-    description: `Choose from ${categories.length} equipment types for your workplace. We source around your needs and clarify configuration, condition and price in a written quote.`,
+    description: `We source used laptops, desktops, mini PCs, monitors and docks for businesses — ${models.length} models to compare. Configuration, condition and price are settled in a written quote.`,
     noStockLine: "An equipment budget needs more than the price of the computer itself.",
     noStockLink: "See budget examples and their basis",
     noPrices1:
