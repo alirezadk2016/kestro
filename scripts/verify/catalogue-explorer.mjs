@@ -1510,7 +1510,10 @@ export async function verifyCatalogueExplorer(
 
   try {
     for (const language of ["da", "en"]) {
-      for (const mode of ["models", "budget"]) {
+      /* "budget" ran the explorer on /priser. The prices page is now a plain
+         price table (components/BudgetExamples.tsx) so it no longer reads as
+         a second shop; scripts/verify/pricing-collection.mjs covers it. */
+      for (const mode of ["models"]) {
         for (const width of regressionsOnly ? [320, 390, 1440] : WIDTHS)
           await scenario(language, mode, width, true);
         if (!regressionsOnly) await scenario(language, mode, 390, false);

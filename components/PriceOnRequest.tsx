@@ -67,9 +67,14 @@ export default function PriceOnRequest({
       {!example && <p className="mt-3 text-sm leading-[1.6] text-paper/75">{c.body}</p>}
       {example && (
         <div className="mt-4 border-y border-white/10 py-4">
-          <p className="font-display text-2xl font-bold tabular-nums text-paper">
-            {lang === "da" ? "Budget ca." : "Budget approx."}{" "}
-            {formatDkk(budgetAmount(example), lang)}
+          {/* Labelled as what it is, at the size of a reference: as a 24px
+              "Budget ca. 2.700 DKK" headline in a box titled "ask about
+              price", it read as Kestro's price for this machine. */}
+          <p className="text-xs font-semibold uppercase tracking-wider text-paper/65">
+            {lang === "da" ? "Pris hos en anden forhandler" : "Price at another retailer"}
+          </p>
+          <p className="mt-1 font-display text-lg font-bold tabular-nums text-paper">
+            {lang === "da" ? "ca." : "approx."} {formatDkk(budgetAmount(example), lang)}
           </p>
           <p className="mt-1 text-xs leading-5 text-paper/65">
             {lang === "da" ? "Prisreference læst" : "Price reference read"}{" "}
