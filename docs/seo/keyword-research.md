@@ -51,7 +51,7 @@ To ting følger af det:
    Kestro sourcer per ordre og lover ikke et fast antal måneder. Det er en
    reel forskel, og den betyder, at Kestro **ikke** skal jagte
    "billige brugte computere" — men derimod de søgninger, hvor spørgsmålet er
-   *indkøb*: antal, konfiguration, ens maskiner, tidsramme, dokumentation.
+   _indkøb_: antal, konfiguration, ens maskiner, tidsramme, dokumentation.
 
 ## Klynger (20)
 
@@ -64,20 +64,20 @@ Engelsk (sekundært marked).
 
 ## Kolonner i CSV'en
 
-| Kolonne | Betydning |
-| --- | --- |
-| `cluster` | Emneklynge — bruges i trin 2 til at undgå kannibalisering |
-| `keyword` | Søgeordet, som det skrives |
-| `language` | da / en (ét felt er markeret `no/da`) |
-| `search_volume`, `keyword_difficulty`, `cpc` | **unknown** — se ovenfor |
-| `data_source` | `not measured`, indtil et værktøj har leveret tallet |
-| `search_intent` | commercial / transactional / commercial investigation / informational / navigational |
-| `commercial_value` | Vurderet værdi for Kestros forretning: high / medium / low |
-| `priority` | P0 essentiel · P1 høj · P2 nyttig · P3 valgfri |
-| `related_keywords` | Varianter, der hører til samme side — ikke egne sider |
-| `candidate_page` | Foreløbig kandidat. **Den endelige mapping sker i trin 2.** |
-| `coverage_today` | covered / partial / gap på sitet i dag |
-| `note` | Hvorfor søgeordet er med — eller hvorfor det er nedprioriteret |
+| Kolonne                                      | Betydning                                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `cluster`                                    | Emneklynge — bruges i trin 2 til at undgå kannibalisering                            |
+| `keyword`                                    | Søgeordet, som det skrives                                                           |
+| `language`                                   | da / en (ét felt er markeret `no/da`)                                                |
+| `search_volume`, `keyword_difficulty`, `cpc` | **unknown** — se ovenfor                                                             |
+| `data_source`                                | `not measured`, indtil et værktøj har leveret tallet                                 |
+| `search_intent`                              | commercial / transactional / commercial investigation / informational / navigational |
+| `commercial_value`                           | Vurderet værdi for Kestros forretning: high / medium / low                           |
+| `priority`                                   | P0 essentiel · P1 høj · P2 nyttig · P3 valgfri                                       |
+| `related_keywords`                           | Varianter, der hører til samme side — ikke egne sider                                |
+| `candidate_page`                             | Foreløbig kandidat. **Den endelige mapping sker i trin 2.**                          |
+| `coverage_today`                             | covered / partial / gap på sitet i dag                                               |
+| `note`                                       | Hvorfor søgeordet er med — eller hvorfor det er nedprioriteret                       |
 
 ## Hvad der bevidst ikke er med
 

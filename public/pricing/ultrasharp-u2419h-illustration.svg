@@ -1,0 +1,105 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="900"
+  viewBox="0 0 1200 900"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="field" x1="600" y1="0" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F5F7" />
+      <stop offset="1" stop-color="#E5E9EE" />
+    </linearGradient>
+    <linearGradient id="bezel" x1="198" y1="105" x2="1005" y2="580" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#424A54" />
+      <stop offset=".22" stop-color="#202833" />
+      <stop offset="1" stop-color="#101720" />
+    </linearGradient>
+    <linearGradient id="screen" x1="221" y1="121" x2="983" y2="561" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17212D" />
+      <stop offset=".56" stop-color="#0B121B" />
+      <stop offset="1" stop-color="#151F2B" />
+    </linearGradient>
+    <linearGradient
+      id="reflection"
+      x1="254"
+      y1="110"
+      x2="749"
+      y2="622"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#BCC8D2" stop-opacity=".13" />
+      <stop offset=".65" stop-color="#CBD5DE" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="stem" x1="554" y1="640" x2="643" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#858F9B" />
+      <stop offset=".2" stop-color="#E1E6EB" />
+      <stop offset=".69" stop-color="#BBC3CD" />
+      <stop offset="1" stop-color="#76828F" />
+    </linearGradient>
+    <linearGradient id="foot" x1="468" y1="747" x2="742" y2="816" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EBEEF1" />
+      <stop offset=".55" stop-color="#C5CDD6" />
+      <stop offset="1" stop-color="#A7B1BE" />
+    </linearGradient>
+    <filter id="shadow" x="218" y="740" width="764" height="135" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="15" />
+    </filter>
+  </defs>
+  <path fill="url(#field)" d="M0 0H1200V900H0z" />
+  <ellipse
+    cx="603"
+    cy="823"
+    rx="294"
+    ry="22"
+    fill="#273341"
+    fill-opacity=".19"
+    filter="url(#shadow)"
+  />
+  <path d="M1005 112L1016 120V572L1005 579V112Z" fill="#151D27" />
+  <path
+    d="M555 522H645L639 755H557L555 522Z"
+    fill="url(#stem)"
+    stroke="#8995A2"
+    stroke-width="1.5"
+  />
+  <path d="M565 581V746" stroke="#EDF1F4" stroke-opacity=".65" stroke-width="2" />
+  <path d="M630 581L625 745" stroke="#5E6C7B" stroke-opacity=".3" stroke-width="2" />
+  <path
+    d="M477 741H725L765 807H437L477 741Z"
+    fill="url(#foot)"
+    stroke="#A9B3BF"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+  />
+  <path d="M437 807H765V817H437V807Z" fill="#8C99A8" />
+  <path d="M442 808H761" stroke="#F1F4F6" stroke-width="2" />
+  <path d="M490 746H719" stroke="#FBFCFD" stroke-opacity=".7" stroke-width="2" />
+  <path
+    d="M198 105H997C1001.42 105 1005 108.582 1005 113V571C1005 575.418 1001.42 579 997 579H198C193.582 579 190 575.418 190 571V113C190 108.582 193.582 105 198 105Z"
+    fill="url(#bezel)"
+    stroke="#535E6B"
+    stroke-width="1.5"
+  />
+  <rect
+    x="204"
+    y="118"
+    width="787"
+    height="443"
+    rx="1.5"
+    fill="url(#screen)"
+    stroke="#070D14"
+    stroke-width="2"
+  />
+  <path d="M206 120H989V286L633 559H206V120Z" fill="url(#reflection)" />
+  <path d="M204 564H991" stroke="#77828F" stroke-opacity=".24" />
+  <path d="M201 109H993" stroke="#D8E0E7" stroke-opacity=".32" />
+  <path d="M194 116V567" stroke="#AAB5C1" stroke-opacity=".2" />
+  <circle cx="976" cy="570" r="2" fill="#D5DEE6" />
+  <path
+    d="M946 570H949M957 570H960M968 570H970"
+    stroke="#8A97A5"
+    stroke-width="1.5"
+    stroke-linecap="round"
+  />
+</svg>

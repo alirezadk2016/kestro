@@ -1,0 +1,1574 @@
+import { randomBytes, randomUUID } from "node:crypto";
+
+import { neon } from "@neondatabase/serverless";
+
+import { adminAuthed } from "@/lib/admin-auth";
+import type {
+  AcquisitionFilters,
+  AcquisitionStats,
+  SearchConsoleReport,
+  StoredSearchConsoleReport,
+} from "@/lib/insights-types";
+import type { VisitAttribution } from "@/lib/visits";
+import {
+  bulkEnquiryIds,
+  copenhagenToday,
+  followUpDateValid,
+  FOLLOW_UP_SCOPES,
+  type EnquiryPriority,
+  type FollowUpScope,
+} from "@/lib/admin-follow-up";
+export type { EnquiryPriority, FollowUpScope } from "@/lib/admin-follow-up";
+
+/**
+ * The one place the site keeps anything.
+ *
+ * Until now nothing was stored: an enquiry became an email and was gone from
+ * our side the moment it was sent, and a visit was counted by somebody else's
+ * dashboard or not at all. Both are fine right up to the point where you want
+ * to answer a message without leaving the site, or see your own numbers — and
+ * neither is possible without somewhere to put them.
+ *
+ * Neon over HTTP rather than a pooled TCP client. A serverless function is
+ * created and destroyed per request, so a connection pool is the wrong shape:
+ * it either leaks connections until the database refuses new ones, or it pays
+ * a handshake on every call. The HTTP driver has neither problem.
+ *
+ * Everything here fails soft. If the database is not configured — no
+ * connection string, which is exactly the state of a fresh clone — `sql`
+ * returns null and every function below returns an empty result instead of
+ * throwing. The contact form must keep working whether or not the archive
+ * does: an enquiry that reaches the inbox but not the panel is a missing
+ * feature, an enquiry that reaches neither because a table was missing is a
+ * lost customer.
+ */
+
+/*
+ * The connection string, whatever the integration decided to call it.
+ *
+ * Vercel's Neon integration names the variables itself, and the name depends
+ * on a "custom prefix" field in the connect dialog: leave it alone and you get
+ * DATABASE_URL, type STORAGE into it and you get STORAGE_URL instead. A local
+ * .env would normally carry DATABASE_URL, and a Postgres integration of a
+ * different vintage POSTGRES_URL.
+ *
+ * Rather than depend on somebody having left one field untouched, any variable
+ * whose name ends in _URL and whose value is a Postgres connection string will
+ * do. The named ones are tried first so an explicit choice always wins; the
+ * scan is the safety net, and it matches on the protocol rather than the name
+ * so a Redis or Blob URL sitting in the same environment cannot be picked up
+ * by mistake.
+ */
+const isPostgres = (value: string | undefined): value is string =>
+  typeof value === "string" && /^postgres(ql)?:\/\//.test(value);
+
+function connectionString(): string {
+  const named = [
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.POSTGRES_PRISMA_URL,
+    process.env.STORAGE_URL,
+  ].find(isPostgres);
+  if (named) return named;
+
+  /* Pooled connections first where both are offered: a serverless function is
+     short-lived and the unpooled endpoint runs out of connections first. */
+  const found = Object.entries(process.env)
+    .filter(([key, value]) => key.endsWith("_URL") && isPostgres(value))
+    .sort(([a], [b]) => Number(a.includes("UNPOOLED")) - Number(b.includes("UNPOOLED")));
+
+  return found[0]?.[1] ?? "";
+}
+
+/**
+ * The names of the connection-string-shaped variables this deployment can see.
+ *
+ * Names only, never values — a connection string carries the password, and the
+ * panel is behind a password rather than behind a firewall. What this answers
+ * is the one question that is otherwise unanswerable from outside: when the
+ * panel says there is no database, is the variable there under a name nothing
+ * looks for, or is it not there at all? Those two have completely different
+ * fixes, and guessing between them costs a deploy each time.
+ */
+export function databaseEnvNames(): string[] {
+  return Object.entries(process.env)
+    .filter(([, value]) => isPostgres(value))
+    .map(([key]) => key)
+    .sort();
+}
+
+/** Every variable name the deployment has, for the same diagnosis one step out:
+ *  an integration that was never connected leaves no trace at all, and seeing
+ *  that the list has no PG-anything in it says so immediately. */
+export function envNameSample(): string[] {
+  return Object.keys(process.env)
+    .filter((key) => /(^PG|POSTGRES|DATABASE|NEON|STORAGE|_URL$)/i.test(key))
+    .sort();
+}
+
+const CONNECTION = connectionString();
+
+/*
+ * Connecting, without taking the site down if the string is wrong.
+ *
+ * neon() validates its argument and throws — at module scope, which is import
+ * time. Every route that touches this file imports it, so one malformed
+ * connection string did not disable the archive: it returned 500 for the admin
+ * panel and for /api/kontakt, which is the contact form. A typo in a Vercel
+ * variable could take the enquiry path down entirely, and everything else in
+ * this file is written specifically so that cannot happen.
+ *
+ * Found by starting the built site with a deliberately incomplete string.
+ */
+function connect(): ReturnType<typeof neon> | null {
+  if (!CONNECTION) return null;
+  try {
+    return neon(CONNECTION);
+  } catch (error) {
+    console.error("Database connection string is present but not usable", error);
+    return null;
+  }
+}
+
+const sql = connect();
+
+export const dbConfigured = sql !== null;
+
+/**
+ * A connection string that exists and does not work.
+ *
+ * Distinct from having none, because the fixes are different: one is a missing
+ * integration, the other is a variable to correct. Without the distinction the
+ * panel would tell somebody to create a database they had already created.
+ */
+export const dbMisconfigured = CONNECTION.length > 0 && sql === null;
+
+/** How an enquiry reached us. */
+export type EnquirySource = "contact" | "quote" | "instagram";
+
+/** Where an enquiry is in its life. */
+export type EnquiryStatus = "new" | "read" | "replied" | "archived";
+
+export type Enquiry = {
+  id: string;
+  created_at: string;
+  name: string;
+  company: string | null;
+  email: string;
+  phone: string | null;
+  subject: string | null;
+  message: string;
+  page: string | null;
+  source: EnquirySource;
+  status: EnquiryStatus;
+  replied_at: string | null;
+  reply_body: string | null;
+  /** Null when the mail went out, or when there was nothing to send it with. */
+  mail_error: string | null;
+  internal_note: string | null;
+  priority: EnquiryPriority;
+  follow_up_on: string | null;
+};
+
+/*
+ * The schema, created on demand.
+ *
+ * A migration tool would be the right answer for a schema that changes often.
+ * This one is two tables that have to exist before the first write, and the
+ * cost of getting there should not be a step somebody has to remember on a
+ * Friday. IF NOT EXISTS makes it idempotent, and the flag below means the
+ * statements are attempted once per warm instance rather than per request.
+ */
+let ready: Promise<void> | null = null;
+
+/*
+ * Another instance created the same object at the same moment.
+ *
+ * IF NOT EXISTS is a check followed by a create, not one atomic step, so two
+ * cold instances can both pass the check and the slower one fails on the
+ * catalogue's own unique index: 23505 on pg_class (or pg_type for a table),
+ * 42P07 for a relation, 42701 for a column, 42710 for another object. It
+ * happened once in production, on 19 October 2026, when a deploy added
+ * enquiries_follow_up_idx and two instances started together: one /api/track
+ * request failed. The object exists by the time the loser hears about it, so
+ * running the statements again turns every one of them into a no-op.
+ */
+const CONCURRENT_DDL = new Set(["23505", "42P07", "42701", "42710"]);
+const concurrentDdl = (error: unknown) =>
+  CONCURRENT_DDL.has(String((error as { code?: unknown } | null)?.code ?? ""));
+
+function ensureSchema(): Promise<void> {
+  if (!sql) return Promise.resolve();
+  if (ready) return ready;
+
+  ready = createSchema()
+    .catch((error) => {
+      if (!concurrentDdl(error)) throw error;
+      return createSchema();
+    })
+    .catch((error) => {
+      /* Let the next call try again rather than caching a failure for the
+         life of the instance. */
+      ready = null;
+      throw error;
+    });
+
+  return ready;
+}
+
+async function createSchema(): Promise<void> {
+  if (!sql) return;
+  await sql`
+      CREATE TABLE IF NOT EXISTS enquiries (
+        id          TEXT PRIMARY KEY,
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+        name        TEXT NOT NULL,
+        company     TEXT,
+        email       TEXT NOT NULL,
+        phone       TEXT,
+        subject     TEXT,
+        message     TEXT NOT NULL,
+        page        TEXT,
+        source      TEXT NOT NULL DEFAULT 'contact',
+        status      TEXT NOT NULL DEFAULT 'new',
+        replied_at  TIMESTAMPTZ,
+        reply_body  TEXT
+      )`;
+  /*
+   * Why the mail copy did not go out, when it did not.
+   *
+   * Added after the fact rather than in the CREATE above, because the table
+   * already exists in production and this has to work on both. ADD COLUMN IF
+   * NOT EXISTS is a no-op the second time and every time after.
+   */
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS mail_error TEXT`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS internal_note TEXT`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS priority TEXT NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high'))`;
+  await sql`ALTER TABLE enquiries ADD COLUMN IF NOT EXISTS follow_up_on DATE`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_follow_up_idx ON enquiries (follow_up_on, created_at DESC) WHERE status <> 'archived'`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_contact_idx ON enquiries (lower(btrim(email)), created_at DESC)`;
+  await sql`
+      CREATE TABLE IF NOT EXISTS enquiry_events (
+        id TEXT PRIMARY KEY,
+        enquiry_id TEXT NOT NULL REFERENCES enquiries(id),
+        kind TEXT NOT NULL CHECK (kind IN ('status', 'note', 'follow_up', 'reply')),
+        detail TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      )`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiry_events_enquiry_idx ON enquiry_events (enquiry_id, created_at DESC, id DESC)`;
+
+  /* The inbox is always read newest first, and the unread count is read on
+       every page of the panel. */
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_created_idx ON enquiries (created_at DESC)`;
+  await sql`CREATE INDEX IF NOT EXISTS enquiries_status_idx ON enquiries (status)`;
+
+  /*
+   * Views, aggregated by day and path rather than stored one row per hit.
+   *
+   * A row per view would be a table that grows without limit and answers
+   * every question with a scan. Counting into a day/path cell keeps the
+   * table proportional to how many pages the site has, which is 112, and
+   * makes every chart a single grouped read.
+   *
+   * Views, not unique people. The separate visit table below deduplicates
+   * reloads using a server-derived daily hash, without a browser cookie or
+   * storage identifier. This day/path table remains aggregate counts only.
+   */
+  await sql`
+      CREATE TABLE IF NOT EXISTS page_views (
+        day    DATE NOT NULL,
+        path   TEXT NOT NULL,
+        views  INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (day, path)
+      )`;
+
+  /*
+   * A visit: one browser reading the site over one sitting.
+   *
+   * This is the table that makes a refresh stop counting as a new reader.
+   * page_views above answers "how many pages were read"; this answers "by
+   * how many people, from where, on what, and for how long" — and the two
+   * are different questions that were previously both answered by the same
+   * incrementing counter.
+   *
+   * A sitting ends after thirty minutes of silence, which is the same window
+   * every analytics tool uses. Coming back after an hour is a second visit,
+   * which is what it feels like to the person too.
+   *
+   * `visitor` is the daily hash from lib/visits.ts, not an address and not
+   * anything that survives the day. No IP, no name, no id in the browser.
+   */
+  await sql`
+      CREATE TABLE IF NOT EXISTS visits (
+        id          TEXT PRIMARY KEY,
+        visitor     TEXT NOT NULL,
+        started_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+        last_seen   TIMESTAMPTZ NOT NULL DEFAULT now(),
+        hits        INTEGER NOT NULL DEFAULT 1,
+        source      TEXT NOT NULL DEFAULT 'Direkte',
+        entry_path  TEXT,
+        last_path   TEXT,
+        country     TEXT,
+        device      TEXT
+      )`;
+  /* Who is here now, and the open-visit lookup that runs on every hit. */
+  await sql`CREATE INDEX IF NOT EXISTS visits_last_seen_idx ON visits (last_seen DESC)`;
+  await sql`CREATE INDEX IF NOT EXISTS visits_open_idx ON visits (visitor, last_seen DESC)`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS medium TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS campaign TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS content TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS term TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS referrer_host TEXT`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS attribution_method TEXT NOT NULL DEFAULT 'legacy'`;
+  await sql`ALTER TABLE visits ADD COLUMN IF NOT EXISTS channel TEXT`;
+  /* Historical source names establish a broad platform category only.
+       They cannot recover a campaign, medium, paid status or referrer. */
+  await sql`
+      UPDATE visits SET channel = CASE
+        WHEN lower(source) IN ('google', 'bing', 'duckduckgo', 'ecosia', 'yahoo') THEN 'search'
+        WHEN lower(source) IN ('instagram', 'facebook', 'linkedin', 'x', 'tiktok', 'youtube', 'pinterest', 'reddit') THEN 'social'
+        WHEN source IN ('Direkte', 'Direkte / ukendt') THEN 'direct_unknown'
+        ELSE 'other' END
+      WHERE channel IS NULL`;
+  await sql`CREATE INDEX IF NOT EXISTS visits_started_idx ON visits (started_at DESC)`;
+  await sql`
+      CREATE TABLE IF NOT EXISTS search_console_reports (
+        property TEXT NOT NULL,
+        date_from DATE NOT NULL,
+        date_to DATE NOT NULL,
+        search_type TEXT NOT NULL,
+        report JSONB NOT NULL,
+        imported_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+        PRIMARY KEY (property, date_from, date_to, search_type)
+      )`;
+
+  /*
+   * The day's salt.
+   *
+   * In the database rather than in memory because every request may land on
+   * a different serverless instance, and two instances with two salts would
+   * hash the same browser to two visitors. Yesterday's row is deleted, which
+   * is what makes yesterday's hashes permanently unlinkable.
+   */
+  /*
+   * Failed logins, so the panel's one password cannot simply be guessed.
+   *
+   * In the database rather than in memory, and that is the whole point: a
+   * per-instance counter is what app/api/kontakt/route.ts has and it says so
+   * itself — "serverless gives no guarantee that two requests reach the same
+   * instance, so it stops a naive flood rather than a determined one". For a
+   * contact form that is an acceptable trade. For the only lock on the admin
+   * panel it is not: an attacker who opens ten connections gets ten
+   * independent counters and the limit stops existing.
+   */
+  await sql`
+      CREATE TABLE IF NOT EXISTS admin_attempts (
+        ip            TEXT PRIMARY KEY,
+        fails         INTEGER NOT NULL DEFAULT 0,
+        first_fail_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+        locked_until  TIMESTAMPTZ
+      )`;
+
+  await sql`
+      CREATE TABLE IF NOT EXISTS analytics_salt (
+        day  DATE PRIMARY KEY,
+        salt TEXT NOT NULL
+      )`;
+}
+
+/** Store an enquiry. Returns false when there is nowhere to store it. */
+export async function saveEnquiry(
+  enquiry: Omit<
+    Enquiry,
+    | "created_at"
+    | "status"
+    | "replied_at"
+    | "reply_body"
+    | "mail_error"
+    | "internal_note"
+    | "priority"
+    | "follow_up_on"
+  >,
+): Promise<boolean> {
+  if (!sql) return false;
+  try {
+    await ensureSchema();
+    await sql`
+      INSERT INTO enquiries (id, name, company, email, phone, subject, message, page, source)
+      VALUES (${enquiry.id}, ${enquiry.name}, ${enquiry.company}, ${enquiry.email},
+              ${enquiry.phone}, ${enquiry.subject}, ${enquiry.message}, ${enquiry.page},
+              ${enquiry.source})
+      ON CONFLICT (id) DO NOTHING`;
+    return true;
+  } catch (error) {
+    console.error("saveEnquiry failed", error);
+    return false;
+  }
+}
+
+/**
+ * The innermost gate: the read itself refuses to run.
+ *
+ * Middleware stops an unauthenticated request before the router picks a
+ * handler, and every page and endpoint under /admin checks the session again on
+ * the way in. Both of those are places a *caller* has to be — and the whole
+ * reason this file has a gate at all is that the original one was also a place
+ * a caller had to be, app/admin/layout.tsx, and the App Router turned out to
+ * have a way of not being there.
+ *
+ * So the last check sits on the data. A page added next year that forgets
+ * requireAdmin(), a route handler that reads an enquiry to do something useful
+ * with it, a debug endpoint that was only ever going to exist for an afternoon:
+ * none of them can read a name, an address or a message body without a session,
+ * because the query will not run.
+ *
+ * It throws rather than returning empty. An empty inbox is a plausible inbox,
+ * and a gate that answers plausibly is a gate whose failure nobody notices. The
+ * layers above return 404 long before this can be reached in normal use, so a
+ * 500 here means a real mistake and should look like one.
+ *
+ * Checked before the `if (!sql)` line in each function on purpose: without a
+ * database configured the answer must still be "no", or a local build with no
+ * DATABASE_URL would quietly pass a test this is supposed to fail.
+ */
+async function adminOnly(what: string): Promise<void> {
+  if (await adminAuthed()) return;
+  throw new Error(`db: refused to read ${what} without an admin session`);
+}
+
+export async function listEnquiries(status?: EnquiryStatus): Promise<Enquiry[]> {
+  await adminOnly("enquiries");
+  if (!sql) return [];
+  try {
+    await ensureSchema();
+    const rows = status
+      ? await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status = ${status} ORDER BY created_at DESC LIMIT 200`
+      : await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status <> 'archived' ORDER BY created_at DESC LIMIT 200`;
+    return rows as Enquiry[];
+  } catch (error) {
+    console.error("listEnquiries failed", error);
+    return [];
+  }
+}
+
+export async function getEnquiry(id: string): Promise<Enquiry | null> {
+  await adminOnly("an enquiry");
+  if (!sql) return null;
+  try {
+    await ensureSchema();
+    const rows =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE id = ${id}`) as Enquiry[];
+    return rows[0] ?? null;
+  } catch {
+    console.error("getEnquiry failed");
+    // A failed read is not a missing customer message. The admin error
+    // boundary can offer recovery without exposing the database error.
+    throw new Error("Beskedarkivet kunne ikke læses.");
+  }
+}
+
+export async function setEnquiryStatus(id: string, status: EnquiryStatus): Promise<boolean> {
+  await adminOnly("enquiry status changes");
+  if (!sql || !["new", "read", "archived"].includes(status)) return false;
+  try {
+    await ensureSchema();
+    const detail =
+      status === "new"
+        ? "Markeret som ulæst."
+        : status === "read"
+          ? "Markeret som læst."
+          : "Beskeden er arkiveret.";
+    const rows = (await sql`
+      WITH previous AS (SELECT id, status FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET status = ${status} FROM previous p
+        WHERE e.id = p.id AND p.status IS DISTINCT FROM ${status} RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'status', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
+  } catch {
+    console.error("setEnquiryStatus failed");
+    return false;
+  }
+}
+
+export async function recordReply(id: string, body: string): Promise<boolean> {
+  await adminOnly("reply records");
+  if (!sql) return false;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      WITH changed AS (UPDATE enquiries
+        SET status = 'replied', replied_at = now(), reply_body = ${body}
+        WHERE id = ${id} RETURNING id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'reply', 'Et svar er sendt som e-mail.' FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM changed) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
+  } catch {
+    console.error("recordReply failed");
+    return false;
+  }
+}
+
+export async function updateEnquiryNote(id: string, note: string): Promise<boolean> {
+  await adminOnly("internal enquiry notes");
+  if (!sql || note.length > 5000) return false;
+  try {
+    await ensureSchema();
+    const detail = note ? "Den interne note er opdateret." : "Den interne note er fjernet.";
+    const rows = (await sql`
+      WITH previous AS (SELECT id, internal_note FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET internal_note = ${note || null} FROM previous p
+        WHERE e.id = p.id AND p.internal_note IS DISTINCT FROM ${note || null} RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'note', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
+  } catch {
+    console.error("updateEnquiryNote failed");
+    return false;
+  }
+}
+
+export type EnquiryCounts = Record<EnquiryStatus | "all" | "active", number>;
+export type EnquirySearch = {
+  q?: string;
+  status?: EnquiryStatus | "active" | "all";
+  source?: EnquirySource;
+  sort?: "newest" | "oldest";
+  page?: number;
+  pageSize?: number;
+};
+
+/** A bounded page from the entire archive, not a filter over the latest 200 rows. */
+export async function searchEnquiries(options: EnquirySearch = {}): Promise<{
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  counts: EnquiryCounts;
+  available: boolean;
+}> {
+  await adminOnly("the enquiry work queue");
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const counts: EnquiryCounts = { all: 0, active: 0, new: 0, read: 0, replied: 0, archived: 0 };
+  const empty = { items: [], total: 0, page: 1, pageSize, counts, available: false };
+  if (!sql) return empty;
+  // Escape ILIKE's wildcard characters so a customer name containing % or _
+  // means that literal text. Every value is a tagged-template SQL parameter.
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  const status = options.status || "active";
+  const source = options.source || "";
+  const oldest = options.sort === "oldest";
+  try {
+    await ensureSchema();
+    const [totals, grouped] = await Promise.all([
+      sql`SELECT count(*)::int AS n FROM enquiries
+        WHERE (${status} = 'all' OR (${status} = 'active' AND status <> 'archived') OR status = ${status})
+          AND (${source} = '' OR source = ${source})
+          AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})`,
+      sql`SELECT status, count(*)::int AS n FROM enquiries GROUP BY status`,
+    ]);
+    for (const row of grouped as { status: EnquiryStatus; n: number }[]) {
+      if (row.status in counts) counts[row.status] = row.n;
+      counts.all += row.n;
+      if (row.status !== "archived") counts.active += row.n;
+    }
+    const total = Number((totals as { n: number }[])[0]?.n || 0);
+    const requested = Number.isFinite(options.page) ? Math.floor(options.page!) : 1;
+    const page = Math.max(1, Math.min(Math.ceil(total / pageSize) || 1, requested));
+    const items =
+      await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries
+      WHERE (${status} = 'all' OR (${status} = 'active' AND status <> 'archived') OR status = ${status})
+        AND (${source} = '' OR source = ${source})
+        AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})
+      ORDER BY CASE WHEN ${oldest} THEN created_at END ASC,
+               CASE WHEN NOT ${oldest} THEN created_at END DESC, id ASC
+      LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
+    return { items: items as Enquiry[], total, page, pageSize, counts, available: true };
+  } catch {
+    // Query parameters can contain customer details; never include them in logs.
+    console.error("searchEnquiries failed");
+    return empty;
+  }
+}
+
+export type EnquiryEvent = {
+  id: string;
+  enquiry_id: string;
+  kind: "status" | "note" | "follow_up" | "reply";
+  detail: string;
+  created_at: string;
+};
+
+export async function listEnquiryEvents(
+  id: string,
+): Promise<{ items: EnquiryEvent[]; available: boolean }> {
+  await adminOnly("enquiry activity");
+  if (!sql) return { items: [], available: false };
+  try {
+    await ensureSchema();
+    const items = (await sql`SELECT id, enquiry_id, kind, detail, created_at FROM enquiry_events
+      WHERE enquiry_id = ${id} ORDER BY created_at DESC, id DESC LIMIT 20`) as EnquiryEvent[];
+    return { items, available: true };
+  } catch {
+    console.error("listEnquiryEvents failed");
+    return { items: [], available: false };
+  }
+}
+
+export async function updateEnquiryFollowUp(
+  id: string,
+  input: { priority: EnquiryPriority; followUpOn: string | null },
+): Promise<boolean> {
+  await adminOnly("enquiry follow-up changes");
+  if (
+    !sql ||
+    !["normal", "high"].includes(input.priority) ||
+    (input.followUpOn !== null && !followUpDateValid(input.followUpOn))
+  )
+    return false;
+  const date = input.followUpOn;
+  const dateLabel = date
+    ? new Date(`${date}T12:00:00.000Z`).toLocaleDateString("da-DK", {
+        dateStyle: "long",
+        timeZone: "Europe/Copenhagen",
+      })
+    : "ingen dato";
+  const detail = `Prioritet: ${input.priority === "high" ? "høj" : "normal"}. Opfølgning: ${dateLabel}.`;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      WITH previous AS (SELECT id, priority, follow_up_on FROM enquiries WHERE id = ${id} FOR UPDATE),
+      changed AS (UPDATE enquiries e SET priority = ${input.priority}, follow_up_on = ${date}::date FROM previous p
+        WHERE e.id = p.id AND (p.priority IS DISTINCT FROM ${input.priority} OR p.follow_up_on IS DISTINCT FROM ${date}::date) RETURNING e.id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT ${randomUUID()}, id, 'follow_up', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM previous) AS matched,
+             (SELECT count(*)::int FROM logged) AS events`) as { matched: number }[];
+    return Number(rows[0]?.matched) > 0;
+  } catch {
+    console.error("updateEnquiryFollowUp failed");
+    return false;
+  }
+}
+
+export async function bulkSetEnquiryStatus(
+  ids: string[],
+  status: "new" | "read" | "archived",
+): Promise<{ changed: number; available: boolean }> {
+  await adminOnly("bulk enquiry status changes");
+  const valid = bulkEnquiryIds(ids);
+  if (!sql || !valid || !["new", "read", "archived"].includes(status))
+    return { changed: 0, available: false };
+  const eventIds = valid.map(() => randomUUID());
+  const detail =
+    status === "new"
+      ? "Markeret som ulæst ved en samlet handling."
+      : status === "read"
+        ? "Markeret som læst ved en samlet handling."
+        : "Arkiveret ved en samlet handling.";
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      WITH requested AS (SELECT unnest(${valid}::text[]) AS id, unnest(${eventIds}::text[]) AS event_id),
+      previous AS (SELECT e.id, e.status, r.event_id FROM enquiries e JOIN requested r ON e.id = r.id ORDER BY e.id FOR UPDATE OF e),
+      changed AS (UPDATE enquiries e SET status = ${status} FROM previous p
+        WHERE e.id = p.id AND p.status IS DISTINCT FROM ${status} RETURNING e.id, p.event_id),
+      logged AS (INSERT INTO enquiry_events (id, enquiry_id, kind, detail)
+        SELECT event_id, id, 'status', ${detail} FROM changed RETURNING id)
+      SELECT (SELECT count(*)::int FROM changed) AS changed,
+             (SELECT count(*)::int FROM logged) AS events`) as { changed: number }[];
+    return { changed: Number(rows[0]?.changed || 0), available: true };
+  } catch {
+    console.error("bulkSetEnquiryStatus failed");
+    return { changed: 0, available: false };
+  }
+}
+
+export type FollowUpCounts = Record<FollowUpScope | "high", number>;
+export type FollowUpSearch = {
+  scope?: FollowUpScope;
+  q?: string;
+  priority?: "all" | "high";
+  page?: number;
+  pageSize?: number;
+};
+
+export async function searchFollowUps(options: FollowUpSearch = {}): Promise<{
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+  today: string;
+  counts: FollowUpCounts;
+}> {
+  await adminOnly("the follow-up queue");
+  const today = copenhagenToday();
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const counts: FollowUpCounts = {
+    due: 0,
+    overdue: 0,
+    upcoming: 0,
+    unscheduled: 0,
+    all: 0,
+    high: 0,
+  };
+  const empty = {
+    items: [],
+    total: 0,
+    page: 1,
+    pageSize,
+    pages: 1,
+    available: false,
+    today,
+    counts,
+  };
+  if (!sql) return empty;
+  const scope = FOLLOW_UP_SCOPES.includes(options.scope!) ? options.scope! : "due";
+  const priority = options.priority === "high" ? "high" : "all";
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  try {
+    await ensureSchema();
+    const [figures, totals] = await Promise.all([
+      sql`SELECT count(*)::int AS "all", count(*) FILTER (WHERE priority = 'high')::int AS high,
+        count(*) FILTER (WHERE follow_up_on <= ${today}::date)::int AS due,
+        count(*) FILTER (WHERE follow_up_on < ${today}::date)::int AS overdue,
+        count(*) FILTER (WHERE follow_up_on > ${today}::date)::int AS upcoming,
+        count(*) FILTER (WHERE follow_up_on IS NULL)::int AS unscheduled
+        FROM enquiries WHERE status <> 'archived'`,
+      sql`SELECT count(*)::int AS n FROM enquiries WHERE status <> 'archived'
+        AND (${priority} = 'all' OR priority = 'high')
+        AND (${scope} = 'all' OR (${scope} = 'due' AND follow_up_on <= ${today}::date)
+          OR (${scope} = 'overdue' AND follow_up_on < ${today}::date)
+          OR (${scope} = 'upcoming' AND follow_up_on > ${today}::date)
+          OR (${scope} = 'unscheduled' AND follow_up_on IS NULL))
+        AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})`,
+    ]);
+    const total = Number((totals as { n: number }[])[0]?.n || 0);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries WHERE status <> 'archived'
+      AND (${priority} = 'all' OR priority = 'high')
+      AND (${scope} = 'all' OR (${scope} = 'due' AND follow_up_on <= ${today}::date)
+        OR (${scope} = 'overdue' AND follow_up_on < ${today}::date)
+        OR (${scope} = 'upcoming' AND follow_up_on > ${today}::date)
+        OR (${scope} = 'unscheduled' AND follow_up_on IS NULL))
+      AND (${term} = '' OR concat_ws(' ', name, company, email, subject, message) ILIKE ${pattern})
+      ORDER BY enquiries.follow_up_on ASC NULLS LAST, (priority = 'high') DESC, created_at DESC, id ASC
+      LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as Enquiry[];
+    return {
+      items,
+      total,
+      page,
+      pageSize,
+      pages,
+      available: true,
+      today,
+      counts: (figures as FollowUpCounts[])[0] || counts,
+    };
+  } catch {
+    console.error("searchFollowUps failed");
+    return empty;
+  }
+}
+
+export type ContactSummary = {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  enquiryCount: number;
+  pendingCount: number;
+  lastSeen: string;
+};
+
+export async function searchContacts(
+  options: { q?: string; page?: number; pageSize?: number } = {},
+): Promise<{
+  items: ContactSummary[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+}> {
+  await adminOnly("contact summaries");
+  const pageSize = Math.max(1, Math.min(50, Math.floor(options.pageSize || 25)));
+  const empty = { items: [], total: 0, page: 1, pageSize, pages: 1, available: false };
+  if (!sql) return empty;
+  const term = (options.q || "").trim().slice(0, 120);
+  const pattern = `%${term.replace(/[\\%_]/g, "\\$&")}%`;
+  try {
+    await ensureSchema();
+    const totals = (await sql`SELECT count(*)::int AS n FROM (
+      SELECT lower(btrim(email)) FROM enquiries WHERE btrim(email) <> '' GROUP BY lower(btrim(email))
+      HAVING (${term} = '' OR bool_or(concat_ws(' ', name, company, email, phone) ILIKE ${pattern}))
+    ) contacts`) as { n: number }[];
+    const total = Number(totals[0]?.n || 0);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items = (await sql`SELECT
+      (array_agg(id ORDER BY created_at ASC, id ASC))[1] AS id,
+      coalesce(nullif(btrim((array_agg(name ORDER BY (nullif(btrim(name), '') IS NULL), created_at DESC, id DESC))[1]), ''), (array_agg(email ORDER BY created_at DESC, id DESC))[1]) AS name,
+      lower(btrim(email)) AS email,
+      nullif(btrim((array_agg(company ORDER BY (nullif(btrim(company), '') IS NULL), created_at DESC, id DESC))[1]), '') AS company,
+      nullif(btrim((array_agg(phone ORDER BY (nullif(btrim(phone), '') IS NULL), created_at DESC, id DESC))[1]), '') AS phone,
+      count(*)::int AS "enquiryCount", count(*) FILTER (WHERE status IN ('new', 'read'))::int AS "pendingCount",
+      max(created_at) AS "lastSeen"
+      FROM enquiries WHERE btrim(email) <> '' GROUP BY lower(btrim(email))
+      HAVING (${term} = '' OR bool_or(concat_ws(' ', name, company, email, phone) ILIKE ${pattern}))
+      ORDER BY max(created_at) DESC, lower(btrim(email)) ASC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as ContactSummary[];
+    return { items, total, page, pageSize, pages, available: true };
+  } catch {
+    console.error("searchContacts failed");
+    return empty;
+  }
+}
+
+export async function getContact(
+  id: string,
+  options: { page?: number } = {},
+): Promise<{
+  contact: ContactSummary | null;
+  items: Enquiry[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pages: number;
+  available: boolean;
+}> {
+  await adminOnly("a contact's enquiry history");
+  const pageSize = 25;
+  const empty = {
+    contact: null,
+    items: [],
+    total: 0,
+    page: 1,
+    pageSize,
+    pages: 1,
+    available: false,
+  };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const anchor = (await sql`SELECT email FROM enquiries WHERE id = ${id}`) as { email: string }[];
+    const email = anchor[0]?.email.trim().toLowerCase();
+    if (!email) return { ...empty, available: true };
+    const profiles = (await sql`SELECT
+      (array_agg(id ORDER BY created_at ASC, id ASC))[1] AS id,
+      coalesce(nullif(btrim((array_agg(name ORDER BY (nullif(btrim(name), '') IS NULL), created_at DESC, id DESC))[1]), ''), (array_agg(email ORDER BY created_at DESC, id DESC))[1]) AS name,
+      lower(btrim(email)) AS email,
+      nullif(btrim((array_agg(company ORDER BY (nullif(btrim(company), '') IS NULL), created_at DESC, id DESC))[1]), '') AS company,
+      nullif(btrim((array_agg(phone ORDER BY (nullif(btrim(phone), '') IS NULL), created_at DESC, id DESC))[1]), '') AS phone,
+      count(*)::int AS "enquiryCount", count(*) FILTER (WHERE status IN ('new', 'read'))::int AS "pendingCount",
+      max(created_at) AS "lastSeen"
+      FROM enquiries WHERE lower(btrim(email)) = ${email} GROUP BY lower(btrim(email))`) as ContactSummary[];
+    const contact = profiles[0] || null;
+    if (!contact) return { ...empty, available: true };
+    const total = Number(contact.enquiryCount);
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.max(
+      1,
+      Math.min(pages, Number.isFinite(options.page) ? Math.floor(options.page!) : 1),
+    );
+    const items =
+      (await sql`SELECT *, to_char(follow_up_on, 'YYYY-MM-DD') AS follow_up_on FROM enquiries
+      WHERE lower(btrim(email)) = ${email} ORDER BY created_at DESC, id ASC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`) as Enquiry[];
+    return { contact, items, total, page, pageSize, pages, available: true };
+  } catch {
+    console.error("getContact failed");
+    return empty;
+  }
+}
+
+/** Configuration is not connectivity: actually read before claiming DB health. */
+export async function adminDatabaseHealth(): Promise<"missing" | "error" | "ready"> {
+  await adminOnly("database health");
+  if (!sql) return "missing";
+  try {
+    await ensureSchema();
+    await sql`SELECT id FROM enquiries LIMIT 1`;
+    return "ready";
+  } catch {
+    return "error";
+  }
+}
+
+/**
+ * Record that the mail copy of an enquiry did not go out, and why.
+ *
+ * The enquiry itself is already stored by this point — that is the whole
+ * reason the order was changed — so this is not error handling, it is a note
+ * attached to a message that arrived. Without it the panel can say "no mail
+ * was sent" but not "the provider refused it because the sender domain is not
+ * verified", and those need different things done about them.
+ *
+ * The reason comes from the mail provider, so it is trimmed and scrubbed
+ * before it is stored: an API key must never end up in a row that is rendered
+ * back into a page, however unlikely the provider is to echo one.
+ */
+export async function noteMailFailure(id: string, reason: string): Promise<void> {
+  if (!sql) return;
+  try {
+    await ensureSchema();
+    await sql`UPDATE enquiries SET mail_error = ${scrubSecrets(reason).slice(0, 500)} WHERE id = ${id}`;
+  } catch (error) {
+    console.error("noteMailFailure failed", error);
+  }
+}
+
+/** Anything shaped like a Resend key, removed. */
+export function scrubSecrets(text: string): string {
+  return text.replace(/re_[A-Za-z0-9_-]{8,}/g, "re_***");
+}
+
+export async function countNew(): Promise<number> {
+  await adminOnly("the unread count");
+  if (!sql) return 0;
+  try {
+    await ensureSchema();
+    const rows = (await sql`SELECT count(*)::int AS n FROM enquiries WHERE status = 'new'`) as {
+      n: number;
+    }[];
+    return rows[0]?.n ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+/*
+ * The day's salt, shared by every instance.
+ *
+ * INSERT … ON CONFLICT DO UPDATE SET salt = analytics_salt.salt is a no-op
+ * update, and it is written that way on purpose: DO NOTHING returns no row
+ * when the day already exists, which would mean a second round trip to read
+ * the salt that is already there. This returns the stored value whether it was
+ * just created or was already there, in one statement and with no race — two
+ * instances starting at the same moment cannot end up with different salts.
+ */
+let saltCache: { day: string; value: string } | null = null;
+
+async function dailySalt(): Promise<string | null> {
+  if (!sql) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  if (saltCache?.day === today) return saltCache.value;
+
+  const rows = (await sql`
+    INSERT INTO analytics_salt (day, salt) VALUES (CURRENT_DATE, ${randomBytes(32).toString("hex")})
+    ON CONFLICT (day) DO UPDATE SET salt = analytics_salt.salt
+    RETURNING salt`) as { salt: string }[];
+
+  const salt = rows[0]?.salt ?? null;
+  if (salt) saltCache = { day: today, value: salt };
+
+  /* Once a day, per instance: drop the salts that would let an old hash be
+     recomputed from an address. */
+  await sql`DELETE FROM analytics_salt WHERE day < CURRENT_DATE - 1`;
+  return salt;
+}
+
+/** The salt for today, or null when there is no database to keep one in. */
+export async function currentSalt(): Promise<string | null> {
+  if (!sql) return null;
+  try {
+    await ensureSchema();
+    return await dailySalt();
+  } catch (error) {
+    console.error("dailySalt failed", error);
+    return null;
+  }
+}
+
+export type VisitHit = VisitAttribution & {
+  visitor: string;
+  path: string;
+  country: string | null;
+  device: string;
+};
+
+/**
+ * Record a page being read, against the visit it belongs to.
+ *
+ * The refresh rule lives here. A hit on the page the visit is already on
+ * extends the visit and counts nothing: pressing reload, or coming back to
+ * the tab, is not a second reading of the page. A hit on a different path is
+ * a real navigation and counts — including a return to a page seen earlier in
+ * the same visit, which genuinely is being read again.
+ *
+ * No open visit means a new one, and only then are source, country and device
+ * recorded: they describe how somebody arrived, so re-deriving them on every
+ * page they go on to read would overwrite the answer with "Direkte".
+ */
+export async function recordHit(hit: VisitHit): Promise<void> {
+  if (!sql) return;
+  try {
+    await ensureSchema();
+
+    /* The lock is a separate statement in a READ COMMITTED transaction.
+       A second concurrent first hit gets a fresh snapshot after it acquires
+       the lock, so it sees the visit the first hit has just committed. */
+    await sql.transaction(
+      [
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${hit.visitor}, 0))`,
+        sql`
+        WITH open_visit AS MATERIALIZED (
+          SELECT id, last_path FROM visits
+          WHERE visitor = ${hit.visitor} AND last_seen > now() - interval '30 minutes'
+          ORDER BY last_seen DESC LIMIT 1
+        ), changed AS (
+          UPDATE visits SET last_seen = now(), last_path = ${hit.path},
+            hits = hits + CASE WHEN (SELECT last_path FROM open_visit) IS DISTINCT FROM ${hit.path} THEN 1 ELSE 0 END
+          WHERE id = (SELECT id FROM open_visit)
+          RETURNING id
+        ), created AS (
+          INSERT INTO visits (id, visitor, source, entry_path, last_path, country, device,
+            medium, campaign, content, term, referrer_host, attribution_method, channel)
+          SELECT ${randomUUID()}, ${hit.visitor}, ${hit.source}, ${hit.path}, ${hit.path},
+            ${hit.country}, ${hit.device}, ${hit.medium}, ${hit.campaign}, ${hit.content},
+            ${hit.term}, ${hit.referrerHost}, ${hit.method}, ${hit.channel}
+          WHERE NOT EXISTS (SELECT 1 FROM open_visit)
+          RETURNING id
+        )
+        INSERT INTO page_views (day, path, views)
+        SELECT CURRENT_DATE, ${hit.path}, 1
+        WHERE EXISTS (SELECT 1 FROM created)
+           OR EXISTS (SELECT 1 FROM open_visit WHERE last_path IS DISTINCT FROM ${hit.path})
+        ON CONFLICT (day, path) DO UPDATE SET views = page_views.views + 1`,
+      ],
+      { isolationLevel: "ReadCommitted" },
+    );
+  } catch (error) {
+    console.error("recordHit failed", error);
+  }
+}
+
+/**
+ * Still here.
+ *
+ * Sent by the open tab every minute. Without it a visit's length is the gap
+ * between its first and last navigation, so anyone who lands on one page and
+ * reads it for five minutes is recorded as having stayed zero seconds — and
+ * the average time on site measures how fast people click rather than how
+ * long they stay. It never counts a view and never opens a visit: a heartbeat
+ * from a sitting that has already timed out is simply dropped.
+ */
+export async function touchVisit(visitor: string): Promise<void> {
+  if (!sql) return;
+  try {
+    await ensureSchema();
+    await sql`
+      UPDATE visits SET last_seen = now()
+      WHERE visitor = ${visitor} AND last_seen > now() - interval '30 minutes'`;
+  } catch (error) {
+    console.error("touchVisit failed", error);
+  }
+}
+
+export type Breakdown = { name: string; visits: number };
+
+export type ViewStats = {
+  available: boolean;
+  total: number;
+  today: number;
+  last30: number;
+  daily: { day: string; views: number }[];
+  topPages: { path: string; views: number }[];
+};
+
+export type LiveStats = {
+  available: boolean;
+  /** Visits with a signal in the last five minutes. */
+  online: number;
+  /** What each of them is reading, newest first. */
+  reading: {
+    path: string | null;
+    country: string | null;
+    device: string | null;
+    source: string;
+    seconds: number;
+  }[];
+  visitsToday: number;
+  visits30: number;
+  /**
+   * Mean length of the visits that lasted long enough to have a length.
+   *
+   * Five seconds is the floor. Two signals a few milliseconds apart — a load
+   * followed straight away by a click through to the next page — say nothing
+   * about how long anybody stayed, and averaging those zeroes in drags the
+   * figure toward nothing no matter how long the real readers stayed.
+   */
+  avgSeconds: number;
+  /** How many visits that mean is taken over — the rest were single hits. */
+  avgBasis: number;
+  /** Share of visits that read exactly one page. */
+  bouncePct: number | null;
+  sources: Breakdown[];
+  countries: Breakdown[];
+  devices: Breakdown[];
+};
+
+const EMPTY_LIVE: LiveStats = {
+  available: false,
+  online: 0,
+  reading: [],
+  visitsToday: 0,
+  visits30: 0,
+  avgSeconds: 0,
+  avgBasis: 0,
+  bouncePct: null,
+  sources: [],
+  countries: [],
+  devices: [],
+};
+
+/**
+ * Everything the live panel shows, in one round trip.
+ *
+ * Six queries in parallel rather than six awaits in sequence: they are
+ * independent, they all hit the same small table, and a serverless function
+ * billed by the millisecond should not spend five of the six waiting.
+ *
+ * Every breakdown is over the same thirty-day window as the chart, so the
+ * numbers on the page can be compared with each other.
+ */
+export async function liveStats(windowDays = 30): Promise<LiveStats> {
+  await adminOnly("live visitor figures");
+  const days = [7, 30, 90].includes(windowDays) ? windowDays : 30;
+  if (!sql) return EMPTY_LIVE;
+  try {
+    await ensureSchema();
+    const [online, reading, totals, sources, countries, devices] = await Promise.all([
+      sql`SELECT count(*)::int AS n FROM visits WHERE last_seen > now() - interval '5 minutes'`,
+      sql`
+        SELECT last_path AS path, country, device, source,
+               extract(epoch FROM (last_seen - started_at))::int AS seconds
+        FROM visits
+        WHERE last_seen > now() - interval '5 minutes'
+        ORDER BY last_seen DESC LIMIT 25`,
+      sql`
+        SELECT
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now())), 0)::int AS today,
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'), 0)::int AS last30,
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+                                      AND last_seen - started_at >= interval '5 seconds'), 0)::int AS measured,
+          coalesce(avg(extract(epoch FROM (last_seen - started_at)))
+                     FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+                               AND last_seen - started_at >= interval '5 seconds'), 0)::int AS avg_seconds,
+          coalesce(count(*) FILTER (WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+                                      AND hits <= 1), 0)::int AS single
+        FROM visits`,
+      sql`
+        SELECT source AS name, count(*)::int AS visits FROM visits
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+        GROUP BY source ORDER BY visits DESC, name LIMIT 12`,
+      sql`
+        SELECT coalesce(country, '??') AS name, count(*)::int AS visits FROM visits
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+        GROUP BY country ORDER BY visits DESC, name LIMIT 12`,
+      sql`
+        SELECT coalesce(device, 'Ukendt') AS name, count(*)::int AS visits FROM visits
+        WHERE started_at >= date_trunc('day', now()) - (${days} - 1) * interval '1 day'
+        GROUP BY device ORDER BY visits DESC, name`,
+    ]);
+
+    const t = (
+      totals as {
+        today: number;
+        last30: number;
+        measured: number;
+        avg_seconds: number;
+        single: number;
+      }[]
+    )[0];
+
+    return {
+      available: true,
+      online: (online as { n: number }[])[0]?.n ?? 0,
+      reading: reading as LiveStats["reading"],
+      visitsToday: t?.today ?? 0,
+      visits30: t?.last30 ?? 0,
+      avgSeconds: t?.avg_seconds ?? 0,
+      avgBasis: t?.measured ?? 0,
+      /* Undefined rather than 0% when there is nothing to divide by: a bounce
+         rate of zero and no visits at all are not the same statement. */
+      bouncePct: t && t.last30 > 0 ? Math.round((t.single / t.last30) * 100) : null,
+      sources: sources as Breakdown[],
+      countries: countries as Breakdown[],
+      devices: devices as Breakdown[],
+    };
+  } catch (error) {
+    console.error("liveStats failed", error);
+    return EMPTY_LIVE;
+  }
+}
+
+export async function viewStats(windowDays = 30): Promise<ViewStats> {
+  await adminOnly("page-view figures");
+  const days = [7, 30, 90].includes(windowDays) ? windowDays : 30;
+  const empty: ViewStats = {
+    available: false,
+    total: 0,
+    today: 0,
+    last30: 0,
+    daily: [],
+    topPages: [],
+  };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const [totals, daily, top] = await Promise.all([
+      sql`
+        SELECT
+          coalesce(sum(views), 0)::int AS total,
+          coalesce(sum(views) FILTER (WHERE day = CURRENT_DATE), 0)::int AS today,
+          coalesce(sum(views) FILTER (WHERE day >= CURRENT_DATE - (${days} - 1)), 0)::int AS last30
+        FROM page_views`,
+      sql`
+        SELECT to_char(day, 'YYYY-MM-DD') AS day, sum(views)::int AS views
+        FROM page_views
+        WHERE day >= CURRENT_DATE - (${days} - 1)
+        GROUP BY day ORDER BY day`,
+      sql`
+        SELECT path, sum(views)::int AS views
+        FROM page_views
+        WHERE day >= CURRENT_DATE - (${days} - 1)
+        GROUP BY path ORDER BY views DESC LIMIT 12`,
+    ]);
+    const t = (totals as { total: number; today: number; last30: number }[])[0];
+    return {
+      available: true,
+      total: t?.total ?? 0,
+      today: t?.today ?? 0,
+      last30: t?.last30 ?? 0,
+      daily: daily as { day: string; views: number }[],
+      topPages: top as { path: string; views: number }[],
+    };
+  } catch (error) {
+    console.error("viewStats failed", error);
+    return empty;
+  }
+}
+
+/** Session acquisition, with every breakdown using the same filtered base. */
+export async function getAcquisitionStats(filters: AcquisitionFilters): Promise<AcquisitionStats> {
+  await adminOnly("traffic acquisition figures");
+  const days = [7, 30, 90].includes(filters.days) ? filters.days : 30;
+  const source = typeof filters.source === "string" ? filters.source.trim().slice(0, 253) : "";
+  const campaign = typeof filters.campaign === "string" ? filters.campaign.trim().slice(0, 80) : "";
+  const knownChannels = [
+    "search",
+    "social",
+    "paid",
+    "email",
+    "referral",
+    "direct_unknown",
+    "other",
+  ];
+  const channel =
+    typeof filters.channel === "string" && knownChannels.includes(filters.channel)
+      ? filters.channel
+      : "";
+  const today = new Date();
+  const end = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 1),
+  );
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - days);
+  const previousStart = new Date(start);
+  previousStart.setUTCDate(previousStart.getUTCDate() - days);
+  const dayBefore = (date: Date) =>
+    new Date(date.getTime() - 86_400_000).toISOString().slice(0, 10);
+  const startISO = start.toISOString();
+  const endISO = end.toISOString();
+  const previousStartISO = previousStart.toISOString();
+  const empty: AcquisitionStats = {
+    available: false,
+    days,
+    filters: { source, channel, campaign },
+    range: {
+      from: startISO.slice(0, 10),
+      to: dayBefore(end),
+      previousFrom: previousStartISO.slice(0, 10),
+      previousTo: dayBefore(start),
+      timezone: "UTC",
+    },
+    allVisits: 0,
+    totals: { visits: 0, attributed: 0, unknown: 0, tagged: 0, legacy: 0 },
+    previousVisits: 0,
+    daily: [],
+    channels: [],
+    sources: [],
+    otherSourceVisits: 0,
+    campaigns: [],
+    landingPages: [],
+    options: { sources: [], channels: [], campaigns: [] },
+  };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const [totals, daily, channels, sources, campaigns, landingPages, options] = await Promise.all([
+      sql`
+        /* acquisition:totals */
+        SELECT
+          (SELECT count(*)::int FROM visits WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz) AS all_visits,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz)::int AS visits,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND (
+            attribution_method IN ('utm', 'referrer') OR (attribution_method = 'legacy' AND source NOT IN ('', 'Direkte', 'Direkte / ukendt', 'Ukendt'))
+          ))::int AS attributed,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND NOT (
+            attribution_method IN ('utm', 'referrer') OR (attribution_method = 'legacy' AND source NOT IN ('', 'Direkte', 'Direkte / ukendt', 'Ukendt'))
+          ))::int AS unknown,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND attribution_method = 'utm')::int AS tagged,
+          count(*) FILTER (WHERE started_at >= ${startISO}::timestamptz AND attribution_method = 'legacy')::int AS legacy,
+          count(*) FILTER (WHERE started_at < ${startISO}::timestamptz)::int AS previous
+        FROM visits
+        WHERE started_at >= ${previousStartISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})`,
+      sql`
+        /* acquisition:daily */
+        SELECT to_char(started_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY day ORDER BY day`,
+      sql`
+        /* acquisition:channels */
+        SELECT coalesce(channel, 'other') AS channel, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY coalesce(channel, 'other') ORDER BY visits DESC, channel`,
+      sql`
+        /* acquisition:sources */
+        SELECT source, coalesce(channel, 'other') AS channel, medium, count(*)::int AS visits,
+          count(*) FILTER (WHERE attribution_method = 'utm')::int AS tagged,
+          count(*) FILTER (WHERE attribution_method = 'referrer')::int AS referred,
+          count(*) FILTER (WHERE attribution_method = 'legacy')::int AS legacy
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY source, coalesce(channel, 'other'), medium
+        ORDER BY visits DESC, source, channel, medium NULLS FIRST LIMIT 100`,
+      sql`
+        /* acquisition:campaigns */
+        SELECT source, medium, campaign, content, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+          AND campaign IS NOT NULL
+        GROUP BY source, medium, campaign, content
+        ORDER BY visits DESC, campaign, source, medium NULLS FIRST, content NULLS FIRST LIMIT 100`,
+      sql`
+        /* acquisition:landing */
+        SELECT coalesce(entry_path, 'Ukendt') AS path, count(*)::int AS visits
+        FROM visits
+        WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+          AND (${source} = '' OR source = ${source})
+          AND (${channel} = '' OR coalesce(channel, 'other') = ${channel})
+          AND (${campaign} = '' OR campaign = ${campaign})
+        GROUP BY coalesce(entry_path, 'Ukendt') ORDER BY visits DESC, path LIMIT 100`,
+      sql`
+        /* acquisition:options */
+        WITH current_visits AS (
+          SELECT source, coalesce(channel, 'other') AS channel, campaign FROM visits
+          WHERE started_at >= ${startISO}::timestamptz AND started_at < ${endISO}::timestamptz
+        )
+        SELECT 'source' AS kind, source AS value FROM current_visits GROUP BY source
+        UNION ALL SELECT 'channel' AS kind, channel AS value FROM current_visits GROUP BY channel
+        UNION ALL SELECT 'campaign' AS kind, campaign AS value FROM current_visits WHERE campaign IS NOT NULL GROUP BY campaign
+        ORDER BY kind, value`,
+    ]);
+    const t = (
+      totals as {
+        all_visits: number;
+        visits: number;
+        attributed: number;
+        unknown: number;
+        tagged: number;
+        legacy: number;
+        previous: number;
+      }[]
+    )[0];
+    const sourceRows = sources as AcquisitionStats["sources"];
+    const byDay = new Map((daily as AcquisitionStats["daily"]).map((row) => [row.day, row.visits]));
+    const optionRows = options as { kind: string; value: string }[];
+    return {
+      ...empty,
+      available: true,
+      allVisits: t?.all_visits ?? 0,
+      totals: {
+        visits: t?.visits ?? 0,
+        attributed: t?.attributed ?? 0,
+        unknown: t?.unknown ?? 0,
+        tagged: t?.tagged ?? 0,
+        legacy: t?.legacy ?? 0,
+      },
+      previousVisits: t?.previous ?? 0,
+      daily: Array.from({ length: days }, (_, index) => {
+        const day = new Date(start.getTime() + index * 86_400_000).toISOString().slice(0, 10);
+        return { day, visits: byDay.get(day) ?? 0 };
+      }),
+      channels: channels as AcquisitionStats["channels"],
+      sources: sourceRows,
+      otherSourceVisits: Math.max(
+        0,
+        (t?.visits ?? 0) - sourceRows.reduce((sum, row) => sum + row.visits, 0),
+      ),
+      campaigns: campaigns as AcquisitionStats["campaigns"],
+      landingPages: landingPages as AcquisitionStats["landingPages"],
+      options: {
+        sources: optionRows.filter((row) => row.kind === "source").map((row) => row.value),
+        channels: optionRows.filter((row) => row.kind === "channel").map((row) => row.value),
+        campaigns: optionRows.filter((row) => row.kind === "campaign").map((row) => row.value),
+      },
+    };
+  } catch (error) {
+    console.error("getAcquisitionStats failed", error);
+    return empty;
+  }
+}
+
+/** Latest imported aggregate Google report; never visitor/customer records. */
+export async function getSearchConsoleReport(): Promise<StoredSearchConsoleReport> {
+  await adminOnly("Search Console reports");
+  const empty: StoredSearchConsoleReport = { available: false, report: null, importedAt: null };
+  if (!sql) return empty;
+  try {
+    await ensureSchema();
+    const rows = await sql`
+      SELECT report, to_char(imported_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS "importedAt" FROM search_console_reports
+      WHERE property = 'sc-domain:kestro.dk'
+      ORDER BY imported_at DESC, date_to DESC, date_from DESC, search_type LIMIT 1`;
+    const row = (rows as { report: SearchConsoleReport; importedAt: string }[])[0];
+    return { available: true, report: row?.report ?? null, importedAt: row?.importedAt ?? null };
+  } catch (error) {
+    console.error("getSearchConsoleReport failed", error);
+    return empty;
+  }
+}
+
+/** Re-importing a property/period/type replaces one snapshot atomically. */
+export async function saveSearchConsoleReport(report: SearchConsoleReport): Promise<boolean> {
+  await adminOnly("Search Console report imports");
+  if (!sql || report.property !== "sc-domain:kestro.dk" || report.schemaVersion !== 1) return false;
+  try {
+    await ensureSchema();
+    const payload = JSON.stringify(report);
+    await sql`
+      INSERT INTO search_console_reports (property, date_from, date_to, search_type, report)
+      VALUES (${report.property}, ${report.dateFrom}::date, ${report.dateTo}::date, ${report.searchType}, ${payload}::jsonb)
+      ON CONFLICT (property, date_from, date_to, search_type) DO UPDATE
+      SET report = EXCLUDED.report, imported_at = now()`;
+    return true;
+  } catch (error) {
+    console.error("saveSearchConsoleReport failed", error);
+    return false;
+  }
+}
+
+/*
+ * How hard the panel is to guess at.
+ *
+ * Eight wrong passwords from one address inside fifteen minutes locks that
+ * address out for fifteen. The numbers are chosen to be invisible to the one
+ * or two people who use this panel — nobody mistypes a password eight times —
+ * and to make an online guessing attack pointless: eight tries a quarter hour
+ * is under a thousand a day against a password that only has to be longer than
+ * a dictionary word.
+ *
+ * It is a lock on the door, not on the building. Somebody with a botnet has an
+ * address per attempt and this does nothing for that; what stops them is the
+ * password's own length. This stops the attack that actually gets run, which is
+ * one host working through a list.
+ */
+const LOCK_AFTER = 8;
+
+/**
+ * Whether this address is currently locked out.
+ *
+ * False when there is no database. The throttle fails OPEN on purpose: losing
+ * the database must not lock the owner out of their own panel, and the password
+ * is still required either way — an open throttle is a missing speed bump, a
+ * closed one is a missing panel.
+ */
+export async function adminLockedOut(ip: string): Promise<boolean> {
+  if (!sql || !ip) return false;
+  try {
+    await ensureSchema();
+    const rows = (await sql`
+      SELECT locked_until > now() AS locked FROM admin_attempts WHERE ip = ${ip}`) as {
+      locked: boolean | null;
+    }[];
+    return rows[0]?.locked === true;
+  } catch (error) {
+    console.error("adminLockedOut failed", error);
+    return false;
+  }
+}
+
+/** Count a wrong password, and lock the address once there have been enough. */
+export async function noteAdminFailure(ip: string): Promise<void> {
+  if (!sql || !ip) return;
+  try {
+    await ensureSchema();
+    /* One statement: the window is reset by the same insert that counts into
+       it, so two attempts landing together cannot each decide the window had
+       expired and both start from one. */
+    /* The window is written out rather than interpolated: Neon's tagged
+       template parameterises every ${} as a VALUE, and an interval is syntax,
+       not a value. It is a constant in this file either way. */
+    await sql`
+      INSERT INTO admin_attempts (ip, fails, first_fail_at)
+      VALUES (${ip}, 1, now())
+      ON CONFLICT (ip) DO UPDATE SET
+        fails = CASE
+          WHEN admin_attempts.first_fail_at < now() - interval '15 minutes'
+          THEN 1 ELSE admin_attempts.fails + 1 END,
+        first_fail_at = CASE
+          WHEN admin_attempts.first_fail_at < now() - interval '15 minutes'
+          THEN now() ELSE admin_attempts.first_fail_at END,
+        locked_until = CASE
+          WHEN admin_attempts.fails + 1 >= ${LOCK_AFTER}
+          THEN now() + interval '15 minutes' ELSE admin_attempts.locked_until END`;
+  } catch (error) {
+    console.error("noteAdminFailure failed", error);
+  }
+}
+
+/** A correct password clears the slate for that address. */
+export async function clearAdminFailures(ip: string): Promise<void> {
+  if (!sql || !ip) return;
+  try {
+    await ensureSchema();
+    await sql`DELETE FROM admin_attempts WHERE ip = ${ip}`;
+  } catch (error) {
+    console.error("clearAdminFailures failed", error);
+  }
+}

@@ -1,0 +1,134 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="900"
+  viewBox="0 0 1200 900"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="field" x1="600" y1="0" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F5F7" />
+      <stop offset="1" stop-color="#E5E9EE" />
+    </linearGradient>
+    <linearGradient id="side" x1="565" y1="440" x2="835" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#343B44" />
+      <stop offset=".52" stop-color="#252D36" />
+      <stop offset="1" stop-color="#1B222B" />
+    </linearGradient>
+    <linearGradient id="front" x1="350" y1="170" x2="565" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#252C34" />
+      <stop offset="1" stop-color="#101720" />
+    </linearGradient>
+    <linearGradient id="top" x1="390" y1="100" x2="720" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4A525C" />
+      <stop offset="1" stop-color="#313A44" />
+    </linearGradient>
+    <linearGradient id="edge" x1="352" y1="180" x2="561" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7E8791" stop-opacity=".62" />
+      <stop offset=".45" stop-color="#89939E" stop-opacity=".15" />
+      <stop offset="1" stop-color="#111821" />
+    </linearGradient>
+    <pattern id="vents" x="367" y="370" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="9" height="8" rx="1.5" fill="#050A11" />
+      <path d="M2 10H10" stroke="#66717E" stroke-opacity=".22" />
+    </pattern>
+    <filter id="shadow" x="200" y="734" width="785" height="150" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="17" />
+    </filter>
+  </defs>
+  <path fill="url(#field)" d="M0 0H1200V900H0z" />
+  <ellipse
+    cx="600"
+    cy="819"
+    rx="309"
+    ry="31"
+    fill="#273341"
+    fill-opacity=".2"
+    filter="url(#shadow)"
+  />
+  <path
+    d="M560 170L820 90V720L560 800V170Z"
+    fill="url(#side)"
+    stroke="#1B232E"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M350 170L610 90H820L560 170H350Z"
+    fill="url(#top)"
+    stroke="#56616E"
+    stroke-opacity=".45"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <path d="M350 170H560V800H350V170Z" fill="url(#front)" stroke="#18212B" stroke-width="2" />
+  <path d="M355 174H555V794H355V174Z" stroke="url(#edge)" stroke-width="2" />
+  <path
+    d="M568 181L811 106V709L568 784V181Z"
+    stroke="#77818D"
+    stroke-opacity=".18"
+    stroke-width="2"
+  />
+  <path d="M572 189L801 119" stroke="#AAB2BC" stroke-opacity=".16" stroke-width="2" />
+  <path d="M365 199H543V251H365V199Z" fill="#141B24" stroke="#697480" stroke-opacity=".25" />
+  <path d="M373 211H535" stroke="#57616D" stroke-width="2" />
+  <path d="M373 239H535" stroke="#070C13" stroke-width="2" />
+  <circle cx="385" cy="286" r="13" fill="#141A23" stroke="#687482" stroke-width="2" />
+  <path
+    d="M385 277V285M379 280A9 9 0 1 0 391 280"
+    stroke="#B7C1CC"
+    stroke-width="1.7"
+    stroke-linecap="round"
+  />
+  <rect x="415" y="282" width="6" height="3" rx="1.5" fill="#8F9DAA" />
+  <circle cx="438" cy="286" r="5" fill="#03070D" stroke="#788592" stroke-width="1.5" />
+  <rect
+    x="469"
+    y="278"
+    width="27"
+    height="11"
+    rx="1.5"
+    fill="#050B13"
+    stroke="#7A8795"
+    stroke-width="1.2"
+  />
+  <path d="M475 282H490" stroke="#717C89" stroke-width="2" />
+  <rect
+    x="509"
+    y="278"
+    width="27"
+    height="11"
+    rx="1.5"
+    fill="#050B13"
+    stroke="#7A8795"
+    stroke-width="1.2"
+  />
+  <path d="M515 282H530" stroke="#717C89" stroke-width="2" />
+  <rect
+    x="373"
+    y="318"
+    width="28"
+    height="11"
+    rx="5.5"
+    fill="#020710"
+    stroke="#7E8A98"
+    stroke-width="1.5"
+  />
+  <rect
+    x="416"
+    y="318"
+    width="28"
+    height="11"
+    rx="1.5"
+    fill="#05101C"
+    stroke="#7E8A98"
+    stroke-width="1.3"
+  />
+  <path d="M422 322H438" stroke="#6588A1" stroke-width="2.5" />
+  <path d="M468 323H535" stroke="#6B7784" stroke-opacity=".25" stroke-width="2" />
+  <path d="M365 359H545" stroke="#697482" stroke-opacity=".35" stroke-width="2" />
+  <rect x="367" y="374" width="175" height="386" rx="2" fill="url(#vents)" />
+  <path d="M367 770H543" stroke="#73808F" stroke-opacity=".2" />
+  <path d="M355 800H560L820 720V726L560 807H355V800Z" fill="#0D141D" />
+  <path d="M360 175H551" stroke="#C0C8D1" stroke-opacity=".2" />
+</svg>
