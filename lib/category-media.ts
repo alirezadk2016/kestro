@@ -8,19 +8,34 @@ type CategoryMedia = {
   width?: number;
   height?: number;
   mark?: CraftMarkName;
-  credit?: { author: string; source: string; licence: string; licenceUrl: string };
+  /** The source photo cuts the device at this edge; set it flush to the frame
+      there so the cut reads as the frame's crop, not a damaged picture. */
+  bleed?: "right";
+  credit?: { subject: string; author: string; source: string; licence: string; licenceUrl: string };
 };
 
 /** Category references explain a type of equipment, never an available stock unit. */
 export const categoryMedia: Record<string, CategoryMedia> = {
+  /* A 2021 EliteBook 840 G8, screen off, on a white ground. The 2018 T480
+     that stood here showed a Windows 10 start menu, and a buyer reads that
+     as old stock on a page whose own FAQ says Windows 10 support has ended;
+     most of the 59 laptops in the list are generations from 2020 on. */
   "baerbare-computere": {
     kind: "photo",
-    src: "/thinkpad-t480-6.jpg",
-    width: 1179,
-    height: 1115,
+    src: "/models/elitebook/840-g8-reference.webp",
+    width: 1280,
+    height: 1182,
+    bleed: "right",
     alt: {
-      da: "Referencefoto: åben Lenovo ThinkPad T480 som eksempel på en erhvervsbærbar",
-      en: "Reference photo: an open Lenovo ThinkPad T480 as an example of a business laptop",
+      da: "Referencefoto: åben HP EliteBook 840 G8 som eksempel på en erhvervsbærbar",
+      en: "Reference photo: an open HP EliteBook 840 G8 as an example of a business laptop",
+    },
+    credit: {
+      subject: "HP EliteBook 840 G8",
+      author: "Infinatious",
+      source: "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
+      licence: "CC BY-SA 4.0 (resized)",
+      licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
     },
   },
   "stationaere-computere": {
@@ -73,6 +88,7 @@ export const categoryMedia: Record<string, CategoryMedia> = {
       en: "Reference photo: a Dell WD19 USB-C dock viewed from the front as an example of a docking station",
     },
     credit: {
+      subject: "Dell WD19",
       author: "Raimond Spekking",
       source: "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
       licence: "CC BY-SA 4.0 (resized)",
@@ -81,12 +97,28 @@ export const categoryMedia: Record<string, CategoryMedia> = {
   },
 };
 
+/* What tells one card from the next, in words a buyer compares: form factor
+   and size, taken from the models' own specs in lib/models.ts. "Faste
+   arbejdspladser" and "Små skriveborde" did not say why a mini PC is not a
+   desktop, and "Skærme og tilbehør samlet" on the dock card read as monitors. */
 export const categoryApplications: Record<string, Localized> = {
   "baerbare-computere": { da: "Kontor og arbejde på farten", en: "Office and work on the move" },
-  "stationaere-computere": { da: "Faste arbejdspladser", en: "Fixed workstations" },
-  skaerme: { da: "Mere plads til arbejdet", en: "More room for your work" },
-  "mini-pc": { da: "Små skriveborde og reception", en: "Small desks and reception" },
+  "stationaere-computere": {
+    da: "SFF og tower til faste arbejdspladser",
+    en: "SFF and tower PCs for fixed desks",
+  },
+  skaerme: {
+    da: "24-tommers kontorskærme med højdejustering",
+    en: "24-inch office monitors with height adjustment",
+  },
+  "mini-pc": {
+    da: "1-liters pc, der kan sidde bag skærmen",
+    en: "One-litre PCs that can mount behind the monitor",
+  },
   tablets: { da: "Lager, butik og service", en: "Warehouse, retail and service" },
   smartphones: { da: "Telefoner til medarbejdere", en: "Phones for your team" },
-  dockingstationer: { da: "Skærme og tilbehør samlet", en: "Connect your desk equipment" },
+  dockingstationer: {
+    da: "Skærme, net og tastatur i ét stik",
+    en: "Monitors, network and keyboard in one connection",
+  },
 };

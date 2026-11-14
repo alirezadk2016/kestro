@@ -19,7 +19,7 @@ const copy = {
     title: "Brugt IT-udstyr, vi skaffer til virksomheder",
     description: `Vi skaffer brugte bærbare, stationære, mini-pc'er, skærme og docks til virksomheder – ${models.length} modeller at sammenligne. Konfiguration, stand og pris afklares i et skriftligt tilbud.`,
     noStockLine: "Et indkøbsbudget kræver mere end prisen på selve computeren.",
-    noStockLink: "Se budgeteksempler og prisgrundlag",
+    pricesLink: "Se priseksempler",
     noPrices1:
       "Nej. Vi skaffer udstyret til den enkelte ordre. Konfiguration, stand, pris og levering skal afklares i tilbuddet, før I tager stilling.",
     noPrices2:
@@ -41,7 +41,7 @@ const copy = {
     title: "Used business computers we source",
     description: `We source used laptops, desktops, mini PCs, monitors and docks for businesses — ${models.length} models to compare. Configuration, condition and price are settled in a written quote.`,
     noStockLine: "An equipment budget needs more than the price of the computer itself.",
-    noStockLink: "See budget examples and their basis",
+    pricesLink: "See price examples",
     noPrices1:
       "No. We source equipment for the individual order. Configuration, condition, price and delivery need to be clarified in the quote before you decide.",
     noPrices2:
@@ -196,12 +196,31 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             </h1>
             <div className="lg:col-span-6 lg:pt-1">
               <p className="text-base leading-[1.65] text-paper/85 sm:text-lg">{c.description}</p>
+              {/* The two questions a buyer brings before choosing a type — what
+                  does it cost, and what if I don't know what I need — were
+                  answered only below the gallery, in small print. */}
+              <div className="mt-3 flex flex-wrap gap-x-6">
+                <Link
+                  href={localePath("/priser", lang)}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                >
+                  {c.pricesLink}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+                <Link
+                  href={localePath("/tilbud", lang)}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                >
+                  {c.enquiry}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
             </div>
           </div>
 
           <ProductCategoryGallery lang={lang} />
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-y border-white/10 py-3 text-sm">
+          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-white/10 py-3 text-sm">
             <div className="flex flex-wrap items-center gap-x-4">
               <p className="text-paper/75">{c.modelHint}</p>
               <Link
@@ -213,12 +232,6 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>
-            <Link
-              href={localePath("/priser", lang)}
-              className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
-            >
-              {c.noStockLink}
-            </Link>
           </div>
 
           <details id="product-buying-help" className="plate group mt-8">

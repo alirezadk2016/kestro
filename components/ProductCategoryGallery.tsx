@@ -40,7 +40,7 @@ function brandsOf(slug: string, da: boolean) {
 
 export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
   const da = lang === "da";
-  const credit = categoryMedia.dockingstationer.credit!;
+  const credits = Object.values(categoryMedia).flatMap((media) => (media.credit ? [media.credit] : []));
   const shown = categories.filter((category) => !LEFT_OUT.has(category.slug));
 
   return (
@@ -56,8 +56,16 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
         {shown.map((category, index) => {
           const lead = index === 0;
           const models = getModelsForCategory(category.slug).length;
+          /* The category is named "…og tilbehør", but its three models are
+             docks; a card that promises accessories sends a buyer to a page
+             without any. */
           const title =
-            category.slug === "dockingstationer" && da ? "Docks og tilbehør" : category.name[lang];
+            category.slug === "dockingstationer"
+              ? da
+                ? /* A soft hyphen: at 320px the one long word overran its card. */
+                  "Docking\u00ADstationer"
+                : "Docking stations"
+              : category.name[lang];
           return (
             <li
               key={category.slug}
@@ -74,11 +82,14 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   sizes={lead ? "(min-width: 1024px) 48vw, 100vw" : "(min-width: 1024px) 24vw, 46vw"}
                   /* Beside two rows of cards the lead is taller than a 4:3
                      frame; the frame takes the height instead of leaving a
-                     navy gap, and the near-square T480 photo fits it better. */
-                  className={lead ? "lg:aspect-auto lg:min-h-0 lg:flex-1" : ""}
+                     navy gap, and the near-square photo fits it better. */
+                  className={lead ? "lg:aspect-auto lg:min-h-0 lg:flex-1 lg:py-10 lg:pl-10 2xl:py-16 2xl:pl-16" : ""}
                 />
+                {/* On desktop the lead's name comes before its picture: at 1920
+                    the picture alone filled the first screen and a buyer saw a
+                    laptop with no name, count or way on. */}
                 <div
-                  className={`flex flex-col ${lead ? "p-4 sm:p-6 lg:flex-none" : "flex-1 p-3 sm:p-5"}`}
+                  className={`flex flex-col ${lead ? "p-4 sm:p-6 lg:order-first lg:flex-none lg:border-b lg:border-white/10" : "flex-1 p-3 sm:p-5"}`}
                 >
                   <h3
                     className={`font-display font-bold leading-snug text-paper ${lead ? "t-h3" : "text-base sm:text-lg"}`}
@@ -92,6 +103,12 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                         : `${categoryApplications[category.slug].en}. ${count(models, da)} from ${brandsOf(category.slug, da)}.`
                       : categoryApplications[category.slug][lang]}
                   </p>
+                  {!lead && (
+                    /* A business buyer decides by brand first. */
+                    <p className="mt-1 text-xs leading-5 text-paper/65">
+                      {brandsOf(category.slug, da)}
+                    </p>
+                  )}
                   <span
                     className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-brand-300 group-hover:text-paper"
                   >
@@ -119,22 +136,28 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
             {da ? "Fotokredit" : "Photo credit"}
           </summary>
           <div className="max-w-lg pb-3">
-            <p>Dell WD19 · {credit.author}</p>
-            <div className="flex flex-wrap gap-x-4">
-              <a
-                href={credit.source}
-                className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
-              >
-                {da ? "Originalfoto" : "Original photo"}
-              </a>
-              <a
-                href={credit.licenceUrl}
-                rel="license"
-                className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
-              >
-                {credit.licence}
-              </a>
-            </div>
+            {credits.map((credit) => (
+              <div key={credit.source}>
+                <p>
+                  {credit.subject} · {credit.author}
+                </p>
+                <div className="flex flex-wrap gap-x-4">
+                  <a
+                    href={credit.source}
+                    className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
+                  >
+                    {da ? "Originalfoto" : "Original photo"}
+                  </a>
+                  <a
+                    href={credit.licenceUrl}
+                    rel="license"
+                    className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
+                  >
+                    {credit.licence}
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
         </details>
       </div>

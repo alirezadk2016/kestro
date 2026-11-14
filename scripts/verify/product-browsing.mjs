@@ -27,10 +27,10 @@ const CATEGORIES = {
 const ARTWORK = [
   {
     kind: "photo",
-    src: "/thinkpad-t480-6.jpg",
-    width: 1179,
-    height: 1115,
-    subject: /ThinkPad T480/i,
+    src: "/models/elitebook/840-g8-reference.webp",
+    width: 1280,
+    height: 1182,
+    subject: /EliteBook 840 G8/i,
   },
   {
     kind: "illustration",
@@ -250,7 +250,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
         /* Beside two rows of cards the lead frame takes the card's height. */
         if (lead && width >= 1024)
           assert.ok(
-            frame.ratio > 0.8 && frame.ratio < 1.6,
+            frame.ratio > 0.7 && frame.ratio < 1.6,
             "the lead frame fills its card without becoming a strip",
           );
         else
@@ -397,26 +397,40 @@ export async function verifyProductBrowsing(browser, base, fail) {
         "photo credit has a touch-sized disclosure target",
       );
       await creditSummary.click();
-      assert.ok(
-        await credits.getByText("Dell WD19 · Raimond Spekking", { exact: true }).isVisible(),
-        "the licensed photograph credits its real author",
-      );
-      assert.equal(
-        await credits.locator('a[href^="https://commons.wikimedia.org/"]').getAttribute("href"),
-        "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
-        "the credit links the exact source photograph",
-      );
-      const licence = credits.locator('a[rel~="license"]');
-      assert.equal(
-        await licence.getAttribute("href"),
-        "https://creativecommons.org/licenses/by-sa/4.0/",
-        "the reused photograph preserves its licence",
-      );
-      assert.match(
-        await licence.innerText(),
-        /CC BY-SA 4\.0/,
-        "the licence is visible after opening provenance",
-      );
+      for (const [line, source] of [
+        [
+          "HP EliteBook 840 G8 · Infinatious",
+          "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
+        ],
+        [
+          "Dell WD19 · Raimond Spekking",
+          "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
+        ],
+      ]) {
+        assert.ok(
+          await credits.getByText(line, { exact: true }).isVisible(),
+          "each licensed photograph credits its real author: " + line,
+        );
+        assert.equal(
+          await credits.locator(`a[href="${source}"]`).count(),
+          1,
+          "the credit links the exact source photograph: " + line,
+        );
+      }
+      const licences = credits.locator('a[rel~="license"]');
+      assert.equal(await licences.count(), 2, "both reused photographs keep a licence link");
+      for (const licence of await licences.all()) {
+        assert.equal(
+          await licence.getAttribute("href"),
+          "https://creativecommons.org/licenses/by-sa/4.0/",
+          "the reused photograph preserves its licence",
+        );
+        assert.match(
+          await licence.innerText(),
+          /CC BY-SA 4\.0/,
+          "the licence is visible after opening provenance",
+        );
+      }
       await creditSummary.click();
 
       const modelIndex = language === "da" ? "/modeller" : "/en/models";

@@ -40,6 +40,8 @@ photographs or generated product images were introduced.
   `E295CC1EC37497E9DA15DECD8C8CC541EE98128D5AF2970C5E569F1B57B053B0`.
 - Processing: resized to 1280 x 1182 and converted to WebP, alpha preserved.
   No retouching, recolouring, screen replacement or product reconstruction.
+- Also the laptop card on the products hub (`/produkter`) from 2026-11-14,
+  credited there in the "Fotokredit" disclosure beside the Dell WD19.
 - WebP SHA256:
   `6B0F8BB23DF5715C40C7F495BF7A9D4581248AC9BDE7787A0A2848B0FDAA2D5F`.
 - The image has a UK keyboard; it is not the seller's individual unit or an
