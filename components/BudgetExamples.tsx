@@ -8,37 +8,27 @@ import {
   budgetEnquiryPath,
 } from "@/lib/pricing";
 import { pricingMedia } from "@/lib/pricing-media";
-import { formatDate, type Lang } from "@/lib/i18n";
-import { getModel, modelGroups } from "@/lib/models";
-import type { CatalogueEntry } from "@/lib/catalogue-types";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { formatDate, localePath, type Lang } from "@/lib/i18n";
+import { getModel } from "@/lib/models";
 import SourceList from "./SourceList";
 import Container from "./Container";
-import CatalogueExplorer from "./CatalogueExplorer";
 
 export default function BudgetExamples({ lang }: { lang: Lang }) {
   const da = lang === "da";
-  const entries: CatalogueEntry[] = budgetExamples.map((item) => {
+  /* Four dated prices read at other retailers, as a price table: model,
+     configuration, the amount and where it was read. It used to be the
+     product catalogue (search, filters, sorting, "compare" boxes and a big
+     "Spørg om pris" button on every card) with a price on each card, so
+     the prices page looked like a second shop and a buyer could not tell
+     which page sold what. Nothing here is for sale: the one action per row
+     that matters is the source, and asking Kestro is a quiet link. */
+  const rows = budgetExamples.map((item) => {
     const model = getModel(item.model);
     if (!model) throw new Error(`Unknown budget model: ${item.model}`);
-    const media = pricingMedia[item.model];
-    return {
-      id: item.model,
-      name: item.name,
-      brand: model.brand,
-      category: {
-        id: model.group,
-        label: modelGroups.find((group) => group.id === model.group)!.name[lang],
-      },
-      format: media.category[lang],
-      description: "",
-      configuration: item.configuration[lang],
-      facts: [{ label: da ? "Konfiguration" : "Configuration", value: item.configuration[lang] }],
-      detailHref: `${lang === "da" ? "/modeller" : "/en/models"}/${item.model}`,
-      enquiryHref: budgetEnquiryPath(item, lang),
-      image: { ...media, alt: media.alt[lang] },
-      budget: { amount: budgetAmount(item), formatted: formatDkk(budgetAmount(item), lang) },
-      sourceHref: budgetSource(item).url,
-    };
+    return { item, media: pricingMedia[item.model], source: budgetSource(item) };
   });
   return (
     <section
@@ -50,9 +40,9 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
         <div className="grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-12">
           <h2
             id="budget-heading"
-            className="sr-only font-display font-extrabold text-paper sm:not-sr-only sm:t-h2"
+            className="font-display t-h2 font-extrabold text-paper"
           >
-            {da ? "Modeller og budgetter" : "Models and budgets"}
+            {da ? "Priseksempler fra andre forhandlere" : "Price examples from other retailers"}
           </h2>
           <div>
             <p className="text-sm leading-6 text-paper/85">
@@ -69,7 +59,77 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             </p>
           </div>
         </div>
-        <CatalogueExplorer entries={entries} lang={lang} mode="budget" />
+        <div
+          aria-hidden="true"
+          className="mt-8 hidden grid-cols-[minmax(0,1fr)_10rem_minmax(0,15rem)] gap-6 px-4 pb-2 text-xs font-semibold uppercase tracking-wider text-paper/65 md:grid"
+        >
+          <span>{da ? "Model og konfiguration" : "Model and configuration"}</span>
+          <span>{da ? "Pris hos forhandler" : "Retailer price"}</span>
+          <span />
+        </div>
+        <ul className="mt-4 grid gap-3 md:mt-0">
+          {rows.map(({ item, media, source }) => (
+            <li
+              key={item.model}
+              data-budget-model={item.model}
+              className="plate grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4 gap-y-3 p-4 md:grid-cols-[4.5rem_minmax(0,1fr)_10rem_minmax(0,15rem)] md:items-center md:gap-x-6"
+            >
+              <figure className="relative aspect-[4/3] w-[4.5rem] overflow-hidden rounded-md bg-paper-dim">
+                <Image
+                  src={media.src}
+                  width={media.width}
+                  height={media.height}
+                  alt={media.alt[lang]}
+                  sizes="72px"
+                  className="h-full w-full object-contain"
+                />
+              </figure>
+              <div className="min-w-0">
+                <h3 className="font-display text-base font-bold leading-snug text-paper">{item.name}</h3>
+                <p className="mt-0.5 text-sm leading-5 text-paper/75">{item.configuration[lang]}</p>
+                {media.kind === "illustration" && (
+                  <p className="mt-0.5 text-xs leading-4 text-paper/65">Illustration</p>
+                )}
+              </div>
+              <p className="col-span-2 text-base font-semibold tabular-nums text-paper md:col-span-1">
+                <span className="mr-1.5 text-xs font-normal text-paper/65 md:sr-only">
+                  {da ? "Pris hos forhandler:" : "Retailer price:"}
+                </span>
+                {da ? "ca." : "approx."} {formatDkk(budgetAmount(item), lang)}
+              </p>
+              <div className="col-span-2 flex flex-wrap items-center gap-x-5 md:col-span-1 md:justify-end">
+                <a
+                  data-budget-source
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  aria-label={`${da ? "Historisk priskilde" : "Historical price source"}: ${item.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper"
+                >
+                  {da ? "Historisk priskilde" : "Historical price source"}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+                <Link
+                  data-budget-model-link
+                  href={localePath(`/modeller/${item.model}`, lang)}
+                  aria-label={`${da ? "Detaljer" : "Details"}: ${item.name}`}
+                  className="inline-flex min-h-11 items-center text-sm text-paper/85 underline underline-offset-4 hover:text-paper"
+                >
+                  {da ? "Detaljer" : "Details"}
+                </Link>
+                <Link
+                  data-budget-enquiry
+                  href={budgetEnquiryPath(item, lang)}
+                  aria-label={`${da ? "Spørg om pris" : "Enquire"}: ${item.name}`}
+                  className="inline-flex min-h-11 items-center gap-1 text-sm text-paper/85 underline underline-offset-4 hover:text-paper"
+                >
+                  {da ? "Spørg om pris" : "Enquire"}
+                  <ArrowRight size={12} aria-hidden="true" />
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
         <p className="mt-5 text-sm leading-6 text-paper/75">
           {da
             ? "Billederne viser modeltypen. Fotos og illustrationer viser ikke en bestemt vare hos forhandleren; stand og tastatur kan afvige."
