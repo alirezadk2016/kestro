@@ -82,6 +82,9 @@ export default function CatalogueListingItem({
   onCompare,
 }: Props) {
   const da = lang === "da";
+  const nameBreak = entry.name.lastIndexOf(" ");
+  const nameHead = nameBreak > 0 ? entry.name.slice(0, nameBreak) : "";
+  const nameTail = nameBreak > 0 ? entry.name.slice(nameBreak + 1) : entry.name;
   const budget = mode === "budget";
   const grid = view === "grid";
   const enquiry = budget
@@ -148,8 +151,20 @@ export default function CatalogueListingItem({
             href={entry.detailHref}
             className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${budget && grid ? "sm:min-h-14" : ""}`}
           >
-            <span>{entry.name}</span>
-            <ArrowRight size={12} className="shrink-0 text-brand-700" aria-hidden="true" />
+            {/* The arrow travels with the last word: "Lenovo ThinkPad X1 Carbon
+                Gen 10" wraps in a list row, and an arrow centred beside two
+                lines reads as a separate control. */}
+            <span>
+              {nameHead && `${nameHead} `}
+              <span className="whitespace-nowrap">
+                {nameTail}
+                <ArrowRight
+                  size={12}
+                  className="ml-1.5 inline-block align-[0.05em] text-brand-700"
+                  aria-hidden="true"
+                />
+              </span>
+            </span>
           </Link>
         </h3>
         {/* What the picture is. A row without one says nothing here: the

@@ -2,6 +2,7 @@ import type { CatalogueEntry } from "@/lib/catalogue-types";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { modelMedia } from "@/lib/model-media";
 import { catalogueOrder } from "@/lib/model-order";
+import { modelSeries } from "@/lib/model-series";
 import { cardSpecs, modelGroups, type Model } from "@/lib/models";
 import CatalogueExplorer from "./CatalogueExplorer";
 
@@ -58,6 +59,7 @@ export function modelCatalogueEntries(models: readonly Model[], lang: Lang): Cat
       id: model.slug,
       name: model.name,
       brand: model.brand,
+      series: modelSeries(model.name),
       category: {
         id: model.group,
         label:

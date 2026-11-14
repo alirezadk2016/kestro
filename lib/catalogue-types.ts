@@ -3,6 +3,8 @@ export type CatalogueEntry = {
   id: string;
   name: string;
   brand: string;
+  /** The manufacturer's product line (lib/model-series.ts), for the "Serie" facet. */
+  series?: { id: string; label: string };
   category: { id: string; label: string };
   format: string;
   description: string;

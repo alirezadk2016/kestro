@@ -1068,6 +1068,27 @@ export async function verifyCatalogueExplorer(
           );
           await clear();
           assert.deepEqual(await ids(), initialOrder, "clear restores the default display order");
+          if (mode === "laptops") {
+            /* The line facet: X1 is its own line, and the X13 is not in it. */
+            await check("data-catalogue-series", "thinkpad-x1");
+            await results(
+              fixtures
+                .filter((entry) => /ThinkPad X1\b/.test(entry.name))
+                .map((entry) => entry.id),
+              "the ThinkPad X1 line returns every X1 generation and no X13",
+            );
+            sameSet(queryValues("series"), ["thinkpad-x1"], "the line is reflected in the URL");
+            await check("data-catalogue-brand", "Dell");
+            await results([], "a line and a brand it does not belong to combine with AND");
+            await clear();
+            assert.deepEqual(await ids(), initialOrder, "clear also resets the line facet");
+          }
+          if (mode === "models")
+            assert.equal(
+              await root().locator("input[data-catalogue-series]").count(),
+              0,
+              "the whole catalogue has too many lines to list until a type is chosen",
+            );
           for (const query of ["Lenovo T480", "  Lenovo   ThinkPad T480  ", "T480 Lenovo"]) {
             await search.fill(query);
             await results(

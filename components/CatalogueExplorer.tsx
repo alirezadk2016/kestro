@@ -20,6 +20,7 @@ type Sort = "default" | "name-asc" | "name-desc" | "budget-asc" | "budget-desc";
 type State = {
   query: string;
   brands: string[];
+  series: string[];
   types: string[];
   sort: Sort;
   view: "grid" | "list";
@@ -28,6 +29,7 @@ type State = {
 const INITIAL: State = {
   query: "",
   brands: [],
+  series: [],
   types: [],
   sort: "default",
   view: "list",
@@ -87,6 +89,16 @@ export default function CatalogueExplorer({
     [entries],
   );
   const hasFacets = brands.length > 1 || categories.length > 1;
+  /* Product lines, grouped by brand so ThinkPad T sits beside ThinkPad X1. */
+  const allSeries = useMemo(() => {
+    const lines = new Map<string, { id: string; label: string; brand: string }>();
+    for (const entry of entries)
+      if (entry.series) lines.set(entry.series.id, { ...entry.series, brand: entry.brand });
+    const order = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
+    return [...lines.values()].sort(
+      (a, b) => order.compare(a.brand, b.brand) || order.compare(a.label, b.label),
+    );
+  }, [entries]);
 
   useEffect(() => {
     function readLocation() {
@@ -111,6 +123,10 @@ export default function CatalogueExplorer({
       setState({
         query: (url.searchParams.get("q") || "").slice(0, 120),
         brands: list("brand", brands),
+        series: list(
+          "series",
+          allSeries.map((line) => line.id),
+        ),
         types,
         sort: sorts.includes(requestedSort) ? requestedSort : "default",
         view: !budget && url.searchParams.get("view") === "grid" ? "grid" : defaultView,
@@ -131,7 +147,7 @@ export default function CatalogueExplorer({
       window.removeEventListener("popstate", readLocation);
       window.removeEventListener("hashchange", readLocation);
     };
-  }, [entries, categories, brands, budget, defaultView]);
+  }, [entries, categories, brands, allSeries, budget, defaultView]);
 
   useEffect(() => {
     if (!ready) return;
@@ -139,6 +155,7 @@ export default function CatalogueExplorer({
     const values = {
       q: state.query || "",
       brand: state.brands.join(","),
+      series: state.series.join(","),
       type: state.types.join(","),
       sort: state.sort === "default" ? "" : state.sort,
       view: budget || state.view === defaultView ? "" : state.view,
@@ -205,8 +222,29 @@ export default function CatalogueExplorer({
     !state.brands.length || state.brands.includes(entry.brand);
   const typeMatches = (entry: CatalogueEntry) =>
     !state.types.length || state.types.includes(entry.category.id);
+  /* The lines on offer follow the chosen type: all of /modeller has too many
+     to scan, its laptops alone have ten. A line that drops out of view stops
+     filtering, so a hidden checkbox can never empty the results. */
+  const seriesOptions = allSeries.filter((line) =>
+    entries.some((entry) => entry.series?.id === line.id && typeMatches(entry)),
+  );
+  const showSeries = !budget && seriesOptions.length >= 2 && seriesOptions.length <= 12;
+  const activeSeries = showSeries
+    ? state.series.filter((id) => seriesOptions.some((line) => line.id === id))
+    : [];
+  const seriesMatches = (entry: CatalogueEntry) =>
+    !activeSeries.length || (!!entry.series && activeSeries.includes(entry.series.id));
+  const activeSeriesKey = activeSeries.join(",");
+  useEffect(() => {
+    if (!ready) return;
+    setState((previous) => {
+      const kept = activeSeriesKey ? activeSeriesKey.split(",") : [];
+      return previous.series.length === kept.length ? previous : { ...previous, series: kept };
+    });
+  }, [ready, activeSeriesKey, state.series.length]);
   const filtered = entries.filter(
-    (entry) => textMatches(entry) && brandMatches(entry) && typeMatches(entry),
+    (entry) =>
+      textMatches(entry) && brandMatches(entry) && seriesMatches(entry) && typeMatches(entry),
   );
   const collator = new Intl.Collator(da ? "da-DK" : "en-GB", {
     numeric: true,
@@ -230,10 +268,11 @@ export default function CatalogueExplorer({
       selected.flatMap((entry) => (entry.comparisonFacts || entry.facts).map((fact) => fact.label)),
     ),
   ];
-  const active = state.brands.length + state.types.length + (query ? 1 : 0);
+  const active =
+    state.brands.length + activeSeries.length + state.types.length + (query ? 1 : 0);
   const canReset = active > 0 || state.sort !== "default";
   const isList = state.view === "list";
-  const toggle = (key: "brands" | "types" | "compare", value: string) =>
+  const toggle = (key: "brands" | "series" | "types" | "compare", value: string) =>
     setState((previous) => ({
       ...previous,
       [key]: previous[key].includes(value)
@@ -243,7 +282,14 @@ export default function CatalogueExplorer({
           : [...previous[key], value],
     }));
   const clear = () =>
-    setState((previous) => ({ ...previous, query: "", brands: [], types: [], sort: "default" }));
+    setState((previous) => ({
+      ...previous,
+      query: "",
+      brands: [],
+      series: [],
+      types: [],
+      sort: "default",
+    }));
   const removeSelection = (id: string) => {
     const index = state.compare.indexOf(id);
     const remaining = state.compare.filter((value) => value !== id);
@@ -272,13 +318,53 @@ export default function CatalogueExplorer({
             <span className="text-xs tabular-nums text-paper/65">
               {
                 entries.filter(
-                  (entry) => entry.brand === brand && textMatches(entry) && typeMatches(entry),
+                  (entry) =>
+                    entry.brand === brand &&
+                    textMatches(entry) &&
+                    seriesMatches(entry) &&
+                    typeMatches(entry),
                 ).length
               }
             </span>
           </label>
         ))}
       </fieldset>
+      {showSeries && (
+        <fieldset className="mt-4 min-w-0 border-t border-white/10 pt-5">
+          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
+            {da ? "Serie" : "Series"}
+          </legend>
+          <div className="clear-both">
+            {seriesOptions.map((line) => (
+              <label
+                key={line.id}
+                className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
+              >
+                <input
+                  data-catalogue-series={line.id}
+                  type="checkbox"
+                  checked={activeSeries.includes(line.id)}
+                  disabled={!ready}
+                  onChange={() => toggle("series", line.id)}
+                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                />
+                <span className="flex-1 whitespace-nowrap">{line.label}</span>
+                <span className="text-xs tabular-nums text-paper/65">
+                  {
+                    entries.filter(
+                      (entry) =>
+                        entry.series?.id === line.id &&
+                        textMatches(entry) &&
+                        brandMatches(entry) &&
+                        typeMatches(entry),
+                    ).length
+                  }
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
       {categories.length > 1 && (
         <fieldset className={budget ? "min-w-0" : "mt-4 border-t border-white/10 pt-5"}>
           <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
@@ -305,7 +391,8 @@ export default function CatalogueExplorer({
                       (entry) =>
                         entry.category.id === category.id &&
                         textMatches(entry) &&
-                        brandMatches(entry),
+                        brandMatches(entry) &&
+                        seriesMatches(entry),
                     ).length
                   }
                 </span>
@@ -543,6 +630,11 @@ export default function CatalogueExplorer({
               {[
                 ...(query ? [{ key: "query", value: state.query, label: state.query }] : []),
                 ...state.brands.map((value) => ({ key: "brands", value, label: value })),
+                ...activeSeries.map((value) => ({
+                  key: "series",
+                  value,
+                  label: allSeries.find((line) => line.id === value)?.label || value,
+                })),
                 ...state.types.map((value) => ({
                   key: "types",
                   value,
@@ -555,7 +647,7 @@ export default function CatalogueExplorer({
                   onClick={() =>
                     chip.key === "query"
                       ? setState((previous) => ({ ...previous, query: "" }))
-                      : toggle(chip.key as "brands" | "types", chip.value)
+                      : toggle(chip.key as "brands" | "series" | "types", chip.value)
                   }
                   aria-label={`${da ? "Fjern filter" : "Remove filter"}: ${chip.label}`}
                   className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-lg border border-brand-300/40 bg-brand-600/10 px-3 text-sm text-paper"
