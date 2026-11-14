@@ -160,7 +160,22 @@ export function categoryFaqs(category: Category): CategoryFaq[] {
     },
   ];
 
-  if (known.length) {
+  /* Fifty-odd laptop names in one sentence is a list nobody reads, and most of
+     them differ only by "Gen 4" or "Gen 5". Past a dozen, name the series once
+     each and give the count; every generation still has its own page. */
+  const series = [...new Set(known.map((name) => name.replace(/ Gen \d+$/, "")))];
+  if (known.length > 12) {
+    items.push({
+      question: {
+        da: `Hvilke modeller af ${name.da} har I beskrevet?`,
+        en: `Which models of ${name.en} have you described?`,
+      },
+      answer: {
+        da: `Vi har beskrevet ${known.length} i detaljer, fordelt på disse ${series.length} serier: ${list(series, "og")}. Hver generation har sin egen side med typisk konfiguration, hvad den er god til, og hvad man skal være opmærksom på.`,
+        en: `We describe ${known.length} in detail, across these ${series.length} ranges: ${list(series, "and")}. Each generation has its own page with the typical configuration, what it suits and what to watch for.`,
+      },
+    });
+  } else if (known.length) {
     items.push({
       question: {
         da: `Hvilke modeller af ${name.da} har I beskrevet?`,

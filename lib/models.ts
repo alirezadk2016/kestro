@@ -1,4 +1,5 @@
 import type { Lang, Localized } from "./i18n";
+import { CARD_CHIPS_LENOVO_BUSINESS, lenovoBusinessModels } from "./models-lenovo-business";
 
 /**
  * Reference models for comparing business hardware.
@@ -1990,6 +1991,8 @@ export const models: Model[] = [
       },
     ],
   },
+  /* One page per generation of the Lenovo business laptops; see that file. */
+  ...lenovoBusinessModels,
 ];
 
 export function getModel(slug: string): Model | undefined {
@@ -2106,5 +2109,7 @@ const CARD_CHIPS: Record<string, Localized[]> = {
 
 /** The short facts for this model's card, or none where none would help. */
 export function cardSpecs(model: Model, lang: Lang): string[] {
-  return (CARD_CHIPS[model.slug] ?? []).map((chip) => chip[lang]);
+  return (CARD_CHIPS[model.slug] ?? CARD_CHIPS_LENOVO_BUSINESS[model.slug] ?? []).map(
+    (chip) => chip[lang],
+  );
 }

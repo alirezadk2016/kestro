@@ -1,6 +1,8 @@
 # Søgeordskort for kestro.dk
 
-Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 263 i alt, 227 danske, 35 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
+Filer: dette dokument og `docs/seo-keyword-map.csv`. CSV'en har én række per søgeord – 315 i alt, 279 danske, 35 engelske og én norsk/dansk – og for hver række sidens title og om søgeordet står i den. De otte rækker til praktiske vejledninger beskriver denne arbejdsgrens indhold; publicering er endnu ikke bekræftet.
+
+De 50 Lenovo-generationssider (`lib/models-lenovo-business.ts`, 14. nov. 2026) har hver én primær række, »thinkpad <model> gen <n> brugt«. Søgevolumen er ikke målt; rækkerne fastholder, at hver generation er sin egen intention, og at den ældre side for samme serie (fx T14 Gen 1–2) ikke tager nyere generationers søgeord.
 
 Anden udgave. Den første var en plan; denne er gennemført: 122 titles og 111 meta descriptions er skrevet om på de 136 URL'er i sitemap'et, og hver eneste er målt i pixels, sådan som Google klipper dem.
 
