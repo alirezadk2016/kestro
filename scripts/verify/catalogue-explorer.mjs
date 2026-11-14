@@ -1398,7 +1398,7 @@ export async function verifyCatalogueExplorer(
             canonical,
             "a filtered catalogue retains the clean canonical",
           );
-          await results(["lenovo-thinkpad-t14"], "reload restores the URL's filtered state");
+          await results(T14_FAMILY, "reload restores the URL's filtered state");
           if (optionalGrid)
             assert.equal(
               await root().locator("[data-catalogue-view='grid']").getAttribute("aria-pressed"),
@@ -1411,10 +1411,12 @@ export async function verifyCatalogueExplorer(
               null,
               "the default mode does not invent a view parameter",
             );
-          const detail = root().locator("li[data-catalogue-item] a[data-catalogue-detail]").first();
+          const firstCard = root().locator("li[data-catalogue-item]:visible").first();
+          const firstId = await firstCard.getAttribute("data-catalogue-item");
+          const detail = firstCard.locator("a[data-catalogue-detail]");
           await detail.focus();
           await page.keyboard.press("Enter");
-          await page.waitForURL((url) => url.pathname.endsWith("/lenovo-thinkpad-t14"));
+          await page.waitForURL((url) => url.pathname.endsWith(`/${firstId}`));
           assert.equal(
             await page.locator("main h1").count(),
             1,
@@ -1422,7 +1424,7 @@ export async function verifyCatalogueExplorer(
           );
           await page.goBack({ waitUntil: "networkidle" });
           await page.waitForURL(filteredUrl);
-          await results(["lenovo-thinkpad-t14"], "Back restores catalogue filters and view");
+          await results(T14_FAMILY, "Back restores catalogue filters and view");
           const enquiry = root()
             .locator("li[data-catalogue-item] a[data-catalogue-enquiry]")
             .first();
@@ -1444,7 +1446,7 @@ export async function verifyCatalogueExplorer(
             "the enquiry retains the selected model or dated configuration",
           );
           await page.goBack({ waitUntil: "networkidle" });
-          await results(["lenovo-thinkpad-t14"], "Back from enquiry restores catalogue state");
+          await results(T14_FAMILY, "Back from enquiry restores catalogue state");
           await clear();
           if (optionalGrid) {
             assert.equal(
