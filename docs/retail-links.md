@@ -90,6 +90,86 @@ blocked for every model.
 All 18 models have one link, to refurbed. Each search URL is the
 query above, exactly as loaded, and is stored in `lib/retail-links.ts`.
 
+## Lenovo ThinkPad generations, 2026-11-14
+
+The 50 ThinkPad generation pages in `lib/models-lenovo-business.ts` were
+checked against refurbed only. Amazon and Elgiganten were not touched, and
+no images or prices were taken.
+
+**Method.** One script fetched refurbed's own search for each model's `name`,
+spaces as `+` (e.g. `https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14+Gen+4`),
+one request at a time, about two seconds apart. Every request answered 200
+with a normal results page; nothing was blocked, rate-limited or served a
+captcha. Product titles were read from the result cards
+(`<article title="…">`, 16 per page). refurbed writes generations as `G4`,
+not `Gen 4`.
+
+A link was kept only if at least one title was that exact model and
+generation: `T14 G4` counts for T14 Gen 4; `T14 G3`, `T14s G4`, `X13 Yoga G4`
+for X13 Gen 4, or `P16s G2` for P16 Gen 2 do not. A title with no generation
+was not counted. Kept slugs get one refurbed link with `condition: "used"`
+and `checkedOn: "2026-11-14"`; the rest get `[]`, a real check that found
+nothing.
+
+**Result:** 38 kept, 12 not found.
+
+| Slug                             | Result    | What the titles showed                                                                                                                                                               |
+| -------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| lenovo-thinkpad-t14-gen-3        | kept      | Several T14 Gen 3 titles. Also shown: T14s Gen 3, T14 Gen 1, T14                                                                                                                     |
+| lenovo-thinkpad-t14-gen-4        | kept      | Several T14 Gen 4 titles. Also shown: T14, T14s Gen 4, T14 Gen 3, T14 Gen 1, T14 Gen 5, T14 Gen 2                                                                                    |
+| lenovo-thinkpad-t14-gen-5        | kept      | Several T14 Gen 5 titles. Also shown: T14 Gen 3, T14 Gen 4, T14 Gen 1, T14s Gen 5, T14, T14 Gen 2, T14s Gen 2                                                                        |
+| lenovo-thinkpad-t14s-gen-2       | kept      | Several T14s Gen 2 titles. Also shown: T14s Gen 5, T14s Gen 4, T14s Gen 1                                                                                                            |
+| lenovo-thinkpad-t14s-gen-3       | kept      | Several T14s Gen 3 titles. Also shown: T14s Gen 5, T14s Gen 4                                                                                                                        |
+| lenovo-thinkpad-t14s-gen-4       | kept      | Several T14s Gen 4 titles. Also shown: T14s Gen 3, T14s Gen 5, T14s Gen 2, T14s Gen 1                                                                                                |
+| lenovo-thinkpad-t14s-gen-5       | kept      | Several T14s Gen 5 titles. Also shown: T14s Gen 4, T14s Gen 3, T14s Gen 1, T14s Gen 2                                                                                                |
+| lenovo-thinkpad-t16-gen-1        | kept      | Several T16 Gen 1 titles. Also shown: T16 Gen 2                                                                                                                                      |
+| lenovo-thinkpad-t16-gen-2        | kept      | Several T16 Gen 2 titles. Also shown: T16 Gen 1                                                                                                                                      |
+| lenovo-thinkpad-t16-gen-3        | not found | Also shown: T16 Gen 1, T16 Gen 2                                                                                                                                                     |
+| lenovo-thinkpad-x1-carbon-gen-9  | kept      | Several X1 Carbon Gen 9 titles. Also shown: X1 Carbon Gen 10, X1 Carbon Gen 6, X1 Carbon Gen 8, X1 Carbon Gen 11, X1 Carbon Gen 12                                                   |
+| lenovo-thinkpad-x1-carbon-gen-10 | kept      | Several X1 Carbon Gen 10 titles. Also shown: X1 Carbon Gen 7, X1 Carbon Gen 8, X1 Carbon Gen 6, X1 Carbon Gen 9                                                                      |
+| lenovo-thinkpad-x1-carbon-gen-11 | kept      | One X1 Carbon Gen 11 title. Also shown: X1 Carbon Gen 10, X1 Carbon Gen 8, X1 Carbon Gen 6, X1 Carbon Gen 7, X1 Carbon Gen 9                                                         |
+| lenovo-thinkpad-x1-carbon-gen-12 | kept      | One X1 Carbon Gen 12 title. Also shown: X1 Carbon Gen 10, X1 Carbon Gen 6, X1 Carbon Gen 8, X1 Carbon Gen 11, X1 Carbon Gen 9                                                        |
+| lenovo-thinkpad-x1-yoga-gen-6    | kept      | Several X1 Yoga Gen 6 titles. Also shown: X1 Yoga Gen 7, X1 Yoga Gen 5, X1 Yoga Gen 8, X1 Yoga Gen 1 Titanium, X1 Carbon Gen 6, X1 Yoga Gen 4                                        |
+| lenovo-thinkpad-x1-yoga-gen-7    | kept      | Several X1 Yoga Gen 7 titles. Also shown: X1 Yoga Gen 5, X1 Yoga Gen 6, X1 Yoga Gen 1 Titanium, X1 Yoga Gen 8, X1 Yoga Gen 4, X1 Yoga Gen 3, X13 Yoga Gen 3                          |
+| lenovo-thinkpad-x1-yoga-gen-8    | kept      | Several X1 Yoga Gen 8 titles. Also shown: X1 Yoga Gen 6, X1 Yoga Gen 5, X1 Yoga Gen 4, X1 Carbon Gen 8, X13 Yoga Gen 3, X1 Yoga Gen 7, X1 Carbon Gen 9, X1 Yoga Gen 3                |
+| lenovo-thinkpad-x1-2-in-1-gen-9  | not found | Also shown: X1 Yoga Gen 8, X1 Yoga Gen 3, X1 Yoga Gen 4, X1 Carbon Gen 11, X1 Yoga Gen 7, X13 Yoga Gen 3, X1 Carbon Gen 9, X13 Gen 3, X1 Yoga Gen 5, X1 Yoga Gen 6, X1 Carbon Gen 10 |
+| lenovo-thinkpad-x1-nano-gen-1    | kept      | One X1 Nano Gen 1 title. Also shown: X1 Carbon Gen 10, X1 Carbon Gen 6, X1 Carbon Gen 7, X1 Yoga Gen 6, X1 Carbon Gen 8, X1 Carbon Gen 9, X13 Gen 3, X1 Yoga Gen 3                   |
+| lenovo-thinkpad-x1-nano-gen-2    | not found | Also shown: X1 Nano Gen 1, X13 Gen 2, X1 Carbon Gen 9, X1 Carbon Gen 10, X1 Carbon Gen 8, X13 Yoga Gen 2, X1 Carbon Gen 6, X1 Yoga Gen 6, X13 Gen 3                                  |
+| lenovo-thinkpad-x1-nano-gen-3    | not found | Also shown: X1 Nano Gen 1, X13 Gen 3, X1 Yoga Gen 3, X1 Extreme Gen 3, X1 Carbon Gen 10, X1 Carbon Gen 8, X1 Yoga Gen 7, X13 Yoga Gen 3, X1 Carbon Gen 9                             |
+| lenovo-thinkpad-x13-gen-2        | kept      | Several X13 Gen 2 titles. Also shown: X13, X13 Yoga Gen 2, X13 Gen 1, X13 Gen 4, X13 Gen 3                                                                                           |
+| lenovo-thinkpad-x13-gen-3        | kept      | Several X13 Gen 3 titles. Also shown: X13, X13 Yoga Gen 3, X13 Gen 1, X13 Gen 2, X13 Gen 4                                                                                           |
+| lenovo-thinkpad-x13-gen-4        | kept      | Several X13 Gen 4 titles. Also shown: X13, X13 Gen 2, X13 Gen 3, X13 Yoga Gen 4, X13 Gen 1, X13 Yoga Gen 2, X13 Yoga                                                                 |
+| lenovo-thinkpad-x13-gen-5        | not found | Also shown: X13, X13 Gen 4, X13 Gen 2, X13 Gen 1, X13 Gen 3, X13 Yoga Gen 2                                                                                                          |
+| lenovo-thinkpad-x13-yoga-gen-2   | kept      | Several X13 Yoga Gen 2 titles. Also shown: X13 Yoga Gen 1, X13 Yoga, X13 Yoga Gen 3, X13 Yoga Gen 4, X13 Gen 2                                                                       |
+| lenovo-thinkpad-x13-yoga-gen-3   | kept      | Several X13 Yoga Gen 3 titles. Also shown: X13 Yoga Gen 2, X13 Yoga Gen 4, X13 Yoga, X13 Yoga Gen 1, X13, X13 Gen 3                                                                  |
+| lenovo-thinkpad-x13-yoga-gen-4   | kept      | One X13 Yoga Gen 4 title. Also shown: X13 Yoga, X13 Yoga Gen 2, X13 Yoga Gen 1, X13 Yoga Gen 3, X13 Gen 4                                                                            |
+| lenovo-thinkpad-l14-gen-3        | kept      | Several L14 Gen 3 titles. Also shown: L14 Gen 5, L14 Gen 1, L14 Gen 4, L14 Gen 2                                                                                                     |
+| lenovo-thinkpad-l14-gen-4        | kept      | One L14 Gen 4 title. Also shown: L14 Gen 5, L14 Gen 2, L14 Gen 1, L14 Gen 3                                                                                                          |
+| lenovo-thinkpad-l14-gen-5        | kept      | Several L14 Gen 5 titles. Also shown: L14 Gen 4, L14 Gen 1, L14 Gen 2, L14 Gen 3                                                                                                     |
+| lenovo-thinkpad-l13-gen-3        | kept      | One L13 Gen 3 title. Also shown: L13 Gen 4, L13 Gen 2, L13 Yoga Gen 2, L13 2-in-1 Gen 5, L13 Gen 5, L13, L13 Yoga Gen 3, L13 Yoga Gen 1                                              |
+| lenovo-thinkpad-l13-gen-4        | kept      | Several L13 Gen 4 titles. Also shown: L13 Gen 5, L13 Gen 2, L13 Yoga Gen 2, L13 Gen 3, L13, L13 Yoga Gen 4, L13 2-in-1 Gen 5                                                         |
+| lenovo-thinkpad-l16-gen-1        | kept      | One L16 Gen 1 title. Also shown: —                                                                                                                                                   |
+| lenovo-thinkpad-e14-gen-4        | kept      | Several E14 Gen 4 titles. Also shown: E14 Gen 5, E14, E14 Gen 2, E14 Gen 3                                                                                                           |
+| lenovo-thinkpad-e14-gen-5        | kept      | Several E14 Gen 5 titles. Also shown: E14, E14 Gen 4, E14 Gen 3, E14 Gen 2                                                                                                           |
+| lenovo-thinkpad-e14-gen-6        | not found | Also shown: E14 Gen 5, E14, E14 Gen 4, E14 Gen 2, E14 Gen 3                                                                                                                          |
+| lenovo-thinkpad-e16-gen-1        | kept      | Several E16 Gen 1 titles. Also shown: E16 Gen 2, E16 Gen 3                                                                                                                           |
+| lenovo-thinkpad-e16-gen-2        | kept      | Several E16 Gen 2 titles. Also shown: E16 Gen 1, E16 Gen 3                                                                                                                           |
+| lenovo-thinkpad-p14s-gen-3       | not found | Also shown: P14s Gen 2, P14s Gen 1                                                                                                                                                   |
+| lenovo-thinkpad-p14s-gen-4       | not found | Also shown: P14s Gen 2, P14s Gen 1                                                                                                                                                   |
+| lenovo-thinkpad-p14s-gen-5       | not found | Also shown: P14s Gen 1, P14s Gen 2                                                                                                                                                   |
+| lenovo-thinkpad-p16s-gen-1       | kept      | Several P16s Gen 1 titles. Also shown: P16s Gen 2                                                                                                                                    |
+| lenovo-thinkpad-p16s-gen-2       | kept      | Several P16s Gen 2 titles. Also shown: P16s Gen 1                                                                                                                                    |
+| lenovo-thinkpad-p16s-gen-3       | not found | Also shown: P16s Gen 1, P16s Gen 2                                                                                                                                                   |
+| lenovo-thinkpad-p1-gen-5         | kept      | Several P1 Gen 5 titles. Also shown: P1 Gen 4, P1 Gen 6, P1 Gen 3, P16, P1 Gen 2, P16 Gen 2, P17 Gen 1, P16v Gen 1                                                                   |
+| lenovo-thinkpad-p1-gen-6         | kept      | One P1 Gen 6 title. Also shown: P1 Gen 5, P1 Gen 4, P1 Gen 2, P1 Gen 3, P16, P16 Gen 2, P15 Gen 2                                                                                    |
+| lenovo-thinkpad-p1-gen-7         | not found | Also shown: P1 Gen 6, P1 Gen 5, P1 Gen 3, P1 Gen 4, P1 Gen 2, P16, P16 Gen 2, P17 Gen 1, P16v Gen 1, P15v Gen 1                                                                      |
+| lenovo-thinkpad-p16-gen-1        | not found | No title says Gen 1/G1; three say only "P16" with no generation and were not counted. Also shown: P16 Gen 2, P16v Gen 1, P16s Gen 1, P16s Gen 2                                      |
+| lenovo-thinkpad-p16-gen-2        | kept      | One P16 Gen 2 title. Also shown: P16, P16s Gen 2, P16v Gen 1, P16s Gen 1                                                                                                             |
+
+Notes: the X1 Carbon Gen 10 search also listed one card as "X1 Kulstof G10",
+refurbed's Danish rendering of Carbon, counted as the same model. The
+X1 2-in-1 Gen 9 search showed no title named 2-in-1 at all.
+
 ## Re-checking
 
 Listings change. Before the section goes live, and whenever `checkedOn` is

@@ -246,4 +246,472 @@ export const retailLinks: Record<string, RetailLink[]> = {
       checkedOn: "2026-11-12",
     },
   ],
+  "lenovo-thinkpad-t14-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished T14 Gen 3 i flere konfigurationer, på refurbed skrevet G3. T14s Gen 3 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished T14 Gen 3 in several configurations, listed by refurbed as G3. The T14s Gen 3 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished T14 Gen 4 i flere konfigurationer, på refurbed skrevet G4. T14s Gen 4 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished T14 Gen 4 in several configurations, listed by refurbed as G4. The T14s Gen 4 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14-gen-5": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14+Gen+5",
+      condition: "used",
+      note: {
+        da: "Refurbished T14 Gen 5 i flere konfigurationer, på refurbed skrevet G5. T14s Gen 5 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished T14 Gen 5 in several configurations, listed by refurbed as G5. The T14s Gen 5 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14s-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14s+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished T14s Gen 2 i flere konfigurationer, på refurbed skrevet G2. Søgningen viser også andre generationer af T14s",
+        en: "Refurbished T14s Gen 2 in several configurations, listed by refurbed as G2. The search also shows other T14s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14s-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14s+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished T14s Gen 3 i flere konfigurationer, på refurbed skrevet G3. Søgningen viser også andre generationer af T14s",
+        en: "Refurbished T14s Gen 3 in several configurations, listed by refurbed as G3. The search also shows other T14s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14s-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14s+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished T14s Gen 4 i flere konfigurationer, på refurbed skrevet G4. Søgningen viser også andre generationer af T14s",
+        en: "Refurbished T14s Gen 4 in several configurations, listed by refurbed as G4. The search also shows other T14s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t14s-gen-5": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T14s+Gen+5",
+      condition: "used",
+      note: {
+        da: "Refurbished T14s Gen 5 i flere konfigurationer, på refurbed skrevet G5. Søgningen viser også andre generationer af T14s",
+        en: "Refurbished T14s Gen 5 in several configurations, listed by refurbed as G5. The search also shows other T14s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t16-gen-1": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T16+Gen+1",
+      condition: "used",
+      note: {
+        da: "Refurbished T16 Gen 1 i flere konfigurationer, på refurbed skrevet G1. Søgningen viser også andre generationer af T16",
+        en: "Refurbished T16 Gen 1 in several configurations, listed by refurbed as G1. The search also shows other T16 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t16-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+T16+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished T16 Gen 2 i flere konfigurationer, på refurbed skrevet G2. Søgningen viser også andre generationer af T16",
+        en: "Refurbished T16 Gen 2 in several configurations, listed by refurbed as G2. The search also shows other T16 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-t16-gen-3": [],
+  "lenovo-thinkpad-x1-carbon-gen-9": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Carbon+Gen+9",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Carbon Gen 9 i flere konfigurationer, på refurbed skrevet G9. Søgningen viser også andre generationer af X1 Carbon",
+        en: "Refurbished X1 Carbon Gen 9 in several configurations, listed by refurbed as G9. The search also shows other X1 Carbon generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-carbon-gen-10": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Carbon+Gen+10",
+      condition: "used",
+      note: {
+        da: 'Refurbished X1 Carbon Gen 10 i flere konfigurationer, på refurbed skrevet G10 – enkelte titler skriver "Kulstof" for Carbon. Søgningen viser også andre generationer af X1 Carbon',
+        en: 'Refurbished X1 Carbon Gen 10 in several configurations, listed by refurbed as G10 — some titles say "Kulstof", Danish for Carbon. The search also shows other X1 Carbon generations',
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-carbon-gen-11": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Carbon+Gen+11",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Carbon Gen 11, på refurbed skrevet G11. Søgningen viser også andre generationer af X1 Carbon",
+        en: "Refurbished X1 Carbon Gen 11, listed by refurbed as G11. The search also shows other X1 Carbon generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-carbon-gen-12": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Carbon+Gen+12",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Carbon Gen 12, på refurbed skrevet G12. Søgningen viser også andre generationer af X1 Carbon",
+        en: "Refurbished X1 Carbon Gen 12, listed by refurbed as G12. The search also shows other X1 Carbon generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-yoga-gen-6": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Yoga+Gen+6",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Yoga Gen 6 i flere konfigurationer, på refurbed skrevet G6. X1 Carbon Gen 6 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X1 Yoga Gen 6 in several configurations, listed by refurbed as G6. The X1 Carbon Gen 6 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-yoga-gen-7": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Yoga+Gen+7",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Yoga Gen 7 i flere konfigurationer, på refurbed skrevet G7. Søgningen viser også andre generationer af X1 Yoga",
+        en: "Refurbished X1 Yoga Gen 7 in several configurations, listed by refurbed as G7. The search also shows other X1 Yoga generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-yoga-gen-8": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Yoga+Gen+8",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Yoga Gen 8 i flere konfigurationer, på refurbed skrevet G8. X1 Carbon Gen 8 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X1 Yoga Gen 8 in several configurations, listed by refurbed as G8. The X1 Carbon Gen 8 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-2-in-1-gen-9": [],
+  "lenovo-thinkpad-x1-nano-gen-1": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X1+Nano+Gen+1",
+      condition: "used",
+      note: {
+        da: "Refurbished X1 Nano Gen 1, på refurbed skrevet G1",
+        en: "Refurbished X1 Nano Gen 1, listed by refurbed as G1",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x1-nano-gen-2": [],
+  "lenovo-thinkpad-x1-nano-gen-3": [],
+  "lenovo-thinkpad-x13-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Gen 2 i flere konfigurationer, på refurbed skrevet G2. X13 Yoga Gen 2 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Gen 2 in several configurations, listed by refurbed as G2. The X13 Yoga Gen 2 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x13-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Gen 3 i flere konfigurationer, på refurbed skrevet G3. X13 Yoga Gen 3 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Gen 3 in several configurations, listed by refurbed as G3. The X13 Yoga Gen 3 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x13-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Gen 4 i flere konfigurationer, på refurbed skrevet G4. X13 Yoga Gen 4 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Gen 4 in several configurations, listed by refurbed as G4. The X13 Yoga Gen 4 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x13-gen-5": [],
+  "lenovo-thinkpad-x13-yoga-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Yoga+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Yoga Gen 2 i flere konfigurationer, på refurbed skrevet G2. X13 Gen 2 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Yoga Gen 2 in several configurations, listed by refurbed as G2. The X13 Gen 2 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x13-yoga-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Yoga+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Yoga Gen 3 i flere konfigurationer, på refurbed skrevet G3. X13 Gen 3 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Yoga Gen 3 in several configurations, listed by refurbed as G3. The X13 Gen 3 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-x13-yoga-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+X13+Yoga+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished X13 Yoga Gen 4, på refurbed skrevet G4. X13 Gen 4 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished X13 Yoga Gen 4, listed by refurbed as G4. The X13 Gen 4 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l14-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L14+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished L14 Gen 3 i flere konfigurationer, på refurbed skrevet G3. Søgningen viser også andre generationer af L14",
+        en: "Refurbished L14 Gen 3 in several configurations, listed by refurbed as G3. The search also shows other L14 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l14-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L14+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished L14 Gen 4, på refurbed skrevet G4. Søgningen viser også andre generationer af L14",
+        en: "Refurbished L14 Gen 4, listed by refurbed as G4. The search also shows other L14 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l14-gen-5": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L14+Gen+5",
+      condition: "used",
+      note: {
+        da: "Refurbished L14 Gen 5 i flere konfigurationer, på refurbed skrevet G5. Søgningen viser også andre generationer af L14",
+        en: "Refurbished L14 Gen 5 in several configurations, listed by refurbed as G5. The search also shows other L14 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l13-gen-3": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L13+Gen+3",
+      condition: "used",
+      note: {
+        da: "Refurbished L13 Gen 3, på refurbed skrevet G3. L13 Yoga Gen 3 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished L13 Gen 3, listed by refurbed as G3. The L13 Yoga Gen 3 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l13-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L13+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished L13 Gen 4 i flere konfigurationer, på refurbed skrevet G4. L13 Yoga Gen 4 i samme søgning er en anden model, og der vises også andre generationer",
+        en: "Refurbished L13 Gen 4 in several configurations, listed by refurbed as G4. The L13 Yoga Gen 4 in the same search is a different model, and other generations are shown too",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-l16-gen-1": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+L16+Gen+1",
+      condition: "used",
+      note: {
+        da: "Refurbished L16 Gen 1, på refurbed skrevet G1",
+        en: "Refurbished L16 Gen 1, listed by refurbed as G1",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-e14-gen-4": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+E14+Gen+4",
+      condition: "used",
+      note: {
+        da: "Refurbished E14 Gen 4 i flere konfigurationer, på refurbed skrevet G4. Søgningen viser også andre generationer af E14",
+        en: "Refurbished E14 Gen 4 in several configurations, listed by refurbed as G4. The search also shows other E14 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-e14-gen-5": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+E14+Gen+5",
+      condition: "used",
+      note: {
+        da: "Refurbished E14 Gen 5 i flere konfigurationer, på refurbed skrevet G5. Søgningen viser også andre generationer af E14",
+        en: "Refurbished E14 Gen 5 in several configurations, listed by refurbed as G5. The search also shows other E14 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-e14-gen-6": [],
+  "lenovo-thinkpad-e16-gen-1": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+E16+Gen+1",
+      condition: "used",
+      note: {
+        da: "Refurbished E16 Gen 1 i flere konfigurationer, på refurbed skrevet G1. Søgningen viser også andre generationer af E16",
+        en: "Refurbished E16 Gen 1 in several configurations, listed by refurbed as G1. The search also shows other E16 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-e16-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+E16+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished E16 Gen 2 i flere konfigurationer, på refurbed skrevet G2. Søgningen viser også andre generationer af E16",
+        en: "Refurbished E16 Gen 2 in several configurations, listed by refurbed as G2. The search also shows other E16 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-p14s-gen-3": [],
+  "lenovo-thinkpad-p14s-gen-4": [],
+  "lenovo-thinkpad-p14s-gen-5": [],
+  "lenovo-thinkpad-p16s-gen-1": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+P16s+Gen+1",
+      condition: "used",
+      note: {
+        da: "Refurbished P16s Gen 1 i flere konfigurationer, på refurbed skrevet G1. Søgningen viser også andre generationer af P16s",
+        en: "Refurbished P16s Gen 1 in several configurations, listed by refurbed as G1. The search also shows other P16s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-p16s-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+P16s+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished P16s Gen 2 i flere konfigurationer, på refurbed skrevet G2. Søgningen viser også andre generationer af P16s",
+        en: "Refurbished P16s Gen 2 in several configurations, listed by refurbed as G2. The search also shows other P16s generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-p16s-gen-3": [],
+  "lenovo-thinkpad-p1-gen-5": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+P1+Gen+5",
+      condition: "used",
+      note: {
+        da: "Refurbished P1 Gen 5 i flere konfigurationer, på refurbed skrevet G5. Søgningen viser også andre generationer af P1",
+        en: "Refurbished P1 Gen 5 in several configurations, listed by refurbed as G5. The search also shows other P1 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-p1-gen-6": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+P1+Gen+6",
+      condition: "used",
+      note: {
+        da: "Refurbished P1 Gen 6, på refurbed skrevet G6. Søgningen viser også andre generationer af P1",
+        en: "Refurbished P1 Gen 6, listed by refurbed as G6. The search also shows other P1 generations",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
+  "lenovo-thinkpad-p1-gen-7": [],
+  "lenovo-thinkpad-p16-gen-1": [],
+  "lenovo-thinkpad-p16-gen-2": [
+    {
+      retailer: "refurbed",
+      url: "https://www.refurbed.dk/search/?query=Lenovo+ThinkPad+P16+Gen+2",
+      condition: "used",
+      note: {
+        da: "Refurbished P16 Gen 2, på refurbed skrevet G2. P16s Gen 2 i samme søgning er en anden model",
+        en: "Refurbished P16 Gen 2, listed by refurbed as G2. The P16s Gen 2 in the same search is a different model",
+      },
+      checkedOn: "2026-11-14",
+    },
+  ],
 };
