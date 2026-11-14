@@ -36,6 +36,17 @@ import { join, dirname } from "node:path";
 const ROOT = process.cwd();
 const APP = join(ROOT, "app", "[lang]");
 
+/* The warning above was not enough: a session working in a 50-commit clone ran
+   this, and 39 routes, the front page among them, were republished as written
+   on the clone's oldest day (4b96555, repaired in 6d4dda2). Refuse instead. */
+if (execFileSync("git", ["rev-parse", "--is-shallow-repository"], { cwd: ROOT }).toString().trim() === "true") {
+  console.error(
+    "page-dates: this clone is shallow, so every route older than its history would get the same date.\n" +
+      "Run `git fetch --unshallow` first, then run this again.",
+  );
+  process.exit(1);
+}
+
 /*
  * Commits that changed how a page looks and not what it says.
  *
