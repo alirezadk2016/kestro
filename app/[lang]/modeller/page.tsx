@@ -14,8 +14,10 @@ import ModelCatalogue from "@/components/ModelCatalogue";
 const copy = {
   da: {
     metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
-    metaDescription:
-      "18 brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.",
+    /* The count comes from the list. It was written as "18" and stayed 18
+       after the 50 ThinkPad generations arrived. Measured with mak at 68:
+       146 ch / 905 px; a third digit would need measuring again. */
+    metaDescription: `${models.length} brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.`,
     title: "Brugte erhvervsmodeller: ThinkPad, EliteBook, Latitude og OptiPlex",
     /* Answer first, with the counts the page actually shows. */
     description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konfiguration bekræftet.`,
@@ -31,8 +33,7 @@ const copy = {
   },
   en: {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
-    metaDescription:
-      "See 18 refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.",
+    metaDescription: `See ${models.length} refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.`,
     title: "Used business models: ThinkPad, EliteBook, Latitude and OptiPlex",
     description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and configuration.`,
     noStockLine:

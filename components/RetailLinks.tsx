@@ -25,8 +25,11 @@ const copy = {
     title: "Har I brug for den nu?",
     lead: (name: string, stores: string) =>
       `Vi har ikke ${name} på lager endnu. Indtil vi har, kan I finde den hos ${stores} og selv sammenligne pris og stand.`,
+    /* Every empty check so far is a refurbed search (docs/retail-links.md,
+       2026-11-14). "Ingen af de butikker" claimed more shops than were
+       searched; name the one that was, and change this if another is added. */
     leadNone: (name: string) =>
-      `Vi har ikke ${name} på lager endnu, og ingen af de butikker, vi har tjekket, viste netop den model, da vi så efter.`,
+      `Vi har ikke ${name} på lager endnu, og refurbed viste ikke netop den model, da vi søgte efter den.`,
     source: "Skal den hellere komme fra os, klargjort og med nordisk tastatur?",
     sourceLink: "Bed os skaffe den",
     search: (name: string, retailer: string) => `Søg efter ${name} hos ${retailer}`,
@@ -41,7 +44,7 @@ const copy = {
     lead: (name: string, stores: string) =>
       `We don't have the ${name} in stock yet. Until we do, you can find it at ${stores} and compare price and condition yourself.`,
     leadNone: (name: string) =>
-      `We don't have the ${name} in stock yet, and none of the retailers we checked showed that exact model when we looked.`,
+      `We don't have the ${name} in stock yet, and refurbed did not show that exact model when we searched for it.`,
     source: "Would you rather it came from us, prepared and with a Nordic keyboard?",
     sourceLink: "Ask us to source it",
     search: (name: string, retailer: string) => `Search for the ${name} at ${retailer}`,

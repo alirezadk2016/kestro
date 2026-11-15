@@ -2,7 +2,7 @@
 
 Checked on **2026-11-12**. Data: `lib/retail-links.ts`. No model page imports it yet.
 
-Kestro stocks none of the 18 models in `lib/models.ts`. Each model page will get
+Kestro stocks none of the models in `lib/models.ts` (18 at first, 68 since the ThinkPad generations). Each model page will get
 a section that points the buyer to retailers who carry the model. This file
 records how those links were checked.
 
