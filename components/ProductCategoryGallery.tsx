@@ -74,9 +74,14 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                  below holds the other four without a hole. */
               className={`min-w-0 ${index === 0 ? "col-span-2 sm:col-span-1" : ""}`}
             >
+              {/* One white sheet, the surface of the model rows a buyer meets
+                  on the next page, with the picture inset in it. The picture
+                  sat on a pale well over a navy text panel, and the seam
+                  between them made every card read as two parts. Radii are
+                  concentric: 12px sheet, 6px padding, 6px well. */}
               <Link
                 href={localePath(`/produkter/${category.slug}`, lang)}
-                className="plate plate-edge plate-lift group flex h-full flex-col overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                className="sheet group flex h-full flex-col p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
               >
                 <CategoryArtwork
                   slug={category.slug}
@@ -87,21 +92,24 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                       ? "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw"
                       : "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 46vw"
                   }
+                  className="rounded-md"
                 />
-                <div className="flex flex-1 flex-col p-3 sm:p-4">
-                  <h3 className="font-display text-base font-bold leading-snug text-paper">
+                <div className="flex flex-1 flex-col px-2.5 pb-3 pt-3 sm:px-3.5 sm:pb-4">
+                  <h3 className="text-balance font-display text-base font-bold leading-snug text-ink-900">
                     {title}
                   </h3>
-                  <p className="mt-1 text-sm leading-5 text-paper/75">
+                  <p className="mt-1 text-pretty text-sm leading-5 text-ink-700">
                     {categoryApplications[category.slug][lang]}
                   </p>
                   {/* A business buyer decides by brand first. */}
-                  <p className="mt-1 text-xs leading-5 text-paper/65">
-                    {brandsOf(category.slug, da)}
-                  </p>
-                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-semibold text-brand-300 group-hover:text-paper">
-                    {count(models, da)}
-                    <ArrowRight size={14} aria-hidden="true" />
+                  <p className="mt-1.5 text-xs leading-5 text-ink-600">{brandsOf(category.slug, da)}</p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-600">
+                    <span className="tabular-nums">{count(models, da)}</span>
+                    <ArrowRight
+                      size={14}
+                      aria-hidden="true"
+                      className="transition-transform duration-150 ease-out group-hover:translate-x-0.5 motion-reduce:transition-none"
+                    />
                   </span>
                 </div>
               </Link>

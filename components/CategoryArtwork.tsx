@@ -21,7 +21,7 @@ export default function CategoryArtwork({
   return (
     <div
       data-category-artwork={media.kind}
-      className={`relative flex aspect-[4/3] flex-none items-center justify-center overflow-hidden bg-paper-dim ${className}`}
+      className={`product-well relative flex aspect-[4/3] flex-none items-center justify-center overflow-hidden ${className}`}
     >
       {media.src ? (
         <Image
@@ -32,8 +32,14 @@ export default function CategoryArtwork({
           sizes={sizes}
           priority={priority}
           /* A photo's white studio ground multiplies into the same pale well
-             the drawings stand on, so a photo is not a white card on grey. */
-          className={`h-full w-full object-contain ${media.bleed === "right" ? "object-right py-3 pl-3 sm:py-4 sm:pl-4" : media.kind === "photo" ? "p-3 sm:p-4" : ""} ${media.kind === "photo" ? "mix-blend-multiply" : ""}`}
+             the drawings stand on. The drawings carry their own margin inside
+             the SVG; a photo is cut close to the device, so it gets the same
+             margin here, or a laptop and a dock fill their frames edge to
+             edge while the monitor beside them stands back. */
+          /* brightness lifts a studio ground of 252–254 to pure white first,
+             so the multiply leaves no faint rectangle around the device. */
+          className={`h-full w-full object-contain ${media.kind === "photo" ? "mix-blend-multiply brightness-[1.025]" : ""}`}
+          style={media.kind === "photo" ? { padding: `${media.pad ?? 9}%` } : undefined}
         />
       ) : (
         <div role="img" aria-label={media.alt[lang]}>

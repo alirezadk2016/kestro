@@ -1270,6 +1270,19 @@ body {
       0 12px 28px -14px rgb(11 20 38 / 0.28);
   }
 
+  /*
+   * The floor a product picture stands on inside a sheet: the product
+   * drawings' own ground (#F4F5F7 to #E5E9EE, the field in the SVGs under
+   * public/pricing and public/products), so a photo multiplied into it and a
+   * drawing share one floor instead of one white and one grey. The hairline
+   * is pure black at 10%, so it reads as an edge, not as dirt.
+   */
+  .product-well {
+    background-image: linear-gradient(180deg, #f4f5f7 0%, #e5e9ee 100%);
+    outline: 1px solid rgb(0 0 0 / 0.1);
+    outline-offset: -1px;
+  }
+
   .plate {
     /* 12px, the radius of every ForgedPanel and the mark tiles. The plate
        was square while the cards around it were rounded, and next to each

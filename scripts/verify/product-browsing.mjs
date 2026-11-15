@@ -27,10 +27,10 @@ const CATEGORIES = {
 const ARTWORK = [
   {
     kind: "photo",
-    src: "/models/elitebook/840-g8-reference.webp",
-    width: 1280,
-    height: 1182,
-    subject: /EliteBook 840 G8/i,
+    src: "/thinkpad-t480-6.jpg",
+    width: 1179,
+    height: 1115,
+    subject: /ThinkPad T480/i,
   },
   {
     kind: "illustration",
@@ -391,10 +391,6 @@ export async function verifyProductBrowsing(browser, base, fail) {
       await creditSummary.click();
       for (const [line, source] of [
         [
-          "HP EliteBook 840 G8 · Infinatious",
-          "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
-        ],
-        [
           "Dell WD19 · Raimond Spekking",
           "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
         ],
@@ -410,7 +406,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
         );
       }
       const licences = credits.locator('a[rel~="license"]');
-      assert.equal(await licences.count(), 2, "both reused photographs keep a licence link");
+      assert.equal(await licences.count(), 1, "the reused photograph keeps its licence link");
       for (const licence of await licences.all()) {
         assert.equal(
           await licence.getAttribute("href"),

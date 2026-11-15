@@ -8,34 +8,28 @@ type CategoryMedia = {
   width?: number;
   height?: number;
   mark?: CraftMarkName;
-  /** The source photo cuts the device at this edge; set it flush to the frame
-      there so the cut reads as the frame's crop, not a damaged picture. */
-  bleed?: "right";
+  /** A photo's margin inside its well, in % of the well's width (default 9).
+      A photo that already carries a wide studio margin needs less, or its
+      device looks a size smaller than the drawings beside it. */
+  pad?: number;
   credit?: { subject: string; author: string; source: string; licence: string; licenceUrl: string };
 };
 
 /** Category references explain a type of equipment, never an available stock unit. */
 export const categoryMedia: Record<string, CategoryMedia> = {
-  /* A 2021 EliteBook 840 G8, screen off, on a white ground. The 2018 T480
-     that stood here showed a Windows 10 start menu, and a buyer reads that
-     as old stock on a page whose own FAQ says Windows 10 support has ended;
-     most of the 59 laptops in the list are generations from 2020 on. */
+  /* The ThinkPad T480 photo: the whole machine, screen lit, on a white
+     ground. For one day this was a 2021 EliteBook 840 G8 with its screen
+     off; that photo cuts the laptop's front right corner, and in the small
+     tile the cut read as a damaged picture. */
   "baerbare-computere": {
     kind: "photo",
-    src: "/models/elitebook/840-g8-reference.webp",
-    width: 1280,
-    height: 1182,
-    bleed: "right",
+    src: "/thinkpad-t480-6.jpg",
+    width: 1179,
+    height: 1115,
+    pad: 2,
     alt: {
-      da: "Referencefoto: åben HP EliteBook 840 G8 som eksempel på en erhvervsbærbar",
-      en: "Reference photo: an open HP EliteBook 840 G8 as an example of a business laptop",
-    },
-    credit: {
-      subject: "HP EliteBook 840 G8",
-      author: "Infinatious",
-      source: "https://commons.wikimedia.org/wiki/File:HP_EliteBook_840_G8.png",
-      licence: "CC BY-SA 4.0 (resized)",
-      licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      da: "Referencefoto: åben Lenovo ThinkPad T480 som eksempel på en erhvervsbærbar",
+      en: "Reference photo: an open Lenovo ThinkPad T480 as an example of a business laptop",
     },
   },
   "stationaere-computere": {
