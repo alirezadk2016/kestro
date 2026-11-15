@@ -1120,6 +1120,20 @@ export async function verifyCatalogueExplorer(
             "T14",
             "search is reflected in the URL",
           );
+          if (!budget) {
+            /* A generation is one term, however a shop spells it. */
+            const gen4 = ["lenovo-thinkpad-t14-gen-4", "lenovo-thinkpad-t14s-gen-4"].filter((id) =>
+              fixtures.some((entry) => entry.id === id),
+            );
+            for (const spelling of ["T14 Gen 4", "t14 gen4", "T14 G4"]) {
+              await search.fill(spelling);
+              await results(gen4, `"${spelling}" finds the Gen 4 machines only`);
+            }
+            if (fixtures.some((entry) => entry.id === "lenovo-thinkpad-x1-carbon-gen-11")) {
+              await search.fill("X1 Carbon Gen 1");
+              await results([], "Gen 1 does not match Gen 10, 11 or 12");
+            }
+          }
           await search.fill("<script>unmatched-reference</script>");
           await results([], "unmatched text produces a real empty state");
           assert.equal(

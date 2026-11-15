@@ -209,14 +209,25 @@ export default function CatalogueExplorer({
     else selectionButtons.current.get(target)?.focus({ preventScroll: true });
   }, [state.compare, comparisonVisible]);
 
+  /* A generation is one term. "T14 Gen 4" matched all seven T14 and T14s
+     generations, because "4" alone is in 14" and in PCIe 4.0; "X1 Carbon Gen
+     1" matched Gen 10 to 12; and "gen4" or "G4", as shops write it, matched
+     nothing. Query and text both spell a generation "gen N", and that token
+     must end where the number ends. */
+  const generations = (text: string) =>
+    text
+      .toLocaleLowerCase(lang)
+      .replace(/\bgen(?:eration)?\.?\s*(\d+)\b/g, "gen $1")
+      .replace(/\bg(\d+)\b/g, "gen $1");
   const query = state.query.trim().toLocaleLowerCase(lang);
-  const tokens = query.split(/\s+/).filter(Boolean);
+  const tokens = generations(query).match(/gen \d+|\S+/g) ?? [];
   const textMatches = (entry: CatalogueEntry) => {
-    const text =
-      `${entry.name} ${entry.brand} ${entry.format} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`.toLocaleLowerCase(
-        lang,
-      );
-    return tokens.every((token) => text.includes(token));
+    const text = generations(
+      `${entry.name} ${entry.brand} ${entry.format} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`,
+    );
+    return tokens.every((token) =>
+      /^gen \d+$/.test(token) ? new RegExp(`\\b${token}\\b`).test(text) : text.includes(token),
+    );
   };
   const brandMatches = (entry: CatalogueEntry) =>
     !state.brands.length || state.brands.includes(entry.brand);
