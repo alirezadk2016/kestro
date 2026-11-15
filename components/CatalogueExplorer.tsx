@@ -614,7 +614,7 @@ export default function CatalogueExplorer({
               aria-label={da ? "Filtre" : "Filters"}
               className={
                 (filtersOpen ? "block" : "hidden") +
-                " plate mt-3 p-4 lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto"
+                " plate mt-3 p-4 lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:[scrollbar-color:rgb(255_255_255/0.18)_transparent] lg:[scrollbar-width:thin]"
               }
             >
               {filterPanel}

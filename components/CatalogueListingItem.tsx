@@ -20,6 +20,33 @@ type Props = {
   onCompare: () => void;
 };
 
+/* "Lenovo ThinkPad T14s Gen 4" -> ThinkPad / T14s / Gen 4, for the tile a
+   model without a photograph gets. */
+const FAMILIES = new Set([
+  "ThinkPad",
+  "ThinkCentre",
+  "ThinkVision",
+  "EliteBook",
+  "ProBook",
+  "ZBook",
+  "EliteDesk",
+  "EliteDisplay",
+  "Latitude",
+  "OptiPlex",
+  "UltraSharp",
+]);
+function nameParts(entry: CatalogueEntry) {
+  const rest = entry.name.startsWith(entry.brand + " ")
+    ? entry.name.slice(entry.brand.length + 1)
+    : entry.name;
+  const generation = rest.match(/\s(Gen \d+)$/)?.[1];
+  const base = generation ? rest.slice(0, -generation.length - 1) : rest;
+  const [first, ...others] = base.split(" ");
+  return FAMILIES.has(first) && others.length
+    ? { family: first, model: others.join(" "), generation }
+    : { family: entry.brand, model: base, generation };
+}
+
 function Media({
   entry,
   grid,
@@ -31,19 +58,18 @@ function Media({
   budget: boolean;
   priority: boolean;
 }) {
+  const parts = nameParts(entry);
   return (
+    /* The picture stands on the products hub's own floor (.product-well): the
+       drawings' ground with a hairline, photos multiplied into it. */
     <figure
       data-catalogue-media
       aria-hidden={entry.image ? undefined : true}
-      className={`relative aspect-[4/3] self-start overflow-hidden rounded-lg ${budget ? "w-[104px]" : "w-20 sm:w-[104px]"} ${
-        entry.image
-          ? "bg-paper-dim ring-1 ring-inset ring-ink-900/5"
-          : "border border-ink-200 bg-paper-dim"
-      } ${
+      className={`product-well relative aspect-[4/3] self-start overflow-hidden rounded-md ${budget ? "w-[104px]" : "w-[88px] sm:w-32"} ${
         grid
           ? entry.image
             ? "sm:aspect-auto sm:h-48 sm:w-full sm:rounded-none"
-            : "sm:aspect-auto sm:h-14 sm:w-full sm:rounded-none sm:border-x-0 sm:border-t-0"
+            : "sm:aspect-auto sm:h-14 sm:w-full sm:rounded-none"
           : "xl:col-start-1 xl:row-start-1 xl:self-center"
       }`}
     >
@@ -54,15 +80,29 @@ function Media({
           height={entry.image.height}
           alt={entry.image.alt}
           priority={priority}
-          sizes={grid ? "(min-width: 1536px) 25vw, (min-width: 640px) 45vw, 104px" : "104px"}
-          className="h-full w-full object-contain"
+          sizes={grid ? "(min-width: 1536px) 25vw, (min-width: 640px) 45vw, 128px" : "128px"}
+          className={`h-full w-full object-contain ${entry.image.kind === "photo" ? "mix-blend-multiply brightness-[1.025]" : ""}`}
         />
       ) : (
+        /* No photograph of this exact model yet, and no stand-in device: the
+           owner wants real pictures or none. A grey box with "Lenovo" in it,
+           54 times down the page, read as a shop with its images missing;
+           the model's own name, set as type, reads as a specification. */
         <div
           data-catalogue-placeholder
-          className={`flex h-full items-center justify-center px-2 text-center font-display text-sm font-bold text-ink-700 ${grid ? "sm:justify-start sm:px-4 sm:text-base" : ""}`}
+          className={`flex h-full flex-col justify-end p-2 sm:p-3 ${grid ? "sm:flex-row sm:items-center sm:justify-start sm:gap-2 sm:px-4" : ""}`}
         >
-          {entry.brand}
+          {/* The family only from sm: in the 88px phone tile "ELITEBOOK" ran to
+              the edge and a two-line "X1 Carbon" pushed it out of the top. */}
+          <span className="hidden truncate text-xs font-semibold uppercase leading-4 tracking-[0.08em] text-ink-600 sm:block">
+            {parts.family}
+          </span>
+          <span className="font-display text-sm font-extrabold leading-tight text-ink-900 sm:text-xl">
+            {parts.model}
+          </span>
+          {parts.generation && (
+            <span className="text-xs font-medium leading-4 text-ink-600">{parts.generation}</span>
+          )}
         </div>
       )}
     </figure>
@@ -116,7 +156,14 @@ export default function CatalogueListingItem({
       data-budget-enquiry={budget ? "" : undefined}
       href={entry.enquiryHref}
       aria-label={`${enquiry}: ${entry.name}`}
-      className={`${buttonClass("primary")} shrink-0 whitespace-nowrap !px-3`}
+      /* One quiet outline action per row. Fifty-nine filled blue buttons
+         down the page shouted over the models; the filled blue stays the
+         header's single "Få et tilbud". It fills on hover. */
+      className={
+        budget
+          ? `${buttonClass("primary")} shrink-0 whitespace-nowrap !px-3`
+          : "inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/35 transition-colors duration-150 hover:bg-brand-600 hover:text-white hover:ring-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 motion-safe:active:scale-[0.96]"
+      }
     >
       {enquiry}
       {!budget && <ArrowRight size={14} aria-hidden="true" />}
@@ -131,20 +178,22 @@ export default function CatalogueListingItem({
       className={`sheet grid min-w-0 scroll-mt-28 gap-y-3 overflow-hidden ${
         budget
           ? "grid-cols-[104px_minmax(0,1fr)] gap-x-4 p-4"
-          : `grid-cols-[80px_minmax(0,1fr)] gap-x-3 p-3 sm:grid-cols-[104px_minmax(0,1fr)] ${grid ? "" : "sm:p-4"}`
+          : `grid-cols-[88px_minmax(0,1fr)] gap-x-3.5 p-3 sm:grid-cols-[128px_minmax(0,1fr)] sm:gap-x-5 ${grid ? "" : "sm:p-4"}`
       } ${
         grid
           ? "sm:flex sm:flex-col sm:gap-y-0 sm:p-0"
           : budget
             ? "xl:grid-cols-[104px_minmax(0,1fr)]"
-            : "xl:grid-cols-[104px_minmax(0,1.1fr)_minmax(0,1.25fr)_auto] xl:gap-x-5 xl:gap-y-1"
+            : "xl:grid-cols-[128px_minmax(0,1.1fr)_minmax(0,1.25fr)_auto] xl:gap-x-6 xl:gap-y-1"
       }`}
     >
       <Media entry={entry} grid={grid} budget={budget} priority={priority} />
       <div
         className={`min-w-0 self-center ${grid ? `sm:w-full sm:px-4 sm:pt-3 ${budget ? "sm:min-h-24" : ""}` : "xl:col-start-2 xl:row-start-1"}`}
       >
-        <p className="text-xs font-medium leading-4 text-ink-600">{entry.format}</p>
+        <p className="text-xs font-semibold uppercase leading-4 tracking-[0.08em] text-brand-700">
+          {entry.format}
+        </p>
         <h3 className="font-display text-base font-bold leading-snug text-ink-900 sm:text-lg">
           <Link
             data-catalogue-detail
@@ -167,14 +216,8 @@ export default function CatalogueListingItem({
             </span>
           </Link>
         </h3>
-        {/* What the picture is. A row without one says nothing here: the
-            frame already shows the brand, and "Modelreference" under six
-            laptops read as a term to look up. */}
-        {entry.image && (
-          <p className="text-xs leading-4 text-ink-600">
-            {entry.image.kind === "photo" ? (da ? "Modelfoto" : "Model photo") : "Illustration"}
-          </p>
-        )}
+        {/* What a picture is — model photo or illustration — is said once,
+            in the note under the list, not under every name. */}
       </div>
 
       {budget ? (
@@ -244,8 +287,12 @@ export default function CatalogueListingItem({
           >
             {entry.facts.slice(0, 3).map((fact) => (
               <div key={fact.label} className="min-w-0">
-                <dt className="text-xs leading-4 text-ink-600">{fact.label}</dt>
-                <dd className="mt-1 break-words text-sm font-medium leading-5 text-ink-900">
+                {/* Capitals from sm: three columns at 320px ran "HUKOMMELSE"
+                    into "LAGRING". */}
+                <dt className="text-xs font-medium leading-4 text-ink-600 sm:uppercase sm:tracking-[0.06em]">
+                  {fact.label}
+                </dt>
+                <dd className="mt-1 break-words text-sm font-semibold leading-5 tabular-nums text-ink-900">
                   {fact.value}
                 </dd>
               </div>
