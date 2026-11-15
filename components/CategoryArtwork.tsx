@@ -33,7 +33,7 @@ export default function CategoryArtwork({
           priority={priority}
           /* A photo's white studio ground multiplies into the same pale well
              the drawings stand on, so a photo is not a white card on grey. */
-          className={`h-full w-full object-contain ${media.bleed === "right" ? "object-right py-2 pl-2" : media.kind === "photo" ? "p-2" : ""} ${media.kind === "photo" ? "mix-blend-multiply" : ""}`}
+          className={`h-full w-full object-contain ${media.bleed === "right" ? "object-right py-3 pl-3 sm:py-4 sm:pl-4" : media.kind === "photo" ? "p-3 sm:p-4" : ""} ${media.kind === "photo" ? "mix-blend-multiply" : ""}`}
         />
       ) : (
         <div role="img" aria-label={media.alt[lang]}>

@@ -210,7 +210,6 @@ export async function verifyProductBrowsing(browser, base, fail) {
           language === "da" ? /\d+ modell?(er)?/ : /\d+ models?/,
           "every category says how many models it holds",
         );
-        const lead = CATEGORIES[language].indexOf(href.pathname) === 0;
         await media.scrollIntoViewIfNeeded();
         const frame = await well.evaluate((element) => {
           const frame = element.getBoundingClientRect();
@@ -247,17 +246,10 @@ export async function verifyProductBrowsing(browser, base, fail) {
         });
         assert.ok(frame.wellFits, "the media frame stays within its category card");
         assert.equal(frame.overflow, "hidden", "the neutral media frame contains its contents");
-        /* Beside two rows of cards the lead frame takes the card's height. */
-        if (lead && width >= 1024)
-          assert.ok(
-            frame.ratio > 0.7 && frame.ratio < 1.6,
-            "the lead frame fills its card without becoming a strip",
-          );
-        else
-          assert.ok(
-            Math.abs(frame.ratio - 4 / 3) < 0.03,
-            "the media frames keep a consistent 4:3 shape",
-          );
+        assert.ok(
+          Math.abs(frame.ratio - 4 / 3) < 0.03,
+          "the media frames keep a consistent 4:3 shape",
+        );
         if (expected.src) {
           assert.equal(
             await media.evaluate((element) => element.tagName),

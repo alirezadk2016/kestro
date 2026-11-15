@@ -1,14 +1,16 @@
 # Product browsing refresh
 
-> **2026-11-14 — five categories, laptops leading.** The owner read the
+> **2026-11-15 — five categories in one compact row.** The owner read the
 > seven-tile hub as confusing and artificial and asked for tablets and
 > smartphones to leave it: they had no model and no picture, only a mark in an
 > empty frame. Their pages and URLs stay, linked from the header and footer.
-> Laptops (59 of 68 models, and the one category with a real photograph) take a
-> large card; desktops, monitors, mini PCs and docks sit beside it. Each card
-> gives its model count. The photo/drawing label is said once under the grid,
-> and photos multiply into the same pale well as the drawings so the set reads
-> as one. Everything below describes the seven-tile version.
+> A large laptop card beside a 2x2 grid followed for one evening; at 1920 it
+> ran past the screen and the owner found it too big. Now five equal cards
+> sit in one row from 1024px (three columns from 640, laptops full width on a
+> phone), so the directory fits the first screen at 1440 and 1920. Each card
+> gives name, what sets it apart, brands and model count. The photo/drawing
+> label is said once under the row, and photos multiply into the same pale
+> well as the drawings. Everything below describes the seven-tile version.
 
 ## Product and scope
 

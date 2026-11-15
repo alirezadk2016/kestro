@@ -7,20 +7,22 @@ import { getModelsForCategory } from "@/lib/models";
 import CategoryArtwork from "./CategoryArtwork";
 
 /*
- * The products hub's directory: laptops first and large, the four other
- * equipment types beside it.
+ * The products hub's directory: five equipment types in one compact row.
  *
- * It was seven equal tiles. Two of them, tablets and smartphones, had no
- * model and no picture — a small icon in an empty frame — and the owner read
- * the row as confusing and artificial (2026-11-14) and asked for them to go.
- * Their pages stay, linked from the header and footer; only this directory
- * leaves them out. Laptops are 59 of the 68 models and the one category with
- * a real photograph, so they lead. Every card says how many models it holds,
- * which is a fact from lib/models, not a stock level.
+ * It was seven equal tiles; two of them, tablets and smartphones, had no
+ * model and no picture, and the owner asked for them to go (2026-11-14).
+ * Their pages stay, linked from the header and footer.
  *
- * The "Referencefoto"/"Illustration" label sat on every card and again in the
- * note under them; it is said once, in the note. Photos sit on the same pale
- * well as the drawings (multiplied into it), so the row reads as one set.
+ * For one evening laptops led as a large card beside a 2x2 grid. At 1920 the
+ * grid ran past the screen and the owner found it too big and ugly
+ * (2026-11-15). Now every type gets the same small card, laptops first, and
+ * the whole directory fits in the first screen at 1440 and 1920. Each card
+ * gives the same four things: name, what sets it apart, brands, model count.
+ * The count is a fact from lib/models, not a stock level.
+ *
+ * The photo/drawing label is said once, in the note under the row. Photos
+ * multiply into the same pale well as the drawings, so the row reads as one
+ * set.
  */
 const LEFT_OUT = new Set(["tablets", "smartphones"]);
 
@@ -52,9 +54,8 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
       <h2 id="product-categories-heading" className="t-h2 font-display font-extrabold text-paper">
         {da ? "Vælg udstyrstype" : "Choose your equipment"}
       </h2>
-      <ul className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-12 lg:gap-5">
+      <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
         {shown.map((category, index) => {
-          const lead = index === 0;
           const models = getModelsForCategory(category.slug).length;
           /* The category is named "…og tilbehør", but its three models are
              docks; a card that promises accessories sends a buyer to a page
@@ -69,7 +70,9 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
           return (
             <li
               key={category.slug}
-              className={`min-w-0 ${lead ? "col-span-2 lg:col-span-6 lg:row-span-2" : "lg:col-span-3"}`}
+              /* On a phone laptops take the full width, so the 2-column grid
+                 below holds the other four without a hole. */
+              className={`min-w-0 ${index === 0 ? "col-span-2 sm:col-span-1" : ""}`}
             >
               <Link
                 href={localePath(`/produkter/${category.slug}`, lang)}
@@ -79,44 +82,25 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   slug={category.slug}
                   lang={lang}
                   priority={index < 3}
-                  sizes={lead ? "(min-width: 1024px) 48vw, 100vw" : "(min-width: 1024px) 24vw, 46vw"}
-                  /* Beside two rows of cards the lead is taller than a 4:3
-                     frame; the frame takes the height instead of leaving a
-                     navy gap, and the near-square photo fits it better. */
-                  className={lead ? "lg:aspect-auto lg:min-h-0 lg:flex-1 lg:py-10 lg:pl-10 2xl:py-16 2xl:pl-16" : ""}
+                  sizes={
+                    index === 0
+                      ? "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw"
+                      : "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 46vw"
+                  }
                 />
-                {/* On desktop the lead's name comes before its picture: at 1920
-                    the picture alone filled the first screen and a buyer saw a
-                    laptop with no name, count or way on. */}
-                <div
-                  className={`flex flex-col ${lead ? "p-4 sm:p-6 lg:order-first lg:flex-none lg:border-b lg:border-white/10" : "flex-1 p-3 sm:p-5"}`}
-                >
-                  <h3
-                    className={`font-display font-bold leading-snug text-paper ${lead ? "t-h3" : "text-base sm:text-lg"}`}
-                  >
+                <div className="flex flex-1 flex-col p-3 sm:p-4">
+                  <h3 className="font-display text-base font-bold leading-snug text-paper">
                     {title}
                   </h3>
-                  <p className="mt-1.5 text-sm leading-5 text-paper/75">
-                    {lead && models > 1
-                      ? da
-                        ? `${categoryApplications[category.slug].da}. ${count(models, da)} fra ${brandsOf(category.slug, da)}.`
-                        : `${categoryApplications[category.slug].en}. ${count(models, da)} from ${brandsOf(category.slug, da)}.`
-                      : categoryApplications[category.slug][lang]}
+                  <p className="mt-1 text-sm leading-5 text-paper/75">
+                    {categoryApplications[category.slug][lang]}
                   </p>
-                  {!lead && (
-                    /* A business buyer decides by brand first. */
-                    <p className="mt-1 text-xs leading-5 text-paper/65">
-                      {brandsOf(category.slug, da)}
-                    </p>
-                  )}
-                  <span
-                    className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-brand-300 group-hover:text-paper"
-                  >
-                    {lead
-                      ? da
-                        ? `Se alle ${models}`
-                        : `See all ${models}`
-                      : count(models, da)}
+                  {/* A business buyer decides by brand first. */}
+                  <p className="mt-1 text-xs leading-5 text-paper/65">
+                    {brandsOf(category.slug, da)}
+                  </p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-semibold text-brand-300 group-hover:text-paper">
+                    {count(models, da)}
                     <ArrowRight size={14} aria-hidden="true" />
                   </span>
                 </div>
