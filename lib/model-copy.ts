@@ -36,9 +36,10 @@ const tail = (value: string) =>
    sound except a/e/i/o, and "U" in USB is read "you". */
 const article = (word: string) => (/^[aeio]/i.test(word) ? "an" : "a");
 
-/** "Dockingstation" → "dockingstation", but "USB-C dock" stays as written. */
+/** "Dockingstation" → "dockingstation" and "Én M.2" → "én M.2", but "USB-C
+    dock", "LPDDR5" and "NVMe" stay as written. */
 const lcFirst = (text: string) =>
-  /^[A-ZÆØÅ][a-zæøå]/.test(text) ? text[0].toLowerCase() + text.slice(1) : text;
+  /^[A-ZÆØÅÉ](?:[a-zæøåé]|\s)/.test(text) ? text[0].toLocaleLowerCase("da") + text.slice(1) : text;
 
 /* "tre" and "to" as digits in the lead only, so the answer-first sentence
    carries the figure; the spec table keeps the wording it was written in. */
@@ -65,8 +66,11 @@ export function modelLead(model: Model, lang: Lang): string {
     const second =
       ram && storage
         ? da
-          ? ` Hukommelsen er ${head(ram).replace(/, kan.*$/, "")}, og lagringen er ${head(storage)}.`
-          : ` Memory is ${head(ram).replace(/, (usually )?expandable.*$/, "")}, and storage is ${head(storage)}.`
+          ? /* The spec table opens its values with a capital ("Op til 48 GB",
+               "Én M.2 2280"); inside this sentence they are mid-clause. Forty
+               of the generation pages opened with "lagringen er Én M.2". */
+            ` Hukommelsen er ${lcFirst(head(ram).replace(/, kan.*$/, ""))}, og lagringen er ${lcFirst(head(storage))}.`
+          : ` Memory is ${lcFirst(head(ram).replace(/, (usually )?expandable.*$/, ""))}, and storage is ${lcFirst(head(storage))}.`
         : "";
     return first + second;
   }

@@ -170,6 +170,18 @@ Notes: the X1 Carbon Gen 10 search also listed one card as "X1 Kulstof G10",
 refurbed's Danish rendering of Carbon, counted as the same model. The
 X1 2-in-1 Gen 9 search showed no title named 2-in-1 at all.
 
+## Searches that found nothing
+
+An empty array in `retailLinks` says a model was searched and nothing matched,
+but not where or when. That is recorded beside it, in `emptyChecks` in the
+same file: retailer and date per slug. The model page builds its sentence from
+that record ("refurbed viste ikke netop den model, da vi søgte efter den
+14. nov. 2026"), so the page never names a shop nobody searched. When another
+retailer is checked for one of these models and also finds nothing, add it to
+that slug's `emptyChecks`; when it finds the model, add the link to
+`retailLinks` and remove the slug from `emptyChecks`. An empty array with no
+`emptyChecks` entry shows no section at all.
+
 ## Re-checking
 
 Listings change. Before the section goes live, and whenever `checkedOn` is

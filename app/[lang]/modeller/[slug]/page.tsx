@@ -7,6 +7,7 @@ import RelatedModelRows from "@/components/RelatedModelRows";
 import { modelCatalogueEntries } from "@/components/ModelCatalogue";
 import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
+import { modelSeries } from "@/lib/model-series";
 import { modelMedia } from "@/lib/model-media";
 import { Check, ChevronDown, Info } from "lucide-react";
 import Container from "@/components/Container";
@@ -120,9 +121,24 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const siblings = [...sameCategory, ...sameGroup].filter(
     (m) => series(m.name) === series(model.name),
   );
+  /* Then the rest of the manufacturer's line, same form factor and newest
+     generation first. The X1 2-in-1 Gen 9 has no other generation, and its
+     shelf showed a 2018 T480, a T14 and a Latitude 7490 as "same class"
+     because they had photographs; its real neighbours are the X1 Yogas it
+     replaced. Only after the line come the photographed models. */
+  const line = modelSeries(model.name)?.id;
+  const generation = (name: string) => Number(name.match(/ Gen (\d+)$/)?.[1] ?? 0);
+  const sameLine = [...sameCategory, ...sameGroup]
+    .filter((m) => line && modelSeries(m.name)?.id === line && !siblings.includes(m))
+    .sort(
+      (a, b) =>
+        Number(b.format.da === model.format.da) - Number(a.format.da === model.format.da) ||
+        generation(b.name) - generation(a.name),
+    );
+  const near = [...siblings, ...sameLine];
   const peers = [
-    ...siblings,
-    ...picturesFirst([...sameCategory, ...sameGroup]).filter((m) => !siblings.includes(m)),
+    ...near,
+    ...picturesFirst([...sameCategory, ...sameGroup]).filter((m) => !near.includes(m)),
   ];
   const related = peers.slice(0, 3);
   const pagePath = `/modeller/${model.slug}`;

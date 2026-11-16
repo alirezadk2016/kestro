@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import Container from "./Container";
 import { formatDate, localePath, type Lang } from "@/lib/i18n";
 import type { Model } from "@/lib/models";
-import { retailLinks, retailers } from "@/lib/retail-links";
+import { emptyChecks, retailLinks, retailers } from "@/lib/retail-links";
 
 /*
  * "Need it now?" — under a model's header, for a buyer who cannot wait for
@@ -25,16 +25,15 @@ const copy = {
     title: "Har I brug for den nu?",
     lead: (name: string, stores: string) =>
       `Vi har ikke ${name} på lager endnu. Indtil vi har, kan I finde den hos ${stores} og selv sammenligne pris og stand.`,
-    /* Every empty check so far is a refurbed search (docs/retail-links.md,
-       2026-11-14). "Ingen af de butikker" claimed more shops than were
-       searched; name the one that was, and change this if another is added. */
-    leadNone: (name: string) =>
-      `Vi har ikke ${name} på lager endnu, og refurbed viste ikke netop den model, da vi søgte efter den.`,
+    /* Who was searched and when comes from emptyChecks, not from this
+       sentence. "Ingen af de butikker, vi har tjekket" claimed more shops
+       than were searched. */
+    leadNone: (name: string, stores: string) =>
+      `Vi har ikke ${name} på lager endnu, og ${stores} viste ikke netop den model, da vi søgte efter den`,
     source: "Skal den hellere komme fra os, klargjort og med nordisk tastatur?",
     sourceLink: "Bed os skaffe den",
     search: (name: string, retailer: string) => `Søg efter ${name} hos ${retailer}`,
     open: "Se udvalget",
-    and: "og",
     newWindow: "åbner i et nyt vindue",
     footnote: (many: boolean) =>
       `Uafhængige butikker: pris, stand og vilkår er deres, og Kestro får intet for linket. ${many ? "Søgningerne er tjekket" : "Søgningen er tjekket"}`,
@@ -43,13 +42,12 @@ const copy = {
     title: "Need it now?",
     lead: (name: string, stores: string) =>
       `We don't have the ${name} in stock yet. Until we do, you can find it at ${stores} and compare price and condition yourself.`,
-    leadNone: (name: string) =>
-      `We don't have the ${name} in stock yet, and refurbed did not show that exact model when we searched for it.`,
+    leadNone: (name: string, stores: string) =>
+      `We don't have the ${name} in stock yet, and ${stores} did not show that exact model when we searched for it on`,
     source: "Would you rather it came from us, prepared and with a Nordic keyboard?",
     sourceLink: "Ask us to source it",
     search: (name: string, retailer: string) => `Search for the ${name} at ${retailer}`,
     open: "See what they have",
-    and: "and",
     newWindow: "opens in a new window",
     footnote: (many: boolean) =>
       `Independent retailers: price, condition and terms are theirs, and Kestro earns nothing from the link. ${many ? "Searches checked" : "Search checked"}`,
@@ -64,10 +62,12 @@ export default function RetailLinks({ model, lang }: { model: Model; lang: Lang 
   const checked = retailLinks[model.slug];
   if (!checked) return null;
   const links = checked;
+  const empty = links.length === 0 ? (emptyChecks[model.slug] ?? []) : [];
+  if (links.length === 0 && empty.length === 0) return null;
   const checkedOn = links.map((link) => link.checkedOn).sort().at(-1);
-  const names = links.map((link) => retailers[link.retailer].name);
-  const stores =
-    names.length > 1 ? `${names.slice(0, -1).join(", ")} ${c.and} ${names.at(-1)}` : (names[0] ?? "");
+  const emptyOn = empty.map((check) => check.checkedOn).sort().at(-1);
+  const names = (links.length > 0 ? links : empty).map((entry) => retailers[entry.retailer].name);
+  const stores = new Intl.ListFormat(lang === "da" ? "da" : "en-GB", { type: "conjunction" }).format(names);
   /* One store is one wide card, not a third of a row with two holes beside it. */
   const grid =
     links.length === 1 ? "grid max-w-xl" : links.length === 2 ? "grid gap-3 sm:grid-cols-2" : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3";
@@ -89,7 +89,14 @@ export default function RetailLinks({ model, lang }: { model: Model; lang: Lang 
               {c.title}
             </h2>
             <p className="mt-3 text-base leading-[1.75] text-paper/75">
-              {links.length > 0 ? c.lead(model.name, stores) : c.leadNone(model.name)}
+              {links.length > 0 ? (
+                c.lead(model.name, stores)
+              ) : (
+                <>
+                  {c.leadNone(model.name, stores)}{" "}
+                  <time dateTime={emptyOn}>{formatDate(emptyOn!, lang)}</time>.
+                </>
+              )}
             </p>
           </div>
 

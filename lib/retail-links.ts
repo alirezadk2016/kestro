@@ -715,3 +715,28 @@ export const retailLinks: Record<string, RetailLink[]> = {
     },
   ],
 };
+
+/**
+ * Searches that found nothing: where an empty array above was searched, and
+ * when. An empty array alone records neither, and the page sentence once had
+ * to hard-code the shop's name. A slug with an empty array and no entry here
+ * shows no section, because nobody can say who was asked.
+ */
+export type EmptyCheck = { retailer: Retailer; checkedOn: string };
+
+const REFURBED_2026_11_14: EmptyCheck[] = [{ retailer: "refurbed", checkedOn: "2026-11-14" }];
+
+export const emptyChecks: Record<string, EmptyCheck[]> = {
+  "lenovo-thinkpad-t16-gen-3": REFURBED_2026_11_14,
+  "lenovo-thinkpad-x1-2-in-1-gen-9": REFURBED_2026_11_14,
+  "lenovo-thinkpad-x1-nano-gen-2": REFURBED_2026_11_14,
+  "lenovo-thinkpad-x1-nano-gen-3": REFURBED_2026_11_14,
+  "lenovo-thinkpad-x13-gen-5": REFURBED_2026_11_14,
+  "lenovo-thinkpad-e14-gen-6": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p14s-gen-3": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p14s-gen-4": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p14s-gen-5": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p16s-gen-3": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p1-gen-7": REFURBED_2026_11_14,
+  "lenovo-thinkpad-p16-gen-1": REFURBED_2026_11_14,
+};
