@@ -266,6 +266,14 @@ for (const path of PAGES) {
   if (found.h1 !== 1) fail(path, `${found.h1} h1 elements`);
   if (!found.title) fail(path, "no title");
   if (!found.description) fail(path, "no meta description");
+  /* These two descriptions carry live model counts. They were measured with
+     mak at two digits; a count that grows a digit, or a list that shrinks,
+     must send somebody back to measure.mjs instead of drifting unseen. */
+  if (
+    /^\/(en\/)?(modeller|models|produkter|products)$/.test(path) &&
+    (found.description.length < 145 || found.description.length > 160)
+  )
+    fail(path, `description is ${found.description.length} characters; measure it again with mak`);
   if (!found.canonical) fail(path, "no canonical");
   if (!found.language) fail(path, "no lang on <html>");
   if (found.main !== 1) fail(path, `${found.main} main landmarks`);

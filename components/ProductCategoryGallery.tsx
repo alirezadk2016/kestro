@@ -36,7 +36,7 @@ function brandsOf(slug: string, da: boolean) {
   for (const model of getModelsForCategory(slug))
     tally.set(model.brand, (tally.get(model.brand) ?? 0) + 1);
   const names = [...tally.entries()].sort((a, b) => b[1] - a[1]).map(([brand]) => brand);
-  return new Intl.ListFormat(da ? "da" : "en", { type: "conjunction" }).format(names);
+  return new Intl.ListFormat(da ? "da" : "en-GB", { type: "conjunction" }).format(names);
 }
 
 export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
