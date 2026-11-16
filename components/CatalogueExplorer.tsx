@@ -219,12 +219,24 @@ export default function CatalogueExplorer({
       .toLocaleLowerCase(lang)
       .replace(/\bgen(?:eration)?\.?\s*(\d+)\b/g, "gen $1")
       .replace(/\bg(\d+)\b/g, "gen $1");
+  /* One normalised text per entry, not one per facet count per keystroke. */
+  const haystacks = useMemo(
+    () =>
+      new Map(
+        entries.map((entry) => [
+          entry.id,
+          generations(
+            `${entry.name} ${entry.brand} ${entry.format} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`,
+          ),
+        ]),
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [entries, lang],
+  );
   const query = state.query.trim().toLocaleLowerCase(lang);
   const tokens = generations(query).match(/gen \d+|\S+/g) ?? [];
   const textMatches = (entry: CatalogueEntry) => {
-    const text = generations(
-      `${entry.name} ${entry.brand} ${entry.format} ${entry.configuration || ""} ${entry.facts.map((fact) => fact.value).join(" ")}`,
-    );
+    const text = haystacks.get(entry.id) ?? "";
     return tokens.every((token) =>
       /^gen \d+$/.test(token) ? new RegExp(`\\b${token}\\b`).test(text) : text.includes(token),
     );
@@ -235,7 +247,8 @@ export default function CatalogueExplorer({
     !state.types.length || state.types.includes(entry.category.id);
   /* The lines on offer follow the chosen type: all of /modeller has too many
      to scan, its laptops alone have ten. A line that drops out of view stops
-     filtering, so a hidden checkbox can never empty the results. */
+     filtering, so a hidden checkbox can never empty the results, but it stays
+     chosen and returns with its type. */
   const seriesOptions = allSeries.filter((line) =>
     entries.some((entry) => entry.series?.id === line.id && typeMatches(entry)),
   );
@@ -245,14 +258,6 @@ export default function CatalogueExplorer({
     : [];
   const seriesMatches = (entry: CatalogueEntry) =>
     !activeSeries.length || (!!entry.series && activeSeries.includes(entry.series.id));
-  const activeSeriesKey = activeSeries.join(",");
-  useEffect(() => {
-    if (!ready) return;
-    setState((previous) => {
-      const kept = activeSeriesKey ? activeSeriesKey.split(",") : [];
-      return previous.series.length === kept.length ? previous : { ...previous, series: kept };
-    });
-  }, [ready, activeSeriesKey, state.series.length]);
   const filtered = entries.filter(
     (entry) =>
       textMatches(entry) && brandMatches(entry) && seriesMatches(entry) && typeMatches(entry),

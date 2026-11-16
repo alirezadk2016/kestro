@@ -1092,3 +1092,35 @@ ask Kestro to source it.
   the shops are independent and Kestro earns nothing from the link.
 - The FAQ answer "Har I {model} på lager?" stays: it answers a question
   buyers type, which is a different job from the section's notice.
+
+### `mak run`, 16 November 2026 — after the ThinkPad generations
+
+Run on the build with the 50 Lenovo generation pages, the rebuilt products
+hub and the corrected /modeller description. 256 sitemap pages.
+
+- **FAIL 0.** Titles ≤ 580 px and unique on 256/256, descriptions ≤ 920 px
+  and unique on 256/256, one H1, canonical = page, charset first and no
+  skipped heading level on every page. No orphans, no vague anchors.
+- **Fixed in this pass:** /modeller and /en/models said "18" models after the
+  list had grown to 68; the count now comes from `lib/models.ts` (146 ch /
+  905 px and 147 ch / 917 px at 68 — a three-digit count must be measured
+  again). The products hub description dropped tablets, which the hub no
+  longer lists (146 ch / 894 px, EN 145 ch / 915 px).
+- **Accepted warnings.** Five descriptions under 145 characters
+  (X1 Carbon, WD19, USB-C Dock G5, two guides) already sit at 880–905 px;
+  every longer draft measured 945–990 px, over the binding 920. Eighteen
+  titles at 61–63 characters are inside 580 px. The H1s without the full
+  primary keyword (front page, /flaadeloesninger, /kontakt, three guides)
+  are deliberate and unchanged.
+- **Rule 9.** 58 pages get their links from one anchor text — model pages
+  linked by their own name from the catalogue and the related shelf. The
+  name is the precise anchor; varied anchors belong in running text on the
+  guides, which is the next step there.
+- **Rule 12.** Category pages miss the "pris" node (and docks, monitors,
+  mini PCs, phones the "genbrug" node). These are questions for the owner,
+  not sentences to write: Kestro has no prices yet.
+- **Rule 3.** 19 informational secondary keywords sit on service and quality
+  pages. Each needs a Danish page one read before it moves; Search Console
+  will show which of them get impressions first.
+- `docs/seo-internal-links.csv` and `docs/seo-pillar-cluster.csv` are
+  regenerated from this run; the pillar sheet now holds the generation pages.
