@@ -149,80 +149,97 @@ const more: Record<number, { href: string; label: { da: string; en: string } }> 
 export default function AnswerBlock({ lang }: { lang: Lang }) {
   const c = copy[lang];
   const updated = pageUpdated("/");
+  const rest = faqs.slice(1);
+  const half = Math.ceil(rest.length / 2);
 
   return (
     <section className="border-b border-ink-200 bg-paper-dim py-14 text-ink-900 sm:py-24">
       <FaqSchema lang={lang} items={faqs} />
       <Container>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
-            {/* The question as the heading and the answer as the first
-                paragraph under it. In that order, on purpose. */}
-            <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
-              {c.question}
-            </h2>
-            <p className="mt-5 text-base leading-[1.75] text-ink-700 sm:text-lg sm:leading-[1.7]">
+        {/* The question beside its answer, then the follow-up questions in
+            two columns across the full width. The answer used to share a
+            narrow left column with nothing under it while eight questions
+            ran down the right: at 1440 and wider, 370px of the section was
+            empty paper. */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-x-6">
+          {/* The question as the heading and the answer as the first
+              paragraph after it. In that order, on purpose. */}
+          <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
+            {c.question}
+          </h2>
+          {/* The same two columns as the questions below, so the answer
+              starts on the right-hand column's own left edge. */}
+          <div>
+            <p className="text-pretty text-base leading-[1.75] text-ink-700 sm:text-lg sm:leading-[1.7]">
               {c.answer}
             </p>
 
-            <p className="mt-6 text-sm text-ink-600">
+            <p className="mt-5 text-sm text-ink-600">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums text-ink-800">
                 {formatDate(updated, lang)}
               </time>
             </p>
           </div>
+        </div>
 
-          <div className="lg:col-span-7">
-            <p className="text-sm font-semibold text-ink-600">{c.faqTitle}</p>
-            {/* Native <details>: no JavaScript, and keyboard and screen-reader
-                behaviour for free. The question is an h3 inside the summary,
-                so it is a heading in the outline and not only a control. */}
-            <div className="mt-4 space-y-2.5">
-              {faqs.slice(1).map((faq, i) => {
-                const link = more[i + 1];
-                const isWindows = faq.question.da.startsWith("Kører");
-                return (
-                  <details key={faq.question.da} className="sheet group px-5 sm:px-6">
-                    <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-3.5 [&::-webkit-details-marker]:hidden">
-                      <h3 className="text-base font-semibold leading-snug text-ink-900 group-open:text-brand-700 group-hover:text-brand-700">
-                        {faq.question[lang]}
-                      </h3>
-                      <ChevronDown
-                        className="h-5 w-5 flex-none text-ink-600 transition-transform duration-200 group-open:rotate-180"
-                        strokeWidth={2}
-                        aria-hidden="true"
-                      />
-                    </summary>
-                    <div className="pb-5 pr-2 sm:pr-9">
-                      <p className="text-base leading-[1.7] text-ink-700">{faq.answer[lang]}</p>
-                      {isWindows && (
-                        <p className="mt-2 text-sm text-ink-600">
-                          {lang === "da" ? "Kilde: " : "Source: "}
-                          <a
-                            href={win10.url}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
+        <div className="mt-10 border-t border-ink-200 pt-8 lg:mt-14 lg:pt-10">
+          <p className="text-sm font-semibold text-ink-600">{c.faqTitle}</p>
+          {/* Native <details>: no JavaScript, and keyboard and screen-reader
+              behaviour for free. The question is an h3 inside the summary,
+              so it is a heading in the outline and not only a control.
+              Two independent columns, so opening an answer lengthens its own
+              column and leaves the neighbour where it was. */}
+          <div className="mt-4 grid grid-cols-1 gap-2.5 lg:grid-cols-2 lg:items-start lg:gap-x-6">
+            {[rest.slice(0, half), rest.slice(half)].map((column, columnIndex) => (
+              <div key={columnIndex} className="space-y-2.5">
+                {column.map((faq) => {
+                  const link = more[faqs.indexOf(faq)];
+                  const isWindows = faq.question.da.startsWith("Kører");
+                  return (
+                    <details key={faq.question.da} className="sheet group px-5 sm:px-6">
+                      <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-3.5 [&::-webkit-details-marker]:hidden">
+                        <h3 className="text-base font-semibold leading-snug text-ink-900 group-open:text-brand-700 group-hover:text-brand-700">
+                          {faq.question[lang]}
+                        </h3>
+                        <ChevronDown
+                          className="h-5 w-5 flex-none text-ink-600 transition-transform duration-200 group-open:rotate-180"
+                          strokeWidth={2}
+                          aria-hidden="true"
+                        />
+                      </summary>
+                      <div className="pb-5 pr-2 sm:pr-9">
+                        <p className="text-base leading-[1.7] text-ink-700">{faq.answer[lang]}</p>
+                        {isWindows && (
+                          <p className="mt-2 text-sm text-ink-600">
+                            {lang === "da" ? "Kilde: " : "Source: "}
+                            <a
+                              href={win10.url}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              className="text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
+                            >
+                              <cite className="not-italic">{win10.publisher}</cite>
+                            </a>
+                          </p>
+                        )}
+                        {link && (
+                          <Link
+                            href={localePath(link.href, lang)}
+                            rel={
+                              link.href === "/handelsbetingelser" ? "terms-of-service" : undefined
+                            }
+                            className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
                           >
-                            <cite className="not-italic">{win10.publisher}</cite>
-                          </a>
-                        </p>
-                      )}
-                      {link && (
-                        <Link
-                          href={localePath(link.href, lang)}
-                          rel={link.href === "/handelsbetingelser" ? "terms-of-service" : undefined}
-                          className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-brand-700 underline decoration-brand-600/40 decoration-2 underline-offset-4 hover:text-brand-600"
-                        >
-                          {link.label[lang]}
-                        </Link>
-                      )}
-                    </div>
-                  </details>
-                );
-              })}
-            </div>
+                            {link.label[lang]}
+                          </Link>
+                        )}
+                      </div>
+                    </details>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         </div>
       </Container>

@@ -13,6 +13,11 @@ shared navigation/footer, consent banner, service pages or global identity as
 part of product work. The homepage and shared shell were restored exactly to
 the version before d39f0b6 after the owner corrected the overbroad scope.
 
+**2026-11-17:** the owner explicitly asked for the front page to be reviewed
+and refined, with structural changes allowed and the brand's look kept. That
+work and its reasons are in `design/art-direction/front-page-2026-11.md`. The
+shared navigation, footer and consent banner remain out of scope.
+
 This is a production implementation in the existing Next/Tailwind stack.
 The prior ten-point critique did not authorise changing the homepage. Future
 work must preserve it unless the owner explicitly requests changes there.

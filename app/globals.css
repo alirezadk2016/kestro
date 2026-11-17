@@ -659,10 +659,6 @@ body {
       text-wrap: pretty;
     }
 
-    .home-hero-detail {
-      display: none;
-    }
-
     .home-hero .home-hero-status {
       position: absolute;
       inset-inline: 20px;
@@ -893,8 +889,13 @@ body {
   }
 
   @media (min-width: 768px) {
+    /* 3.3vw, not 2.63: at 1440 the headline was 38px over 34px section
+       headings, so the page's one h1 barely outranked its h2s on a laptop.
+       It reaches the display size's 52px cap at 1576px now instead of 1977px.
+       The longest line, "Ready for the Nordics.", still ends on the dark wall
+       at every width from 768 up. */
     .hero-title {
-      font-size: clamp(1.85rem, 2.63vw, 3.25rem);
+      font-size: clamp(2rem, 3.3vw, 3.25rem);
     }
   }
 

@@ -96,7 +96,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
   const rest = situations.filter((item) => item !== featured);
 
   return (
-    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-28">
+    <section className="border-y border-white/10 bg-ink-900 py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">

@@ -83,10 +83,17 @@ export default function FeatureStrip({ lang }: { lang: Lang }) {
   ));
 
   return (
-    <div className="relative z-10 shrink-0 border-y border-white/10 bg-ink-950/70">
+    /* One ground for all five. At 70% the photograph read through the right
+       half of the strip, so the last two facts stood on lit stone and the
+       first three on flat navy. From xl the columns take their own width and
+       the row is spread edge to edge (below that the labels wrap, and equal
+       tracks wrap them evenly): five equal tracks left the last fact
+       ending 110px short of the container, under a header whose button sits
+       flush right. */
+    <div className="relative z-10 shrink-0 border-y border-white/10 bg-ink-950/90">
       <Container className="max-md:px-0">
         <Ticker>
-          <ul className="flex py-4 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-6 md:py-8 lg:grid-cols-5 lg:gap-x-7">
+          <ul className="flex py-4 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-6 md:py-8 lg:grid-cols-5 lg:gap-x-6 xl:grid-cols-[repeat(5,auto)] xl:justify-between">
             {items}
           </ul>
           <ul aria-hidden="true" inert className="flex py-4 md:hidden">

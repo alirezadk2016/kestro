@@ -34,38 +34,30 @@ const copy = {
        says refurbished, so the sentence under it says what that means here,
        instead of using the two words as if they were one. */
     subLead: "Kestro skaffer brugte erhvervscomputere til virksomheder",
-    sub: "i Danmark og Norge og gør dem klar – testede og med nordisk tastatur.",
+    /* "i" is tied to "Danmark": as flowing text the line broke after the
+       preposition and left it hanging at the end of the first line. */
+    sub: "i\u00a0Danmark og Norge og gør dem klar – testede og med nordisk tastatur.",
     /* The project's status on the first screen, once, in small type. A buyer
        who learns it three screens down, after reading "supplier" and "get a
        quote", has reason to feel misled. */
     status:
       "Under etablering – endnu ikke en registreret virksomhed. Vi tager imod forespørgsler, ikke ordrer.",
     statusLink: "Status og vilkår",
-    /* How buying works, on the first screen. It was one sentence ("we
-       source per order, and price, condition and warranty are in writing")
-       that said what is true but not what to do; a visitor still had to
-       find out that the way in is an enquiry and that it binds nothing. */
-    stepsLabel: "Sådan foregår det",
-    steps: [
-      "Skriv, hvad I skal bruge",
-      "Få et skriftligt tilbud pr. enhed",
-      "Beslut jer – en forespørgsel binder ikke",
-    ],
+    /* No list of steps here. Three numbered lines stood between the sentence
+       and the buttons from md up (a phone never showed them), which made five
+       blocks of text on the first screen: headline, sentence, steps, actions,
+       status. How buying works is the process section and the written-quote
+       section further down; the status line under the buttons already says
+       an enquiry is not an order. */
     secondary: "Se produkterne",
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
     headlineAccent: "Ready for the Nordics.",
     subLead: "Kestro sources used business computers for companies",
-    sub: "in Denmark and Norway and gets them ready — tested, with a Nordic keyboard.",
+    sub: "in\u00a0Denmark and Norway and gets them ready — tested, with a Nordic keyboard.",
     status: "Pre-launch — not yet a registered business. We take enquiries, not orders.",
     statusLink: "Status and terms",
-    stepsLabel: "How it works",
-    steps: [
-      "Tell us what you need",
-      "Get a written quote per unit",
-      "Decide — an enquiry commits you to nothing",
-    ],
     secondary: "See the products",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
@@ -266,38 +258,17 @@ export default function Hero({ lang }: { lang: Lang }) {
                   <span className="block w-fit text-brand-500">{tuckStop(c.headlineAccent)}</span>
                 </h1>
 
-                {/* One sentence on a phone, two lines from md. As two block
-                  spans on a phone it broke into a long line, a short line and
-                  a dimmer third — "…erhvervs-" / "IT til virksomheder" / "i
-                  Danmark…" on an iPhone, which read as three fragments in two
-                  colours. Inline below md it flows as the sentence it is, in
-                  one colour; "erhvervs-IT" is kept whole, because a line that
-                  ends on "erhvervs-" splits the one term a buyer searches. */}
-                <p className="home-hero-lead mt-4 max-w-xl text-base leading-[1.6] text-paper/85 max-md:text-balance md:mt-5 md:text-[clamp(0.95rem,0.98vw,1.2rem)] md:leading-[1.72]">
-                  <span className="md:block md:text-paper">{keepTerm(c.subLead)} </span>
-                  <span className="md:block md:text-paper/75">{c.sub}</span>
+                {/* One sentence in one colour at every width. From md it was
+                  two block spans, the first clause in white and the rest at
+                  75%, so the sentence changed colour where the line happened
+                  to break and read as a statement with a caption under it.
+                  "erhvervs-IT" is kept whole, because a line that ends on
+                  "erhvervs-" splits the one term a buyer searches. The
+                  measure is narrower at md and lg, where the lit window starts
+                  closer to the copy and a full-width line ran onto it. */}
+                <p className="home-hero-lead mt-4 max-w-xl text-pretty text-base leading-[1.6] text-paper/85 md:mt-6 md:max-w-md md:text-[clamp(1.0625rem,1.25vw,1.3rem)] md:leading-[1.65] lg:max-w-lg 2xl:max-w-xl">
+                  {keepTerm(c.subLead)} {c.sub}
                 </p>
-                {/* Detailed steps remain in the desktop hero; the mobile frame
-                  prioritizes its introduction and primary action. */}
-                <ol
-                  aria-label={c.stepsLabel}
-                  className="home-hero-detail mt-3 max-w-xl space-y-1 text-[0.9375rem] leading-[1.55] text-paper/85 md:mt-4 md:space-y-1.5 md:text-[clamp(0.9rem,0.9vw,1.1rem)] max-md:[@media(max-height:600px)]:hidden"
-                >
-                  {(c.steps as string[]).map((step, i) => (
-                    <li key={step} className="flex items-baseline gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        /* A solid disc, not a ring over the glass: where the
-                         English lines wrap, the numerals sat on the lit part of
-                         the photograph and brand-200 measured 4.0:1. */
-                        className="inline-flex h-5 w-5 flex-none translate-y-[-1px] items-center justify-center rounded-full border border-brand-400/70 bg-brand-950 text-[0.6875rem] font-bold tabular-nums text-paper"
-                      >
-                        {i + 1}
-                      </span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
 
                 {/* No row of facts here any more. It said "Testet · Nordisk
                   tastatur · Levering" in the panel while the strip a thumb's
@@ -329,12 +300,12 @@ export default function Hero({ lang }: { lang: Lang }) {
                 </Button>
               </div>
 
-              <p className="home-hero-status rise rise-1 mt-4 max-w-xl text-[0.8125rem] leading-[1.55] text-paper/75 sm:mt-5 max-md:[@media(max-height:600px)]:hidden">
+              <p className="home-hero-status rise rise-1 mt-4 max-w-xl text-pretty text-[0.8125rem] leading-[1.55] text-paper/75 sm:mt-5 md:max-w-md lg:max-w-xl max-md:[@media(max-height:600px)]:hidden">
                 {c.status}{" "}
                 <Link
                   href={localePath("/handelsbetingelser", lang)}
                   rel="terms-of-service"
-                  className="font-semibold text-paper/85 underline decoration-paper/40 underline-offset-4 hover:text-paper"
+                  className="whitespace-nowrap font-semibold text-paper/85 underline decoration-paper/40 underline-offset-4 hover:text-paper"
                 >
                   {c.statusLink}
                 </Link>

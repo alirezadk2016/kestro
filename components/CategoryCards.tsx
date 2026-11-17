@@ -75,7 +75,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="border-b border-white/10 bg-brand-950 py-10 sm:py-16">
+    <section className="border-b border-white/10 bg-brand-950 py-12 sm:py-20">
       <Container>
         {/* A heading that reads as one. It was an h2 set as a tracked-caps
             label ("HVAD VI SKAFFER") with a rule beside it — a heading in the

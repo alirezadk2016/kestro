@@ -60,7 +60,7 @@ export default function Services({ lang }: { lang: Lang }) {
   const c = copy[lang];
 
   return (
-    <section className="stage py-12 sm:py-20">
+    <section className="stage py-14 sm:py-24">
       <Container>
         <div className="max-w-3xl">
           <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-paper">
