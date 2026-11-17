@@ -255,13 +255,6 @@ export async function verifyPricingCollection(browser, base, fail) {
         4,
         "the table names its columns",
       );
-      const visible = (locator) =>
-        locator.evaluateAll((nodes) =>
-          nodes
-            .map((node, index) => ({ index, shown: node.getClientRects().length > 0 }))
-            .filter((node) => node.shown)
-            .map((node) => node.index),
-        );
       for (const expected of EXAMPLES) {
         const card = section.locator(`[data-budget-model='${expected.model}']`);
         assert.equal(await card.count(), 1, "each reference appears once");
@@ -293,10 +286,19 @@ export async function verifyPricingCollection(browser, base, fail) {
 
         const models = card.locator("a[data-budget-model-link]");
         assert.equal(await models.count(), 1, "the model name links to its specification once");
-        const sources = card.locator("a[data-budget-source]");
-        const shownSources = await visible(sources);
-        assert.equal(shownSources.length, 1, "one historical source is visible per row");
-        const source = sources.nth(shownSources[0]);
+        /* Once in the markup, not once visible: hidden per-breakpoint copies
+           put every source link in the page three times. */
+        const source = card.locator("a[data-budget-source]");
+        assert.equal(await source.count(), 1, "each row has one historical source link");
+        assert.equal(
+          await card
+            .locator("[data-budget-model-link], td")
+            .evaluateAll(
+              (nodes) => nodes.filter((node) => node.getClientRects().length === 0).length,
+            ),
+          0,
+          "no cell or link in a row is hidden at this width",
+        );
         for (const link of [models, source]) {
           assert.ok(await link.isVisible(), "row links are usable without hover");
           const box = await link.boundingBox();

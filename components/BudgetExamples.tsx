@@ -52,88 +52,89 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
         </div>
 
         <div className="plate mt-8 overflow-hidden">
-          <table aria-labelledby="budget-heading" className="w-full border-collapse text-left">
-            {/* Four columns from lg, where the width is there to use; two from
-                sm, with the configuration under the model and the source under
-                the price; one on a phone, where a price column left the model
-                name 130px at 320 and the link broke over two lines. The moved
-                copies are display:none, so a screen reader meets each value
-                once. */}
-            <thead>
-              <tr className="text-xs uppercase tracking-wider text-paper/65">
-                <th scope="col" className="px-3 py-3 font-semibold sm:px-6">
-                  <span className="sm:hidden">{da ? "Model og pris" : "Model and price"}</span>
-                  <span className="hidden sm:inline">Model</span>
+          {/* One cell per value, laid out three ways: a table row from lg; a
+              two-by-two grid from sm (model and price, configuration and
+              source); a stack on a phone, where a price column left the model
+              name 130px at 320 and the link broke over two lines. It was
+              done with hidden copies once, which put each source link in the
+              page three times. Changing a table part's display can strip its
+              table semantics in some browsers, so the roles are stated. */}
+          <table
+            role="table"
+            aria-labelledby="budget-heading"
+            className="w-full border-collapse text-left"
+          >
+            <thead role="rowgroup" className="sr-only lg:not-sr-only">
+              <tr role="row" className="text-xs uppercase tracking-wider text-paper/65">
+                <th role="columnheader" scope="col" className="px-6 py-3 font-semibold">
+                  Model
                 </th>
-                <th scope="col" className="hidden px-3 py-3 font-semibold sm:px-6 lg:table-cell">
+                <th role="columnheader" scope="col" className="px-6 py-3 font-semibold">
                   {da ? "Konfiguration" : "Configuration"}
                 </th>
                 <th
+                  role="columnheader"
                   scope="col"
-                  className="hidden whitespace-nowrap px-3 py-3 text-right font-semibold sm:table-cell sm:px-6"
+                  className="whitespace-nowrap px-6 py-3 text-right font-semibold"
                 >
                   {da ? "Pris hos forhandler" : "Retailer price"}
                 </th>
-                <th scope="col" className="hidden px-3 py-3 font-semibold sm:px-6 lg:table-cell">
+                <th role="columnheader" scope="col" className="px-6 py-3 font-semibold">
                   {da ? "Kilde" : "Source"}
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {rows.map(({ item, source }) => {
-                const sourceLink = (className: string) => (
-                  <a
-                    data-budget-source
-                    href={source.url}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    aria-label={`${source.publisher}: ${da ? "historisk pris for" : "historical price for"} ${item.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
-                    className={`min-h-11 items-center gap-1 whitespace-nowrap text-sm text-brand-300 hover:text-paper ${className}`}
+            <tbody role="rowgroup">
+              {rows.map(({ item, source }) => (
+                <tr
+                  key={item.model}
+                  role="row"
+                  data-budget-model={item.model}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 border-t border-white/10 px-3 py-3 first:border-t-0 sm:px-6 lg:table-row lg:p-0 lg:first:border-t"
+                >
+                  <th
+                    role="rowheader"
+                    scope="row"
+                    className="col-span-2 text-left font-normal sm:col-span-1 lg:px-6 lg:py-2"
                   >
-                    {source.publisher}
-                    <ArrowUpRight size={14} aria-hidden="true" />
-                  </a>
-                );
-                const price = (
-                  <p className="flex min-h-11 items-center whitespace-nowrap text-base font-semibold tabular-nums text-paper">
+                    <Link
+                      data-budget-model-link
+                      href={localePath(`/modeller/${item.model}`, lang)}
+                      className="inline-flex min-h-11 items-center whitespace-nowrap font-display text-base font-bold leading-snug text-paper underline decoration-white/25 underline-offset-4 hover:decoration-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                    >
+                      {item.name}
+                    </Link>
+                  </th>
+                  <td
+                    role="cell"
+                    className="col-span-2 text-sm leading-5 text-paper/75 sm:col-span-1 sm:col-start-1 sm:row-start-2 lg:px-6 lg:py-2"
+                  >
+                    {item.configuration[lang]}
+                  </td>
+                  <td
+                    role="cell"
+                    className="mt-1 whitespace-nowrap text-base font-semibold tabular-nums text-paper sm:col-start-2 sm:row-start-1 sm:mt-0 sm:text-right lg:px-6 lg:py-2"
+                  >
                     {da ? "ca." : "approx."} {formatDkk(budgetAmount(item), lang)}
-                  </p>
-                );
-                return (
-                  <tr
-                    key={item.model}
-                    data-budget-model={item.model}
-                    className="border-t border-white/10 align-top lg:align-middle"
+                  </td>
+                  <td
+                    role="cell"
+                    className="mt-1 justify-self-end sm:col-start-2 sm:row-start-2 sm:mt-0 lg:px-6 lg:py-2"
                   >
-                    <th scope="row" className="px-3 py-3 text-left font-normal sm:px-6 lg:py-2">
-                      <Link
-                        data-budget-model-link
-                        href={localePath(`/modeller/${item.model}`, lang)}
-                        className="inline-flex min-h-11 items-center whitespace-nowrap font-display text-base font-bold leading-snug text-paper underline decoration-white/25 underline-offset-4 hover:decoration-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
-                      >
-                        {item.name}
-                      </Link>
-                      <p className="text-sm leading-5 text-paper/75 lg:hidden">
-                        {item.configuration[lang]}
-                      </p>
-                      <div className="flex items-center justify-between gap-3 sm:hidden">
-                        {price}
-                        {sourceLink("inline-flex")}
-                      </div>
-                    </th>
-                    <td className="hidden px-3 py-2 text-sm leading-5 text-paper/75 sm:px-6 lg:table-cell">
-                      {item.configuration[lang]}
-                    </td>
-                    <td className="hidden px-3 py-3 text-right sm:table-cell sm:px-6 lg:py-2">
-                      <div className="flex justify-end">{price}</div>
-                      {sourceLink("inline-flex lg:hidden")}
-                    </td>
-                    <td className="hidden px-3 py-2 sm:px-6 lg:table-cell">
-                      {sourceLink("inline-flex")}
-                    </td>
-                  </tr>
-                );
-              })}
+                    <a
+                      data-budget-source
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      aria-label={`${source.publisher}: ${da ? "historisk pris for" : "historical price for"} ${item.name} (${da ? "åbner i en ny fane" : "opens in a new tab"})`}
+                      className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-sm text-brand-300 hover:text-paper"
+                    >
+                      {source.publisher}
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
