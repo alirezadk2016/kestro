@@ -10,7 +10,7 @@ import PointerLight from "@/components/PointerLight";
  * on one box cannot do it. .forge is the frame, .forge-face is what it holds;
  * both are in globals.css with the reasoning.
  *
- * Given an `href` it becomes one link, tilts, and takes a highlight that
+ * Given an `href` it becomes one link, lifts, and takes a highlight that
  * tracks the pointer. Without one it is a static panel and none of that
  * applies — a card that does not go anywhere should not lift when you point
  * at it, which is the entire vocabulary of "this is clickable".

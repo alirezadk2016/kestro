@@ -51,7 +51,7 @@ export default function ServiceTile({
     <ForgedPanel href={href}>
       <div className="flex items-start gap-4">
         <MarkTile name={mark} size="md" className="tile-z tile-z-near flex-none" />
-        <div className="tile-z tile-z-far flex min-w-0 flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col">
           <Heading className="text-base font-semibold leading-snug text-paper group-hover:text-brand-200">
             {title}
           </Heading>

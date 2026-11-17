@@ -52,9 +52,11 @@ const copy = {
     formTitle: "Få en pris på jeres opsætning",
     quantity: "Hvor mange maskiner?",
     model: "Udstyr eller model",
-    modelPlaceholder: "Fx bærbare til kontorbrug eller ThinkPad T14",
+    /* Placeholders fit the 210px a 320px screen leaves the field; the
+       longer ones were cut off mid-word on every phone. */
+    modelPlaceholder: "Fx bærbare, ThinkPad T14",
     when: "Hvornår skal det stå klar?",
-    whenPlaceholder: "Fx inden udgangen af november",
+    whenPlaceholder: "Fx inden for en måned",
     optional: "(valgfrit)",
     submit: "Fortsæt til tilbuddet",
     next: "Næste trin er navn, virksomhed og e-mail. Det er uforpligtende.",
@@ -74,9 +76,9 @@ const copy = {
     formTitle: "Get a price for your setup",
     quantity: "How many machines?",
     model: "Equipment or model",
-    modelPlaceholder: "E.g. laptops for office use, or ThinkPad T14",
+    modelPlaceholder: "E.g. laptops, ThinkPad T14",
     when: "When does it need to be ready?",
-    whenPlaceholder: "E.g. before the end of November",
+    whenPlaceholder: "E.g. within a month",
     optional: "(optional)",
     submit: "Continue to the quote",
     next: "The next step is your name, company and email. Nothing is binding.",
@@ -117,8 +119,13 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
   return (
     <section className="border-y border-ink-200 bg-paper-dim py-14 text-ink-900 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-6">
+        {/* Three blocks, not two columns: the promise, the form, and the
+            people who answer it. On a phone they stack in that order, so the
+            form follows the list it fulfils; the faces came first there once
+            and pushed the form 700px down. From lg the promise and the faces
+            share the left column and the form spans both rows on the right. */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-0">
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1">
             <h2 className="text-balance font-display t-h2 font-extrabold tracking-display text-ink-900">
               {c.title}
             </h2>
@@ -149,38 +156,9 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
                 aria-hidden="true"
               />
             </Link>
-
-            {/* Who answers the form, beside the form. On the front page this
-                strip closed a separate call-to-action band that repeated
-                "Få et tilbud" a screen below this form; the band is gone from
-                this page and the faces moved here, where a buyer deciding
-                whether to write actually is. */}
-            <div className="mt-10 border-t border-ink-200 pt-6">
-              <p className="text-sm font-semibold text-ink-700">{c.who}</p>
-              <ul className="mt-4 space-y-4">
-                {team.map((member) => (
-                  <li key={member.id} className="flex items-center gap-3">
-                    <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold leading-[1.5] text-ink-900">
-                        {member.name}
-                      </p>
-                      <p className="text-sm leading-[1.5] text-ink-600">{member.role[lang]}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={localePath("/om-os", lang)}
-                className="group mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
-              >
-                {c.meet}
-                <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
-              </Link>
-            </div>
           </div>
 
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1">
             <form
               method="get"
               action={localePath("/tilbud", lang)}
@@ -257,6 +235,35 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
               </button>
               <p className="mt-3 text-sm leading-[1.5] text-ink-600">{c.next}</p>
             </form>
+          </div>
+
+          {/* Who answers the form, beside the form. On the front page this
+              strip closed a separate call-to-action band that repeated
+              "Få et tilbud" a screen below this form; the band is gone from
+              this page and the faces moved here, where a buyer deciding
+              whether to write actually is. */}
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:mt-10 lg:border-t lg:border-ink-200 lg:pt-6">
+            <p className="text-sm font-semibold text-ink-700">{c.who}</p>
+            <ul className="mt-4 space-y-4">
+              {team.map((member) => (
+                <li key={member.id} className="flex items-center gap-3">
+                  <TeamAvatar member={member} lang={lang} size={44} className="h-11 w-11" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold leading-[1.5] text-ink-900">
+                      {member.name}
+                    </p>
+                    <p className="text-sm leading-[1.5] text-ink-600">{member.role[lang]}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={localePath("/om-os", lang)}
+              className="group mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
+            >
+              {c.meet}
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </Container>

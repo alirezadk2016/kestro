@@ -929,57 +929,42 @@ body {
   }
 
   /*
-   * A tile with depth.
+   * A tile that lifts.
    *
    * The card grids were flat rectangles that did nothing when you pointed at
-   * them, which is also how they told you they were not clickable — and they
-   * were not, which was the bigger problem.
+   * them, which is also how they told you they were not clickable.
    *
-   * The depth is real rather than drawn: the grid cell carries the
-   * perspective, the tile rotates about its own bottom edge, and the icon
-   * sits on its own plane 34px in front of the face, so it separates from the
-   * card the way an object separates from a wall. Nothing here follows the
-   * mouse — a tilt that tracks the cursor is a demo, and by the fourth card
-   * on a page it is noise.
+   * For a while the answer was real depth: the tile tipped back 7 degrees
+   * about its bottom edge, grew 1.2% and carried its icon 34px in front of
+   * the face, over 420ms. On a page with eight linked panels that is eight
+   * small demonstrations on the way to a click, and type on a rotated plane
+   * renders soft at the moment somebody is reading it to decide. Now the
+   * tile rises 3px in 180ms and stays flat. The rim, the sheen and the
+   * pointer light still say it can be pressed; the icon answers with its
+   * own highlight instead of leaving the card.
    */
-  .tilt {
-    perspective: 900px;
-  }
-
   .tile {
-    transform-style: preserve-3d;
     transition:
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      background-image 420ms ease;
+      transform 180ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 180ms cubic-bezier(0.2, 0, 0, 1),
+      background-image 240ms ease;
   }
 
   .tilt:hover .tile,
   .tile:focus-visible {
-    transform: translateY(-6px) rotateX(7deg) scale(1.012);
-    transform-origin: center bottom;
+    transform: translateY(-3px);
   }
 
-  /* The icon, the heading and the prompt each sit at their own depth, so the
-     card opens up rather than simply growing. */
   .tile-z {
-    transform: translateZ(0);
     transition:
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      color 240ms ease;
-  }
-
-  .tilt:hover .tile-z-far,
-  .tile:focus-visible .tile-z-far {
-    transform: translateZ(14px);
+      box-shadow 180ms cubic-bezier(0.2, 0, 0, 1),
+      color 180ms ease;
   }
 
   .tilt:hover .tile-z-near,
   .tile:focus-visible .tile-z-near {
-    transform: translateZ(34px);
     box-shadow:
-      0 14px 22px -10px rgb(2 5 12 / 0.9),
+      0 10px 18px -10px rgb(2 5 12 / 0.9),
       inset 0 1px 0 0 rgb(255 247 233 / 0.22),
       inset 0 0 0 1px rgb(96 128 255 / 0.32);
   }
@@ -991,14 +976,14 @@ body {
     opacity: 0;
     transform: translateY(4px);
     transition:
-      opacity 300ms ease,
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 180ms ease,
+      transform 180ms cubic-bezier(0.2, 0, 0, 1);
   }
 
   .tilt:hover .tile-prompt,
   .tile:focus-visible .tile-prompt {
     opacity: 1;
-    transform: translateY(0) translateZ(20px);
+    transform: translateY(0);
   }
 
   /* A phone has no hover, so a prompt that waits for one never arrives and
@@ -1027,7 +1012,7 @@ body {
       rgb(255 250 238 / 0.09) 48%,
       transparent 62%
     );
-    transition: opacity 420ms ease;
+    transition: opacity 240ms ease;
   }
 
   .tilt:hover .tile-sheen::before,
@@ -1078,10 +1063,13 @@ body {
       inset 0 -1px 0 0 rgb(0 0 0 / 0.5),
       0 2px 4px -2px rgb(2 5 12 / 0.7),
       0 28px 52px -28px rgb(2 5 12 / 0.92);
+    /* The same timing as .tile, which shares this element: declared later,
+       this list is the one that applies, so a slower value here would undo
+       the tile's. */
     transition:
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      background-image 420ms ease;
+      transform 180ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 180ms cubic-bezier(0.2, 0, 0, 1),
+      background-image 240ms ease;
   }
 
   .tilt:hover .forge,
@@ -1127,8 +1115,8 @@ body {
       inset 0 0 0 1px rgb(0 0 0 / 0.4),
       inset 0 -1px 0 0 rgb(255 247 233 / 0.09);
     transition:
-      background-image 420ms ease,
-      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+      background-image 240ms ease,
+      box-shadow 180ms cubic-bezier(0.2, 0, 0, 1);
   }
 
   .tilt:hover .forge-face {
@@ -1173,7 +1161,7 @@ body {
       linear-gradient(90deg, transparent 6%, rgb(96 128 255 / 0.5) 50%, transparent 94%) top / 100%
         1px no-repeat;
     opacity: 0.45;
-    transition: opacity 420ms ease;
+    transition: opacity 240ms ease;
   }
 
   .tilt:hover .forge-rim::before,
@@ -1199,17 +1187,7 @@ body {
     }
 
     .tilt:hover .tile,
-    .tile:focus-visible {
-      transform: none;
-    }
-
-    .tilt:hover .tile-z-far,
-    .tilt:hover .tile-z-near,
-    .tile:focus-visible .tile-z-far,
-    .tile:focus-visible .tile-z-near {
-      transform: none;
-    }
-
+    .tile:focus-visible,
     .tilt:hover .tile-prompt,
     .tile:focus-visible .tile-prompt {
       transform: none;

@@ -32,6 +32,19 @@ Measured at 1904x912, 1440x900, 1280x720, 768x1024, 390x844, 320x640.
 | Does any hero text leave the dark wall? | At 768 the sentence and the status note ran onto the lit window; at 1440 the English sentence reached the pillar. | Narrower measure at md, lg and xl. |
 | Is any link broken over two lines? | At 1024 the English "Status and terms" wrapped. | The link does not wrap. |
 
+## Round 3: the sections under the fold
+
+Measured at 1904x912, 1440x900 and 390x844, with the pointer on each linked
+panel.
+
+| Question | Evidence | Change |
+| --- | --- | --- |
+| Does a card answer the pointer without performing? | The eight linked panels tipped back 7 degrees, grew 1.2% and lifted their icon 34px off the face over 420ms. Type on a rotated plane renders soft at the moment somebody reads it. `.forge`, on the same element and later in the file, also set its own 420ms transform transition, so any faster value on `.tile` was ignored. | The tile rises 3px in 180ms and stays flat; the frame, face and rim use the same timing. The icon still lights its ring. |
+| On a phone, does the form follow the promise it keeps? | At 390 the quote section ran heading, list, sample-quote button, the two faces and "Mød os", and only then the form: 700px of scrolling between "Alt står skriftligt" and the first field. | Three blocks in a grid. A phone reads promise, form, faces; from lg the promise and the faces share the left column and the form spans both rows, as before. |
+| Do the example texts fit the fields? | At 390 "Fx bærbare til kontorbrug eller ThinkPad T14" was cut at "ThinkPa"; at 320 the date example was cut too. The field has 210px at 320. | "Fx bærbare, ThinkPad T14" (188px) and "Fx inden for en måned" (164px), in both forms that used them. |
+| Does any line start or end on a separator? | At 390 the all-products card broke "Bærbare · skærme · / tilbehør" with a dot at a line's edge, either way round. | It lists kinds, so it reads as a list: "Bærbare, skærme og tilbehør". The brand lines are short and keep their dots. |
+| Do the four situations share a left edge on a phone? | The fleet card had 28px of padding over the 20px of the three cards under it, so its mark stood 8px right of theirs. | 20px on a phone, 36px from sm as before. |
+
 ## Left as it is, and why
 
 - The hero photograph and the four category scenes. One room, one light, one

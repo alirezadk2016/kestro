@@ -137,7 +137,9 @@ export default function QualifySection({ lang }: { lang: Lang }) {
             <li key={item.href} className="lg:col-span-5">
               <ForgedPanel
                 href={localePath(item.href, lang)}
-                faceClassName="h-full justify-between p-7 sm:p-9"
+                /* p-5 on a phone, the padding of the three cards under it, so
+                   the four marks stand on one left edge in the stack. */
+                faceClassName="h-full justify-between p-5 sm:p-9"
               >
                 <div>
                   <MarkTile name={item.mark} size="lg" className="tile-z tile-z-near" />

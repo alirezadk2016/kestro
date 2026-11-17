@@ -58,7 +58,9 @@ const cards = [
     width: 1200,
     height: 675,
     title: { da: "Alle produkter", en: "All products" },
-    brands: { da: "Bærbare · skærme · tilbehør", en: "Laptops · monitors · accessories" },
+    /* A list of kinds, not of brands, so it reads as a sentence: at
+       390px the dotted version broke with a dot alone at a line's edge. */
+    brands: { da: "Bærbare, skærme og tilbehør", en: "Laptops, monitors and accessories" },
     alt: {
       da: "To stakke lukkede bærbare computere og én åben bærbar på et stenbord",
       en: "Two stacks of closed laptops and one open laptop on a stone desk",
@@ -106,7 +108,7 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                   />
                 </div>
 
-                <div className="tile-z tile-z-far flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
+                <div className="flex flex-1 items-end justify-between gap-3 p-3 sm:p-4">
                   <div className="min-w-0">
                     <h3 className="text-sm font-bold leading-snug text-paper sm:text-base">
                       {card.title[lang]}
