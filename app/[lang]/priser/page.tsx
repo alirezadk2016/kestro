@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 import FaqSchema from "@/components/FaqSchema";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -197,7 +197,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
           className="mb-4"
         />
         <div className="grid gap-4 lg:grid-cols-2 lg:items-start lg:gap-12">
-          <h1 className="t-h2 font-display font-extrabold tracking-display text-paper">
+          <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper">
             {c.title}
           </h1>
           <p className="text-sm leading-6 text-paper/85 sm:text-base">{lead}</p>
@@ -215,7 +215,31 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
 
       <ProjectNotice lang={lang} />
 
-      <section className="lit lit-paper py-8 sm:py-12">
+      {/* What moves a price, open and first. It sat folded at the bottom of
+          the page, under a summary line, while the top of the page was four
+          product rows: the one thing this page can say that the products hub
+          cannot was the thing a reader had to dig for. Six parallel factors,
+          so six plates. */}
+      <section aria-labelledby="price-drivers" className="py-8 sm:py-12">
+        <Container>
+          <h2
+            id="price-drivers"
+            className="font-display t-h2 font-extrabold tracking-display text-paper"
+          >
+            {c.driversTitle}
+          </h2>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {drivers.map((driver) => (
+              <li key={driver.heading.da} className="plate p-5">
+                <h3 className="text-base font-bold text-paper">{driver.heading[lang]}</h3>
+                <p className="mt-1.5 text-sm leading-6 text-paper/75">{driver.body[lang]}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <section className="lit lit-paper border-t border-white/10 py-8 sm:py-12">
         <Container>
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div>
@@ -264,6 +288,8 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                   <li key={point}>{point}</li>
                 ))}
               </ul>
+              {/* The page's one call to Kestro. The price rows used to carry
+                  four more, one per model. */}
               <Link href={localePath("/tilbud", lang)} className={`${buttonClass("primary")} mt-4`}>
                 {c.enquiry}
                 <ArrowRight size={16} aria-hidden="true" />
@@ -271,26 +297,7 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
             </div>
           </div>
 
-          <details className="group mt-8 border-y border-white/15">
-            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
-              <h2 className="font-display text-lg font-bold text-paper">{c.driversTitle}</h2>
-              <ChevronDown
-                size={20}
-                aria-hidden="true"
-                className="flex-none text-brand-300 transition-transform group-open:rotate-180 motion-reduce:transition-none"
-              />
-            </summary>
-            <ul className="grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-3">
-              {drivers.map((driver) => (
-                <li key={driver.heading.da}>
-                  <h3 className="text-sm font-bold text-paper">{driver.heading[lang]}</h3>
-                  <p className="mt-1 text-sm leading-6 text-paper/75">{driver.body[lang]}</p>
-                </li>
-              ))}
-            </ul>
-          </details>
-
-          <ul className="mt-3 flex flex-wrap gap-x-6">
+          <ul className="mt-8 flex flex-wrap gap-x-6">
             {c.related.map((link) => (
               <li key={link.href}>
                 <Link

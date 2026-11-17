@@ -57,6 +57,8 @@ no substituted photograph: no suitable exact-model licence was verified.
 - Created for Kestro on 2026-11-11 as original code-native SVG artwork.
 - These are labelled illustrations, not photographs of actual stock, seller
   units or evidence of a specific device's condition, accessories or ports.
+- Since 2026-11-17 they no longer appear on `/priser`, which is a text price
+  table; they remain on the products hub and the model pages.
 - No manufacturer/retailer image or manual drawing was copied, traced,
   embedded or linked as an external image. No logos or operating-system
   screenshots appear in the artwork.

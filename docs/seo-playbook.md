@@ -1124,3 +1124,25 @@ hub and the corrected /modeller description. 256 sitemap pages.
   will show which of them get impressions first.
 - `docs/seo-internal-links.csv` and `docs/seo-pillar-cluster.csv` are
   regenerated from this run; the pillar sheet now holds the generation pages.
+
+# Prices page: a price table, apart from the products hub — 17 November 2026
+
+The owner found `/priser` and `/produkter` hard to tell apart. The cause was
+the prices page itself: Kestro has no selling prices, so the page showed four
+catalogue models as product cards (photograph, model name as heading,
+"Detaljer" and "Spørg om pris" on every row), and three of the four pictures
+were the very files the products hub uses for its categories.
+
+Rule 1 (one page per search intent) keeps both URLs: "hvad koster brugte
+computere" asks a cost question, "brugte computere til virksomheder" looks
+for a range. What changed is what `/priser` answers with.
+
+- The four references are one table: model, configuration, retailer price,
+  source. No pictures and no per-row enquiry; the model name links to its
+  specification page, so the internal links stay.
+- "Hvad afgør jeres pris?" is open and second, as six plates, instead of a
+  folded line at the bottom.
+- One call to the quote form, after the explanation.
+- The H1 takes the page-title size; it had the size of the H2 under it.
+- Title, description, URL, canonical, the FAQ markup and the dated figures
+  are unchanged. No `Offer` markup.

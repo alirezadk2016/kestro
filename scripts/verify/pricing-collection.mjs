@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import sharp from "sharp";
 
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920];
 const SECTION = "#budget-collection";
@@ -17,8 +16,6 @@ const EXAMPLES = [
     observed: 2655,
     fee: 37,
     source: "https://www.refurbed.dk/p/lenovo-tp-t480-8250u/95266/",
-    photo: /^\/thinkpad-t480-6\.jpg$/,
-    alt: /ThinkPad\s+T480/i,
   },
   {
     model: "lenovo-thinkpad-t14",
@@ -30,8 +27,6 @@ const EXAMPLES = [
     observed: 2955,
     fee: 37,
     source: "https://www.refurbed.dk/p/lenovo-thinkpad-t14-g2-1145g7/",
-    photo: /^\/models\/t14\/gen2-intel-reference\.webp$/,
-    alt: /ThinkPad\s+T14.*(?:Gen\s*2|G2)/i,
   },
   {
     model: "dell-optiplex-5060",
@@ -43,9 +38,6 @@ const EXAMPLES = [
     observed: 2029,
     fee: 30,
     source: "https://www.refurbed.dk/en-dk/p/dell-optiplez-5060-sff/",
-    photo: /^\/pricing\/optiplex-5060-sff-illustration\.svg$/,
-    alt: /OptiPlex\s+5060\s+SFF/i,
-    illustration: true,
   },
   {
     model: "dell-ultrasharp-u2419h",
@@ -57,27 +49,18 @@ const EXAMPLES = [
     observed: 1185,
     fee: 15,
     source: "https://www.refurbed.dk/p/dell-ultrasharp-u2419h/",
-    photo: /^\/pricing\/ultrasharp-u2419h-illustration\.svg$/,
-    alt: /(?:UltraSharp\s+)?U2419H/i,
-    illustration: true,
   },
-];
-
-const T14_CREDITS = [
-  "https://commons.wikimedia.org/wiki/File:ThinkPad_T14.jpg",
-  "https://creativecommons.org/publicdomain/zero/1.0/",
 ];
 
 /** A dated budget reference is not a live sale; its enquiry retains the exact configuration. */
 export async function verifyPricingCollection(browser, base, fail) {
-  console.log("verify: photographic budget collection and exact enquiry handoff");
+  console.log("verify: dated price table, separate from the products hub");
   const origin = new URL(base);
   assert.ok(
     ["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname),
     "pricing checks are local only",
   );
   const repository = fileURLToPath(new URL("../../", import.meta.url));
-  const publicRoot = resolve(repository, "public");
   const directory = process.env.VERIFY_ARTIFACT_DIR && resolve(process.env.VERIFY_ARTIFACT_DIR);
   if (directory) {
     const fromRepository = relative(repository, directory);
@@ -190,7 +173,6 @@ export async function verifyPricingCollection(browser, base, fail) {
       assert.ok(await section.isVisible(), "the collection is visible without a filter or script");
       const cards = section.locator("[data-budget-model]");
       assert.equal(await cards.count(), 4, "four distinct dated budget examples remain");
-      assert.equal(await section.locator("img").count(), 4, "every reference has an image");
       assert.equal(
         await section
           .locator("canvas,[data-checkout],a[href*='/checkout'],a[href*='/cart']")
@@ -254,16 +236,44 @@ export async function verifyPricingCollection(browser, base, fail) {
         "there is no misleading purchase action",
       );
 
-      const destinations = new Map();
+      /* A price table, not a second products page: no pictures, no per-row
+         enquiry, one row header per model. Photographs and two buttons on each
+         row made /priser read as /produkter with prices (2026-11-17). */
+      assert.equal(
+        await section.locator("img").count(),
+        0,
+        "the price table carries no product pictures",
+      );
+      assert.equal(
+        await section.locator("a[data-budget-enquiry]").count(),
+        0,
+        "rows carry no enquiry action; the page has one call to action",
+      );
+      assert.equal(await section.locator("table").count(), 1, "the references are one table");
+      assert.equal(
+        await section.locator("table th[scope='col']").count(),
+        4,
+        "the table names its columns",
+      );
+      const visible = (locator) =>
+        locator.evaluateAll((nodes) =>
+          nodes
+            .map((node, index) => ({ index, shown: node.getClientRects().length > 0 }))
+            .filter((node) => node.shown)
+            .map((node) => node.index),
+        );
       for (const expected of EXAMPLES) {
         const card = section.locator(`[data-budget-model='${expected.model}']`);
         assert.equal(await card.count(), 1, "each reference appears once");
         assert.equal(
-          await card.getByRole("heading", { level: 3, name: expected.name, exact: true }).count(),
-          1,
-          "the exact model is named",
+          await card.evaluate((row) => row.tagName),
+          "TR",
+          "each reference is a table row",
         );
+        const header = card.locator("th[scope='row']");
+        assert.equal(await header.count(), 1, "each row has one row header");
         const cardText = (await card.innerText()).replace(/\s+/g, " ");
+        assert.ok(cardText.includes(expected.name), "the exact model is named");
         assert.ok(
           cardText.includes(expected.configuration[language]),
           "the historical configuration remains readable",
@@ -275,130 +285,30 @@ export async function verifyPricingCollection(browser, base, fail) {
           cardText.includes(`${number} DKK`),
           "the documented total is rounded to the correct DKK 100 budget",
         );
-        if (expected.illustration)
-          assert.match(
-            cardText,
-            /illustration/i,
-            "the Dell artwork is visibly labelled as an illustration",
-          );
-
-        const photo = card.locator("img");
-        await photo.scrollIntoViewIfNeeded();
-        const handle = await photo.elementHandle();
-        try {
-          await page.waitForFunction(async (image) => {
-            if (!image?.complete || !image.naturalWidth) return false;
-            await image.decode();
-            return true;
-          }, handle);
-        } finally {
-          await handle?.dispose();
-        }
-        const rendered = await photo.evaluate((image) => {
-          const box = image.getBoundingClientRect();
-          const frame = image.parentElement.getBoundingClientRect();
-          const card = image.closest("[data-budget-model]").getBoundingClientRect();
-          const source = new URL(image.currentSrc);
-          const style = getComputedStyle(image);
-          return {
-            source: source.searchParams.get("url") || source.pathname,
-            alt: image.alt,
-            width: Number(image.getAttribute("width")),
-            height: Number(image.getAttribute("height")),
-            ratio: image.naturalWidth / image.naturalHeight,
-            fit: style.objectFit,
-            transform: style.transform,
-            fits:
-              box.width > 0 &&
-              box.height > 0 &&
-              box.left >= frame.left - 1 &&
-              box.right <= frame.right + 1 &&
-              box.top >= frame.top - 1 &&
-              box.bottom <= frame.bottom + 1,
-            frameFits:
-              frame.left >= card.left - 1 &&
-              frame.right <= card.right + 1 &&
-              frame.top >= card.top - 1 &&
-              frame.bottom <= card.bottom + 1,
-          };
-        });
-        assert.match(
-          rendered.source,
-          expected.photo,
-          "the intended model photograph or original illustration is local",
-        );
-        assert.match(
-          rendered.alt,
-          expected.alt,
-          "alternative text identifies the correct model and form factor",
-        );
-        const filename = resolve(publicRoot, `.${rendered.source}`);
-        assert.ok(
-          filename.startsWith(publicRoot + "/") || filename.startsWith(publicRoot + "\\"),
-          "the image file stays under public",
-        );
-        const metadata = await sharp(filename).metadata();
-        assert.ok(
-          Math.abs(rendered.ratio - metadata.width / metadata.height) < 0.015,
-          "delivered dimensions preserve the asset aspect ratio",
-        );
-        if (rendered.width && rendered.height) {
-          assert.equal(rendered.width, metadata.width, "intrinsic width matches the asset");
-          assert.equal(rendered.height, metadata.height, "intrinsic height matches the asset");
-        }
-        assert.equal(rendered.fit, "contain", "the whole product remains inside its frame");
         assert.equal(
-          rendered.transform,
-          "none",
-          "the model media is not zoomed into a misleading crop",
+          cardText.split(`${number} DKK`).length - 1,
+          1,
+          "each price is shown once at this width",
         );
-        assert.ok(rendered.fits && rendered.frameFits, "the picture and frame fit their card");
 
-        const enquiry = card.locator("a[data-budget-enquiry]");
-        const model = card.locator("a[data-budget-model-link]");
-        const source = card.locator("a[data-budget-source]");
-        for (const link of [enquiry, model, source]) {
-          assert.equal(
-            await link.count(),
-            1,
-            "every reference has one clear enquiry, specification and historical-source action",
-          );
-          assert.ok(await link.isVisible(), "actions are usable without hover");
+        const models = card.locator("a[data-budget-model-link]");
+        assert.equal(await models.count(), 1, "the model name links to its specification once");
+        const sources = card.locator("a[data-budget-source]");
+        const shownSources = await visible(sources);
+        assert.equal(shownSources.length, 1, "one historical source is visible per row");
+        const source = sources.nth(shownSources[0]);
+        for (const link of [models, source]) {
+          assert.ok(await link.isVisible(), "row links are usable without hover");
           const box = await link.boundingBox();
-          assert.ok(box && box.width >= 44 && box.height >= 44, "actions are at least 44px");
+          assert.ok(box && box.width >= 44 && box.height >= 44, "row links are at least 44px");
+          assert.ok(box.height <= 48, "a row link stays on one line");
         }
-        for (const [link, visibleLabel] of [
-          [enquiry, language === "da" ? "Spørg om pris" : "Enquire"],
-          [model, language === "da" ? "Detaljer" : "Details"],
-        ]) {
-          const namedLink = card.getByRole("link", {
-            name: new RegExp(`^${visibleLabel}(?:\\s|:|$)`, "i"),
-          });
-          assert.equal(
-            await link.and(namedLink).count(),
-            1,
-            "the accessible action name begins with its visible label for speech-input users",
-          );
-        }
-        const enquiryUrl = new URL(await enquiry.getAttribute("href"), origin);
-        const configuration = `${expected.name} — ${expected.configuration[language]}`;
-        assert.equal(enquiryUrl.origin, origin.origin, "an enquiry stays on Kestro");
         assert.equal(
-          enquiryUrl.pathname,
-          quotePath,
-          "the enquiry reaches the locale's existing quote page",
+          (await models.innerText()).trim(),
+          expected.name,
+          "the link text is the exact model name",
         );
-        assert.equal(
-          enquiryUrl.searchParams.get("model"),
-          configuration,
-          "the exact name, generation, form factor and configuration reach the enquiry",
-        );
-        assert.ok(
-          configuration.length <= 120,
-          "the supplied configuration fits the form's existing text limit",
-        );
-        destinations.set(expected.model, { href: enquiryUrl.href, configuration });
-        const modelUrl = new URL(await model.getAttribute("href"), origin);
+        const modelUrl = new URL(await models.getAttribute("href"), origin);
         assert.equal(modelUrl.origin, origin.origin, "model specifications stay on Kestro");
         assert.equal(
           modelUrl.pathname,
@@ -418,10 +328,15 @@ export async function verifyPricingCollection(browser, base, fail) {
         const relations = ((await source.getAttribute("rel")) || "").split(/\s+/);
         for (const relation of ["noopener", "noreferrer", "nofollow"])
           assert.ok(relations.includes(relation), "external sources retain safe relations");
+        const sourceName = (await source.getAttribute("aria-label")) || "";
         assert.match(
-          (await source.getAttribute("aria-label")) || (await source.innerText()),
+          sourceName,
           language === "da" ? /historisk/i : /historical/i,
           "the source action is not represented as a current offer",
+        );
+        assert.ok(
+          sourceName.startsWith((await source.innerText()).trim()),
+          "the accessible source name begins with its visible label for speech-input users",
         );
         const layout = await card.evaluate((card) => {
           const bounds = card.getBoundingClientRect();
@@ -429,19 +344,11 @@ export async function verifyPricingCollection(browser, base, fail) {
             left: bounds.left,
             right: bounds.right,
             height: bounds.height,
-            clipped: [...card.querySelectorAll("h3,p,a")]
+            clipped: [...card.querySelectorAll("p,a")]
               .filter((node) => {
                 const box = node.getBoundingClientRect();
                 const style = getComputedStyle(node);
-                if (
-                  !box.width ||
-                  !box.height ||
-                  style.display === "none" ||
-                  style.visibility === "hidden" ||
-                  node.closest("[aria-hidden='true']") ||
-                  node.classList.contains("sr-only")
-                )
-                  return false;
+                if (!box.width || !box.height || node.getClientRects().length === 0) return false;
                 return (
                   node.scrollWidth > node.clientWidth + 2 ||
                   box.left < bounds.left - 1 ||
@@ -452,16 +359,13 @@ export async function verifyPricingCollection(browser, base, fail) {
               .map((node) => node.textContent.trim()),
           };
         });
-        assert.ok(layout.left >= -1 && layout.right <= width + 1, "each card fits its viewport");
+        assert.ok(layout.left >= -1 && layout.right <= width + 1, "each row fits its viewport");
         if (width < 640)
-          assert.ok(
-            layout.height > 0 && layout.height <= 440,
-            "mobile reference cards remain compact without sacrificing their existing readable content or actions",
-          );
+          assert.ok(layout.height > 0 && layout.height <= 200, "phone rows stay compact");
         assert.deepEqual(
           layout.clipped,
           [],
-          "model names, prices and actions remain readable without clipping",
+          "model names, prices and sources remain readable without clipping",
         );
       }
 
@@ -518,50 +422,6 @@ export async function verifyPricingCollection(browser, base, fail) {
         "the native calculation basis can be closed again",
       );
 
-      const credits = section.locator("details[data-budget-credits]");
-      assert.equal(
-        await credits.count(),
-        1,
-        "image provenance is available in a native disclosure",
-      );
-      const summary = credits.locator(":scope > summary");
-      const target = await summary.boundingBox();
-      assert.ok(
-        target && target.width >= 44 && target.height >= 44,
-        "credits have a touch-sized control",
-      );
-      await summary.click();
-      assert.notEqual(
-        await credits.getAttribute("open"),
-        null,
-        "photo credits open without JavaScript",
-      );
-      const creditLinks = await credits
-        .locator("a[href]")
-        .evaluateAll((nodes) => nodes.map((node) => node.href));
-      for (const url of T14_CREDITS)
-        assert.ok(
-          creditLinks.includes(url),
-          "the T14 photograph retains its source and CC0 licence",
-        );
-      for (const url of T14_CREDITS) {
-        const credit = credits.locator(`a[href='${url}']`);
-        assert.ok(await credit.isVisible(), "source and licence credits are visible when opened");
-        const box = await credit.boundingBox();
-        assert.ok(
-          box && box.width >= 44 && box.height >= 44,
-          "source and licence credits are touch-sized",
-        );
-      }
-      assert.match(await credits.innerText(), /Edvard10/, "the T14 photographer is credited");
-      assert.match(
-        await credits.innerText(),
-        /illustration/i,
-        "original Dell illustrations are distinguished from photographs",
-      );
-      await summary.click();
-      assert.equal(await credits.getAttribute("open"), null, "credits can be closed again");
-
       const offers = await page
         .locator("script[type='application/ld+json']")
         .evaluateAll((nodes) => {
@@ -591,65 +451,29 @@ export async function verifyPricingCollection(browser, base, fail) {
           animations: "disabled",
         });
 
-      if (javaScriptEnabled && [390, 1440].includes(width)) {
-        for (const [index, expected] of EXAMPLES.entries()) {
-          const link = page.locator(
-            `${SECTION} [data-budget-model='${expected.model}'] a[data-budget-enquiry]`,
-          );
-          const destination = destinations.get(expected.model);
-          if (index === 0) {
-            await link.focus();
-            assert.ok(
-              await link.evaluate((node) => node === document.activeElement),
-              "the enquiry supports keyboard focus",
-            );
-            await page.keyboard.press("Enter");
-          } else await link.click();
-          await page.waitForURL(
-            (url) =>
-              url.pathname === quotePath &&
-              url.searchParams.get("model") === destination.configuration,
-          );
-          await page.waitForFunction(
-            (expected) => document.querySelector("#udstyr")?.value === expected,
-            destination.configuration,
-          );
-          assert.equal(
-            await page.locator("#udstyr").inputValue(),
-            destination.configuration,
-            "the quote form keeps every card's exact configuration",
-          );
-          await page.goBack({ waitUntil: "networkidle" });
-          await page.waitForURL((url) => url.pathname === path);
-          assert.equal(
-            await page.locator(`${SECTION} [data-budget-model]`).count(),
-            4,
-            "Back restores the full collection",
-          );
-        }
-      } else if (!javaScriptEnabled) {
-        await section.locator("a[data-budget-enquiry]").first().click();
-        await page.waitForURL(
-          (url) =>
-            url.pathname === quotePath &&
-            url.searchParams.get("model") === destinations.get(EXAMPLES[0].model).configuration,
+      /* One call to Kestro, after the explanation, instead of one per row. */
+      const quoteLinks = await page
+        .locator("main a[href]")
+        .evaluateAll(
+          (nodes, quotePath) =>
+            nodes.filter((node) => new URL(node.href).pathname === quotePath).length,
+          quotePath,
         );
-        assert.match(
-          await page.locator("main").innerText(),
-          /requires JavaScript|kræver JavaScript/i,
-          "the script-disabled form states its existing requirement honestly",
-        );
-        assert.ok(
-          await page.locator("#udstyr").isDisabled(),
-          "the script-disabled form does not pretend to be ready",
-        );
-        await page.goBack({ waitUntil: "networkidle" });
-        assert.equal(
-          await page.locator(`${SECTION} [data-budget-model]`).count(),
-          4,
-          "native Back restores the no-JS collection",
-        );
-      }
+      assert.equal(quoteLinks, 1, "the page body has exactly one link to the quote form");
+      assert.ok(
+        await page
+          .locator("main a[href]")
+          .evaluateAll(
+            (nodes, [quotePath]) =>
+              nodes.some(
+                (node) =>
+                  new URL(node.href).pathname === quotePath && !node.closest("#budget-collection"),
+              ),
+            [quotePath],
+          ),
+        "that call to action sits after the explanation, not in the table",
+      );
+
       assert.ok(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
         "the pricing journey has no horizontal overflow",
