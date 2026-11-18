@@ -216,11 +216,25 @@ export async function verifyPricingCollection(browser, base, fail) {
         language === "da" ? /servicegebyr/i : /service\s*fee/i,
         "the service-fee basis is visible",
       );
-      const dates = section.locator("time[datetime='2026-10-14']");
-      assert.ok(await dates.count(), "the historical observation date is in the collection");
+      /* The read date is in the page's opening answer, once, not again
+         under the table heading. */
+      const dates = page.locator("main h1 ~ div time[datetime='2026-10-14']");
+      assert.equal(await dates.count(), 1, "the historical read date is in the opening answer");
       assert.ok(
         await dates.first().isVisible(),
-        "the historical date does not require opening small print",
+        "the read date does not require opening small print",
+      );
+      assert.doesNotMatch(
+        await dates.first().innerText(),
+        /\d{4}-\d{2}-\d{2}/,
+        "the visible date is human-formatted",
+      );
+      assert.match(
+        text,
+        language === "da"
+          ? /afrundet\s+op\s+til\s+hele\s+100/i
+          : /rounded\s+up\s+to\s+the\s+nearest\s+DKK\s+100/i,
+        "the rounding is visible beside the table, not only in the folded calculation",
       );
       assert.doesNotMatch(text, /\b2026-10-14\b/, "the visible date is human-formatted");
       assert.match(

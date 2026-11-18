@@ -41,12 +41,15 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
                 ? "Budgetreferencer, ikke Kestros salgspriser eller lager."
                 : "Budget references, not Kestro selling prices or stock."}
             </p>
+            {/* The read date and "per unit" are in the page's opening answer
+                just above; this line says only what that one does not. The
+                rounding was in the folded calculation alone, so a buyer who
+                followed a source and found 2,692 DKK met a different figure
+                with no warning. */}
             <p className="mt-1 text-sm leading-6 text-paper/75">
-              {da ? "Læst " : "Read "}
-              <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>
               {da
-                ? " · pr. enhed inkl. moms og servicegebyr, ekskl. fragt."
-                : " · per unit including VAT and service fee, excluding shipping."}
+                ? "Afrundet op til hele 100 kr., inkl. moms og servicegebyr, ekskl. fragt."
+                : "Rounded up to the nearest DKK 100, including VAT and service fee, excluding shipping."}
             </p>
           </div>
         </div>
@@ -138,7 +141,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             </tbody>
           </table>
         </div>
-        <details data-budget-basis className="group mt-4 border-b border-white/10">
+        <details data-budget-basis className="group mt-4">
           <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-3 text-sm font-semibold text-paper/85 [&::-webkit-details-marker]:hidden">
             {da ? "Kilder og beregningsgrundlag" : "Sources and calculation"}
             <ChevronDown

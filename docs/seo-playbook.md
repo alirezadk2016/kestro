@@ -1146,3 +1146,38 @@ for a range. What changed is what `/priser` answers with.
 - The H1 takes the page-title size; it had the size of the H2 under it.
 - Title, description, URL, canonical, the FAQ markup and the dated figures
   are unchanged. No `Offer` markup.
+
+## /priser, second pass — 18 November 2026
+
+Eleven findings on the table version, all fixed:
+
+1. The read date and "pr. enhed" stood in the lead and again under the table
+   heading. The lead keeps them (a quoted first paragraph carries its date);
+   the table note says only what the lead does not.
+2. The rounding up to whole 100 kr. was only in the folded calculation, so a
+   buyer who followed a source met 2,692 DKK beside a 2,700 DKK row. It is now
+   in the visible note.
+3. Two hairlines 27px apart under the table (the fold's own border and the
+   section's).
+4. "Opdateret" and the pre-launch notice sat between the table and the
+   factors that explain it. The date is under the lead; the notice follows
+   the call to action, where an order would be attempted.
+5. Two factor cards ran to two sentences; each is now a title and one.
+6. On a phone the six factors took 924px; tighter plates, 808px.
+7. The lower half said the factors three times: "Hvorfor vejledende", "Send
+   os jeres behov" and "Det står i tilbuddet" each listed them again.
+8. One heading level in four sizes (34, 20 and 12px h2). Every h2 is now
+   `t-h2`; the questions are h3 in the site's FAQ.
+9. The page's only call to action was 3,300px down on a phone, after those
+   lists. It is under the factors, at 2,400px.
+10. A consumer-law note (two-year reklamationsret on forbrugerkøb) closed a
+    B2B price page with no sentence leaning on it, which a business buyer
+    could read as applying to them. Removed here; it stays on /kvalitet, the
+    guides and the repairs pages, where the text uses it.
+11. The opening answer was 14-16px under a 44px heading; it takes the lead
+    size of the products hub, and its date no longer breaks across lines.
+
+The three questions (why indicative, does a quote cost anything, what is in
+the quote) are the FAQ and its schema; the third is new as a question and
+keeps the old list as its answer. Title, description, URL and canonical are
+unchanged.
