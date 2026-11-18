@@ -23,9 +23,8 @@ const copy = {
     noPrices1:
       "Nej. Vi skaffer udstyret til den enkelte ordre. Konfiguration, stand, pris og levering skal afklares i tilbuddet, før I tager stilling.",
     noPrices2:
-      "Send modelnavn eller beskriv opgaven, antal og budget. Vi undersøger mulighederne; kataloget er eksempler på udstyrstyper og modelserier.",
+      "Det undersøger vi gerne. Send modelnavn eller beskriv opgaven, antal og budget; kataloget er eksempler på udstyrstyper og modelserier.",
     modelsButton: "Sammenlign specifikationer",
-    modelHint: "Kender I allerede modellen?",
     choiceTitle: "Hvilken computer passer til jeres behov?",
     choiceLead:
       "Vælg efter opgaven og det udstyr, I allerede bruger. Et helt team behøver ikke den samme maskine, men hver løsning skal passe sammen.",
@@ -45,9 +44,8 @@ const copy = {
     noPrices1:
       "No. We source equipment for the individual order. Configuration, condition, price and delivery need to be clarified in the quote before you decide.",
     noPrices2:
-      "Send a model name or describe the work, quantity and budget. We investigate the options; the catalogue illustrates equipment types and model ranges.",
+      "We are glad to look into it. Send a model name or describe the work, quantity and budget; the catalogue illustrates equipment types and model ranges.",
     modelsButton: "Compare specifications",
-    modelHint: "Already know the model?",
     choiceTitle: "Which computer fits your needs?",
     choiceLead:
       "Choose around the job and the equipment you already use. A whole team need not have the same machine, but every setup needs to work together.",
@@ -157,6 +155,20 @@ const purchaseChecks = [
   },
 ];
 
+/* Hyphenated compounds stay whole. "IT-udstyr" broke at 320px and
+   "mini-pc'er" at 390, leaving "IT-" and "mini-" alone at a line's end. */
+function keepCompounds(text: string) {
+  return text.split(/(\S+-\S+)/).map((part, index) =>
+    index % 2 ? (
+      <span key={index} className="whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export async function generateMetadata(props: {
   params: Promise<{ lang: Lang }>;
 }): Promise<Metadata> {
@@ -191,15 +203,27 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
             className="mb-3"
           />
           <div className="grid gap-6 lg:grid-cols-12 lg:items-start lg:gap-12">
-            <h1 className="t-h1 text-balance font-display font-extrabold tracking-display text-paper lg:col-span-6">
-              {c.title}
+            <h1 className="t-h1 text-pretty font-display font-extrabold tracking-display text-paper sm:text-balance lg:col-span-6">
+              {keepCompounds(c.title)}
             </h1>
             <div className="lg:col-span-6 lg:pt-1">
-              <p className="text-base leading-[1.65] text-paper/85 sm:text-lg">{c.description}</p>
-              {/* The two questions a buyer brings before choosing a type — what
-                  does it cost, and what if I don't know what I need — were
-                  answered only below the gallery, in small print. */}
+              <p className="text-base leading-[1.65] text-paper/85 sm:text-lg">
+                {keepCompounds(c.description)}
+              </p>
+              {/* The three ways past the gallery, together: a buyer who already
+                  knows the model, one who wants a figure, one who wants to
+                  write. The model comparison stood alone under the gallery
+                  between two hairlines, the length of the page away from the
+                  other two. */}
               <div className="mt-3 flex flex-wrap gap-x-6">
+                <Link
+                  href={localePath("/modeller", lang)}
+                  data-model-index-entry
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+                >
+                  {c.modelsButton}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
                 <Link
                   href={localePath("/priser", lang)}
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
@@ -215,28 +239,21 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                   <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </div>
+              <p className="mt-1 text-xs leading-5 text-paper/65">
+                {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                <time dateTime={pageUpdated("/produkter")} className="tabular-nums">
+                  {formatDate(pageUpdated("/produkter"), lang)}
+                </time>
+              </p>
             </div>
           </div>
 
           <ProductCategoryGallery lang={lang} />
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-white/10 py-3 text-sm">
-            <div className="flex flex-wrap items-center gap-x-4">
-              <p className="text-paper/75">{c.modelHint}</p>
-              <Link
-                href={localePath("/modeller", lang)}
-                data-model-index-entry
-                className="inline-flex min-h-11 items-center gap-2 font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
-              >
-                {c.modelsButton}
-                <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-
           <details id="product-buying-help" className="plate group mt-8">
             <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 p-5 marker:content-none sm:px-6 [&::-webkit-details-marker]:hidden">
-              <h2 className="text-lg font-bold text-paper">{c.choiceTitle}</h2>
+              {/* On the type scale (t-h3) rather than an ad hoc text-lg. */}
+              <h2 className="font-display t-h3 font-bold text-paper">{c.choiceTitle}</h2>
               <ChevronDown
                 aria-hidden="true"
                 className="h-5 w-5 flex-none text-brand-300 transition-transform duration-150 group-open:rotate-180"
@@ -295,12 +312,6 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               </div>
             </div>
           </details>
-          <p className="mt-5 text-xs leading-5 text-paper/65">
-            {lang === "da" ? "Opdateret" : "Updated"}{" "}
-            <time dateTime={pageUpdated("/produkter")} className="tabular-nums">
-              {formatDate(pageUpdated("/produkter"), lang)}
-            </time>
-          </p>
         </Container>
       </section>
 
@@ -308,8 +319,11 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
           as well, the same four situations at the same 1,670px, so anyone who
           came from the front page met it twice in two clicks. */}
 
+      {/* contactLink off: the closing section a screen below offers
+          "Skriv til os" too, and twice in 420px is once too many. */}
       <Faq
         lang={lang}
+        contactLink={false}
         title={{ da: "Spørgsmål om udvalget", en: "Questions about the range" }}
         items={[
           {
@@ -329,8 +343,8 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
               en: "Which version of Windows do the computers come with?",
             },
             answer: {
-              da: "Aftal version, udgave og licens for den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
-              en: "Agree the version, edition and licence for the chosen configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
+              da: "Det aftales for hver ordre: version, udgave og licens følger den valgte konfiguration. Windows 11 kræver blandt andet en understøttet processor, TPM 2.0 og Secure Boot. Microsofts almindelige support for Windows 10 sluttede den 14. oktober 2025.",
+              en: "It is agreed for each order: the version, edition and licence follow the chosen configuration. Windows 11 requires a supported processor, TPM 2.0 and Secure Boot among other things. Microsoft's general Windows 10 support ended on 14 October 2025.",
             },
           },
         ]}

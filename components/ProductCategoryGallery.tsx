@@ -41,7 +41,9 @@ function brandsOf(slug: string, da: boolean) {
 
 export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
   const da = lang === "da";
-  const credits = Object.values(categoryMedia).flatMap((media) => (media.credit ? [media.credit] : []));
+  const credits = Object.values(categoryMedia).flatMap((media) =>
+    media.credit ? [media.credit] : [],
+  );
   const shown = categories.filter((category) => !LEFT_OUT.has(category.slug));
 
   return (
@@ -78,8 +80,13 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   sat on a pale well over a navy text panel, and the seam
                   between them made every card read as two parts. Radii are
                   concentric: 12px sheet, 6px padding, 6px well. */}
+              {/* Named by its heading and count. Without this the link's name
+                  began with the picture's alt text, so a screen reader said
+                  "Referencefoto: åben Lenovo ThinkPad T480 som eksempel på en
+                  erhvervsbærbar" before "Bærbare computere" on every card. */}
               <Link
                 href={localePath(`/produkter/${category.slug}`, lang)}
+                aria-labelledby={`category-${category.slug} category-${category.slug}-count`}
                 className="sheet group flex h-full flex-col p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
               >
                 <CategoryArtwork
@@ -94,16 +101,23 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   className="rounded-md"
                 />
                 <div className="flex flex-1 flex-col px-2.5 pb-3 pt-3 sm:px-3.5 sm:pb-4">
-                  <h3 className="text-balance font-display text-base font-bold leading-snug text-ink-900">
+                  <h3
+                    id={`category-${category.slug}`}
+                    className="text-balance font-display text-base font-bold leading-snug text-ink-900"
+                  >
                     {title}
                   </h3>
                   <p className="mt-1 text-pretty text-sm leading-5 text-ink-700">
                     {categoryApplications[category.slug][lang]}
                   </p>
                   {/* A business buyer decides by brand first. */}
-                  <p className="mt-1.5 text-xs leading-5 text-ink-600">{brandsOf(category.slug, da)}</p>
+                  <p className="mt-1.5 text-xs leading-5 text-ink-600">
+                    {brandsOf(category.slug, da)}
+                  </p>
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-600">
-                    <span className="tabular-nums">{count(models, da)}</span>
+                    <span id={`category-${category.slug}-count`} className="tabular-nums">
+                      {count(models, da)}
+                    </span>
                     <ArrowRight
                       size={14}
                       aria-hidden="true"

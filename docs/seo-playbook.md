@@ -1181,3 +1181,34 @@ The three questions (why indicative, does a quote cost anything, what is in
 the quote) are the FAQ and its schema; the third is new as a question and
 keeps the old list as its answer. Title, description, URL and canonical are
 unchanged.
+
+## /produkter review — 18 November 2026
+
+The products hub, read the same way as /priser:
+
+1. Each category card's link was named from its picture first: a screen
+   reader said "Referencefoto: åben Lenovo ThinkPad T480 som eksempel på en
+   erhvervsbærbar" before "Bærbare computere", on every card. The link is now
+   named by its heading and count ("Bærbare computere 59 modeller"); the
+   picture keeps its alt.
+2. "Kan I skaffe noget, der ikke står her?" did not answer the question in
+   its first words. It opens "Det undersøger vi gerne".
+3. "Hvilken Windows-version kommer computerne med?" opened with an
+   instruction. It opens "Det aftales for hver ordre".
+4. At 320px the H1 broke at the hyphen of "IT-udstyr", and at 390 the lead
+   broke "mini-pc'er" the same way. Hyphenated compounds stay whole, and the
+   H1 wraps greedily on a phone instead of balancing "skaffer" onto a line of
+   its own.
+5. The entrance to the 68-model comparison stood alone under the gallery
+   between two hairlines. It joins the price and enquiry links under the
+   lead; the bar and both rules are gone.
+6. "Opdateret" sat at the end of the section, after the folded buying help.
+   It is under the lead, as on /priser.
+7. The buying-help heading used an ad hoc text-lg; it is on the type scale
+   (`t-h3`).
+8. "Skriv til os" appeared in the FAQ heading and again in the closing
+   section a screen below; the FAQ's copy is off on this page.
+
+Left for the owner: the header menu and the footer still list tablets and
+smartphones, which the hub no longer shows. Title, description, URL and
+canonical are unchanged.
