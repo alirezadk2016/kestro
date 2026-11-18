@@ -3,14 +3,14 @@ import { mkdir } from "node:fs/promises";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+/* The header menu lists what the products hub lists. Tablets and
+   smartphones left both and stay in the footer (ON_REQUEST below). */
 const PRODUCT_CATEGORIES = {
   da: [
     "/produkter/baerbare-computere",
     "/produkter/stationaere-computere",
     "/produkter/skaerme",
     "/produkter/mini-pc",
-    "/produkter/tablets",
-    "/produkter/smartphones",
     "/produkter/dockingstationer",
   ],
   en: [
@@ -18,10 +18,12 @@ const PRODUCT_CATEGORIES = {
     "/en/products/desktop-computers",
     "/en/products/monitors",
     "/en/products/mini-pc",
-    "/en/products/tablets",
-    "/en/products/smartphones",
     "/en/products/docking-stations",
   ],
+};
+const ON_REQUEST = {
+  da: ["/produkter/tablets", "/produkter/smartphones"],
+  en: ["/en/products/tablets", "/en/products/smartphones"],
 };
 
 /** Public navigation and enquiry journeys against the local production build. */
@@ -227,8 +229,14 @@ export async function verifySiteUx(browser, base, fail) {
               .locator("a[href]")
               .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href"))),
             [...PRODUCT_CATEGORIES[language.code], language.models],
-            "the products menu leads with seven equipment categories and one model-comparison entrance",
+            "the products menu lists the hub's five equipment types and one model-comparison entrance",
           );
+          for (const href of ON_REQUEST[language.code])
+            assert.equal(
+              await page.locator(`footer a[href='${href}']`).count(),
+              1,
+              "pages left out of the menu stay linked from the footer: " + href,
+            );
           const about = language.code === "da" ? "/om-os" : "/en/about-us";
           const guides = language.code === "da" ? "/vejledninger" : "/en/knowledge";
           assert.equal(
@@ -400,7 +408,7 @@ export async function verifySiteUx(browser, base, fail) {
                 nodes.map((node) => node.getAttribute("href")),
               ),
               [hub, ...PRODUCT_CATEGORIES[language], models],
-              "mobile Products offers the overview, seven categories and one model-comparison entrance",
+              "mobile Products offers the overview, the hub's five types and one model-comparison entrance",
             );
             for (const link of await productLinks.all()) await target(link, "mobile product link");
             await products.click();

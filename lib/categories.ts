@@ -534,6 +534,32 @@ export const categories: Category[] = [
   },
 ];
 
+/*
+ * The five equipment types the products hub and the header menu show.
+ *
+ * Tablets and smartphones have no model and no picture, and beside the rest
+ * they read as stocked categories. The owner had them taken off the hub
+ * (2026-11-14) and left the menu to us (2026-11-18): they leave the menu
+ * too, so the menu and the hub list the same things. Their pages stay and
+ * stay linked from the footer, last, so a search for them still lands
+ * somewhere and no URL moves.
+ */
+const ON_REQUEST = new Set(["tablets", "smartphones"]);
+export const directoryCategories = categories.filter((category) => !ON_REQUEST.has(category.slug));
+export const onRequestCategories = categories.filter((category) => ON_REQUEST.has(category.slug));
+
+/*
+ * The name menus and link lists use. The category is "Dockingstationer og
+ * tilbehør", but its models are docks; the products hub dropped "og
+ * tilbehør" so a card would not promise accessories its page does not have,
+ * and the menu and footer say the same.
+ */
+export function menuCategoryName(category: Category): Category["name"] {
+  return category.slug === "dockingstationer"
+    ? { da: "Dockingstationer", en: "Docking stations" }
+    : category.name;
+}
+
 export function getCategory(slug: string): Category | undefined {
   return categories.find((c) => c.slug === slug);
 }

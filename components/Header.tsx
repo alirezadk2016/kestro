@@ -8,7 +8,7 @@ import { ArrowRight, ChevronDown, Phone, Search } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import { buttonClass } from "./Button";
-import { categories } from "@/lib/categories";
+import { directoryCategories, menuCategoryName } from "@/lib/categories";
 import { company } from "@/lib/company";
 import { mainNav, productsNav, ui } from "@/lib/nav";
 import { localePath, stripLocale, langs, langLabel, type Lang } from "@/lib/i18n";
@@ -331,7 +331,7 @@ export default function Header({ lang }: { lang: Lang }) {
                     the list inside short viewports and give it an opaque ground:
                     page headings must not show through its link labels. */}
                 <div className="glass-panel max-h-[calc(100svh-10rem)] overflow-y-auto overscroll-contain rounded-xl bg-ink-950 p-2 shadow-xl shadow-black/40">
-                  {categories.map((category) => (
+                  {directoryCategories.map((category) => (
                     <Link
                       key={category.slug}
                       href={localePath(`/produkter/${category.slug}`, lang)}
@@ -339,7 +339,7 @@ export default function Header({ lang }: { lang: Lang }) {
                       aria-current={isCurrent(`/produkter/${category.slug}`) ? "page" : undefined}
                       className={`flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm transition hover:bg-white/10 hover:text-paper ${isCurrent(`/produkter/${category.slug}`) ? "bg-white/[0.08] font-semibold text-paper" : "text-paper/75"}`}
                     >
-                      {category.name[lang]}
+                      {menuCategoryName(category)[lang]}
                     </Link>
                   ))}
                   <div aria-hidden="true" className="mx-3 my-1.5 border-t border-white/10" />
@@ -526,7 +526,7 @@ export default function Header({ lang }: { lang: Lang }) {
                   {productsNav.overview[lang]}
                 </Link>
                 <div aria-hidden="true" className="mx-3 my-1 border-t border-white/10" />
-                {categories.map((category) => {
+                {directoryCategories.map((category) => {
                   const href = `/produkter/${category.slug}`;
                   return (
                     <Link
@@ -538,7 +538,7 @@ export default function Header({ lang }: { lang: Lang }) {
                         basePath === href ? "font-medium text-paper" : "text-paper/75"
                       }`}
                     >
-                      {category.name[lang]}
+                      {menuCategoryName(category)[lang]}
                     </Link>
                   );
                 })}

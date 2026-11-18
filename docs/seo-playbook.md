@@ -1212,3 +1212,14 @@ The products hub, read the same way as /priser:
 Left for the owner: the header menu and the footer still list tablets and
 smartphones, which the hub no longer shows. Title, description, URL and
 canonical are unchanged.
+
+## Products menu = products hub — 18 November 2026
+
+The owner left the question of tablets and smartphones in the menu to us.
+The header menu (desktop and mobile) now lists the hub's five types, from
+one list in `lib/categories.ts` (`directoryCategories`). Tablets and
+smartphones stay in the footer, last in the product column: their pages
+keep an internal link from every page, no URL moves, and the sitemap is
+unchanged. The menu also says "Dockingstationer", as the hub and footer do,
+instead of "Dockingstationer og tilbehør" for a page with only docks
+(`menuCategoryName`).

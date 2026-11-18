@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import ConsentReset from "./ConsentReset";
 import { company, postalAddress } from "@/lib/company";
 import { buyNav, companyNav, productExtras, serviceNav, type NavLink } from "@/lib/nav";
-import { categories } from "@/lib/categories";
+import { directoryCategories, onRequestCategories, menuCategoryName } from "@/lib/categories";
 import { localePath, type Lang } from "@/lib/i18n";
 
 const copy = {
@@ -101,13 +101,14 @@ export default function Footer({ lang }: { lang: Lang }) {
    * most — the categories people buy from. "Dockingstationer og tilbehør" is
    * cut to its first word so the link stays on one line in a phone column.
    */
-  const productLinks: NavLink[] = categories.map((category) => ({
-    href: `/produkter/${category.slug}`,
-    label:
-      category.slug === "dockingstationer"
-        ? { da: "Dockingstationer", en: "Docking stations" }
-        : category.name,
-  }));
+  /* In the hub's order; tablets and smartphones, which only the footer
+     still lists, come last. */
+  const productLinks: NavLink[] = [...directoryCategories, ...onRequestCategories].map(
+    (category) => ({
+      href: `/produkter/${category.slug}`,
+      label: menuCategoryName(category),
+    }),
+  );
   const groups = [
     {
       label: c.products,

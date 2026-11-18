@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { categories } from "@/lib/categories";
+import { directoryCategories } from "@/lib/categories";
 import { categoryApplications, categoryMedia } from "@/lib/category-media";
 import { localePath, type Lang } from "@/lib/i18n";
 import { getModelsForCategory } from "@/lib/models";
@@ -11,7 +11,7 @@ import CategoryArtwork from "./CategoryArtwork";
  *
  * It was seven equal tiles; two of them, tablets and smartphones, had no
  * model and no picture, and the owner asked for them to go (2026-11-14).
- * Their pages stay, linked from the header and footer.
+ * Their pages stay, linked from the footer (lib/categories.ts).
  *
  * For one evening laptops led as a large card beside a 2x2 grid. At 1920 the
  * grid ran past the screen and the owner found it too big and ugly
@@ -24,8 +24,6 @@ import CategoryArtwork from "./CategoryArtwork";
  * multiply into the same pale well as the drawings, so the row reads as one
  * set.
  */
-const LEFT_OUT = new Set(["tablets", "smartphones"]);
-
 function count(n: number, da: boolean) {
   return da ? `${n} ${n === 1 ? "model" : "modeller"}` : `${n} ${n === 1 ? "model" : "models"}`;
 }
@@ -44,7 +42,7 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
   const credits = Object.values(categoryMedia).flatMap((media) =>
     media.credit ? [media.credit] : [],
   );
-  const shown = categories.filter((category) => !LEFT_OUT.has(category.slug));
+  const shown = directoryCategories;
 
   return (
     <section
