@@ -19,6 +19,7 @@ import FaqSchema from "@/components/FaqSchema";
 import { categoryFaqs, categorySources } from "@/lib/category-copy";
 import ModelCatalogue from "@/components/ModelCatalogue";
 import { catalogueOrder } from "@/lib/model-order";
+import { modelSeries } from "@/lib/model-series";
 import FactNote from "@/components/FactNote";
 
 /*
@@ -112,6 +113,23 @@ export default async function CategoryPage(props: {
 
   const others = categories.filter((c) => c.slug !== category.slug);
   const categoryModels = catalogueOrder(getModelsForCategory(category.slug));
+  /* The answer to "what is here", with its numbers, from the same list the
+     catalogue renders: how many models, from which makers (most first), in
+     how many product lines. */
+  const brandTally = new Map<string, number>();
+  for (const model of categoryModels)
+    brandTally.set(model.brand, (brandTally.get(model.brand) ?? 0) + 1);
+  const brandList = new Intl.ListFormat(lang === "da" ? "da" : "en-GB", {
+    type: "conjunction",
+  }).format([...brandTally].sort((a, b) => b[1] - a[1]).map(([brand]) => brand));
+  const lineCount = new Set(
+    categoryModels.map((model) => modelSeries(model.name)?.id).filter(Boolean),
+  ).size;
+  const n = categoryModels.length;
+  const rangeLine =
+    lang === "da"
+      ? `${n}\u00a0${n === 1 ? "model" : "modeller"} fra ${brandList}${lineCount > 1 ? `, fordelt på ${lineCount}\u00a0serier` : ""}.`
+      : `${n}\u00a0${n === 1 ? "model" : "models"} from ${brandList}${lineCount > 1 ? ` across ${lineCount}\u00a0product lines` : ""}.`;
   const pagePath = `/produkter/${category.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const collectionId = `${pageUrl}#collection`;
@@ -263,7 +281,6 @@ export default async function CategoryPage(props: {
               className="mt-8 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.allModels}
-              <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>
         </Container>
@@ -315,20 +332,15 @@ export default async function CategoryPage(props: {
               {(category.h1 ?? category.name)[lang]}
             </h1>
             <div className="lg:col-span-6">
-              <p className="text-sm leading-6 text-paper/85 sm:text-base">
-                {category.tagline[lang]}.
+              {/* Answer first, at the lead size of the hubs: what this is and
+                  what is in it, with the count. It was a 14px tagline, a "buy
+                  elsewhere" link above the range and a 12px caption. The
+                  external retailers are still one click away, after the
+                  catalogue, where they belong. */}
+              <p className="text-pretty text-base leading-[1.65] text-paper/85 sm:text-lg">
+                {category.tagline[lang]}. {n > 0 && rangeLine}
               </p>
-              {/* On its own line: inside the sentence its 44px tap height
-                  pushed the paragraph's lines 20px apart on a phone. */}
-              {isLaptops && (
-                <a
-                  href="#external-laptop-recommendations"
-                  className="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-semibold text-brand-300 hover:text-paper"
-                >
-                  {lang === "da" ? "Køb hos andre" : "Buy elsewhere"}
-                </a>
-              )}
-              <p className="mt-1 text-xs leading-5 text-paper/65">
+              <p className="mt-2 text-sm leading-6 text-paper/65">
                 {categoryModels.length > 0
                   ? c.modelsBody
                   : lang === "da"

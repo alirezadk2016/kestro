@@ -95,3 +95,25 @@ Publish only after the gate passes; confirm production SHA and live flows.
 Success means visible product recognition, one click to a category, less
 initial reading and honest external buying. Reject a layout that is more
 decorated but obscures condition, actual merchant or the next action.
+
+## The catalogue as one ledger — 18 November 2026
+
+The owner found the laptop category amateur and dated. Read against
+Anthropic's frontend-design skill (anthropics/skills, 2026-11-18), the list
+was its "SaaS card kit": 59 white cards on navy, one radius, one shadow, each
+repeating "Processor, Hukommelse, Lagring". The plan, checked against the
+skill's list of defaults before building:
+
+- **Subject:** a business buyer comparing laptop lines and generations.
+- **Layout:** the list view is one dark panel, a rule between rows and the
+  spec columns named once above them (when every row shares them); actions
+  sit in a fixed 11rem column so the heads align. The grid view keeps the
+  hub's white sheets.
+- **The one bold thing:** only the pictures stand on light, on the
+  `.product-well` floor, like products on a lit shelf in a dark room.
+- **Toolbar** over the list column, not the page: a field, the count, sort
+  and view. Filters are a column of type on a desktop, a panel on a phone;
+  native controls take the dark colour scheme.
+- **Lead:** answer first, from the data: "59 modeller fra Lenovo, HP og
+  Dell, fordelt på 10 serier." The "Køb hos andre" link left the top of the
+  page; the external retailers are still the disclosure after the range.

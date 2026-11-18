@@ -284,10 +284,21 @@ export default function CatalogueExplorer({
       selected.flatMap((entry) => (entry.comparisonFacts || entry.facts).map((fact) => fact.label)),
     ),
   ];
-  const active =
-    state.brands.length + activeSeries.length + state.types.length + (query ? 1 : 0);
+  const active = state.brands.length + activeSeries.length + state.types.length + (query ? 1 : 0);
   const canReset = active > 0 || state.sort !== "default";
   const isList = state.view === "list";
+  const ledger = isList && !budget;
+  const heads = filtered[0]?.facts.slice(0, 3).map((fact) => fact.label) ?? [];
+  const sharedHeads =
+    ledger &&
+    heads.length > 0 &&
+    filtered.every(
+      (entry) =>
+        entry.facts
+          .slice(0, 3)
+          .map((fact) => fact.label)
+          .join("|") === heads.join("|"),
+    );
   const toggle = (key: "brands" | "series" | "types" | "compare", value: string) =>
     setState((previous) => ({
       ...previous,
@@ -495,36 +506,45 @@ export default function CatalogueExplorer({
             : "All models and links are shown here. Search, filters and comparison require JavaScript."}
         </p>
       </noscript>
-      <div className="border-b border-white/15 pb-4">
+      {/* One bar over the list, not over the page. From lg it starts where
+          the list starts, so the filters and the rows share a top edge and
+          the search is a field, not a 1,600px strip across the screen. */}
+      <div
+        className={
+          hasFacets && !budget
+            ? "lg:ml-[calc(184px+1.5rem)] xl:ml-[calc(184px+1.75rem)] 2xl:ml-[calc(200px+1.75rem)]"
+            : ""
+        }
+      >
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
-        <div className="flex items-center gap-2">
-          <div className="relative min-w-0 flex-1">
-            <Search
-              size={18}
-              aria-hidden="true"
-              className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
-            />
-            <input
-              ref={search}
-              id={`${prefix}-search`}
-              data-catalogue-search
-              disabled={!ready}
-              type="search"
-              value={state.query}
-              maxLength={120}
-              autoComplete="off"
-              onChange={(event) =>
-                setState((previous) => ({ ...previous, query: event.target.value }))
-              }
-              placeholder={da ? "Model eller mærke" : "Model or brand"}
-              className={`${control} w-full pl-10`}
-            />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-sm lg:flex-1 lg:basis-auto">
+            <div className="relative min-w-0 flex-1">
+              <Search
+                size={18}
+                aria-hidden="true"
+                className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
+              />
+              <input
+                ref={search}
+                id={`${prefix}-search`}
+                data-catalogue-search
+                disabled={!ready}
+                type="search"
+                value={state.query}
+                maxLength={120}
+                autoComplete="off"
+                onChange={(event) =>
+                  setState((previous) => ({ ...previous, query: event.target.value }))
+                }
+                placeholder={da ? "Model eller mærke" : "Model or brand"}
+                className={`${control} w-full pl-10`}
+              />
+            </div>
+            {hasFacets && filterButton}
           </div>
-          {hasFacets && filterButton}
-        </div>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <p
             data-catalogue-count
             role="status"
@@ -535,7 +555,7 @@ export default function CatalogueExplorer({
             {filtered.length} {da ? "af" : "of"} {entries.length}{" "}
             {budget ? (da ? "budgetreferencer" : "budget references") : da ? "modeller" : "models"}
           </p>
-          <div className="flex min-w-0 flex-wrap items-center gap-3">
+          <div className="ml-auto flex min-w-0 flex-wrap items-center gap-3">
             {canReset && (
               <button
                 type="button"
@@ -619,7 +639,10 @@ export default function CatalogueExplorer({
               aria-label={da ? "Filtre" : "Filters"}
               className={
                 (filtersOpen ? "block" : "hidden") +
-                " plate mt-3 p-4 lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:[scrollbar-color:rgb(255_255_255/0.18)_transparent] lg:[scrollbar-width:thin]"
+                /* A panel on a phone, where it drops open under the search;
+                   on a desktop the filters are a column of type beside the
+                   list, without a box around them. */
+                " plate mt-3 p-4 [color-scheme:dark] lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:rounded-none lg:bg-none lg:p-0 lg:pr-2 lg:shadow-none lg:[scrollbar-color:rgb(255_255_255/0.18)_transparent] lg:[scrollbar-width:thin]"
               }
             >
               {filterPanel}
@@ -675,25 +698,56 @@ export default function CatalogueExplorer({
             </div>
           )}
 
-          <ul
-            className={`mt-4 grid min-w-0 gap-4 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 2xl:grid-cols-3"}`}
+          {/* The list is one ledger: a single panel, a rule between rows,
+              and the spec columns named once above them. Fifty-nine white
+              cards with the same radius and the same shadow was the SaaS
+              card kit Anthropic's frontend-design skill lists as a tell, and
+              each card repeated "Processor, Hukommelse, Lagring". */}
+          <div
+            className={
+              ledger && filtered.length > 0 ? "plate mt-4 overflow-hidden [color-scheme:dark]" : ""
+            }
           >
-            {filtered.map((entry, index) => (
-              <CatalogueListingItem
-                key={entry.id}
-                entry={entry}
-                lang={lang}
-                mode={mode}
-                view={state.view}
-                ready={ready}
-                selected={state.compare.includes(entry.id)}
-                selectionFull={state.compare.length >= 3}
-                canCompare={entries.length > 1}
-                priority={index === 0}
-                onCompare={() => toggle("compare", entry.id)}
-              />
-            ))}
-          </ul>
+            {sharedHeads && (
+              <div
+                aria-hidden="true"
+                className="hidden grid-cols-[112px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
+              >
+                <span className="col-span-2">Model</span>
+                <span
+                  className={`grid gap-3 ${heads.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}
+                >
+                  {heads.map((head) => (
+                    <span key={head}>{head}</span>
+                  ))}
+                </span>
+              </div>
+            )}
+            <ul
+              className={`min-w-0 ${
+                ledger
+                  ? "divide-y divide-white/[0.07]"
+                  : `mt-4 grid gap-4 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 2xl:grid-cols-3"}`
+              }`}
+            >
+              {filtered.map((entry, index) => (
+                <CatalogueListingItem
+                  key={entry.id}
+                  entry={entry}
+                  lang={lang}
+                  mode={mode}
+                  view={state.view}
+                  ready={ready}
+                  selected={state.compare.includes(entry.id)}
+                  selectionFull={state.compare.length >= 3}
+                  canCompare={entries.length > 1}
+                  priority={index === 0}
+                  onCompare={() => toggle("compare", entry.id)}
+                  sharedHeads={sharedHeads}
+                />
+              ))}
+            </ul>
+          </div>
           {filtered.length === 0 && (
             <div className="plate mt-4 p-6 sm:p-8">
               <h3 className="font-display text-xl font-bold text-paper">
