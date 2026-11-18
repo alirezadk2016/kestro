@@ -226,7 +226,7 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {c.lead}
             </p>
-            <p className="label mt-6 text-paper/65">
+            <p className="mt-6 text-xs leading-5 text-paper/65">
               {lang === "da" ? "Opdateret" : "Updated"}{" "}
               <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/85">
                 {formatDate(pageUpdated("/tilbud"), lang)}

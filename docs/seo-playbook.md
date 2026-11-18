@@ -1223,3 +1223,32 @@ keep an internal link from every page, no URL moves, and the sitemap is
 unchanged. The menu also says "Dockingstationer", as the hub and footer do,
 instead of "Dockingstationer og tilbehør" for a page with only docks
 (`menuCategoryName`).
+
+## Site review with the newest Anthropic skills — 18 November 2026
+
+`anthropics/skills` read on 18 November: the project's frontend-design,
+canvas-design and theme-factory are identical to it; webapp-testing was
+added. Findings on all 256 sitemap pages:
+
+- **webapp-testing crawl (390px, after networkidle):** 0 console errors,
+  0 failed requests, 0 broken internal links (256 checked), 0 horizontal
+  overflow, every image with alt, one H1 per page.
+- **mak:** FAIL 0, orphans 0; the warnings are the accepted ones above.
+- **Lighthouse** (front page, laptops, T480, a guide, /tilbud, /kontakt):
+  accessibility, best practices and SEO 100; performance 89–97.
+- **Fixed — label in name (WCAG 2.5.3), 110 model pages:** the retailer
+  cards' aria-label replaced the card's own words, so "Se udvalget" and the
+  retailer's name were not in the link's name. The words now name the link
+  and the context follows in screen-reader text.
+- **Fixed — dates in capitals:** six templates set "Opdateret 16. nov.
+  2026" in the tracked capitals of `.label` ("OPDATERET 16. NOV. 2026");
+  frontend-design lists all-caps labels as a generated-page tell, and the
+  hubs already used sentence case. 216 date lines now read normally.
+- **Fixed — one list two ways:** the front page cards joined brands with
+  middle dots ("Lenovo · HP · Dell") while the products hub wrote "Lenovo,
+  HP og Dell". The front page now writes the sentence.
+- **Left for the owner (brand decision):** frontend-design's calibration
+  counts an arrow after 2,569 links and buttons (about ten a page), 1,283
+  tracked-capital labels and 923 strings joined with middle dots. They are
+  the site's current look, not errors; reducing them is a design direction
+  to choose, not a fix.

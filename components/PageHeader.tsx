@@ -50,10 +50,12 @@ export default function PageHeader({
         {description}
       </p>
       {updated && (
-        /* The same meta line as the guides index: label case, one weight up on
-           the value. It printed the raw ISO date at 12px roman, which is the
-           data rather than a date. */
-        <p className="label mt-6 text-paper/65">
+        /* The meta line: one weight up on the value. It printed the raw ISO
+           date at 12px roman, which is the data rather than a date. Then it
+           was set in the tracked capitals of .label and read "OPDATERET 16.
+           NOV. 2026", the month shouted in abbreviation, while the products
+           and prices hubs said it in sentence case. Now every date line does. */
+        <p className="mt-6 text-xs leading-5 text-paper/65">
           {lang === "en" ? "Updated" : "Opdateret"}{" "}
           <time dateTime={pageUpdated(updated)} className="tabular-nums text-paper/85">
             {formatDate(pageUpdated(updated), lang ?? "da")}

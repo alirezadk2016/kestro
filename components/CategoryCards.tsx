@@ -22,7 +22,7 @@ const cards = [
     width: 1200,
     height: 675,
     title: { da: "Bærbare computere", en: "Business laptops" },
-    brands: "Lenovo · HP · Dell",
+    brands: ["Lenovo", "HP", "Dell"],
     alt: {
       da: "Åben bærbar erhvervscomputer set fra siden",
       en: "An open business laptop seen from the side",
@@ -34,7 +34,7 @@ const cards = [
     width: 1200,
     height: 675,
     title: { da: "Stationære computere", en: "Desktop PCs" },
-    brands: "HP · Dell · Lenovo",
+    brands: ["HP", "Dell", "Lenovo"],
     alt: {
       da: "Stationær computer og en mini-pc side om side",
       en: "A desktop tower and a mini PC side by side",
@@ -46,7 +46,7 @@ const cards = [
     width: 1200,
     height: 675,
     title: { da: "Skærme og docking", en: "Monitors and docks" },
-    brands: "Dell · Lenovo · HP",
+    brands: ["Dell", "Lenovo", "HP"],
     alt: {
       da: "Bredformatskærm med tastatur og en dockingstation",
       en: "A widescreen monitor with a keyboard and a docking station",
@@ -114,7 +114,14 @@ export default function CategoryCards({ lang }: { lang: Lang }) {
                       {card.title[lang]}
                     </h3>
                     <p className="mt-0.5 text-xs text-paper/65 leading-[1.45]">
-                      {typeof card.brands === "string" ? card.brands : card.brands[lang]}
+                      {/* A list as a sentence, as on the products hub: "Lenovo,
+                          HP og Dell". Joined with middle dots it was template
+                          chrome, and the hub said the same thing another way. */}
+                      {Array.isArray(card.brands)
+                        ? new Intl.ListFormat(lang === "da" ? "da" : "en-GB", {
+                            type: "conjunction",
+                          }).format(card.brands)
+                        : card.brands[lang]}
                     </p>
                   </div>
                   {/*

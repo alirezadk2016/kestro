@@ -279,7 +279,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               )}
 
               <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
-                <p className="label text-paper/65">
+                <p className="text-xs leading-5 text-paper/65">
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
                   <time
                     dateTime={pageUpdated("/modeller/[slug]")}

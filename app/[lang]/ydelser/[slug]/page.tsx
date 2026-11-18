@@ -221,7 +221,7 @@ export default async function ServicePage(props: {
             <p className="mt-5 text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
               {(answers?.lead ?? service.summary)[lang]}
             </p>
-            <p className="label mt-6 text-paper/65">
+            <p className="mt-6 text-xs leading-5 text-paper/65">
               {c.updated}{" "}
               <time dateTime={updated} className="tabular-nums text-paper/85">
                 {formatDate(updated, lang)}

@@ -64,13 +64,25 @@ export default function RetailLinks({ model, lang }: { model: Model; lang: Lang 
   const links = checked;
   const empty = links.length === 0 ? (emptyChecks[model.slug] ?? []) : [];
   if (links.length === 0 && empty.length === 0) return null;
-  const checkedOn = links.map((link) => link.checkedOn).sort().at(-1);
-  const emptyOn = empty.map((check) => check.checkedOn).sort().at(-1);
+  const checkedOn = links
+    .map((link) => link.checkedOn)
+    .sort()
+    .at(-1);
+  const emptyOn = empty
+    .map((check) => check.checkedOn)
+    .sort()
+    .at(-1);
   const names = (links.length > 0 ? links : empty).map((entry) => retailers[entry.retailer].name);
-  const stores = new Intl.ListFormat(lang === "da" ? "da" : "en-GB", { type: "conjunction" }).format(names);
+  const stores = new Intl.ListFormat(lang === "da" ? "da" : "en-GB", {
+    type: "conjunction",
+  }).format(names);
   /* One store is one wide card, not a third of a row with two holes beside it. */
   const grid =
-    links.length === 1 ? "grid max-w-xl" : links.length === 2 ? "grid gap-3 sm:grid-cols-2" : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3";
+    links.length === 1
+      ? "grid max-w-xl"
+      : links.length === 2
+        ? "grid gap-3 sm:grid-cols-2"
+        : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3";
   const sourceHref = localePath(`/tilbud?model=${encodeURIComponent(model.name)}`, lang);
 
   return (
@@ -110,16 +122,30 @@ export default function RetailLinks({ model, lang }: { model: Model; lang: Lang 
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
-                      aria-label={`${c.search(model.name, retailer.name)}: ${link.note[lang]} (${c.newWindow})`}
                       className="plate plate-lift group flex h-full min-h-[44px] flex-col p-4 sm:p-5"
                     >
                       <span className="block font-display text-base font-bold text-paper">
                         {retailer.name}
                       </span>
-                      <span className="mt-1 block text-sm leading-5 text-paper/75">{link.note[lang]}</span>
+                      <span className="mt-1 block text-sm leading-5 text-paper/75">
+                        {link.note[lang]}
+                      </span>
                       <span className="mt-auto inline-flex items-center gap-1.5 whitespace-nowrap pt-3 text-sm font-semibold text-brand-300 transition-colors group-hover:text-paper">
                         {c.open}
-                        <ArrowUpRight aria-hidden="true" className="h-4 w-4 flex-none" strokeWidth={2} />
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="h-4 w-4 flex-none"
+                          strokeWidth={2}
+                        />
+                      </span>
+                      {/* The name is the card's own words, then the context.
+                          It was an aria-label that replaced them, so a voice
+                          user saying "Se udvalget" or "refurbed" had nothing
+                          to match: Lighthouse's label-in-name on 110 model
+                          pages. */}
+                      <span className="sr-only">
+                        {" – "}
+                        {c.search(model.name, retailer.name)}, {c.newWindow}
                       </span>
                     </a>
                   </li>
@@ -139,7 +165,8 @@ export default function RetailLinks({ model, lang }: { model: Model; lang: Lang 
           </p>
           {checkedOn && (
             <p className="mt-2 text-xs leading-5 text-paper/65">
-              {c.footnote(links.length > 1)} <time dateTime={checkedOn}>{formatDate(checkedOn, lang)}</time>.
+              {c.footnote(links.length > 1)}{" "}
+              <time dateTime={checkedOn}>{formatDate(checkedOn, lang)}</time>.
             </p>
           )}
         </div>

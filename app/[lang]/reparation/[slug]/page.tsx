@@ -183,7 +183,7 @@ export default async function RepairPage(props: Params) {
                   </Link>
                 )}
               </div>
-              <p className="label mt-6 text-paper/65">
+              <p className="mt-6 text-xs leading-5 text-paper/65">
                 {c.updated}{" "}
                 <time dateTime={updated} className="tabular-nums text-paper/85">
                   {formatDate(updated, lang)}
