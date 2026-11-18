@@ -56,7 +56,7 @@
   },
   "/produkter": {
     "published": "2026-08-23",
-    "modified": "2026-11-14",
+    "modified": "2026-11-18",
     "files": 5
   },
   "/produkter/[slug]": {
