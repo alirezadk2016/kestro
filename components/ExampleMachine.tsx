@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import Container from "./Container";
 import { getModel } from "@/lib/models";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -88,7 +88,6 @@ export default function ExampleMachine({ lang }: { lang: Lang }) {
             >
               {c.link}
               <span className="sr-only">: {model.name}</span>
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>
         </div>

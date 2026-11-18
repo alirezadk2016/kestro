@@ -189,14 +189,14 @@ const scaleTiers = [
  */
 const rolloutPhases = [
   {
-    when: { da: "Uge 1 · Afklaring", en: "Week 1 · Scoping" },
+    when: { da: "Uge 1: afklaring", en: "Week 1: scoping" },
     body: {
       da: "Antal, brugstyper og deadline – og om gammelt udstyr skal væk samtidig. Ud af det kommer én specifikation, vi begge kan læse.",
       en: "Quantity, user types and deadline — and whether old equipment has to go at the same time. Out of it comes one specification we can both read.",
     },
   },
   {
-    when: { da: "Uge 1–2 · Sourcing og tilbud", en: "Week 1–2 · Sourcing and quote" },
+    when: { da: "Uge 1–2: sourcing og tilbud", en: "Week 1–2: sourcing and quote" },
     body: {
       da: "Vi vender tilbage med det, der faktisk kan skaffes: model, stand, antal, pris pr. enhed og leveringstid – eller det nærmeste alternativ.",
       en: "We come back with what can actually be sourced: model, condition, quantity, price per unit and delivery time — or the closest alternative.",
@@ -207,7 +207,7 @@ const rolloutPhases = [
     },
   },
   {
-    when: { da: "Efter accept · Klargøring", en: "After acceptance · Preparation" },
+    when: { da: "Efter accept: klargøring", en: "After acceptance: preparation" },
     body: {
       da: "Test, RAM og lagring efter aftale, Windows og drivere, dansk eller norsk tastatur. Skal I bruge en serienummerliste til aktivregistret, aftales den her.",
       en: "Testing, memory and storage as agreed, Windows and drivers, a Danish or Norwegian keyboard. If you need a serial-number list for the asset register, it is agreed here.",
@@ -230,8 +230,8 @@ const rolloutPhases = [
   },
   {
     when: {
-      da: "Efter levering · Det gamle og det næste",
-      en: "After delivery · The old and the next",
+      da: "Efter levering: det gamle og det næste",
+      en: "After delivery: the old and the next",
     },
     body: {
       da: "Vi kan hente det gamle udstyr, slette lagermedierne og modregne værdien. Den aftalte konfiguration kan holdes ved lige til nye medarbejdere.",
@@ -482,7 +482,6 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
             >
               {c.scaleCloseLink}
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>
         </Container>
@@ -511,7 +510,6 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
                 className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
               >
                 {c.tradeLink}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </Link>
             </div>
           </div>

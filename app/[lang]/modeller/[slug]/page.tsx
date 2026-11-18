@@ -228,7 +228,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 {/* Brand and format as the page's one label, then mark and
                     title on one row, on the type scale like every page title. */}
                 <p className="label mt-2 text-paper/75">
-                  {model.brand} · {model.format[lang]}
+                  {model.brand}, {model.format[lang]}
                 </p>
                 <div className="mt-3 flex items-center gap-4 sm:gap-5">
                   <MarkTile

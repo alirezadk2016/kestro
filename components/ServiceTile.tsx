@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { type CraftMarkName } from "@/components/CraftMark";
 import ForgedPanel from "@/components/ForgedPanel";
 import MarkTile from "@/components/MarkTile";
@@ -58,7 +57,6 @@ export default function ServiceTile({
           <p className="mt-1.5 text-sm leading-[1.6] text-paper/75">{summary}</p>
           <span className="tile-prompt mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-300">
             {prompt}
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </span>
         </div>
       </div>

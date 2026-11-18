@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowDown,
-  ArrowRight,
-  Check,
-  ClipboardList,
-  BadgeCheck,
-  Truck,
-  Wallet,
-} from "lucide-react";
+import { ArrowDown, Check, ClipboardList, BadgeCheck, Truck, Wallet } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import { type CraftMarkName } from "@/components/CraftMark";
@@ -258,7 +250,6 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
               className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 hover:text-paper"
             >
               {c.fleetLink}
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
             </Link>
           </div>
         </Container>

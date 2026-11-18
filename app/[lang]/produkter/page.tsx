@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCategoryGallery from "@/components/ProductCategoryGallery";
@@ -222,21 +222,18 @@ export default async function ProdukterPage(props: { params: Promise<{ lang: Lan
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                 >
                   {c.modelsButton}
-                  <ArrowRight size={14} aria-hidden="true" />
                 </Link>
                 <Link
                   href={localePath("/priser", lang)}
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                 >
                   {c.pricesLink}
-                  <ArrowRight size={14} aria-hidden="true" />
                 </Link>
                 <Link
                   href={localePath("/tilbud", lang)}
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                 >
                   {c.enquiry}
-                  <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </div>
               <p className="mt-1 text-xs leading-5 text-paper/65">

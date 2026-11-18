@@ -70,7 +70,7 @@ export default function PriceOnRequest({
           {/* Labelled as what it is, at the size of a reference: as a 24px
               "Budget ca. 2.700 DKK" headline in a box titled "ask about
               price", it read as Kestro's price for this machine. */}
-          <p className="text-xs font-semibold uppercase tracking-wider text-paper/65">
+          <p className="text-xs font-semibold text-paper/65">
             {lang === "da" ? "Pris hos en anden forhandler" : "Price at another retailer"}
           </p>
           <p className="mt-1 font-display text-lg font-bold tabular-nums text-paper">
@@ -81,7 +81,7 @@ export default function PriceOnRequest({
             <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>
           </p>
           <p className="mt-2 text-sm leading-6 text-paper/75">
-            {example.name} · {example.configuration[lang]}
+            {example.name}: {example.configuration[lang]}
           </p>
           <p className="mt-2 text-sm leading-6 text-paper/75">
             {lang === "da"
@@ -98,7 +98,6 @@ export default function PriceOnRequest({
         {lang === "da"
           ? "Se et eksempel på oplysningerne i et tilbud"
           : "See the information in a sample quote"}
-        <ArrowRight size={14} aria-hidden="true" className="shrink-0" />
       </Link>
 
       <p className="mt-4 flex items-start gap-2.5 border-t border-white/10 pt-4 text-sm leading-[1.6] text-paper/75">

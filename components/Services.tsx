@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MarkTile from "@/components/MarkTile";
-import { ArrowRight } from "lucide-react";
+
 import Container from "./Container";
 import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -129,10 +129,6 @@ export default function Services({ lang }: { lang: Lang }) {
           className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
         >
           {c.link}
-          <ArrowRight
-            className="h-4 w-4 transition-transform group-hover:translate-x-1"
-            strokeWidth={2}
-          />
         </Link>
       </Container>
     </section>

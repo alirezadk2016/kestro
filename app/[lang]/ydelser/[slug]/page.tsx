@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { type Crumb } from "@/components/BreadcrumbSchema";
@@ -255,7 +255,6 @@ export default async function ServicePage(props: {
                   className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
                 >
                   {c.enquire}
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
                 </Link>
               </div>
             </aside>
@@ -327,11 +326,6 @@ export default async function ServicePage(props: {
                           {other.summary[lang]}
                         </span>
                         <span className="flex-1" />
-                        <ArrowRight
-                          aria-hidden="true"
-                          className="mt-4 h-4 w-4 text-brand-300 transition-transform group-hover:translate-x-1"
-                          strokeWidth={2}
-                        />
                       </Link>
                     </li>
                   ))}
@@ -351,7 +345,6 @@ export default async function ServicePage(props: {
                         className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                       >
                         {link.label[lang]}
-                        <ArrowRight aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
                       </Link>
                     </li>
                   ))}

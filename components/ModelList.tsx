@@ -89,7 +89,7 @@ export default function ModelList({ models, lang }: { models: Model[]; lang: Lan
       {columns > 0 && (
         <div
           aria-hidden="true"
-          className={`hidden gap-6 px-5 pb-3 text-xs font-semibold uppercase tracking-wider text-paper/65 lg:grid ${ROW[columns]}`}
+          className={`hidden gap-6 px-5 pb-3 text-xs font-semibold text-paper/65 lg:grid ${ROW[columns]}`}
         >
           <span>{da ? "Model" : "Model"}</span>
           <span className={`grid gap-4 ${SPECS[columns]}`}>
@@ -113,8 +113,8 @@ export default function ModelList({ models, lang }: { models: Model[]; lang: Lan
                 <div className="flex min-w-0 items-center gap-4">
                   <Thumb model={model} lang={lang} />
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-brand-300">
-                      {model.brand} · {model.format[lang]}
+                    <p className="text-xs font-semibold text-brand-300">
+                      {model.brand}, {model.format[lang]}
                     </p>
                     <h3 className="mt-1 font-display text-base font-bold leading-snug text-paper sm:text-lg">
                       <Link
@@ -129,11 +129,15 @@ export default function ModelList({ models, lang }: { models: Model[]; lang: Lan
                 </div>
 
                 {specs.length > 0 && (
-                  <dl className={`grid gap-4 border-t border-white/10 pt-4 lg:border-0 lg:pt-0 ${SPECS[specs.length]}`}>
+                  <dl
+                    className={`grid gap-4 border-t border-white/10 pt-4 lg:border-0 lg:pt-0 ${SPECS[specs.length]}`}
+                  >
                     {specs.map((spec, i) => (
                       <div key={spec} className="min-w-0">
                         <dt className="text-xs text-paper/65 lg:sr-only">{rowLabels[i]?.[lang]}</dt>
-                        <dd className="mt-0.5 text-sm font-medium leading-5 text-paper/85 lg:mt-0">{spec}</dd>
+                        <dd className="mt-0.5 text-sm font-medium leading-5 text-paper/85 lg:mt-0">
+                          {spec}
+                        </dd>
                       </div>
                     ))}
                   </dl>

@@ -57,7 +57,7 @@ export default function SourceList({
               </a>
               <p className="mt-0.5 text-paper/65">
                 {source.publisher}
-                {source.published ? `, ${source.published}` : ""} · {read}{" "}
+                {source.published ? `, ${source.published}` : ""}. {read}{" "}
                 <time dateTime={source.accessed}>{formatDate(source.accessed, lang)}</time>
               </p>
               {!compact && <p className="mt-1.5 text-paper/75">{source.claim[lang]}</p>}

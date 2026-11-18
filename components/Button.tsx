@@ -27,9 +27,12 @@ import type { ReactNode } from "react";
  * carries the same radius and the same arrow travel on hover, so the family
  * reads as one control in three weights rather than three controls.
  *
- * `arrow` defaults on for primary and secondary because the arrow is what
- * separates "this goes somewhere" from "this is a label"; turn it off for a
- * button that stays on the page.
+ * `arrow` defaults on for primary only. It was on for every intent, and
+ * with an arrow after every card, row and text link as well the site set
+ * about ten a page (2,569 over 256 pages, 2026-11-18) — the "→ appended to
+ * link and button text" Anthropic's frontend-design skill lists as
+ * template chrome. The arrow now marks the one forward action on a screen;
+ * external links keep their ↗, which says something else: you leave.
  */
 type Intent = "primary" | "secondary" | "quiet";
 type Size = "md" | "lg";
@@ -78,14 +81,14 @@ export default function Button({
   href: string;
   intent?: Intent;
   size?: Size;
-  /** Defaults to on except for `quiet`, where the caller usually wants it too. */
+  /** Defaults to on for `primary` only. */
   arrow?: boolean;
   /** Replaces the arrow, for an action whose meaning is not "forward". */
   icon?: ReactNode;
   className?: string;
   children: ReactNode;
 }) {
-  const showArrow = arrow ?? true;
+  const showArrow = arrow ?? intent === "primary";
 
   return (
     <Link

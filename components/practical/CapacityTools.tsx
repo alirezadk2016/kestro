@@ -274,9 +274,7 @@ function CapacityTool({ lang, kind }: { lang: Lang; kind: ToolKind }) {
         </form>
         <div className="flex min-w-0 flex-col justify-between border-t border-paper-edge bg-paper-dim p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
           <div role="status" aria-live="polite" aria-atomic="true">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-600">
-              {c.result}
-            </p>
+            <p className="text-xs font-semibold text-ink-600">{c.result}</p>
             {result ? (
               <>
                 <p className="mt-6 text-sm font-medium text-ink-700">{t.resultLabel}</p>
@@ -295,7 +293,7 @@ function CapacityTool({ lang, kind }: { lang: Lang; kind: ToolKind }) {
                 )}
                 {kind === "battery" && result.percentage <= 100 && (
                   <div className="mt-6 border-l-2 border-brand-600 pl-4">
-                    <p className="text-sm font-semibold uppercase tracking-[0.08em] text-ink-700">
+                    <p className="text-sm font-semibold text-ink-700">
                       {batteryBandFor(result.percentage).range}
                     </p>
                     <p className="mt-1 text-base font-semibold leading-snug text-ink-900">

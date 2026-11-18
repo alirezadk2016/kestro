@@ -43,7 +43,11 @@ export default function FactNote({ lang, ids }: { lang: Lang; ids: readonly Sour
               <span className="sr-only">{c.title}: </span>
               {c.label}
             </h2>
-            <span className="min-w-0 truncate text-sm text-paper/65">{publishers.join(" · ")}</span>
+            <span className="min-w-0 truncate text-sm text-paper/65">
+              {new Intl.ListFormat(lang === "da" ? "da" : "en-GB", { type: "conjunction" }).format(
+                publishers,
+              )}
+            </span>
             <ChevronDown
               aria-hidden="true"
               className="ml-auto h-4 w-4 flex-none text-paper/65 transition-transform duration-200 group-open:rotate-180"

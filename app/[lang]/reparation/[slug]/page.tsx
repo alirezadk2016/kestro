@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MarkTile from "@/components/MarkTile";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -175,11 +175,6 @@ export default async function RepairPage(props: Params) {
                     className="group inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
                   >
                     {repair.tool.label[lang]}
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                      strokeWidth={2}
-                    />
                   </Link>
                 )}
               </div>
@@ -259,11 +254,6 @@ export default async function RepairPage(props: Params) {
                 className="group mt-6 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-300 transition hover:text-paper"
               >
                 {repair.tool.label[lang]}
-                <ArrowRight
-                  aria-hidden="true"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2}
-                />
               </Link>
             )}
           </Container>
@@ -313,10 +303,6 @@ export default async function RepairPage(props: Params) {
               className="group inline-flex min-h-[44px] items-center gap-2 whitespace-nowrap text-sm font-semibold text-brand-300 transition hover:text-paper"
             >
               {c.back}
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2}
-              />
             </Link>
           </div>
           <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">

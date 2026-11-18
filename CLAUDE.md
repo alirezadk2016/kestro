@@ -180,6 +180,14 @@ bodies.
   empty, page after page; give it `split` (globals.css: heading left, the rest
   right, from lg) or a real second column. Text inside a card is not capped
   at 34em — the card is the measure.
+- **Chrome is a choice, not a default.** An arrow marks the one forward
+  action on a screen (a primary button), and ↗ an external link; text links,
+  cards and rows carry none. Labels are in sentence case, never tracked
+  capitals. A list of things is a sentence ("Lenovo, HP og Dell"), not words
+  joined with middle dots; a dot stays only between the values of a spec
+  string. On 18 November 2026 the site carried 2,569 arrows, 1,283 capital
+  labels and 923 dotted meta strings over 256 pages — the template chrome
+  Anthropic's frontend-design skill lists as the tell of a generated page.
 - **Design for the phone.** Every graphic idea must exist at 390px. The
   process section had a spine on desktop and `hidden lg:flex`, so the whole
   argument of the section was invisible to most readers.

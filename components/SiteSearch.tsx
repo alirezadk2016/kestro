@@ -316,9 +316,7 @@ export default function SiteSearch({
             {failed && <p className="px-3 py-6 text-sm text-paper/75">{c.failed}</p>}
 
             {!typed && shortcuts.length > 0 && (
-              <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-paper/65">
-                {c.shortcuts}
-              </p>
+              <p className="px-3 pb-1 pt-2 text-xs font-semibold text-paper/65">{c.shortcuts}</p>
             )}
 
             {typed && entries && results.length === 0 && (
@@ -338,7 +336,7 @@ export default function SiteSearch({
             {groups.map(({ g, items }) => (
               <div key={g} className="pb-1">
                 {typed && (
-                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-[0.12em] text-paper/65">
+                  <p className="px-3 pb-1 pt-3 text-xs font-semibold text-paper/65">
                     {groupLabel[g][lang]}
                   </p>
                 )}

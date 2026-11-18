@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import MarkTile from "@/components/MarkTile";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import Container from "@/components/Container";
 import { type CraftMarkName } from "@/components/CraftMark";
 import ServiceTile from "@/components/ServiceTile";
@@ -241,10 +241,6 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
                       </p>
                       <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                         {c.stepLink}
-                        <ArrowRight
-                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                          strokeWidth={2}
-                        />
                       </span>
                     </div>
                   </Link>
@@ -260,7 +256,6 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
                 className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-base font-semibold text-brand-300 transition hover:text-paper"
               >
                 {c.qualityLink}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </Link>
             </div>
           </div>

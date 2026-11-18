@@ -107,7 +107,7 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
                 <div className="mt-auto pt-6">
                   <p className="border-t border-white/10 pt-4 text-sm leading-6 text-paper/75">
                     {c.seller}: <span className="font-semibold text-paper">{item.seller}</span>
-                    <span aria-hidden="true"> · </span>
+                    {". "}
                     {item.buyerLabel[lang]}
                   </p>
                   {!commonCheckedOn && (
@@ -147,12 +147,12 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
           >
             <div>
               <p className="text-sm font-semibold text-brand-300">
-                {c.alternative} · {item.useCase[lang]}
+                {c.alternative}: {item.useCase[lang]}
               </p>
               <h3 className="mt-2 text-lg font-bold text-paper">{item.name}</h3>
               <p className="mt-2 text-sm leading-6 text-paper/85">{item.configuration[lang]}</p>
               <p className="mt-1 text-sm leading-6 text-paper/75">
-                {item.condition[lang]} · {item.caveat[lang]}
+                {item.condition[lang]}. {item.caveat[lang]}
               </p>
             </div>
             <div className="lg:w-72">
@@ -211,7 +211,7 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
                           href={item.photo.source}
                           className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
                         >
-                          {item.photo.author} · Wikimedia Commons
+                          {item.photo.author}, Wikimedia Commons
                         </a>
                         <a
                           href={item.photo.licenceUrl}

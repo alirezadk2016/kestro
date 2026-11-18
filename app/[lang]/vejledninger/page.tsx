@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PracticalGuides from "@/components/practical/PracticalGuides";
 import { practicalGuides } from "@/lib/practical-guides";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
@@ -194,7 +194,6 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                     <span className="text-xs tabular-nums text-paper/65">
                       {articles.length} {articles.length === 1 ? c.article : c.articles}
                     </span>
-                    <ArrowRight size={14} aria-hidden="true" className="shrink-0 text-brand-300" />
                   </a>
                 </li>
               ))}
@@ -362,11 +361,6 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
                         <span className="whitespace-nowrap text-sm tabular-nums text-paper/65">
                           {guide.readingMinutes} {c.readingSuffix}
                         </span>
-                        <ArrowRight
-                          aria-hidden="true"
-                          className="h-4 w-4 flex-none text-paper/65 transition-[transform,color] duration-200 group-hover:translate-x-1 group-hover:text-brand-300"
-                          strokeWidth={2}
-                        />
                       </span>
                     </div>
                     <span className="sr-only">{c.read}</span>

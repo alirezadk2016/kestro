@@ -132,7 +132,7 @@ export default function ModelGallery({
               <p id={titleId} className="min-w-0 text-sm font-semibold">
                 {name}{" "}
                 <span className="text-paper/75">
-                  · {selected + 1}/{images.length}
+                  ({selected + 1}/{images.length})
                 </span>
               </p>
               <button

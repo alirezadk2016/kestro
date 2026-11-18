@@ -79,7 +79,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     lang === "da"
       ? {
           home: "Viden",
-          label: "Praktisk guide · Windows",
+          label: "Praktisk guide til Windows",
           steps: "Sådan gør du",
           tool: "Brug værktøjet",
           browser: "Prøv et browsertjek",
@@ -93,7 +93,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
         }
       : {
           home: "Knowledge",
-          label: "Practical guide · Windows",
+          label: "A practical Windows guide",
           steps: "Step by step",
           tool: "Use the tool",
           browser: "Try a browser check",
@@ -231,16 +231,12 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
             <ul className={styles.relatedList}>
               {guide.related.map((link) => (
                 <li key={link.href}>
-                  <Link href={localePath(link.href, lang)}>
-                    {link.label[lang]}
-                    <ArrowRight size={18} aria-hidden="true" />
-                  </Link>
+                  <Link href={localePath(link.href, lang)}>{link.label[lang]}</Link>
                 </li>
               ))}
               <li>
                 <Link href={`${localePath("/vejledninger", lang)}#praktiske-guides`}>
                   {lang === "da" ? "Alle praktiske guides" : "All practical guides"}
-                  <ArrowRight size={18} aria-hidden="true" />
                 </Link>
               </li>
             </ul>

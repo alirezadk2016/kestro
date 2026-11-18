@@ -228,7 +228,6 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                 className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
               >
                 {c.example}
-                <ArrowRight size={14} aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -241,7 +240,6 @@ export default async function PricingPage(props: { params: Promise<{ lang: Lang 
                   className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
                 >
                   {link.label}
-                  <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </li>
             ))}

@@ -57,7 +57,7 @@ const copy = {
     brandsNote:
       "Mangler I et bestemt mærke eller en bestemt model? Spørg os – vi kan ofte skaffe det.",
     modelsTitle: "Sammenlign modelserier",
-    modelsBody: "Modelreferencer · konfiguration og stand afklares ved forespørgsel.",
+    modelsBody: "Modelreferencer: konfiguration og stand afklares ved forespørgsel.",
     stockNote: "Eksemplerne er ikke en lagerliste.",
     allModels: "Sammenlign på tværs af udstyrstyper",
     priceNote: "Prisen afhænger af konfiguration, stand og antal.",
@@ -74,7 +74,7 @@ const copy = {
       "We source per order, so we are not tied to particular brands. These are the ones we can normally get for",
     brandsNote: "Missing a particular brand or model? Ask us — we can often get it.",
     modelsTitle: "Compare model ranges",
-    modelsBody: "Model references · configuration and condition are clarified on enquiry.",
+    modelsBody: "Model references: configuration and condition are clarified on enquiry.",
     stockNote: "These examples are not a stock list.",
     allModels: "Compare across equipment types",
     priceNote: "The price depends on configuration, condition and quantity.",

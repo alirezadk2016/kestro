@@ -81,8 +81,10 @@ export default function ModelCard({
       )}
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-brand-300">
-          {eyebrow === "brand-format" ? `${model.brand} · ${model.format[lang]}` : model.format[lang]}
+        <p className="text-xs font-semibold text-brand-300">
+          {eyebrow === "brand-format"
+            ? `${model.brand}, ${model.format[lang]}`
+            : model.format[lang]}
         </p>
         <Heading className="mt-2 font-display text-lg font-bold leading-snug text-paper">
           <Link

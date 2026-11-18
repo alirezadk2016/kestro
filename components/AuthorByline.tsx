@@ -46,13 +46,13 @@ export default function AuthorByline({
         >
           {author.name}
         </Link>
-        <span className="text-paper/65"> · {author.role[lang]}</span>
+        <span className="text-paper/65">, {author.role[lang]}</span>
       </p>
       <p className="ml-auto text-xs leading-5 text-paper/65">
         <time dateTime={updated}>
           {c.updated} {formatDate(updated, lang)}
         </time>
-        <span aria-hidden="true"> · </span>
+        {", "}
         {readingMinutes} {c.reading}
       </p>
     </div>

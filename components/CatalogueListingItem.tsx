@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { CatalogueEntry } from "@/lib/catalogue-types";
 import type { Lang } from "@/lib/i18n";
 import { buttonClass } from "./Button";
@@ -166,7 +166,6 @@ export default function CatalogueListingItem({
       }
     >
       {enquiry}
-      {!budget && <ArrowRight size={14} aria-hidden="true" />}
     </Link>
   );
 
@@ -191,28 +190,19 @@ export default function CatalogueListingItem({
       <div
         className={`min-w-0 self-center ${grid ? `sm:w-full sm:px-4 sm:pt-3 ${budget ? "sm:min-h-24" : ""}` : "xl:col-start-2 xl:row-start-1"}`}
       >
-        <p className="text-xs font-semibold uppercase leading-4 tracking-[0.08em] text-brand-700">
-          {entry.format}
-        </p>
+        <p className="text-xs font-semibold leading-4 text-brand-700">{entry.format}</p>
         <h3 className="font-display text-base font-bold leading-snug text-ink-900 sm:text-lg">
           <Link
             data-catalogue-detail
             href={entry.detailHref}
             className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${budget && grid ? "sm:min-h-14" : ""}`}
           >
-            {/* The arrow travels with the last word: "Lenovo ThinkPad X1 Carbon
-                Gen 10" wraps in a list row, and an arrow centred beside two
-                lines reads as a separate control. */}
+            {/* The last word stays whole when the name wraps ("…X1 Carbon
+                Gen 10"). It carried an arrow once; the row is the link, and an
+                arrow on every one of sixty rows was chrome. */}
             <span>
               {nameHead && `${nameHead} `}
-              <span className="whitespace-nowrap">
-                {nameTail}
-                <ArrowRight
-                  size={12}
-                  className="ml-1.5 inline-block align-[0.05em] text-brand-700"
-                  aria-hidden="true"
-                />
-              </span>
+              <span className="whitespace-nowrap">{nameTail}</span>
             </span>
           </Link>
         </h3>
@@ -250,7 +240,6 @@ export default function CatalogueListingItem({
               >
                 {da ? "Detaljer" : "Details"}
                 <span className="sr-only">: {entry.name}</span>
-                <ArrowRight size={12} aria-hidden="true" />
               </Link>
               {entry.sourceHref && (
                 <a
@@ -289,9 +278,7 @@ export default function CatalogueListingItem({
               <div key={fact.label} className="min-w-0">
                 {/* Capitals from sm: three columns at 320px ran "HUKOMMELSE"
                     into "LAGRING". */}
-                <dt className="text-xs font-medium leading-4 text-ink-600 sm:uppercase sm:tracking-[0.06em]">
-                  {fact.label}
-                </dt>
+                <dt className="text-xs font-medium leading-4 text-ink-600">{fact.label}</dt>
                 <dd className="mt-1 break-words text-sm font-semibold leading-5 tabular-nums text-ink-900">
                   {fact.value}
                 </dd>

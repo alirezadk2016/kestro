@@ -154,7 +154,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                 {company.email}
               </a>
               <p className="text-sm leading-[1.6] text-paper/65">
-                {company.locationShort[lang]} · {c.delivers} {company.serves[lang]}
+                {company.locationShort[lang]}. {c.delivers} {company.serves[lang]}
               </p>
             </div>
           </div>
@@ -216,8 +216,8 @@ export default function Footer({ lang }: { lang: Lang }) {
                 company.phoneDisplay,
               ]
                 .filter(Boolean)
-                .join(" · ")}{" "}
-              · &copy; {new Date().getFullYear()} Kestro. {c.rights}
+                .join(", ")}
+              . &copy; {new Date().getFullYear()} Kestro. {c.rights}
             </p>
 
             {/* rel="me" alongside noopener: it is what marks these as the same

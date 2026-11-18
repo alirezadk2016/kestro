@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import Container from "./Container";
 import { type CraftMarkName } from "./CraftMark";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -175,10 +175,6 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                 </div>
                 <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                   {item.linkLabel[lang]}
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
                 </span>
               </ForgedPanel>
             </li>
@@ -203,10 +199,6 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                         </p>
                         <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-brand-300">
                           {item.linkLabel[lang]}
-                          <ArrowRight
-                            className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                            strokeWidth={2}
-                          />
                         </span>
                       </div>
                     </div>

@@ -150,11 +150,6 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
             >
               <FileText className="h-4 w-4 text-brand-600" strokeWidth={1.75} aria-hidden="true" />
               {c.cta}
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2}
-                aria-hidden="true"
-              />
             </Link>
           </div>
 
@@ -262,7 +257,6 @@ export default function TrustStrip({ lang }: { lang: Lang }) {
               className="group mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-700 underline decoration-brand-600/40 underline-offset-4 hover:text-brand-600"
             >
               {c.meet}
-              <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
             </Link>
           </div>
         </div>

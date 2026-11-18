@@ -68,7 +68,7 @@ export default function BudgetExamples({ lang }: { lang: Lang }) {
             className="w-full border-collapse text-left"
           >
             <thead role="rowgroup" className="sr-only lg:not-sr-only">
-              <tr role="row" className="text-xs uppercase tracking-wider text-paper/65">
+              <tr role="row" className="text-xs text-paper/65">
                 <th role="columnheader" scope="col" className="px-6 py-3 font-semibold">
                   Model
                 </th>

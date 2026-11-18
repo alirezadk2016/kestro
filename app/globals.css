@@ -908,8 +908,16 @@ body {
    * Colour stays at the call site — these are the same label on paper and on
    * navy.
    */
+  /*
+   * Sentence case, 2026-11-18. The eyebrow and the label were tracked
+   * capitals, and set above guide titles, under every source bar, over the
+   * footer columns, on table heads and model rows they came to 1,283 on 256
+   * pages — the "tracked-out ALL-CAPS eyebrow" Anthropic's frontend-design
+   * skill lists as the commonest tell of a generated page. Weight and colour
+   * still say "label"; the letters no longer shout it.
+   */
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.16em];
+    @apply text-sm font-semibold;
   }
 
   /*
@@ -921,7 +929,7 @@ body {
    * wide enough for the label to read as a label.
    */
   .label {
-    @apply font-medium uppercase tracking-[0.12em];
+    @apply font-semibold;
     /* 12px at every width now. It stepped down to 11.2px from sm, which put
        every date line, count and "Kilder" on the desktop pages under the
        12px floor the site holds everything else to. */

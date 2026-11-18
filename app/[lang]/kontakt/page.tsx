@@ -248,7 +248,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
                       <dt className="text-paper/65">{c.fieldCvr}</dt>
                       <dd className="font-medium text-paper">
                         {company.cvr}
-                        {company.legalForm ? ` · ${company.legalForm}` : ""}
+                        {company.legalForm ? `, ${company.legalForm}` : ""}
                       </dd>
                     </div>
                   )}

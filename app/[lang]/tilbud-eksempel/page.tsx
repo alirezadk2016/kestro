@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
@@ -366,7 +366,6 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                   className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-800"
                 >
                   {c.priceLink}
-                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
                 </Link>
               </div>
             </article>
@@ -388,7 +387,6 @@ export default async function SampleQuotePage(props: { params: Promise<{ lang: L
                       className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                     >
                       {link.label}
-                      <ArrowRight className="h-4 w-4" strokeWidth={2} />
                     </Link>
                   </li>
                 ))}

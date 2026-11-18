@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import { directoryCategories } from "@/lib/categories";
 import { categoryApplications, categoryMedia } from "@/lib/category-media";
 import { localePath, type Lang } from "@/lib/i18n";
@@ -116,11 +116,6 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                     <span id={`category-${category.slug}-count`} className="tabular-nums">
                       {count(models, da)}
                     </span>
-                    <ArrowRight
-                      size={14}
-                      aria-hidden="true"
-                      className="transition-transform duration-150 ease-out group-hover:translate-x-0.5 motion-reduce:transition-none"
-                    />
                   </span>
                 </div>
               </Link>
@@ -142,7 +137,7 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
             {credits.map((credit) => (
               <div key={credit.source}>
                 <p>
-                  {credit.subject} · {credit.author}
+                  {credit.subject}, {credit.author}
                 </p>
                 <div className="flex flex-wrap gap-x-4">
                   <a

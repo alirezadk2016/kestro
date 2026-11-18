@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import Container from "@/components/Container";
 import { localePath, type Lang } from "@/lib/i18n";
 import { practicalGuides } from "@/lib/practical-guides";
@@ -54,10 +54,7 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
               <p className={styles.kicker}>{c.feature}</p>
               <h3 className="font-display t-h3 font-bold tracking-tight">{featured.title[lang]}</h3>
               <p className={styles.featureSummary}>{featured.summary[lang]}</p>
-              <span className={styles.featureAction}>
-                {c.open}
-                <ArrowRight size={20} aria-hidden="true" />
-              </span>
+              <span className={styles.featureAction}>{c.open}</span>
             </div>
             <div className={styles.featurePhoto}>
               <Image
@@ -90,7 +87,6 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
                     </h3>
                     <p>{guide.summary[lang]}</p>
                   </div>
-                  <ArrowRight size={19} aria-hidden="true" />
                 </Link>
               </li>
             ))}
