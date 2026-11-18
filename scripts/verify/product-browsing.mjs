@@ -391,7 +391,7 @@ export async function verifyProductBrowsing(browser, base, fail) {
       await creditSummary.click();
       for (const [line, source] of [
         [
-          "Dell WD19 · Raimond Spekking",
+          "Dell WD19, Raimond Spekking",
           "https://commons.wikimedia.org/wiki/File:Dell_WD19_(model_K20A)-5812.jpg",
         ],
       ]) {
