@@ -36,24 +36,7 @@ const INITIAL: State = {
   compare: [],
 };
 const control =
-  "min-h-11 rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm text-paper outline-none transition-colors hover:border-white/25 focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
-
-/*
- * Facets, 2026-11-19. Three rows of chips over the list, and a fourth row of
- * tags repeating the chips that were on, read as clutter: seventeen choices
- * before the first model. On a desktop each facet is now one button in the
- * command bar that opens its chips; on a phone the chips sit in the Filtre
- * panel. Each chip is still a native checkbox (its transparent surface) and
- * turns blue when it is on.
- */
-const pill =
-  "group relative inline-flex min-h-11 cursor-pointer select-none items-center gap-1.5 rounded-full bg-white/[0.04] px-3.5 text-sm text-paper/85 ring-1 ring-inset ring-white/10 transition-colors duration-150 hover:bg-white/[0.08] hover:text-paper has-[:checked]:bg-brand-600 has-[:checked]:text-white has-[:checked]:ring-brand-500 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 has-[:disabled]:cursor-not-allowed";
-/* The native checkbox is the chip's whole surface, transparent: it is what
-   a pointer hits and what a keyboard focuses, and the chip shows its state. */
-const dot =
-  "absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-full focus-visible:outline-none disabled:cursor-not-allowed";
-const tally = "text-xs tabular-nums text-paper/65 group-has-[:checked]:text-white/80";
-type FacetKey = "brands" | "series" | "types";
+  "min-h-11 rounded-lg border border-white/20 bg-ink-950 px-3 text-sm text-paper outline-none transition-colors focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
 
 function keepComparisonFocusVisible(event: React.FocusEvent<HTMLAnchorElement>) {
   const link = event.currentTarget;
@@ -90,9 +73,6 @@ export default function CatalogueExplorer({
   const [state, setState] = useState<State>({ ...INITIAL, view: defaultView });
   const [ready, setReady] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  /* The desktop facet whose chips are open under its button, if any. */
-  const [openFacet, setOpenFacet] = useState<FacetKey | null>(null);
-  const facetBar = useRef<HTMLDivElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const comparisonHeading = useRef<HTMLHeadingElement>(null);
   const comparisonButton = useRef<HTMLButtonElement>(null);
@@ -204,29 +184,6 @@ export default function CatalogueExplorer({
     });
     return () => cancelAnimationFrame(frame);
   }, [ready, state]);
-
-  /* An open facet closes on a click anywhere else and on Escape, which
-     returns focus to its button. Choosing chips keeps it open: a facet is a
-     multiple choice. */
-  useEffect(() => {
-    if (!openFacet) return;
-    const group = () => facetBar.current?.querySelector(`[data-catalogue-facet="${openFacet}"]`);
-    const away = (event: PointerEvent) => {
-      if (!group()?.contains(event.target as Node)) setOpenFacet(null);
-    };
-    const escape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      const opener = group()?.querySelector<HTMLButtonElement>("[data-catalogue-facet-toggle]");
-      setOpenFacet(null);
-      opener?.focus();
-    };
-    document.addEventListener("pointerdown", away);
-    document.addEventListener("keydown", escape);
-    return () => {
-      document.removeEventListener("pointerdown", away);
-      document.removeEventListener("keydown", escape);
-    };
-  }, [openFacet]);
 
   const comparisonVisible = comparisonOpen && state.compare.length >= 2;
   useEffect(() => {
@@ -367,149 +324,110 @@ export default function CatalogueExplorer({
     toggle("compare", id);
   };
 
-  const facet = (
-    key: FacetKey,
-    label: string,
-    attribute: "data-catalogue-brand" | "data-catalogue-series" | "data-catalogue-category",
-    options: { id: string; label: string; count: number; checked: boolean }[],
-    first: boolean,
-  ) => {
-    const open = openFacet === key;
-    const chosen = options.filter((option) => option.checked).length;
-    const panelId = `${prefix}-${key}`;
-    return (
-      <fieldset
-        key={key}
-        data-catalogue-facet={key}
-        onBlur={(event) => {
-          const next = event.relatedTarget as Node | null;
-          if (open && next && !event.currentTarget.contains(next)) setOpenFacet(null);
-        }}
-        className={budget ? "min-w-0" : `min-w-0 ${first ? "" : "mt-5"} lg:relative lg:mt-0`}
-      >
-        <legend className="sr-only">{label}</legend>
-        {!budget && (
-          <button
-            type="button"
-            data-catalogue-facet-toggle={key}
-            disabled={!ready}
-            aria-expanded={open}
-            aria-controls={panelId}
-            onClick={() => setOpenFacet(open ? null : key)}
-            className={`hidden min-h-11 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-inset transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed lg:inline-flex ${
-              chosen || open
-                ? "bg-white/[0.08] text-paper ring-white/25"
-                : "bg-white/[0.04] text-paper/85 ring-white/10 hover:bg-white/[0.08] hover:text-paper"
-            }`}
-          >
-            {label}
-            {chosen > 0 && (
-              <span className="inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-600 px-1.5 text-xs font-semibold tabular-nums text-white">
-                {chosen}
-                <span className="sr-only">{da ? " valgt" : " selected"}</span>
-              </span>
-            )}
-            <ChevronDown
-              size={16}
-              aria-hidden="true"
-              className={`text-paper/65 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
-            />
-          </button>
-        )}
-        <span
-          aria-hidden="true"
-          className={`mb-2.5 block text-xs font-medium text-paper/65 ${budget ? "" : "lg:hidden"}`}
-        >
-          {label}
-        </span>
-        <div
-          id={panelId}
-          className={`flex flex-wrap gap-2 ${
-            budget
-              ? ""
-              : `${open ? "lg:flex" : "lg:hidden"} lg:absolute lg:left-0 lg:top-full lg:z-40 lg:mt-2 lg:w-max lg:max-w-[30rem] lg:rounded-2xl lg:bg-ink-900 lg:p-3 lg:shadow-[0_24px_48px_-12px_rgb(0_0_0/0.6)] lg:ring-1 lg:ring-white/10`
-          }`}
-        >
-          {options.map((option) => (
-            <label key={option.id} className={pill}>
-              <input
-                {...{ [attribute]: option.id }}
-                type="checkbox"
-                checked={option.checked}
-                disabled={!ready}
-                onChange={() => toggle(key, option.id)}
-                className={dot}
-              />
-              <span className="whitespace-nowrap">{option.label}</span>
-              <span className={tally}>{option.count}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-    );
-  };
   const filterPanel = (
-    <div
-      className={
-        budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : "lg:flex lg:items-center lg:gap-2"
-      }
-    >
-      {facet(
-        "brands",
-        da ? "Mærke" : "Brand",
-        "data-catalogue-brand",
-        brands.map((brand) => ({
-          id: brand,
-          label: brand,
-          checked: state.brands.includes(brand),
-          count: entries.filter(
-            (entry) =>
-              entry.brand === brand &&
-              textMatches(entry) &&
-              seriesMatches(entry) &&
-              typeMatches(entry),
-          ).length,
-        })),
-        true,
+    <div className={budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : ""}>
+      <fieldset className="min-w-0">
+        <legend className="text-sm font-semibold text-paper">{da ? "Mærke" : "Brand"}</legend>
+        {brands.map((brand) => (
+          <label
+            key={brand}
+            className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
+          >
+            <input
+              data-catalogue-brand={brand}
+              type="checkbox"
+              checked={state.brands.includes(brand)}
+              disabled={!ready}
+              onChange={() => toggle("brands", brand)}
+              className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+            />
+            <span className="flex-1">{brand}</span>
+            <span className="text-xs tabular-nums text-paper/65">
+              {
+                entries.filter(
+                  (entry) =>
+                    entry.brand === brand &&
+                    textMatches(entry) &&
+                    seriesMatches(entry) &&
+                    typeMatches(entry),
+                ).length
+              }
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      {showSeries && (
+        <fieldset className="mt-4 min-w-0 border-t border-white/10 pt-5">
+          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
+            {da ? "Serie" : "Series"}
+          </legend>
+          <div className="clear-both">
+            {seriesOptions.map((line) => (
+              <label
+                key={line.id}
+                className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
+              >
+                <input
+                  data-catalogue-series={line.id}
+                  type="checkbox"
+                  checked={activeSeries.includes(line.id)}
+                  disabled={!ready}
+                  onChange={() => toggle("series", line.id)}
+                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                />
+                <span className="flex-1 whitespace-nowrap">{line.label}</span>
+                <span className="text-xs tabular-nums text-paper/65">
+                  {
+                    entries.filter(
+                      (entry) =>
+                        entry.series?.id === line.id &&
+                        textMatches(entry) &&
+                        brandMatches(entry) &&
+                        typeMatches(entry),
+                    ).length
+                  }
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
       )}
-      {showSeries &&
-        facet(
-          "series",
-          da ? "Serie" : "Series",
-          "data-catalogue-series",
-          seriesOptions.map((line) => ({
-            id: line.id,
-            label: line.label,
-            checked: activeSeries.includes(line.id),
-            count: entries.filter(
-              (entry) =>
-                entry.series?.id === line.id &&
-                textMatches(entry) &&
-                brandMatches(entry) &&
-                typeMatches(entry),
-            ).length,
-          })),
-          false,
-        )}
-      {categories.length > 1 &&
-        facet(
-          "types",
-          "Type",
-          "data-catalogue-category",
-          categories.map((category) => ({
-            id: category.id,
-            label: category.label,
-            checked: state.types.includes(category.id),
-            count: entries.filter(
-              (entry) =>
-                entry.category.id === category.id &&
-                textMatches(entry) &&
-                brandMatches(entry) &&
-                seriesMatches(entry),
-            ).length,
-          })),
-          false,
-        )}
+      {categories.length > 1 && (
+        <fieldset className={budget ? "min-w-0" : "mt-4 border-t border-white/10 pt-5"}>
+          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
+            {da ? "Type" : "Type"}
+          </legend>
+          <div className="clear-both">
+            {categories.map((category) => (
+              <label
+                key={category.id}
+                className="flex min-h-11 cursor-pointer items-center gap-3 py-1 text-sm leading-5 text-paper/85"
+              >
+                <input
+                  data-catalogue-category={category.id}
+                  type="checkbox"
+                  checked={state.types.includes(category.id)}
+                  disabled={!ready}
+                  onChange={() => toggle("types", category.id)}
+                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                />
+                <span className="flex-1">{category.label}</span>
+                <span className="text-xs tabular-nums text-paper/65">
+                  {
+                    entries.filter(
+                      (entry) =>
+                        entry.category.id === category.id &&
+                        textMatches(entry) &&
+                        brandMatches(entry) &&
+                        seriesMatches(entry),
+                    ).length
+                  }
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
     </div>
   );
   const filterButton = (
@@ -588,21 +506,26 @@ export default function CatalogueExplorer({
             : "All models and links are shown here. Search, filters and comparison require JavaScript."}
         </p>
       </noscript>
-      {/* One command bar over the catalogue: search, count, sort and view.
-          From lg it stays under the site header while the list scrolls,
-          on frosted glass, so the controls are where the eye is after the
-          tenth row too. */}
-      <div className="lg:sticky lg:top-20 lg:z-30 lg:-mx-3 lg:rounded-b-2xl lg:bg-ink-900/80 lg:px-3 lg:py-3 lg:backdrop-blur-xl">
+      {/* One bar over the list, not over the page. From lg it starts where
+          the list starts, so the filters and the rows share a top edge and
+          the search is a field, not a 1,600px strip across the screen. */}
+      <div
+        className={
+          hasFacets && !budget
+            ? "lg:ml-[calc(184px+1.5rem)] xl:ml-[calc(184px+1.75rem)] 2xl:ml-[calc(200px+1.75rem)]"
+            : ""
+        }
+      >
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
-        <div ref={facetBar} className="flex flex-wrap items-center gap-x-4 gap-y-3 lg:gap-x-3">
-          <div className="flex min-w-0 basis-full items-center gap-2 lg:w-56 lg:flex-none lg:basis-auto xl:w-80">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-sm lg:flex-1 lg:basis-auto">
             <div className="relative min-w-0 flex-1">
               <Search
                 size={18}
                 aria-hidden="true"
-                className="pointer-events-none absolute left-4 top-3.5 text-paper/65"
+                className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
               />
               <input
                 ref={search}
@@ -617,25 +540,11 @@ export default function CatalogueExplorer({
                   setState((previous) => ({ ...previous, query: event.target.value }))
                 }
                 placeholder={da ? "Model eller mærke" : "Model or brand"}
-                className={`${control} w-full pl-11`}
+                className={`${control} w-full pl-10`}
               />
             </div>
             {hasFacets && filterButton}
           </div>
-          {hasFacets && !budget && (
-            <aside
-              id={prefix + "-filters"}
-              aria-label={da ? "Filtre" : "Filters"}
-              className={
-                (filtersOpen ? "block" : "hidden") +
-                /* A panel on a phone, under the count and sort; on a desktop
-                   the facet buttons beside the search, each opening its chips. */
-                " plate order-last basis-full p-4 [color-scheme:dark] lg:order-none lg:block lg:basis-auto lg:rounded-none lg:bg-none lg:p-0 lg:shadow-none"
-              }
-            >
-              {filterPanel}
-            </aside>
-          )}
           <p
             data-catalogue-count
             role="status"
@@ -646,57 +555,47 @@ export default function CatalogueExplorer({
             {filtered.length} {da ? "af" : "of"} {entries.length}{" "}
             {budget ? (da ? "budgetreferencer" : "budget references") : da ? "modeller" : "models"}
           </p>
-          {/* Reset belongs to the count it changes. */}
-          {canReset && (
-            <button
-              type="button"
-              disabled={!ready}
-              data-catalogue-clear
-              onClick={clear}
-              className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
-            >
-              {da ? "Nulstil filtre" : "Reset filters"}
-            </button>
-          )}
           <div className="ml-auto flex min-w-0 flex-wrap items-center gap-3">
+            {canReset && (
+              <button
+                type="button"
+                disabled={!ready}
+                data-catalogue-clear
+                onClick={clear}
+                className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+              >
+                {da ? "Nulstil filtre" : "Reset filters"}
+              </button>
+            )}
             <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
-              <span className="sr-only sm:not-sr-only lg:sr-only xl:not-sr-only">
-                {da ? "Sortér" : "Sort"}
-              </span>
-              <span className="relative inline-flex">
-                <select
-                  data-catalogue-sort
-                  disabled={!ready}
-                  value={state.sort}
-                  onChange={(event) =>
-                    setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
-                  }
-                  className={`${control} w-32 max-w-full appearance-none pr-9 text-sm sm:w-auto`}
-                >
-                  <option value="default">{da ? "Standard" : "Default"}</option>
-                  <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
-                  <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
-                  {budget && (
-                    <>
-                      <option value="budget-asc">
-                        {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
-                      </option>
-                      <option value="budget-desc">
-                        {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
-                      </option>
-                    </>
-                  )}
-                </select>
-                <ChevronDown
-                  size={16}
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-paper/65"
-                />
-              </span>
+              <span className="sr-only sm:not-sr-only">{da ? "Sortér" : "Sort"}</span>
+              <select
+                data-catalogue-sort
+                disabled={!ready}
+                value={state.sort}
+                onChange={(event) =>
+                  setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
+                }
+                className={`${control} w-28 max-w-full text-xs sm:w-auto`}
+              >
+                <option value="default">{da ? "Standard" : "Default"}</option>
+                <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
+                <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
+                {budget && (
+                  <>
+                    <option value="budget-asc">
+                      {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
+                    </option>
+                    <option value="budget-desc">
+                      {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
+                    </option>
+                  </>
+                )}
+              </select>
             </label>
             {!budget && (
               <div
-                className="hidden rounded-full bg-white/[0.04] p-1 ring-1 ring-inset ring-white/10 sm:inline-flex"
+                className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
                 role="group"
                 aria-label={da ? "Visning" : "View"}
               >
@@ -719,7 +618,7 @@ export default function CatalogueExplorer({
                             : "List view"
                       }
                       onClick={() => setState((previous) => ({ ...previous, view }))}
-                      className={`inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-white text-ink-950" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
+                      className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
                     >
                       <Icon size={18} aria-hidden="true" />
                     </button>
@@ -731,10 +630,26 @@ export default function CatalogueExplorer({
         </div>
       </div>
       <div
-        /* The list has the container's width: the facets were a 200px
-           column beside it once, and rows of chips over it after that. */
-        className="min-w-0"
+        className={`grid min-w-0 gap-3 lg:gap-6 ${hasFacets && !budget ? "lg:grid-cols-[184px_minmax(0,1fr)] xl:gap-7 2xl:grid-cols-[200px_minmax(0,1fr)]" : ""}`}
       >
+        {hasFacets && !budget && (
+          <div className={`${filtersOpen ? "block" : "hidden"} min-w-0 lg:block`}>
+            <aside
+              id={prefix + "-filters"}
+              aria-label={da ? "Filtre" : "Filters"}
+              className={
+                (filtersOpen ? "block" : "hidden") +
+                /* A panel on a phone, where it drops open under the search;
+                   on a desktop the filters are a column of type beside the
+                   list, without a box around them. */
+                " plate mt-3 p-4 [color-scheme:dark] lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:rounded-none lg:bg-none lg:p-0 lg:pr-2 lg:shadow-none lg:[scrollbar-color:rgb(255_255_255/0.18)_transparent] lg:[scrollbar-width:thin]"
+              }
+            >
+              {filterPanel}
+            </aside>
+          </div>
+        )}
+
         <div className="min-w-0">
           {budget && hasFacets && (
             <aside
@@ -746,9 +661,43 @@ export default function CatalogueExplorer({
             </aside>
           )}
 
-          {/* No row of "selected filter" tags: it repeated the chips that
-              were on. A facet's button counts its choices, Filtre counts them
-              all on a phone, and "Nulstil filtre" clears them. */}
+          {active > 0 && (
+            <div
+              className="mt-3 flex flex-wrap gap-2"
+              aria-label={da ? "Valgte filtre" : "Selected filters"}
+            >
+              {[
+                ...(query ? [{ key: "query", value: state.query, label: state.query }] : []),
+                ...state.brands.map((value) => ({ key: "brands", value, label: value })),
+                ...activeSeries.map((value) => ({
+                  key: "series",
+                  value,
+                  label: allSeries.find((line) => line.id === value)?.label || value,
+                })),
+                ...state.types.map((value) => ({
+                  key: "types",
+                  value,
+                  label: categories.find((category) => category.id === value)?.label || value,
+                })),
+              ].map((chip) => (
+                <button
+                  key={`${chip.key}-${chip.value}`}
+                  type="button"
+                  onClick={() =>
+                    chip.key === "query"
+                      ? setState((previous) => ({ ...previous, query: "" }))
+                      : toggle(chip.key as "brands" | "series" | "types", chip.value)
+                  }
+                  aria-label={`${da ? "Fjern filter" : "Remove filter"}: ${chip.label}`}
+                  className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-lg border border-brand-300/40 bg-brand-600/10 px-3 text-sm text-paper"
+                >
+                  <span className="break-words">{chip.label}</span>
+                  <X size={14} className="shrink-0" aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* The list is one ledger: a single panel, a rule between rows,
               and the spec columns named once above them. Fifty-nine white
               cards with the same radius and the same shadow was the SaaS
@@ -762,7 +711,7 @@ export default function CatalogueExplorer({
             {sharedHeads && (
               <div
                 aria-hidden="true"
-                className="hidden grid-cols-[144px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
+                className="hidden grid-cols-[112px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
               >
                 <span className="col-span-2">Model</span>
                 <span

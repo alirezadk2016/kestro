@@ -166,3 +166,12 @@ model.
 - On a phone nothing moved: the chips stay in the Filtre panel.
 - At 1024 the bar holds one line: the search is narrower and "Sortér"
   is left to the screen reader until xl.
+
+### Back to the ledger, the same day
+
+The owner saw both passes above and preferred the version before them: the
+ledger with the filters as a column beside it (as at commit c8b2c5e). The
+command bar, the chips and the facet buttons were taken out again; the
+catalogue components and their check are as they were then. One change
+stayed: the placeholder writes the family as the brand does ("ThinkPad"),
+not in tracked capitals, because the site's rule on labels asks for it.
