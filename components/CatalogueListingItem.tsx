@@ -68,12 +68,12 @@ function Media({
     <figure
       data-catalogue-media
       aria-hidden={entry.image ? undefined : true}
-      className={`product-well relative aspect-[4/3] self-start overflow-hidden rounded-md ${budget ? "w-[104px]" : grid ? "w-[88px] sm:w-32" : "w-[88px] sm:w-28"} ${
+      className={`product-well relative aspect-[4/3] self-start overflow-hidden rounded-md ${budget ? "w-[104px]" : grid ? "w-[88px] sm:w-32" : "w-[88px] rounded-lg sm:w-36"} ${
         grid
           ? entry.image
             ? "sm:aspect-auto sm:h-48 sm:w-full sm:rounded-none"
             : "sm:aspect-auto sm:h-14 sm:w-full sm:rounded-none"
-          : "xl:col-start-1 xl:row-start-1 xl:self-center"
+          : `xl:col-start-1 xl:row-start-1 xl:self-center ${budget ? "" : "xl:row-span-2"}`
       }`}
     >
       {entry.image ? (
@@ -83,7 +83,7 @@ function Media({
           height={entry.image.height}
           alt={entry.image.alt}
           priority={priority}
-          sizes={grid ? "(min-width: 1536px) 25vw, (min-width: 640px) 45vw, 128px" : "112px"}
+          sizes={grid ? "(min-width: 1536px) 25vw, (min-width: 640px) 45vw, 128px" : "144px"}
           className={`h-full w-full object-contain ${entry.image.kind === "photo" ? "mix-blend-multiply brightness-[1.025]" : ""}`}
         />
       ) : (
@@ -95,9 +95,10 @@ function Media({
           data-catalogue-placeholder
           className={`flex h-full flex-col justify-end p-2 sm:p-3 ${grid ? "sm:flex-row sm:items-center sm:justify-start sm:gap-2 sm:px-4" : ""}`}
         >
-          {/* The family only from sm: in the 88px phone tile "ELITEBOOK" ran to
-              the edge and a two-line "X1 Carbon" pushed it out of the top. */}
-          <span className="hidden truncate text-xs font-semibold uppercase leading-4 tracking-[0.08em] text-ink-600 sm:block">
+          {/* The family only from sm: in the 88px phone tile "EliteBook" ran to
+              the edge and a two-line "X1 Carbon" pushed it out of the top.
+              Written as the brand writes it, not in tracked capitals. */}
+          <span className="hidden truncate text-xs font-semibold leading-4 text-ink-600 sm:block">
             {parts.family}
           </span>
           {/* sm:text-base in the list's 112px well: at text-xl "X1 Carbon"
@@ -167,7 +168,11 @@ export default function CatalogueListingItem({
       : "Enquire";
   const compare = canCompare && (
     <label
-      className={`inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-sm ${tone.compare}`}
+      className={
+        ledger
+          ? "relative z-10 inline-flex min-h-11 shrink-0 cursor-pointer select-none items-center gap-2 rounded-full px-3 text-sm text-paper/75 transition-colors hover:bg-white/[0.06] hover:text-paper has-[:checked]:text-paper has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60"
+          : `inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 text-sm ${tone.compare}`
+      }
     >
       <input
         data-catalogue-compare={entry.id}
@@ -175,7 +180,11 @@ export default function CatalogueListingItem({
         checked={selected}
         disabled={!ready || (selectionFull && !selected)}
         onChange={onCompare}
-        className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+        className={
+          ledger
+            ? "h-3.5 w-3.5 shrink-0 cursor-pointer appearance-none rounded-full border border-white/35 transition-colors checked:border-brand-300 checked:bg-brand-300 focus-visible:outline-none disabled:cursor-not-allowed"
+            : "h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+        }
       />
       <span>
         {da ? "Sammenlign" : "Compare"}
@@ -196,7 +205,7 @@ export default function CatalogueListingItem({
         budget
           ? `${buttonClass("primary")} shrink-0 whitespace-nowrap !px-3`
           : ledger
-            ? "inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold text-paper ring-1 ring-inset ring-white/20 transition-colors duration-150 hover:bg-brand-600 hover:ring-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 motion-safe:active:scale-[0.96]"
+            ? "relative z-10 inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-white/[0.07] px-4 text-sm font-semibold text-paper transition-colors duration-150 hover:bg-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 motion-safe:active:scale-[0.96]"
             : "inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/35 transition-colors duration-150 hover:bg-brand-600 hover:text-white hover:ring-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 motion-safe:active:scale-[0.96]"
       }
     >
@@ -211,7 +220,7 @@ export default function CatalogueListingItem({
       data-budget-model={budget ? entry.id : undefined}
       className={`grid min-w-0 scroll-mt-28 gap-y-3 ${
         ledger
-          ? "grid-cols-[88px_minmax(0,1fr)] gap-x-3.5 px-3 py-4 transition-colors duration-150 hover:bg-white/[0.025] sm:grid-cols-[112px_minmax(0,1fr)] sm:gap-x-5 sm:px-5 xl:grid-cols-[112px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] xl:gap-x-6 xl:gap-y-1 xl:py-3.5"
+          ? "relative grid-cols-[88px_minmax(0,1fr)] gap-x-3.5 px-3 py-4 transition-colors duration-150 focus-within:bg-white/[0.035] hover:bg-white/[0.035] sm:grid-cols-[144px_minmax(0,1fr)] sm:gap-x-6 sm:px-5 xl:grid-cols-[144px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] xl:gap-x-6 xl:gap-y-1 xl:py-4"
           : `sheet overflow-hidden ${
               budget
                 ? `grid-cols-[104px_minmax(0,1fr)] gap-x-4 p-4 ${grid ? "sm:flex sm:flex-col sm:gap-y-0 sm:p-0" : "xl:grid-cols-[104px_minmax(0,1fr)]"}`
@@ -221,14 +230,16 @@ export default function CatalogueListingItem({
     >
       <Media entry={entry} grid={grid} budget={budget} priority={priority} />
       <div
-        className={`min-w-0 self-center ${grid ? `sm:w-full sm:px-4 sm:pt-3 ${budget ? "sm:min-h-24" : ""}` : "xl:col-start-2 xl:row-start-1"}`}
+        className={`min-w-0 self-center ${grid ? `sm:w-full sm:px-4 sm:pt-3 ${budget ? "sm:min-h-24" : ""}` : `xl:col-start-2 xl:row-start-1 ${budget ? "" : "xl:self-end"}`}`}
       >
         <p className={`text-xs font-semibold leading-4 ${tone.eyebrow}`}>{entry.format}</p>
         <h3 className="font-display text-base font-bold leading-snug sm:text-lg">
           <Link
             data-catalogue-detail
             href={entry.detailHref}
-            className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${tone.name} ${budget && grid ? "sm:min-h-14" : ""}`}
+            /* In the ledger the name's link covers the whole row, so a row
+               is one target; compare and enquire sit above it (z-10). */
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${tone.name} ${budget && grid ? "sm:min-h-14" : ""} ${ledger ? "after:absolute after:inset-0 after:content-['']" : ""}`}
           >
             {/* The last word stays whole when the name wraps ("…X1 Carbon
                 Gen 10"). It carried an arrow once; the row is the link, and an
@@ -295,7 +306,7 @@ export default function CatalogueListingItem({
           {entry.application && (
             <p
               data-catalogue-application
-              className={`col-span-2 text-sm leading-5 ${tone.body} ${grid ? "sm:px-4 sm:pt-2" : "xl:col-span-1 xl:col-start-2 xl:row-start-2"}`}
+              className={`col-span-2 text-sm leading-5 ${tone.body} ${grid ? "sm:px-4 sm:pt-2" : "xl:col-span-1 xl:col-start-2 xl:row-start-2 xl:self-start"}`}
             >
               {entry.application}
             </p>

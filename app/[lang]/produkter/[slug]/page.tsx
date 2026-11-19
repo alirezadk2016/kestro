@@ -259,12 +259,12 @@ export default async function CategoryPage(props: {
      elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:py-10">
+      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:pb-10 sm:pt-4">
         <Container>
           <div id={isLaptops ? "laptop-model-library" : undefined} className="scroll-mt-28">
-            <h2 className="sr-only font-display t-h2 font-extrabold text-paper sm:not-sr-only">
-              {c.modelsTitle}
-            </h2>
+            {/* For the outline, not the eye: a second big heading between the
+                page title and the list read as a form with sections. */}
+            <h2 className="sr-only">{c.modelsTitle}</h2>
           </div>
 
           <div>

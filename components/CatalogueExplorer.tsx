@@ -36,7 +36,24 @@ const INITIAL: State = {
   compare: [],
 };
 const control =
-  "min-h-11 rounded-lg border border-white/20 bg-ink-950 px-3 text-sm text-paper outline-none transition-colors focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
+  "min-h-11 rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm text-paper outline-none transition-colors hover:border-white/25 focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
+
+/*
+ * Facets as chips, 2026-11-19. The filters were a column of native square
+ * checkboxes with a number at the far edge — the form a 2012 admin screen
+ * has. Each value is now a chip a finger can hit (44px), still a native
+ * checkbox (the chip's transparent surface); the chip turns blue when on.
+ */
+const pill =
+  "group relative inline-flex min-h-11 cursor-pointer select-none items-center gap-1.5 rounded-full bg-white/[0.04] px-3.5 text-sm text-paper/85 ring-1 ring-inset ring-white/10 transition-colors duration-150 hover:bg-white/[0.08] hover:text-paper has-[:checked]:bg-brand-600 has-[:checked]:text-white has-[:checked]:ring-brand-500 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 has-[:disabled]:cursor-not-allowed";
+/* The native checkbox is the chip's whole surface, transparent: it is what
+   a pointer hits and what a keyboard focuses, and the chip shows its state. */
+const dot =
+  "absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-full focus-visible:outline-none disabled:cursor-not-allowed";
+const tally = "text-xs tabular-nums text-paper/65 group-has-[:checked]:text-white/80";
+/* On a desktop each facet is a row: its name, then its chips. */
+const facetRow = "min-w-0 lg:grid lg:grid-cols-[4.5rem_minmax(0,1fr)] lg:items-start lg:gap-x-4";
+const facetLabel = "mb-2.5 block text-xs font-medium text-paper/65 lg:mb-0 lg:pt-3.5";
 
 function keepComparisonFocusVisible(event: React.FocusEvent<HTMLAnchorElement>) {
   const link = event.currentTarget;
@@ -326,57 +343,57 @@ export default function CatalogueExplorer({
 
   const filterPanel = (
     <div className={budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : ""}>
-      <fieldset className="min-w-0">
-        <legend className="text-sm font-semibold text-paper">{da ? "Mærke" : "Brand"}</legend>
-        {brands.map((brand) => (
-          <label
-            key={brand}
-            className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
-          >
-            <input
-              data-catalogue-brand={brand}
-              type="checkbox"
-              checked={state.brands.includes(brand)}
-              disabled={!ready}
-              onChange={() => toggle("brands", brand)}
-              className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-            />
-            <span className="flex-1">{brand}</span>
-            <span className="text-xs tabular-nums text-paper/65">
-              {
-                entries.filter(
-                  (entry) =>
-                    entry.brand === brand &&
-                    textMatches(entry) &&
-                    seriesMatches(entry) &&
-                    typeMatches(entry),
-                ).length
-              }
-            </span>
-          </label>
-        ))}
+      <fieldset className={facetRow}>
+        <legend className="sr-only">{da ? "Mærke" : "Brand"}</legend>
+        <span aria-hidden="true" className={facetLabel}>
+          {da ? "Mærke" : "Brand"}
+        </span>
+        <div className="flex flex-wrap gap-2">
+          {brands.map((brand) => (
+            <label key={brand} className={pill}>
+              <input
+                data-catalogue-brand={brand}
+                type="checkbox"
+                checked={state.brands.includes(brand)}
+                disabled={!ready}
+                onChange={() => toggle("brands", brand)}
+                className={dot}
+              />
+              <span>{brand}</span>
+              <span className={tally}>
+                {
+                  entries.filter(
+                    (entry) =>
+                      entry.brand === brand &&
+                      textMatches(entry) &&
+                      seriesMatches(entry) &&
+                      typeMatches(entry),
+                  ).length
+                }
+              </span>
+            </label>
+          ))}
+        </div>
       </fieldset>
       {showSeries && (
-        <fieldset className="mt-4 min-w-0 border-t border-white/10 pt-5">
-          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
+        <fieldset className={`mt-5 lg:mt-3 ${facetRow}`}>
+          <legend className="sr-only">{da ? "Serie" : "Series"}</legend>
+          <span aria-hidden="true" className={facetLabel}>
             {da ? "Serie" : "Series"}
-          </legend>
-          <div className="clear-both">
+          </span>
+          <div className="flex flex-wrap gap-2">
             {seriesOptions.map((line) => (
-              <label
-                key={line.id}
-                className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-paper/85"
-              >
+              <label key={line.id} className={pill}>
                 <input
                   data-catalogue-series={line.id}
                   type="checkbox"
                   checked={activeSeries.includes(line.id)}
                   disabled={!ready}
                   onChange={() => toggle("series", line.id)}
-                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                  className={dot}
                 />
-                <span className="flex-1 whitespace-nowrap">{line.label}</span>
-                <span className="text-xs tabular-nums text-paper/65">
+                <span className="whitespace-nowrap">{line.label}</span>
+                <span className={tally}>
                   {
                     entries.filter(
                       (entry) =>
@@ -393,26 +410,24 @@ export default function CatalogueExplorer({
         </fieldset>
       )}
       {categories.length > 1 && (
-        <fieldset className={budget ? "min-w-0" : "mt-4 border-t border-white/10 pt-5"}>
-          <legend className="float-left mb-2 w-full text-sm font-semibold text-paper">
-            {da ? "Type" : "Type"}
-          </legend>
-          <div className="clear-both">
+        <fieldset className={budget ? "min-w-0" : `mt-5 lg:mt-3 ${facetRow}`}>
+          <legend className="sr-only">Type</legend>
+          <span aria-hidden="true" className={facetLabel}>
+            Type
+          </span>
+          <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <label
-                key={category.id}
-                className="flex min-h-11 cursor-pointer items-center gap-3 py-1 text-sm leading-5 text-paper/85"
-              >
+              <label key={category.id} className={pill}>
                 <input
                   data-catalogue-category={category.id}
                   type="checkbox"
                   checked={state.types.includes(category.id)}
                   disabled={!ready}
                   onChange={() => toggle("types", category.id)}
-                  className="h-4 w-4 shrink-0 accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                  className={dot}
                 />
-                <span className="flex-1">{category.label}</span>
-                <span className="text-xs tabular-nums text-paper/65">
+                <span>{category.label}</span>
+                <span className={tally}>
                   {
                     entries.filter(
                       (entry) =>
@@ -506,26 +521,21 @@ export default function CatalogueExplorer({
             : "All models and links are shown here. Search, filters and comparison require JavaScript."}
         </p>
       </noscript>
-      {/* One bar over the list, not over the page. From lg it starts where
-          the list starts, so the filters and the rows share a top edge and
-          the search is a field, not a 1,600px strip across the screen. */}
-      <div
-        className={
-          hasFacets && !budget
-            ? "lg:ml-[calc(184px+1.5rem)] xl:ml-[calc(184px+1.75rem)] 2xl:ml-[calc(200px+1.75rem)]"
-            : ""
-        }
-      >
+      {/* One command bar over the catalogue: search, count, sort and view.
+          From lg it stays under the site header while the list scrolls,
+          on frosted glass, so the controls are where the eye is after the
+          tenth row too. */}
+      <div className="lg:sticky lg:top-20 lg:z-30 lg:-mx-3 lg:rounded-b-2xl lg:bg-ink-900/80 lg:px-3 lg:py-3 lg:backdrop-blur-xl">
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-sm lg:flex-1 lg:basis-auto">
+          <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-md lg:flex-1 lg:basis-auto">
             <div className="relative min-w-0 flex-1">
               <Search
                 size={18}
                 aria-hidden="true"
-                className="pointer-events-none absolute left-3 top-3.5 text-paper/65"
+                className="pointer-events-none absolute left-4 top-3.5 text-paper/65"
               />
               <input
                 ref={search}
@@ -540,7 +550,7 @@ export default function CatalogueExplorer({
                   setState((previous) => ({ ...previous, query: event.target.value }))
                 }
                 placeholder={da ? "Model eller mærke" : "Model or brand"}
-                className={`${control} w-full pl-10`}
+                className={`${control} w-full pl-11`}
               />
             </div>
             {hasFacets && filterButton}
@@ -569,33 +579,40 @@ export default function CatalogueExplorer({
             )}
             <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
               <span className="sr-only sm:not-sr-only">{da ? "Sortér" : "Sort"}</span>
-              <select
-                data-catalogue-sort
-                disabled={!ready}
-                value={state.sort}
-                onChange={(event) =>
-                  setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
-                }
-                className={`${control} w-28 max-w-full text-xs sm:w-auto`}
-              >
-                <option value="default">{da ? "Standard" : "Default"}</option>
-                <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
-                <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
-                {budget && (
-                  <>
-                    <option value="budget-asc">
-                      {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
-                    </option>
-                    <option value="budget-desc">
-                      {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
-                    </option>
-                  </>
-                )}
-              </select>
+              <span className="relative inline-flex">
+                <select
+                  data-catalogue-sort
+                  disabled={!ready}
+                  value={state.sort}
+                  onChange={(event) =>
+                    setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
+                  }
+                  className={`${control} w-32 max-w-full appearance-none pr-9 text-sm sm:w-auto`}
+                >
+                  <option value="default">{da ? "Standard" : "Default"}</option>
+                  <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
+                  <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
+                  {budget && (
+                    <>
+                      <option value="budget-asc">
+                        {da ? "Historisk budget: lav–høj" : "Historical budget: low–high"}
+                      </option>
+                      <option value="budget-desc">
+                        {da ? "Historisk budget: høj–lav" : "Historical budget: high–low"}
+                      </option>
+                    </>
+                  )}
+                </select>
+                <ChevronDown
+                  size={16}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-paper/65"
+                />
+              </span>
             </label>
             {!budget && (
               <div
-                className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
+                className="hidden rounded-full bg-white/[0.04] p-1 ring-1 ring-inset ring-white/10 sm:inline-flex"
                 role="group"
                 aria-label={da ? "Visning" : "View"}
               >
@@ -618,7 +635,7 @@ export default function CatalogueExplorer({
                             : "List view"
                       }
                       onClick={() => setState((previous) => ({ ...previous, view }))}
-                      className={`inline-flex h-11 w-11 items-center justify-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-brand-600 text-paper" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
+                      className={`inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${state.view === view ? "bg-white text-ink-950" : "text-paper/75 hover:bg-white/10 hover:text-paper"}`}
                     >
                       <Icon size={18} aria-hidden="true" />
                     </button>
@@ -630,7 +647,11 @@ export default function CatalogueExplorer({
         </div>
       </div>
       <div
-        className={`grid min-w-0 gap-3 lg:gap-6 ${hasFacets && !budget ? "lg:grid-cols-[184px_minmax(0,1fr)] xl:gap-7 2xl:grid-cols-[200px_minmax(0,1fr)]" : ""}`}
+        /* Facets above the list, not beside it: a 200px column of chips one
+           to a line, and a table squeezed into what was left, until the
+           specs wrapped. Now the chips run in rows under the command bar
+           and the table has the container's width. */
+        className="min-w-0"
       >
         {hasFacets && !budget && (
           <div className={`${filtersOpen ? "block" : "hidden"} min-w-0 lg:block`}>
@@ -640,9 +661,8 @@ export default function CatalogueExplorer({
               className={
                 (filtersOpen ? "block" : "hidden") +
                 /* A panel on a phone, where it drops open under the search;
-                   on a desktop the filters are a column of type beside the
-                   list, without a box around them. */
-                " plate mt-3 p-4 [color-scheme:dark] lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:rounded-none lg:bg-none lg:p-0 lg:pr-2 lg:shadow-none lg:[scrollbar-color:rgb(255_255_255/0.18)_transparent] lg:[scrollbar-width:thin]"
+                   on a desktop, rows of chips under the command bar. */
+                " plate mt-3 p-4 [color-scheme:dark] lg:mt-2 lg:block lg:rounded-none lg:bg-none lg:p-0 lg:shadow-none"
               }
             >
               {filterPanel}
@@ -711,7 +731,7 @@ export default function CatalogueExplorer({
             {sharedHeads && (
               <div
                 aria-hidden="true"
-                className="hidden grid-cols-[112px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
+                className="hidden grid-cols-[144px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
               >
                 <span className="col-span-2">Model</span>
                 <span

@@ -117,3 +117,37 @@ skill's list of defaults before building:
 - **Lead:** answer first, from the data: "59 modeller fra Lenovo, HP og
   Dell, fordelt på 10 serier." The "Køb hos andre" link left the top of the
   page; the external retailers are still the disclosure after the range.
+
+## The modern pass — 19 November 2026
+
+The owner looked at the ledger and said it still was not modern. Measured at
+1920, 1440 and 390, the dated parts were the controls, not the list: square
+checkboxes in a 220px sidebar, the filters reading as a form beside the
+table, a plain select and a visible "Sammenlign modelserier" heading
+repeating the page's own subject.
+
+- **One command bar.** Search, count, sort and view share a bar that stays
+  under the header while the list scrolls (from lg), on the navy at 80% with
+  a blur so the rows read through it. Every control is a pill; the sort is
+  a native select with its own chevron; the view switch is a segmented pair
+  with a white active half.
+- **Facets are chips above the table**, one row per facet with its name on
+  the left (Mærke, Serie, Type). The table gets the whole container width.
+  The native checkbox still carries the state: it covers the chip
+  transparently, so a click, a keyboard and Playwright reach the real
+  control, and the chip fills brand blue when it is checked. On a phone the
+  same chips sit in the Filtre panel.
+- **A row is one target.** The model name's link covers the row; compare
+  and enquire sit above it. The row lights faintly under the pointer and
+  under keyboard focus. Compare is a quiet pill with a dot, enquire a soft
+  pill that fills blue on hover — the header keeps the one solid blue button.
+- **The picture spans the name and its use**, so the format, the name and
+  the one-line use sit together beside a 144px picture instead of the use
+  line falling under the picture.
+- The models heading stays for the outline and leaves the screen; the
+  placeholder's family name is written as the brand writes it, not in
+  tracked capitals.
+
+Left as it is: the grid view's white sheets (the hub's language), and the
+short placeholder band on models without a photo — a tall empty frame would
+be a picture of nothing.

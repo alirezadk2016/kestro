@@ -323,7 +323,7 @@ export async function verifyCatalogueExplorer(
         assert.equal(
           await toggle.isVisible(),
           false,
-          "desktop models use their visible facet sidebar",
+          "desktop models show their facets without a toggle",
         );
       if (!(await first.isVisible())) {
         await toggle.click();
@@ -358,9 +358,11 @@ export async function verifyCatalogueExplorer(
         const resultColumn = await root()
           .locator("ul")
           .evaluate((element) => element.parentElement.getBoundingClientRect().toJSON());
+        /* The facets are rows of chips between the command bar and the
+           list (2026-11-19); they were a column beside it. */
         assert.ok(
-          resultColumn.width > 0 && panelBox && panelBox.x + panelBox.width <= resultColumn.x + 1,
-          "the desktop model sidebar stays beside the result column beneath the shared toolbar",
+          resultColumn.width > 0 && panelBox && panelBox.y + panelBox.height <= resultColumn.y + 1,
+          "the desktop facets sit between the shared toolbar and the result list",
         );
       }
       assert.notEqual(
