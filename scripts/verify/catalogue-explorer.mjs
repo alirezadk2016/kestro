@@ -314,38 +314,37 @@ export async function verifyCatalogueExplorer(
       assert.ok(box && box.width >= 44 && box.height >= 44, `${label} has a 44px target`);
     }
 
-    async function filters() {
-      const first = root().locator("input[data-catalogue-brand]").first();
+    const FACETS = {
+      "data-catalogue-brand": "brands",
+      "data-catalogue-series": "series",
+      "data-catalogue-category": "types",
+    };
+
+    async function filters(attribute = "data-catalogue-brand") {
+      const first = root().locator(`input[${attribute}]`).first();
       const toggle = root().locator("[data-catalogue-filter-toggle]");
-      const hasToggle = budget || width < 1024;
-      if (hasToggle) await target(toggle, "the compact filter toggle");
-      else
-        assert.equal(
-          await toggle.isVisible(),
-          false,
-          "desktop models show their facets without a toggle",
-        );
-      if (!(await first.isVisible())) {
-        await toggle.click();
-      }
-      assert.ok(await first.isVisible(), "brand filters are accessible on this viewport");
-      if (hasToggle)
+      const searchBox = await root().locator("[data-catalogue-search]").boundingBox();
+      /* From lg each facet is a button in the command bar that opens its
+         chips (2026-11-19); on a phone the chips are in the Filtre panel. */
+      const popover = !budget && width >= 1024;
+      if (!popover) {
+        await target(toggle, "the compact filter toggle");
+        if (!(await first.isVisible())) await toggle.click();
+        assert.ok(await first.isVisible(), "the facet chips are accessible on this viewport");
         assert.equal(
           await toggle.getAttribute("aria-expanded"),
           "true",
           "the panel state is explicit",
         );
-      const controls = await toggle.getAttribute("aria-controls");
-      assert.ok(controls, "the filter toggle identifies its inline panel");
-      const panel = page.locator(`[id=${JSON.stringify(controls)}]`);
-      assert.ok(await panel.isVisible(), "the controlled filter panel is visible");
-      const searchBox = await root().locator("[data-catalogue-search]").boundingBox();
-      const panelBox = await panel.boundingBox();
-      assert.ok(
-        searchBox && panelBox && searchBox.y + searchBox.height <= panelBox.y + 1,
-        "the filter panel follows the shared search toolbar",
-      );
-      if (hasToggle) {
+        const controls = await toggle.getAttribute("aria-controls");
+        assert.ok(controls, "the filter toggle identifies its inline panel");
+        const panel = page.locator(`[id=${JSON.stringify(controls)}]`);
+        assert.ok(await panel.isVisible(), "the controlled filter panel is visible");
+        const panelBox = await panel.boundingBox();
+        assert.ok(
+          searchBox && panelBox && searchBox.y + searchBox.height <= panelBox.y + 1,
+          "the filter panel follows the shared search toolbar",
+        );
         const toggleBox = await toggle.boundingBox();
         assert.ok(
           searchBox &&
@@ -354,15 +353,42 @@ export async function verifyCatalogueExplorer(
             searchBox.x + searchBox.width <= toggleBox.x + 1,
           "compact filters share the search row without covering the input",
         );
-      } else if (width >= 1024) {
-        const resultColumn = await root()
-          .locator("ul")
-          .evaluate((element) => element.parentElement.getBoundingClientRect().toJSON());
-        /* The facets are rows of chips between the command bar and the
-           list (2026-11-19); they were a column beside it. */
+      } else {
+        assert.equal(
+          await toggle.isVisible(),
+          false,
+          "desktop models open each facet from the command bar, without a Filtre panel",
+        );
+        const facet = FACETS[attribute];
+        const opener = root().locator(`[data-catalogue-facet-toggle='${facet}']`);
+        await target(opener, `the ${facet} facet button`);
+        const openerBox = await opener.boundingBox();
         assert.ok(
-          resultColumn.width > 0 && panelBox && panelBox.y + panelBox.height <= resultColumn.y + 1,
-          "the desktop facets sit between the shared toolbar and the result list",
+          searchBox &&
+            openerBox &&
+            Math.abs(searchBox.y + searchBox.height / 2 - (openerBox.y + openerBox.height / 2)) <=
+              1 &&
+            searchBox.x + searchBox.width <= openerBox.x + 1,
+          "the facet buttons share the search row without covering the input",
+        );
+        if (!(await first.isVisible())) await opener.click();
+        assert.ok(await first.isVisible(), "the facet's chips open from its button");
+        assert.equal(
+          await opener.getAttribute("aria-expanded"),
+          "true",
+          "the facet's open state is explicit",
+        );
+        const controls = await opener.getAttribute("aria-controls");
+        assert.ok(controls, "the facet button identifies its chips");
+        const panel = page.locator(`[id=${JSON.stringify(controls)}]`);
+        const panelBox = await panel.boundingBox();
+        assert.ok(
+          panelBox && openerBox && panelBox.y >= openerBox.y + openerBox.height - 1,
+          "the facet's chips open under its button",
+        );
+        assert.ok(
+          panelBox && panelBox.x >= -1 && panelBox.x + panelBox.width <= width + 1,
+          "the open facet fits the viewport",
         );
       }
       assert.notEqual(
@@ -378,7 +404,7 @@ export async function verifyCatalogueExplorer(
     }
 
     async function check(attribute, value, checked = true) {
-      await filters();
+      await filters(attribute);
       const control = root().locator(selector(attribute, value));
       assert.equal(await control.count(), 1, "each facet value has one native control");
       assert.equal(
@@ -742,7 +768,7 @@ export async function verifyCatalogueExplorer(
         assert.equal(
           await root()
             .locator(
-              "input[data-catalogue-brand]:visible,input[data-catalogue-category]:visible,[data-catalogue-filter-toggle]:visible",
+              "input[data-catalogue-brand]:visible,input[data-catalogue-category]:visible,[data-catalogue-filter-toggle]:visible,[data-catalogue-facet-toggle]:visible",
             )
             .count(),
           0,
@@ -817,6 +843,8 @@ export async function verifyCatalogueExplorer(
                 return JSON.stringify(actual) === JSON.stringify([...expected].sort());
               }, expected);
             };
+            /* The type chips open from their button in the command bar. */
+            await direct.locator("[data-catalogue-facet-toggle='types']").click();
             await direct.locator("[data-catalogue-category='baerbare']").check();
             await expectIds(
               direct,
@@ -1074,9 +1102,7 @@ export async function verifyCatalogueExplorer(
             /* The line facet: X1 is its own line, and the X13 is not in it. */
             await check("data-catalogue-series", "thinkpad-x1");
             await results(
-              fixtures
-                .filter((entry) => /ThinkPad X1\b/.test(entry.name))
-                .map((entry) => entry.id),
+              fixtures.filter((entry) => /ThinkPad X1\b/.test(entry.name)).map((entry) => entry.id),
               "the ThinkPad X1 line returns every X1 generation and no X13",
             );
             sameSet(queryValues("series"), ["thinkpad-x1"], "the line is reflected in the URL");

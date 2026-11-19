@@ -131,12 +131,10 @@ repeating the page's own subject.
   a blur so the rows read through it. Every control is a pill; the sort is
   a native select with its own chevron; the view switch is a segmented pair
   with a white active half.
-- **Facets are chips above the table**, one row per facet with its name on
-  the left (Mærke, Serie, Type). The table gets the whole container width.
-  The native checkbox still carries the state: it covers the chip
-  transparently, so a click, a keyboard and Playwright reach the real
-  control, and the chip fills brand blue when it is checked. On a phone the
-  same chips sit in the Filtre panel.
+- **Facets are chips**, and the native checkbox still carries the state: it
+  covers the chip transparently, so a click, a keyboard and Playwright reach
+  the real control, and the chip fills brand blue when it is checked. (Where
+  the chips live changed the same day; see below.)
 - **A row is one target.** The model name's link covers the row; compare
   and enquire sit above it. The row lights faintly under the pointer and
   under keyboard focus. Compare is a quiet pill with a dot, enquire a soft
@@ -151,3 +149,20 @@ repeating the page's own subject.
 Left as it is: the grid view's white sheets (the hub's language), and the
 short placeholder band on models without a photo — a tall empty frame would
 be a picture of nothing.
+
+### Facets as buttons, the same day
+
+The owner, on the chip rows: cluttered and useless. Measured at 1440: three
+rows of chips (17 choices) and, once something was chosen, a fourth row of
+tags repeating the chips that were on — 230px of controls before the first
+model.
+
+- From lg each facet is one button in the command bar, beside the search:
+  Mærke, Serie, Type. It opens its chips under it; a click elsewhere or
+  Escape closes it, and Escape returns focus to the button. A chosen facet
+  shows how many of its chips are on.
+- The row of selected-filter tags is gone. The facet's count, the phone's
+  "Filtre (n)" and "Nulstil filtre", now beside the result count, cover it.
+- On a phone nothing moved: the chips stay in the Filtre panel.
+- At 1024 the bar holds one line: the search is narrower and "Sortér"
+  is left to the screen reader until xl.

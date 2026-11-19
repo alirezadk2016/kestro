@@ -39,10 +39,12 @@ const control =
   "min-h-11 rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm text-paper outline-none transition-colors hover:border-white/25 focus-visible:border-brand-300 focus-visible:ring-2 focus-visible:ring-brand-300/60 disabled:cursor-not-allowed";
 
 /*
- * Facets as chips, 2026-11-19. The filters were a column of native square
- * checkboxes with a number at the far edge — the form a 2012 admin screen
- * has. Each value is now a chip a finger can hit (44px), still a native
- * checkbox (the chip's transparent surface); the chip turns blue when on.
+ * Facets, 2026-11-19. Three rows of chips over the list, and a fourth row of
+ * tags repeating the chips that were on, read as clutter: seventeen choices
+ * before the first model. On a desktop each facet is now one button in the
+ * command bar that opens its chips; on a phone the chips sit in the Filtre
+ * panel. Each chip is still a native checkbox (its transparent surface) and
+ * turns blue when it is on.
  */
 const pill =
   "group relative inline-flex min-h-11 cursor-pointer select-none items-center gap-1.5 rounded-full bg-white/[0.04] px-3.5 text-sm text-paper/85 ring-1 ring-inset ring-white/10 transition-colors duration-150 hover:bg-white/[0.08] hover:text-paper has-[:checked]:bg-brand-600 has-[:checked]:text-white has-[:checked]:ring-brand-500 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-300 has-[:disabled]:cursor-not-allowed";
@@ -51,9 +53,7 @@ const pill =
 const dot =
   "absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-full focus-visible:outline-none disabled:cursor-not-allowed";
 const tally = "text-xs tabular-nums text-paper/65 group-has-[:checked]:text-white/80";
-/* On a desktop each facet is a row: its name, then its chips. */
-const facetRow = "min-w-0 lg:grid lg:grid-cols-[4.5rem_minmax(0,1fr)] lg:items-start lg:gap-x-4";
-const facetLabel = "mb-2.5 block text-xs font-medium text-paper/65 lg:mb-0 lg:pt-3.5";
+type FacetKey = "brands" | "series" | "types";
 
 function keepComparisonFocusVisible(event: React.FocusEvent<HTMLAnchorElement>) {
   const link = event.currentTarget;
@@ -90,6 +90,9 @@ export default function CatalogueExplorer({
   const [state, setState] = useState<State>({ ...INITIAL, view: defaultView });
   const [ready, setReady] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  /* The desktop facet whose chips are open under its button, if any. */
+  const [openFacet, setOpenFacet] = useState<FacetKey | null>(null);
+  const facetBar = useRef<HTMLDivElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const comparisonHeading = useRef<HTMLHeadingElement>(null);
   const comparisonButton = useRef<HTMLButtonElement>(null);
@@ -201,6 +204,29 @@ export default function CatalogueExplorer({
     });
     return () => cancelAnimationFrame(frame);
   }, [ready, state]);
+
+  /* An open facet closes on a click anywhere else and on Escape, which
+     returns focus to its button. Choosing chips keeps it open: a facet is a
+     multiple choice. */
+  useEffect(() => {
+    if (!openFacet) return;
+    const group = () => facetBar.current?.querySelector(`[data-catalogue-facet="${openFacet}"]`);
+    const away = (event: PointerEvent) => {
+      if (!group()?.contains(event.target as Node)) setOpenFacet(null);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      const opener = group()?.querySelector<HTMLButtonElement>("[data-catalogue-facet-toggle]");
+      setOpenFacet(null);
+      opener?.focus();
+    };
+    document.addEventListener("pointerdown", away);
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("pointerdown", away);
+      document.removeEventListener("keydown", escape);
+    };
+  }, [openFacet]);
 
   const comparisonVisible = comparisonOpen && state.compare.length >= 2;
   useEffect(() => {
@@ -341,108 +367,149 @@ export default function CatalogueExplorer({
     toggle("compare", id);
   };
 
-  const filterPanel = (
-    <div className={budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : ""}>
-      <fieldset className={facetRow}>
-        <legend className="sr-only">{da ? "Mærke" : "Brand"}</legend>
-        <span aria-hidden="true" className={facetLabel}>
-          {da ? "Mærke" : "Brand"}
+  const facet = (
+    key: FacetKey,
+    label: string,
+    attribute: "data-catalogue-brand" | "data-catalogue-series" | "data-catalogue-category",
+    options: { id: string; label: string; count: number; checked: boolean }[],
+    first: boolean,
+  ) => {
+    const open = openFacet === key;
+    const chosen = options.filter((option) => option.checked).length;
+    const panelId = `${prefix}-${key}`;
+    return (
+      <fieldset
+        key={key}
+        data-catalogue-facet={key}
+        onBlur={(event) => {
+          const next = event.relatedTarget as Node | null;
+          if (open && next && !event.currentTarget.contains(next)) setOpenFacet(null);
+        }}
+        className={budget ? "min-w-0" : `min-w-0 ${first ? "" : "mt-5"} lg:relative lg:mt-0`}
+      >
+        <legend className="sr-only">{label}</legend>
+        {!budget && (
+          <button
+            type="button"
+            data-catalogue-facet-toggle={key}
+            disabled={!ready}
+            aria-expanded={open}
+            aria-controls={panelId}
+            onClick={() => setOpenFacet(open ? null : key)}
+            className={`hidden min-h-11 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-inset transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed lg:inline-flex ${
+              chosen || open
+                ? "bg-white/[0.08] text-paper ring-white/25"
+                : "bg-white/[0.04] text-paper/85 ring-white/10 hover:bg-white/[0.08] hover:text-paper"
+            }`}
+          >
+            {label}
+            {chosen > 0 && (
+              <span className="inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-600 px-1.5 text-xs font-semibold tabular-nums text-white">
+                {chosen}
+                <span className="sr-only">{da ? " valgt" : " selected"}</span>
+              </span>
+            )}
+            <ChevronDown
+              size={16}
+              aria-hidden="true"
+              className={`text-paper/65 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+            />
+          </button>
+        )}
+        <span
+          aria-hidden="true"
+          className={`mb-2.5 block text-xs font-medium text-paper/65 ${budget ? "" : "lg:hidden"}`}
+        >
+          {label}
         </span>
-        <div className="flex flex-wrap gap-2">
-          {brands.map((brand) => (
-            <label key={brand} className={pill}>
+        <div
+          id={panelId}
+          className={`flex flex-wrap gap-2 ${
+            budget
+              ? ""
+              : `${open ? "lg:flex" : "lg:hidden"} lg:absolute lg:left-0 lg:top-full lg:z-40 lg:mt-2 lg:w-max lg:max-w-[30rem] lg:rounded-2xl lg:bg-ink-900 lg:p-3 lg:shadow-[0_24px_48px_-12px_rgb(0_0_0/0.6)] lg:ring-1 lg:ring-white/10`
+          }`}
+        >
+          {options.map((option) => (
+            <label key={option.id} className={pill}>
               <input
-                data-catalogue-brand={brand}
+                {...{ [attribute]: option.id }}
                 type="checkbox"
-                checked={state.brands.includes(brand)}
+                checked={option.checked}
                 disabled={!ready}
-                onChange={() => toggle("brands", brand)}
+                onChange={() => toggle(key, option.id)}
                 className={dot}
               />
-              <span>{brand}</span>
-              <span className={tally}>
-                {
-                  entries.filter(
-                    (entry) =>
-                      entry.brand === brand &&
-                      textMatches(entry) &&
-                      seriesMatches(entry) &&
-                      typeMatches(entry),
-                  ).length
-                }
-              </span>
+              <span className="whitespace-nowrap">{option.label}</span>
+              <span className={tally}>{option.count}</span>
             </label>
           ))}
         </div>
       </fieldset>
-      {showSeries && (
-        <fieldset className={`mt-5 lg:mt-3 ${facetRow}`}>
-          <legend className="sr-only">{da ? "Serie" : "Series"}</legend>
-          <span aria-hidden="true" className={facetLabel}>
-            {da ? "Serie" : "Series"}
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {seriesOptions.map((line) => (
-              <label key={line.id} className={pill}>
-                <input
-                  data-catalogue-series={line.id}
-                  type="checkbox"
-                  checked={activeSeries.includes(line.id)}
-                  disabled={!ready}
-                  onChange={() => toggle("series", line.id)}
-                  className={dot}
-                />
-                <span className="whitespace-nowrap">{line.label}</span>
-                <span className={tally}>
-                  {
-                    entries.filter(
-                      (entry) =>
-                        entry.series?.id === line.id &&
-                        textMatches(entry) &&
-                        brandMatches(entry) &&
-                        typeMatches(entry),
-                    ).length
-                  }
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+    );
+  };
+  const filterPanel = (
+    <div
+      className={
+        budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : "lg:flex lg:items-center lg:gap-2"
+      }
+    >
+      {facet(
+        "brands",
+        da ? "Mærke" : "Brand",
+        "data-catalogue-brand",
+        brands.map((brand) => ({
+          id: brand,
+          label: brand,
+          checked: state.brands.includes(brand),
+          count: entries.filter(
+            (entry) =>
+              entry.brand === brand &&
+              textMatches(entry) &&
+              seriesMatches(entry) &&
+              typeMatches(entry),
+          ).length,
+        })),
+        true,
       )}
-      {categories.length > 1 && (
-        <fieldset className={budget ? "min-w-0" : `mt-5 lg:mt-3 ${facetRow}`}>
-          <legend className="sr-only">Type</legend>
-          <span aria-hidden="true" className={facetLabel}>
-            Type
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <label key={category.id} className={pill}>
-                <input
-                  data-catalogue-category={category.id}
-                  type="checkbox"
-                  checked={state.types.includes(category.id)}
-                  disabled={!ready}
-                  onChange={() => toggle("types", category.id)}
-                  className={dot}
-                />
-                <span>{category.label}</span>
-                <span className={tally}>
-                  {
-                    entries.filter(
-                      (entry) =>
-                        entry.category.id === category.id &&
-                        textMatches(entry) &&
-                        brandMatches(entry) &&
-                        seriesMatches(entry),
-                    ).length
-                  }
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      )}
+      {showSeries &&
+        facet(
+          "series",
+          da ? "Serie" : "Series",
+          "data-catalogue-series",
+          seriesOptions.map((line) => ({
+            id: line.id,
+            label: line.label,
+            checked: activeSeries.includes(line.id),
+            count: entries.filter(
+              (entry) =>
+                entry.series?.id === line.id &&
+                textMatches(entry) &&
+                brandMatches(entry) &&
+                typeMatches(entry),
+            ).length,
+          })),
+          false,
+        )}
+      {categories.length > 1 &&
+        facet(
+          "types",
+          "Type",
+          "data-catalogue-category",
+          categories.map((category) => ({
+            id: category.id,
+            label: category.label,
+            checked: state.types.includes(category.id),
+            count: entries.filter(
+              (entry) =>
+                entry.category.id === category.id &&
+                textMatches(entry) &&
+                brandMatches(entry) &&
+                seriesMatches(entry),
+            ).length,
+          })),
+          false,
+        )}
     </div>
   );
   const filterButton = (
@@ -529,8 +596,8 @@ export default function CatalogueExplorer({
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-md lg:flex-1 lg:basis-auto">
+        <div ref={facetBar} className="flex flex-wrap items-center gap-x-4 gap-y-3 lg:gap-x-3">
+          <div className="flex min-w-0 basis-full items-center gap-2 lg:w-56 lg:flex-none lg:basis-auto xl:w-80">
             <div className="relative min-w-0 flex-1">
               <Search
                 size={18}
@@ -555,6 +622,20 @@ export default function CatalogueExplorer({
             </div>
             {hasFacets && filterButton}
           </div>
+          {hasFacets && !budget && (
+            <aside
+              id={prefix + "-filters"}
+              aria-label={da ? "Filtre" : "Filters"}
+              className={
+                (filtersOpen ? "block" : "hidden") +
+                /* A panel on a phone, under the count and sort; on a desktop
+                   the facet buttons beside the search, each opening its chips. */
+                " plate order-last basis-full p-4 [color-scheme:dark] lg:order-none lg:block lg:basis-auto lg:rounded-none lg:bg-none lg:p-0 lg:shadow-none"
+              }
+            >
+              {filterPanel}
+            </aside>
+          )}
           <p
             data-catalogue-count
             role="status"
@@ -565,20 +646,23 @@ export default function CatalogueExplorer({
             {filtered.length} {da ? "af" : "of"} {entries.length}{" "}
             {budget ? (da ? "budgetreferencer" : "budget references") : da ? "modeller" : "models"}
           </p>
+          {/* Reset belongs to the count it changes. */}
+          {canReset && (
+            <button
+              type="button"
+              disabled={!ready}
+              data-catalogue-clear
+              onClick={clear}
+              className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+            >
+              {da ? "Nulstil filtre" : "Reset filters"}
+            </button>
+          )}
           <div className="ml-auto flex min-w-0 flex-wrap items-center gap-3">
-            {canReset && (
-              <button
-                type="button"
-                disabled={!ready}
-                data-catalogue-clear
-                onClick={clear}
-                className="inline-flex min-h-11 items-center rounded-sm text-sm text-brand-300 underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
-              >
-                {da ? "Nulstil filtre" : "Reset filters"}
-              </button>
-            )}
             <label className="flex min-w-0 flex-wrap items-center gap-2 text-xs text-paper/75">
-              <span className="sr-only sm:not-sr-only">{da ? "Sortér" : "Sort"}</span>
+              <span className="sr-only sm:not-sr-only lg:sr-only xl:not-sr-only">
+                {da ? "Sortér" : "Sort"}
+              </span>
               <span className="relative inline-flex">
                 <select
                   data-catalogue-sort
@@ -647,29 +731,10 @@ export default function CatalogueExplorer({
         </div>
       </div>
       <div
-        /* Facets above the list, not beside it: a 200px column of chips one
-           to a line, and a table squeezed into what was left, until the
-           specs wrapped. Now the chips run in rows under the command bar
-           and the table has the container's width. */
+        /* The list has the container's width: the facets were a 200px
+           column beside it once, and rows of chips over it after that. */
         className="min-w-0"
       >
-        {hasFacets && !budget && (
-          <div className={`${filtersOpen ? "block" : "hidden"} min-w-0 lg:block`}>
-            <aside
-              id={prefix + "-filters"}
-              aria-label={da ? "Filtre" : "Filters"}
-              className={
-                (filtersOpen ? "block" : "hidden") +
-                /* A panel on a phone, where it drops open under the search;
-                   on a desktop, rows of chips under the command bar. */
-                " plate mt-3 p-4 [color-scheme:dark] lg:mt-2 lg:block lg:rounded-none lg:bg-none lg:p-0 lg:shadow-none"
-              }
-            >
-              {filterPanel}
-            </aside>
-          </div>
-        )}
-
         <div className="min-w-0">
           {budget && hasFacets && (
             <aside
@@ -681,43 +746,9 @@ export default function CatalogueExplorer({
             </aside>
           )}
 
-          {active > 0 && (
-            <div
-              className="mt-3 flex flex-wrap gap-2"
-              aria-label={da ? "Valgte filtre" : "Selected filters"}
-            >
-              {[
-                ...(query ? [{ key: "query", value: state.query, label: state.query }] : []),
-                ...state.brands.map((value) => ({ key: "brands", value, label: value })),
-                ...activeSeries.map((value) => ({
-                  key: "series",
-                  value,
-                  label: allSeries.find((line) => line.id === value)?.label || value,
-                })),
-                ...state.types.map((value) => ({
-                  key: "types",
-                  value,
-                  label: categories.find((category) => category.id === value)?.label || value,
-                })),
-              ].map((chip) => (
-                <button
-                  key={`${chip.key}-${chip.value}`}
-                  type="button"
-                  onClick={() =>
-                    chip.key === "query"
-                      ? setState((previous) => ({ ...previous, query: "" }))
-                      : toggle(chip.key as "brands" | "series" | "types", chip.value)
-                  }
-                  aria-label={`${da ? "Fjern filter" : "Remove filter"}: ${chip.label}`}
-                  className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-lg border border-brand-300/40 bg-brand-600/10 px-3 text-sm text-paper"
-                >
-                  <span className="break-words">{chip.label}</span>
-                  <X size={14} className="shrink-0" aria-hidden="true" />
-                </button>
-              ))}
-            </div>
-          )}
-
+          {/* No row of "selected filter" tags: it repeated the chips that
+              were on. A facet's button counts its choices, Filtre counts them
+              all on a phone, and "Nulstil filtre" clears them. */}
           {/* The list is one ledger: a single panel, a rule between rows,
               and the spec columns named once above them. Fifty-nine white
               cards with the same radius and the same shadow was the SaaS
