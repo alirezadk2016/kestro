@@ -270,7 +270,7 @@ export default async function CategoryPage(props: {
           <div>
             <ModelCatalogue models={categoryModels} lang={lang} />
             <p className="mt-4 text-sm leading-6 text-paper/65">
-              {c.stockNote}{" "}
+              {c.modelsBody} {c.stockNote}{" "}
               {lang === "da"
                 ? "Billederne er modelfotos eller illustrationer af formatet – ikke den maskine, I får."
                 : "The pictures are model photos or illustrations of the format — not the machine you get."}
@@ -336,17 +336,33 @@ export default async function CategoryPage(props: {
                   what is in it, with the count. It was a 14px tagline, a "buy
                   elsewhere" link above the range and a 12px caption. The
                   external retailers are still one click away, after the
-                  catalogue, where they belong. */}
+                  catalogue; a quiet line under the answer still jumps there. */}
               <p className="text-pretty text-base leading-[1.65] text-paper/85 sm:text-lg">
                 {category.tagline[lang]}. {n > 0 && rangeLine}
               </p>
-              <p className="mt-2 text-sm leading-6 text-paper/65">
-                {categoryModels.length > 0
-                  ? c.modelsBody
-                  : lang === "da"
+              {/* What the rows are (references, configured on enquiry) is said
+                  once, in the note under the list. */}
+              {categoryModels.length === 0 && (
+                <p className="mt-2 text-sm leading-6 text-paper/65">
+                  {lang === "da"
                     ? "Fortæl os om antal, apps og budget. Vi afklarer mulighederne i et skriftligt tilbud."
                     : "Tell us your quantity, apps and budget. We clarify the options in a written quote."}
-              </p>
+                </p>
+              )}
+              {/* The way to the external retailers, named as the section it
+                  opens is named, so the action keeps one name. It sat above
+                  the range as "Køb hos andre"; now it is a quiet line after
+                  the answer. */}
+              {isLaptops && (
+                <a
+                  href="#external-laptop-recommendations"
+                  className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-brand-300 hover:text-paper"
+                >
+                  {lang === "da"
+                    ? "Brug for en nu? Se eksterne forhandlere"
+                    : "Need one now? See external retailers"}
+                </a>
+              )}
               {categoryModels.length === 0 && (
                 <div className="mt-3">
                   <Button
