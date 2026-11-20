@@ -1,7 +1,8 @@
 import type { FaqItem } from "@/components/Faq";
 import type { Category } from "./categories";
-import { countWord, type Lang } from "./i18n";
+import { countWord, type Lang, type Localized } from "./i18n";
 import { models } from "./models";
+import { budgetExamples } from "./pricing";
 import type { SourceId } from "./sources";
 
 /*
@@ -60,8 +61,8 @@ const PREPARED: Record<string, { da: string; en: string }> = {
     en: "Confirm the exact dock model number, the function-test result, power supply, host cable and any firmware or driver requirements. The same connector shape does not necessarily mean the same functionality.",
   },
   tablets: {
-    da: "Bed om batteritilstand, funktionstest af touchskærmen og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
-    en: "Ask for battery health, touchscreen test results and confirmation that the device has been released from its previous owner and management. A reset alone does not establish that a tablet can enrol in your MDM.",
+    da: "Bed om batteritilstand, funktionstest af touchskærmen, dokumentation for sletning af tidligere data og bekræftelse på, at enheden er frigivet fra tidligere ejer og administration. Nulstilling alene dokumenterer ikke, at en tablet kan tilmeldes jeres MDM.",
+    en: "Ask for battery health, touchscreen test results, documentation that previous data was erased and confirmation that the device has been released from its previous owner and management. A reset alone does not establish that a tablet can enrol in your MDM.",
   },
   smartphones: {
     da: "Bed om batteritilstand, funktionstest af skærm, kamera og opladning samt bekræftelse på, at telefonen er frigivet fra tidligere ejer og administration. Aftal tilbehør og eventuel håndtering af de gamle telefoner særskilt.",
@@ -142,7 +143,8 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
   },
 };
 
-type CategoryFaq = FaqItem & { primary?: boolean };
+/* A question may end in one link to the page that answers it in full. */
+type CategoryFaq = FaqItem & { primary?: boolean; link?: { href: string; label: Localized } };
 
 export function categoryFaqs(category: Category): CategoryFaq[] {
   const name = { da: lc(category.name.da), en: lc(category.name.en) };
@@ -198,6 +200,43 @@ export function categoryFaqs(category: Category): CategoryFaq[] {
     answer: {
       da: `Antal, hvad udstyret skal bruges til, og hvornår I skal bruge det. ${category.specNote.da}`,
       en: `Quantity, what the equipment is for, and when you need it. ${category.specNote.en}`,
+    },
+  });
+
+  /* What it costs is the question a buyer asks first, and the page did not
+     answer it (2026-11-20). Kestro has no selling prices yet, so the answer
+     says what the price depends on and where it is settled, and points to
+     /priser: its dated budget references where this category has one, its
+     price drivers where it has none. No figure is written here. */
+  const referenced = budgetExamples.some(
+    (example) => models.find((m) => m.slug === example.model)?.category === category.slug,
+  );
+  items.push({
+    primary: true,
+    question: {
+      da: `Hvad koster brugte ${name.da}?`,
+      en: `What do refurbished ${name.en} cost?`,
+    },
+    answer: {
+      da: `Prisen afhænger af model, generation, konfiguration, stand og antal, og den bekræftes skriftligt for de konkrete enheder. ${
+        referenced
+          ? "Som pejlemærke viser siden Priser daterede budgetreferencer fra eksterne forhandlere for udvalgte modeller."
+          : "Siden Priser forklarer, hvad der trækker prisen op og ned."
+      }`,
+      en: `The price depends on the model, generation, configuration, condition and quantity, and it is confirmed in writing for the actual units. ${
+        referenced
+          ? "As a guide, the Prices page shows dated budget references from external retailers for selected models."
+          : "The Prices page explains what moves the price up and down."
+      }`,
+    },
+    link: {
+      href: "/priser",
+      label: referenced
+        ? {
+            da: "Budgetreferencer for udvalgte modeller",
+            en: "Budget references for selected models",
+          }
+        : { da: "Hvad prisen afhænger af", en: "What the price depends on" },
     },
   });
 
@@ -294,7 +333,7 @@ export const categorySources = (category: Category): SourceId[] =>
 export const whyUsed: FaqItem = {
   question: { da: "Hvorfor brugt frem for nyt?", en: "Why used rather than new?" },
   answer: {
-    da: "Fordi udstyr, der stadig kan det, opgaven kræver, gør mere gavn i brug end som affald. Ifølge ITU og UNITAR producerede verden 62 mio. ton elektronikaffald i 2022, og 22,3 % af det blev dokumenteret indsamlet og genanvendt.",
-    en: "Because equipment that can still do what the job needs does more good in use than as waste. According to ITU and UNITAR, the world generated 62 million tonnes of e-waste in 2022, and 22.3% of it was documented as collected and recycled.",
+    da: "Fordi genbrug af udstyr, der stadig kan det, opgaven kræver, gør mere gavn end at kassere det. Ifølge ITU og UNITAR producerede verden 62 mio. ton elektronikaffald i 2022, og 22,3 % af det blev dokumenteret indsamlet og genanvendt.",
+    en: "Because reusing equipment that can still do what the job needs does more good than scrapping it. According to ITU and UNITAR, the world generated 62 million tonnes of e-waste in 2022, and 22.3% of it was documented as collected and recycled.",
   },
 };

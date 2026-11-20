@@ -1252,3 +1252,53 @@ added. Findings on all 256 sitemap pages:
   tracked-capital labels and 923 strings joined with middle dots. They are
   the site's current look, not errors; reducing them is a design direction
   to choose, not a fix.
+
+## Product and model pages — 20 November 2026
+
+`mak audit` on the 7 category pages and 68 model pages, both languages.
+Before: FAIL 0, 86 warnings site-wide; titles in 50–60 characters 233/256;
+primary keyword in the title 127 pages.
+
+- **Model titles, keyword first.** Every ThinkPad, ThinkCentre and
+  ThinkVision title dropped "Lenovo" (snippets.md: people type "thinkpad
+  t480"), so the primary reads in order at the start: "Brugt ThinkPad T14
+  Gen 4: specs, fordele og ulemper | Kestro". "specs" went back in where it
+  fits. The X1 Carbon, X1 Yoga, X1 Nano, X1 2-in-1 and X13 Yoga titles had
+  no "ThinkPad" at all; they have it now. English reads "pros and cons"
+  where it fits, "pros, cons" only for the two X1 Carbon titles that
+  otherwise pass 580 px.
+- **English categories:** monitors carries its primary ("Refurbished
+  monitors for the office — 22 to 27 inch", the same range as the Danish
+  page); tablets is inside 60 characters.
+- **Price, on every category page (rule 12).** The knowledge graph's "pris"
+  node was missing on six of seven categories: a buyer's first question had
+  no answer. A new FAQ, "Hvad koster brugte <kategori>?", says what the
+  price depends on and that it is confirmed in writing, and links /priser:
+  its dated budget references where the category has one (laptops,
+  desktops, monitors), its price drivers where not. No figure is written.
+- **Reuse:** the "Hvorfor brugt frem for nyt?" answer says "genbrug" in so
+  many words. Tablets ask for documentation that previous data was erased.
+  All seven categories now cover their whole graph.
+- **Internal links (rule 9).** A ThinkPad page's related rows showed only
+  ThinkPads, so the HP and Dell laptop pages were linked from the category
+  list and the model index alone (2–6 pages). When a series fills the three
+  related rows, a fourth shows the same kind of machine from another maker,
+  within an inch of size. Links in: EliteBook 840 2 → 7, ProBook 450 2 → 8,
+  ZBook 15 2 → 10, Latitude 5410 3 → 9, Latitude 7490 6 → 13.
+- **Chrome:** three leftover arrows on the category and model pages
+  (brand pills, guide pills, "Se alle …") are gone.
+
+After: titles in 50–60 characters 251/256, primary in the title 142.
+
+**Left as they are, with reasons:**
+
+- Ten descriptions under 145 characters (X1 Carbon, WD19, USB-C Dock G5
+  and seven English) already fill 868–916 of the 920 px Google shows; more
+  characters would be cut. The pixel limit binds.
+- The laptop category title is 62 characters but 554 px, and it carries
+  "til erhverv" and "dansk tastatur", both keywords in the map.
+- 29 model slugs have more than five words (x1-carbon-gen-10 and the like).
+  URLs never move.
+- The model pages' incoming anchors are the model name everywhere. For a
+  product name that is the precise anchor; varying it would mean writing
+  "this laptop" and the like.

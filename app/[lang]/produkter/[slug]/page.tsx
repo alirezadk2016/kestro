@@ -148,7 +148,20 @@ export default async function CategoryPage(props: {
           aria-hidden="true"
         />
       </summary>
-      <p className="pb-5 pr-2 text-base leading-[1.7] text-ink-700 sm:pr-9">{faq.answer[lang]}</p>
+      <p className="pb-5 pr-2 text-base leading-[1.7] text-ink-700 sm:pr-9">
+        {faq.answer[lang]}
+        {faq.link && (
+          <>
+            <br />
+            <Link
+              href={localePath(faq.link.href, lang)}
+              className="mt-1 inline-flex min-h-[44px] items-center font-semibold text-brand-700 underline underline-offset-4 hover:text-ink-900"
+            >
+              {faq.link.label[lang]}
+            </Link>
+          </>
+        )}
+      </p>
     </details>
   );
 
@@ -444,9 +457,6 @@ export default async function CategoryPage(props: {
                           className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 text-sm font-semibold text-paper/85 transition-colors hover:text-brand-300"
                         >
                           {brand}
-                          <span aria-hidden="true" className="text-brand-300">
-                            &rarr;
-                          </span>
                         </Link>
                       ) : isPhones ? (
                         <Link
@@ -522,7 +532,6 @@ export default async function CategoryPage(props: {
                         className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                       >
                         {link.label[lang]}
-                        <span aria-hidden="true">&rarr;</span>
                       </Link>
                     </li>
                   ))}
