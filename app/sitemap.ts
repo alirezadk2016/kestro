@@ -2,7 +2,10 @@ import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { models } from "@/lib/models";
 import { guides } from "@/lib/guides";
+import { practicalGuides } from "@/lib/practical-guides";
+import { legalUpdated } from "@/lib/legal";
 import { services } from "@/lib/services";
+import { repairs } from "@/lib/repairs";
 import { localePath } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -16,7 +19,7 @@ function absolute(path: string, lang: "da" | "en"): string {
   return p === "/" ? BASE_URL : `${BASE_URL}${p}`;
 }
 
-type Route = { path: string; lastModified?: string };
+type Route = { path: string; lastModified?: string; images?: string[] };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: Route[] = [
@@ -35,20 +38,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tilbud" },
     { path: "/om-os" },
     { path: "/kontakt" },
-    { path: "/privatlivspolitik" },
+    /* The two documents that state their own "last updated" on the page. The
+       date is read from lib/legal.ts, which the pages read too, so the
+       <lastmod> and the line the visitor sees are the same value. */
+    { path: "/handelsbetingelser", lastModified: legalUpdated["/handelsbetingelser"] },
+    { path: "/privatlivspolitik", lastModified: legalUpdated["/privatlivspolitik"] },
   ];
 
   const categoryRoutes: Route[] = categories.map((category) => ({
     path: `/produkter/${category.slug}`,
   }));
 
+  /* A model page with photographs lists them as image entries, so Google
+     Images can find the photo on the page that is about that model. Only
+     photographs (model.images) are listed; the labelled illustrations are
+     not a picture of the model and are left out. */
   const modelRoutes: Route[] = models.map((model) => ({
     path: `/modeller/${model.slug}`,
+    ...(model.images?.length
+      ? { images: model.images.map((image) => `${BASE_URL}${image.src}`) }
+      : {}),
   }));
 
   /*
-   * Guides are the only content carrying a real edit date, so they are the only
-   * pages that get a <lastmod>.
+   * Guides carry a real edit date, so they get a <lastmod> — as do the two
+   * legal documents above, which state their own on the page.
    *
    * Everything else deliberately has none. It used to be `new Date()`, which
    * stamped all 110 URLs with the moment of the last build — so a deploy that
@@ -57,13 +71,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * ignores it otherwise, and an omitted date is treated better than a wrong
    * one. Give a page a real date here when there is one to give.
    */
-  const guideRoutes: Route[] = guides.map((guide) => ({
+  const guideRoutes: Route[] = [...guides, ...practicalGuides].map((guide) => ({
     path: `/vejledninger/${guide.slug}`,
-    lastModified: guide.updated,
+    lastModified: "updated" in guide ? guide.updated : "2026-10-17",
   }));
 
   const serviceRoutes: Route[] = services.map((service) => ({
     path: `/ydelser/${service.slug}`,
+  }));
+
+  const repairRoutes: Route[] = repairs.map((repair) => ({
+    path: `/reparation/${repair.slug}`,
   }));
 
   const routes: Route[] = [
@@ -72,6 +90,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...modelRoutes,
     ...guideRoutes,
     ...serviceRoutes,
+    ...repairRoutes,
   ];
 
   /*
@@ -87,7 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * hreflang is "da", not "da-DK": the region subtag would target Danish
    * speakers in Denmark only, and the same pages serve Norway.
    */
-  return routes.flatMap(({ path, lastModified }) => {
+  return routes.flatMap(({ path, lastModified, images }) => {
     const da = absolute(path, "da");
     const en = absolute(path, "en");
     const languages = { da, en, "x-default": da };
@@ -97,11 +116,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: da,
         ...(lastModified ? { lastModified } : {}),
         alternates: { languages },
+        ...(images ? { images } : {}),
       },
       {
         url: en,
         ...(lastModified ? { lastModified } : {}),
         alternates: { languages },
+        ...(images ? { images } : {}),
       },
     ];
   });

@@ -1,0 +1,2 @@
+# Media inventory records the served bytes; keep SVGs identical across checkouts.
+*.svg text eol=lf

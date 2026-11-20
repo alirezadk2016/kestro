@@ -24,14 +24,14 @@ spille.
 
 Kategorien, Kestro skal eje:
 
-> **IT-indkøbspartner** — ikke *forhandler af refurbished*.
+> **IT-indkøbspartner** — ikke _forhandler af refurbished_.
 
 Sætningen, der skal gentages uændret alle steder:
 
 > **"Fortæl os, hvad I skal bruge. Vi finder det, klargør det og leverer det —
 > med pris, stand og garantivilkår på skrift, før I bestiller."**
 
-At der ikke er lager, er ikke en mangel, det er *mekanismen*: en leverandør med
+At der ikke er lager, er ikke en mangel, det er _mekanismen_: en leverandør med
 et fyldt lager skal have det lager afsat. Kestro skal ikke. Det er den ene
 påstand, ingen konkurrent kan gentage.
 
@@ -40,15 +40,15 @@ påstand, ingen konkurrent kan gentage.
 En forhandler uden lager får ét spørgsmål igen og igen, og hele forretningen
 hænger på svaret:
 
-> *"Hvorfor skal vi købe gennem jer i stedet for at gå direkte til
-> leverandøren?"*
+> _"Hvorfor skal vi købe gennem jer i stedet for at gå direkte til
+> leverandøren?"_
 
 Svaret skal være konkret, kort og stå på sitet — ikke først komme frem i det
 tredje møde:
 
 1. **Prisen.** Kestro køber ind på en anden aftale, end en virksomhed får ved
-   at ringe selv én gang om året. *Skriv det kun så stærkt, som det kan
-   holdes — aldrig et procenttal, der ikke kan dokumenteres.*
+   at ringe selv én gang om året. _Skriv det kun så stærkt, som det kan
+   holdes — aldrig et procenttal, der ikke kan dokumenteres._
 2. **Én ordre i stedet for fem.** Maskiner, skærme, docks og tastaturer kommer
    sjældent fra samme sted. Kunden skal ikke koordinere fire leverandører for
    at få ét skrivebord til at stå klar.
@@ -61,11 +61,11 @@ med lager.
 
 ## Tre brandsøjler — alle tre er sande i dag
 
-| Søjle | Hvorfor den holder |
-| --- | --- |
-| **Specifikationen følger opgaven** | Den eneste strukturelle forskel på hele markedet |
-| **Alt på skrift, før I bestiller** | Markedet er fuldt af vagt "Grade B"; dokumentet er våbnet |
-| **Nordisk klargøring** | Konkret, efterprøveligt, og en udenlandsk leverandør kan det ikke |
+| Søjle                              | Hvorfor den holder                                                |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| **Specifikationen følger opgaven** | Den eneste strukturelle forskel på hele markedet                  |
+| **Alt på skrift, før I bestiller** | Markedet er fuldt af vagt "Grade B"; dokumentet er våbnet         |
+| **Nordisk klargøring**             | Konkret, efterprøveligt, og en udenlandsk leverandør kan det ikke |
 
 `/tilbud-eksempel` er sitets stærkeste markedsføringsaktiv. Det dokument skal
 sendes i den første mail, deles på LinkedIn og nævnes i første telefonsamtale.
@@ -113,7 +113,7 @@ arbejdspladsen ét sted.
 
 ## Beviser, når der endnu ikke er kunder
 
-- **De tre første ordrer er de tre første cases.** Spørg om lov *før*
+- **De tre første ordrer er de tre første cases.** Spørg om lov _før_
   leveringen, ikke efter. Skabelon: `docs/case-study-template.md`.
 - **Fotografér rigtige leveringer.** Alt visuelt materiale er renderinger i
   dag. Rigtige billeder af klargøring, test og udlevering er den billigste
@@ -134,11 +134,11 @@ Det eneste visuelle hul er rigtige fotos af arbejdet.
 
 ## 90 dage
 
-| Periode | Arbejde |
-| --- | --- |
-| Dag 1–14 | CVR, adresse og telefon på sitet · handelsbetingelser · Google Business Profile · LinkedIn-firmaside og tre personprofiler, der siger det samme |
+| Periode   | Arbejde                                                                                                                                                |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Dag 1–14  | CVR, adresse og telefon på sitet · handelsbetingelser · Google Business Profile · LinkedIn-firmaside og tre personprofiler, der siger det samme        |
 | Dag 15–45 | Liste med 200 virksomheder i profilen · opsøgende sekvens i gang · to artikler (Windows 10 udløber, refurbished vs. brugt) · aftale om den første case |
-| Dag 46–90 | Otte artikler mere · tre cases offentliggjort · brancheregistre · to henvisningspartnere |
+| Dag 46–90 | Otte artikler mere · tre cases offentliggjort · brancheregistre · to henvisningspartnere                                                               |
 
 ## Det, der skal måles
 

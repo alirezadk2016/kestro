@@ -1,0 +1,229 @@
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { BUTTON, CARD } from "@/components/admin/tokens";
+import { AdminPageHeader, SectionHead } from "@/components/admin/parts";
+import { requireAdmin, SESSION_COOKIE } from "@/lib/admin-auth";
+import { adminDatabaseHealth, dbMisconfigured, getSearchConsoleReport } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+
+export default async function SystemPage() {
+  await requireAdmin();
+  const [database, searchReport] = await Promise.all([
+    adminDatabaseHealth(),
+    getSearchConsoleReport(),
+  ]);
+  const mail = Boolean(process.env.RESEND_API_KEY);
+  const windsor = Boolean(process.env.WINDSOR_API_KEY);
+  const dedicatedSecret = Boolean(process.env.ADMIN_SESSION_SECRET);
+  // The signature has already been verified by requireAdmin. Never render it.
+  const expires = Number((await cookies()).get(SESSION_COOKIE)?.value.split(".")[0]);
+  const expiry = Number.isFinite(expires)
+    ? new Date(expires).toLocaleString("da-DK", {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "Europe/Copenhagen",
+      })
+    : "ukendt";
+  const checks = [
+    {
+      title: "Database",
+      state:
+        database === "ready"
+          ? "Forbindelse bekræftet"
+          : database === "error"
+            ? "Forbindelsesfejl"
+            : "Ikke tilgængelig",
+      ok: database === "ready",
+      note:
+        database === "ready"
+          ? "Et læsekald til beskedarkivet lykkedes ved denne sidevisning."
+          : dbMisconfigured
+            ? "Forbindelsen er sat, men formatet kan ikke bruges. Ret databasevariablen i Vercel og genudgiv."
+            : database === "error"
+              ? "Databasen er konfigureret, men beskedarkivet kunne ikke læses. Kontrollér forbindelsen og databasen i Vercel."
+              : "Forbind en Postgres-database til projektet i Vercel. Arkivet og besøgstal kræver databasen.",
+    },
+    {
+      title: "Mailafsendelse",
+      state: mail ? "Nøgle konfigureret" : "Mangler opsætning",
+      ok: mail,
+      note: mail
+        ? "RESEND_API_KEY er til stede. Domæne og levering er ikke testet her; denne kontrol sender ingen e-mail."
+        : "Tilføj RESEND_API_KEY og en godkendt afsender i projektets miljøvariabler. Genudgiv derefter.",
+    },
+    {
+      title: "Google & SEO",
+      state: !searchReport.available
+        ? "Rapport kunne ikke læses"
+        : searchReport.report
+          ? "Rapport gemt"
+          : "Ingen rapport gemt endnu",
+      ok: searchReport.available && Boolean(searchReport.report),
+      note: !searchReport.available
+        ? "Kontrollér databasen. En manglende forbindelse er ikke det samme som en tom Search Console-rapport."
+        : searchReport.report
+          ? `Seneste gemte dataperiode: ${new Date(`${searchReport.report.dateFrom}T12:00:00Z`).toLocaleDateString("da-DK", { dateStyle: "medium", timeZone: "UTC" })} – ${new Date(`${searchReport.report.dateTo}T12:00:00Z`).toLocaleDateString("da-DK", { dateStyle: "medium", timeZone: "UTC" })}. Rapportens oprindelse, dato og afgrænsning vises under Google & SEO.`
+          : "Importér en rigtig Search Console-rapport under Google & SEO. Der vises ingen opdigtede søgeord eller tal.",
+    },
+    {
+      title: "Automatisk SEO-kilde",
+      state: windsor ? "API-nøgle konfigureret" : "Manuel import tilgængelig",
+      ok: windsor,
+      note: windsor
+        ? "WINDSOR_API_KEY er til stede på webstedet. Denne kontrol henter ingen data og bekræfter ikke kontoadgang; forbindelsen testes først ved rapportopdatering."
+        : "Der er ingen Windsor-nøgle konfigureret på webstedet. En forbindelse i chatten overføres ikke automatisk til serveren. Manuel rapportimport kan bruges under Google & SEO.",
+    },
+    {
+      title: "Sessionsignering",
+      state: dedicatedSecret ? "Separat nøgle" : "Afledt af adgangskoden",
+      ok: dedicatedSecret,
+      note: dedicatedSecret
+        ? "Sessionen signeres med ADMIN_SESSION_SECRET. Nøglen vises aldrig i panelet."
+        : "Den eksisterende adgangskode bruges også til signering. En separat ADMIN_SESSION_SECRET kan konfigureres i Vercel.",
+    },
+  ];
+  return (
+    <div className="space-y-8">
+      <AdminPageHeader
+        eyebrow="Kestro · drift"
+        title="Systemstatus"
+        description="Se, hvad der er tilsluttet, og hvad der kræver handling. Ingen nøgler eller adgangskoder vises."
+        actions={
+          <form action="/admin/system" method="get">
+            <button className={BUTTON}>Kontrollér igen</button>
+          </form>
+        }
+      />
+      <section
+        aria-label="Forbindelser"
+        className={`${CARD} divide-y divide-white/10 overflow-hidden`}
+      >
+        {checks.map((check) => (
+          <div
+            key={check.title}
+            className="grid gap-3 p-5 sm:grid-cols-[11rem_minmax(0,1fr)] sm:p-6"
+          >
+            <h2 className="font-semibold">{check.title}</h2>
+            <div>
+              <p
+                className={`inline-flex items-center gap-2 text-sm font-semibold ${check.ok ? "text-emerald-200" : "text-amber-200"}`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`h-1.5 w-1.5 rounded-full ${check.ok ? "bg-emerald-300" : "bg-amber-300"}`}
+                />
+                {check.state}
+              </p>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-paper/70">{check.note}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+      <section aria-label="Adgang og session">
+        <SectionHead title="Adgang og session" />
+        <dl className={`${CARD} mt-4 grid gap-6 p-5 sm:grid-cols-2 sm:p-6`}>
+          <div>
+            <dt className="text-xs text-paper/70">Adgang</dt>
+            <dd className="mt-2 text-sm font-semibold">Fælles administrator</dd>
+            <dd className="mt-2 text-sm leading-6 text-paper/70">
+              Panelet har én fælles adgangskode. Der findes ingen individuelle roller eller
+              brugerrettigheder i denne løsning.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-paper/70">Denne session udløber</dt>
+            <dd className="mt-2 text-sm font-semibold tabular-nums">{expiry} · København</dd>
+            <dd className="mt-2 text-sm leading-6 text-paper/70">
+              Log ud på fælles enheder. Ny adgang kræver login, når sessionen udløber.
+            </dd>
+          </div>
+        </dl>
+      </section>
+      <section aria-label="Vedligeholdelse">
+        <SectionHead
+          title="Vedligeholdelse"
+          note="Konfiguration ændres i hostingprojektet. Panelet ændrer ikke adgangskoder, nøgler eller rettigheder."
+        />
+        <div className={`${CARD} mt-4 flex flex-wrap gap-3 p-5`}>
+          <a
+            href="https://vercel.com/web-mak/kestro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center rounded-md border border-white/15 px-4 text-sm font-medium text-paper/90 hover:border-brand-300"
+          >
+            Åbn Vercel ↗
+          </a>
+          <a
+            href="https://github.com/alirezadk2016/kestro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center rounded-md border border-white/15 px-4 text-sm font-medium text-paper/90 hover:border-brand-300"
+          >
+            Åbn kildekode ↗
+          </a>
+        </div>
+      </section>
+      <details className={`${CARD} group p-5 sm:p-6`}>
+        <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300">
+          <h2 className="text-base font-semibold">Sådan bruger du panelet</h2>
+          <span aria-hidden="true" className="text-brand-200 group-open:rotate-180">
+            ↓
+          </span>
+        </summary>
+        <ol className="mt-4 grid gap-5 sm:grid-cols-2">
+          {[
+            {
+              title: "Planlæg næste skridt",
+              text: "Åbn en besked, vælg prioritet og en opfølgningsdato. Find dagens og forfaldne opfølgninger samlet.",
+              href: "/admin/opfoelgning",
+              label: "Åbn opfølgning",
+            },
+            {
+              title: "Find kontaktens historik",
+              text: "Kontakter samler tidligere henvendelser efter e-mailadresse. Oplysningerne stammer fra beskederne.",
+              href: "/admin/kontakter",
+              label: "Åbn kontakter",
+            },
+            {
+              title: "Håndtér flere beskeder",
+              text: "Vælg op til 25 beskeder på den aktuelle indbakkeside, og brug en fælles handling. Læs bekræftelsen, før du fortsætter.",
+              href: "/admin/beskeder",
+              label: "Åbn indbakken",
+            },
+            {
+              title: "Find dine trafikkilder",
+              text: "Vælg en kilde eller kampagne for at se de tilhørende indgangssider. Direkte / ukendt er ikke bevis for en indtastet adresse.",
+              href: "/admin/trafik",
+              label: "Åbn trafik & kilder",
+            },
+            {
+              title: "Se søgeord og mærk links",
+              text: "Google & SEO bruger en rigtig Search Console-rapport. Kampagnelinks gør dine egne placeringer genkendelige i næste besøg.",
+              href: "/admin/seo",
+              label: "Åbn Google & SEO",
+            },
+            {
+              title: "Se sitets indhold",
+              text: "Indhold og Medier viser de faktiske kilder og billeder. Offentlige tekster er kildestyrede og udgives gennem kodeprojektet.",
+              href: "/admin/indhold",
+              label: "Åbn indhold",
+            },
+          ].map((workflow, index) => (
+            <li key={workflow.title} className="min-w-0">
+              <p className="text-xs font-semibold tabular-nums text-brand-200">0{index + 1}</p>
+              <h3 className="mt-2 text-sm font-semibold">{workflow.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-paper/70">{workflow.text}</p>
+              <Link
+                href={workflow.href}
+                className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-brand-200 underline underline-offset-4"
+              >
+                {workflow.label} →
+              </Link>
+            </li>
+          ))}
+        </ol>
+      </details>
+    </div>
+  );
+}

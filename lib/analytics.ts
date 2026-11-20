@@ -10,12 +10,37 @@
  * and `track` is a no-op until that has happened, so an event fired before
  * consent is dropped rather than queued.
  */
+import { readConsent, type Consent } from "./consent";
+
 export const GA_MEASUREMENT_ID = "G-5BCBNXTR8T";
+
+/** Stop an already-loaded tag as soon as the visitor withdraws permission. */
+export function syncAnalyticsConsent(consent: Consent | null): void {
+  if (typeof window === "undefined") return;
+  const granted = consent === "granted";
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = !granted;
+  window.gtag?.("consent", "update", {
+    analytics_storage: granted ? "granted" : "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  if (granted) return;
+  for (const cookie of document.cookie.split(";")) {
+    const name = cookie.split("=")[0].trim();
+    if (!/^_ga(?:_|$)/.test(name)) continue;
+    document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`;
+    const host = window.location.hostname.split(".");
+    for (let index = 0; index < host.length - 1; index++)
+      document.cookie = `${name}=; Max-Age=0; Path=/; Domain=${host.slice(index).join(".")}; SameSite=Lax`;
+  }
+}
 
 type GtagParams = Record<string, string | number | boolean | undefined>;
 
 declare global {
   interface Window {
+    [key: `ga-disable-${string}`]: boolean | undefined;
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
@@ -29,7 +54,12 @@ declare global {
  * which pages produce enquiries.
  */
 export function track(event: string, params: GtagParams = {}): void {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  if (
+    typeof window === "undefined" ||
+    readConsent() !== "granted" ||
+    typeof window.gtag !== "function"
+  )
+    return;
   window.gtag("event", event, params);
 }
 
@@ -43,4 +73,6 @@ export const events = {
   emailClick: "email_click",
   /** A click on a tel: link anywhere on the site. */
   phoneClick: "phone_click",
+  formStart: "enquiry_form_start",
+  formError: "enquiry_form_error",
 } as const;

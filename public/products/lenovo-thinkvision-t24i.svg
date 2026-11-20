@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+
+  <defs>
+    <linearGradient id="field" x1="600" y1="0" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F5F7"/>
+      <stop offset="1" stop-color="#E3E7EC"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 780) scale(430 46)">
+      <stop stop-color="#5B6573" stop-opacity=".42"/>
+      <stop offset=".6" stop-color="#7D8794" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#9AA3AE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#3A424C"/>
+      <stop offset="1" stop-color="#1E252E"/>
+    </linearGradient>
+    <linearGradient id="deck" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#2E363F"/>
+      <stop offset="1" stop-color="#3B444E"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#27313D"/>
+      <stop offset=".55" stop-color="#0D141D"/>
+      <stop offset="1" stop-color="#18212C"/>
+    </linearGradient>
+    <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity=".09"/>
+      <stop offset=".5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#323A44"/>
+      <stop offset="1" stop-color="#1A2028"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4C555F"/>
+      <stop offset="1" stop-color="#343C46"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#C9CFD6"/>
+      <stop offset=".5" stop-color="#E9ECEF"/>
+      <stop offset="1" stop-color="#AEB6BF"/>
+    </linearGradient>
+    
+  </defs>
+  <rect width="1200" height="900" fill="url(#field)"/>
+  <ellipse cx="600" cy="758" rx="360" ry="36" fill="url(#shadow)"/>
+
+    <rect x="220" y="120" width="760" height="461.5" rx="10" fill="url(#body)"/>
+    <rect x="221.5" y="121.5" width="757" height="458.5" rx="9" stroke="#6B7580" stroke-opacity=".35" stroke-width="1.5"/>
+    <rect x="232" y="132" width="736" height="415.5" rx="2" fill="url(#panel)"/>
+    <rect x="232" y="132" width="736" height="415.5" rx="2" fill="url(#glare)"/>
+    <circle cx="940" cy="564.5" r="3" fill="#C9D1DA"/>
+    <rect x="892" y="563.5" width="12" height="2" rx="1" fill="#6B7580"/>
+    <rect x="870" y="563.5" width="12" height="2" rx="1" fill="#6B7580"/>
+    <rect x="848" y="563.5" width="12" height="2" rx="1" fill="#6B7580"/>
+    
+    <rect x="560" y="575.5" width="80" height="124.5" fill="url(#body)"/>
+    <rect x="578" y="605.5" width="44" height="64.5" rx="10" fill="#0E141B" opacity=".55"/>
+    <polygon points="470,700 730,700 770,744 430,744" fill="url(#top)"/>
+    <rect x="430" y="744" width="340" height="8" rx="3" fill="#1A2028"/>
+</svg>
