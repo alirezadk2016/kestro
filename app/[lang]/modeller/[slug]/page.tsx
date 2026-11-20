@@ -140,7 +140,27 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
     ...near,
     ...picturesFirst([...sameCategory, ...sameGroup]).filter((m) => !near.includes(m)),
   ];
-  const related = peers.slice(0, 3);
+  /* A fourth row for the same kind of machine from another maker, when the
+     series already fills the three. A ThinkPad page showed only ThinkPads,
+     so the EliteBook and Latitude pages were linked from the category list
+     and the model index and nowhere else (2026-11-20). The slug picks which
+     alternative, so the links spread over the other makers' pages instead
+     of all going to one. */
+  /* The same kind of machine within an inch: a 16" ThinkPad's counterpart
+     is the 15.6" ProBook, a 16" P-series the 15.6" ZBook. */
+  const kind = (format: string) => format.replace(/^[\d,]+"\s*(eller [\d,]+"\s*)?/, "");
+  const inches = (format: string) => Number(format.match(/^([\d,]+)"/)?.[1].replace(",", "."));
+  const comparable = (m: (typeof models)[number]) =>
+    kind(m.format.da) === kind(model.format.da) &&
+    (Number.isNaN(inches(model.format.da)) ||
+      Math.abs(inches(m.format.da) - inches(model.format.da)) <= 1);
+  const alternatives = picturesFirst([...sameCategory, ...sameGroup]).filter(
+    (m) => m.brand !== model.brand && comparable(m) && !near.includes(m),
+  );
+  const spread = [...model.slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const alternative = alternatives.length ? alternatives[spread % alternatives.length] : undefined;
+  const related =
+    near.length >= 3 && alternative ? [...near.slice(0, 3), alternative] : peers.slice(0, 3);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const productId = `${pageUrl}#product`;
@@ -467,7 +487,6 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   {lang === "da"
                     ? `Se alle ${lowerFirst(category.name.da)}`
                     : `See all ${lowerFirst(category.name.en)}`}
-                  <span aria-hidden="true">&rarr;</span>
                 </Link>
               )}
             </div>
