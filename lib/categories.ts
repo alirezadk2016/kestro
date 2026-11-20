@@ -235,7 +235,7 @@ export const categories: Category[] = [
     },
     metaTitle: {
       da: "Brugte skærme til kontoret – 22 til 27 tommer | Kestro",
-      en: "Refurbished business monitors, 24 and 27 inch | Kestro",
+      en: "Refurbished monitors for the office — 22 to 27 inch | Kestro",
     },
     metaDescription: {
       da: "Brugte kontorskærme fra Dell, HP og Lenovo i 22 til 27 tommer, tjekket for døde pixels og leveret sammen med maskiner og docks. Tilbud på skrift.",
@@ -349,7 +349,7 @@ export const categories: Category[] = [
     },
     metaTitle: {
       da: "Brugte tablets til erhverv – iPad, Galaxy, Surface | Kestro",
-      en: "Refurbished business tablets — iPad, Galaxy, Surface | Kestro",
+      en: "Refurbished business tablets: iPad, Galaxy, Surface | Kestro",
     },
     metaDescription: {
       da: "Brugte tablets til erhverv: iPad, Galaxy Tab og Surface til lager, service og møder. Skaffet pr. ordre, med stand og batteri oplyst, før I bestiller.",

@@ -99,8 +99,8 @@ export const models: Model[] = [
       en: "The workhorse of the T series — sturdy, repairable and easy to upgrade.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T480: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T480: specs, pros, cons | Kestro",
+      da: "Brugt ThinkPad T480: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T480: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T480: 14", Intel i5/i7 (8. gen.), op til 32 GB RAM og udskiftelig SSD. Robust og nem at reparere. Tilbud med stand og målt batteri.',
@@ -343,8 +343,8 @@ export const models: Model[] = [
       en: "The successor to the T480 — newer processor, same sturdiness.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14: specs, pros, cons | Kestro",
+      da: "Brugt ThinkPad T14: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T14 Gen 1 og 2: 14" Full HD, Intel i5/i7 eller AMD Ryzen PRO og en udskiftelig SSD. Forskellen på Intel og AMD. Skriftligt tilbud.',
@@ -460,8 +460,8 @@ export const models: Model[] = [
       en: "Just over a kilo — for people who travel with the machine.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X1 Carbon: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad X1 Carbon: pros, cons | Kestro",
+      da: "Brugt ThinkPad X1 Carbon: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 6–8: 14\" på godt 1 kilo, men RAM'en er loddet fast, så vælg nok hukommelse fra start. Tilbud med stand og batteri.",
@@ -560,8 +560,8 @@ export const models: Model[] = [
       en: "A business machine for a tight budget.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14: specs, fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L14: specs, pros, cons | Kestro",
+      da: "Brugt ThinkPad L14: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L14: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad L14: samme tastatur og porte som T-serien til et strammere budget. Intel eller AMD og 14" Full HD. Tilbud med stand og målt batteri.',
@@ -1253,8 +1253,8 @@ export const models: Model[] = [
       en: "The size of a book — it can sit behind the monitor.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkCentre M720q: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkCentre M720q: pros and cons | Kestro",
+      da: "Brugt ThinkCentre M720q: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkCentre M720q: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkCentre M720q og M920q Tiny: 1-liters mini-pc, der kan sidde bag skærmen, med to skærmudgange og lille strømforbrug. Skriftligt tilbud.",
@@ -1618,8 +1618,8 @@ export const models: Model[] = [
       en: "Matches a ThinkPad fleet in looks.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkVision T24i: specs, fordele, ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkVision T24i: specs, pros, cons | Kestro",
+      da: "Brugt ThinkVision T24i: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkVision T24i: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt Lenovo ThinkVision T24i: 23,8" IPS i Full HD, tynde rammer og fuldt justerbar fod – passer til en ThinkPad-flåde. Skriftligt tilbud med stand.',
@@ -1726,8 +1726,8 @@ export const models: Model[] = [
       en: "A mechanical dock that clicks onto the bottom of the machine.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad Ultra Dock: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad Ultra Dock: pros and cons | Kestro",
+      da: "Brugt ThinkPad Ultra Dock: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad Ultra Dock: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad Ultra Dock: klikker fast under maskinen og giver op til tre skærme, netværk og nøglelås. Passer kun til bestemte ThinkPad-modeller.",

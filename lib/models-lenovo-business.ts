@@ -81,8 +81,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The first T14 with a 16:10 screen — Intel 12th gen or Ryzen PRO 6000.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14 Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14 Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14 Gen 3: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14 Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T14 Gen 3: 14" med 16:10-skærm, netstik og Intel eller Ryzen PRO. Intel har en fri sokkel til RAM, AMD har alt loddet fast. Få tilbud.',
@@ -162,8 +162,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Intel 13th gen or Ryzen PRO 7040 — with an OLED panel as an option.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14 Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14 Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14 Gen 4: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14 Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad T14 Gen 4: Intel 13. gen eller Ryzen PRO, og OLED er et af skærmvalgene. RAM er i en fri sokkel eller er loddet, alt efter modellen.",
@@ -239,8 +239,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Two RAM slots again — up to 64 GB DDR5 on both Intel and AMD.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14 Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14 Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14 Gen 5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14 Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad T14 Gen 5: to sokler til RAM på både Intel og AMD, så den kan få op til 64 GB, og den har stadig netstik. Få et skriftligt tilbud.",
@@ -317,8 +317,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The slim T14 — Intel 11th gen or Ryzen 5000, a 57 Wh battery.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14s Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14s Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14s Gen 2: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14s Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad T14s Gen 2: den slanke T14 fra 1,28 kg med et større batteri og Intel eller Ryzen. RAM er loddet, så vælg nok fra start. Få tilbud.",
@@ -391,8 +391,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A 16:10 screen at just over 1.2 kg — Intel 12th gen or Ryzen PRO 6000.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14s Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14s Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14s Gen 3: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14s Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad T14s Gen 3: slank 14\" med 16:10-skærm og Intel eller Ryzen PRO. Let at bære, men RAM'en er loddet, intet netstik. Skriftligt tilbud.",
@@ -468,8 +468,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "At least 16 GB from the factory — Intel 13th gen or Ryzen PRO 7040.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14s Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14s Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14s Gen 4: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14s Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T14s Gen 4: slank 14" med mindst 16 GB RAM, loddet fast, og Intel eller Ryzen PRO. Intet netstik, så husk en adapter. Få et tilbud.',
@@ -545,8 +545,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Core Ultra, up to 64 GB and 58 Wh — with USB-A still on board.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T14s Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T14s Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad T14s Gen 5: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T14s Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad T14s Gen 5: Core Ultra, op til 64 GB RAM loddet fast og et lidt større batteri i et slankt kabinet. Den fås kun med Intel, uden netstik.",
@@ -619,8 +619,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A large 16" screen and a numeric keypad in a T series.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T16 Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T16 Gen 1: pros, cons | Kestro",
+      da: "Brugt ThinkPad T16 Gen 1: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T16 Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T16 Gen 1: stor 16"-skærm, taltastatur og netstik med Intel eller Ryzen PRO. Vælg det store batteri til lange dage. Skriftligt tilbud.',
@@ -696,8 +696,8 @@ export const lenovoBusinessModels: Model[] = [
       en: '16" with a keypad — now also with 4K OLED and Ryzen PRO 7040.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T16 Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T16 Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad T16 Gen 2: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T16 Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T16 Gen 2: 16" med taltastatur, netstik, Intel eller Ryzen PRO og OLED som tilvalg. Spørg til, hvilken slags RAM den har. Få tilbud.',
@@ -773,8 +773,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" Core Ultra with two DDR5 slots and up to 86 Wh.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad T16 Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad T16 Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad T16 Gen 3: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad T16 Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad T16 Gen 3: Core Ultra og to sokler til RAM, taltastatur og netstik på en stor 16"-skærm. Den fås kun med Intel i denne generation.',
@@ -847,8 +847,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The first X1 Carbon with 16:10 and Thunderbolt 4 — 1.13 kg.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Carbon Gen 9: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Carbon Gen 9: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Carbon Gen 9: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon Gen 9: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 9: den første X1 Carbon med 16:10-skærm, på lidt over et kilo. RAM er loddet fast, så vælg nok, når I bestiller den.",
@@ -918,8 +918,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "12th-generation Intel and four screen choices at 1.12 kg.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Carbon Gen 10: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Carbon Gen 10: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Carbon Gen 10: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon Gen 10: pros, cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 10: Intel 12. gen på lidt over et kilo og fire skærmvalg op til OLED. RAM er loddet fast, og der er intet netstik i den.",
@@ -989,8 +989,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "At least 16 GB and up to 64 GB in a 1.12 kg X1 Carbon.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Carbon Gen 11: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Carbon Gen 11: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Carbon Gen 11: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon Gen 11: pros, cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 11: Intel 13. gen og mindst 16 GB RAM på lidt over et kilo. RAM'en er loddet fast, så vælg mængden, når I bestiller.",
@@ -1060,8 +1060,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Core Ultra at 1.08 kg — the lightest X1 Carbon we describe.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Carbon Gen 12: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Carbon Gen 12: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Carbon Gen 12: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Carbon Gen 12: pros, cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Carbon Gen 12: Core Ultra i den letteste X1 Carbon, vi har beskrevet. Op til 64 GB RAM, loddet fast, og der er intet netstik i den.",
@@ -1134,8 +1134,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "An X1 with a touchscreen that folds all the way round, and a pen in the chassis.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Yoga Gen 6: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Yoga Gen 6: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Yoga Gen 6: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Yoga Gen 6: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X1 Yoga Gen 6: 14" skærm, der kan foldes til en tablet, med pen i kabinettet og Intel 11. gen. RAM er loddet, og der er intet netstik.',
@@ -1205,8 +1205,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A 2-in-1 with 12th-generation Intel and WQUXGA OLED as an option.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Yoga Gen 7: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Yoga Gen 7: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Yoga Gen 7: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Yoga Gen 7: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Yoga Gen 7: 2-i-1 med pen i siden, Intel 12. gen og OLED som tilvalg. RAM er loddet fast, så vælg nok fra start af. Få et tilbud.",
@@ -1276,8 +1276,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "An X1 Yoga with 13th-generation Intel and at least 16 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Yoga Gen 8: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Yoga Gen 8: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Yoga Gen 8: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Yoga Gen 8: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Yoga Gen 8: en 2-i-1 med pen, Intel 13. gen og mindst 16 GB RAM, loddet fast. Der er intet netstik, så planlæg en dock til den.",
@@ -1347,8 +1347,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The X1 as a 2-in-1 with Core Ultra and a pen that attaches magnetically.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 2-in-1 Gen 9: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 2-in-1 Gen 9: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 2-in-1 Gen 9: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 2-in-1 Gen 9: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 2-in-1 Gen 9: Core Ultra, en skærm op til OLED og en pen, der sidder fast med magnet. RAM'en er loddet og der er intet netstik.",
@@ -1418,8 +1418,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Under a kilo — 907 grams, and only two USB-C ports.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Nano Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Nano Gen 1: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Nano Gen 1: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Nano Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X1 Nano Gen 1: under et kilo, med 13" 2K-skærm. Blot to USB-C-stik og RAM loddet, regn med en dock til den. Få et skriftligt tilbud.',
@@ -1489,8 +1489,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Under a kilo with 12th-generation Intel and at least 16 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Nano Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Nano Gen 2: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Nano Gen 2: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Nano Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Nano Gen 2: under et kilo, med Intel 12. gen og mindst 16 GB RAM, loddet. Blot to USB-C-stik, regn med en hub. Skriftligt tilbud.",
@@ -1560,8 +1560,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "An X1 Nano with 13th-generation P series and a fixed 16 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X1 Nano Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X1 Nano Gen 3: pros and cons | Kestro",
+      da: "Brugt ThinkPad X1 Nano Gen 3: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X1 Nano Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X1 Nano Gen 3: under et kilo, med Intel 13. gen og fast 16 GB RAM, loddet. Blot to USB-C-stik, regn med en hub til den. Skriv til os.",
@@ -1631,8 +1631,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A small 13.3" with a 16:10 screen — Intel 11th gen or Ryzen 5000.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X13 Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad X13 Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad X13 Gen 2: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X13 Gen 2: lille 13,3" med 16:10-skærm, USB-A og HDMI og Intel eller Ryzen. RAM er loddet og netstik kræver adapter. Skriv til os.',
@@ -1705,8 +1705,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 13.3" with Intel 12th gen or Ryzen PRO 6000 and HDMI 2.1.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X13 Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad X13 Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad X13 Gen 3: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X13 Gen 3: en lille 13,3" med Intel 12. gen eller Ryzen PRO og de almindelige stik. RAM er loddet fast, og der er intet netstik i den.',
@@ -1782,8 +1782,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Down to 1.09 kg — Intel 13th gen or Ryzen PRO 7040.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X13 Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad X13 Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad X13 Gen 4: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X13 Gen 4: lettere end Gen 3, med Intel eller Ryzen PRO og OLED som tilvalg på Intel. RAM er loddet, intet netstik. Skriftligt tilbud.",
@@ -1859,8 +1859,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 13.3" with Core Ultra and up to 64 GB of soldered RAM.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad X13 Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad X13 Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad X13 Gen 5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad X13 Gen 5: en lille 13,3" med Core Ultra og op til 64 GB RAM, loddet fast. Der er kun en skærm at vælge, kun Intel og intet netstik.',
@@ -1933,8 +1933,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 13.3" touchscreen that folds into a tablet — Intel 11th gen.',
     },
     metaTitle: {
-      da: "Brugt Lenovo X13 Yoga Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X13 Yoga Gen 2: pros and cons | Kestro",
+      da: "Brugt ThinkPad X13 Yoga Gen 2: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Yoga Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X13 Yoga Gen 2: en lille 2-i-1, hvor skærmen kan foldes til en tablet, med Intel 11. gen. Pen på visse modeller, og RAM er loddet.",
@@ -2004,8 +2004,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A 2-in-1 with Intel 12th gen U series and HDMI 2.1.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X13 Yoga Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X13 Yoga Gen 3: pros and cons | Kestro",
+      da: "Brugt ThinkPad X13 Yoga Gen 3: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Yoga Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X13 Yoga Gen 3: en lille 2-i-1 med touch og Intel 12. gen i U-serien. Til noter og møder, ikke til tunge beregninger, og RAM er loddet.",
@@ -2075,8 +2075,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A 2-in-1 with Intel 13th gen and two battery choices.",
     },
     metaTitle: {
-      da: "Brugt Lenovo X13 Yoga Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo X13 Yoga Gen 4: pros and cons | Kestro",
+      da: "Brugt ThinkPad X13 Yoga Gen 4: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad X13 Yoga Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad X13 Yoga Gen 4: lille 2-i-1 med touch og Intel 13. gen, nu med to batterier at vælge. Tag det store, hvis den skal bruges på farten.",
@@ -2146,8 +2146,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A budget ThinkPad with two RAM slots and a microSD reader.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14 Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L14 Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad L14 Gen 3: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L14 Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad L14 Gen 3: en ThinkPad til et lille budget, med to sokler til RAM, netstik og microSD, Intel eller Ryzen. Bed om Full HD, ikke HD.",
@@ -2220,8 +2220,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Two RAM slots, Ethernet and an SSD up to 2 TB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14 Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L14 Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad L14 Gen 4: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L14 Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad L14 Gen 4: to sokler til RAM, netstik og plads til en større SSD, med Intel eller Ryzen PRO. Bed om Full HD i stedet for HD-skærm.",
@@ -2294,8 +2294,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A 16:10 screen, DDR5 in two slots and three USB-A ports.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L14 Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L14 Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad L14 Gen 5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L14 Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad L14 Gen 5: 16:10-skærm, to sokler til RAM, tre USB-A og netstik, så den sjældent kræver adapter. Core Ultra eller Ryzen. Få tilbud.",
@@ -2368,8 +2368,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'The small L series — 13.3" 16:10 and 1.25 kg.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L13 Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L13 Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad L13 Gen 3: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L13 Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad L13 Gen 3: den lille L-serie med 13,3" 16:10-skærm og Intel eller Ryzen. Til forskel fra L14 er RAM loddet, og der er intet netstik.',
@@ -2445,8 +2445,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 13.3" L series with Intel 13th gen or Ryzen 7030.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L13 Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L13 Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad L13 Gen 4: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L13 Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad L13 Gen 4: en lille 13,3" L-serie med Intel eller Ryzen. RAM er loddet fast, så vælg mindst 16 GB, og der er intet netstik i siden.',
@@ -2519,8 +2519,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" L series with a numeric keypad and two DDR5 slots.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad L16 Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad L16 Gen 1: pros, cons | Kestro",
+      da: "Brugt ThinkPad L16 Gen 1: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad L16 Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad L16 Gen 1: 16"-skærm med taltastatur, to sokler til RAM og netstik, med Core Ultra eller Ryzen PRO. Til faste pladser. Få et tilbud.',
@@ -2593,8 +2593,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "ThinkPad's entry model — two M.2 slots and one RAM slot.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad E14 Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad E14 Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad E14 Gen 4: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad E14 Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad E14 Gen 4: den billigste ThinkPad, med plads til to SSD'er og en fri sokkel til RAM, Intel eller Ryzen. Bed om IPS, ikke TN-panel.",
@@ -2667,8 +2667,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The E14 with a 16:10 screen, a lighter chassis and two SSD slots.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad E14 Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad E14 Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad E14 Gen 5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad E14 Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad E14 Gen 5: en lettere E14 med 16:10-skærm, netstik og plads til to SSD'er, Intel eller Ryzen. Vælg Intel, hvis I bruger USB-C-docks.",
@@ -2741,8 +2741,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "The E14 with two DDR5 slots — no soldered RAM.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad E14 Gen 6: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad E14 Gen 6: pros, cons | Kestro",
+      da: "Brugt ThinkPad E14 Gen 6: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad E14 Gen 6: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad E14 Gen 6: intet RAM loddet fast, men to sokler, to SSD-pladser og netstik. Core Ultra eller Ryzen, til et budget lige under T-serien.",
@@ -2815,8 +2815,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" E series with a numeric keypad and two SSD slots.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad E16 Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad E16 Gen 1: pros, cons | Kestro",
+      da: "Brugt ThinkPad E16 Gen 1: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad E16 Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad E16 Gen 1: stor 16"-skærm med taltastatur, netstik og to SSD-pladser, Intel eller Ryzen. Til bogføring og til at taste tal hele dagen.',
@@ -2889,8 +2889,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" with a numeric keypad and two DDR5 slots up to 64 GB.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad E16 Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad E16 Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad E16 Gen 2: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad E16 Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad E16 Gen 2: 16\" med taltastatur, to sokler til RAM og plads til to SSD'er, Core Ultra eller Ryzen. RAM kan let udvides. Få et tilbud.",
@@ -2964,8 +2964,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A T14 chassis with workstation graphics — NVIDIA T550 on Intel.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P14s Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P14s Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad P14s Gen 3: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P14s Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad P14s Gen 3: workstation på størrelse med en T14, med Intel og NVIDIA T550 eller Ryzen PRO. Til lettere CAD. Få et skriftligt tilbud.",
@@ -3042,8 +3042,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 14" workstation with NVIDIA RTX A500 or Radeon 780M.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P14s Gen 4: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P14s Gen 4: pros, cons | Kestro",
+      da: "Brugt ThinkPad P14s Gen 4: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P14s Gen 4: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P14s Gen 4: let 14" workstation med NVIDIA på Intel eller Radeon på AMD. RAM er loddet fast på de fleste udgaver. Skriftligt tilbud.',
@@ -3117,8 +3117,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'Two DDR5 slots up to 96 GB — Intel with a 14.5" screen, AMD with 14".',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P14s Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P14s Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad P14s Gen 5: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P14s Gen 5: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad P14s Gen 5: to sokler til RAM op til 96 GB. Intel har den største skærm og NVIDIA, AMD er lettest. Sig, hvilken I vil have. Få tilbud.",
@@ -3198,8 +3198,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" workstation under 2 kg — NVIDIA T550 or Ryzen PRO 6000.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P16s Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P16s Gen 1: pros, cons | Kestro",
+      da: "Brugt ThinkPad P16s Gen 1: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P16s Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P16s Gen 1: let 16" workstation under 2 kg med Intel og NVIDIA T550 eller Ryzen. Til tegning i 2D på en stor skærm. Skriftligt tilbud.',
@@ -3273,8 +3273,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A 16" workstation from 1.70 kg with RTX A500 or Radeon 780M.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P16s Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P16s Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad P16s Gen 2: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P16s Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P16s Gen 2: lettere 16" workstation med NVIDIA på Intel eller Radeon på AMD og OLED som tilvalg. Spørg til RAM. Skriftligt tilbud.',
@@ -3348,8 +3348,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Core Ultra H, RTX 500 Ada and two DDR5 slots up to 96 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P16s Gen 3: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P16s Gen 3: pros, cons | Kestro",
+      da: "Brugt ThinkPad P16s Gen 3: fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P16s Gen 3: pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P16s Gen 3: Core Ultra, NVIDIA som tilvalg og to sokler til RAM op til 96 GB på 16"-skærm. Til tung analyse. Skriv til os for et tilbud.',
@@ -3423,8 +3423,8 @@ export const lenovoBusinessModels: Model[] = [
       en: 'A slim 16" workstation with up to NVIDIA RTX A5500.',
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P1 Gen 5: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P1 Gen 5: pros, cons | Kestro",
+      da: "Brugt ThinkPad P1 Gen 5: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P1 Gen 5: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P1 Gen 5: tynd 16" workstation med Intel 12. gen og NVIDIA op til de største kort. Til 3D og rendering, der skal bæres. Få et tilbud.',
@@ -3498,8 +3498,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "RTX Ada or GeForce RTX 40 and up to 96 GB DDR5.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P1 Gen 6: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P1 Gen 6: pros, cons | Kestro",
+      da: "Brugt ThinkPad P1 Gen 6: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P1 Gen 6: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: 'Brugt ThinkPad P1 Gen 6: en tynd 16" workstation med Intel 13. gen, NVIDIA og op til 96 GB RAM. Få det præcise grafikkort bekræftet, før I køber.',
@@ -3573,8 +3573,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Core Ultra H and LPCAMM2 — replaceable LPDDR5X up to 64 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P1 Gen 7: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P1 Gen 7: pros, cons | Kestro",
+      da: "Brugt ThinkPad P1 Gen 7: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P1 Gen 7: specs, pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad P1 Gen 7: Core Ultra, plads til to SSD'er og RAM i et nyt modul, der kan skiftes. En tynd 16\" workstation. Få et skriftligt tilbud.",
@@ -3648,8 +3648,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "A full workstation: HX processor, four RAM slots and up to 128 GB.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P16 Gen 1: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P16 Gen 1: pros, cons | Kestro",
+      da: "Brugt ThinkPad P16 Gen 1: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P16 Gen 1: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad P16 Gen 1: en fuld workstation med fire sokler til RAM, ECC som tilvalg og plads til to SSD'er. Intel HX og NVIDIA, til et skrivebord.",
@@ -3723,8 +3723,8 @@ export const lenovoBusinessModels: Model[] = [
       en: "Up to 192 GB of RAM and NVIDIA RTX 5000 Ada in a laptop.",
     },
     metaTitle: {
-      da: "Brugt Lenovo ThinkPad P16 Gen 2: fordele og ulemper | Kestro",
-      en: "Refurbished Lenovo ThinkPad P16 Gen 2: pros, cons | Kestro",
+      da: "Brugt ThinkPad P16 Gen 2: specs, fordele og ulemper | Kestro",
+      en: "Refurbished ThinkPad P16 Gen 2: pros and cons | Kestro",
     },
     metaDescription: {
       da: "Brugt ThinkPad P16 Gen 2: op til 192 GB RAM i fire sokler, Intel HX og NVIDIA. Til simulering og store modeller ved et skrivebord. Skriftligt tilbud.",
