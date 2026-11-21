@@ -1,0 +1,28 @@
+.card:global(.sheet) {
+  overflow: hidden;
+  border: 1px solid #dfe4ec;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.04);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.card:global(.sheet):hover {
+  border-color: #93aefb;
+  box-shadow: 0 10px 26px rgb(0 0 0 / 0.12);
+}
+.card :global([data-category-artwork]) {
+  border: 0;
+  border-radius: 10px;
+  background: #f1f3f6;
+  box-shadow: none;
+}
+.card h3 {
+  min-height: 2.7em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card:global(.sheet) {
+    transition: none;
+  }
+}

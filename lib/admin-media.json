@@ -224,11 +224,25 @@
     "format": "webp"
   },
   {
+    "src": "/models/e16-gen-2/intel-underside-reference.jpg",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 147554,
+    "format": "jpeg"
+  },
+  {
     "src": "/models/elitebook/840-g8-reference.webp",
     "width": 1280,
     "height": 1182,
     "bytes": 72368,
     "format": "webp"
+  },
+  {
+    "src": "/models/l16-gen-1/intel-underside-reference.jpg",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 366271,
+    "format": "jpeg"
   },
   {
     "src": "/models/laptop-assembly.webp",
@@ -266,6 +280,13 @@
     "format": "webp"
   },
   {
+    "src": "/models/latitude-5410/front-reference.jpg",
+    "width": 1920,
+    "height": 1440,
+    "bytes": 120460,
+    "format": "jpeg"
+  },
+  {
     "src": "/models/latitude-7490/front-open-reference.webp",
     "width": 1600,
     "height": 1200,
@@ -287,6 +308,20 @@
     "format": "webp"
   },
   {
+    "src": "/models/t14-gen-5/intel-underside-reference.jpg",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 174935,
+    "format": "jpeg"
+  },
+  {
+    "src": "/models/t14/gen1-amd-front-reference.jpg",
+    "width": 1920,
+    "height": 1440,
+    "bytes": 101905,
+    "format": "jpeg"
+  },
+  {
     "src": "/models/t14/gen2-intel-reference.webp",
     "width": 1600,
     "height": 1200,
@@ -306,6 +341,13 @@
     "height": 1234,
     "bytes": 70892,
     "format": "webp"
+  },
+  {
+    "src": "/models/x1-carbon/gen8-front-reference.jpg",
+    "width": 1920,
+    "height": 1440,
+    "bytes": 99382,
+    "format": "jpeg"
   },
   {
     "src": "/pricing/optiplex-5060-sff-illustration.svg",

@@ -1,0 +1,34 @@
+.frame {
+  aspect-ratio: 8 / 5;
+  max-height: 30rem;
+}
+.frame:global(.bg-paper-dim) {
+  background: #fff;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: #64748b transparent;
+  padding: 0.25rem 0.125rem 0.5rem;
+}
+
+.thumbnail {
+  width: 5.5rem;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  .frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .thumbnail {
+    width: 6rem;
+  }
+}

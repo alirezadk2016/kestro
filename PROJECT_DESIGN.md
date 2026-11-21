@@ -1,5 +1,25 @@
 # Kestro: product section only
 
+## Confirmed refinement — 21 November 2026
+
+The owner accepted the product audit and asked to implement the whole product
+redesign. Work starts from ad6e63b; the older local checkout is not the baseline.
+Retain the navy/blue Jakarta identity and five compact equipment categories.
+Use coherent pale product cards in both grid and list views, a fixed image
+frame, linked images, concise decision facts and clear comparison states.
+Default to a responsive grid, twelve initial results and progressive access
+to every model. Buyer-use and screen-size filters must describe model data,
+not claim an offered configuration or stock. Keep all no-JS links, fragments,
+browser restoration and search semantics. Model details lead with the device,
+practical use, key facts and enquiry; longer specifications remain accessible.
+External price references remain visibly separate from Kestro enquiries.
+Use exact-model owner-supplied or licensed imagery with attribution. A missing
+exact photo gets an intentional model-reference panel, never a fictional or
+wrong-generation machine. Extend verified photo coverage where sources allow.
+Homepage, shared header/footer, admin, repairs and education are out of scope.
+Before publication: complete production verify, desktop/mobile DA/EN visual
+inspection, image/credit checks and a baseline diff confirming scoped changes.
+
 ## Product and scope
 
 Kestro is a pre-launch B2B equipment sourcing project for Denmark and Norway.

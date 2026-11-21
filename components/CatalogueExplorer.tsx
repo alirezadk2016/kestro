@@ -17,11 +17,21 @@ import { buttonClass } from "./Button";
 import CatalogueListingItem from "./CatalogueListingItem";
 
 type Sort = "default" | "name-asc" | "name-desc" | "budget-asc" | "budget-desc";
+type UseCase = "office" | "mobile" | "workstation";
+const PAGE_SIZE = 12;
+const USE_CASES: { id: UseCase; da: string; en: string }[] = [
+  { id: "office", da: "Kontor", en: "Office" },
+  { id: "mobile", da: "På farten", en: "On the move" },
+  { id: "workstation", da: "Workstations", en: "Workstations" },
+];
 type State = {
   query: string;
   brands: string[];
   series: string[];
   types: string[];
+  use: UseCase | "";
+  screen: string;
+  shown: number;
   sort: Sort;
   view: "grid" | "list";
   compare: string[];
@@ -31,8 +41,11 @@ const INITIAL: State = {
   brands: [],
   series: [],
   types: [],
+  use: "",
+  screen: "",
+  shown: PAGE_SIZE,
   sort: "default",
-  view: "list",
+  view: "grid",
   compare: [],
 };
 const control =
@@ -68,7 +81,7 @@ export default function CatalogueExplorer({
 }) {
   const da = lang === "da";
   const budget = mode === "budget";
-  const defaultView = budget ? "grid" : "list";
+  const defaultView = "grid";
   const prefix = useId();
   const [state, setState] = useState<State>({ ...INITIAL, view: defaultView });
   const [ready, setReady] = useState(false);
@@ -78,17 +91,49 @@ export default function CatalogueExplorer({
   const comparisonButton = useRef<HTMLButtonElement>(null);
   const search = useRef<HTMLInputElement>(null);
   const legacyTarget = useRef<string | null>(null);
+  const restoreReveal = useRef(false);
   const explorer = useRef<HTMLDivElement>(null);
   const returnPosition = useRef<number | null>(null);
   const restoreBrowsing = useRef(false);
   const pendingSelectionFocus = useRef<string | null>(null);
+  const pendingMoreFocus = useRef<string | null>(null);
   const selectionButtons = useRef(new Map<string, HTMLButtonElement>());
   const brands = useMemo(() => [...new Set(entries.map((entry) => entry.brand))].sort(), [entries]);
   const categories = useMemo(
     () => [...new Map(entries.map((entry) => [entry.category.id, entry.category])).values()],
     [entries],
   );
-  const hasFacets = brands.length > 1 || categories.length > 1;
+  const screens = useMemo(
+    () =>
+      [...new Set(entries.flatMap((entry) => (entry.screenSize ? [entry.screenSize] : [])))].sort(
+        (a, b) => Number(a) - Number(b),
+      ),
+    [entries],
+  );
+  const useOptions = useMemo(
+    () => USE_CASES.filter((use) => entries.some((entry) => entry.useCases?.includes(use.id))),
+    [entries],
+  );
+  const photoCredits = useMemo(() => {
+    const credited = new Map<
+      string,
+      {
+        id: string;
+        name: string;
+        credit: NonNullable<NonNullable<CatalogueEntry["image"]>["credit"]>;
+      }
+    >();
+    for (const entry of entries) {
+      if (entry.image?.kind === "photo" && entry.image.credit && !credited.has(entry.image.src))
+        credited.set(entry.image.src, {
+          id: entry.id,
+          name: entry.name,
+          credit: entry.image.credit,
+        });
+    }
+    return [...credited.values()];
+  }, [entries]);
+  const hasFacets = brands.length > 1 || categories.length > 1 || screens.length > 1;
   /* Product lines, grouped by brand so ThinkPad T sits beside ThinkPad X1. */
   const allSeries = useMemo(() => {
     const lines = new Map<string, { id: string; label: string; brand: string }>();
@@ -112,6 +157,7 @@ export default function CatalogueExplorer({
         categories.map((category) => category.id),
       );
       const fragment = url.hash.slice(1);
+      legacyTarget.current = null;
       if (categories.some((category) => category.id === fragment)) {
         if (!types.length) types.push(fragment);
         legacyTarget.current = fragment;
@@ -120,6 +166,16 @@ export default function CatalogueExplorer({
         ? ["default", "name-asc", "name-desc", "budget-asc", "budget-desc"]
         : ["default", "name-asc", "name-desc"];
       const requestedSort = url.searchParams.get("sort") as Sort;
+      const requestedUse = url.searchParams.get("use") as UseCase;
+      const compare =
+        entries.length > 1
+          ? list(
+              "compare",
+              entries.map((entry) => entry.id),
+            ).slice(0, 3)
+          : [];
+      const requestedShown = Number(url.searchParams.get("shown") || PAGE_SIZE);
+      restoreReveal.current = true;
       setState({
         query: (url.searchParams.get("q") || "").slice(0, 120),
         brands: list("brand", brands),
@@ -128,15 +184,22 @@ export default function CatalogueExplorer({
           allSeries.map((line) => line.id),
         ),
         types,
+        use: useOptions.some((option) => option.id === requestedUse) ? requestedUse : "",
+        screen: screens.includes(url.searchParams.get("screen") || "")
+          ? url.searchParams.get("screen")!
+          : "",
+        shown: Math.min(
+          entries.length,
+          Math.max(
+            PAGE_SIZE,
+            Number.isFinite(requestedShown) && requestedShown > 0
+              ? Math.ceil(requestedShown / PAGE_SIZE) * PAGE_SIZE
+              : PAGE_SIZE,
+          ),
+        ),
         sort: sorts.includes(requestedSort) ? requestedSort : "default",
-        view: !budget && url.searchParams.get("view") === "grid" ? "grid" : defaultView,
-        compare:
-          entries.length > 1
-            ? list(
-                "compare",
-                entries.map((entry) => entry.id),
-              ).slice(0, 3)
-            : [],
+        view: !budget && url.searchParams.get("view") === "list" ? "list" : defaultView,
+        compare,
       });
     }
     readLocation();
@@ -147,7 +210,7 @@ export default function CatalogueExplorer({
       window.removeEventListener("popstate", readLocation);
       window.removeEventListener("hashchange", readLocation);
     };
-  }, [entries, categories, brands, allSeries, budget, defaultView]);
+  }, [entries, categories, brands, allSeries, screens, useOptions, budget, defaultView]);
 
   useEffect(() => {
     if (!ready) return;
@@ -157,6 +220,9 @@ export default function CatalogueExplorer({
       brand: state.brands.join(","),
       series: state.series.join(","),
       type: state.types.join(","),
+      use: state.use,
+      screen: state.screen,
+      shown: !budget && state.shown > PAGE_SIZE ? String(state.shown) : "",
       sort: state.sort === "default" ? "" : state.sort,
       view: budget || state.view === defaultView ? "" : state.view,
       compare: state.compare.join(","),
@@ -169,21 +235,6 @@ export default function CatalogueExplorer({
     if (anchoredCategory && !state.types.includes(anchoredCategory.id)) url.hash = "";
     if (url.href !== window.location.href) window.history.replaceState(null, "", url);
   }, [state, ready, categories, budget, defaultView]);
-
-  // A fragment can initially scroll far down the unfiltered HTML. Keep its
-  // real model in view after React commits the shorter filtered result.
-  useEffect(() => {
-    if (!ready || !legacyTarget.current) return;
-    const target = legacyTarget.current;
-    legacyTarget.current = null;
-    const frame = requestAnimationFrame(() => {
-      (document.getElementById(target) || explorer.current)?.scrollIntoView({
-        behavior: "auto",
-        block: "start",
-      });
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [ready, state]);
 
   const comparisonVisible = comparisonOpen && state.compare.length >= 2;
   useEffect(() => {
@@ -208,6 +259,16 @@ export default function CatalogueExplorer({
     if (target === "search") search.current?.focus();
     else selectionButtons.current.get(target)?.focus({ preventScroll: true });
   }, [state.compare, comparisonVisible]);
+  useEffect(() => {
+    const id = pendingMoreFocus.current;
+    if (!id) return;
+    pendingMoreFocus.current = null;
+    const link = explorer.current?.querySelector<HTMLAnchorElement>(
+      `[data-catalogue-item="${CSS.escape(id)}"] [data-catalogue-detail]`,
+    );
+    link?.focus({ preventScroll: true });
+    link?.scrollIntoView({ behavior: "auto", block: "nearest" });
+  }, [state.shown]);
 
   /* A generation is one term. "T14 Gen 4" matched all seven T14 and T14s
      generations, because "4" alone is in 14" and in PCIe 4.0; "X1 Carbon Gen
@@ -245,6 +306,10 @@ export default function CatalogueExplorer({
     !state.brands.length || state.brands.includes(entry.brand);
   const typeMatches = (entry: CatalogueEntry) =>
     !state.types.length || state.types.includes(entry.category.id);
+  const matchesUseCase = (entry: CatalogueEntry) =>
+    !state.use || !!entry.useCases?.includes(state.use);
+  const screenMatches = (entry: CatalogueEntry) =>
+    !state.screen || entry.screenSize === state.screen;
   /* The lines on offer follow the chosen type: all of /modeller has too many
      to scan, its laptops alone have ten. A line that drops out of view stops
      filtering, so a hidden checkbox can never empty the results, but it stays
@@ -260,7 +325,12 @@ export default function CatalogueExplorer({
     !activeSeries.length || (!!entry.series && activeSeries.includes(entry.series.id));
   const filtered = entries.filter(
     (entry) =>
-      textMatches(entry) && brandMatches(entry) && seriesMatches(entry) && typeMatches(entry),
+      textMatches(entry) &&
+      brandMatches(entry) &&
+      seriesMatches(entry) &&
+      typeMatches(entry) &&
+      matchesUseCase(entry) &&
+      screenMatches(entry),
   );
   const collator = new Intl.Collator(da ? "da-DK" : "en-GB", {
     numeric: true,
@@ -276,6 +346,37 @@ export default function CatalogueExplorer({
         ((a.budget?.amount || 0) - (b.budget?.amount || 0)) *
         (state.sort === "budget-desc" ? -1 : 1),
     );
+  // Restored selections and legacy fragments must reveal their position in
+  // the actual filtered/sorted list. A selected model outside the filters
+  // stays in the comparison tray without expanding the visible result page.
+  useEffect(() => {
+    if (!ready || !restoreReveal.current) return;
+    const target = legacyTarget.current;
+    const through = filtered.reduce(
+      (last, entry, index) =>
+        state.compare.includes(entry.id) || (target && entry.fragmentId === target)
+          ? Math.max(last, index + 1)
+          : last,
+      0,
+    );
+    if (!budget && through > state.shown) {
+      setState((previous) => ({
+        ...previous,
+        shown: Math.min(filtered.length, Math.ceil(through / PAGE_SIZE) * PAGE_SIZE),
+      }));
+      return;
+    }
+    restoreReveal.current = false;
+    legacyTarget.current = null;
+    if (!target) return;
+    const frame = requestAnimationFrame(() => {
+      const visibleTarget = filtered.some((entry) => entry.fragmentId === target)
+        ? document.getElementById(target)
+        : null;
+      (visibleTarget || explorer.current)?.scrollIntoView({ behavior: "auto", block: "start" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [ready, filtered, state.compare, state.shown, budget]);
   const selected = state.compare
     .map((id) => entries.find((entry) => entry.id === id))
     .filter((entry): entry is CatalogueEntry => Boolean(entry));
@@ -284,24 +385,21 @@ export default function CatalogueExplorer({
       selected.flatMap((entry) => (entry.comparisonFacts || entry.facts).map((fact) => fact.label)),
     ),
   ];
-  const active = state.brands.length + activeSeries.length + state.types.length + (query ? 1 : 0);
+  const active =
+    state.brands.length +
+    activeSeries.length +
+    state.types.length +
+    (state.use ? 1 : 0) +
+    (state.screen ? 1 : 0) +
+    (query ? 1 : 0);
+  const visibleCount = budget || !ready ? filtered.length : Math.min(state.shown, filtered.length);
   const canReset = active > 0 || state.sort !== "default";
   const isList = state.view === "list";
   const ledger = isList && !budget;
-  const heads = filtered[0]?.facts.slice(0, 3).map((fact) => fact.label) ?? [];
-  const sharedHeads =
-    ledger &&
-    heads.length > 0 &&
-    filtered.every(
-      (entry) =>
-        entry.facts
-          .slice(0, 3)
-          .map((fact) => fact.label)
-          .join("|") === heads.join("|"),
-    );
   const toggle = (key: "brands" | "series" | "types" | "compare", value: string) =>
     setState((previous) => ({
       ...previous,
+      shown: key === "compare" ? previous.shown : PAGE_SIZE,
       [key]: previous[key].includes(value)
         ? previous[key].filter((item) => item !== value)
         : key === "compare" && previous.compare.length >= 3
@@ -315,6 +413,9 @@ export default function CatalogueExplorer({
       brands: [],
       series: [],
       types: [],
+      use: "",
+      screen: "",
+      shown: PAGE_SIZE,
       sort: "default",
     }));
   const removeSelection = (id: string) => {
@@ -326,6 +427,34 @@ export default function CatalogueExplorer({
 
   const filterPanel = (
     <div className={budget ? "grid gap-x-8 gap-y-4 sm:grid-cols-2" : ""}>
+      {!budget && screens.length > 1 && (
+        <div className="mb-5 border-b border-white/10 pb-5">
+          <label htmlFor={`${prefix}-screen`} className="text-sm font-semibold text-paper">
+            {da ? "Skærmstørrelse" : "Screen size"}
+          </label>
+          <select
+            id={`${prefix}-screen`}
+            data-catalogue-screen
+            disabled={!ready}
+            value={state.screen}
+            onChange={(event) =>
+              setState((previous) => ({
+                ...previous,
+                screen: event.target.value,
+                shown: PAGE_SIZE,
+              }))
+            }
+            className={`${control} mt-2 w-full`}
+          >
+            <option value="">{da ? "Alle størrelser" : "All sizes"}</option>
+            {screens.map((size) => (
+              <option key={size} value={size}>
+                {size.replace(".", da ? "," : ".")}″
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <fieldset className="min-w-0">
         <legend className="text-sm font-semibold text-paper">{da ? "Mærke" : "Brand"}</legend>
         {brands.map((brand) => (
@@ -349,7 +478,9 @@ export default function CatalogueExplorer({
                     entry.brand === brand &&
                     textMatches(entry) &&
                     seriesMatches(entry) &&
-                    typeMatches(entry),
+                    typeMatches(entry) &&
+                    matchesUseCase(entry) &&
+                    screenMatches(entry),
                 ).length
               }
             </span>
@@ -383,7 +514,9 @@ export default function CatalogueExplorer({
                         entry.series?.id === line.id &&
                         textMatches(entry) &&
                         brandMatches(entry) &&
-                        typeMatches(entry),
+                        typeMatches(entry) &&
+                        matchesUseCase(entry) &&
+                        screenMatches(entry),
                     ).length
                   }
                 </span>
@@ -419,7 +552,9 @@ export default function CatalogueExplorer({
                         entry.category.id === category.id &&
                         textMatches(entry) &&
                         brandMatches(entry) &&
-                        seriesMatches(entry),
+                        seriesMatches(entry) &&
+                        matchesUseCase(entry) &&
+                        screenMatches(entry),
                     ).length
                   }
                 </span>
@@ -497,15 +632,45 @@ export default function CatalogueExplorer({
   );
 
   return (
-    <div ref={explorer} data-catalogue={mode} className="mt-5 min-w-0 scroll-mt-28">
+    <div ref={explorer} data-catalogue={mode} className="mt-2 min-w-0 scroll-mt-28 sm:mt-5">
       {heading && <h2 className="sr-only">{heading}</h2>}
       <noscript>
-        <p className="mb-4 text-sm leading-6 text-paper/85">
+        <p className="mb-1 text-sm leading-5 text-paper/85 sm:mb-4 sm:leading-6">
           {da
             ? "Alle modeller og links vises her. Søgning, filtre og sammenligning kræver JavaScript."
             : "All models and links are shown here. Search, filters and comparison require JavaScript."}
         </p>
       </noscript>
+      {!budget && useOptions.length > 1 && (
+        <div className="mb-3 sm:mb-5">
+          <p className="mb-2 hidden text-sm font-medium text-paper/75 sm:block">
+            {da ? "Vælg efter jeres arbejde" : "Choose around your work"}
+          </p>
+          <div
+            className="grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:gap-2"
+            role="group"
+            aria-label={da ? "Anvendelse" : "Use"}
+          >
+            {[{ id: "" as const, da: "Alle modeller", en: "All models" }, ...useOptions].map(
+              (use) => (
+                <button
+                  key={use.id || "all"}
+                  type="button"
+                  data-catalogue-use={use.id || "all"}
+                  disabled={!ready}
+                  aria-pressed={state.use === use.id}
+                  onClick={() =>
+                    setState((previous) => ({ ...previous, use: use.id, shown: PAGE_SIZE }))
+                  }
+                  className={`inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 disabled:cursor-not-allowed ${state.use === use.id ? "border-brand-300 bg-brand-600 text-white" : "border-white/20 bg-ink-950 text-paper/85 hover:border-brand-300 hover:text-white"}`}
+                >
+                  {da ? use.da : use.en}
+                </button>
+              ),
+            )}
+          </div>
+        </div>
+      )}
       {/* One bar over the list, not over the page. From lg it starts where
           the list starts, so the filters and the rows share a top edge and
           the search is a field, not a 1,600px strip across the screen. */}
@@ -519,7 +684,7 @@ export default function CatalogueExplorer({
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-y-3">
           <div className="flex min-w-0 basis-full items-center gap-2 lg:max-w-sm lg:flex-1 lg:basis-auto">
             <div className="relative min-w-0 flex-1">
               <Search
@@ -537,7 +702,11 @@ export default function CatalogueExplorer({
                 maxLength={120}
                 autoComplete="off"
                 onChange={(event) =>
-                  setState((previous) => ({ ...previous, query: event.target.value }))
+                  setState((previous) => ({
+                    ...previous,
+                    query: event.target.value,
+                    shown: PAGE_SIZE,
+                  }))
                 }
                 placeholder={da ? "Model eller mærke" : "Model or brand"}
                 className={`${control} w-full pl-10`}
@@ -574,11 +743,17 @@ export default function CatalogueExplorer({
                 disabled={!ready}
                 value={state.sort}
                 onChange={(event) =>
-                  setState((previous) => ({ ...previous, sort: event.target.value as Sort }))
+                  setState((previous) => ({
+                    ...previous,
+                    sort: event.target.value as Sort,
+                    shown: PAGE_SIZE,
+                  }))
                 }
                 className={`${control} w-28 max-w-full text-xs sm:w-auto`}
               >
-                <option value="default">{da ? "Standard" : "Default"}</option>
+                <option value="default">
+                  {budget ? (da ? "Standard" : "Default") : da ? "Modelserier" : "Model families"}
+                </option>
                 <option value="name-asc">{da ? "Modelnavn A–Å" : "Model name A–Z"}</option>
                 <option value="name-desc">{da ? "Modelnavn Å–A" : "Model name Z–A"}</option>
                 {budget && (
@@ -595,7 +770,7 @@ export default function CatalogueExplorer({
             </label>
             {!budget && (
               <div
-                className="hidden rounded-lg border border-white/20 p-0.5 sm:inline-flex"
+                className="inline-flex rounded-lg border border-white/20 p-0.5"
                 role="group"
                 aria-label={da ? "Visning" : "View"}
               >
@@ -679,13 +854,31 @@ export default function CatalogueExplorer({
                   value,
                   label: categories.find((category) => category.id === value)?.label || value,
                 })),
+                ...(state.use
+                  ? [
+                      {
+                        key: "use",
+                        value: state.use,
+                        label: USE_CASES.find((use) => use.id === state.use)![da ? "da" : "en"],
+                      },
+                    ]
+                  : []),
+                ...(state.screen
+                  ? [
+                      {
+                        key: "screen",
+                        value: state.screen,
+                        label: `${state.screen.replace(".", da ? "," : ".")}″`,
+                      },
+                    ]
+                  : []),
               ].map((chip) => (
                 <button
                   key={`${chip.key}-${chip.value}`}
                   type="button"
                   onClick={() =>
-                    chip.key === "query"
-                      ? setState((previous) => ({ ...previous, query: "" }))
+                    ["query", "use", "screen"].includes(chip.key)
+                      ? setState((previous) => ({ ...previous, [chip.key]: "", shown: PAGE_SIZE }))
                       : toggle(chip.key as "brands" | "series" | "types", chip.value)
                   }
                   aria-label={`${da ? "Fjern filter" : "Remove filter"}: ${chip.label}`}
@@ -698,41 +891,19 @@ export default function CatalogueExplorer({
             </div>
           )}
 
-          {/* The list is one ledger: a single panel, a rule between rows,
-              and the spec columns named once above them. Fifty-nine white
-              cards with the same radius and the same shadow was the SaaS
-              card kit Anthropic's frontend-design skill lists as a tell, and
-              each card repeated "Processor, Hukommelse, Lagring". */}
-          <div
-            className={
-              ledger && filtered.length > 0 ? "plate mt-4 overflow-hidden [color-scheme:dark]" : ""
-            }
-          >
-            {sharedHeads && (
-              <div
-                aria-hidden="true"
-                className="hidden grid-cols-[112px_minmax(0,1.15fr)_minmax(0,1.35fr)_11rem] gap-x-6 border-b border-white/10 px-5 py-3 text-xs font-medium text-paper/65 xl:grid"
-              >
-                <span className="col-span-2">Model</span>
-                <span
-                  className={`grid gap-3 ${heads.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}
-                >
-                  {heads.map((head) => (
-                    <span key={head}>{head}</span>
-                  ))}
-                </span>
-              </div>
-            )}
+          {/* Both layouts share the same product cards and labelled facts. */}
+          <div className={ledger && filtered.length > 0 ? "mt-4" : ""}>
             <ul
               className={`min-w-0 ${
                 ledger
-                  ? "divide-y divide-white/[0.07]"
-                  : `mt-4 grid gap-4 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 2xl:grid-cols-3"}`
+                  ? "space-y-3"
+                  : `mt-3 grid gap-4 sm:mt-4 lg:gap-5 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 xl:grid-cols-3"}`
               }`}
             >
               {filtered.map((entry, index) => (
                 <CatalogueListingItem
                   key={entry.id}
+                  hidden={ready && index >= visibleCount}
                   entry={entry}
                   lang={lang}
                   mode={mode}
@@ -743,11 +914,35 @@ export default function CatalogueExplorer({
                   canCompare={entries.length > 1}
                   priority={index === 0}
                   onCompare={() => toggle("compare", entry.id)}
-                  sharedHeads={sharedHeads}
                 />
               ))}
             </ul>
           </div>
+          {!budget && ready && filtered.length > PAGE_SIZE && (
+            <div className="mt-7 flex flex-col items-center gap-3 border-t border-white/10 pt-6">
+              <p data-catalogue-visible-count className="text-sm tabular-nums text-paper/75">
+                {da ? "Viser" : "Showing"} {visibleCount} {da ? "af" : "of"} {filtered.length}{" "}
+                {da ? "modeller" : "models"}
+              </p>
+              {visibleCount < filtered.length && (
+                <button
+                  type="button"
+                  data-catalogue-show-more
+                  onClick={() => {
+                    pendingMoreFocus.current = filtered[visibleCount]?.id || null;
+                    setState((previous) => ({
+                      ...previous,
+                      shown: Math.min(filtered.length, visibleCount + PAGE_SIZE),
+                    }));
+                  }}
+                  className={`${buttonClass("secondary")} min-w-48`}
+                >
+                  {da ? "Vis" : "Show"} {Math.min(PAGE_SIZE, filtered.length - visibleCount)}{" "}
+                  {da ? "flere modeller" : "more models"}
+                </button>
+              )}
+            </div>
+          )}
           {filtered.length === 0 && (
             <div className="plate mt-4 p-6 sm:p-8">
               <h3 className="font-display text-xl font-bold text-paper">
@@ -770,6 +965,41 @@ export default function CatalogueExplorer({
           )}
         </div>
       </div>
+
+      {photoCredits.length > 0 && (
+        <details data-catalogue-photo-credits className="mt-6 border-t border-white/10 text-sm">
+          <summary className="min-h-11 cursor-pointer py-3 text-paper/75 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300">
+            {da ? "Fotokrediter" : "Photo credits"}
+          </summary>
+          <ul className="divide-y divide-white/10 pb-2 text-paper/75">
+            {photoCredits.map(({ id, name, credit }) => (
+              <li key={id} data-catalogue-photo-credit={id} className="py-3">
+                <p className="font-medium text-paper">{name}</p>
+                <div className="flex flex-wrap items-center gap-x-5">
+                  <a
+                    href={credit.source}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    aria-label={`${credit.author} — ${da ? "fotokilde, åbner i en ny fane" : "photo source, opens in a new tab"}`}
+                    className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+                  >
+                    {credit.author}
+                  </a>
+                  <a
+                    href={credit.licenceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    aria-label={`${credit.licence} — ${da ? "licens, åbner i en ny fane" : "licence, opens in a new tab"}`}
+                    className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
+                  >
+                    {credit.licence}
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
 
       {comparisonVisible && (
         <section

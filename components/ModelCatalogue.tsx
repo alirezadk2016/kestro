@@ -3,6 +3,7 @@ import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import { modelMedia } from "@/lib/model-media";
 import { catalogueOrder } from "@/lib/model-order";
 import { modelSeries } from "@/lib/model-series";
+import { catalogueIntent } from "@/lib/catalogue-intent";
 import { cardSpecs, modelGroups, type Model } from "@/lib/models";
 import CatalogueExplorer from "./CatalogueExplorer";
 
@@ -70,6 +71,7 @@ export function modelCatalogueEntries(models: readonly Model[], lang: Lang): Cat
       format: model.format[lang],
       description: model.tagline[lang],
       application: model.goodFor[0]?.[lang],
+      ...catalogueIntent(model),
       facts,
       comparisonFacts: [
         {
@@ -93,6 +95,7 @@ export function modelCatalogueEntries(models: readonly Model[], lang: Lang): Cat
             height: media.height,
             alt: media.alt[lang],
             kind: media.kind,
+            credit: media.credit,
           }
         : undefined,
       fragmentId,

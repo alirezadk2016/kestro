@@ -8,23 +8,22 @@ import { modelCatalogueEntries } from "@/components/ModelCatalogue";
 import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
 import { modelSeries } from "@/lib/model-series";
-import { modelMedia } from "@/lib/model-media";
+import { additionalModelPhotos, modelMedia } from "@/lib/model-media";
 import { Check, ChevronDown, Info } from "lucide-react";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import PriceOnRequest from "@/components/PriceOnRequest";
 import WhatIsFixed from "@/components/WhatIsFixed";
 import CtaSection from "@/components/CtaSection";
-import { models, getModel } from "@/lib/models";
+import { models, getModel, cardSpecs } from "@/lib/models";
 import { getCategory } from "@/lib/categories";
-import { getCategoryMark } from "@/lib/category-marks";
-import MarkTile from "@/components/MarkTile";
 import { formatDate, localePath, metaFor, langs, type Lang, lowerFirst } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import FactNote from "@/components/FactNote";
 import Faq from "@/components/Faq";
 import { modelFaqs, modelLead, modelSources } from "@/lib/model-copy";
+import styles from "@/components/ModelDetail.module.css";
 
 /*
  * No dynamicParams override here, and that is the point.
@@ -102,6 +101,28 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   const model = getModel(params.slug);
   if (!model) notFound();
   const media = modelMedia(model);
+  const supplementalPhotos = additionalModelPhotos(model);
+  const galleryImages =
+    media?.kind === "photo"
+      ? [
+          { src: media.src, alt: media.alt, photographic: true, credit: media.credit },
+          ...(model.images ?? []).filter((image) => image.src !== media.src),
+        ]
+      : model.images;
+  const computer = ["baerbare", "workstations", "stationaere"].includes(model.group);
+  const factLabels =
+    lang === "da" ? ["Processor", "Hukommelse", "Lagring"] : ["Processor", "Memory", "Storage"];
+  const quickFacts = computer
+    ? cardSpecs(model, lang)
+        .slice(0, 3)
+        .map((value, index) => ({ label: factLabels[index], value }))
+    : model.specs
+        .filter((spec) => spec.label.en !== "Model")
+        .slice(0, 3)
+        .map((spec) => ({ label: spec.label[lang], value: spec.value[lang] }));
+  const referenceName = model.name.startsWith(model.brand + " ")
+    ? model.name.slice(model.brand.length + 1)
+    : model.name;
 
   const category = getCategory(model.category);
   /* Peers are the models in the same category, not the same group: the ZBook
@@ -190,8 +211,8 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
     category: category?.name[lang],
     description: model.intro[lang],
     url: pageUrl,
-    ...(model.images?.length
-      ? { image: model.images.map((img) => `${SITE_ORIGIN}${img.src}`) }
+    ...(galleryImages?.length
+      ? { image: galleryImages.map((img) => `${SITE_ORIGIN}${img.src}`) }
       : {}),
     additionalProperty: model.specs.map((spec) => ({
       "@type": "PropertyValue",
@@ -221,131 +242,146 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      {/* Lit by the site's own wash. Two blurred orbs sat here: one was
-          bg-brand-950 on bg-brand-950 and drew nothing, the other was the
-          generic glow every generated page has. */}
-      <section className="overflow-hidden bg-brand-950 py-6 text-white sm:py-12">
-        <Container className="relative">
-          {/* One shell width for the whole page, so every section starts at the
-              same left edge. Inside it the machine and what we say about it sit
-              side by side on a desktop: as stacked full-width blocks the photos
-              alone were two screens of scrolling with half the window empty. */}
-          <div className="max-w-6xl xl:max-w-none">
-            {/* The shared trail, visible and marked up from one list. */}
-            <Breadcrumbs
-              lang={lang}
-              trail={[
-                { name: c.breadcrumb, href: "/modeller" },
-                { name: model.name, href: `/modeller/${model.slug}` },
-              ]}
-            />
-            {/* Title and lead, then the photographs, then the longer text on a
-                phone; on a wide screen the photographs stand in the right
-                column beside both. They used to follow the whole text column,
-                900px down a phone. */}
-            <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
-              <div className="lg:col-span-7">
-                {/* Brand and format as the page's one label, then mark and
-                    title on one row, on the type scale like every page title. */}
-                <p className="label mt-2 text-paper/75">
-                  {model.brand}, {model.format[lang]}
-                </p>
-                <div className="mt-3 flex items-center gap-4 sm:gap-5">
-                  <MarkTile
-                    name={getCategoryMark(model.category)}
-                    size="lg"
-                    className="flex-none"
-                  />
-                  <h1 className="min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                    {lang === "da" ? "Brugt" : "Refurbished"} {model.name}
-                  </h1>
-                </div>
-                {/* The tagline, then the answer: what the machine is, with
-                    the figures from its own spec table. */}
-                <p className="mt-5 text-base leading-[1.65] text-paper/85 sm:text-lg">
-                  {model.tagline[lang]} {modelLead(model, lang)}
-                </p>
-              </div>
+      <section className={`${styles.hero} py-6 text-paper sm:py-8`}>
+        <Container>
+          <Breadcrumbs
+            lang={lang}
+            trail={[
+              { name: c.breadcrumb, href: "/modeller" },
+              { name: model.name, href: `/modeller/${model.slug}` },
+            ]}
+          />
+          <div className={styles.layout}>
+            <header className={styles.title}>
+              <p className="text-sm font-medium text-brand-300">
+                {model.brand}, {model.format[lang]}
+              </p>
+              <h1 className="mt-3 min-w-0 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {lang === "da" ? "Brugt" : "Refurbished"} {model.name}
+              </h1>
+              <p className="mt-4 text-base leading-7 text-paper/85 sm:text-lg">
+                {model.tagline[lang]}
+              </p>
+            </header>
 
-              {model.images ? (
-                <div className="space-y-3 sm:space-y-4 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
-                  <ModelGallery
-                    images={model.images}
-                    lang={lang}
-                    name={model.name}
-                    note={c.imageNote}
-                  />
-                </div>
-              ) : (
-                media && (
-                  /* The same studio frame as the catalogue card, so the model a
-                     buyer tapped is the picture the page opens on. A drawing of
-                     the format, and labelled as one. */
-                  <figure className="relative overflow-hidden rounded-xl bg-paper-dim outline outline-1 -outline-offset-1 outline-white/10 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-start">
+            <div className={styles.media}>
+              {galleryImages?.length ? (
+                <ModelGallery
+                  key={model.slug}
+                  images={galleryImages}
+                  lang={lang}
+                  name={model.name}
+                  note={c.imageNote}
+                />
+              ) : media ? (
+                <figure className={styles.illustration}>
+                  <div className="relative aspect-[8/5] sm:aspect-[4/3]">
                     <Image
                       src={media.src}
                       alt={media.alt[lang]}
                       width={media.width}
                       height={media.height}
                       priority
-                      sizes="(min-width: 1024px) 38vw, 92vw"
-                      className="h-auto w-full"
+                      sizes="(min-width: 1536px) 43vw, (min-width: 1024px) 49vw, 92vw"
+                      className="h-full w-full object-contain"
                     />
-                    <figcaption className="absolute left-3 top-3 rounded bg-ink-950/90 px-2 py-0.5 text-xs font-semibold leading-5 text-paper">
-                      Illustration
-                    </figcaption>
-                  </figure>
-                )
+                  </div>
+                  <figcaption className="border-t border-ink-200 px-4 py-3 text-xs leading-5 text-ink-600">
+                    {lang === "da"
+                      ? "Illustration af udstyrstypen. Udseende og konfiguration afhænger af den konkrete enhed."
+                      : "Illustration of the equipment type. Appearance and configuration depend on the actual unit."}
+                  </figcaption>
+                </figure>
+              ) : (
+                <div className={styles.reference} data-model-reference>
+                  <p className="text-sm font-semibold text-ink-600">
+                    {lang === "da" ? "Modelreference" : "Model reference"}
+                  </p>
+                  <div className="py-8 sm:py-12">
+                    <p className="mb-2 text-sm font-semibold text-brand-700">{model.brand}</p>
+                    <p
+                      className={`${styles.referenceName} font-display t-h1 font-extrabold tracking-display`}
+                    >
+                      {referenceName}
+                    </p>
+                    <p className="mt-4 text-base text-ink-600">{model.format[lang]}</p>
+                  </div>
+                  <p className="max-w-md border-t border-ink-200 pt-4 text-sm leading-6 text-ink-600">
+                    {lang === "da"
+                      ? "Et verificeret frontfoto af denne model er endnu ikke tilføjet."
+                      : "A verified front photo of this model has not been added yet."}
+                  </p>
+                </div>
               )}
+            </div>
 
-              <div className="lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:mt-8">
-                <p className="text-xs leading-5 text-paper/65">
+            <div className={styles.decision}>
+              {quickFacts.length > 0 && (
+                <dl className={`${styles.facts} border-y border-white/15 py-4`}>
+                  {quickFacts.map((fact) => (
+                    <div key={fact.label} className="min-w-0">
+                      <dt className="text-xs font-medium leading-5 text-paper/65">{fact.label}</dt>
+                      <dd className="mt-1 break-words text-sm font-semibold leading-5 text-paper">
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              <PriceOnRequest
+                lang={lang}
+                equipment={model.name}
+                accessory={model.group === "skaerme" || model.group === "docking"}
+                className="mt-5"
+              />
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-1 text-xs leading-5 text-paper/65">
+                <a
+                  href="#model-considerations"
+                  className="inline-flex min-h-11 items-center font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
+                >
+                  {c.watchOut}
+                </a>
+                <p>
                   {lang === "da" ? "Opdateret" : "Updated"}{" "}
-                  <time
-                    dateTime={pageUpdated("/modeller/[slug]")}
-                    className="tabular-nums text-paper/85"
-                  >
+                  <time dateTime={pageUpdated("/modeller/[slug]")}>
                     {formatDate(pageUpdated("/modeller/[slug]"), lang)}
                   </time>
                 </p>
-
-                {/* The page describes the machine in detail and then used to say
-                nothing about price, which leaves a buyer guessing whether this
-                is a shop that forgot its prices. One box answers price and
-                stock together: a "not in stock" plate stood above it saying
-                half the same thing, and an "Ask about this model" panel further
-                down said the rest again. */}
-                {model.images && (
-                  <PriceOnRequest lang={lang} equipment={model.name} className="mt-6" />
-                )}
               </div>
-
-              {/* Models without photographs: the right column carries the
-                  illustration and, under it, the price box; after the text in
-                  the markup, so a phone still reads title, picture, intro,
-                  then price. A laptop without a photograph has no picture at
-                  all, so its price box moves up to the top of the column. */}
-              {!model.images && (
-                <div
-                  className={`lg:col-span-5 lg:col-start-8 lg:self-start ${
-                    media ? "lg:row-start-3 lg:mt-6" : "lg:row-span-2 lg:row-start-1"
-                  }`}
-                >
-                  <PriceOnRequest
-                    lang={lang}
-                    equipment={model.name}
-                    accessory={model.group === "skaerme" || model.group === "docking"}
-                  />
-                </div>
-              )}
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Kestro stocks none of the catalogue yet: say so under the product,
-          and where it can be found meanwhile (components/RetailLinks.tsx). */}
-      <RetailLinks model={model} lang={lang} />
+      {supplementalPhotos.length > 0 && (
+        <section className="pb-8">
+          <Container>
+            <details className="group rounded-xl border border-white/15 px-5 sm:px-6">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+                <h2 className="text-base font-semibold text-paper">
+                  {lang === "da"
+                    ? "Referencefotos af modellens underside"
+                    : "Reference photos of the model’s underside"}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  aria-hidden="true"
+                  className="shrink-0 text-brand-300 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <div className="mx-auto max-w-2xl pb-6">
+                <ModelGallery
+                  key={`${model.slug}-reference`}
+                  images={supplementalPhotos}
+                  lang={lang}
+                  name={model.name}
+                  note={c.imageNote}
+                />
+              </div>
+            </details>
+          </Container>
+        </section>
+      )}
 
       <section className="border-t border-white/10 py-10 sm:py-20">
         <Container>
@@ -369,7 +405,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                 </ul>
               </div>
 
-              <div className="plate p-5 sm:p-6">
+              <div id="model-considerations" className="plate scroll-mt-28 p-5 sm:p-6">
                 <h2 className="flex items-center gap-2 font-display t-h3 font-bold tracking-tight text-paper">
                   <Info className="h-5 w-5 flex-shrink-0 text-paper/85" strokeWidth={2} />
                   {c.watchOut}
@@ -384,12 +420,20 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
               </div>
             </div>
 
-            <div className="plate overflow-hidden">
-              <div className="border-b border-white/10 bg-ink-900 px-5 py-4 sm:px-6">
+            <details className="group plate overflow-hidden" id="model-specifications">
+              <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 sm:px-6 [&::-webkit-details-marker]:hidden">
                 <h2 className="font-display t-h3 font-bold tracking-tight text-paper">
                   {c.configTitle}
                 </h2>
+                <ChevronDown
+                  size={18}
+                  aria-hidden="true"
+                  className="shrink-0 text-brand-300 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <div className="border-t border-white/10 px-5 py-4 sm:px-6">
                 <p className="mt-1 text-sm leading-[1.6] text-paper/75">{c.configBody}</p>
+                <p className="mt-3 text-sm leading-6 text-paper/85">{modelLead(model, lang)}</p>
               </div>
 
               <dl className="lg:grid lg:grid-cols-2">
@@ -405,7 +449,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                   </div>
                 ))}
               </dl>
-            </div>
+            </details>
 
             <details className="group mt-8 border-y border-white/15">
               <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 py-4 [&::-webkit-details-marker]:hidden">
@@ -464,6 +508,8 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
           </div>
         </Container>
       </section>
+
+      <RetailLinks model={model} lang={lang} />
 
       {related.length > 0 && (
         <section className="border-t border-white/10 bg-ink-900 py-10 sm:py-20">
