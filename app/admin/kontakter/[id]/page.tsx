@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InboxRow } from "@/components/admin/InboxRow";
-import { BUTTON, CARD, EYEBROW } from "@/components/admin/tokens";
+import { BUTTON, CARD, EYEBROW, PAGE_TITLE } from "@/components/admin/tokens";
+import { ArrowLeftIcon } from "@/components/admin/icons";
 import { requireAdmin } from "@/lib/admin-auth";
 import { enquiryIdValid } from "@/lib/admin-form";
 import { getContact } from "@/lib/db";
@@ -54,11 +55,11 @@ export default async function ContactPage({
         href="/admin/kontakter"
         className="inline-flex min-h-11 items-center text-sm font-medium text-paper/75 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
       >
-        ← Alle kontakter
+        <ArrowLeftIcon className="mr-2 h-4 w-4" />
+        Alle kontakter
       </Link>
       <header>
-        <p className={EYEBROW}>Kontakt · historik fra formularerne</p>
-        <h1 className="mt-2 break-words font-display text-3xl font-extrabold tracking-tight [overflow-wrap:anywhere]">
+        <h1 className={`${PAGE_TITLE} [overflow-wrap:anywhere]`}>
           {contact.name || contact.email}
         </h1>
         {contact.company && (

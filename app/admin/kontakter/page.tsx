@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BUTTON, CARD, EYEBROW, INPUT } from "@/components/admin/tokens";
+import { BUTTON, CARD, INPUT, PAGE_TITLE, SEARCH_ROW } from "@/components/admin/tokens";
 import { shortWhen } from "@/components/admin/parts";
 import { requireAdmin } from "@/lib/admin-auth";
 import { searchContacts } from "@/lib/db";
@@ -7,6 +7,17 @@ import { searchContacts } from "@/lib/db";
 export const dynamic = "force-dynamic";
 type Query = Record<string, string | string[] | undefined>;
 const scalar = (value: Query[string]) => (typeof value === "string" ? value : "");
+
+/** One or two letters for the avatar: first and last name, or the address. */
+const initials = (name: string) => {
+  const words = name
+    .replace(/@.*/, "")
+    .split(/[\s._-]+/)
+    .filter(Boolean);
+  const letters =
+    words.length > 1 ? words[0][0] + words[words.length - 1][0] : (words[0] ?? "?").slice(0, 2);
+  return letters.toLocaleUpperCase("da-DK");
+};
 
 export default async function ContactsPage({ searchParams }: { searchParams: Promise<Query> }) {
   await requireAdmin();
@@ -24,9 +35,8 @@ export default async function ContactsPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-6">
       <header>
-        <p className={EYEBROW}>Relationer · samlet kontaktbillede</p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">Kontakter</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-paper/70">
+        <h1 className={PAGE_TITLE}>Kontakter</h1>
+        <p className="mt-2 hidden max-w-2xl text-sm leading-6 text-paper/70 sm:block">
           Henvendelser samlet efter e-mailadresse. Åbn en kontakt for at se tidligere beskeder og
           udestående svar.
         </p>
@@ -37,10 +47,10 @@ export default async function ContactsPage({ searchParams }: { searchParams: Pro
         aria-label="Søg i kontakter"
         method="get"
         action="/admin/kontakter"
-        className={`${CARD} grid grid-cols-2 gap-3 p-4 sm:flex sm:flex-wrap sm:items-end`}
+        className={`${SEARCH_ROW} ${q ? "grid-cols-[minmax(0,1fr)_auto_auto]" : ""}`}
       >
-        <div className="col-span-2 min-w-0 sm:flex-1 sm:basis-56">
-          <label htmlFor="contact-search" className="mb-2 block text-xs font-medium text-paper/75">
+        <div className="min-w-0">
+          <label htmlFor="contact-search" className="sr-only">
             Søg efter kontakt
           </label>
           <input
@@ -49,11 +59,11 @@ export default async function ContactsPage({ searchParams }: { searchParams: Pro
             name="q"
             defaultValue={q}
             maxLength={120}
-            placeholder="Navn, virksomhed eller e-mail"
+            placeholder="Navn, firma eller e-mail"
             className={`${INPUT} w-full placeholder:text-paper/65`}
           />
         </div>
-        <button className={`${BUTTON} ${q ? "" : "col-span-2"}`}>Søg kontakter</button>
+        <button className={BUTTON}>Søg kontakter</button>
         {q && (
           <Link href="/admin/kontakter" className={BUTTON}>
             Nulstil
@@ -80,36 +90,49 @@ export default async function ContactsPage({ searchParams }: { searchParams: Pro
             <ul aria-label="Kontakter" className={`${CARD} overflow-hidden`}>
               {result.items.map((contact) => (
                 <li key={contact.id} className="border-b border-white/10 last:border-b-0">
+                  {/* A contact is a line in a list, with its initials as the
+                      one mark: name and company, then the address; on the
+                      right what waits and when they last wrote. */}
                   <Link
                     href={`/admin/kontakter/${contact.id}`}
                     prefetch={false}
-                    className="grid min-w-0 gap-3 p-5 transition-colors hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-brand-300 sm:grid-cols-[minmax(0,1fr)_auto]"
+                    className="group grid min-w-0 grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-x-3 px-4 py-3 transition-colors hover:bg-white/[0.035] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-brand-300 sm:px-5"
                   >
+                    <span
+                      aria-hidden="true"
+                      className="grid h-10 w-10 place-items-center rounded-full bg-brand-500/15 text-sm font-semibold text-brand-200"
+                    >
+                      {initials(contact.name || contact.email)}
+                    </span>
                     <div className="min-w-0">
-                      <h2 className="break-words text-base font-semibold [overflow-wrap:anywhere]">
-                        {contact.name || contact.email}
+                      <h2 className="flex min-w-0 items-baseline gap-2 text-sm font-semibold group-hover:text-brand-200">
+                        <span className="min-w-0 truncate">{contact.name || contact.email}</span>
+                        {contact.company && (
+                          <span className="hidden min-w-0 truncate font-normal text-paper/65 sm:inline">
+                            {contact.company}
+                          </span>
+                        )}
                       </h2>
-                      {contact.company && (
-                        <p className="mt-1 break-words text-sm text-paper/80 [overflow-wrap:anywhere]">
-                          {contact.company}
-                        </p>
-                      )}
-                      <p className="mt-2 break-all text-xs leading-5 text-paper/70">
+                      <p className="truncate text-xs leading-5 text-paper/70">
                         {contact.email}
+                        <span className="sm:hidden">
+                          {contact.company ? `, ${contact.company}` : ""}
+                        </span>
                       </p>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-paper/75 sm:flex-col sm:items-end">
-                      <span className="tabular-nums">
-                        {contact.enquiryCount}{" "}
-                        {contact.enquiryCount === 1 ? "henvendelse" : "henvendelser"}
-                      </span>
-                      {contact.pendingCount > 0 && (
-                        <span className="rounded-md bg-brand-500/15 px-2 py-1 font-semibold tabular-nums text-brand-200">
+                    <div className="flex flex-col items-end gap-1 text-xs text-paper/70">
+                      {contact.pendingCount > 0 ? (
+                        <span className="rounded-md bg-brand-500/15 px-1.5 py-0.5 font-semibold tabular-nums text-brand-200">
                           {contact.pendingCount} afventer svar
                         </span>
+                      ) : (
+                        <span className="tabular-nums">
+                          {contact.enquiryCount}{" "}
+                          {contact.enquiryCount === 1 ? "henvendelse" : "henvendelser"}
+                        </span>
                       )}
-                      <span>
-                        Senest{" "}
+                      <span className="whitespace-nowrap tabular-nums">
+                        <span className="sr-only">Senest </span>
                         <time dateTime={contact.lastSeen}>{shortWhen(contact.lastSeen)}</time>
                       </span>
                     </div>

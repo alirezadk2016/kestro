@@ -68,7 +68,8 @@ const groups = [
   { label: "Drift", items: [{ href: "/admin/system", label: "System", Icon: DeviceIcon }] },
 ];
 const items = groups.flatMap((group) => group.items);
-const primary = items.slice(0, 3);
+/* The phone's bottom bar: the four places the work happens, then Menu. */
+const primary = items.slice(0, 4);
 const activePath = (pathname: string, href: string) =>
   href === "/admin" ? pathname === href : pathname.startsWith(href);
 
@@ -145,6 +146,27 @@ export default function AdminNav() {
     ));
   }
 
+  const actions = (
+    <>
+      <Link
+        href="/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.action}
+        aria-label="Se sitet (åbner i ny fane)"
+      >
+        <ExternalIcon />
+        <span className={styles.siteLabel}>Se sitet</span>
+      </Link>
+      <form action="/api/admin/logout" method="post">
+        <button type="submit" className={styles.action}>
+          <LogoutIcon />
+          <span>Log ud</span>
+        </button>
+      </form>
+    </>
+  );
+
   return (
     <aside className={styles.nav} aria-label="Kestro administration">
       <div className={styles.navInner}>
@@ -155,6 +177,35 @@ export default function AdminNav() {
             <span className={styles.brandLabel}>Administration</span>
           </span>
         </Link>
+
+        {/* Find any message from anywhere. On a phone a button in the top bar
+            opens the inbox's search over every message; on a desktop the
+            field is in the sidebar. Both land on the same search. */}
+        <Link
+          href="/admin/beskeder?status=all"
+          prefetch={false}
+          className={styles.searchLink}
+          aria-label="Søg i alle beskeder"
+        >
+          <SearchIcon className="h-5 w-5" />
+        </Link>
+        <form
+          action="/admin/beskeder"
+          method="get"
+          className={styles.quickSearch}
+          aria-label="Hurtig søgning"
+        >
+          <input type="hidden" name="status" value="all" />
+          <SearchIcon className={styles.quickSearchIcon} />
+          <input
+            type="search"
+            name="q"
+            maxLength={120}
+            aria-label="Find en besked"
+            placeholder="Søg i beskeder"
+            className={styles.quickSearchInput}
+          />
+        </form>
 
         <nav aria-label="Panel" className={styles.desktopNavigation}>
           {sections()}
@@ -192,9 +243,9 @@ export default function AdminNav() {
         </nav>
 
         <noscript>
-          <style>{`.${styles.navInner}>noscript{display:contents}.${styles.mobileMenuItem}{display:none!important}.${styles.primaryDestinations}{grid-template-columns:repeat(3,minmax(0,1fr))}`}</style>
+          <style>{`.${styles.navInner}>noscript{display:contents}.${styles.mobileMenuItem}{display:none!important}.${styles.primaryDestinations}{grid-template-columns:repeat(4,minmax(0,1fr))}`}</style>
           <nav aria-label="Flere sektioner" className={styles.noScriptNavigation}>
-            {items.slice(3).map((item) => (
+            {items.slice(4).map((item) => (
               <Link key={item.href} href={item.href} className={styles.noScriptLink}>
                 {item.label}
               </Link>
@@ -221,24 +272,7 @@ export default function AdminNav() {
           </div>
         </div>
 
-        <div className={styles.actions}>
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.action}
-            aria-label="Se sitet (åbner i ny fane)"
-          >
-            <ExternalIcon />
-            <span className={styles.siteLabel}>Se sitet</span>
-          </Link>
-          <form action="/api/admin/logout" method="post">
-            <button type="submit" className={styles.action}>
-              <LogoutIcon />
-              <span>Log ud</span>
-            </button>
-          </form>
-        </div>
+        <div className={styles.actions}>{actions}</div>
       </div>
 
       <dialog
@@ -256,10 +290,7 @@ export default function AdminNav() {
         }}
       >
         <div className={styles.menuHeader}>
-          <div>
-            <p className={styles.menuEyebrow}>Kestro · arbejdsrum</p>
-            <h2 id="admin-menu-title">Alle sektioner</h2>
-          </div>
+          <h2 id="admin-menu-title">Alle sektioner</h2>
           <button
             type="button"
             onClick={closeMenu}
@@ -281,6 +312,9 @@ export default function AdminNav() {
         <nav aria-label="Alle sektioner" className={styles.menuNavigation}>
           {sections(true)}
         </nav>
+        {/* On a phone the site link and logging out live here, not in the
+            top bar: they are used once a session, not once a minute. */}
+        <div className={styles.menuActions}>{actions}</div>
       </dialog>
     </aside>
   );

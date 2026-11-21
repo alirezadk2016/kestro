@@ -2,13 +2,19 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { AlertIcon, ArchiveIcon, ArrowLeftIcon, CheckIcon } from "@/components/admin/icons";
+import {
+  AlertIcon,
+  ArchiveIcon,
+  ArrowLeftIcon,
+  CheckIcon,
+  SendIcon,
+} from "@/components/admin/icons";
 import { INBOX_SOURCE } from "@/components/admin/InboxRow";
 import MessageReplyForm from "@/components/admin/MessageReplyForm";
 import MessageNoteForm from "@/components/admin/MessageNoteForm";
 import MessageReadReceipt from "@/components/admin/MessageReadReceipt";
 import MessageFollowUpForm from "@/components/admin/MessageFollowUpForm";
-import { BUTTON, CARD } from "@/components/admin/tokens";
+import { BUTTON, CARD, PRIMARY_BUTTON } from "@/components/admin/tokens";
 import { MAIL_ERROR_COOKIE, requireAdmin } from "@/lib/admin-auth";
 import { enquiryIdValid } from "@/lib/admin-form";
 import { company } from "@/lib/company";
@@ -164,10 +170,19 @@ export default async function EnquiryPage(props: {
         <p className="mt-2 text-xs leading-5 text-paper/65">
           Modtaget <time dateTime={enquiry.created_at}>{when(enquiry.created_at)}</time>
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a href="#reply-heading" className={`${BUTTON} text-sm`}>
+        {/* The things done with a message, at the top: on a phone an even
+            grid of large targets, the reply first; "Ring op" when the
+            customer left a number. */}
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
+          <a href="#reply-heading" className={`${PRIMARY_BUTTON} col-span-2 text-sm sm:col-span-1`}>
+            <SendIcon className="h-4 w-4" />
             Skriv svar
           </a>
+          {safePhone.length >= 8 && (
+            <a href={`tel:${safePhone}`} className={`${BUTTON} text-sm`}>
+              Ring op
+            </a>
+          )}
           <Link
             href={`/admin/kontakter/${enquiry.id}`}
             prefetch={false}
@@ -176,7 +191,7 @@ export default async function EnquiryPage(props: {
             Samlet kontakt
           </Link>
           <a href="#message-actions" className={`${BUTTON} text-sm xl:hidden`}>
-            Kontakt og håndtering
+            Detaljer
           </a>
         </div>
       </header>

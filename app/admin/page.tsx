@@ -121,16 +121,21 @@ export default async function AdminHome() {
           unopened message is the one thing on this page that costs a
           customer if it waits. */}
       <section aria-label="Arbejdsstatus" className={`${CARD} px-1`}>
-        <dl className="grid grid-cols-3 divide-x divide-white/[0.08]">
+        {/* On a phone the three are rows, the figure at the thumb's side;
+            from sm they stand side by side. */}
+        <dl className="grid divide-y divide-white/[0.08] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {work.map((item, index) => (
-            <div key={item.label} className="min-w-0 px-3 py-4 sm:px-5 sm:py-5">
-              <dt className="text-xs font-medium leading-5 text-paper/70 sm:text-sm">
+            <div
+              key={item.label}
+              className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 px-4 py-3 sm:block sm:px-5 sm:py-5"
+            >
+              <dt className="col-start-1 row-start-1 text-sm font-medium leading-5 text-paper/80 sm:text-paper/70">
                 {item.label}
               </dt>
-              <dd>
+              <dd className="contents sm:block">
                 <Link
                   href={item.href}
-                  className={`mt-1 inline-flex min-h-11 min-w-11 items-center rounded transition-colors hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${index === 0 ? "text-brand-300" : "text-paper"}`}
+                  className={`col-start-2 row-span-2 row-start-1 inline-flex min-h-11 min-w-11 items-center justify-end rounded transition-colors hover:text-brand-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 sm:mt-1 sm:justify-start ${index === 0 ? "text-brand-300" : "text-paper"}`}
                 >
                   <span
                     className={`${FIGURE} leading-none ${index === 0 ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl"}`}
@@ -139,7 +144,7 @@ export default async function AdminHome() {
                   </span>
                 </Link>
                 <span
-                  className={`mt-1 block text-xs leading-5 ${index === 2 && overdue > 0 ? "text-amber-200" : "text-paper/65"}`}
+                  className={`col-start-1 row-start-2 block text-xs leading-5 sm:mt-1 ${index === 2 && overdue > 0 ? "text-amber-200" : "text-paper/65"}`}
                 >
                   {item.note}
                 </span>

@@ -30,16 +30,16 @@
   font-weight: 500;
 }
 .title {
-  margin-top: 8px;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .description {
+  display: none;
   max-width: 56ch;
-  margin-top: 12px;
+  margin-top: 8px;
   color: var(--admin-secondary);
   font-size: 14px;
   line-height: 1.6;
@@ -773,5 +773,15 @@
   .growthLink,
   .button {
     transition: none;
+  }
+}
+
+/* The page line returns from sm, and the title takes the panel's size. */
+@media (min-width: 640px) {
+  .title {
+    font-size: 28px;
+  }
+  .description {
+    display: block;
   }
 }

@@ -44,3 +44,19 @@ does not say something.
   behaviour on the new layout. Three links lost their arrow, and the checks
   now name them without it.
 - The login screen, the sidebar and its grouping.
+
+## Round 2: the phone, the same day
+
+The owner: more professional, more complete, and on a phone very simple with
+everything in easy reach. Measured at 390 and 320:
+
+| Finding | Evidence | Change |
+| --- | --- | --- |
+| The menu was out of reach | A 140px block under the logo: three destinations and Menu, at the top of the screen, with "Log ud" beside the logo on every page. | A bar at the bottom edge, where the thumb is: Oversigt, Beskeder (with the unread count), Opfølgning, Kontakter, Menu. Menu opens a sheet from the bottom with every section, "Se sitet" and "Log ud". The top bar is the logo and a search button. |
+| Searching meant finding the right page first | Search lived inside each list. | A search button in the phone's top bar and a search field at the top of the desktop sidebar, both over every message (status "Alle"). |
+| Lists started a screen down | Opfølgning: title, a line of text, five scope buttons in three rows, a framed search box and a filter: the first customer at 760px. | Every list page has the same top: title, one row of tabs that scrolls sideways, one search line. Page descriptions are left to sm and up. |
+| Contacts read as cards | About 175px a contact. | A list line with the contact's initials, name, company and address, and on the right what waits and when they last wrote. |
+| The overview's figures were squeezed | Three columns at 390: "Aktive beskeder" broke over two lines. | On a phone the three are rows with the figure on the right. |
+| A message's actions were not where the hand is | Three equal outline buttons; "Kontakt og håndtering" wrapped. | "Skriv svar" a full-width primary button, then "Samlet kontakt" and "Detaljer"; "Ring op" when the customer left a number. |
+
+Every admin page fits 320px with no sideways scroll.

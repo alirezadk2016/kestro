@@ -111,7 +111,7 @@ export default function MessageReplyForm({
               `Hej ${firstName},\n\nTak for din henvendelse til Kestro.\n\nVenlig hilsen\nKestro`,
             )
           }
-          className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 px-3 text-xs font-medium text-paper/80 hover:border-white/30 hover:text-paper disabled:cursor-not-allowed disabled:text-paper/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
+          className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-lg border border-white/15 px-3 text-xs font-medium text-paper/80 hover:border-white/30 hover:text-paper disabled:cursor-not-allowed disabled:text-paper/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
         >
           Bekræft modtagelse
         </button>
@@ -123,7 +123,7 @@ export default function MessageReplyForm({
               `Hej ${firstName},\n\nTak for din henvendelse. Vil du sende modelnavn og en kort beskrivelse af dit behov, så vi kan vurdere det nærmere?\n\nVenlig hilsen\nKestro`,
             )
           }
-          className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 px-3 text-xs font-medium text-paper/80 hover:border-white/30 hover:text-paper disabled:cursor-not-allowed disabled:text-paper/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
+          className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-lg border border-white/15 px-3 text-xs font-medium text-paper/80 hover:border-white/30 hover:text-paper disabled:cursor-not-allowed disabled:text-paper/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300"
         >
           Bed om flere oplysninger
         </button>

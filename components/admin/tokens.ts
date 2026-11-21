@@ -37,3 +37,25 @@ export const BUTTON =
 
 export const PRIMARY_BUTTON =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand-600 px-4 py-2 text-sm font-semibold text-paper transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-paper/70";
+
+/*
+ * The top of a list page, shared since 2026-11-21: a tab row for the list's
+ * views and one search line. On a phone the tabs scroll sideways in one row
+ * rather than wrapping into three, and the search label is for screen
+ * readers, so the first result is near the top of the screen.
+ */
+export const TAB_BAR =
+  "-mx-4 flex gap-1 overflow-x-auto border-b border-white/10 px-4 [scrollbar-width:none] sm:mx-0 sm:px-0";
+
+export const tabClass = (active: boolean) =>
+  `-mb-px inline-flex min-h-[44px] flex-none items-center gap-2 border-b-2 px-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-300 ${active ? "border-brand-400 font-semibold text-paper" : "border-transparent text-paper/70 hover:text-paper"}`;
+
+export const tabCount = (active: boolean) =>
+  `tabular-nums text-xs ${active ? "text-brand-200" : "text-paper/65"}`;
+
+/** The search line: the field takes the row, the button sits beside it. */
+export const SEARCH_ROW = "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2";
+
+/** A page title, the same size on every page. */
+export const PAGE_TITLE =
+  "break-words font-display text-[1.625rem] font-extrabold leading-tight tracking-tight sm:text-[1.75rem]";

@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 
-import { EYEBROW, FIGURE, HAIRLINE } from "@/components/admin/tokens";
+import { EYEBROW, FIGURE, HAIRLINE, PAGE_TITLE } from "@/components/admin/tokens";
 import { decimal, flag } from "@/lib/format";
 import type { Breakdown } from "@/lib/db";
 
@@ -25,12 +25,11 @@ export function AdminPageHeader({
       {/* The eyebrow is accepted and not shown: "Kestro · arbejdsrum" above
           every title repeated what the sidebar already says. */}
       <div className="min-w-0" data-section={eyebrow}>
-        <h1 className="break-words font-display text-[1.75rem] font-extrabold leading-tight tracking-tight">
-          {title}
-        </h1>
+        <h1 className={PAGE_TITLE}>{title}</h1>
         {description && (
           <p
-            className={`mt-2 max-w-2xl text-sm leading-6 text-paper/75 ${compactMobile ? "hidden sm:block" : ""}`}
+            /* On a phone the title says enough; the line returns from sm. */
+            className="mt-2 hidden max-w-2xl text-sm leading-6 text-paper/75 sm:block"
           >
             {description}
           </p>

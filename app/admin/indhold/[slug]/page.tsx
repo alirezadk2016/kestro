@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowLeftIcon } from "@/components/admin/icons";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/admin-auth";
@@ -35,7 +36,8 @@ export default async function AdminContentDetail({
         href="/admin/indhold"
         className="inline-flex min-h-11 items-center text-sm text-paper/75 hover:text-paper"
       >
-        ← Alt indhold
+        <ArrowLeftIcon className="mr-2 h-4 w-4" />
+        Alt indhold
       </Link>
       <AdminPageHeader
         eyebrow={`${contentKind(entry.kind)} · ${entry.category}`}

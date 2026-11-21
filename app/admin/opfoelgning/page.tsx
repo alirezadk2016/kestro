@@ -1,6 +1,15 @@
 import Link from "next/link";
 import { InboxRow, followUpDate } from "@/components/admin/InboxRow";
-import { BUTTON, CARD, EYEBROW, INPUT } from "@/components/admin/tokens";
+import {
+  BUTTON,
+  CARD,
+  INPUT,
+  PAGE_TITLE,
+  SEARCH_ROW,
+  TAB_BAR,
+  tabClass,
+  tabCount,
+} from "@/components/admin/tokens";
 import { requireAdmin } from "@/lib/admin-auth";
 import { searchFollowUps, type FollowUpScope } from "@/lib/db";
 
@@ -43,9 +52,8 @@ export default async function FollowUpsPage({ searchParams }: { searchParams: Pr
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className={EYEBROW}>Arbejdsdag · næste skridt</p>
-          <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight">Opfølgning</h1>
-          <p className="mt-2 text-sm leading-6 text-paper/70">
+          <h1 className={PAGE_TITLE}>Opfølgning</h1>
+          <p className="mt-2 hidden text-sm leading-6 text-paper/70 sm:block">
             Planlæg henvendelser efter dato og prioritet. Åbn en besked for at ændre planen.
           </p>
         </div>
@@ -54,17 +62,17 @@ export default async function FollowUpsPage({ searchParams }: { searchParams: Pr
           <span className="font-semibold text-paper/90">{followUpDate(queue.today)}</span>
         </p>
       </header>
-      <nav aria-label="Opfølgningsperiode" className="flex flex-wrap gap-2">
+      <nav aria-label="Opfølgningsperiode" className={TAB_BAR}>
         {SCOPES.map((item) => (
           <Link
             key={item.key}
             href={href({ scope: item.key })}
             aria-current={scope === item.key ? "page" : undefined}
-            className={`${BUTTON} ${scope === item.key ? "border-brand-400/60 bg-brand-500/15" : ""}`}
+            className={tabClass(scope === item.key)}
           >
             {item.label}
             {queue.available && (
-              <span className="tabular-nums text-xs text-paper/70">
+              <span className={tabCount(scope === item.key)}>
                 {queue.counts[item.key].toLocaleString("da-DK")}
               </span>
             )}
@@ -77,15 +85,11 @@ export default async function FollowUpsPage({ searchParams }: { searchParams: Pr
         aria-label="Søg i opfølgning"
         action="/admin/opfoelgning"
         method="get"
-        className={`${CARD} p-4`}
       >
         <input type="hidden" name="scope" value={scope} />
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+        <div className={SEARCH_ROW}>
           <div className="min-w-0">
-            <label
-              htmlFor="followup-search"
-              className="mb-2 block text-xs font-medium text-paper/75"
-            >
+            <label htmlFor="followup-search" className="sr-only">
               Søg i henvendelser
             </label>
             <input
@@ -94,11 +98,11 @@ export default async function FollowUpsPage({ searchParams }: { searchParams: Pr
               name="q"
               defaultValue={q}
               maxLength={120}
-              placeholder="Navn, firma, e-mail eller besked"
+              placeholder="Søg i navn, e-mail og tekst"
               className={`${INPUT} w-full placeholder:text-paper/65`}
             />
           </div>
-          <button className={`${BUTTON} w-full sm:w-auto`}>Søg og filtrér</button>
+          <button className={BUTTON}>Søg</button>
         </div>
         <details open={priority === "high"} className="mt-2">
           <summary className="flex min-h-11 cursor-pointer items-center text-xs font-medium text-paper/80">

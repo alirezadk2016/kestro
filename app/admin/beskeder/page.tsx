@@ -3,7 +3,14 @@ import Link from "next/link";
 import { AlertIcon, InboxIcon } from "@/components/admin/icons";
 import { InboxRow } from "@/components/admin/InboxRow";
 import InboxBulk from "@/components/admin/InboxBulk";
-import { INPUT } from "@/components/admin/tokens";
+import {
+  INPUT,
+  PAGE_TITLE,
+  SEARCH_ROW,
+  TAB_BAR,
+  tabClass,
+  tabCount,
+} from "@/components/admin/tokens";
 import { requireAdmin } from "@/lib/admin-auth";
 import { searchEnquiries, type EnquirySource, type EnquiryStatus } from "@/lib/db";
 
@@ -62,16 +69,14 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
     <div>
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-[1.75rem] font-extrabold leading-tight tracking-tight">
-            Beskeder
-          </h1>
-          <p className="mt-2 text-sm leading-6 text-paper/70">
+          <h1 className={PAGE_TITLE}>Beskeder</h1>
+          <p className="mt-2 hidden text-sm leading-6 text-paper/70 sm:block">
             Find en henvendelse, svar kunden og hold styr på det næste skridt.
           </p>
         </div>
         <a
           href={href({ page: result.page })}
-          className="inline-flex min-h-[44px] items-center rounded-lg border border-white/15 px-4 text-sm font-medium text-paper/80 transition hover:border-white/30 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+          className="hidden min-h-[44px] items-center rounded-lg border border-white/15 px-4 text-sm font-medium text-paper/80 transition hover:border-white/30 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:inline-flex"
         >
           Opdatér indbakken
         </a>
@@ -104,22 +109,17 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         </p>
       )}
 
-      <nav
-        aria-label="Beskedstatus"
-        className="mt-6 flex gap-1 overflow-x-auto border-b border-white/10 [scrollbar-width:none]"
-      >
+      <nav aria-label="Beskedstatus" className={`mt-5 ${TAB_BAR}`}>
         {STATUS_FILTERS.map((filter) => (
           <Link
             key={filter.key}
             href={href({ status: filter.key })}
             aria-current={status === filter.key ? "page" : undefined}
-            className={`-mb-px inline-flex min-h-[44px] flex-none items-center gap-2 border-b-2 px-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-300 ${status === filter.key ? "border-brand-400 font-semibold text-paper" : "border-transparent text-paper/70 hover:text-paper"}`}
+            className={tabClass(status === filter.key)}
           >
             {filter.label}
             {result.available && (
-              <span
-                className={`tabular-nums text-xs ${status === filter.key ? "text-brand-200" : "text-paper/65"}`}
-              >
+              <span className={tabCount(status === filter.key)}>
                 {result.counts[filter.key].toLocaleString("da-DK")}
               </span>
             )}
@@ -136,7 +136,7 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         className="mt-4"
       >
         <input type="hidden" name="status" value={status} />
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+        <div className={SEARCH_ROW}>
           <div className="min-w-0">
             <label htmlFor="inbox-search" className="sr-only">
               Søg
@@ -147,11 +147,11 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
               type="search"
               defaultValue={q}
               maxLength={120}
-              placeholder="Navn, firma, e-mail eller besked"
+              placeholder="Søg i navn, e-mail og tekst"
               className={`${fieldClass} placeholder:text-paper/65`}
             />
           </div>
-          <button className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-brand-600 px-5 text-sm font-semibold text-paper transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:w-auto">
+          <button className="inline-flex min-h-11 items-center justify-center rounded-md bg-brand-600 px-4 text-sm font-semibold text-paper transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:px-5">
             Søg og filtrér
           </button>
         </div>
