@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import type { Model } from "@/lib/models";
+import styles from "./ModelGallery.module.css";
 
 export default function ModelGallery({
   images,
@@ -20,6 +21,7 @@ export default function ModelGallery({
   const [selected, setSelected] = useState(0);
   const [zoomed, setZoomed] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const thumbnails = useRef<(HTMLButtonElement | null)[]>([]);
   const titleId = useId();
   const da = lang === "da";
   const item = images[selected];
@@ -40,12 +42,12 @@ export default function ModelGallery({
   const iconClass =
     "inline-flex h-11 w-11 flex-none items-center justify-center rounded border border-white/20 bg-brand-950 text-paper hover:border-brand-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300";
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <div className="space-y-3">
       <button
         type="button"
         onClick={() => setZoomed(true)}
         aria-label={da ? `Forstør billede af ${name}` : `Enlarge photo of ${name}`}
-        className="group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper-dim ring-1 ring-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+        className={`${styles.frame} group relative block w-full overflow-hidden rounded-xl bg-paper-dim ring-1 ring-inset ring-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300`}
       >
         <Image
           src={item.src}
@@ -53,28 +55,44 @@ export default function ModelGallery({
           width={1179}
           height={1120}
           quality={85}
-          sizes="(max-width: 1024px) 92vw, 460px"
+          sizes="(min-width: 1536px) 43vw, (min-width: 1024px) 49vw, 92vw"
           priority={selected === 0}
           className={`h-full w-full object-contain ${item.photographic ? "" : "p-3 mix-blend-multiply sm:p-6"}`}
         />
-        <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded border border-ink-200 bg-paper text-ink-800">
+        <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-lg border border-ink-200 bg-paper text-ink-800 transition-colors group-hover:border-brand-600 group-hover:text-brand-700 motion-reduce:transition-none">
           <ZoomIn size={20} aria-hidden="true" />
         </span>
       </button>
       {images.length > 1 && (
         <div
-          className="grid grid-cols-4 gap-2 sm:gap-3"
+          className={styles.thumbnails}
           role="group"
           aria-label={da ? "Produktbilleder" : "Product photos"}
         >
           {images.map((image, index) => (
             <button
               key={image.src}
+              ref={(element) => {
+                thumbnails.current[index] = element;
+              }}
               type="button"
               onClick={() => setSelected(index)}
+              onKeyDown={(event) => {
+                let next = index;
+                if (event.key === "ArrowLeft") next = (index - 1 + images.length) % images.length;
+                else if (event.key === "ArrowRight") next = (index + 1) % images.length;
+                else if (event.key === "Home") next = 0;
+                else if (event.key === "End") next = images.length - 1;
+                else return;
+                event.preventDefault();
+                setSelected(next);
+                thumbnails.current[next]?.focus();
+                thumbnails.current[next]?.scrollIntoView({ block: "nearest", inline: "nearest" });
+              }}
+              tabIndex={selected === index ? 0 : -1}
               aria-pressed={selected === index}
               aria-label={`${index + 1}: ${image.alt[lang]}`}
-              className={`aspect-[4/3] min-h-11 overflow-hidden rounded border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${selected === index ? "border-brand-300" : "border-transparent hover:border-ink-400"}`}
+              className={`${styles.thumbnail} aspect-[4/3] min-h-11 overflow-hidden rounded-lg border-2 bg-paper-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${selected === index ? "border-brand-300" : "border-transparent hover:border-ink-400"}`}
             >
               <Image
                 src={image.src}
@@ -82,14 +100,22 @@ export default function ModelGallery({
                 width={295}
                 height={280}
                 quality={75}
-                sizes="(max-width: 640px) 22vw, 110px"
+                sizes="96px"
                 className={`h-full w-full object-contain ${image.photographic ? "" : "p-2 mix-blend-multiply"}`}
               />
             </button>
           ))}
         </div>
       )}
-      <p className="pt-1 text-sm leading-[1.6] text-paper/65">{note}</p>
+      <div className="flex items-start justify-between gap-4">
+        <p className="text-xs leading-5 text-paper/65">{note}</p>
+        {images.length > 1 && (
+          <p className="shrink-0 text-xs leading-5 tabular-nums text-paper/75" aria-live="polite">
+            <span className="sr-only">{da ? "Billede" : "Photo"} </span>
+            {selected + 1} / {images.length}
+          </p>
+        )}
+      </div>
       {item.credit && (
         <p className="flex flex-wrap items-center gap-x-3 text-sm text-paper/75">
           <a

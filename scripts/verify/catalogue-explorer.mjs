@@ -106,6 +106,23 @@ const BUDGET = [
 ];
 const LAPTOPS = MODELS.filter((model) => ["baerbare", "workstations"].includes(model.type));
 const WORKSTATIONS = MODELS.filter((model) => model.type === "workstations");
+const LICENSED_FRONTS = [
+  {
+    id: "lenovo-thinkpad-t14",
+    image: "/models/t14/gen1-amd-front-reference.jpg",
+    source: "https://www.youtube.com/watch?v=eHQjbtcbt1g",
+  },
+  {
+    id: "lenovo-thinkpad-x1-carbon",
+    image: "/models/x1-carbon/gen8-front-reference.jpg",
+    source: "https://www.youtube.com/watch?v=Dkzl9vMPP9w",
+  },
+  {
+    id: "dell-latitude-5410",
+    image: "/models/latitude-5410/front-reference.jpg",
+    source: "https://www.youtube.com/watch?v=GfeEm279CrE",
+  },
+];
 /* "T14" is a substring of every T14 and T14s generation's name, so the literal
    search returns the whole family, not only the original T14 page. */
 const T14_FAMILY = MODELS.filter((model) => model.name.includes("T14")).map((model) => model.id);
@@ -257,7 +274,38 @@ export async function verifyCatalogueExplorer(
     const sameSet = (actual, expected, message) =>
       assert.deepEqual([...actual].sort(), [...expected].sort(), message);
 
+    async function revealAll(expectedCount) {
+      if (!javaScriptEnabled || budget) return;
+      // Every filtered reference remains in the HTML. Pagination limits visual
+      // density, not the underlying result set or access to a model's route.
+      await page.waitForFunction(
+        ({ key, expectedCount }) => {
+          const scope = document.querySelector(`[data-catalogue='${key}']`);
+          return (
+            scope?.querySelectorAll("li[data-catalogue-item]").length === expectedCount &&
+            Number(
+              scope?.querySelector("[data-catalogue-count]")?.textContent.match(/\d+/)?.[0],
+            ) === expectedCount
+          );
+        },
+        { key, expectedCount },
+      );
+      const more = root().locator("[data-catalogue-show-more]");
+      while (await more.count()) {
+        const before = await items().count();
+        await more.click();
+        await page.waitForFunction(
+          ({ key, count }) =>
+            [
+              ...document.querySelectorAll(`[data-catalogue='${key}'] li[data-catalogue-item]`),
+            ].filter((node) => node.getBoundingClientRect().height > 0).length === count,
+          { key, count: Math.min(expectedCount, before + 12) },
+        );
+      }
+    }
+
     async function results(expected, message) {
+      await revealAll(expected.length);
       await page.waitForFunction(
         ({ key, expected }) => {
           const scope = document.querySelector(`[data-catalogue='${key}']`);
@@ -290,6 +338,7 @@ export async function verifyCatalogueExplorer(
     }
 
     async function ordered(expected, message) {
+      await revealAll(expected.length);
       await page.waitForFunction(
         ({ key, expected }) => {
           const nodes = [
@@ -356,8 +405,11 @@ export async function verifyCatalogueExplorer(
         );
       } else if (width >= 1024) {
         const resultColumn = await root()
-          .locator("ul")
-          .evaluate((element) => element.parentElement.getBoundingClientRect().toJSON());
+          .locator("li[data-catalogue-item]")
+          .first()
+          .evaluate((element) =>
+            element.parentElement.parentElement.getBoundingClientRect().toJSON(),
+          );
         assert.ok(
           resultColumn.width > 0 && panelBox && panelBox.x + panelBox.width <= resultColumn.x + 1,
           "the desktop model sidebar stays beside the result column beneath the shared toolbar",
@@ -402,6 +454,37 @@ export async function verifyCatalogueExplorer(
       const reset = root().locator("[data-catalogue-clear]:visible").first();
       await target(reset, "clear filters");
       await reset.click();
+      if (!budget) {
+        await page.waitForFunction(
+          ({ key, count }) => {
+            const scope = document.querySelector(`[data-catalogue='${key}']`);
+            return (
+              Number(
+                scope?.querySelector("[data-catalogue-count]")?.textContent.match(/\d+/)?.[0],
+              ) === count &&
+              [...scope.querySelectorAll("[data-catalogue-item]")].filter(
+                (node) => node.getBoundingClientRect().height > 0,
+              ).length === Math.min(12, count)
+            );
+          },
+          { key, count: fixtures.length },
+        );
+        assert.equal(
+          new URL(page.url()).searchParams.get("use"),
+          null,
+          "clear removes the use preset",
+        );
+        assert.equal(
+          new URL(page.url()).searchParams.get("screen"),
+          null,
+          "clear removes screen size",
+        );
+        assert.equal(
+          new URL(page.url()).searchParams.get("shown"),
+          null,
+          "clear returns to the first twelve models",
+        );
+      }
       await results(
         fixtures.map((entry) => entry.id),
         "clear restores the complete scoped model set",
@@ -437,13 +520,25 @@ export async function verifyCatalogueExplorer(
 
     async function modelMedia({ grid = false } = {}) {
       if (budget) return;
+      let firstFrame;
       for (const card of await items().all()) {
         const media = card.locator("[data-catalogue-media]");
         assert.equal(await media.count(), 1, "each model has one deliberately sized media area");
         const frame = await media.boundingBox();
+        if (grid) {
+          assert.ok(
+            frame && frame.width >= 150 && frame.height >= 130 && frame.height <= 150,
+            "compact grid media keeps a recognizable model within a 130–150px-high frame",
+          );
+          if (!firstFrame) firstFrame = frame;
+          else
+            assert.ok(
+              Math.abs(firstFrame.height - frame.height) <= 1,
+              "photo and fallback frames align",
+            );
+        }
         const image = card.locator("img");
         if (await image.count()) {
-          if (grid) assert.ok(frame && frame.height <= 208, "grid model media is capped at 208px");
           assert.equal(
             await image.evaluate((node) => getComputedStyle(node).objectFit),
             "contain",
@@ -453,46 +548,312 @@ export async function verifyCatalogueExplorer(
           assert.equal(
             await card.locator("[data-catalogue-placeholder]").count(),
             1,
-            "unavailable photography has an explicit compact fallback",
+            "unavailable photography has an explicit model-reference fallback",
           );
-          if (grid)
-            assert.ok(
-              frame && frame.height <= 80,
-              "a missing photo does not create an empty grid image well",
-            );
         }
       }
     }
 
     async function listGeometry() {
-      if (budget || (await items().count()) < 2 || width < 640) return;
-      const first = await items().nth(0).boundingBox();
-      const second = await items().nth(1).boundingBox();
-      assert.ok(
-        first &&
-          second &&
-          Math.abs(first.x - second.x) <= 1 &&
-          second.y >= first.y + first.height - 1,
-        "the default model list uses actual full rows",
-      );
+      if (budget) return;
+      const observed = await items().evaluateAll((nodes) => {
+        const bounds = (node) => {
+          const box = node.getBoundingClientRect();
+          return {
+            left: box.left,
+            right: box.right,
+            top: box.top,
+            bottom: box.bottom,
+            width: box.width,
+          };
+        };
+        const textRects = (node) => {
+          const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+          const rects = [];
+          while (walker.nextNode()) {
+            if (!walker.currentNode.textContent.trim()) continue;
+            const range = document.createRange();
+            range.selectNodeContents(walker.currentNode);
+            for (const box of range.getClientRects())
+              if (box.width && box.height)
+                rects.push({ left: box.left, right: box.right, top: box.top, bottom: box.bottom });
+          }
+          return rects;
+        };
+        return nodes.map((node) => {
+          const fields = [...node.querySelectorAll("h3, [data-catalogue-application], dt, dd")].map(
+            (field) => ({
+              text: field.textContent.trim(),
+              tag: field.tagName,
+              box: bounds(field),
+              cell: bounds(field.parentElement),
+              ink: textRects(field),
+              clipped:
+                field.scrollWidth > field.clientWidth + 2 ||
+                field.scrollHeight > field.clientHeight + 2,
+              fontSize: Number.parseFloat(getComputedStyle(field).fontSize),
+            }),
+          );
+          const overlaps = [];
+          for (let i = 0; i < fields.length; i++)
+            for (let j = i + 1; j < fields.length; j++)
+              if (
+                fields[i].ink.some((a) =>
+                  fields[j].ink.some(
+                    (b) =>
+                      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 &&
+                      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5,
+                  ),
+                )
+              )
+                overlaps.push([fields[i].text, fields[j].text]);
+          return {
+            id: node.getAttribute("data-catalogue-item"),
+            card: bounds(node),
+            column: bounds(node.parentElement.parentElement),
+            fields,
+            overlaps,
+          };
+        });
+      });
+      for (const [index, entry] of observed.entries()) {
+        assert.ok(
+          Math.abs(entry.card.left - entry.column.left) <= 2 &&
+            Math.abs(entry.card.right - entry.column.right) <= 2 &&
+            Math.abs(entry.card.width - entry.column.width) <= 2,
+          `${entry.id}: each list card fills its entire result column at ${width}px (${entry.card.width}px card / ${entry.column.width}px column)`,
+        );
+        if (index > 0)
+          assert.ok(
+            entry.card.top >= observed[index - 1].card.bottom - 1,
+            "the optional model list uses separate full-width rows",
+          );
+        assert.deepEqual(
+          entry.overlaps,
+          [],
+          `${entry.id}: list titles, applications and fact text never overlap`,
+        );
+        for (const field of entry.fields) {
+          assert.ok(
+            !field.clipped && field.fontSize >= 12,
+            `${entry.id}: ${field.tag} remains fully readable: ${field.text}`,
+          );
+          assert.ok(
+            field.ink.every(
+              (ink) =>
+                ink.left >= field.box.left - 2 &&
+                ink.right <= field.box.right + 2 &&
+                ink.top >= field.box.top - 2 &&
+                ink.bottom <= field.box.bottom + 2,
+            ),
+            `${entry.id}: ${field.tag} text stays inside its own field: ${field.text}`,
+          );
+          if (["DT", "DD"].includes(field.tag))
+            assert.ok(
+              field.ink.every(
+                (ink) => ink.left >= field.cell.left - 2 && ink.right <= field.cell.right + 2,
+              ),
+              `${entry.id}: each fact label and value stays inside its own column`,
+            );
+        }
+      }
     }
 
     async function gridGeometry() {
-      if (width < 640 || (await items().count()) < 2) return;
-      await page.waitForFunction(
-        (key) => {
-          const cards = document.querySelectorAll(
-            `[data-catalogue='${key}'] li[data-catalogue-item]`,
+      if (width >= 640 && (await items().count()) > 1)
+        await page.waitForFunction(
+          (key) => {
+            const cards = document.querySelectorAll(
+              `[data-catalogue='${key}'] li[data-catalogue-item]`,
+            );
+            const first = cards[0]?.getBoundingClientRect();
+            const second = cards[1]?.getBoundingClientRect();
+            return (
+              first && second && Math.abs(first.y - second.y) <= 1 && first.right <= second.left + 1
+            );
+          },
+          key,
+          { timeout: 3000 },
+        );
+      const columns =
+        width < 640
+          ? 1
+          : budget
+            ? width >= 1280
+              ? 4
+              : 2
+            : width >= 1536
+              ? 4
+              : width >= 1280
+                ? 3
+                : 2;
+      const observed = await items().evaluateAll((nodes) => {
+        const bounds = (node) => {
+          const box = node.getBoundingClientRect();
+          return {
+            left: box.left,
+            right: box.right,
+            top: box.top,
+            bottom: box.bottom,
+            width: box.width,
+            height: box.height,
+          };
+        };
+        const textRects = (node) => {
+          const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+          const rects = [];
+          while (walker.nextNode()) {
+            const text = walker.currentNode;
+            if (
+              !text.textContent.trim() ||
+              text.parentElement.closest(".sr-only, [aria-hidden='true']")
+            )
+              continue;
+            const range = document.createRange();
+            range.selectNodeContents(text);
+            for (const box of range.getClientRects())
+              if (box.width && box.height)
+                rects.push({ left: box.left, right: box.right, top: box.top, bottom: box.bottom });
+          }
+          return rects;
+        };
+        return nodes.map((node) => {
+          const fields = [...node.querySelectorAll("h3, dt, dd")].map((field) => ({
+            text: field.textContent.trim(),
+            tag: field.tagName,
+            box: bounds(field),
+            cell: bounds(field.parentElement),
+            ink: textRects(field),
+            clipped:
+              field.scrollWidth > field.clientWidth + 2 ||
+              field.scrollHeight > field.clientHeight + 2,
+            fontSize: Number.parseFloat(getComputedStyle(field).fontSize),
+          }));
+          const overlaps = [];
+          for (let i = 0; i < fields.length; i++)
+            for (let j = i + 1; j < fields.length; j++)
+              if (
+                fields[i].ink.some((a) =>
+                  fields[j].ink.some(
+                    (b) =>
+                      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 &&
+                      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5,
+                  ),
+                )
+              )
+                overlaps.push([fields[i].text, fields[j].text]);
+          const compare = node.querySelector("input[data-catalogue-compare]");
+          return {
+            id: node.getAttribute("data-catalogue-item"),
+            card: bounds(node),
+            applicationCount: node.querySelectorAll("[data-catalogue-application]").length,
+            factCount: node.querySelectorAll("dl > div").length,
+            fields,
+            overlaps,
+            actions: [
+              node.querySelector("[data-catalogue-detail]"),
+              node.querySelector("[data-catalogue-enquiry]"),
+              compare?.closest("label"),
+            ]
+              .filter(Boolean)
+              .map(bounds),
+          };
+        });
+      });
+      if (observed.length) {
+        const firstRow = observed.filter(
+          (entry) => Math.abs(entry.card.top - observed[0].card.top) <= 1,
+        );
+        assert.equal(
+          firstRow.length,
+          Math.min(columns, observed.length),
+          `the grid uses ${columns} intentional columns at ${width}px`,
+        );
+      }
+      if (budget) return;
+      const maxHeight = width < 640 ? 410 : 390;
+      for (const entry of observed) {
+        assert.ok(
+          entry.card.height > 0 && entry.card.height <= maxHeight,
+          `${entry.id}: compact grid height stays within ${maxHeight}px at ${width}px (${entry.card.height}px)`,
+        );
+        assert.equal(
+          entry.applicationCount,
+          0,
+          `${entry.id}: grid cards leave application prose to the model page and optional list`,
+        );
+        assert.ok(
+          entry.factCount >= 2 && entry.factCount <= 3,
+          `${entry.id}: compact cards retain their complete key facts`,
+        );
+        assert.deepEqual(
+          entry.overlaps,
+          [],
+          `${entry.id}: grid titles and fact text never overlap`,
+        );
+        assert.equal(
+          entry.actions.length,
+          fixtures.length > 1 ? 3 : 2,
+          `${entry.id}: compact cards preserve distinct title, enquiry and available comparison actions`,
+        );
+        for (const field of entry.fields) {
+          assert.ok(
+            field.text &&
+              !field.clipped &&
+              field.fontSize >= 12 &&
+              field.box.width > 0 &&
+              field.box.height > 0,
+            `${entry.id}: compact ${field.tag} remains fully readable: ${field.text}`,
           );
-          const first = cards[0]?.getBoundingClientRect();
-          const second = cards[1]?.getBoundingClientRect();
-          return (
-            first && second && Math.abs(first.y - second.y) <= 1 && first.right <= second.left + 1
+          assert.ok(
+            field.ink.every(
+              (ink) =>
+                ink.left >= field.box.left - 2 &&
+                ink.right <= field.box.right + 2 &&
+                ink.top >= field.box.top - 2 &&
+                ink.bottom <= field.box.bottom + 2,
+            ),
+            `${entry.id}: compact ${field.tag} ink stays within its field: ${field.text}`,
           );
-        },
-        key,
-        { timeout: 3000 },
-      );
+          assert.ok(
+            field.box.left >= entry.card.left - 1 &&
+              field.box.right <= entry.card.right + 1 &&
+              field.box.top >= entry.card.top - 1 &&
+              field.box.bottom <= entry.card.bottom + 1,
+            `${entry.id}: each grid field remains inside the card`,
+          );
+          if (["DT", "DD"].includes(field.tag))
+            assert.ok(
+              field.ink.every(
+                (ink) => ink.left >= field.cell.left - 2 && ink.right <= field.cell.right + 2,
+              ),
+              `${entry.id}: grid facts stay inside their own columns`,
+            );
+        }
+        for (const action of entry.actions) {
+          assert.ok(
+            action.width >= 44 && action.height >= 44,
+            `${entry.id}: compact title and footer controls retain 44px targets`,
+          );
+          assert.ok(
+            action.left >= entry.card.left - 1 &&
+              action.right <= entry.card.right + 1 &&
+              action.top >= entry.card.top - 1 &&
+              action.bottom <= entry.card.bottom + 1,
+            `${entry.id}: compact title and footer controls remain inside the card`,
+          );
+        }
+        for (let index = 0; index < entry.actions.length; index++)
+          for (let other = index + 1; other < entry.actions.length; other++) {
+            const a = entry.actions[index];
+            const b = entry.actions[other];
+            assert.ok(
+              Math.min(a.right, b.right) - Math.max(a.left, b.left) <= 0.5 ||
+                Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) <= 0.5,
+              `${entry.id}: compact title and footer targets never overlap`,
+            );
+          }
+      }
     }
 
     async function selectionFocus(remaining) {
@@ -570,11 +931,127 @@ export async function verifyCatalogueExplorer(
       assert.equal(response?.status(), 200, "the catalogue route is available");
       await page.evaluate(() => document.fonts.ready);
       assert.equal(await root().count(), 1, "there is one explorer for the route's data set");
+      if (javaScriptEnabled && !budget) {
+        await page.waitForFunction(
+          () => !document.querySelector("[data-catalogue-search]")?.disabled,
+        );
+        await page.waitForFunction(
+          (count) => document.querySelectorAll("[data-catalogue-item]").length === count,
+          fixtures.length,
+        );
+        const allHtmlIds = await root()
+          .locator("[data-catalogue-item]")
+          .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-catalogue-item")));
+        sameSet(
+          allHtmlIds,
+          fixtures.map((entry) => entry.id),
+          "all reference routes remain in the filtered HTML",
+        );
+        assert.deepEqual(
+          await ids(),
+          allHtmlIds.slice(0, 12),
+          "the first viewport starts with at most twelve models",
+        );
+        if (!fragment && fixtures.length > 12) {
+          const names = new Map(fixtures.map((entry) => [entry.id, entry.name]));
+          assert.equal(
+            new Set(allHtmlIds.slice(0, 12).map((id) => names.get(id).replace(/\sGen \d+$/, "")))
+              .size,
+            12,
+            "the first twelve choices represent different model families rather than many generations of one laptop",
+          );
+          for (const photo of LICENSED_FRONTS.filter((photo) => names.has(photo.id)))
+            assert.ok(
+              allHtmlIds.slice(0, 12).includes(photo.id),
+              "an exact photographed representative is visible in its family's initial position",
+            );
+        }
+        const more = root().locator("[data-catalogue-show-more]");
+        if (fixtures.length > 12) {
+          await target(more, "show more models");
+          const expected = Math.min(24, fixtures.length);
+          await more.click();
+          await page.waitForFunction(
+            (expected) =>
+              [...document.querySelectorAll("[data-catalogue-item]")].filter(
+                (node) => node.getBoundingClientRect().height > 0,
+              ).length === expected,
+            expected,
+          );
+          assert.deepEqual(
+            await ids(),
+            allHtmlIds.slice(0, expected),
+            "show more reveals the next twelve real models in order",
+          );
+          assert.equal(
+            Number(new URL(page.url()).searchParams.get("shown")),
+            expected,
+            "the revealed count is shareable URL state",
+          );
+          await page.waitForFunction(
+            (id) =>
+              document.activeElement
+                ?.closest("[data-catalogue-item]")
+                ?.getAttribute("data-catalogue-item") === id,
+            allHtmlIds[12],
+          );
+          assert.ok(
+            await root()
+              .locator(selector("data-catalogue-item", allHtmlIds[12]))
+              .locator("[data-catalogue-detail]")
+              .evaluate((node) => node === document.activeElement),
+            "show more gives keyboard focus to the first newly revealed model",
+          );
+          await page.reload({ waitUntil: "networkidle" });
+          await page.waitForFunction(
+            () => !document.querySelector("[data-catalogue-search]")?.disabled,
+          );
+          assert.deepEqual(
+            await ids(),
+            allHtmlIds.slice(0, expected),
+            "reload preserves the revealed page size",
+          );
+        } else {
+          assert.equal(
+            await more.count(),
+            0,
+            "a short category has no redundant Show more control",
+          );
+        }
+      }
       await results(
         fixtures.map((entry) => entry.id),
         "the complete reference set is available initially",
       );
       const initialOrder = await ids();
+      if (!budget && !mini && !fragment) {
+        for (const [family, expected] of [
+          [
+            "lenovo-thinkpad-t14",
+            [
+              "lenovo-thinkpad-t14",
+              "lenovo-thinkpad-t14-gen-5",
+              "lenovo-thinkpad-t14-gen-4",
+              "lenovo-thinkpad-t14-gen-3",
+            ],
+          ],
+          [
+            "lenovo-thinkpad-x1-carbon",
+            [
+              "lenovo-thinkpad-x1-carbon",
+              "lenovo-thinkpad-x1-carbon-gen-12",
+              "lenovo-thinkpad-x1-carbon-gen-11",
+              "lenovo-thinkpad-x1-carbon-gen-10",
+              "lenovo-thinkpad-x1-carbon-gen-9",
+            ],
+          ],
+        ])
+          assert.deepEqual(
+            initialOrder.filter((id) => id === family || id.startsWith(family + "-gen-")),
+            expected,
+            "a photographed family representative leads while all remaining generations stay newest-first",
+          );
+      }
       const canonical = await page.locator("link[rel='canonical']").getAttribute("href");
       assert.equal(
         new URL(canonical).origin,
@@ -598,6 +1075,119 @@ export async function verifyCatalogueExplorer(
           (await count.getAttribute("role")) === "status",
         "changed result counts are announced politely",
       );
+      if (!budget && !mini && width < 640) {
+        const uses = root().locator("[data-catalogue-use]");
+        assert.equal(await uses.count(), 4, "four useful browsing presets are available");
+        const boxes = [];
+        for (const use of await uses.all()) {
+          await target(use, "use preset");
+          boxes.push(await use.boundingBox());
+          assert.equal(
+            await use.evaluate((node) => getComputedStyle(node).justifyContent),
+            "center",
+            "mobile preset labels are centered",
+          );
+        }
+        assert.ok(
+          Math.abs(boxes[0].y - boxes[1].y) <= 1 &&
+            Math.abs(boxes[2].y - boxes[3].y) <= 1 &&
+            boxes[2].y >= boxes[0].y + boxes[0].height &&
+            Math.abs(boxes[0].width - boxes[1].width) <= 1 &&
+            Math.abs(boxes[0].x - boxes[2].x) <= 1 &&
+            Math.abs(boxes[1].x - boxes[3].x) <= 1,
+          "mobile use presets form two equal columns and two intentional rows",
+        );
+      }
+
+      if (!budget) {
+        const credits = root().locator("[data-catalogue-photo-credits]");
+        const licensed = LICENSED_FRONTS.filter((photo) =>
+          fixtures.some((entry) => entry.id === photo.id),
+        );
+        if (licensed.length > 0) {
+          assert.equal(
+            await credits.count(),
+            1,
+            "licensed photos have one shared credit disclosure",
+          );
+          assert.equal(
+            await credits.evaluate((node) => node.tagName),
+            "DETAILS",
+            "photo credits work as a native disclosure with or without JavaScript",
+          );
+          assert.equal(await credits.getAttribute("open"), null, "photo credits start collapsed");
+          assert.equal(
+            await items().locator("[data-catalogue-photo-credit]").count(),
+            0,
+            "attribution does not repeat inside every product card",
+          );
+          const summary = credits.locator("summary");
+          const browsingScroll = await page.evaluate(() => scrollY);
+          await target(summary, "photo credit disclosure");
+          for (const photo of licensed) {
+            const card = root().locator(selector("data-catalogue-item", photo.id));
+            const image = card.locator("[data-catalogue-media] img");
+            assert.equal(await image.count(), 1, "each licensed front photo is displayed");
+            const imageUrl = new URL(await image.getAttribute("src"), origin);
+            assert.equal(
+              imageUrl.pathname === "/_next/image"
+                ? imageUrl.searchParams.get("url")
+                : imageUrl.pathname,
+              photo.image,
+              "the photographed model uses its exact licensed reference frame",
+            );
+            assert.equal(
+              await credits.locator(selector("data-catalogue-photo-credit", photo.id)).count(),
+              1,
+              "each licensed front photo has exactly one attribution record",
+            );
+          }
+          await summary.click();
+          assert.equal(await credits.getAttribute("open"), "", "native credits can be opened");
+          for (const photo of licensed) {
+            const record = credits.locator(selector("data-catalogue-photo-credit", photo.id));
+            const links = record.locator("a");
+            assert.equal(await links.count(), 2, "each attribution names a source and licence");
+            assert.equal(await links.nth(0).innerText(), "LaptopMedia", "the author is credited");
+            assert.equal(
+              await links.nth(0).getAttribute("href"),
+              photo.source,
+              "the original source is linked",
+            );
+            assert.equal(
+              await links.nth(1).innerText(),
+              "CC BY 3.0 (video frame)",
+              "the frame's licence is explicit",
+            );
+            assert.equal(
+              await links.nth(1).getAttribute("href"),
+              "https://creativecommons.org/licenses/by/3.0/",
+              "the licence terms are linked",
+            );
+            for (const link of await links.all()) {
+              await target(link, "photo attribution link");
+              assert.equal(
+                await link.getAttribute("target"),
+                "_blank",
+                "credit links open separately",
+              );
+              const rel = (await link.getAttribute("rel")).split(/\s+/);
+              for (const token of ["noopener", "noreferrer", "nofollow"])
+                assert.ok(rel.includes(token), `credit links retain ${token}`);
+            }
+          }
+          await summary.click();
+          assert.equal(await credits.getAttribute("open"), null, "credits collapse after review");
+          // Reviewing footer attribution is a separate interaction from the
+          // initial legacy-fragment journey checked below. Restore that
+          // journey's scroll position without re-scrolling its target.
+          await page.evaluate(
+            (top) => window.scrollTo({ top, behavior: "instant" }),
+            browsingScroll,
+          );
+          await page.waitForFunction((top) => Math.abs(scrollY - top) <= 1, browsingScroll);
+        }
+      }
 
       for (const entry of fixtures) {
         const card = root().locator(selector("data-catalogue-item", entry.id));
@@ -623,7 +1213,7 @@ export async function verifyCatalogueExplorer(
           `${language === "da" ? "/modeller" : "/en/models"}/${entry.id}`,
           "the model's canonical detail route is preserved",
         );
-        if (!budget)
+        if (!budget) {
           assert.equal(
             await card
               .locator("a")
@@ -632,9 +1222,17 @@ export async function verifyCatalogueExplorer(
                   links.filter((link) => new URL(link.href).pathname === pathname).length,
                 detailUrl.pathname,
               ),
-            1,
-            "a model row has one clear detail link on its name",
+            2,
+            "the product image and model name both lead to the canonical detail page",
           );
+          const imageLink = card.locator("a[data-catalogue-image-link]");
+          await target(imageLink, "product image link");
+          assert.equal(
+            await imageLink.getAttribute("href"),
+            await detail.getAttribute("href"),
+            "image and title lead to the same model",
+          );
+        }
         const enquiryUrl = new URL(await enquiry.getAttribute("href"), origin);
         assert.equal(enquiryUrl.origin, origin.origin, "the enquiry stays on Kestro");
         assert.equal(
@@ -672,34 +1270,54 @@ export async function verifyCatalogueExplorer(
           return { left: card.left, right: card.right, height: card.height, clipped };
         });
         assert.ok(layout.left >= -1 && layout.right <= width + 1, "model cards fit the viewport");
-        if (!budget && (width === 1440 || width === 390))
-          assert.ok(
-            layout.height > 0 && layout.height <= (width === 1440 ? 240 : 320),
-            `default model rows stay compact at ${width}px without clipping content: ${layout.height}px`,
-          );
         assert.deepEqual(
           layout.clipped,
           [],
           "model names, facts and controls are readable without clipping",
         );
       }
-      await modelMedia();
-      if (budget) await gridGeometry();
-      else await listGeometry();
+      await modelMedia({ grid: true });
+      await gridGeometry();
+      if (javaScriptEnabled && !budget && !fragment) {
+        await root().locator("[data-catalogue-view='list']").click();
+        await page.waitForFunction(
+          () =>
+            document.querySelector("[data-catalogue-view='list']")?.getAttribute("aria-pressed") ===
+            "true",
+        );
+        await listGeometry();
+        await root().locator("[data-catalogue-view='grid']").click();
+        await page.waitForFunction(
+          () =>
+            document.querySelector("[data-catalogue-view='grid']")?.getAttribute("aria-pressed") ===
+            "true",
+        );
+        await gridGeometry();
+      }
       if (!fragment)
         assert.equal(
           await root().locator("[data-catalogue-clear]:visible").count(),
           0,
           "the unfiltered catalogue has no no-op Reset control",
         );
-      if (budget || width < 640)
+      if (budget)
         assert.equal(
           await root().locator("[data-catalogue-view]:visible").count(),
           0,
-          budget
-            ? "budget references have one grid presentation"
-            : "phones have one compact presentation",
+          "budget references have one grid presentation",
         );
+      else {
+        assert.equal(
+          await root().locator("[data-catalogue-view]:visible").count(),
+          2,
+          "both catalogue layouts remain available on phones and desktops",
+        );
+        assert.equal(
+          await root().locator("[data-catalogue-view='grid']").getAttribute("aria-pressed"),
+          "true",
+          "models start in the image-led grid",
+        );
+      }
       const offers = await page
         .locator("script[type='application/ld+json']")
         .evaluateAll((nodes) => {
@@ -1008,6 +1626,159 @@ export async function verifyCatalogueExplorer(
         }
 
         if (!mini && [390, 1440].includes(width)) {
+          if (!budget) {
+            const descending = [...fixtures]
+              .sort((a, b) =>
+                new Intl.Collator(language === "da" ? "da-DK" : "en-GB", {
+                  numeric: true,
+                  sensitivity: "base",
+                }).compare(b.name, a.name),
+              )
+              .map((entry) => entry.id);
+            const selectedId = "lenovo-thinkpad-t480";
+            const expectedShown = Math.min(
+              descending.length,
+              Math.ceil((descending.indexOf(selectedId) + 1) / 12) * 12,
+            );
+            assert.ok(
+              expectedShown > 12,
+              "the sorted restoration fixture lies after the first page",
+            );
+            await page.goto(base + path + `?sort=name-desc&compare=${selectedId}`, {
+              waitUntil: "networkidle",
+            });
+            await page.waitForFunction((id) => {
+              const card = document.querySelector(`[data-catalogue-item='${id}']`);
+              return (
+                card?.getBoundingClientRect().height > 0 &&
+                card.querySelector("input[data-catalogue-compare]")?.checked
+              );
+            }, selectedId);
+            assert.deepEqual(
+              await ids(),
+              descending.slice(0, expectedShown),
+              "restored comparison reveals its actual position in the sorted results without a Show more click",
+            );
+            assert.equal(
+              Number(new URL(page.url()).searchParams.get("shown")),
+              expectedShown,
+              "the corrected reveal size is reflected in the restored URL",
+            );
+
+            const excludedId = "lenovo-thinkpad-p16-gen-2";
+            const laptopIds = fixtures
+              .filter((entry) => entry.type === "baerbare")
+              .map((entry) => entry.id);
+            await page.goto(base + path + `?type=baerbare&compare=${excludedId}`, {
+              waitUntil: "networkidle",
+            });
+            await page.waitForFunction(
+              (count) =>
+                document.querySelectorAll("[data-catalogue-item]").length === count &&
+                !!document.querySelector("[data-catalogue-tray]"),
+              laptopIds.length,
+            );
+            assert.equal(
+              await items().count(),
+              12,
+              "a selected model excluded by filters does not inflate the restored first page",
+            );
+            assert.equal(
+              new URL(page.url()).searchParams.get("shown"),
+              null,
+              "an excluded comparison does not add a spurious revealed count",
+            );
+            assert.equal(
+              await root().locator(selector("data-catalogue-remove", excludedId)).count(),
+              1,
+              "the excluded model remains available in the comparison tray",
+            );
+            sameSet(
+              await root()
+                .locator("[data-catalogue-item]")
+                .evaluateAll((nodes) =>
+                  nodes.map((node) => node.getAttribute("data-catalogue-item")),
+                ),
+              laptopIds,
+              "comparison restoration does not change the active type filter",
+            );
+
+            await page.goto(base + path + "?sort=name-desc#baerbare", { waitUntil: "networkidle" });
+            await page.waitForFunction(() => {
+              const target = document.getElementById("baerbare");
+              const box = target?.getBoundingClientRect();
+              return box?.height > 0 && box.top >= 0 && box.top < innerHeight;
+            });
+            const sortedLaptops = descending.filter((id) => laptopIds.includes(id));
+            const fragmentShown = Math.min(
+              sortedLaptops.length,
+              Math.ceil((sortedLaptops.indexOf(selectedId) + 1) / 12) * 12,
+            );
+            assert.deepEqual(
+              await ids(),
+              sortedLaptops.slice(0, fragmentShown),
+              "a sorted legacy fragment reveals its real target before scrolling",
+            );
+            assert.equal(
+              new URL(page.url()).hash,
+              "#baerbare",
+              "the legacy fragment remains a native shareable destination",
+            );
+            await page.goto(base + path, { waitUntil: "networkidle" });
+            await results(
+              fixtures.map((entry) => entry.id),
+              "restoration regressions return to the complete clean catalogue",
+            );
+
+            await root().locator("[data-catalogue-use='workstation']").click();
+            await results(
+              WORKSTATIONS.map((entry) => entry.id),
+              "the workstation preset returns the researched workstation group",
+            );
+            assert.equal(
+              new URL(page.url()).searchParams.get("use"),
+              "workstation",
+              "use is reflected in the URL",
+            );
+            await check("data-catalogue-brand", "Dell");
+            await results(
+              [],
+              "use and brand combine with AND rather than admitting an unrelated laptop",
+            );
+            await clear();
+            await root().locator("[data-catalogue-use='mobile']").click();
+            await filters();
+            const size = root().locator("[data-catalogue-screen]");
+            await target(size, "screen-size filter");
+            await size.selectOption("13");
+            const nanos = fixtures
+              .filter((entry) => /ThinkPad X1 Nano\b/.test(entry.name))
+              .map((entry) => entry.id);
+            assert.equal(
+              nanos.length,
+              3,
+              "three researched X1 Nano generations have a 13-inch format",
+            );
+            await results(
+              nanos,
+              "screen size and mobility combine on the actual reference formats",
+            );
+            assert.equal(
+              new URL(page.url()).searchParams.get("screen"),
+              "13",
+              "screen size is shareable URL state",
+            );
+            await page.reload({ waitUntil: "networkidle" });
+            await results(nanos, "reload restores both new discovery facets");
+            assert.equal(
+              await root().locator("[data-catalogue-use='mobile']").getAttribute("aria-pressed"),
+              "true",
+              "the restored use preset is visibly selected",
+            );
+            await filters();
+            assert.equal(await size.inputValue(), "13", "reload restores the screen-size control");
+            await clear();
+          }
           if (width === 1440) {
             await sort.selectOption("name-desc");
             await root().locator("[data-catalogue-clear]:visible").waitFor();
@@ -1072,9 +1843,7 @@ export async function verifyCatalogueExplorer(
             /* The line facet: X1 is its own line, and the X13 is not in it. */
             await check("data-catalogue-series", "thinkpad-x1");
             await results(
-              fixtures
-                .filter((entry) => /ThinkPad X1\b/.test(entry.name))
-                .map((entry) => entry.id),
+              fixtures.filter((entry) => /ThinkPad X1\b/.test(entry.name)).map((entry) => entry.id),
               "the ThinkPad X1 line returns every X1 generation and no X13",
             );
             sameSet(queryValues("series"), ["thinkpad-x1"], "the line is reflected in the URL");
@@ -1384,40 +2153,41 @@ export async function verifyCatalogueExplorer(
           await tray.waitFor({ state: "hidden" });
 
           const list = root().locator("[data-catalogue-view='list']");
-          const optionalGrid = !budget && width >= 640;
-          if (optionalGrid) {
-            assert.equal(
-              await list.getAttribute("aria-pressed"),
-              "true",
-              "models start in their compact list view",
-            );
-            const listWidth = (await items().first().boundingBox()).width;
+          const switchableView = !budget;
+          if (switchableView) {
             const grid = root().locator("[data-catalogue-view='grid']");
-            await target(grid, "optional grid view");
-            await grid.click();
             assert.equal(
               await grid.getAttribute("aria-pressed"),
+              "true",
+              "models start in the image-led grid on desktop and mobile",
+            );
+            const imageWidth = (
+              await items().first().locator("[data-catalogue-media]").boundingBox()
+            ).width;
+            await target(list, "optional compact list");
+            await list.click();
+            assert.equal(
+              await list.getAttribute("aria-pressed"),
               "true",
               "the active view is indicated statically",
             );
             assert.equal(
               new URL(page.url()).searchParams.get("view"),
-              "grid",
+              "list",
               "the chosen view is reflected in the URL",
             );
-            await gridGeometry();
+            await listGeometry();
             assert.ok(
-              (await items().first().boundingBox()).width < listWidth - 1,
-              "the optional grid changes the actual model layout",
+              (await items().first().locator("[data-catalogue-media]").boundingBox()).width <
+                imageWidth - 1,
+              "the compact list changes the actual product layout, including on a phone",
             );
-            await modelMedia({ grid: true });
+            await modelMedia();
           } else {
             assert.equal(
               await root().locator("[data-catalogue-view]:visible").count(),
               0,
-              budget
-                ? "budget references retain one grid presentation"
-                : "phones keep one compact layout without redundant view toggles",
+              "budget references retain one grid presentation",
             );
           }
           await search.fill("T14");
@@ -1434,11 +2204,11 @@ export async function verifyCatalogueExplorer(
             "a filtered catalogue retains the clean canonical",
           );
           await results(T14_FAMILY, "reload restores the URL's filtered state");
-          if (optionalGrid)
+          if (switchableView)
             assert.equal(
-              await root().locator("[data-catalogue-view='grid']").getAttribute("aria-pressed"),
+              await root().locator("[data-catalogue-view='list']").getAttribute("aria-pressed"),
               "true",
-              "reload restores the optional model grid",
+              "reload restores the optional compact list",
             );
           else
             assert.equal(
@@ -1483,16 +2253,17 @@ export async function verifyCatalogueExplorer(
           await page.goBack({ waitUntil: "networkidle" });
           await results(T14_FAMILY, "Back from enquiry restores catalogue state");
           await clear();
-          if (optionalGrid) {
+          if (switchableView) {
             assert.equal(
-              await root().locator("[data-catalogue-view='grid']").getAttribute("aria-pressed"),
+              await root().locator("[data-catalogue-view='list']").getAttribute("aria-pressed"),
               "true",
-              "clearing filters retains the chosen model grid",
+              "clearing filters retains the chosen compact list",
             );
-            await gridGeometry();
-            await list.click();
-            await page.waitForFunction(() => !new URL(location.href).searchParams.has("view"));
             await listGeometry();
+            await root().locator("[data-catalogue-view='grid']").click();
+            await page.waitForFunction(() => !new URL(location.href).searchParams.has("view"));
+            await gridGeometry();
+            await modelMedia({ grid: true });
           } else {
             assert.equal(
               new URL(page.url()).searchParams.get("view"),
@@ -1548,12 +2319,11 @@ export async function verifyCatalogueExplorer(
          price table (components/BudgetExamples.tsx) so it no longer reads as
          a second shop; scripts/verify/pricing-collection.mjs covers it. */
       for (const mode of ["models"]) {
-        for (const width of regressionsOnly ? [320, 390, 1440] : WIDTHS)
+        for (const width of regressionsOnly ? [320, 390, 1440, 1920] : WIDTHS)
           await scenario(language, mode, width, true);
         if (!regressionsOnly) await scenario(language, mode, 390, false);
       }
-      for (const width of regressionsOnly ? [390] : [390, 1440])
-        await scenario(language, "laptops", width, true);
+      for (const width of [390, 1440, 1920]) await scenario(language, "laptops", width, true);
       if (!regressionsOnly) await scenario(language, "laptops", 390, false);
     }
     for (const language of ["da", "en"]) await scenario(language, "fragment", 1440, true);

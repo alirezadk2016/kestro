@@ -39,6 +39,7 @@ import { verifyExternalLaptops } from "./external-laptops.mjs";
 import { verifyProductBrowsing } from "./product-browsing.mjs";
 import { verifyPricingCollection } from "./pricing-collection.mjs";
 import { verifyCatalogueExplorer } from "./catalogue-explorer.mjs";
+import { verifyModelReferencePhotos } from "./model-reference-photos.mjs";
 
 const BASE = process.env.VERIFY_BASE ?? "http://localhost:4173";
 const HOME = process.env.USERPROFILE ?? process.env.HOME ?? "";
@@ -1238,41 +1239,7 @@ for (const [prefix, productPath, memoryQuestion] of [
   await context.close();
 }
 
-for (const width of [320, 390, 1440]) {
-  const context = await browser.newContext({ viewport: { width, height: 900 } });
-  const page = await context.newPage();
-  await page.goto(BASE + "/modeller/lenovo-thinkpad-t14", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Kun nødvendige", exact: true }).click();
-  const enlarge = page.getByRole("button", {
-    name: "Forstør billede af Lenovo ThinkPad T14",
-    exact: true,
-  });
-  if (
-    !(await enlarge
-      .locator("img")
-      .evaluate(
-        (img) =>
-          img.complete && img.naturalWidth > 0 && getComputedStyle(img).mixBlendMode === "normal",
-      ))
-  )
-    fail("reference photo", `missing image or photographic blend regression at ${width}`);
-  if (await page.getByRole("group", { name: "Produktbilleder", exact: true }).count())
-    fail("reference photo", "single photograph has redundant thumbnail controls");
-  if (!(await page.locator("a[rel='license']").count()))
-    fail("reference photo", "missing visible licence credit");
-  await enlarge.click();
-  await page.locator("dialog[open]").waitFor();
-  const box = await page.locator("dialog[open]").boundingBox();
-  if (!box || box.x < 0 || box.x + box.width > width + 1)
-    fail("reference photo", `zoom overflows at ${width}`);
-  await page.keyboard.press("Escape");
-  await page.waitForFunction(
-    () => !document.querySelector("dialog").open && document.body.style.overflow !== "hidden",
-  );
-  if (!(await enlarge.evaluate((el) => el === document.activeElement)))
-    fail("reference photo", `focus did not return at ${width}`);
-  await context.close();
-}
+await verifyModelReferencePhotos(browser, BASE, fail);
 
 /* ---------------------------------------------------------------- education */
 

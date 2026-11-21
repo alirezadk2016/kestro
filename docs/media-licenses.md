@@ -224,11 +224,16 @@ Laptops and the workstation (each keeps its empty dark well):
   viewed and rejected: each screen shows a video call with identifiable
   people, and one has a person's hand in frame. Other Commons X1 Carbon
   files are Gen 1, 2 or 5.
+  Update 2026-11-21: an exact Gen 8 front view is now used, with its
+  author's primary reuse declaration independently checked; see below.
 - ThinkPad L14: nothing on Commons or Openverse.
 - EliteBook 840 (page: G5 and G6): Commons has G1, G3, G4 and G8 only.
 - ProBook 450 (page: G7 and G8): nothing; Commons has a ProBook 640 G1.
 - Latitude 5410: nothing; the LaptopMedia video on Commons is still
   "License review needed".
+  Update 2026-11-21: the original LaptopMedia video now independently
+  confirms its Creative Commons reuse declaration; a front view is used
+  as documented below. This supersedes the earlier unresolved status.
 - Latitude 5420 (`lib/external-laptops.ts`): nothing on Commons or
   Openverse.
 - ZBook 15 (page: G5 and G6): Commons and Openverse have G3, ZBook 14/17
@@ -251,3 +256,101 @@ Desktops, monitors and docks (each keeps its labelled illustration):
   at its natural aspect now that the card frames wide photos uncropped.
 - HP USB-C Dock G5: nothing; "USB-C dock front/back" on Commons is a
   third-party dock.
+
+## Exact-model video stills (21 November 2026)
+
+Six complete-device photographs were selected from LaptopMedia videos. The
+three front views are catalogue/detail references. The three underside views
+are supplemental gallery photographs only: `modelMedia()` deliberately does
+not return them as card or hero images. Every view is of the named generation
+and platform; none is assigned to another generation or sibling model.
+
+### Permission and processing
+
+- Author and required attribution: **LaptopMedia**.
+- Licence: **CC BY 3.0**, https://creativecommons.org/licenses/by/3.0/.
+- Primary verification, 2026-11-21: each original YouTube watch page below,
+  requested with `app=desktop&hl=en`, identifies LaptopMedia as the publisher
+  and includes a visible metadata row headed `License`, with the value
+  `Creative Commons Attribution license (reuse allowed)`. The corresponding
+  Wikimedia Commons file records identify the same author, YouTube source
+  and CC BY 3.0 licence. Commons still carries its pending independent video
+  review marker; the author's original licence declaration was therefore
+  checked directly rather than treating that marker as verification.
+- Acquisition: 1920 px JPEG video thumbnails from Wikimedia Commons'
+  `videoinfo`/TimedMediaHandler thumbnail service. The selected frames are
+  listed below. JPEG files are copied unchanged into `public/models/`.
+  A still frame is an extraction from the licensed video; the visible credit
+  explicitly says `video frame`. No retouching, background removal, product
+  reconstruction, screen replacement, recolouring, rotation or local cropping.
+- Visual inspection: all six whole devices and all their corners remain in
+  frame. The front views have white backgrounds; original Cyrillic keyboard
+  legends remain visible and are identified in the localized alt text. They
+  are reference units, not proof of Nordic keyboard layout, condition,
+  configuration, availability or ownership by Kestro.
+- Attribution is supplied through `ModelMedia.credit` and each supplemental
+  image's `credit`: author, primary source link, licence and licence link.
+  The existing gallery displays these credits for the selected image.
+
+### Front views used by the catalogue
+
+**ThinkPad T14 Gen 1 AMD** — `public/models/t14/gen1-amd-front-reference.jpg`,
+1920 x 1440, frame at 18 seconds.
+
+- Primary: https://www.youtube.com/watch?v=eHQjbtcbt1g
+- Commons: https://commons.wikimedia.org/wiki/File:Lenovo_ThinkPad_T14_*360_degrees*.webm
+- Scope: only the existing T14 family page covering Gen 1 and Gen 2. The
+  original Gen 2 Intel photograph remains in that page's gallery. This Gen 1
+  photograph is not used on the Gen 3, Gen 4 or Gen 5 individual pages.
+
+**ThinkPad X1 Carbon Gen 8** — `public/models/x1-carbon/gen8-front-reference.jpg`,
+1920 x 1440, the Commons default poster frame.
+
+- Primary: https://www.youtube.com/watch?v=Dkzl9vMPP9w
+- Commons: https://commons.wikimedia.org/wiki/File:Lenovo_ThinkPad_X1_Carbon_8th_Gen_*360_degrees*.webm
+- Scope: only the existing X1 Carbon family page covering Gen 6–8, explicitly
+  labelled Gen 8. Never assigned to the separate Gen 9–12 pages.
+
+**Dell Latitude 5410** — `public/models/latitude-5410/front-reference.jpg`,
+1920 x 1440, frame at 1 second.
+
+- Primary: https://www.youtube.com/watch?v=GfeEm279CrE
+- Commons: https://commons.wikimedia.org/wiki/File:Dell_Latitude_14_5410_*360_degrees*.webm
+- Scope: Latitude 5410 only; not the externally recommended Latitude 5420.
+
+### Supplemental underside references
+
+Each is 1920 x 1080, from the frame at 8 seconds, showing the intact computer
+with its bottom cover installed. These photographs show real service-cover
+layout, not disassembled internals or the appearance of a front display.
+
+**ThinkPad T14 Gen 5 Intel** —
+`public/models/t14-gen-5/intel-underside-reference.jpg`.
+
+- Primary: https://www.youtube.com/watch?v=Y5eSTzvPOOU
+- Commons: https://commons.wikimedia.org/wiki/File:How_to_open_Lenovo_ThinkPad_T14_Gen_5_(Intel)_-_disassembly_and_upgrade_options.webm
+
+**ThinkPad L16 Gen 1 Intel** —
+`public/models/l16-gen-1/intel-underside-reference.jpg`.
+
+- Primary: https://www.youtube.com/watch?v=Ls4b4ZSFty0
+- Commons: https://commons.wikimedia.org/wiki/File:How_to_open_Lenovo_ThinkPad_L16_Gen_1_(Intel)_-_disassembly_and_upgrade_options.webm
+
+**ThinkPad E16 Gen 2 Intel** —
+`public/models/e16-gen-2/intel-underside-reference.jpg`.
+
+- Primary: https://www.youtube.com/watch?v=DY_-5NBw5PM
+- Commons: https://commons.wikimedia.org/wiki/File:How_to_open_Lenovo_ThinkPad_E16_Gen_2_(Intel)_-_disassembly_and_upgrade_options.webm
+
+### Remaining coverage
+
+The original three photographed laptop families are now joined by X1 Carbon
+and Latitude 5410, for **five laptop families with catalogue front photos**.
+Three additional model pages have accurate underside references but no
+front-view hero. The other Lenovo generations, L14 family, EliteBook 840
+G5/G6, ProBook 450 G7/G8 and ZBook 15 G5/G6 still need an exact-model
+owner-supplied or explicitly licensed photograph. Manufacturer PSREF and
+review-site product photographs were not copied merely because they were
+publicly visible. The existing 840 G8 photo was not substituted for G5/G6,
+nor was a T14s Gen 6 Snapdragon video used for Gen 5 Intel. No synthetic
+laptop illustration or generated hardware photo was added.

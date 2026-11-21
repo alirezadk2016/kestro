@@ -10,6 +10,9 @@ export type CatalogueEntry = {
   description: string;
   /** Existing, researched practical use, shown before technical detail. */
   application?: string;
+  /** Browsing aids derived from the researched model, never an offered configuration. */
+  useCases?: ("office" | "mobile" | "workstation")[];
+  screenSize?: string;
   facts: { label: string; value: string }[];
   comparisonFacts?: { label: string; value: string }[];
   detailHref: string;
@@ -20,6 +23,13 @@ export type CatalogueEntry = {
     height: number;
     alt: string;
     kind: "photo" | "illustration";
+    sourceFrame?: boolean;
+    credit?: {
+      author: string;
+      source: string;
+      licence: string;
+      licenceUrl: string;
+    };
   };
   /** Kept verbatim for the four dated budget configurations. */
   configuration?: string;

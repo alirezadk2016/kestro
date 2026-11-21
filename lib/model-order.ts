@@ -26,15 +26,50 @@ export function picturesFirst(list: readonly Model[]): Model[] {
     .map((entry) => entry.model);
 }
 
-/** Keep the product groups together; prefer cleared pictures within each group. */
+/** Keep group/family positions fixed and show one representative per family.
+ * Prefer an exact photographed reference within that family; its remaining
+ * generations stay newest-first. No recommendation or recency is implied. */
 export function catalogueOrder(list: readonly Model[]): Model[] {
-  return list
+  const families = new Map<string, number>();
+  const family = (model: Model) => model.name.replace(/\sGen \d+$/, "");
+  for (const model of list) {
+    const key = family(model);
+    if (!families.has(key)) families.set(key, families.size);
+  }
+  const ordered = list
     .map((model, index) => ({
       model,
       index,
       group: GROUP_ORDER.get(model.group) ?? modelGroups.length,
-      picture: pictureRank(model),
+      family: families.get(family(model))!,
+      generation: Number(model.name.match(/\sGen (\d+)$/)?.[1] || 0),
+      photographed: modelMedia(model)?.kind === "photo",
     }))
-    .sort((a, b) => a.group - b.group || a.picture - b.picture || a.index - b.index)
+    .sort(
+      (a, b) =>
+        a.group - b.group ||
+        a.family - b.family ||
+        b.generation - a.generation ||
+        a.index - b.index,
+    );
+  const representatives = new Map<number, (typeof ordered)[number]>();
+  for (const entry of ordered) {
+    const current = representatives.get(entry.family);
+    if (!current || (entry.photographed && !current.photographed))
+      representatives.set(entry.family, entry);
+  }
+  return ordered
+    .map((entry) => ({
+      ...entry,
+      tier: representatives.get(entry.family)?.index === entry.index ? 0 : 1,
+    }))
+    .sort(
+      (a, b) =>
+        a.group - b.group ||
+        a.tier - b.tier ||
+        a.family - b.family ||
+        b.generation - a.generation ||
+        a.index - b.index,
+    )
     .map((entry) => entry.model);
 }

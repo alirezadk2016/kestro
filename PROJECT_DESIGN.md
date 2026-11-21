@@ -1,5 +1,25 @@
 # Kestro: product section only
 
+## Confirmed refinement — 21 November 2026
+
+The owner accepted the product audit and asked to implement the whole product
+redesign. Work starts from ad6e63b; the older local checkout is not the baseline.
+Retain the navy/blue Jakarta identity and five compact equipment categories.
+Use coherent pale product cards in both grid and list views, a fixed image
+frame, linked images, concise decision facts and clear comparison states.
+Default to a responsive grid, twelve initial results and progressive access
+to every model. Buyer-use and screen-size filters must describe model data,
+not claim an offered configuration or stock. Keep all no-JS links, fragments,
+browser restoration and search semantics. Model details lead with the device,
+practical use, key facts and enquiry; longer specifications remain accessible.
+External price references remain visibly separate from Kestro enquiries.
+Use exact-model owner-supplied or licensed imagery with attribution. A missing
+exact photo gets an intentional model-reference panel, never a fictional or
+wrong-generation machine. Extend verified photo coverage where sources allow.
+Homepage, shared header/footer, admin, repairs and education are out of scope.
+Before publication: complete production verify, desktop/mobile DA/EN visual
+inspection, image/credit checks and a baseline diff confirming scoped changes.
+
 ## Product and scope
 
 Kestro is a pre-launch B2B equipment sourcing project for Denmark and Norway.
@@ -61,3 +81,12 @@ page lengths and overflow. Preserve search AND semantics, browser restoration,
 legacy fragments, no-JS links/disclosures, comparison focus and prefilled
 enquiries. Run the repository's complete production verification gate before
 publication; inspect screenshots independently of passing tests.
+
+## Compact product grid — 21 November 2026
+
+The owner rejected tall cards. Grid cards now prioritize scanning: a 136–140px
+device/reference frame, one combined format/title link, three key facts and a
+44px action row. Application prose remains on model pages and in list view.
+Use one/two/three/four columns as width allows, keeping desktop card widths
+similar at 1440 and 1920. Target a maximum 390px grid card on desktop and 410px
+on phones, with full-device photos, readable facts and honest references.

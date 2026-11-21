@@ -272,12 +272,10 @@ export default async function CategoryPage(props: {
      elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:py-10">
+      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:pb-10 sm:pt-6">
         <Container>
           <div id={isLaptops ? "laptop-model-library" : undefined} className="scroll-mt-28">
-            <h2 className="sr-only font-display t-h2 font-extrabold text-paper sm:not-sr-only">
-              {c.modelsTitle}
-            </h2>
+            <h2 className="sr-only">{c.modelsTitle}</h2>
           </div>
 
           <div>
@@ -323,7 +321,7 @@ export default async function CategoryPage(props: {
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
-      <section className="border-b border-white/10 bg-brand-950 pb-5 pt-3 sm:pb-7 sm:pt-6">
+      <section className="border-b border-white/10 bg-brand-950 pb-3 pt-3 sm:pb-5 sm:pt-4">
         <Container>
           <Breadcrumbs
             lang={lang}
@@ -340,7 +338,7 @@ export default async function CategoryPage(props: {
               }}
             />
           )}
-          <div className="mt-3 grid gap-3 lg:grid-cols-12 lg:items-center lg:gap-12">
+          <div className="mt-2 grid gap-2 sm:mt-3 sm:gap-3 lg:grid-cols-12 lg:items-start lg:gap-12">
             <h1 className="t-h1 font-display font-extrabold tracking-display text-paper lg:col-span-6">
               {(category.h1 ?? category.name)[lang]}
             </h1>
@@ -351,7 +349,8 @@ export default async function CategoryPage(props: {
                   external retailers are still one click away, after the
                   catalogue; a quiet line under the answer still jumps there. */}
               <p className="text-pretty text-base leading-[1.65] text-paper/85 sm:text-lg">
-                {category.tagline[lang]}. {n > 0 && rangeLine}
+                {category.tagline[lang]}.
+                {n > 0 && <span className="hidden sm:inline"> {rangeLine}</span>}
               </p>
               {/* What the rows are (references, configured on enquiry) is said
                   once, in the note under the list. */}

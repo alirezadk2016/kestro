@@ -5,6 +5,7 @@ import { categoryApplications, categoryMedia } from "@/lib/category-media";
 import { localePath, type Lang } from "@/lib/i18n";
 import { getModelsForCategory } from "@/lib/models";
 import CategoryArtwork from "./CategoryArtwork";
+import styles from "./ProductCategoryGallery.module.css";
 
 /*
  * The products hub's directory: five equipment types in one compact row.
@@ -85,7 +86,7 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
               <Link
                 href={localePath(`/produkter/${category.slug}`, lang)}
                 aria-labelledby={`category-${category.slug} category-${category.slug}-count`}
-                className="sheet group flex h-full flex-col p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
+                className={`${styles.card} sheet group flex h-full flex-col p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300`}
               >
                 <CategoryArtwork
                   slug={category.slug}
@@ -105,14 +106,14 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   >
                     {title}
                   </h3>
-                  <p className="mt-1 text-pretty text-sm leading-5 text-ink-700">
+                  <p className="mt-1 min-h-10 text-pretty text-sm leading-5 text-ink-700">
                     {categoryApplications[category.slug][lang]}
                   </p>
                   {/* A business buyer decides by brand first. */}
                   <p className="mt-1.5 text-xs leading-5 text-ink-600">
                     {brandsOf(category.slug, da)}
                   </p>
-                  <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-600">
+                  <span className="mt-auto inline-flex items-center gap-1.5 border-t border-ink-200 pt-3 text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-600">
                     <span id={`category-${category.slug}-count`} className="tabular-nums">
                       {count(models, da)}
                     </span>
