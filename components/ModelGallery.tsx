@@ -120,9 +120,11 @@ export default function ModelGallery({
         <p className="flex flex-wrap items-center gap-x-3 text-sm text-paper/75">
           <a
             href={item.credit.source}
+            title={item.credit.title}
             className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
           >
             {da ? "Referencefoto" : "Reference photo"}: {item.credit.author}
+            {item.credit.title && <span className="sr-only"> — {item.credit.title}</span>}
           </a>
           <a
             href={item.credit.licenceUrl}

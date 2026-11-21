@@ -224,6 +224,27 @@
     "format": "webp"
   },
   {
+    "src": "/models/e14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 37498,
+    "format": "webp"
+  },
+  {
+    "src": "/models/e14-gen-5/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 39924,
+    "format": "webp"
+  },
+  {
+    "src": "/models/e16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 41208,
+    "format": "webp"
+  },
+  {
     "src": "/models/e16-gen-2/intel-underside-reference.jpg",
     "width": 1920,
     "height": 1080,
@@ -235,6 +256,41 @@
     "width": 1280,
     "height": 1182,
     "bytes": 72368,
+    "format": "webp"
+  },
+  {
+    "src": "/models/hp-probook-450/front-reference.webp",
+    "width": 1600,
+    "height": 1216,
+    "bytes": 64176,
+    "format": "webp"
+  },
+  {
+    "src": "/models/l13-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 26700,
+    "format": "webp"
+  },
+  {
+    "src": "/models/l14-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 72194,
+    "format": "webp"
+  },
+  {
+    "src": "/models/l14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 54342,
+    "format": "webp"
+  },
+  {
+    "src": "/models/l14/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 40922,
     "format": "webp"
   },
   {
@@ -308,6 +364,55 @@
     "format": "webp"
   },
   {
+    "src": "/models/p1-gen-5/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 42464,
+    "format": "webp"
+  },
+  {
+    "src": "/models/p1-gen-6/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 38620,
+    "format": "webp"
+  },
+  {
+    "src": "/models/p14s-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 25592,
+    "format": "webp"
+  },
+  {
+    "src": "/models/p16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 88164,
+    "format": "webp"
+  },
+  {
+    "src": "/models/p16s-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 40996,
+    "format": "webp"
+  },
+  {
+    "src": "/models/t14-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 31008,
+    "format": "webp"
+  },
+  {
+    "src": "/models/t14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 32760,
+    "format": "webp"
+  },
+  {
     "src": "/models/t14-gen-5/intel-underside-reference.jpg",
     "width": 1920,
     "height": 1080,
@@ -329,6 +434,20 @@
     "format": "webp"
   },
   {
+    "src": "/models/t14s-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 34990,
+    "format": "webp"
+  },
+  {
+    "src": "/models/t16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 31712,
+    "format": "webp"
+  },
+  {
     "src": "/models/thinkpad-internals-texture.webp",
     "width": 1536,
     "height": 1024,
@@ -343,11 +462,74 @@
     "format": "webp"
   },
   {
+    "src": "/models/x1-carbon-gen-10/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 24396,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x1-carbon-gen-9/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 32338,
+    "format": "webp"
+  },
+  {
     "src": "/models/x1-carbon/gen8-front-reference.jpg",
     "width": 1920,
     "height": 1440,
     "bytes": 99382,
     "format": "jpeg"
+  },
+  {
+    "src": "/models/x1-nano-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 28980,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x1-nano-gen-2/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 124606,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x1-yoga-gen-6/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 24242,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x1-yoga-gen-7/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 33462,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x1-yoga-gen-8/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 40228,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x13-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 31710,
+    "format": "webp"
+  },
+  {
+    "src": "/models/x13-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "bytes": 44676,
+    "format": "webp"
   },
   {
     "src": "/pricing/optiplex-5060-sff-illustration.svg",

@@ -90,3 +90,13 @@ device/reference frame, one combined format/title link, three key facts and a
 Use one/two/three/four columns as width allows, keeping desktop card widths
 similar at 1440 and 1920. Target a maximum 390px grid card on desktop and 410px
 on phones, with full-device photos, readable facts and honest references.
+
+## Exact-model catalogue photos — 21 November 2026
+
+Add genuine, licensed full-device reference photos in the existing compact
+frames and model galleries. Preserve the complete hardware, original keyboard,
+screen and colours; optimize dimensions and WebP encoding. Keep source titles,
+authors and licenses with the images, with catalogue credits collapsed by
+default. The new registry provides 26 additional models with primary photos;
+33 of 68 models now have one. The remaining 35 require a suitable exact-model
+photo with permission, rather than a generated device or another generation.

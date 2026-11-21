@@ -122,6 +122,25 @@ const LICENSED_FRONTS = [
     image: "/models/latitude-5410/front-reference.jpg",
     source: "https://www.youtube.com/watch?v=GfeEm279CrE",
   },
+  {
+    id: "lenovo-thinkpad-t14-gen-4",
+    image: "/models/t14-gen-4/front-reference.webp",
+    source: "https://www.youtube.com/watch?v=XMOWZMoQEfs",
+    author: "LaptopMedia Benchmarks",
+  },
+  {
+    id: "lenovo-thinkpad-x1-carbon-gen-10",
+    image: "/models/x1-carbon-gen-10/front-reference.webp",
+    source: "https://www.youtube.com/watch?v=t2in9Y4E8BA",
+    author: "LaptopMedia Benchmarks",
+  },
+];
+/* Newer exact-model photographs replace the older family photo as the initial
+ * representative. Older generations still retain their own source and credits. */
+const PHOTOGRAPHED_LEADS = [
+  "lenovo-thinkpad-t14-gen-4",
+  "lenovo-thinkpad-x1-carbon-gen-10",
+  "dell-latitude-5410",
 ];
 /* "T14" is a substring of every T14 and T14s generation's name, so the literal
    search returns the whole family, not only the original T14 page. */
@@ -968,9 +987,9 @@ export async function verifyCatalogueExplorer(
             12,
             "the first twelve choices represent different model families rather than many generations of one laptop",
           );
-          for (const photo of LICENSED_FRONTS.filter((photo) => names.has(photo.id)))
+          for (const id of PHOTOGRAPHED_LEADS.filter((id) => names.has(id)))
             assert.ok(
-              allHtmlIds.slice(0, 12).includes(photo.id),
+              allHtmlIds.slice(0, 12).includes(id),
               "an exact photographed representative is visible in its family's initial position",
             );
         }
@@ -1037,20 +1056,20 @@ export async function verifyCatalogueExplorer(
           [
             "lenovo-thinkpad-t14",
             [
-              "lenovo-thinkpad-t14",
-              "lenovo-thinkpad-t14-gen-5",
               "lenovo-thinkpad-t14-gen-4",
+              "lenovo-thinkpad-t14-gen-5",
               "lenovo-thinkpad-t14-gen-3",
+              "lenovo-thinkpad-t14",
             ],
           ],
           [
             "lenovo-thinkpad-x1-carbon",
             [
-              "lenovo-thinkpad-x1-carbon",
+              "lenovo-thinkpad-x1-carbon-gen-10",
               "lenovo-thinkpad-x1-carbon-gen-12",
               "lenovo-thinkpad-x1-carbon-gen-11",
-              "lenovo-thinkpad-x1-carbon-gen-10",
               "lenovo-thinkpad-x1-carbon-gen-9",
+              "lenovo-thinkpad-x1-carbon",
             ],
           ],
         ])
@@ -1156,7 +1175,11 @@ export async function verifyCatalogueExplorer(
             const record = credits.locator(selector("data-catalogue-photo-credit", photo.id));
             const links = record.locator("a");
             assert.equal(await links.count(), 2, "each attribution names a source and licence");
-            assert.equal(await links.nth(0).innerText(), "LaptopMedia", "the author is credited");
+            assert.equal(
+              await links.nth(0).innerText(),
+              photo.author || "LaptopMedia",
+              "the source's actual author is credited",
+            );
             assert.equal(
               await links.nth(0).getAttribute("href"),
               photo.source,

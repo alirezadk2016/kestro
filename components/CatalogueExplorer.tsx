@@ -973,9 +973,11 @@ export default function CatalogueExplorer({
             {photoCredits.map(({ id, name, credit }) => (
               <li key={id} data-catalogue-photo-credit={id} className="py-3">
                 <p className="font-medium text-paper">{name}</p>
+                {credit.title && <p className="text-xs leading-5">{credit.title}</p>}
                 <div className="flex flex-wrap items-center gap-x-5">
                   <a
                     href={credit.source}
+                    title={credit.title}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     aria-label={`${credit.author} — ${da ? "fotokilde, åbner i en ny fane" : "photo source, opens in a new tab"}`}

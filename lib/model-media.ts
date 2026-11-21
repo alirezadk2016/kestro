@@ -1,6 +1,7 @@
 import type { Localized } from "./i18n";
 import type { Model } from "./models";
 import { pricingMedia } from "./pricing-media";
+import catalogueReferencePhotos from "./model-reference-photos.json";
 
 /*
  * The one picture each model shows on a card and at the top of its page.
@@ -39,13 +40,15 @@ const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
 
 /*
  * Exact-model reference photographs, selected as complete, unretouched frames
- * from LaptopMedia's CC-licensed videos. The primary YouTube license declaration
- * and the matching Commons CC BY 3.0 records were checked on 2026-11-21;
- * docs/media-licenses.md records the source and selected time for each frame.
+ * from the creators' CC-licensed videos. The primary YouTube license declaration
+ * was checked for every source; the original three below also have matching
+ * Commons CC BY 3.0 records. The JSON registry holds later exact-model photos.
+ * docs/media-licenses.md records each source, license and selected frame.
  * A generation-family page may show a labelled generation within its scope.
  * Never reuse these photos for a newer generation's individual model page.
  */
 const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
+  ...(catalogueReferencePhotos as Record<string, ModelMedia>),
   "lenovo-thinkpad-t14": {
     src: "/models/t14/gen1-amd-front-reference.jpg",
     sourceFrame: true,
@@ -59,6 +62,7 @@ const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
     credit: {
       author: "LaptopMedia",
       source: "https://www.youtube.com/watch?v=eHQjbtcbt1g",
+      title: "Lenovo ThinkPad T14 *360 degrees*",
       licence: "CC BY 3.0 (video frame)",
       licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
     },
@@ -76,6 +80,7 @@ const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
     credit: {
       author: "LaptopMedia",
       source: "https://www.youtube.com/watch?v=Dkzl9vMPP9w",
+      title: "Lenovo ThinkPad X1 Carbon 8th Gen *360 degrees*",
       licence: "CC BY 3.0 (video frame)",
       licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
     },
@@ -93,6 +98,7 @@ const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
     credit: {
       author: "LaptopMedia",
       source: "https://www.youtube.com/watch?v=GfeEm279CrE",
+      title: "Dell Latitude 14 5410 *360 degrees*",
       licence: "CC BY 3.0 (video frame)",
       licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
     },
@@ -112,6 +118,7 @@ const ADDITIONAL_PHOTOS: Record<string, NonNullable<Model["images"]>> = {
       credit: {
         author: "LaptopMedia",
         source: "https://www.youtube.com/watch?v=Y5eSTzvPOOU",
+        title: "How to open Lenovo ThinkPad T14 Gen 5 (Intel) - disassembly and upgrade options",
         licence: "CC BY 3.0 (video frame)",
         licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
       },
@@ -128,6 +135,7 @@ const ADDITIONAL_PHOTOS: Record<string, NonNullable<Model["images"]>> = {
       credit: {
         author: "LaptopMedia",
         source: "https://www.youtube.com/watch?v=Ls4b4ZSFty0",
+        title: "How to open Lenovo ThinkPad L16 Gen 1 (Intel) - disassembly and upgrade options",
         licence: "CC BY 3.0 (video frame)",
         licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
       },
@@ -144,6 +152,7 @@ const ADDITIONAL_PHOTOS: Record<string, NonNullable<Model["images"]>> = {
       credit: {
         author: "LaptopMedia",
         source: "https://www.youtube.com/watch?v=DY_-5NBw5PM",
+        title: "How to open Lenovo ThinkPad E16 Gen 2 (Intel) - disassembly and upgrade options",
         licence: "CC BY 3.0 (video frame)",
         licenceUrl: "https://creativecommons.org/licenses/by/3.0/",
       },

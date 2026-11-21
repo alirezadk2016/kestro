@@ -1,0 +1,444 @@
+{
+  "hp-probook-450": {
+    "src": "/models/hp-probook-450/front-reference.webp",
+    "width": 1600,
+    "height": 1216,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: HP ProBook 450 G8, åben set forfra med sort skærm og numerisk tastatur",
+      "en": "Reference photo: HP ProBook 450 G8, open front view with black display and number pad"
+    },
+    "credit": {
+      "author": "LaptopMedia",
+      "source": "https://www.youtube.com/watch?v=d-OHaYt4-B0",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "HP ProBook 450 G8 in 360 degrees"
+    }
+  },
+  "lenovo-thinkpad-e14-gen-4": {
+    "src": "/models/e14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad E14 Gen 4, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad E14 Gen 4, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=LK64hTOeqwk",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad E14 Gen 4 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-e14-gen-5": {
+    "src": "/models/e14-gen-5/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad E14 Gen 5, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad E14 Gen 5, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=eRoxz7xcUes",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad E14 Gen 5 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-e16-gen-1": {
+    "src": "/models/e16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad E16 Gen 1, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad E16 Gen 1, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=Ki15Xyl0Nn8",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad E16 Gen 1 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-l13-gen-3": {
+    "src": "/models/l13-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad L13 Gen 3, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad L13 Gen 3, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=HWGQJEnJlYs",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad L13 Gen 3 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-l14": {
+    "src": "/models/l14/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad L14 Gen 1 Intel, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad L14 Gen 1 Intel, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=509_UZNjcQY",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad L14 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-l14-gen-3": {
+    "src": "/models/l14-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad L14 Gen 3, åben på et bord med testgrafer på skærmen",
+      "en": "Reference photo: ThinkPad L14 Gen 3, open on a desk with review charts on the screen"
+    },
+    "credit": {
+      "author": "LaptopMedia",
+      "source": "https://www.youtube.com/watch?v=Yw4o8baJxUQ",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "[REVIEW] Lenovo ThinkPad L14 Gen 3"
+    }
+  },
+  "lenovo-thinkpad-l14-gen-4": {
+    "src": "/models/l14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad L14 Gen 4 (Intel), åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad L14 Gen 4 (Intel), open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=rAPw1kMu6HU",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad L14 Gen 4 (Intel) - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-p1-gen-5": {
+    "src": "/models/p1-gen-5/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad P1 Gen 5, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad P1 Gen 5, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=9g09RPp6iFk",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad P1 Gen 5 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-p1-gen-6": {
+    "src": "/models/p1-gen-6/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad P1 Gen 6, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad P1 Gen 6, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=ecbUtUMMhDw",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad P1 Gen 6 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-p14s-gen-3": {
+    "src": "/models/p14s-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad P14s Gen 3, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad P14s Gen 3, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=aPZar2PC6Hg",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad P14s Gen 3 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-p16-gen-1": {
+    "src": "/models/p16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad P16 Gen 1, åben på et bord med testgrafer på skærmen",
+      "en": "Reference photo: ThinkPad P16 Gen 1, open on a desk with review charts on the screen"
+    },
+    "credit": {
+      "author": "LaptopMedia",
+      "source": "https://www.youtube.com/watch?v=aDeNm9WDacM",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "[REVIEW] Lenovo ThinkPad P16 Gen 1 -  A titan of a workstation"
+    }
+  },
+  "lenovo-thinkpad-p16s-gen-1": {
+    "src": "/models/p16s-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: Lenovo ThinkPad P16s Gen 1, åben set forfra på hvid baggrund med sort skærm",
+      "en": "Reference photo: Lenovo ThinkPad P16s Gen 1, open front view on white with a black screen"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=0MIS8ODNW8M",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad P16s Gen 1 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-t14-gen-3": {
+    "src": "/models/t14-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad T14 Gen 3, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad T14 Gen 3, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia",
+      "source": "https://www.youtube.com/watch?v=lSpxuYyQceQ",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "[REVIEW] Lenovo ThinkPad T14 Gen 3 - business laptop  with great screen"
+    }
+  },
+  "lenovo-thinkpad-t14-gen-4": {
+    "src": "/models/t14-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad T14 Gen 4, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad T14 Gen 4, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=XMOWZMoQEfs",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad T14 Gen 4 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-t14s-gen-3": {
+    "src": "/models/t14s-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad T14s Gen 3, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad T14s Gen 3, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=-rl3bf5QJvE",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad T14s Gen 3 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-t16-gen-1": {
+    "src": "/models/t16-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad T16 Gen 1, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad T16 Gen 1, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=GvF6TA6qsHg",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad T16 Gen 1 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x1-carbon-gen-10": {
+    "src": "/models/x1-carbon-gen-10/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Carbon Gen 10, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Carbon Gen 10, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=t2in9Y4E8BA",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Carbon 10th Gen - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x1-carbon-gen-9": {
+    "src": "/models/x1-carbon-gen-9/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Carbon Gen 9, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Carbon Gen 9, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=Sl5NtJ3A-FQ",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Carbon 9th Gen - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x1-nano-gen-1": {
+    "src": "/models/x1-nano-gen-1/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Nano Gen 1, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Nano Gen 1, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=vPsKKM16nJo",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Nano in 360 degrees"
+    }
+  },
+  "lenovo-thinkpad-x1-nano-gen-2": {
+    "src": "/models/x1-nano-gen-2/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Nano Gen 2, åben på et hvidt bord mod blå baggrund; kildens vandmærke og skærmbillede er bevaret",
+      "en": "Reference photo: ThinkPad X1 Nano Gen 2, open on a white table against blue; original source watermark and screen image retained"
+    },
+    "credit": {
+      "author": "An Phát Computer",
+      "source": "https://www.youtube.com/watch?v=HUMC1Y23kmg",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo Thinkpad X1 Nano Gen 2 - Ultrabook siêu mỏng, hiệu năng vượt trội!!!"
+    }
+  },
+  "lenovo-thinkpad-x1-yoga-gen-6": {
+    "src": "/models/x1-yoga-gen-6/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Yoga Gen 6, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Yoga Gen 6, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=FfrVZnJ3sWQ",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Yoga Gen 6 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x1-yoga-gen-7": {
+    "src": "/models/x1-yoga-gen-7/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Yoga Gen 7, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Yoga Gen 7, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=7W1NZzgSTvM",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Yoga Gen 7 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x1-yoga-gen-8": {
+    "src": "/models/x1-yoga-gen-8/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X1 Yoga Gen 8, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X1 Yoga Gen 8, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=wY3SHxlSEcY",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X1 Yoga Gen 8 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x13-gen-3": {
+    "src": "/models/x13-gen-3/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X13 Gen 3, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X13 Gen 3, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=pNzmAm9Vq5Q",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X13 Gen 3 - Ports info and 360º look"
+    }
+  },
+  "lenovo-thinkpad-x13-gen-4": {
+    "src": "/models/x13-gen-4/front-reference.webp",
+    "width": 1600,
+    "height": 900,
+    "kind": "photo",
+    "alt": {
+      "da": "Referencefoto: ThinkPad X13 Gen 4, åben forfra med hele computeren i billedet; originalt tastatur og konfiguration kan variere",
+      "en": "Reference photo: ThinkPad X13 Gen 4, open front view with the complete laptop visible; original keyboard and configuration may differ"
+    },
+    "credit": {
+      "author": "LaptopMedia Benchmarks",
+      "source": "https://www.youtube.com/watch?v=6z4zlrwduFs",
+      "licence": "CC BY 3.0 (video frame)",
+      "licenceUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "title": "Lenovo ThinkPad X13 Gen 4 - Ports info and 360º look"
+    }
+  }
+}

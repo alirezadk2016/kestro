@@ -354,3 +354,107 @@ review-site product photographs were not copied merely because they were
 publicly visible. The existing 840 G8 photo was not substituted for G5/G6,
 nor was a T14s Gen 6 Snapdragon video used for Gen 5 Intel. No synthetic
 laptop illustration or generated hardware photo was added.
+
+## Catalogue primary photos expanded on 21 November 2026
+
+26 additional models now have genuine, complete-device reference photographs.
+Each source was checked on the original creator's YouTube watch page for the
+explicit Creative Commons reuse declaration and independently in the video
+metadata. Model identity was checked against the original title, description,
+linked review and visible hardware. These are model references, not photographs
+of available Kestro stock. Family pages use an identified generation within
+their documented scope.
+
+All 26 sources were published before 1 August 2025 and retain CC BY 3.0;
+[the Commons YouTube license template](https://commons.wikimedia.org/wiki/Template:YouTube_CC-BY)
+documents that the later change to CC BY 4.0 was not retroactive. The
+[YouTube license guide](https://support.google.com/youtube/answer/2797468?hl=en)
+explains attribution and reuse. Source title, creator, source link and license
+are retained in the registry and customer-facing photo credits. Decorative
+leading emoji are omitted from source-title typography. The six existing
+CC-video photo records also retain their verified original source titles.
+
+Processing is limited to selection of one complete video frame, proportional
+resizing to 1600px and WebP encoding at quality 90. There is no crop, device
+reconstruction, retouch, recolouring, screen replacement or background
+replacement. Original watermarks remain. Most sources have white backgrounds;
+Nano Gen 2 retains the creator's blue studio, and P16 Gen 1/L14 Gen 3 retain
+the original review desk and screen charts. Public credit identifies them as
+video frames. Detailed original metadata, license HTML and inspected contact
+sheets are preserved in the task output directory.
+
+| Model                            | Local photo                                     | Original work and source                                                                                                   | Creator                | Upload date | Frame | License                                                   |
+| -------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- | ----- | --------------------------------------------------------- |
+| HP ProBook 450                   | `/models/hp-probook-450/front-reference.webp`   | [HP ProBook 450 G8 in 360 degrees](https://www.youtube.com/watch?v=d-OHaYt4-B0)                                            | LaptopMedia            | 20210203    | 3s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad E14 Gen 4        | `/models/e14-gen-4/front-reference.webp`        | [Lenovo ThinkPad E14 Gen 4 - Ports info and 360º look](https://www.youtube.com/watch?v=LK64hTOeqwk)                        | LaptopMedia Benchmarks | 20230630    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad E14 Gen 5        | `/models/e14-gen-5/front-reference.webp`        | [Lenovo ThinkPad E14 Gen 5 - Ports info and 360º look](https://www.youtube.com/watch?v=eRoxz7xcUes)                        | LaptopMedia Benchmarks | 20240127    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad E16 Gen 1        | `/models/e16-gen-1/front-reference.webp`        | [Lenovo ThinkPad E16 Gen 1 - Ports info and 360º look](https://www.youtube.com/watch?v=Ki15Xyl0Nn8)                        | LaptopMedia Benchmarks | 20240127    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad L13 Gen 3        | `/models/l13-gen-3/front-reference.webp`        | [Lenovo ThinkPad L13 Gen 3 - Ports info and 360º look](https://www.youtube.com/watch?v=HWGQJEnJlYs)                        | LaptopMedia Benchmarks | 20230630    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad L14              | `/models/l14/front-reference.webp`              | [Lenovo ThinkPad L14 - Ports info and 360º look](https://www.youtube.com/watch?v=509_UZNjcQY)                              | LaptopMedia Benchmarks | 20220510    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad L14 Gen 3        | `/models/l14-gen-3/front-reference.webp`        | [[REVIEW] Lenovo ThinkPad L14 Gen 3](https://www.youtube.com/watch?v=Yw4o8baJxUQ)                                          | LaptopMedia            | 20220924    | 260s  | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad L14 Gen 4        | `/models/l14-gen-4/front-reference.webp`        | [Lenovo ThinkPad L14 Gen 4 (Intel) - Ports info and 360º look](https://www.youtube.com/watch?v=rAPw1kMu6HU)                | LaptopMedia Benchmarks | 20240201    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad P1 Gen 5         | `/models/p1-gen-5/front-reference.webp`         | [Lenovo ThinkPad P1 Gen 5 - Ports info and 360º look](https://www.youtube.com/watch?v=9g09RPp6iFk)                         | LaptopMedia Benchmarks | 20230630    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad P1 Gen 6         | `/models/p1-gen-6/front-reference.webp`         | [Lenovo ThinkPad P1 Gen 6 - Ports info and 360º look](https://www.youtube.com/watch?v=ecbUtUMMhDw)                         | LaptopMedia Benchmarks | 20240127    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad P14s Gen 3       | `/models/p14s-gen-3/front-reference.webp`       | [Lenovo ThinkPad P14s Gen 3 - Ports info and 360º look](https://www.youtube.com/watch?v=aPZar2PC6Hg)                       | LaptopMedia Benchmarks | 20230630    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad P16 Gen 1        | `/models/p16-gen-1/front-reference.webp`        | [[REVIEW] Lenovo ThinkPad P16 Gen 1 - A titan of a workstation](https://www.youtube.com/watch?v=aDeNm9WDacM)               | LaptopMedia            | 20230430    | 355s  | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad P16s Gen 1       | `/models/p16s-gen-1/front-reference.webp`       | [Lenovo ThinkPad P16s Gen 1 - Ports info and 360º look](https://www.youtube.com/watch?v=0MIS8ODNW8M)                       | LaptopMedia Benchmarks | 20230505    | 1s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad T14 Gen 3        | `/models/t14-gen-3/front-reference.webp`        | [[REVIEW] Lenovo ThinkPad T14 Gen 3 - business laptop with great screen](https://www.youtube.com/watch?v=lSpxuYyQceQ)      | LaptopMedia            | 20221214    | 101s  | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad T14 Gen 4        | `/models/t14-gen-4/front-reference.webp`        | [Lenovo ThinkPad T14 Gen 4 - Ports info and 360º look](https://www.youtube.com/watch?v=XMOWZMoQEfs)                        | LaptopMedia Benchmarks | 20240127    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad T14s Gen 3       | `/models/t14s-gen-3/front-reference.webp`       | [Lenovo ThinkPad T14s Gen 3 - Ports info and 360º look](https://www.youtube.com/watch?v=-rl3bf5QJvE)                       | LaptopMedia Benchmarks | 20230505    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad T16 Gen 1        | `/models/t16-gen-1/front-reference.webp`        | [Lenovo ThinkPad T16 Gen 1 - Ports info and 360º look](https://www.youtube.com/watch?v=GvF6TA6qsHg)                        | LaptopMedia Benchmarks | 20221003    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Carbon Gen 10 | `/models/x1-carbon-gen-10/front-reference.webp` | [Lenovo ThinkPad X1 Carbon 10th Gen - Ports info and 360º look](https://www.youtube.com/watch?v=t2in9Y4E8BA)               | LaptopMedia Benchmarks | 20221007    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Carbon Gen 9  | `/models/x1-carbon-gen-9/front-reference.webp`  | [Lenovo ThinkPad X1 Carbon 9th Gen - Ports info and 360º look](https://www.youtube.com/watch?v=Sl5NtJ3A-FQ)                | LaptopMedia Benchmarks | 20220516    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Nano Gen 1    | `/models/x1-nano-gen-1/front-reference.webp`    | [Lenovo ThinkPad X1 Nano in 360 degrees](https://www.youtube.com/watch?v=vPsKKM16nJo)                                      | LaptopMedia Benchmarks | 20210421    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Nano Gen 2    | `/models/x1-nano-gen-2/front-reference.webp`    | [Lenovo Thinkpad X1 Nano Gen 2 - Ultrabook siêu mỏng, hiệu năng vượt trội!!!](https://www.youtube.com/watch?v=HUMC1Y23kmg) | An Phát Computer       | 20221202    | 25s   | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Yoga Gen 6    | `/models/x1-yoga-gen-6/front-reference.webp`    | [Lenovo ThinkPad X1 Yoga Gen 6 - Ports info and 360º look](https://www.youtube.com/watch?v=FfrVZnJ3sWQ)                    | LaptopMedia Benchmarks | 20221003    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Yoga Gen 7    | `/models/x1-yoga-gen-7/front-reference.webp`    | [Lenovo ThinkPad X1 Yoga Gen 7 - Ports info and 360º look](https://www.youtube.com/watch?v=7W1NZzgSTvM)                    | LaptopMedia Benchmarks | 20221003    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X1 Yoga Gen 8    | `/models/x1-yoga-gen-8/front-reference.webp`    | [Lenovo ThinkPad X1 Yoga Gen 8 - Ports info and 360º look](https://www.youtube.com/watch?v=wY3SHxlSEcY)                    | LaptopMedia Benchmarks | 20240127    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X13 Gen 3        | `/models/x13-gen-3/front-reference.webp`        | [Lenovo ThinkPad X13 Gen 3 - Ports info and 360º look](https://www.youtube.com/watch?v=pNzmAm9Vq5Q)                        | LaptopMedia Benchmarks | 20230630    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| Lenovo ThinkPad X13 Gen 4        | `/models/x13-gen-4/front-reference.webp`        | [Lenovo ThinkPad X13 Gen 4 - Ports info and 360º look](https://www.youtube.com/watch?v=6z4zlrwduFs)                        | LaptopMedia Benchmarks | 20240130    | 2s    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+
+Coverage after this change: **33 of 68 models** have a real primary photo,
+up from 7. **35 still need an exact-model photo with suitable composition and
+commercial reuse permission.** A licensed underside, cropped chassis, another
+generation, retailer slideshow or a monitor obscuring a mini PC does not count
+as a suitable primary product photo. The manufacturer's public CDN or PSREF
+URL alone was not treated as a grant to republish. HP, Lenovo and Dell asset
+workflows may provide authorized partner imagery, but no blanket permission
+for Kestro was established.
+
+Remaining primary-photo gaps:
+
+- HP EliteBook 840
+- HP ZBook 15
+- HP EliteDesk 800
+- Lenovo ThinkCentre M720q Tiny
+- Dell OptiPlex 5060
+- Dell UltraSharp U2419H
+- HP EliteDisplay E243
+- Lenovo ThinkVision T24i
+- HP USB-C Dock G5
+- Lenovo ThinkPad T14 Gen 5
+- Lenovo ThinkPad T14s Gen 2
+- Lenovo ThinkPad T14s Gen 4
+- Lenovo ThinkPad T14s Gen 5
+- Lenovo ThinkPad T16 Gen 2
+- Lenovo ThinkPad T16 Gen 3
+- Lenovo ThinkPad X1 Carbon Gen 11
+- Lenovo ThinkPad X1 Carbon Gen 12
+- Lenovo ThinkPad X1 2-in-1 Gen 9
+- Lenovo ThinkPad X1 Nano Gen 3
+- Lenovo ThinkPad X13 Gen 2
+- Lenovo ThinkPad X13 Gen 5
+- Lenovo ThinkPad X13 Yoga Gen 2
+- Lenovo ThinkPad X13 Yoga Gen 3
+- Lenovo ThinkPad X13 Yoga Gen 4
+- Lenovo ThinkPad L14 Gen 5
+- Lenovo ThinkPad L13 Gen 4
+- Lenovo ThinkPad L16 Gen 1
+- Lenovo ThinkPad E14 Gen 6
+- Lenovo ThinkPad E16 Gen 2
+- Lenovo ThinkPad P14s Gen 4
+- Lenovo ThinkPad P14s Gen 5
+- Lenovo ThinkPad P16s Gen 2
+- Lenovo ThinkPad P16s Gen 3
+- Lenovo ThinkPad P1 Gen 7
+- Lenovo ThinkPad P16 Gen 2

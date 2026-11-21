@@ -39,7 +39,14 @@ export type Model = {
     src: string;
     alt: Localized;
     photographic?: boolean;
-    credit?: { author: string; source: string; licence: string; licenceUrl: string };
+    credit?: {
+      author: string;
+      source: string;
+      licence: string;
+      licenceUrl: string;
+      /** Original work title, retained when the source supplies one. */
+      title?: string;
+    };
   }[];
 };
 
