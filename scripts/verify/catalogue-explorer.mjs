@@ -224,10 +224,18 @@ export async function verifyCatalogueExplorer(
             externalImages.push(source);
             return await route.abort();
           }
-          const fetched = images.request.get(url.href, {
-            maxRedirects: 0,
-            headers: await request.allHeaders(),
-          });
+          const headers = await request.allHeaders();
+          /* The image request is replayed on its own connection, and Node's
+             keep-alive can close an idle socket just as it is reused: the
+             server never saw the request, and the client reads ECONNRESET
+             (2026-11-21, once in a full run, on a photo the server serves
+             fine). Replay that transport failure once. A response of any
+             status is still the server's answer, and a second reset still
+             fails the run. */
+          const fetchImage = () => images.request.get(url.href, { maxRedirects: 0, headers });
+          const fetched = fetchImage().catch((error) =>
+            /ECONNRESET|socket hang up/.test(error.message) ? fetchImage() : Promise.reject(error),
+          );
           pendingImages.add(fetched);
           let response;
           try {
