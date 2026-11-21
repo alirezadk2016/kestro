@@ -64,6 +64,7 @@ export default function CatalogueListingItem({
 }: Props) {
   const da = lang === "da";
   const budget = mode === "budget";
+  const compactGrid = view === "grid" && !budget;
   const parts = nameParts(entry);
   const disabled = !ready || (selectionFull && !selected);
   const enquiry = budget ? (da ? "Spørg om pris" : "Enquire") : da ? "Forespørg" : "Enquire";
@@ -73,8 +74,9 @@ export default function CatalogueListingItem({
       id={entry.fragmentId}
       hidden={hidden}
       data-catalogue-item={entry.id}
+      data-catalogue-layout={view}
       data-budget-model={budget ? entry.id : undefined}
-      className={`${styles.card} ${view === "grid" ? styles.grid : styles.list} ${selected ? styles.selected : ""} ${hidden ? "!hidden" : ""}`}
+      className={`${styles.card} ${view === "grid" ? styles.grid : styles.list} ${compactGrid ? styles.compact : ""} ${selected ? styles.selected : ""} ${hidden ? "!hidden" : ""}`}
     >
       <Link
         data-catalogue-image-link
@@ -118,13 +120,27 @@ export default function CatalogueListingItem({
         </figure>
       </Link>
       <div className={styles.identity}>
-        <p className={styles.format}>{entry.format}</p>
-        <h3 className={styles.name}>
-          <Link data-catalogue-detail href={entry.detailHref}>
-            {entry.name}
+        {compactGrid ? (
+          <Link
+            data-catalogue-detail
+            href={entry.detailHref}
+            aria-label={entry.name}
+            className={styles.identityLink}
+          >
+            <span className={styles.format}>{entry.format}</span>
+            <h3 className={styles.name}>{entry.name}</h3>
           </Link>
-        </h3>
-        {!budget && entry.application && (
+        ) : (
+          <>
+            <p className={styles.format}>{entry.format}</p>
+            <h3 className={styles.name}>
+              <Link data-catalogue-detail href={entry.detailHref}>
+                {entry.name}
+              </Link>
+            </h3>
+          </>
+        )}
+        {!budget && view === "list" && entry.application && (
           <p data-catalogue-application className={styles.application}>
             {entry.application}
           </p>

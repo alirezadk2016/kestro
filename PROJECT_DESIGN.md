@@ -81,3 +81,12 @@ page lengths and overflow. Preserve search AND semantics, browser restoration,
 legacy fragments, no-JS links/disclosures, comparison focus and prefilled
 enquiries. Run the repository's complete production verification gate before
 publication; inspect screenshots independently of passing tests.
+
+## Compact product grid — 21 November 2026
+
+The owner rejected tall cards. Grid cards now prioritize scanning: a 136–140px
+device/reference frame, one combined format/title link, three key facts and a
+44px action row. Application prose remains on model pages and in list view.
+Use one/two/three/four columns as width allows, keeping desktop card widths
+similar at 1440 and 1920. Target a maximum 390px grid card on desktop and 410px
+on phones, with full-device photos, readable facts and honest references.

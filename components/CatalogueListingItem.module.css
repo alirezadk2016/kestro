@@ -19,6 +19,70 @@
 .grid {
   height: 100%;
 }
+.compact .media {
+  height: 140px;
+  aspect-ratio: auto;
+}
+.compact .image {
+  padding: 10px;
+}
+.compact .sourceFrame {
+  padding: 0;
+}
+.compact .reference {
+  padding: 12px;
+}
+.compact .referenceFamily,
+.compact .referenceNote {
+  line-height: 16px;
+}
+.compact .referenceModel {
+  margin-top: 2px;
+  font-size: 20px;
+  line-height: 22px;
+  font-weight: 600;
+}
+.compact .referenceGeneration {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 16px;
+}
+.compact .referenceNote {
+  margin-top: 6px;
+}
+.compact .identity {
+  padding: 8px 14px 0;
+}
+.identityLink {
+  display: block;
+  min-height: 44px;
+  border-radius: 2px;
+  color: #0b1426;
+}
+.identityLink .format {
+  display: block;
+}
+.identityLink .name {
+  margin-top: 2px;
+  font-size: 16px;
+  line-height: 22px;
+}
+.identityLink:hover {
+  color: #1a36d6;
+}
+.compact .facts {
+  gap: 10px;
+  margin: 8px 14px 0;
+  padding-top: 8px;
+}
+.compact .facts dd {
+  margin-top: 3px;
+  line-height: 18px;
+}
+.compact .actions {
+  gap: 4px 8px;
+  padding: 8px 14px 10px;
+}
 .list {
   display: grid;
   width: 100%;
@@ -84,6 +148,7 @@
   border-radius: 10px;
 }
 .mediaLink:focus-visible,
+.identityLink:focus-visible,
 .name a:focus-visible,
 .enquiry:focus-visible,
 .budgetLinks a:focus-visible {
@@ -298,6 +363,9 @@
   text-underline-offset: 3px;
 }
 @media (min-width: 640px) {
+  .compact .media {
+    height: 136px;
+  }
   .list {
     display: grid;
     grid-template-columns: 160px minmax(0, 1fr);

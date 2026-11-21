@@ -527,12 +527,8 @@ export async function verifyCatalogueExplorer(
         const frame = await media.boundingBox();
         if (grid) {
           assert.ok(
-            frame && frame.width >= 150 && frame.height >= 90,
-            "grid media makes the model recognizable",
-          );
-          assert.ok(
-            Math.abs(frame.width / frame.height - 1.6) <= 0.02,
-            "every photograph and reference tile uses the same 8:5 frame",
+            frame && frame.width >= 150 && frame.height >= 130 && frame.height <= 150,
+            "compact grid media keeps a recognizable model within a 130–150px-high frame",
           );
           if (!firstFrame) firstFrame = frame;
           else
@@ -664,21 +660,200 @@ export async function verifyCatalogueExplorer(
     }
 
     async function gridGeometry() {
-      if (width < 640 || (await items().count()) < 2) return;
-      await page.waitForFunction(
-        (key) => {
-          const cards = document.querySelectorAll(
-            `[data-catalogue='${key}'] li[data-catalogue-item]`,
+      if (width >= 640 && (await items().count()) > 1)
+        await page.waitForFunction(
+          (key) => {
+            const cards = document.querySelectorAll(
+              `[data-catalogue='${key}'] li[data-catalogue-item]`,
+            );
+            const first = cards[0]?.getBoundingClientRect();
+            const second = cards[1]?.getBoundingClientRect();
+            return (
+              first && second && Math.abs(first.y - second.y) <= 1 && first.right <= second.left + 1
+            );
+          },
+          key,
+          { timeout: 3000 },
+        );
+      const columns =
+        width < 640
+          ? 1
+          : budget
+            ? width >= 1280
+              ? 4
+              : 2
+            : width >= 1536
+              ? 4
+              : width >= 1280
+                ? 3
+                : 2;
+      const observed = await items().evaluateAll((nodes) => {
+        const bounds = (node) => {
+          const box = node.getBoundingClientRect();
+          return {
+            left: box.left,
+            right: box.right,
+            top: box.top,
+            bottom: box.bottom,
+            width: box.width,
+            height: box.height,
+          };
+        };
+        const textRects = (node) => {
+          const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+          const rects = [];
+          while (walker.nextNode()) {
+            const text = walker.currentNode;
+            if (
+              !text.textContent.trim() ||
+              text.parentElement.closest(".sr-only, [aria-hidden='true']")
+            )
+              continue;
+            const range = document.createRange();
+            range.selectNodeContents(text);
+            for (const box of range.getClientRects())
+              if (box.width && box.height)
+                rects.push({ left: box.left, right: box.right, top: box.top, bottom: box.bottom });
+          }
+          return rects;
+        };
+        return nodes.map((node) => {
+          const fields = [...node.querySelectorAll("h3, dt, dd")].map((field) => ({
+            text: field.textContent.trim(),
+            tag: field.tagName,
+            box: bounds(field),
+            cell: bounds(field.parentElement),
+            ink: textRects(field),
+            clipped:
+              field.scrollWidth > field.clientWidth + 2 ||
+              field.scrollHeight > field.clientHeight + 2,
+            fontSize: Number.parseFloat(getComputedStyle(field).fontSize),
+          }));
+          const overlaps = [];
+          for (let i = 0; i < fields.length; i++)
+            for (let j = i + 1; j < fields.length; j++)
+              if (
+                fields[i].ink.some((a) =>
+                  fields[j].ink.some(
+                    (b) =>
+                      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 &&
+                      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5,
+                  ),
+                )
+              )
+                overlaps.push([fields[i].text, fields[j].text]);
+          const compare = node.querySelector("input[data-catalogue-compare]");
+          return {
+            id: node.getAttribute("data-catalogue-item"),
+            card: bounds(node),
+            applicationCount: node.querySelectorAll("[data-catalogue-application]").length,
+            factCount: node.querySelectorAll("dl > div").length,
+            fields,
+            overlaps,
+            actions: [
+              node.querySelector("[data-catalogue-detail]"),
+              node.querySelector("[data-catalogue-enquiry]"),
+              compare?.closest("label"),
+            ]
+              .filter(Boolean)
+              .map(bounds),
+          };
+        });
+      });
+      if (observed.length) {
+        const firstRow = observed.filter(
+          (entry) => Math.abs(entry.card.top - observed[0].card.top) <= 1,
+        );
+        assert.equal(
+          firstRow.length,
+          Math.min(columns, observed.length),
+          `the grid uses ${columns} intentional columns at ${width}px`,
+        );
+      }
+      if (budget) return;
+      const maxHeight = width < 640 ? 410 : 390;
+      for (const entry of observed) {
+        assert.ok(
+          entry.card.height > 0 && entry.card.height <= maxHeight,
+          `${entry.id}: compact grid height stays within ${maxHeight}px at ${width}px (${entry.card.height}px)`,
+        );
+        assert.equal(
+          entry.applicationCount,
+          0,
+          `${entry.id}: grid cards leave application prose to the model page and optional list`,
+        );
+        assert.ok(
+          entry.factCount >= 2 && entry.factCount <= 3,
+          `${entry.id}: compact cards retain their complete key facts`,
+        );
+        assert.deepEqual(
+          entry.overlaps,
+          [],
+          `${entry.id}: grid titles and fact text never overlap`,
+        );
+        assert.equal(
+          entry.actions.length,
+          fixtures.length > 1 ? 3 : 2,
+          `${entry.id}: compact cards preserve distinct title, enquiry and available comparison actions`,
+        );
+        for (const field of entry.fields) {
+          assert.ok(
+            field.text &&
+              !field.clipped &&
+              field.fontSize >= 12 &&
+              field.box.width > 0 &&
+              field.box.height > 0,
+            `${entry.id}: compact ${field.tag} remains fully readable: ${field.text}`,
           );
-          const first = cards[0]?.getBoundingClientRect();
-          const second = cards[1]?.getBoundingClientRect();
-          return (
-            first && second && Math.abs(first.y - second.y) <= 1 && first.right <= second.left + 1
+          assert.ok(
+            field.ink.every(
+              (ink) =>
+                ink.left >= field.box.left - 2 &&
+                ink.right <= field.box.right + 2 &&
+                ink.top >= field.box.top - 2 &&
+                ink.bottom <= field.box.bottom + 2,
+            ),
+            `${entry.id}: compact ${field.tag} ink stays within its field: ${field.text}`,
           );
-        },
-        key,
-        { timeout: 3000 },
-      );
+          assert.ok(
+            field.box.left >= entry.card.left - 1 &&
+              field.box.right <= entry.card.right + 1 &&
+              field.box.top >= entry.card.top - 1 &&
+              field.box.bottom <= entry.card.bottom + 1,
+            `${entry.id}: each grid field remains inside the card`,
+          );
+          if (["DT", "DD"].includes(field.tag))
+            assert.ok(
+              field.ink.every(
+                (ink) => ink.left >= field.cell.left - 2 && ink.right <= field.cell.right + 2,
+              ),
+              `${entry.id}: grid facts stay inside their own columns`,
+            );
+        }
+        for (const action of entry.actions) {
+          assert.ok(
+            action.width >= 44 && action.height >= 44,
+            `${entry.id}: compact title and footer controls retain 44px targets`,
+          );
+          assert.ok(
+            action.left >= entry.card.left - 1 &&
+              action.right <= entry.card.right + 1 &&
+              action.top >= entry.card.top - 1 &&
+              action.bottom <= entry.card.bottom + 1,
+            `${entry.id}: compact title and footer controls remain inside the card`,
+          );
+        }
+        for (let index = 0; index < entry.actions.length; index++)
+          for (let other = index + 1; other < entry.actions.length; other++) {
+            const a = entry.actions[index];
+            const b = entry.actions[other];
+            assert.ok(
+              Math.min(a.right, b.right) - Math.max(a.left, b.left) <= 0.5 ||
+                Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) <= 0.5,
+              `${entry.id}: compact title and footer targets never overlap`,
+            );
+          }
+      }
     }
 
     async function selectionFocus(remaining) {
@@ -1095,11 +1270,6 @@ export async function verifyCatalogueExplorer(
           return { left: card.left, right: card.right, height: card.height, clipped };
         });
         assert.ok(layout.left >= -1 && layout.right <= width + 1, "model cards fit the viewport");
-        if (!budget && (width === 1440 || width === 390))
-          assert.ok(
-            layout.height > 0 && layout.height <= 650,
-            `image-led model cards remain bounded and readable at ${width}px: ${layout.height}px`,
-          );
         assert.deepEqual(
           layout.clipped,
           [],

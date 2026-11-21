@@ -895,7 +895,7 @@ export default function CatalogueExplorer({
               className={`min-w-0 ${
                 ledger
                   ? "grid grid-cols-1 gap-3"
-                  : `mt-3 grid gap-4 sm:mt-4 lg:gap-5 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 xl:grid-cols-3"}`
+                  : `mt-3 grid gap-4 sm:mt-4 lg:gap-5 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"}`
               }`}
             >
               {filtered.map((entry, index) => (
