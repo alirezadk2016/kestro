@@ -102,7 +102,7 @@ export default async function FollowUpsPage({ searchParams }: { searchParams: Pr
         </div>
         <details open={priority === "high"} className="mt-2">
           <summary className="flex min-h-11 cursor-pointer items-center text-xs font-medium text-paper/80">
-            Prioritet{priority === "high" ? " · høj valgt" : ""} ↓
+            Prioritet{priority === "high" ? ", høj valgt" : ""}
           </summary>
           <div className="border-t border-white/10 pt-3">
             <label htmlFor="followup-priority-filter" className="mb-2 block text-xs text-paper/75">

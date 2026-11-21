@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import { BUTTON, CARD } from "@/components/admin/tokens";
 import { AdminPageHeader, SectionHead } from "@/components/admin/parts";
 import { requireAdmin, SESSION_COOKIE } from "@/lib/admin-auth";
@@ -72,7 +73,7 @@ export default async function SystemPage() {
       ok: windsor,
       note: windsor
         ? "WINDSOR_API_KEY er til stede på webstedet. Denne kontrol henter ingen data og bekræfter ikke kontoadgang; forbindelsen testes først ved rapportopdatering."
-        : "Der er ingen Windsor-nøgle konfigureret på webstedet. En forbindelse i chatten overføres ikke automatisk til serveren. Manuel rapportimport kan bruges under Google & SEO.",
+        : "Automatisk hentning fra Search Console kræver en Windsor-nøgle i Vercel, og den er ikke sat. Indtil da indlæses rapporten som fil under Google & SEO.",
     },
     {
       title: "Sessionsignering",
@@ -167,9 +168,11 @@ export default async function SystemPage() {
       <details className={`${CARD} group p-5 sm:p-6`}>
         <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300">
           <h2 className="text-base font-semibold">Sådan bruger du panelet</h2>
-          <span aria-hidden="true" className="text-brand-200 group-open:rotate-180">
-            ↓
-          </span>
+          <ChevronDown
+            aria-hidden="true"
+            size={18}
+            className="flex-none text-brand-200 transition-transform duration-150 group-open:rotate-180"
+          />
         </summary>
         <ol className="mt-4 grid gap-5 sm:grid-cols-2">
           {[
@@ -218,7 +221,7 @@ export default async function SystemPage() {
                 href={workflow.href}
                 className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-brand-200 underline underline-offset-4"
               >
-                {workflow.label} →
+                {workflow.label}
               </Link>
             </li>
           ))}

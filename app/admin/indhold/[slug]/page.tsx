@@ -91,7 +91,7 @@ export default async function AdminContentDetail({
                 href={`/admin/medier?q=${encodeURIComponent(image.src.split("/").pop() || "")}`}
                 className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-brand-200 hover:text-paper"
               >
-                Find billedet i Medier →
+                Find billedet i Medier
               </Link>
             )}
           </div>

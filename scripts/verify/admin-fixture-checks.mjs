@@ -1177,7 +1177,7 @@ try {
       );
       await screenshotsAtBothSizes(page, "growth-seo");
       const pages = page.getByRole("navigation", { name: "Søgerapportens sider", exact: true });
-      await pages.getByRole("link", { name: "Næste →", exact: true }).click();
+      await pages.getByRole("link", { name: "Næste", exact: true }).click();
       await page.waitForURL((url) => url.searchParams.get("page") === "2");
       await pages.getByText("Side 2 af 3", { exact: false }).waitFor();
       await waitForCount(table.locator("tbody > tr"), 20);

@@ -166,7 +166,7 @@ export default async function EnquiryPage(props: {
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href="#reply-heading" className={`${BUTTON} text-sm`}>
-            Skriv svar ↓
+            Skriv svar
           </a>
           <Link
             href={`/admin/kontakter/${enquiry.id}`}
@@ -176,12 +176,12 @@ export default async function EnquiryPage(props: {
             Samlet kontakt
           </Link>
           <a href="#message-actions" className={`${BUTTON} text-sm xl:hidden`}>
-            Kontakt og håndtering ↓
+            Kontakt og håndtering
           </a>
         </div>
       </header>
 
-      <div className="mt-7 grid min-w-0 items-start gap-7 xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="mt-7 grid min-w-0 items-start gap-7 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0 space-y-7">
           <section aria-labelledby="message-heading" className={`${CARD} p-5 sm:p-6`}>
             <h2 id="message-heading" className="text-base font-semibold">
@@ -257,7 +257,7 @@ export default async function EnquiryPage(props: {
             ) : events.items.length ? (
               <details className="mt-2">
                 <summary className="flex min-h-11 cursor-pointer items-center text-sm font-medium text-brand-200">
-                  Vis seneste hændelser ({events.items.length}) ↓
+                  Vis seneste hændelser ({events.items.length})
                 </summary>
                 <ol className="mt-3 space-y-4 border-l border-white/15 pl-4">
                   {events.items.map((event) => (
@@ -295,12 +295,15 @@ export default async function EnquiryPage(props: {
           </section>
         </div>
 
+        {/* One panel, four sections. They were four separate cards with four
+            frames, so the column read as a stack of forms; the hairlines now
+            say "one customer, four things you can do". */}
         <aside
           id="message-actions"
-          className="min-w-0 scroll-mt-6 space-y-5"
+          className={`${CARD} min-w-0 scroll-mt-6 divide-y divide-white/[0.08] overflow-hidden`}
           aria-label="Kontakt og håndtering"
         >
-          <section className={`${CARD} p-5`}>
+          <section className="p-5">
             <h2 className="text-base font-semibold">Kontakt</h2>
             <dl className="mt-4 space-y-4 text-sm">
               <div>
@@ -354,7 +357,7 @@ export default async function EnquiryPage(props: {
             </dl>
           </section>
 
-          <section className={`${CARD} p-5`}>
+          <section className="p-5">
             <h2 className="text-base font-semibold">Opfølgning</h2>
             {status === "archived" && (
               <p className="mt-2 text-xs leading-5 text-paper/70">
@@ -374,7 +377,7 @@ export default async function EnquiryPage(props: {
             />
           </section>
 
-          <section className={`${CARD} p-5`}>
+          <section className="p-5">
             <h2 className="text-base font-semibold">Håndtering</h2>
             {status === "archived" ? (
               <form action="/api/admin/status" method="post" className="mt-4">
@@ -406,7 +409,7 @@ export default async function EnquiryPage(props: {
             )}
           </section>
 
-          <section className={`${CARD} p-5`}>
+          <section className="p-5">
             <h2 className="text-base font-semibold">Intern note</h2>
             <p id="note-help" className="mt-2 text-xs leading-5 text-paper/70">
               Kun til administrationen. Noten sendes ikke til kunden.

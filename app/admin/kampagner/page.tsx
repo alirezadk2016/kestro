@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CampaignBuilder from "@/components/admin/CampaignBuilder";
-import { GrowthHeader, GrowthNav, GrowthPanel } from "@/components/admin/GrowthParts";
+import { GrowthHeader, GrowthPanel } from "@/components/admin/GrowthParts";
 import styles from "@/components/admin/growth.module.css";
 import { requireAdmin } from "@/lib/admin-auth";
 import { models } from "@/lib/models";
@@ -15,7 +15,6 @@ export default async function CampaignPage() {
         title="Kampagnelinks"
         description="Giv hvert link en tydelig kilde, så du kan se, hvilke placeringer der sender besøg til Kestro."
       />
-      <GrowthNav active="campaigns" />
       <GrowthPanel
         title="Ét link. Én kendt placering."
         description="Vælg en skabelon, navngiv kampagnen og kopiér linket. Der oprettes ingen annonce, og intet bliver offentliggjort automatisk."
@@ -35,7 +34,7 @@ export default async function CampaignPage() {
               sammenligne placeringerne i samme kampagne.
             </p>
             <Link href="/admin/trafik" className={styles.textLink}>
-              Se kilder & kampagner →
+              Se kilder & kampagner
             </Link>
           </div>
         </GrowthPanel>
@@ -46,7 +45,7 @@ export default async function CampaignPage() {
               du selv har skrevet.
             </p>
             <Link href="/admin/seo" className={styles.textLink}>
-              Åbn Google & SEO →
+              Åbn Google & SEO
             </Link>
           </div>
         </GrowthPanel>

@@ -53,7 +53,7 @@ export default async function AdminMedia({
         description="Find billeder, kopiér links, og hent originalfilerne."
         actions={
           <Link href="/admin/indhold" className={BUTTON}>
-            Indhold →
+            Indhold
           </Link>
         }
       />
@@ -82,7 +82,7 @@ export default async function AdminMedia({
         </div>
         <details open={group !== "all"} className="mt-2">
           <summary className="flex min-h-11 cursor-pointer items-center rounded-sm text-xs font-medium text-paper/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300">
-            Billedgruppe{group !== "all" ? " · filter valgt" : ""} ↓
+            Billedgruppe{group !== "all" ? ", filter valgt" : ""}
           </summary>
           <div className="border-t border-white/10 pt-3">
             <div className="min-w-0">
@@ -125,7 +125,7 @@ export default async function AdminMedia({
       {items.length ? (
         <ul
           aria-label="Billedbibliotek"
-          className="grid min-w-0 gap-5 md:grid-cols-2 2xl:grid-cols-3"
+          className="grid min-w-0 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
         >
           {items.map((asset) => (
             <li key={asset.src} className={`${CARD} flex min-w-0 flex-col overflow-hidden`}>
@@ -140,7 +140,7 @@ export default async function AdminMedia({
                   src={asset.src}
                   alt={asset.content[0]?.images.da?.alt ?? `Forhåndsvisning af ${asset.filename}`}
                   fill
-                  sizes="(min-width:1536px) 400px, (min-width:768px) 45vw, 90vw"
+                  sizes="(min-width:1536px) 340px, (min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw"
                   className="object-contain p-3"
                   unoptimized={asset.format === "svg"}
                 />
@@ -175,7 +175,7 @@ export default async function AdminMedia({
                             href={`/admin/indhold/${entry.slug}`}
                             className="inline-flex min-h-11 items-center text-sm leading-6 text-brand-200 hover:text-paper"
                           >
-                            {entry.title.da} →
+                            {entry.title.da}
                           </Link>
                           <p className="text-xs leading-5 text-paper/65">{entry.images.da?.alt}</p>
                         </li>

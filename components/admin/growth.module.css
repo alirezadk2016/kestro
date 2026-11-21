@@ -1,13 +1,19 @@
+/*
+ * The growth pages on the panel's own surfaces, 2026-11-21. They were white
+ * cards on the navy room: three pages of the same tool in a second design
+ * system, which is most of why the panel read as assembled. The names stay;
+ * their values are now the panel's.
+ */
 .workspace {
-  --growth-paper: #f3f5f8;
-  --growth-surface: #fff;
-  --growth-inset: #e9edf3;
-  --growth-ink: #122039;
-  --growth-secondary: #42516a;
-  --growth-line: #d5dce6;
-  --growth-control: #6c7c93;
-  --growth-blue: #244dc7;
-  --growth-blue-wash: #e9efff;
+  --growth-paper: var(--admin-panel);
+  --growth-surface: var(--admin-panel);
+  --growth-inset: var(--admin-inset);
+  --growth-ink: var(--admin-text);
+  --growth-secondary: var(--admin-secondary);
+  --growth-line: var(--admin-border);
+  --growth-control: var(--admin-control-border);
+  --growth-blue: #93aefb;
+  --growth-blue-wash: rgb(30 64 255 / 0.18);
   display: grid;
   gap: 24px;
 }
@@ -21,9 +27,7 @@
 .eyebrow {
   color: var(--admin-muted);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: 500;
 }
 .title {
   margin-top: 8px;
@@ -103,10 +107,8 @@
   line-height: 1.6;
 }
 .reportKicker {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 .metricStrip {
   display: grid;
@@ -215,12 +217,13 @@
   background: var(--growth-inset);
 }
 .primaryButton {
-  border-color: var(--growth-blue);
+  border-color: #1e40ff;
   color: #fff;
-  background: var(--growth-blue);
+  background: #1e40ff;
 }
 .primaryButton:hover {
-  background: #193ba4;
+  border-color: #1a36d6;
+  background: #1a36d6;
 }
 .textLink {
   display: inline-flex;
@@ -336,7 +339,7 @@
   border-top: 1px solid var(--growth-line);
 }
 .table tbody tr:hover {
-  background: #f8faff;
+  background: rgb(255 255 255 / 0.035);
 }
 .table td:first-child {
   min-width: 140px;
@@ -397,7 +400,7 @@
   overflow: hidden;
   margin-top: 12px;
   border-radius: 4px;
-  background: #d5dce6;
+  background: rgb(255 255 255 / 0.1);
 }
 .coverageBar span {
   min-width: 0;
@@ -435,11 +438,11 @@
   line-height: 1.65;
 }
 .notice {
-  border: 1px solid #e4c37d;
+  border: 1px solid rgb(252 211 77 / 0.3);
   border-radius: 8px;
   padding: 16px;
-  color: #714b0d;
-  background: #fff6df;
+  color: #fde68a;
+  background: rgb(252 211 77 / 0.06);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -490,7 +493,7 @@
 .chartBar {
   flex: 1;
   min-width: 0;
-  background: var(--growth-blue);
+  background: rgb(102 144 249 / 0.7);
 }
 .chartZero {
   height: 1px;
@@ -603,7 +606,7 @@
   line-height: 1.6;
 }
 .error {
-  color: #9b1c1c;
+  color: #fca5a5;
   font-size: 13px;
   line-height: 1.6;
 }

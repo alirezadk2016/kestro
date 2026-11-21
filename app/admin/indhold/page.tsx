@@ -90,7 +90,7 @@ export default async function AdminContent({
         </div>
         <details open={Boolean(kind || category)} className="mt-2">
           <summary className="flex min-h-11 cursor-pointer items-center rounded-sm text-xs font-medium text-paper/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-300">
-            Type og emne{kind || category ? " · filtre valgt" : ""} ↓
+            Type og emne{kind || category ? ", filtre valgt" : ""}
           </summary>
           <div className="grid gap-4 border-t border-white/10 pt-3 sm:grid-cols-2">
             <div className="min-w-0">

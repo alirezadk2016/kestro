@@ -21,9 +21,9 @@ export const INSET = "bg-[var(--admin-inset)]";
 
 export const HAIRLINE = "border-[color:var(--admin-border)]";
 
-/** Small caps. One size and one tracking for every label in the panel. */
-export const EYEBROW =
-  "text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--admin-muted)]";
+/** A small label. Sentence case, like the site: tracked capitals on every
+    label were a third of what made the panel read as a template. */
+export const EYEBROW = "text-xs font-medium text-[color:var(--admin-muted)]";
 
 /** Any figure. Tight tracking because these are set large, and tabular so a
     number changing under a live update does not shift the layout. */

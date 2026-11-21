@@ -1,10 +1,10 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "@/components/admin/growth.module.css";
 
-/** Growth reports share one paper work surface within the navy Kestro frame. */
+/** The growth pages' header: the same title, line and actions as every page.
+    The eyebrow is accepted and not shown; the sidebar already says where
+    you are. */
 export function GrowthHeader({
-  eyebrow = "Kestro · vækst",
   title,
   description,
   actions,
@@ -17,38 +17,11 @@ export function GrowthHeader({
   return (
     <header className={styles.header}>
       <div>
-        <p className={styles.eyebrow}>{eyebrow}</p>
         <h1 className={styles.title}>{title}</h1>
         {description && <p className={styles.description}>{description}</p>}
       </div>
       {actions && <div className={styles.headerActions}>{actions}</div>}
     </header>
-  );
-}
-
-export function GrowthNav({ active }: { active: "traffic" | "seo" | "campaigns" }) {
-  const links = [
-    { id: "traffic", href: "/admin/trafik", label: "Trafik & kilder", number: "01" },
-    { id: "seo", href: "/admin/seo", label: "Google & SEO", number: "02" },
-    { id: "campaigns", href: "/admin/kampagner", label: "Kampagnelinks", number: "03" },
-  ];
-  return (
-    <nav aria-label="Vækstværktøjer" className={styles.growthNav}>
-      {links.map((link) => (
-        <Link
-          key={link.id}
-          href={link.href}
-          prefetch={false}
-          aria-current={active === link.id ? "page" : undefined}
-          className={`${styles.growthLink} ${active === link.id ? styles.growthLinkActive : ""}`}
-        >
-          <span aria-hidden="true" className={styles.navNumber}>
-            {link.number}
-          </span>
-          {link.label}
-        </Link>
-      ))}
-    </nav>
   );
 }
 

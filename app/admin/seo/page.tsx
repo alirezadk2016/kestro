@@ -13,7 +13,7 @@ import {
   SEARCH_CONSOLE_URL,
 } from "@/lib/search-console";
 import { searchConsoleSyncConfigured } from "@/lib/search-console-provider";
-import { GrowthHeader, GrowthNav, GrowthPanel, GrowthEmpty } from "@/components/admin/GrowthParts";
+import { GrowthHeader, GrowthPanel, GrowthEmpty } from "@/components/admin/GrowthParts";
 import SearchConsoleImport from "@/components/admin/SearchConsoleImport";
 import styles from "@/components/admin/growth.module.css";
 
@@ -98,14 +98,13 @@ export default async function SearchConsolePage({
           </a>
         }
       />
-      <GrowthNav active="seo" />
       {!stored.available && (
         <div className={styles.paper}>
           <p role="status" className={`${styles.notice} m-5`}>
             Den gemte rapport kunne ikke hentes. Det er manglende adgang til målinger, ikke
             dokumentation for nul trafik.{" "}
             <Link href="/admin/system" className={styles.textLink}>
-              Se systemstatus →
+              Se systemstatus
             </Link>
           </p>
         </div>
@@ -146,7 +145,7 @@ export default async function SearchConsolePage({
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <a href="#search-queries" className={`${styles.button} ${styles.primaryButton}`}>
-                  Se søgefraser ↓
+                  Se søgefraser
                 </a>
                 <p className={styles.metricNote}>
                   {report.daily.length
@@ -306,7 +305,7 @@ export default async function SearchConsolePage({
               >
                 {page > 1 ? (
                   <Link href={href(page - 1)} prefetch={false} className={styles.button}>
-                    ← Forrige
+                    Forrige
                   </Link>
                 ) : (
                   <span />
@@ -316,7 +315,7 @@ export default async function SearchConsolePage({
                 </span>
                 {page < pageCount ? (
                   <Link href={href(page + 1)} prefetch={false} className={styles.button}>
-                    Næste →
+                    Næste
                   </Link>
                 ) : (
                   <span />
@@ -391,7 +390,7 @@ export default async function SearchConsolePage({
                   ))}
                 </ul>
                 <Link href="/admin/indhold" className={`${styles.textLink} mt-5`}>
-                  Gennemse eksisterende indhold →
+                  Gennemse eksisterende indhold
                 </Link>
                 <p className={styles.sectionCopy}>
                   Tekst og publicering styres i GitHub. Bevar sidens søgeintention og mål ændringer
@@ -406,12 +405,11 @@ export default async function SearchConsolePage({
         stored.available && (
           <GrowthPanel
             title="Indlæs den første søgerapport"
-            description="Search Console kan være forbundet i en anden tjeneste, uden at denne server har adgang. Der vises ingen prøve- eller gættede trafikdata."
+            description="Siden viser kun tal fra en rigtig Search Console-rapport, aldrig prøvetal."
           >
             <GrowthEmpty>
-              Importér en rigtig rapport nedenfor. En samlet Kestro JSON-rapport kan indeholde
-              ejendomstal, datoer, søgefraser og sider. En officiel CSV-tabel vises med sin egen
-              begrænsede dækning.
+              Eksportér søgefraser eller sider fra Search Console som CSV, og indlæs filen herunder.
+              En samlet Kestro JSON-rapport kan også indeholde datoer og de samlede tal.
             </GrowthEmpty>
           </GrowthPanel>
         )
@@ -473,7 +471,7 @@ function DailyReport({ report }: { report: SearchConsoleReport }) {
           <span>{date(report.dateTo)}</span>
         </div>
         <details className="mt-5">
-          <summary className={styles.textLink}>Vis daglige målinger ↓</summary>
+          <summary className={styles.textLink}>Vis daglige målinger</summary>
           <div
             className={`${styles.tableScroll} max-h-80`}
             tabIndex={0}

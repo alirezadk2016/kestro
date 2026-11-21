@@ -22,14 +22,15 @@ export function AdminPageHeader({
     <header
       className={`flex flex-wrap items-end justify-between ${compactMobile ? "gap-x-4 gap-y-3 sm:gap-x-8 sm:gap-y-5" : "gap-x-8 gap-y-5"}`}
     >
-      <div className="min-w-0">
-        <p className={EYEBROW}>{eyebrow}</p>
-        <h1 className="mt-2 break-words font-display text-3xl font-extrabold tracking-tight">
+      {/* The eyebrow is accepted and not shown: "Kestro · arbejdsrum" above
+          every title repeated what the sidebar already says. */}
+      <div className="min-w-0" data-section={eyebrow}>
+        <h1 className="break-words font-display text-[1.75rem] font-extrabold leading-tight tracking-tight">
           {title}
         </h1>
         {description && (
           <p
-            className={`mt-3 max-w-2xl text-sm leading-6 text-paper/75 ${compactMobile ? "hidden sm:block" : ""}`}
+            className={`mt-2 max-w-2xl text-sm leading-6 text-paper/75 ${compactMobile ? "hidden sm:block" : ""}`}
           >
             {description}
           </p>

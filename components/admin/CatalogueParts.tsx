@@ -37,20 +37,20 @@ export function CataloguePager({
       <div className="flex gap-2">
         {page > 1 ? (
           <Link href={previous} className={BUTTON}>
-            ← Forrige
+            Forrige
           </Link>
         ) : (
           <span className={`${BUTTON} pointer-events-none !text-paper/65`} aria-disabled="true">
-            ← Forrige
+            Forrige
           </span>
         )}
         {page < pages ? (
           <Link href={next} className={BUTTON}>
-            Næste →
+            Næste
           </Link>
         ) : (
           <span className={`${BUTTON} pointer-events-none !text-paper/65`} aria-disabled="true">
-            Næste →
+            Næste
           </span>
         )}
       </div>

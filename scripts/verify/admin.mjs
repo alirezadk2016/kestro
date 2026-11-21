@@ -555,7 +555,7 @@ export async function verifyAdmin(browser, base, fail) {
     );
     await page
       .getByRole("navigation", { name: "Billedsider", exact: true })
-      .getByRole("link", { name: "Næste →", exact: true })
+      .getByRole("link", { name: "Næste", exact: true })
       .click();
     await page.waitForURL((url) => url.searchParams.get("page") === "2");
     await visit(page, "/admin/medier?q=battery.webp&group=practical");
@@ -581,7 +581,7 @@ export async function verifyAdmin(browser, base, fail) {
     await asset.locator("summary").click();
     assert.equal(
       await asset
-        .getByRole("link", { name: "Tjek batterikapacitet i Windows →", exact: true })
+        .getByRole("link", { name: "Tjek batterikapacitet i Windows", exact: true })
         .count(),
       1,
     );

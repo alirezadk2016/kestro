@@ -253,8 +253,7 @@ export default function SearchConsoleImport({
       </form>
       {!syncConfigured && (
         <p className={`${styles.sectionCopy} mt-4`}>
-          Serverens løbende forbindelse er ikke konfigureret. Filimport virker uafhængigt af
-          forbindelsen til chatten.
+          Automatisk hentning fra Search Console er ikke sat op, så rapporten indlæses som fil her.
         </p>
       )}
       <noscript>

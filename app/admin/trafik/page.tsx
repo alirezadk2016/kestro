@@ -3,7 +3,6 @@ import LivePanel from "@/components/admin/LivePanel";
 import {
   GrowthEmpty,
   GrowthHeader,
-  GrowthNav,
   GrowthPanel,
   channelLabel,
   growthPercent,
@@ -60,7 +59,6 @@ export default async function TrafficPage({ searchParams }: { searchParams: Prom
         title="Trafik"
         description="Se, hvor Kestro bliver fundet — fra første kilde til den side, besøget starter på."
       />
-      <GrowthNav active="traffic" />
       <div className={styles.paper}>
         <div className={styles.reportTop}>
           <div className={styles.reportMeta}>
@@ -319,7 +317,7 @@ export default async function TrafficPage({ searchParams }: { searchParams: Prom
               Instagram alene beviser ikke Explore, story eller profil.
             </p>
             <Link href="/admin/kampagner" className={styles.textLink}>
-              Mærk dine næste links →
+              Mærk dine næste links
             </Link>
           </aside>
         </div>
@@ -390,7 +388,7 @@ export default async function TrafficPage({ searchParams }: { searchParams: Prom
                                 href={`/admin/indhold/${entry.slug}`}
                                 className={styles.textLink}
                               >
-                                Gennemse indhold →
+                                Gennemse indhold
                               </Link>
                             </small>
                           )}
@@ -415,7 +413,7 @@ export default async function TrafficPage({ searchParams }: { searchParams: Prom
                 <>
                   Ingen kampagnemærker i dette udvalg.{" "}
                   <Link href="/admin/kampagner" className={styles.textLink}>
-                    Opret et mærket link →
+                    Opret et mærket link
                   </Link>
                 </>
               ) : (

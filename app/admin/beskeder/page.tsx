@@ -62,10 +62,7 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
     <div>
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-200">
-            Indbakke
-          </p>
-          <h1 className="mt-2 font-display text-[1.75rem] font-extrabold tracking-tight">
+          <h1 className="font-display text-[1.75rem] font-extrabold leading-tight tracking-tight">
             Beskeder
           </h1>
           <p className="mt-2 text-sm leading-6 text-paper/70">
@@ -107,13 +104,16 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         </p>
       )}
 
-      <nav aria-label="Beskedstatus" className="mt-7 flex flex-wrap gap-2">
+      <nav
+        aria-label="Beskedstatus"
+        className="mt-6 flex gap-1 overflow-x-auto border-b border-white/10 [scrollbar-width:none]"
+      >
         {STATUS_FILTERS.map((filter) => (
           <Link
             key={filter.key}
             href={href({ status: filter.key })}
             aria-current={status === filter.key ? "page" : undefined}
-            className={`inline-flex min-h-[44px] items-center gap-2 rounded-lg border px-3.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 ${status === filter.key ? "border-brand-400/60 bg-brand-500/15 font-semibold text-paper" : "border-white/10 text-paper/70 hover:border-white/25 hover:text-paper"}`}
+            className={`-mb-px inline-flex min-h-[44px] flex-none items-center gap-2 border-b-2 px-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-300 ${status === filter.key ? "border-brand-400 font-semibold text-paper" : "border-transparent text-paper/70 hover:text-paper"}`}
           >
             {filter.label}
             {result.available && (
@@ -133,12 +133,12 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         aria-label="Søg i beskeder"
         action="/admin/beskeder"
         method="get"
-        className="mt-5 rounded-xl border border-white/10 bg-white/[0.025] p-4"
+        className="mt-4"
       >
         <input type="hidden" name="status" value={status} />
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
           <div className="min-w-0">
-            <label htmlFor="inbox-search" className="mb-2 block text-xs font-medium text-paper/75">
+            <label htmlFor="inbox-search" className="sr-only">
               Søg
             </label>
             <input
@@ -157,7 +157,7 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
         </div>
         <details open={Boolean(source || sort !== "newest")} className="mt-2">
           <summary className="flex min-h-11 cursor-pointer items-center text-xs font-medium text-paper/80">
-            Type og sortering{source || sort !== "newest" ? " · aktive filtre" : ""} ↓
+            Type og sortering{source || sort !== "newest" ? ", aktive filtre" : ""}
           </summary>
           <div className="grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-2">
             <div>
@@ -312,9 +312,6 @@ export default async function InboxPage(props: { searchParams: Promise<Query> })
               )}
             </nav>
           )}
-          <p className="mt-4 text-xs leading-5 text-paper/65">
-            Tallene ved status viser hele indbakken. Listen følger dine valgte filtre.
-          </p>
         </>
       )}
     </div>
