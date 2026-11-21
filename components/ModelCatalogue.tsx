@@ -95,6 +95,7 @@ export function modelCatalogueEntries(models: readonly Model[], lang: Lang): Cat
             height: media.height,
             alt: media.alt[lang],
             kind: media.kind,
+            sourceFrame: media.sourceFrame,
             credit: media.credit,
           }
         : undefined,

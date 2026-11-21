@@ -134,6 +134,10 @@ export default function CatalogueExplorer({
     return [...credited.values()];
   }, [entries]);
   const hasFacets = brands.length > 1 || categories.length > 1 || screens.length > 1;
+  const resultsInset =
+    hasFacets && !budget
+      ? "lg:ml-[calc(184px+1.5rem)] xl:ml-[calc(184px+1.75rem)] 2xl:ml-[calc(200px+1.75rem)]"
+      : "";
   /* Product lines, grouped by brand so ThinkPad T sits beside ThinkPad X1. */
   const allSeries = useMemo(() => {
     const lines = new Map<string, { id: string; label: string; brand: string }>();
@@ -632,7 +636,7 @@ export default function CatalogueExplorer({
   );
 
   return (
-    <div ref={explorer} data-catalogue={mode} className="mt-2 min-w-0 scroll-mt-28 sm:mt-5">
+    <div ref={explorer} data-catalogue={mode} className="mt-2 min-w-0 scroll-mt-28 sm:mt-3">
       {heading && <h2 className="sr-only">{heading}</h2>}
       <noscript>
         <p className="mb-1 text-sm leading-5 text-paper/85 sm:mb-4 sm:leading-6">
@@ -642,7 +646,7 @@ export default function CatalogueExplorer({
         </p>
       </noscript>
       {!budget && useOptions.length > 1 && (
-        <div className="mb-3 sm:mb-5">
+        <div className={`mb-3 sm:mb-4 ${resultsInset}`}>
           <p className="mb-2 hidden text-sm font-medium text-paper/75 sm:block">
             {da ? "Vælg efter jeres arbejde" : "Choose around your work"}
           </p>
@@ -674,13 +678,7 @@ export default function CatalogueExplorer({
       {/* One bar over the list, not over the page. From lg it starts where
           the list starts, so the filters and the rows share a top edge and
           the search is a field, not a 1,600px strip across the screen. */}
-      <div
-        className={
-          hasFacets && !budget
-            ? "lg:ml-[calc(184px+1.5rem)] xl:ml-[calc(184px+1.75rem)] 2xl:ml-[calc(200px+1.75rem)]"
-            : ""
-        }
-      >
+      <div className={resultsInset}>
         <label htmlFor={`${prefix}-search`} className="sr-only">
           {da ? "Søg efter model eller mærke" : "Search by model or brand"}
         </label>
@@ -896,7 +894,7 @@ export default function CatalogueExplorer({
             <ul
               className={`min-w-0 ${
                 ledger
-                  ? "space-y-3"
+                  ? "grid grid-cols-1 gap-3"
                   : `mt-3 grid gap-4 sm:mt-4 lg:gap-5 ${isList ? "" : budget ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-2 xl:grid-cols-3"}`
               }`}
             >

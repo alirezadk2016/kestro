@@ -272,7 +272,7 @@ export default async function CategoryPage(props: {
      elsewhere meanwhile" follows them. */
   const modelsSection =
     categoryModels.length > 0 ? (
-      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:py-10">
+      <section id="models" className="scroll-mt-24 bg-ink-900 pb-8 pt-2 sm:pb-10 sm:pt-6">
         <Container>
           <div id={isLaptops ? "laptop-model-library" : undefined} className="scroll-mt-28">
             <h2 className="sr-only">{c.modelsTitle}</h2>
@@ -321,7 +321,7 @@ export default async function CategoryPage(props: {
         primaryEntityId={collectionJsonLd ? collectionId : undefined}
       />
 
-      <section className="border-b border-white/10 bg-brand-950 pb-3 pt-3 sm:pb-7 sm:pt-6">
+      <section className="border-b border-white/10 bg-brand-950 pb-3 pt-3 sm:pb-5 sm:pt-4">
         <Container>
           <Breadcrumbs
             lang={lang}
@@ -338,7 +338,7 @@ export default async function CategoryPage(props: {
               }}
             />
           )}
-          <div className="mt-2 grid gap-2 sm:mt-3 sm:gap-3 lg:grid-cols-12 lg:items-center lg:gap-12">
+          <div className="mt-2 grid gap-2 sm:mt-3 sm:gap-3 lg:grid-cols-12 lg:items-start lg:gap-12">
             <h1 className="t-h1 font-display font-extrabold tracking-display text-paper lg:col-span-6">
               {(category.h1 ?? category.name)[lang]}
             </h1>

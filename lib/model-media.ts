@@ -22,6 +22,8 @@ export type ModelMedia = {
   height: number;
   kind: "photo" | "illustration";
   alt: Localized;
+  /** Catalogue-only clipping of the frame's thin blank source edge. */
+  sourceFrame?: boolean;
   credit?: NonNullable<Model["images"]>[number]["credit"];
 };
 
@@ -46,6 +48,7 @@ const PHOTO_SIZE: Record<string, { width: number; height: number }> = {
 const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
   "lenovo-thinkpad-t14": {
     src: "/models/t14/gen1-amd-front-reference.jpg",
+    sourceFrame: true,
     width: 1920,
     height: 1440,
     kind: "photo",
@@ -62,6 +65,7 @@ const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
   },
   "lenovo-thinkpad-x1-carbon": {
     src: "/models/x1-carbon/gen8-front-reference.jpg",
+    sourceFrame: true,
     width: 1920,
     height: 1440,
     kind: "photo",
@@ -78,6 +82,7 @@ const REFERENCE_PHOTOS: Record<string, ModelMedia> = {
   },
   "dell-latitude-5410": {
     src: "/models/latitude-5410/front-reference.jpg",
+    sourceFrame: true,
     width: 1920,
     height: 1440,
     kind: "photo",

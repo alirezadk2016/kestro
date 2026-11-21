@@ -82,7 +82,11 @@ export default function CatalogueListingItem({
         aria-label={`${entry.image ? (da ? "Se billeder og detaljer" : "View images and details") : da ? "Se detaljer" : "View details"}: ${entry.name}`}
         className={styles.mediaLink}
       >
-        <figure data-catalogue-media className={styles.media}>
+        <figure
+          data-catalogue-media
+          data-photographic={entry.image?.kind === "photo" ? "true" : undefined}
+          className={styles.media}
+        >
           {entry.image ? (
             <Image
               src={entry.image.src}
@@ -95,7 +99,7 @@ export default function CatalogueListingItem({
                   ? "(min-width: 1536px) 24vw, (min-width: 1024px) 28vw, (min-width: 640px) 44vw, 92vw"
                   : "(min-width: 1024px) 180px, (min-width: 640px) 160px, 92vw"
               }
-              className={styles.image}
+              className={`${styles.image} ${entry.image.sourceFrame ? styles.sourceFrame : ""}`}
             />
           ) : (
             <div data-catalogue-placeholder aria-hidden="true" className={styles.reference}>

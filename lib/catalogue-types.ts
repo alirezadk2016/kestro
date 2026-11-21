@@ -23,6 +23,7 @@ export type CatalogueEntry = {
     height: number;
     alt: string;
     kind: "photo" | "illustration";
+    sourceFrame?: boolean;
     credit?: {
       author: string;
       source: string;

@@ -559,16 +559,108 @@ export async function verifyCatalogueExplorer(
     }
 
     async function listGeometry() {
-      if (budget || (await items().count()) < 2 || width < 640) return;
-      const first = await items().nth(0).boundingBox();
-      const second = await items().nth(1).boundingBox();
-      assert.ok(
-        first &&
-          second &&
-          Math.abs(first.x - second.x) <= 1 &&
-          second.y >= first.y + first.height - 1,
-        "the optional model list uses actual full rows",
-      );
+      if (budget) return;
+      const observed = await items().evaluateAll((nodes) => {
+        const bounds = (node) => {
+          const box = node.getBoundingClientRect();
+          return {
+            left: box.left,
+            right: box.right,
+            top: box.top,
+            bottom: box.bottom,
+            width: box.width,
+          };
+        };
+        const textRects = (node) => {
+          const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+          const rects = [];
+          while (walker.nextNode()) {
+            if (!walker.currentNode.textContent.trim()) continue;
+            const range = document.createRange();
+            range.selectNodeContents(walker.currentNode);
+            for (const box of range.getClientRects())
+              if (box.width && box.height)
+                rects.push({ left: box.left, right: box.right, top: box.top, bottom: box.bottom });
+          }
+          return rects;
+        };
+        return nodes.map((node) => {
+          const fields = [...node.querySelectorAll("h3, [data-catalogue-application], dt, dd")].map(
+            (field) => ({
+              text: field.textContent.trim(),
+              tag: field.tagName,
+              box: bounds(field),
+              cell: bounds(field.parentElement),
+              ink: textRects(field),
+              clipped:
+                field.scrollWidth > field.clientWidth + 2 ||
+                field.scrollHeight > field.clientHeight + 2,
+              fontSize: Number.parseFloat(getComputedStyle(field).fontSize),
+            }),
+          );
+          const overlaps = [];
+          for (let i = 0; i < fields.length; i++)
+            for (let j = i + 1; j < fields.length; j++)
+              if (
+                fields[i].ink.some((a) =>
+                  fields[j].ink.some(
+                    (b) =>
+                      Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0.5 &&
+                      Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5,
+                  ),
+                )
+              )
+                overlaps.push([fields[i].text, fields[j].text]);
+          return {
+            id: node.getAttribute("data-catalogue-item"),
+            card: bounds(node),
+            column: bounds(node.parentElement.parentElement),
+            fields,
+            overlaps,
+          };
+        });
+      });
+      for (const [index, entry] of observed.entries()) {
+        assert.ok(
+          Math.abs(entry.card.left - entry.column.left) <= 2 &&
+            Math.abs(entry.card.right - entry.column.right) <= 2 &&
+            Math.abs(entry.card.width - entry.column.width) <= 2,
+          `${entry.id}: each list card fills its entire result column at ${width}px (${entry.card.width}px card / ${entry.column.width}px column)`,
+        );
+        if (index > 0)
+          assert.ok(
+            entry.card.top >= observed[index - 1].card.bottom - 1,
+            "the optional model list uses separate full-width rows",
+          );
+        assert.deepEqual(
+          entry.overlaps,
+          [],
+          `${entry.id}: list titles, applications and fact text never overlap`,
+        );
+        for (const field of entry.fields) {
+          assert.ok(
+            !field.clipped && field.fontSize >= 12,
+            `${entry.id}: ${field.tag} remains fully readable: ${field.text}`,
+          );
+          assert.ok(
+            field.ink.every(
+              (ink) =>
+                ink.left >= field.box.left - 2 &&
+                ink.right <= field.box.right + 2 &&
+                ink.top >= field.box.top - 2 &&
+                ink.bottom <= field.box.bottom + 2,
+            ),
+            `${entry.id}: ${field.tag} text stays inside its own field: ${field.text}`,
+          );
+          if (["DT", "DD"].includes(field.tag))
+            assert.ok(
+              field.ink.every(
+                (ink) => ink.left >= field.cell.left - 2 && ink.right <= field.cell.right + 2,
+              ),
+              `${entry.id}: each fact label and value stays inside its own column`,
+            );
+        }
+      }
     }
 
     async function gridGeometry() {
@@ -1016,6 +1108,22 @@ export async function verifyCatalogueExplorer(
       }
       await modelMedia({ grid: true });
       await gridGeometry();
+      if (javaScriptEnabled && !budget && !fragment) {
+        await root().locator("[data-catalogue-view='list']").click();
+        await page.waitForFunction(
+          () =>
+            document.querySelector("[data-catalogue-view='list']")?.getAttribute("aria-pressed") ===
+            "true",
+        );
+        await listGeometry();
+        await root().locator("[data-catalogue-view='grid']").click();
+        await page.waitForFunction(
+          () =>
+            document.querySelector("[data-catalogue-view='grid']")?.getAttribute("aria-pressed") ===
+            "true",
+        );
+        await gridGeometry();
+      }
       if (!fragment)
         assert.equal(
           await root().locator("[data-catalogue-clear]:visible").count(),
@@ -2041,12 +2149,11 @@ export async function verifyCatalogueExplorer(
          price table (components/BudgetExamples.tsx) so it no longer reads as
          a second shop; scripts/verify/pricing-collection.mjs covers it. */
       for (const mode of ["models"]) {
-        for (const width of regressionsOnly ? [320, 390, 1440] : WIDTHS)
+        for (const width of regressionsOnly ? [320, 390, 1440, 1920] : WIDTHS)
           await scenario(language, mode, width, true);
         if (!regressionsOnly) await scenario(language, mode, 390, false);
       }
-      for (const width of regressionsOnly ? [390] : [390, 1440])
-        await scenario(language, "laptops", width, true);
+      for (const width of [390, 1440, 1920]) await scenario(language, "laptops", width, true);
       if (!regressionsOnly) await scenario(language, "laptops", 390, false);
     }
     for (const language of ["da", "en"]) await scenario(language, "fragment", 1440, true);
