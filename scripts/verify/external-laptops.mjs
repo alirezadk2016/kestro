@@ -321,10 +321,19 @@ export async function verifyExternalLaptops(browser, base, fail) {
           } finally {
             await handle?.dispose();
           }
+          /* Read the image the locator points at now, once it has loaded: the
+             handle above can be a copy React has since replaced, and a fresh
+             copy that is still loading has no currentSrc yet (an intermittent
+             "Invalid URL" in a full run, 2026-11-24). */
+          await image.evaluate((element) =>
+            element.complete && element.naturalWidth && element.currentSrc
+              ? null
+              : new Promise((done) => element.addEventListener("load", done, { once: true })),
+          );
           const photo = await image.evaluate((element) => {
             const box = element.getBoundingClientRect();
             const frame = element.parentElement.getBoundingClientRect();
-            const source = new URL(element.currentSrc);
+            const source = new URL(element.currentSrc || element.src, location.href);
             return {
               source: source.searchParams.get("url") || source.pathname,
               width: Number(element.getAttribute("width")),
