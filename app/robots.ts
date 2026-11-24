@@ -57,6 +57,9 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: corpusAgents, allow: "/" },
     ],
     sitemap: `${SITE_ORIGIN}/sitemap.xml`,
-    host: SITE_ORIGIN,
+    /* No "Host:" line. It was Yandex's directive for a preferred mirror and
+       Yandex dropped it in 2018; Google and Bing ignore it, and robots.txt
+       testers list it as an unsupported rule. The canonical host is set by
+       the redirect from the bare domain and by every canonical tag. */
   };
 }

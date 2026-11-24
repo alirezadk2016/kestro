@@ -11,7 +11,7 @@ import Analytics from "@/components/Analytics";
    mistake waiting to be made. */
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import ConsentBanner from "@/components/ConsentBanner";
+import ConsentBanner, { consentAskScript } from "@/components/ConsentBanner";
 import { CraftMarkDefs } from "@/components/CraftMark";
 import LanguageHint, { languageHintScript } from "@/components/LanguageHint";
 import { company } from "@/lib/company";
@@ -252,6 +252,14 @@ export default async function RootLayout({
             __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
+        {/* Before anything is painted: shows the consent banner on a first
+            visit, so it is drawn with the page instead of after hydration. */}
+        <script dangerouslySetInnerHTML={{ __html: consentAskScript }} />
+        {/* First in the document, though it is drawn at the foot of the
+            screen: at the end of a long page it arrived with the last bytes
+            and was the page's slowest paint. A consent question before the
+            content is also where a screen reader should meet it. */}
+        <ConsentBanner lang={lang} />
         {lang === "da" && (
           <>
             {/* Before the bar below is parsed, so the first paint is already
@@ -268,7 +276,6 @@ export default async function RootLayout({
         {/* Our own count, so the numbers also exist in our own panel and
             survive a change of host or plan. Sends a path, nothing else. */}
         <PageViewTracker />
-        <ConsentBanner lang={lang} />
         <Analytics />
         {/*
          * Vercel's own two, beside Google's.

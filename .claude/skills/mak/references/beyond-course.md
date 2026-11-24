@@ -16,7 +16,7 @@ means `npm run verify` already fails the build when it breaks.
 | Item | Why | Kestro |
 | --- | --- | --- |
 | One host | `www` and bare domain, `http` and `https` must end on one address, or the value splits | `https://www.kestro.dk`; check the bare domain redirects after any DNS change |
-| `robots.txt` open, sitemap named | A blocked page cannot rank | Open to all, answer and training crawlers named (`app/robots.ts`) |
+| `robots.txt` open, sitemap named | A blocked page cannot rank | Open to all, answer and training crawlers named (`app/robots.ts`); no obsolete `Host:` line |
 | XML sitemap with every indexable page | How Google finds new pages fast | `app/sitemap.ts`, both languages, hreflang inside. Gate: a route not in it fails |
 | Canonical on every page, pointing at itself | Stops tracking and filter URLs competing with the real one | Gate, and `audit.mjs` checks a `?utm_` URL keeps the clean canonical |
 | `noindex` only on pages that should not rank | Thin utility pages dilute the site | Admin is gated and out of the sitemap |
@@ -42,7 +42,7 @@ manual-action risk.
 | `BreadcrumbList` | The path shown in results | Present |
 | `FAQPage` | Google limits FAQ rich results to a few site types since 2023, but assistants still read it | Present where a page has questions |
 | `Service` | Repairs and services | Present |
-| `Product` with `Offer` | Only with a real price and availability | **Not used, on purpose:** Kestro has no prices of its own |
+| `Product` with `Offer` | Only with a real price and availability | **Not used, on purpose:** Kestro has no prices of its own. A `Product` without `offers`, `review` or `aggregateRating` is an invalid item in Search Console's product reports, so model pages describe the model as a `Thing` with `additionalType` ProductModel (since 24 November 2026) |
 | `LocalBusiness` | Needs a real address and opening hours | Waits on the owner's company data |
 | `Article` with dates | Guides | Present, with `datePublished` and `dateModified` from git |
 

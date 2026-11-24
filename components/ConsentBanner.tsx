@@ -37,12 +37,26 @@ const copy = {
   },
 } satisfies Record<Lang, Record<string, string>>;
 
+/*
+ * Drawn by the server, shown before the first frame (2026-11-24).
+ *
+ * The banner used to exist only after hydration, so on a first visit it was
+ * painted about three seconds in on a throttled phone, and as the largest
+ * text on the screen it was the page's Largest Contentful Paint: 3.5 s on the
+ * laptop category, against Google's 2.5 s. Now the server renders it hidden,
+ * and this script, at the top of <body>, shows it before anything is painted
+ * when no answer is stored. A returning visitor never sees it, and without
+ * JavaScript it stays hidden, because its buttons need JavaScript to work.
+ * The key and the two values are lib/consent.ts's.
+ */
+export const consentAskScript = `try{var v=localStorage.getItem("kestro-consent");if(v!=="granted"&&v!=="denied")document.documentElement.dataset.consentAsk="1"}catch(e){document.documentElement.dataset.consentAsk="1"}`;
+
 export default function ConsentBanner({ lang }: { lang: Lang }) {
   const c = copy[lang];
-  const [asked, setAsked] = useState(true);
+  /* Rendered on the server and on the client's first pass alike, so the two
+     match; the effect below removes it once an answer is known. */
+  const [asked, setAsked] = useState(false);
 
-  /* Only after hydration: the server has no idea what this visitor answered,
-     and rendering the banner on the server would flash it for everyone. */
   useEffect(() => {
     setAsked(readConsent() !== null);
     const onChange = () => setAsked(readConsent() !== null);
@@ -56,8 +70,18 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
      while the hero's is covered (globals.css, header-cta-home). */
   useEffect(() => {
     const root = document.documentElement;
-    if (asked) delete root.dataset.consentOpen;
-    else root.dataset.consentOpen = "1";
+    /* Read the answer itself, not the state: on the first pass the state is
+       "not asked" for everyone, and a returning visitor's header must not
+       blink. */
+    if (asked || readConsent() !== null) {
+      delete root.dataset.consentOpen;
+      delete root.dataset.consentAsk;
+    } else {
+      /* Also when the question is asked again from the footer, after the
+         first-paint script last ran: the banner is shown by this mark. */
+      root.dataset.consentOpen = "1";
+      root.dataset.consentAsk = "1";
+    }
     return () => {
       delete root.dataset.consentOpen;
     };
@@ -69,7 +93,7 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     <div
       role="dialog"
       aria-label={c.label}
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
+      className="consent-banner fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
     >
       <Container className="flex flex-col gap-3 py-3 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">

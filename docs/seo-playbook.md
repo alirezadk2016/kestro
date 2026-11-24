@@ -1302,3 +1302,47 @@ After: titles in 50–60 characters 251/256, primary in the title 142.
 - The model pages' incoming anchors are the model name everywhere. For a
   product name that is the precise anchor; varying it would mean writing
   "this laptop" and the like.
+
+## SEO weaknesses review — 24 November 2026
+
+The owner asked for the problems and errors that weaken the site. Search
+Console could not be read: Windsor.ai has paused reads until four of the
+five connected Search Console accounts are removed (the owner's, in
+Windsor). Checked instead: the live domains and robots.txt through Vercel,
+`mak run` on the build, every sitemap page's status, robots, canonical,
+hreflang and structured data, click depth, and Lighthouse on five pages.
+
+Clean: all 256 sitemap pages answer 200, none is noindex, every canonical
+points at itself on `https://www.kestro.dk`, the bare domain redirects there
+permanently, hreflang is reciprocal on every page, every page is within two
+clicks of a front page, every image has its size set, no runtime errors in
+seven days, Lighthouse SEO, accessibility and best practices 100.
+
+**Fixed:**
+
+- **136 invalid structured-data items.** Every model page, in both
+  languages, marked the model up as a `Product` without `offers`, `review`
+  or `aggregateRating`. Search Console's product reports count each one as
+  an invalid item. Kestro has no prices, so the model is now a `Thing` with
+  `additionalType` ProductModel: the same name, description and pictures,
+  nothing Google validates as a product for sale.
+- **The consent banner was the slowest paint.** It existed only after
+  hydration, and as the largest text on a first visit it was the Largest
+  Contentful Paint. On the laptop category, measured in a throttled phone
+  browser, LCP went from about 2.3 s to about 1.5 s (equal to the first
+  paint): the banner is now in the server's HTML, first in the document,
+  and a script at the top of `<body>` shows it before the first frame when
+  no answer is stored. Without JavaScript it stays hidden, as before.
+- **robots.txt** no longer carries `Host:`, a Yandex directive Google and
+  Bing ignore and testers list as unsupported.
+
+**Left as they are:** the five short descriptions (they fill the 920 px
+Google shows), six H1s without the full primary keyword (the front page's
+H1 among them; a visible design decision for the owner), and the laptop
+category's 62-character title (554 px, with two mapped keywords).
+
+**Waits on the owner:** freeing Windsor so Search Console can be read
+again; in Search Console, URL inspection and "request indexing" for
+`/produkter/baerbare-computere` and `/produkter/skaerme` (no impressions up
+to 21 October), and a look at the product report after the next crawl,
+where the 136 invalid items should drop; Bing Webmaster Tools.

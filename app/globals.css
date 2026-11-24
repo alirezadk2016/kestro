@@ -2421,3 +2421,13 @@ body:has([data-catalogue-tray]) {
     padding-bottom: 8rem;
   }
 }
+
+/* The consent banner is in the server's HTML and hidden; the script at the
+   top of <body> shows it before the first paint when no answer is stored
+   (components/ConsentBanner.tsx). */
+.consent-banner {
+  display: none;
+}
+html[data-consent-ask] .consent-banner {
+  display: block;
+}

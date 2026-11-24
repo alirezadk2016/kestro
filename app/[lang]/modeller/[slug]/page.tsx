@@ -184,43 +184,36 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
     near.length >= 3 && alternative ? [...near.slice(0, 3), alternative] : peers.slice(0, 3);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
-  const productId = `${pageUrl}#product`;
+  const modelId = `${pageUrl}#model`;
 
   /*
-   * The model as a product Google can recognise.
+   * The model as an entity, not as a product for sale (2026-11-24).
    *
-   * Deliberately carries no `offers`. Google's product snippets need offers,
-   * a review or a rating, so Search Console lists these as invalid snippet
-   * items: no rich result, and no ranking penalty. We hold no stock and price
-   * per order — the whole /priser page exists to say so. A made-up price would
-   * buy a rich result with a number the buyer cannot hold us to, which is the
-   * one thing this site has consistently refused to do. The entity still tells
-   * search engines and answer engines what the page is about. Everything here
-   * is a fact from lib/models.ts; add offers the day there is a real price.
+   * It was a schema.org Product without offers, and Google's product reports
+   * count every Product without offers, a review or a rating as an invalid
+   * item: 136 errors in Search Console, one per model page and language, for
+   * markup that could never become a rich result. Kestro holds no stock and
+   * prices per order, so a real offer cannot be added, and a made-up one is
+   * the thing this site refuses to do.
    *
-   * No `seller` either: schema.org defines it on Offer, not on Product, so on
-   * a Product it is an unknown property. The organisation is the page's
-   * publisher already.
+   * What the page is about is still said: a Thing whose additionalType is
+   * schema.org's ProductModel ("a datasheet or vendor specification of a
+   * product"), which is what a model page is. Google validates Product and
+   * leaves a Thing alone; answer engines still read the name, the
+   * description and the picture. The specifications are on the page itself,
+   * in the table. Add a real Product with offers the day there is a price.
    */
-  const productJsonLd = {
+  const modelJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "@id": productId,
+    "@type": "Thing",
+    additionalType: "https://schema.org/ProductModel",
+    "@id": modelId,
     name: model.name,
-    brand: { "@type": "Brand", name: model.brand },
-    category: category?.name[lang],
     description: model.intro[lang],
     url: pageUrl,
     ...(galleryImages?.length
       ? { image: galleryImages.map((img) => `${SITE_ORIGIN}${img.src}`) }
       : {}),
-    additionalProperty: model.specs.map((spec) => ({
-      "@type": "PropertyValue",
-      name: spec.label[lang],
-      value: spec.value[lang],
-    })),
-    itemCondition: "https://schema.org/RefurbishedCondition",
-    manufacturer: { "@type": "Organization", name: model.brand },
   };
 
   return (
@@ -233,13 +226,13 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
         name={model.name}
         description={model.metaDescription[lang]}
         sources={modelSources(model)}
-        primaryEntityId={productId}
+        primaryEntityId={modelId}
       />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(modelJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       <section className={`${styles.hero} py-6 text-paper sm:py-8`}>
