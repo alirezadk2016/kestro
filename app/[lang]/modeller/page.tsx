@@ -10,17 +10,33 @@ import PageSchema, { pageUpdated } from "@/components/PageSchema";
 import Faq from "@/components/Faq";
 import FactNote from "@/components/FactNote";
 import ModelCatalogue from "@/components/ModelCatalogue";
+import { modelIndexed } from "@/lib/model-index";
+
+/*
+ * One model per line, not every generation (2026-11-25).
+ *
+ * This page listed all 68 models, the 59 laptops among them, card for card as
+ * the laptop category does: 59% of the category's text stood here too, and
+ * the category had no impressions for five weeks while laptop searches landed
+ * on this page. Now it shows the line's indexed page (lib/model-index.ts) —
+ * one T14, one X1 Carbon, one of each — and the category keeps the full list
+ * of generations. The two pages answer different questions: which lines are
+ * there, and which laptop to buy.
+ */
+const lines = models.filter((model) => modelIndexed(model.slug));
 
 const copy = {
   da: {
     metaTitle: "Brugte ThinkPad, EliteBook, Latitude og OptiPlex | Kestro",
     /* The count comes from the list. It was written as "18" and stayed 18
-       after the 50 ThinkPad generations arrived. Measured with mak at 68:
-       146 ch / 905 px; a third digit would need measuring again. */
-    metaDescription: `${models.length} brugte erhvervsmodeller fra Lenovo, HP og Dell. Se specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en specifik model.`,
+       after the 50 ThinkPad generations arrived. Measured with mak at 33:
+       148 ch / 910 px, English 146 ch / 918 px. */
+    metaDescription: `${lines.length} brugte erhvervsmodeller fra Lenovo, HP og Dell, én pr. serie: specifikationer, fordele og ulemper for pc'er, skærme og docks. Spørg til en model.`,
     title: "Brugte erhvervsmodeller: ThinkPad, EliteBook, Latitude og OptiPlex",
     /* Answer first, with the counts the page actually shows. */
-    description: `Sammenlign ${models.length} brugte erhvervsmodeller i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konfiguration bekræftet.`,
+    description: `Sammenlign ${lines.length} brugte erhvervsmodeller, én pr. serie, i ${modelGroups.length} grupper fra bærbare til dockingstationer. Hver model har specifikationer, anvendelser og begrænsninger; få altid generation og konfiguration bekræftet.`,
+    generationsLine: "Seriens øvrige generationer står på modellens side og under",
+    generationsLink: "bærbare computere",
     noStockLine:
       "Modelserier til sammenligning. Præcis konfiguration, stand og tilgængelighed afklares ved forespørgsel.",
     noStockLink: "Sådan bliver prisen til",
@@ -33,9 +49,11 @@ const copy = {
   },
   en: {
     metaTitle: "Refurbished ThinkPad, EliteBook, Latitude, OptiPlex | Kestro",
-    metaDescription: `See ${models.length} refurbished IT models from Lenovo, HP and Dell. Find specs, benefits and limits for PCs, monitors and docks. Ask about a specific unit here.`,
+    metaDescription: `${lines.length} refurbished IT models from Lenovo, HP and Dell, one per series. Find specs, benefits and limits for PCs, monitors and docks. Ask about a model.`,
     title: "Used business models: ThinkPad, EliteBook, Latitude and OptiPlex",
-    description: `Compare ${models.length} used business models in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and configuration.`,
+    description: `Compare ${lines.length} used business models, one per series, in ${modelGroups.length} groups, from laptops to docking stations. Each model has specifications, uses and limitations; always confirm the generation and configuration.`,
+    generationsLine: "A series' other generations are on the model's page and under",
+    generationsLink: "business laptops",
     noStockLine:
       "Model families for comparison. Exact configuration, condition and availability are confirmed on enquiry.",
     noStockLink: "How the price is set",
@@ -107,10 +125,21 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
             </Link>
           </p>
           <ModelCatalogue
-            models={models}
+            models={lines}
             lang={lang}
             heading={lang === "da" ? "Find og sammenlign modeller" : "Find and compare models"}
           />
+
+          <p className="mt-5 max-w-3xl text-sm leading-6 text-paper/65">
+            {c.generationsLine}{" "}
+            <Link
+              href={localePath("/produkter/baerbare-computere", lang)}
+              className="font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
+            >
+              {c.generationsLink}
+            </Link>
+            .
+          </p>
 
           <p className="mt-5 text-xs leading-5 text-paper/65">
             {lang === "da" ? "Opdateret" : "Updated"}{" "}
