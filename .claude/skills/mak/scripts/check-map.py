@@ -28,7 +28,12 @@ audit = json.load(open(arg("--audit"))) if arg("--audit") else None
 live = {r["path"] for r in audit} if audit else None
 STOP = {"til", "i", "af", "på", "for", "og", "en", "et", "med", "a", "the", "and", "of", "to", "in", "on"}
 words = lambda s: [w for w in re.sub(r"[^\wæøå ]", " ", s.lower()).split() if w not in STOP]
-blog = lambda u: u.startswith("/vejledninger") or u.startswith("/en/knowledge")
+# The blog tree, plus the one explanatory page outside it: /kvalitet answers
+# "what do A, B and C mean", "what should a function test cover", data and
+# warranty in its H2s. It is a page that explains, not a product page, and a
+# guide on the same questions would compete with it (25 Nov 2026).
+EXPLAINERS = ("/kvalitet", "/en/condition-and-quality")
+blog = lambda u: u.startswith("/vejledninger") or u.startswith("/en/knowledge") or u in EXPLAINERS
 
 problems = 0
 def say(tag, msg):

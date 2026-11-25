@@ -282,11 +282,11 @@ Primært søgeord og title for hver dansk side. De engelske sider følger samme 
 | Side                                          | Primært                     | Sekundære                                                                                     |
 | --------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
 | `/reparation`                                 | computer reparation         | reparation af firmacomputere; pc reparation; reparation af bærbar; computer reparation aarhus |
-| `/reparation/batteriskift`                    | batteriskift bærbar         | udskift batteri i bærbar; skift batteri bærbar; tjek batteri bærbar                           |
+| `/reparation/batteriskift`                    | batteriskift bærbar         | udskift batteri i bærbar; skift batteri bærbar                                                |
 | `/reparation/fejlfinding`                     | computer starter ikke       | computer går ned                                                                              |
 | `/reparation/klargoering-af-brugt-udstyr`     | tjek af brugt computer      | —                                                                                             |
 | `/reparation/ny-opsaetning-og-dataflytning`   | flytte data til ny computer | overføre filer til ny pc                                                                      |
-| `/reparation/ram-og-ssd-opgradering`          | ram og ssd opgradering      | skifte ssd i bærbar; ssd opgradering firmacomputere                                           |
+| `/reparation/ram-og-ssd-opgradering`          | ram og ssd opgradering      | ssd opgradering firmacomputere                                                                |
 | `/reparation/rens-og-koeling`                 | rens af bærbar              | bærbar larmer; bærbar bliver varm; skift kølepasta                                            |
 | `/reparation/reservedele-og-komponentskift`   | reservedele bærbar          | skift blæser bærbar; ladestik bærbar reparation                                               |
 | `/reparation/samling-af-pc`                   | få samlet en pc             | pc samling                                                                                    |
@@ -346,3 +346,22 @@ Tre ting gør den næste runde præcis:
 1. **Google Search Console → Effektivitet → Forespørgsler og Sider, tre måneder, eksporteret.** Visninger, klik og CTR per søgning og per side viser, hvilke titles der ses uden at blive klikket på – dem skal der arbejdes på først.
 2. **Volumen fra Google Ads' søgeordsplanlægger** for de cirka 80 primære ord.
 3. **Værkstedets adresse,** så »Aarhus« kan komme i reparationstitlerne.
+
+## 25. november 2026: én side pr. modelserie, og informationssøgninger
+
+**Generationerne.** 35 af de 50 Lenovo-generationssider er holdt uden for
+indekset (`lib/model-index.json`): for ens til at stå hver for sig. Deres 35
+rækker »thinkpad <model> gen <n> brugt« peger nu som sekundære på seriens
+indekserede side, indtil generationssiden har noget eget.
+
+**Regel 3, informationssøgninger på kommercielle sider.** 20 rækker blev
+læst mod side ét (søgt 25. nov.; et skøn, ikke Googles danske resultat):
+
+| Hvad side ét viste                    | Søgeord                                                                                                                                                            | Nu                                                                                                        |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| Butikker, leverandørsider             | usb-c dock til flere skærme; licenser til firmacomputere                                                                                                           | kommerciel, bliver                                                                                        |
+| Prissider og manualer                 | udskift batteri i bærbar                                                                                                                                           | blandet, bliver på batteriskift                                                                           |
+| Vejledning findes                     | tjek batteri bærbar; skifte ssd i bærbar                                                                                                                           | flyttet til `/vejledninger/tjek-batterikapacitet` og `/vejledninger/hvor-meget-kan-en-baerbar-opgraderes` |
+| Forklaring findes                     | grade a b c refurbished; hvad betyder grade b; grade a refurbished meaning; reklamation på brugt it-udstyr; funktionstest af brugt computer                        | `/kvalitet`, som svarer i sine H2'er                                                                      |
+| Ikke vores intention                  | opdatering af bærbar (software); dobbeltskærm opsætning kontor; co2 besparelse ved genbrug af computer (ingen kilde med tal)                                       | ikke målrettet                                                                                            |
+| Guider og artikler, ingen side svarer | bærbar larmer; bærbar bliver varm; overføre filer til ny pc; computer går ned; dansk tastatur på importeret computer; dansk tastatur skift; danish keyboard laptop | ny guide foreslået, afventer ejerens ja                                                                   |

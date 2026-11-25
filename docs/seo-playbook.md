@@ -1445,3 +1445,41 @@ English 146, 918 px).
 noindex" (expected), the laptop category should begin to collect
 impressions, and `/modeller` should keep the series searches ("brugt
 thinkpad").
+
+## Informational searches and the empty categories — 25 November 2026
+
+The owner approved items three and five of the day's diagnosis.
+
+**Item three: informational keywords on commercial pages (rule 3).** The
+map had 20 informational keywords on service, category and trust pages.
+Each was read against page one, searched that day — an estimate from a
+non-Danish location, not Google's Danish result:
+
+- **Commercial after all** (shops, vendor pages): "usb-c dock til flere
+  skærme" stays on the dock category, "licenser til firmacomputere" on its
+  repair page; "udskift batteri i bærbar" (price pages and manuals, mixed)
+  stays on the battery service.
+- **A guide already answers:** "tjek batteri bærbar" moved to
+  `/vejledninger/tjek-batterikapacitet`, "skifte ssd i bærbar" to
+  `/vejledninger/hvor-meget-kan-en-baerbar-opgraderes`. Both guides link to
+  the service.
+- **`/kvalitet` answers:** the grade questions, the complaint question and
+  "funktionstest af brugt computer" — its H2s are those questions. It is an
+  explanatory page, not a product page, and a guide on the same questions
+  would compete with it, so mak's map check now counts it with the blog tree.
+- **Not ours:** "opdatering af bærbar" (software updates), "dobbeltskærm
+  opsætning kontor", "co2 besparelse ved genbrug af computer" (the source list
+  has the E-waste Monitor's volumes, no CO2 figure for reuse).
+- **Waiting on a new guide** (a new route needs the owner's yes): "bærbar
+  larmer" and "bærbar bliver varm", "overføre filer til ny pc", "computer går
+  ned", and "dansk tastatur på importeret computer" with "dansk tastatur
+  skift" and "danish keyboard laptop". Page one for each is guides and
+  support articles. Rule 3 flags went from 20 to these 7.
+
+**Item five: the two empty categories.** `/produkter/tablets` and
+`/produkter/smartphones` list no models, and page one for "brugte
+firmatelefoner" and "brugte tablets til erhverv" is retailers' product pages
+and marketplace listings. Both, with English, carry `noindex, follow` and left
+the sitemap (186 → 182 URLs); the footer still links them and no URL moved.
+Their five keywords are untargeted until the categories have models. The
+verify gate checks them with the held-out model generations.
