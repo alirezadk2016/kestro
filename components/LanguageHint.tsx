@@ -96,7 +96,15 @@ export default function LanguageHint() {
   }
 
   return (
-    <div className="lang-hint border-b border-white/10 bg-white/[0.06]">
+    /* A named region of its own, so it is not loose content above the header
+       (axe "region"), and lang="en" because these words are English on a
+       Danish page: a screen reader otherwise reads "Read in English" with
+       Danish pronunciation (WCAG 3.1.2, language of parts). */
+    <section
+      lang="en"
+      aria-label="Language"
+      className="lang-hint border-b border-white/10 bg-white/[0.06]"
+    >
       <Container
         /* One row on a phone.
          *
@@ -124,6 +132,6 @@ export default function LanguageHint() {
           Dismiss
         </button>
       </Container>
-    </div>
+    </section>
   );
 }

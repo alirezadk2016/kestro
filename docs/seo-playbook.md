@@ -1346,3 +1346,63 @@ again; in Search Console, URL inspection and "request indexing" for
 `/produkter/baerbare-computere` and `/produkter/skaerme` (no impressions up
 to 21 October), and a look at the product report after the next crawl,
 where the 136 invalid items should drop; Bing Webmaster Tools.
+
+## Site review against current practice — 25 November 2026
+
+The owner: review the site, fix its problems, by today's methods. Google's
+November 2026 core update started rolling out on 10 November, and Chrome
+began publishing experimental soft-navigation versions of LCP, INP and CLS
+in CrUX in October (stable Core Web Vitals unchanged; Search Console moves
+to the new data once they graduate, aimed at May 2027). Neither asks for a
+change here; both reward what the site already does. Checked on a local
+production build: axe-core with the WCAG 2.2 AA and best-practice rules,
+and html-validate, over all 256 sitemap pages and the 404 at 390 px;
+Lighthouse mobile on nine templates; `npm audit`; the live headers.
+
+**Clean:** every page 200, no console errors, no failed requests;
+Lighthouse accessibility, best practices and SEO 100 on all nine,
+performance 92–98; no runtime errors on Vercel in seven days.
+
+**Fixed:**
+
+- **Next 15.5.28 had three moderate advisories** (image optimiser SVG
+  bypass, cookie exposure through an Edge header, response injection when
+  self-hosted). 15.5.29 is the patched release; `npm audit` is at zero.
+- **Label in name (WCAG 2.5.3), 131 pages.** A voice-control user says the
+  words on a button. "Forespørg" was named "Spørg om modellen: …", a
+  catalogue title named without its format line, and the five product
+  category cards by title and count only. Each name now contains what is
+  seen, the visible word first; the category cards put their words before
+  the picture in the document and the picture first on screen.
+- **The language hint was loose content above the header** (axe region,
+  128 Danish pages) and English text read with Danish pronunciation. It is
+  a named `<section lang="en">`.
+- **Invalid HTML.** The 404 nested `<html>` in `<html>`, the outer one
+  without `lang`: it is `app/global-not-found.tsx` now, Next's convention
+  for a root layout under a dynamic segment (`app/not-found.tsx` re-exports
+  it for /produkter/<typo>, which middleware rewrites and Next renders on
+  demand; without it that address showed Next's own English 404). Block content in a `<span>`
+  (the forged panel's face, 32 pages), a `<span>` as a child of `<ol>` (the
+  repair steps' rail, now `::before`), a `<nav>` after a `<figcaption>`
+  (the fleet stage label, now a `<p>`), an empty table header, and
+  duplicated classes.
+- **The largest picture was not marked as such.** On the product hub, the
+  guides, the fleet page, the buyback page and the model pages, the LCP
+  image was preloaded but not `fetchpriority="high"`, which Lighthouse's
+  LCP discovery check asks for. One image a page has it, never three.
+- **Permissions-Policy** dropped `interest-cohort`, FLoC's name, which
+  Chrome reports as an unrecognised feature.
+
+**Left as they are:** the two render-blocking stylesheets (inlining them
+measured worse, 12 October); `<link rel="preload" imagesrcset>` without
+`href`, which html-validate flags and the HTML standard allows;
+`aria-label` on the form's `<fieldset>` rather than a `<legend>`, which is
+an accepted name for a group. AVIF was not turned on: it doubles the image
+transformations Vercel counts, and there is no budget for that.
+
+**Not done, for the owner to decide:** Next 16.4 is the current major.
+Next 15 still gets security releases (15.5.29 is one). Moving is a
+migration, not a bump: Turbopack builds by default and refuses this
+project's webpack setting, image qualities other than 75 must be listed,
+middleware is renamed proxy. Worth doing as its own change, verified on its
+own.

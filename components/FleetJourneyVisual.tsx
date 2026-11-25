@@ -235,12 +235,15 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
         />
         <canvas ref={canvas} aria-hidden="true" className="fleet-journey-canvas" />
       </div>
-      <figcaption className="fleet-journey-caption">
+      {/* The current stage, not a caption of the picture (the image's alt
+          is that). A <p>, because a <figcaption> must be the figure's first
+          or last child, and the stage buttons follow it. */}
+      <p className="fleet-journey-caption">
         <span className="fleet-journey-current" aria-hidden="true">
           {String(active + 1).padStart(2, "0")} / 05
         </span>
         <span>{stages[active]}</span>
-      </figcaption>
+      </p>
       <nav
         className="fleet-journey-nav"
         aria-label={lang === "da" ? "Leverancens trin" : "Delivery stages"}

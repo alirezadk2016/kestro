@@ -79,26 +79,19 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                   sat on a pale well over a navy text panel, and the seam
                   between them made every card read as two parts. Radii are
                   concentric: 12px sheet, 6px padding, 6px well. */}
-              {/* Named by its heading and count. Without this the link's name
-                  began with the picture's alt text, so a screen reader said
-                  "Referencefoto: åben Lenovo ThinkPad T480 som eksempel på en
-                  erhvervsbærbar" before "Bærbare computere" on every card. */}
+              {/* Words first in the document, the picture first on screen
+                  (order-first). The link takes its name from its content, so
+                  it reads "Bærbare computere, Kontor og arbejde på farten,
+                  Lenovo, HP og Dell, 59 modeller" and only then the picture's
+                  alt. With the picture first in the document, a screen reader
+                  said "Referencefoto: åben Lenovo ThinkPad T480 …" before the
+                  category on every card; naming the link by aria-labelledby
+                  instead left the alt out of its name, which axe reads as a
+                  label that does not contain its own content (WCAG 2.5.3). */}
               <Link
                 href={localePath(`/produkter/${category.slug}`, lang)}
-                aria-labelledby={`category-${category.slug} category-${category.slug}-count`}
                 className={`${styles.card} sheet group flex h-full flex-col p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300`}
               >
-                <CategoryArtwork
-                  slug={category.slug}
-                  lang={lang}
-                  priority={index < 3}
-                  sizes={
-                    index === 0
-                      ? "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw"
-                      : "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 46vw"
-                  }
-                  className="rounded-md"
-                />
                 <div className="flex flex-1 flex-col px-2.5 pb-3 pt-3 sm:px-3.5 sm:pb-4">
                   <h3
                     id={`category-${category.slug}`}
@@ -119,6 +112,20 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                     </span>
                   </span>
                 </div>
+                <CategoryArtwork
+                  slug={category.slug}
+                  lang={lang}
+                  priority={index < 3}
+                  /* Three are preloaded; only the first is the largest paint
+                     on every width, and two "high" requests share the pipe. */
+                  fetchPriority={index === 0 ? "high" : undefined}
+                  sizes={
+                    index === 0
+                      ? "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 100vw"
+                      : "(min-width: 1024px) 19vw, (min-width: 640px) 31vw, 46vw"
+                  }
+                  className="order-first rounded-md"
+                />
               </Link>
             </li>
           );

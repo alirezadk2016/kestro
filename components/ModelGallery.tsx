@@ -57,6 +57,7 @@ export default function ModelGallery({
           quality={85}
           sizes="(min-width: 1536px) 43vw, (min-width: 1024px) 49vw, 92vw"
           priority={selected === 0}
+          fetchPriority={selected === 0 ? "high" : undefined}
           className={`h-full w-full object-contain ${item.photographic ? "" : "p-3 mix-blend-multiply sm:p-6"}`}
         />
         <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-lg border border-ink-200 bg-paper text-ink-800 transition-colors group-hover:border-brand-600 group-hover:text-brand-700 motion-reduce:transition-none">

@@ -161,6 +161,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
                 height={900}
                 sizes="(min-width: 1024px) 42vw, 100vw"
                 priority
+                fetchPriority="high"
               />
               <figcaption>{c.image}</figcaption>
             </figure>

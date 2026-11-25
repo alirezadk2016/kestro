@@ -51,6 +51,7 @@ export default function HeaderArt({
         height={height}
         quality={88}
         priority
+        fetchPriority="high"
         sizes="(min-width: 1024px) 480px, 92vw"
         className={`h-full w-full object-cover ${imgClassName}`}
       />

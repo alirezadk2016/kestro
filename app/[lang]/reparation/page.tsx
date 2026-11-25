@@ -218,11 +218,9 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
               {/* A sequence, so a spine: the numbers sit on a rail that runs
                   from the first step to the last. As a plain "1. 2. 3." list
                   it read as body copy that happened to be numbered. */}
-              <ol className="relative mt-6 space-y-6">
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-3 left-[15px] top-3 w-px bg-gradient-to-b from-brand-400/60 via-paper/15 to-paper/5"
-                />
+              {/* The rail is the list's own ::before: an <ol> may only hold
+                  <li>, and the span it used to be was a child of it. */}
+              <ol className="relative mt-6 space-y-6 before:absolute before:bottom-3 before:left-[15px] before:top-3 before:w-px before:bg-gradient-to-b before:from-brand-400/60 before:via-paper/15 before:to-paper/5 before:content-['']">
                 {[c.step1, c.step2, c.step3, c.step4].map((step, i) => (
                   <li key={step} className="relative flex gap-4">
                     <span className="plate-sm relative flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-950 font-display text-xs font-bold tabular-nums text-brand-300">

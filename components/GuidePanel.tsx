@@ -2149,6 +2149,7 @@ export default function GuidePanel({
           quality={88}
           sizes={sizes}
           priority={priority}
+          fetchPriority={priority ? "high" : undefined}
           className={`h-full w-full ${art.fit === "contain" ? "object-contain" : "object-cover"}`}
         />
       </div>

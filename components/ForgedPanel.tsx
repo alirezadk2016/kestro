@@ -33,10 +33,13 @@ export default function ForgedPanel({
   className?: string;
   faceClassName?: string;
 }) {
+  /* A div, not a span: the face holds headings, paragraphs and lists, and a
+     span may only hold phrasing content. Inside the link it is still valid —
+     an <a> takes whatever its parent could. */
   const face = (
-    <span className={`forge-face flex h-full flex-col rounded-[8px] ${faceClassName}`}>
+    <div className={`forge-face flex h-full flex-col rounded-[8px] ${faceClassName}`}>
       {children}
-    </span>
+    </div>
   );
 
   const frame = "forge forge-rim relative flex h-full flex-col rounded-xl p-[5px] sm:p-[6px]";

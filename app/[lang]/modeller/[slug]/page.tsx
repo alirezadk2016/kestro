@@ -275,6 +275,7 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
                       width={media.width}
                       height={media.height}
                       priority
+                      fetchPriority="high"
                       sizes="(min-width: 1536px) 43vw, (min-width: 1024px) 49vw, 92vw"
                       className="h-full w-full object-contain"
                     />

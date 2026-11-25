@@ -409,16 +409,24 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                         <caption className="sr-only">{section.table.caption[lang]}</caption>
                         <thead className="max-sm:sr-only">
                           <tr role="row" className="border-b border-white/20">
-                            {section.table.head.map((cell) => (
-                              <th
-                                key={cell.da}
-                                role="columnheader"
-                                scope="col"
-                                className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
-                              >
-                                {cell[lang]}
-                              </th>
-                            ))}
+                            {section.table.head.map((cell) =>
+                              /* An empty corner above the row labels is a
+                                 cell, not a header: a header with no words
+                                 is announced as nothing (axe
+                                 empty-table-header). */
+                              cell[lang] ? (
+                                <th
+                                  key={cell.da}
+                                  role="columnheader"
+                                  scope="col"
+                                  className="py-3 pr-5 align-bottom font-display text-sm font-bold text-paper last:pr-0"
+                                >
+                                  {cell[lang]}
+                                </th>
+                              ) : (
+                                <td key="corner" role="cell" className="py-3 pr-5" />
+                              ),
+                            )}
                           </tr>
                         </thead>
                         <tbody className="max-sm:block max-sm:border-t max-sm:border-white/20">

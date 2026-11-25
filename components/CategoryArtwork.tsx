@@ -8,12 +8,15 @@ export default function CategoryArtwork({
   slug,
   lang,
   priority = false,
+  fetchPriority,
   sizes = "(min-width: 1024px) 24vw, 46vw",
   className = "",
 }: {
   slug: string;
   lang: Lang;
   priority?: boolean;
+  /** "high" on the one picture that is the page's largest paint. */
+  fetchPriority?: "high";
   sizes?: string;
   className?: string;
 }) {
@@ -31,6 +34,7 @@ export default function CategoryArtwork({
           alt={media.alt[lang]}
           sizes={sizes}
           priority={priority}
+          fetchPriority={fetchPriority}
           /* A photo's white studio ground multiplies into the same pale well
              the drawings stand on. The drawings carry their own margin inside
              the SVG; a photo is cut close to the device, so it gets the same

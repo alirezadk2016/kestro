@@ -139,7 +139,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
                 href={localePath(item.href, lang)}
                 /* p-5 on a phone, the padding of the three cards under it, so
                    the four marks stand on one left edge in the stack. */
-                faceClassName="h-full justify-between p-5 sm:p-9"
+                faceClassName="justify-between p-5 sm:p-9"
               >
                 <div>
                   <MarkTile name={item.mark} size="lg" className="tile-z tile-z-near" />
@@ -183,7 +183,7 @@ export default function QualifySection({ lang }: { lang: Lang }) {
             <ul className="grid h-full grid-cols-1 gap-4">
               {rest.map((item) => (
                 <li key={item.href}>
-                  <ForgedPanel href={localePath(item.href, lang)} faceClassName="h-full p-5 sm:p-6">
+                  <ForgedPanel href={localePath(item.href, lang)} faceClassName="p-5 sm:p-6">
                     <div className="flex items-start gap-4 sm:gap-5">
                       <MarkTile
                         name={item.mark}

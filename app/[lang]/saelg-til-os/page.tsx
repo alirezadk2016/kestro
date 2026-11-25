@@ -150,6 +150,7 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
           width={1440}
           height={960}
           priority
+          fetchPriority="high"
           sizes="(min-width: 1024px) 65vw, 100vw"
           className="buyback-hero-image"
           alt={

@@ -78,10 +78,22 @@ export default function CatalogueListingItem({
       data-budget-model={budget ? entry.id : undefined}
       className={`${styles.card} ${view === "grid" ? styles.grid : styles.list} ${compactGrid ? styles.compact : ""} ${selected ? styles.selected : ""} ${hidden ? "!hidden" : ""}`}
     >
+      {/* With a photograph, the picture is a link of its own: its name says it
+          opens the pictures, and the alt says what the photo shows. Without
+          one, the tile only repeats the model's name, so it is kept off the
+          tab order and out of the accessibility tree — the title below is the
+          same link — rather than reading out a reference card whose visible
+          words ("Modelreference") were not in its accessible name. */}
       <Link
         data-catalogue-image-link
         href={entry.detailHref}
-        aria-label={`${entry.image ? (da ? "Se billeder og detaljer" : "View images and details") : da ? "Se detaljer" : "View details"}: ${entry.name}`}
+        aria-label={
+          entry.image
+            ? `${da ? "Se billeder og detaljer" : "View images and details"}: ${entry.name}`
+            : undefined
+        }
+        aria-hidden={entry.image ? undefined : true}
+        tabIndex={entry.image ? undefined : -1}
         className={styles.mediaLink}
       >
         <figure
@@ -104,7 +116,7 @@ export default function CatalogueListingItem({
               className={`${styles.image} ${entry.image.sourceFrame ? styles.sourceFrame : ""}`}
             />
           ) : (
-            <div data-catalogue-placeholder aria-hidden="true" className={styles.reference}>
+            <div data-catalogue-placeholder className={styles.reference}>
               <span className={styles.referenceFamily}>
                 {entry.brand} {parts.family !== entry.brand ? parts.family : ""}
               </span>
@@ -121,12 +133,7 @@ export default function CatalogueListingItem({
       </Link>
       <div className={styles.identity}>
         {compactGrid ? (
-          <Link
-            data-catalogue-detail
-            href={entry.detailHref}
-            aria-label={entry.name}
-            className={styles.identityLink}
-          >
+          <Link data-catalogue-detail href={entry.detailHref} className={styles.identityLink}>
             <span className={styles.format}>{entry.format}</span>
             <h3 className={styles.name}>{entry.name}</h3>
           </Link>
@@ -199,10 +206,13 @@ export default function CatalogueListingItem({
           data-catalogue-enquiry
           data-budget-enquiry={budget ? "" : undefined}
           href={entry.enquiryHref}
-          aria-label={`${da ? "Spørg om modellen" : "Enquire"}: ${entry.name}`}
           className={budget ? `${buttonClass("primary")} !px-3` : styles.enquiry}
         >
+          {/* The visible word first, then the model for a screen reader: a
+              voice-control user says what they see ("Forespørg"), and the
+              name has to contain it (WCAG 2.5.3). */}
           {enquiry}
+          <span className="sr-only">: {entry.name}</span>
         </Link>
       </div>
       {budget && (

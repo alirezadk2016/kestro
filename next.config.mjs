@@ -59,9 +59,13 @@ const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  /* No interest-cohort: FLoC was withdrawn in 2022 and Chrome answers the
+     name with "Unrecognized feature" in the console. Its successor, Topics,
+     is being retired with the rest of the Privacy Sandbox, so naming that
+     would only trade one warning for a later one. */
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   },
   {
     key: "Strict-Transport-Security",
@@ -223,6 +227,12 @@ function toEnglish(path) {
 const nextConfig = {
   // Do not advertise the framework and its version.
   poweredByHeader: false,
+  experimental: {
+    /* The 404 is app/global-not-found.tsx, a whole document of its own: the
+       root layout sits under [lang], so a root not-found.tsx was wrapped in a
+       default layout and nested <html> inside <html>. */
+    globalNotFound: true,
+  },
   /*
    * No experimental.inlineCss. It removes the render-blocking stylesheet
    * request, but Next then writes the CSS into the page three times — once
