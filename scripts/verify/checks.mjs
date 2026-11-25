@@ -404,19 +404,27 @@ for (const path of PAGES) {
       fail(`sitemap ${path}`, "listed in the sitemap but marked noindex");
   }
 
-  /* The other direction, for the model pages held out of the index
-     (lib/model-index.json): online, noindex but followed, and not listed. */
+  /* The other direction, for the pages held out of the index — model
+     generations (lib/model-index.json) and empty categories: online, noindex
+     but followed, and not listed. */
   const { families } = JSON.parse(
     readFileSync(new URL("../../lib/model-index.json", import.meta.url), "utf8"),
   );
-  for (const slug of Object.values(families).flatMap((family) => family.heldOut)) {
-    for (const path of [`/modeller/${slug}`, `/en/models/${slug}`]) {
+  const heldOut = [
+    ...Object.values(families)
+      .flatMap((family) => family.heldOut)
+      .map((slug) => [`/modeller/${slug}`, `/en/models/${slug}`]),
+    /* The categories with no models (ON_REQUEST in lib/categories.ts). */
+    ...["tablets", "smartphones"].map((slug) => [`/produkter/${slug}`, `/en/products/${slug}`]),
+  ];
+  for (const paths of heldOut) {
+    for (const path of paths) {
       const page = await fetch(BASE + path, { redirect: "manual" });
       const robots = (await page.text()).match(/<meta name="robots" content="([^"]+)"/)?.[1] ?? "";
-      if (page.status !== 200) fail(path, `held-out model page answers HTTP ${page.status}`);
+      if (page.status !== 200) fail(path, `held-out page answers HTTP ${page.status}`);
       if (!/noindex/.test(robots) || /nofollow/.test(robots))
-        fail(path, `held-out model page has robots "${robots}", want noindex, follow`);
-      if (listed.has(origin + path)) fail(path, "held-out model page is in the sitemap");
+        fail(path, `held-out page has robots "${robots}", want noindex, follow`);
+      if (listed.has(origin + path)) fail(path, "held-out page is in the sitemap");
     }
   }
 }

@@ -8,7 +8,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ExternalLaptopRecommendations from "@/components/ExternalLaptopRecommendations";
 import ProductDisclosure from "@/components/ProductDisclosure";
 import CtaSection from "@/components/CtaSection";
-import { categories, getCategory } from "@/lib/categories";
+import { categories, getCategory, categoryIndexed } from "@/lib/categories";
 import { getModelsForCategory } from "@/lib/models";
 import { getCategoryMark } from "@/lib/category-marks";
 import CraftMark from "@/components/CraftMark";
@@ -97,6 +97,8 @@ export async function generateMetadata(props: {
     title: category.metaTitle[params.lang],
     description: category.metaDescription[params.lang],
     ...metaFor(`/produkter/${category.slug}`, params.lang),
+    /* A category with no models is held out of the index (lib/categories.ts). */
+    ...(categoryIndexed(category.slug) ? {} : { robots: { index: false, follow: true } }),
   };
 }
 

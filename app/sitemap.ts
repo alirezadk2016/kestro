@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { categories } from "@/lib/categories";
+import { categories, categoryIndexed } from "@/lib/categories";
 import { models } from "@/lib/models";
 import { modelIndexed } from "@/lib/model-index";
 import { guides } from "@/lib/guides";
@@ -46,9 +46,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/privatlivspolitik", lastModified: legalUpdated["/privatlivspolitik"] },
   ];
 
-  const categoryRoutes: Route[] = categories.map((category) => ({
-    path: `/produkter/${category.slug}`,
-  }));
+  /* Not the categories with no models: they carry noindex (lib/categories.ts). */
+  const categoryRoutes: Route[] = categories
+    .filter((category) => categoryIndexed(category.slug))
+    .map((category) => ({
+      path: `/produkter/${category.slug}`,
+    }));
 
   /* A model page with photographs lists them as image entries, so Google
      Images can find the photo on the page that is about that model. Only

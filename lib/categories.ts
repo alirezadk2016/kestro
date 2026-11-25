@@ -541,10 +541,17 @@ export const categories: Category[] = [
  * they read as stocked categories. The owner had them taken off the hub
  * (2026-11-14) and left the menu to us (2026-11-18): they leave the menu
  * too, so the menu and the hub list the same things. Their pages stay and
- * stay linked from the footer, last, so a search for them still lands
- * somewhere and no URL moves.
+ * stay linked from the footer, last, and no URL moves.
+ *
+ * Out of Google's index too, since 2026-11-25 (the owner's yes to item five
+ * of that day's SEO review): a category is a list of products, and these two
+ * list none, while page one for "brugte firmatelefoner" and "brugte tablets
+ * til erhverv" is retailers' product pages and marketplace listings (searched
+ * that day). noindex,follow and no sitemap entry until they have models;
+ * then they leave this set.
  */
 const ON_REQUEST = new Set(["tablets", "smartphones"]);
+export const categoryIndexed = (slug: string) => !ON_REQUEST.has(slug);
 export const directoryCategories = categories.filter((category) => !ON_REQUEST.has(category.slug));
 export const onRequestCategories = categories.filter((category) => ON_REQUEST.has(category.slug));
 
