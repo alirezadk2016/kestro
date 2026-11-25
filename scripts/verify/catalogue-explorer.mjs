@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -105,7 +106,15 @@ const BUDGET = [
   },
 ];
 const LAPTOPS = MODELS.filter((model) => ["baerbare", "workstations"].includes(model.type));
-const WORKSTATIONS = MODELS.filter((model) => model.type === "workstations");
+/* /modeller shows one model per line: the generations held out of the index
+   (lib/model-index.json) are listed in the category, not on the index. */
+const HELD_OUT = new Set(
+  Object.values(
+    JSON.parse(readFileSync(new URL("../../lib/model-index.json", import.meta.url), "utf8"))
+      .families,
+  ).flatMap((family) => family.heldOut),
+);
+const INDEXED = MODELS.filter((model) => !HELD_OUT.has(model.id));
 const LICENSED_FRONTS = [
   {
     id: "lenovo-thinkpad-t14",
@@ -177,16 +186,19 @@ export async function verifyCatalogueExplorer(
     const budget = mode === "budget";
     const fragment = mode === "fragment";
     const mini = mode === "mini";
+    /* The model index lists one model per line; the categories list all. */
+    const listing = mode === "models" || fragment ? INDEXED : MODELS;
     const fixtures =
       fragment && javaScriptEnabled
-        ? WORKSTATIONS
+        ? listing.filter((model) => model.type === "workstations")
         : mini
           ? [MODELS[10]]
           : budget
             ? BUDGET
             : mode === "laptops"
               ? LAPTOPS
-              : MODELS;
+              : listing;
+    const shownT14 = T14_FAMILY.filter((id) => fixtures.some((entry) => entry.id === id));
     const key = budget ? "budget" : "models";
     const comparisonIds = budget
       ? ["lenovo-thinkpad-t480", "lenovo-thinkpad-t14", "dell-ultrasharp-u2419h"]
@@ -1440,7 +1452,7 @@ export async function verifyCatalogueExplorer(
                   ?.getBoundingClientRect();
                 return cards.length === count && box && box.top >= 80 && box.top <= 700;
               },
-              WORKSTATIONS.length,
+              fixtures.length,
               { timeout: 3000, polling: 100 },
             );
             assert.equal(
@@ -1467,17 +1479,19 @@ export async function verifyCatalogueExplorer(
             await direct.locator("[data-catalogue-category='baerbare']").check();
             await expectIds(
               direct,
-              LAPTOPS.map((entry) => entry.id),
+              listing
+                .filter((entry) => ["baerbare", "workstations"].includes(entry.type))
+                .map((entry) => entry.id),
             );
             await direct.locator("[data-catalogue-category='workstations']").uncheck();
-            const laptops = MODELS.filter((entry) => entry.type === "baerbare").map(
-              (entry) => entry.id,
-            );
             assert.equal(
-              laptops.length,
+              MODELS.filter((entry) => entry.type === "baerbare").length,
               47,
               "the laptop group contains forty-seven actual reference models",
             );
+            const laptops = listing
+              .filter((entry) => entry.type === "baerbare")
+              .map((entry) => entry.id);
             await expectIds(direct, laptops);
             await direct.waitForFunction(
               () =>
@@ -1763,7 +1777,7 @@ export async function verifyCatalogueExplorer(
 
             await root().locator("[data-catalogue-use='workstation']").click();
             await results(
-              WORKSTATIONS.map((entry) => entry.id),
+              fixtures.filter((entry) => entry.type === "workstations").map((entry) => entry.id),
               "the workstation preset returns the researched workstation group",
             );
             assert.equal(
@@ -1914,7 +1928,7 @@ export async function verifyCatalogueExplorer(
             "multiword search uses AND rather than admitting partial token matches",
           );
           await search.fill("T14");
-          await results(T14_FAMILY, "literal model search returns every T14 and T14s reference");
+          await results(shownT14, "literal model search returns every T14 and T14s reference");
           assert.equal(
             new URL(page.url()).searchParams.get("q"),
             "T14",
@@ -2005,7 +2019,7 @@ export async function verifyCatalogueExplorer(
           }
           await sort.selectOption("name-desc");
           await search.fill("T14");
-          await results(T14_FAMILY, "filtering can hide selected cards without losing selection");
+          await results(shownT14, "filtering can hide selected cards without losing selection");
           sameSet(
             queryValues("compare"),
             selected,
@@ -2222,7 +2236,7 @@ export async function verifyCatalogueExplorer(
             );
           }
           await search.fill("T14");
-          await results(T14_FAMILY, "view changes do not change filter meaning");
+          await results(shownT14, "view changes do not change filter meaning");
           const filteredUrl = page.url();
           const filteredResponse = await page.reload({ waitUntil: "networkidle" });
           assert.ok(
@@ -2234,7 +2248,7 @@ export async function verifyCatalogueExplorer(
             canonical,
             "a filtered catalogue retains the clean canonical",
           );
-          await results(T14_FAMILY, "reload restores the URL's filtered state");
+          await results(shownT14, "reload restores the URL's filtered state");
           if (switchableView)
             assert.equal(
               await root().locator("[data-catalogue-view='list']").getAttribute("aria-pressed"),
@@ -2260,7 +2274,7 @@ export async function verifyCatalogueExplorer(
           );
           await page.goBack({ waitUntil: "networkidle" });
           await page.waitForURL(filteredUrl);
-          await results(T14_FAMILY, "Back restores catalogue filters and view");
+          await results(shownT14, "Back restores catalogue filters and view");
           const enquiry = root()
             .locator("li[data-catalogue-item] a[data-catalogue-enquiry]")
             .first();
@@ -2282,7 +2296,7 @@ export async function verifyCatalogueExplorer(
             "the enquiry retains the selected model or dated configuration",
           );
           await page.goBack({ waitUntil: "networkidle" });
-          await results(T14_FAMILY, "Back from enquiry restores catalogue state");
+          await results(shownT14, "Back from enquiry restores catalogue state");
           await clear();
           if (switchableView) {
             assert.equal(

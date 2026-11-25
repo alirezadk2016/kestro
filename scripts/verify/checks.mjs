@@ -23,7 +23,7 @@
  *
  * Exits non-zero on any failure, so it can gate a deploy.
  */
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
@@ -395,8 +395,29 @@ for (const path of PAGES) {
       );
       continue;
     }
-    const canonical = (await page.text()).match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? "";
+    const html = await page.text();
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? "";
     if (canonical !== loc) fail(`sitemap ${path}`, `canonical is ${canonical || "missing"}`);
+    /* A sitemap that lists a page asking not to be indexed is an error in
+       Search Console's page indexing report ("Submitted URL marked noindex"). */
+    if (/<meta name="robots" content="[^"]*noindex/.test(html))
+      fail(`sitemap ${path}`, "listed in the sitemap but marked noindex");
+  }
+
+  /* The other direction, for the model pages held out of the index
+     (lib/model-index.json): online, noindex but followed, and not listed. */
+  const { families } = JSON.parse(
+    readFileSync(new URL("../../lib/model-index.json", import.meta.url), "utf8"),
+  );
+  for (const slug of Object.values(families).flatMap((family) => family.heldOut)) {
+    for (const path of [`/modeller/${slug}`, `/en/models/${slug}`]) {
+      const page = await fetch(BASE + path, { redirect: "manual" });
+      const robots = (await page.text()).match(/<meta name="robots" content="([^"]+)"/)?.[1] ?? "";
+      if (page.status !== 200) fail(path, `held-out model page answers HTTP ${page.status}`);
+      if (!/noindex/.test(robots) || /nofollow/.test(robots))
+        fail(path, `held-out model page has robots "${robots}", want noindex, follow`);
+      if (listed.has(origin + path)) fail(path, "held-out model page is in the sitemap");
+    }
   }
 }
 

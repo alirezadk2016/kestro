@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { models } from "@/lib/models";
+import { modelIndexed } from "@/lib/model-index";
 import { guides } from "@/lib/guides";
 import { practicalGuides } from "@/lib/practical-guides";
 import { legalUpdated } from "@/lib/legal";
@@ -53,12 +54,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
      Images can find the photo on the page that is about that model. Only
      photographs (model.images) are listed; the labelled illustrations are
      not a picture of the model and are left out. */
-  const modelRoutes: Route[] = models.map((model) => ({
-    path: `/modeller/${model.slug}`,
-    ...(model.images?.length
-      ? { images: model.images.map((image) => `${BASE_URL}${image.src}`) }
-      : {}),
-  }));
+  /* Only the pages Google is asked to index: a line's other generations
+     carry noindex (lib/model-index.ts), and a sitemap that lists a noindex
+     page is an error in Search Console's page indexing report. */
+  const modelRoutes: Route[] = models
+    .filter((model) => modelIndexed(model.slug))
+    .map((model) => ({
+      path: `/modeller/${model.slug}`,
+      ...(model.images?.length
+        ? { images: model.images.map((image) => `${BASE_URL}${image.src}`) }
+        : {}),
+    }));
 
   /*
    * Guides carry a real edit date, so they get a <lastmod> — as do the two

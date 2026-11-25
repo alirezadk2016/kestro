@@ -1406,3 +1406,42 @@ migration, not a bump: Turbopack builds by default and refuses this
 project's webpack setting, image qualities other than 75 must be listed,
 middleware is renamed proxy. Worth doing as its own change, verified on its
 own.
+
+## One page per model line, and /modeller apart from the laptops — 25 November 2026
+
+The owner approved items one and two of the day's SEO diagnosis.
+
+**Measured first** (5-word sequences of each page's `<main>`, local build):
+the 68 Danish model pages were 54% of the Danish site, a model page had a
+median of 16% text of its own (lowest 11%), and 54 of 68 shared more than
+half their text with their nearest sibling. 50 of them — the ThinkPad
+generations — arrived on 14 November, inside the November 2026 core update.
+And 59% of the laptop category's text stood on `/modeller` too, which listed
+all 68 models card for card; the category had no impressions in three
+readings while laptop searches reached `/modeller`.
+
+**One page per line is indexed** (`lib/model-index.json`, read by
+`lib/model-index.ts` and by the catalogue check). The lead is the line's
+original page where it has one (T14, X1 Carbon, L14); otherwise the
+generation with a real photograph, then the most text of its own within the
+line, then the earliest generation. 35 generations, 70 URLs with English,
+carry `noindex, follow` and left the sitemap (256 → 186 URLs). No URL moved:
+each is online, linked from its line's page — which now lists every
+generation of the line, not three — in the laptop category and in site
+search. A generation goes back by leaving the list once it has something its
+siblings do not: an owner photograph, a test, a real difference written up.
+The keyword map's 35 "thinkpad … gen N brugt" rows point at the line's page
+as secondaries until then. The verify gate now fails a sitemap URL marked
+noindex and a held-out page that is indexable, missing or listed.
+
+**`/modeller` shows one model per line** — 33, the indexed set — and says
+where the other generations are; the laptop category keeps all of them. The
+category's text found on `/modeller` went from 59% to 33%. The two pages now
+answer different questions: which lines there are, and which laptop to buy.
+`/modeller`'s description was measured again (148 characters, 910 px;
+English 146, 918 px).
+
+**To watch in Search Console:** the 35 generation URLs move to "Excluded by
+noindex" (expected), the laptop category should begin to collect
+impressions, and `/modeller` should keep the series searches ("brugt
+thinkpad").

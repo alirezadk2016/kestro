@@ -8,6 +8,7 @@ import { modelCatalogueEntries } from "@/components/ModelCatalogue";
 import RetailLinks from "@/components/RetailLinks";
 import { picturesFirst } from "@/lib/model-order";
 import { modelSeries } from "@/lib/model-series";
+import { modelIndexed } from "@/lib/model-index";
 import { additionalModelPhotos, modelMedia } from "@/lib/model-media";
 import { Check, ChevronDown, Info } from "lucide-react";
 import Container from "@/components/Container";
@@ -91,6 +92,9 @@ export async function generateMetadata(props: {
     title: model.metaTitle[params.lang],
     description: model.metaDescription[params.lang],
     ...metaFor(`/modeller/${model.slug}`, params.lang),
+    /* One page per line is indexed; the line's other generations stay
+       readable and followed, out of the index (lib/model-index.ts). */
+    ...(modelIndexed(model.slug) ? {} : { robots: { index: false, follow: true } }),
   };
 }
 
@@ -180,8 +184,14 @@ export default async function ModelPage(props: { params: Promise<{ lang: Lang; s
   );
   const spread = [...model.slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
   const alternative = alternatives.length ? alternatives[spread % alternatives.length] : undefined;
+  /* Every generation of the line, not three of them: one page per line is
+     indexed (lib/model-index.ts), so the line's page is where the X1 Carbon
+     Gen 9 to Gen 12 are reached from, and a fourth sibling must not fall off. */
+  const shelf = Math.max(3, siblings.length);
   const related =
-    near.length >= 3 && alternative ? [...near.slice(0, 3), alternative] : peers.slice(0, 3);
+    near.length >= 3 && alternative
+      ? [...near.slice(0, shelf), alternative]
+      : peers.slice(0, shelf);
   const pagePath = `/modeller/${model.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const modelId = `${pageUrl}#model`;

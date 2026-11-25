@@ -1,0 +1,91 @@
+{
+  "decided": "2026-11-25",
+  "rule": "One page per model line stays in Google's index. The lead is the line's original page where it has one; otherwise the generation with a real photograph, then the most text of its own within the line (measured on 5-word sequences), then the earliest generation. The rest stay online, linked and in site search, with noindex,follow and out of the sitemap, until each has something its siblings do not: an owner photograph, a test, a real difference written up. Remove a slug from heldOut to put it back.",
+  "families": {
+    "Lenovo ThinkPad T14": {
+      "lead": "lenovo-thinkpad-t14",
+      "heldOut": [
+        "lenovo-thinkpad-t14-gen-3",
+        "lenovo-thinkpad-t14-gen-4",
+        "lenovo-thinkpad-t14-gen-5"
+      ]
+    },
+    "Lenovo ThinkPad X1 Carbon": {
+      "lead": "lenovo-thinkpad-x1-carbon",
+      "heldOut": [
+        "lenovo-thinkpad-x1-carbon-gen-9",
+        "lenovo-thinkpad-x1-carbon-gen-10",
+        "lenovo-thinkpad-x1-carbon-gen-11",
+        "lenovo-thinkpad-x1-carbon-gen-12"
+      ]
+    },
+    "Lenovo ThinkPad L14": {
+      "lead": "lenovo-thinkpad-l14",
+      "heldOut": [
+        "lenovo-thinkpad-l14-gen-3",
+        "lenovo-thinkpad-l14-gen-4",
+        "lenovo-thinkpad-l14-gen-5"
+      ]
+    },
+    "Lenovo ThinkPad T14s": {
+      "lead": "lenovo-thinkpad-t14s-gen-3",
+      "heldOut": [
+        "lenovo-thinkpad-t14s-gen-2",
+        "lenovo-thinkpad-t14s-gen-4",
+        "lenovo-thinkpad-t14s-gen-5"
+      ]
+    },
+    "Lenovo ThinkPad T16": {
+      "lead": "lenovo-thinkpad-t16-gen-1",
+      "heldOut": ["lenovo-thinkpad-t16-gen-2", "lenovo-thinkpad-t16-gen-3"]
+    },
+    "Lenovo ThinkPad X1 Yoga": {
+      "lead": "lenovo-thinkpad-x1-yoga-gen-6",
+      "heldOut": ["lenovo-thinkpad-x1-yoga-gen-7", "lenovo-thinkpad-x1-yoga-gen-8"]
+    },
+    "Lenovo ThinkPad X1 Nano": {
+      "lead": "lenovo-thinkpad-x1-nano-gen-1",
+      "heldOut": ["lenovo-thinkpad-x1-nano-gen-2", "lenovo-thinkpad-x1-nano-gen-3"]
+    },
+    "Lenovo ThinkPad X13": {
+      "lead": "lenovo-thinkpad-x13-gen-4",
+      "heldOut": [
+        "lenovo-thinkpad-x13-gen-2",
+        "lenovo-thinkpad-x13-gen-3",
+        "lenovo-thinkpad-x13-gen-5"
+      ]
+    },
+    "Lenovo ThinkPad X13 Yoga": {
+      "lead": "lenovo-thinkpad-x13-yoga-gen-2",
+      "heldOut": ["lenovo-thinkpad-x13-yoga-gen-3", "lenovo-thinkpad-x13-yoga-gen-4"]
+    },
+    "Lenovo ThinkPad L13": {
+      "lead": "lenovo-thinkpad-l13-gen-3",
+      "heldOut": ["lenovo-thinkpad-l13-gen-4"]
+    },
+    "Lenovo ThinkPad E14": {
+      "lead": "lenovo-thinkpad-e14-gen-4",
+      "heldOut": ["lenovo-thinkpad-e14-gen-5", "lenovo-thinkpad-e14-gen-6"]
+    },
+    "Lenovo ThinkPad E16": {
+      "lead": "lenovo-thinkpad-e16-gen-1",
+      "heldOut": ["lenovo-thinkpad-e16-gen-2"]
+    },
+    "Lenovo ThinkPad P14s": {
+      "lead": "lenovo-thinkpad-p14s-gen-3",
+      "heldOut": ["lenovo-thinkpad-p14s-gen-4", "lenovo-thinkpad-p14s-gen-5"]
+    },
+    "Lenovo ThinkPad P16s": {
+      "lead": "lenovo-thinkpad-p16s-gen-1",
+      "heldOut": ["lenovo-thinkpad-p16s-gen-2", "lenovo-thinkpad-p16s-gen-3"]
+    },
+    "Lenovo ThinkPad P1": {
+      "lead": "lenovo-thinkpad-p1-gen-6",
+      "heldOut": ["lenovo-thinkpad-p1-gen-5", "lenovo-thinkpad-p1-gen-7"]
+    },
+    "Lenovo ThinkPad P16": {
+      "lead": "lenovo-thinkpad-p16-gen-1",
+      "heldOut": ["lenovo-thinkpad-p16-gen-2"]
+    }
+  }
+}
