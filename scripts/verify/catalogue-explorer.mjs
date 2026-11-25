@@ -1087,7 +1087,8 @@ export async function verifyCatalogueExplorer(
         ])
           assert.deepEqual(
             initialOrder.filter((id) => id === family || id.startsWith(family + "-gen-")),
-            expected,
+            /* /modeller lists the line's indexed page only (lib/model-index.json). */
+            expected.filter((id) => fixtures.some((entry) => entry.id === id)),
             "a photographed family representative leads while all remaining generations stay newest-first",
           );
       }
@@ -1680,7 +1681,17 @@ export async function verifyCatalogueExplorer(
                 }).compare(b.name, a.name),
               )
               .map((entry) => entry.id);
-            const selectedId = "lenovo-thinkpad-t480";
+            /* A laptop past the first page of the name-descending order: the
+               T480 where the list is long enough, and on /modeller, which
+               lists one model per line, the first laptop after it. */
+            const pastFirstPage = (id) => descending.indexOf(id) >= 12;
+            const selectedId = pastFirstPage("lenovo-thinkpad-t480")
+              ? "lenovo-thinkpad-t480"
+              : descending.find(
+                  (id) =>
+                    pastFirstPage(id) &&
+                    fixtures.find((entry) => entry.id === id)?.type === "baerbare",
+                );
             const expectedShown = Math.min(
               descending.length,
               Math.ceil((descending.indexOf(selectedId) + 1) / 12) * 12,
@@ -1710,7 +1721,10 @@ export async function verifyCatalogueExplorer(
               "the corrected reveal size is reflected in the restored URL",
             );
 
-            const excludedId = "lenovo-thinkpad-p16-gen-2";
+            /* A workstation the list shows: Gen 2 is held out of /modeller. */
+            const excludedId = ["lenovo-thinkpad-p16-gen-2", "lenovo-thinkpad-p16-gen-1"].find(
+              (id) => fixtures.some((entry) => entry.id === id),
+            );
             const laptopIds = fixtures
               .filter((entry) => entry.type === "baerbare")
               .map((entry) => entry.id);
@@ -1800,7 +1814,7 @@ export async function verifyCatalogueExplorer(
               .filter((entry) => /ThinkPad X1 Nano\b/.test(entry.name))
               .map((entry) => entry.id);
             assert.equal(
-              nanos.length,
+              MODELS.filter((entry) => /ThinkPad X1 Nano\b/.test(entry.name)).length,
               3,
               "three researched X1 Nano generations have a 13-inch format",
             );
