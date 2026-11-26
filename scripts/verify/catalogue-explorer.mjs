@@ -280,10 +280,14 @@ export async function verifyCatalogueExplorer(
           request.method() === "GET" &&
           (request.isNavigationRequest() || request.headers().rsc === "1")
         ) {
-          const response = await route.fetch({
-            maxRedirects: 0,
-            headers: await request.allHeaders(),
-          });
+          /* The same transport reset as the image replay above, on a page
+             or RSC request (2026-11-26, once in a full run): replay it once;
+             a second reset still fails the run. */
+          const headersIn = await request.allHeaders();
+          const fetchPage = () => route.fetch({ maxRedirects: 0, headers: headersIn });
+          const response = await fetchPage().catch((error) =>
+            /ECONNRESET|socket hang up/.test(error.message) ? fetchPage() : Promise.reject(error),
+          );
           const headers = response.headers();
           // Loopback has HTTP, not the deployed site's TLS. Preserve the real
           // policy apart from this test-only HTTP upgrade directive.

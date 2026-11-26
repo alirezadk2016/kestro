@@ -1464,7 +1464,14 @@ for (const [hub, prefix, language] of [
       fail("bilingual article metadata", `mixed or stale snippet on ${path}`);
     if (info.article?.inLanguage !== language || info.article?.url !== info.canonical)
       fail("bilingual article schema", `incorrect language or URL on ${path}`);
-    if (
+    if (!info.imageSources.length) {
+      /* A practical guide without a picture (26 Nov 2026): the article must
+         not claim an image, and its preview keeps the site's share image. */
+      if (info.article?.image)
+        fail("bilingual article image", `schema claims an image the page does not show on ${path}`);
+      if (info.ogImage !== info.twitterImage)
+        fail("bilingual article image", `preview images disagree on ${path}`);
+    } else if (
       !info.article?.image?.url ||
       info.article.image.url !== info.ogImage ||
       info.ogImage !== info.twitterImage
