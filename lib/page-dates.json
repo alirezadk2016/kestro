@@ -91,12 +91,12 @@
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-10-28",
+    "modified": "2026-11-26",
     "files": 5
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-10-28",
+    "modified": "2026-11-26",
     "files": 9
   },
   "/ydelser": {
