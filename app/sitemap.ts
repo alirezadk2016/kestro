@@ -3,7 +3,7 @@ import { categories, categoryIndexed } from "@/lib/categories";
 import { models } from "@/lib/models";
 import { modelIndexed } from "@/lib/model-index";
 import { guides } from "@/lib/guides";
-import { practicalGuides } from "@/lib/practical-guides";
+import { practicalDates, practicalGuides } from "@/lib/practical-guides";
 import { legalUpdated } from "@/lib/legal";
 import { services } from "@/lib/services";
 import { repairs } from "@/lib/repairs";
@@ -82,7 +82,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
    */
   const guideRoutes: Route[] = [...guides, ...practicalGuides].map((guide) => ({
     path: `/vejledninger/${guide.slug}`,
-    lastModified: "updated" in guide ? guide.updated : "2026-10-17",
+    /* A practical guide's own modified date, the one its page shows. */
+    lastModified: "updated" in guide ? guide.updated : practicalDates(guide).modified,
   }));
 
   const serviceRoutes: Route[] = services.map((service) => ({
