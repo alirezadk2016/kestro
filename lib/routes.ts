@@ -67,6 +67,11 @@ export const englishPath: Record<string, string> = {
   "/vejledninger/tjek-ram-forbrug": "/knowledge/check-memory-usage",
   "/vejledninger/hdd-eller-ssd": "/knowledge/hdd-or-ssd",
   "/vejledninger/langsom-computer": "/knowledge/slow-computer",
+  "/vejledninger/baerbar-larmer-eller-bliver-varm": "/knowledge/laptop-loud-or-hot",
+  "/vejledninger/overfoer-filer-til-ny-pc": "/knowledge/transfer-files-to-a-new-pc",
+  "/vejledninger/computer-gaar-ned": "/knowledge/computer-keeps-crashing",
+  "/vejledninger/dansk-tastatur-paa-importeret-computer":
+    "/knowledge/danish-keyboard-on-an-imported-computer",
   "/vejledninger/windows-10-support-slutter": "/knowledge/windows-10-end-of-support",
   "/vejledninger/refurbished-eller-brugt": "/knowledge/refurbished-or-used",
   "/vejledninger/reparere-eller-koebe-ny": "/knowledge/repair-or-replace",

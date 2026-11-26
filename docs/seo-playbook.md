@@ -1483,3 +1483,40 @@ and marketplace listings. Both, with English, carry `noindex, follow` and left
 the sitemap (186 → 182 URLs); the footer still links them and no URL moved.
 Their five keywords are untargeted until the categories have models. The
 verify gate checks them with the held-out model generations.
+
+## Four practical guides for the last rule 3 searches — 26 November 2026
+
+The owner approved the four guides proposed the day before. Each answers
+searches whose page one is guides and support articles, and links to the
+service that does the job:
+
+| Guide | Searches | Links to |
+| --- | --- | --- |
+| `/vejledninger/baerbar-larmer-eller-bliver-varm` | bærbar bliver varm, bærbar larmer | rens og køling |
+| `/vejledninger/overfoer-filer-til-ny-pc` | overføre filer til ny pc | ny opsætning og dataflytning |
+| `/vejledninger/computer-gaar-ned` | computer går ned | fejlfinding |
+| `/vejledninger/dansk-tastatur-paa-importeret-computer` | dansk tastatur på importeret computer, dansk tastatur skift, danish keyboard laptop | tastaturskift, nordisk tilpasning |
+
+- **Practical guides**, the format of the four Windows guides: steps, what
+  the result means, the limits, sources. English addresses under
+  `/en/knowledge/`, in `lib/routes.ts` and `next.config.mjs`.
+- **No picture.** The first four use AI-generated component illustrations;
+  these topics have no component to show that another guide does not, and
+  no new invented pictures were made. The hero shows the steps as an
+  outline instead, and the guides hub lists the four as a row of their own.
+- **Sources.** Microsoft's and Dell's documentation could not be read from
+  this session (their hosts are outside its network), so nothing new
+  entered `lib/sources.ts`. The guides cite only registry entries they lean
+  on (Task Manager, BitLocker recovery, service safety, swollen batteries,
+  the reset's erasure limits); the keyboard guide cites none. The steps are
+  standard Windows procedures; Microsoft citations can be added once the
+  documents can be read.
+- **Measured:** all eight titles and descriptions within 580 / 920 px and
+  their character ranges; each guide's knowledge graph 100% covered; axe and
+  html-validate clean.
+- **The services step back.** `/reparation/rens-og-koeling` is titled for
+  its own job ("Rens af bærbar og ny kølepasta"), `/reparation/fejlfinding`
+  for "computer starter ikke"; the symptoms are the guides' searches now.
+  `/ydelser/nordisk-tilpasning` takes "dansk tastatur til bærbar" as its
+  primary. Three repair pages link to their guide.
+- **Rule 3 flags: 7 → 0.** mak run: 0 failures.

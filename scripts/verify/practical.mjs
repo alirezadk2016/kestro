@@ -10,12 +10,22 @@ export async function verifyPracticalGuides(browser, base, fail) {
       "/vejledninger/tjek-ram-forbrug",
       "/vejledninger/hdd-eller-ssd",
       "/vejledninger/langsom-computer",
+      /* The four without a picture (26 November 2026), after the four the
+         calculator scenarios below address by position. */
+      "/vejledninger/baerbar-larmer-eller-bliver-varm",
+      "/vejledninger/overfoer-filer-til-ny-pc",
+      "/vejledninger/computer-gaar-ned",
+      "/vejledninger/dansk-tastatur-paa-importeret-computer",
     ],
     en: [
       "/en/knowledge/check-battery-capacity",
       "/en/knowledge/check-memory-usage",
       "/en/knowledge/hdd-or-ssd",
       "/en/knowledge/slow-computer",
+      "/en/knowledge/laptop-loud-or-hot",
+      "/en/knowledge/transfer-files-to-a-new-pc",
+      "/en/knowledge/computer-keeps-crashing",
+      "/en/knowledge/danish-keyboard-on-an-imported-computer",
     ],
   };
 
@@ -98,7 +108,11 @@ export async function verifyPracticalGuides(browser, base, fail) {
     await scenario(`${lang} directory and layouts`, async (context) => {
       const page = await visit(context, lang === "da" ? "/vejledninger" : "/en/knowledge");
       const links = page.locator("#praktiske-guides a[href]");
-      assert.equal(await links.count(), 4, "the hub exposes four separate practical guides");
+      assert.equal(
+        await links.count(),
+        paths[lang].length,
+        "the hub exposes every practical guide once",
+      );
       const hrefs = await links.evaluateAll((items) =>
         items.map((item) => item.getAttribute("href")),
       );

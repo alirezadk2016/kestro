@@ -883,6 +883,95 @@
           "Reklamationsret og garanti": ["reklamationsret", "garanti"]
         }
       }
+    },
+    "/vejledninger/baerbar-larmer-eller-bliver-varm": {
+      "main": ["larmer", "bliver varm"],
+      "nodes": {
+        "Årsag": {
+          "Processoren arbejder": ["cpu", "processer"],
+          "Luften kan ikke komme ud": ["underlag", "luftindtag", "udblæsning"],
+          "Støv og kølepasta": ["støv", "kølepasta"]
+        },
+        "Det, du selv kan gøre": {
+          "Jobliste": ["jobliste", "ctrl + shift + esc"],
+          "Strømtilstand": ["strømtilstand", "strøm og batteri"],
+          "BIOS og drivere": ["bios", "drivere"],
+          "Producentens profil": ["producentens eget program", "profil"]
+        },
+        "Afgrænsning": {
+          "Normal støj under belastning": ["under belastning"],
+          "Varm og langsom": ["skruer selv ned", "langsom"],
+          "Sikkerhed ved åbning": ["servicevejledning", "strømmen afbrudt"],
+          "Opsvulmet batteri": ["opsvulmet"]
+        }
+      }
+    },
+    "/vejledninger/overfoer-filer-til-ny-pc": {
+      "main": ["overføre filer", "ny pc"],
+      "nodes": {
+        "Hvad skal med": {
+          "Mapper": ["skrivebord", "dokumenter", "billeder", "downloads"],
+          "Browser": ["bogmærker", "adgangskoder"],
+          "Mail og programmer": ["mailprogrammet", "programmer", "licenser"]
+        },
+        "Måder at flytte på": {
+          "OneDrive og Windows Backup": ["onedrive", "windows backup"],
+          "Ekstern disk": ["ekstern disk", "usb-disk", "stifinder"],
+          "Synkronisering i browseren": ["synkronisering"]
+        },
+        "Bagefter": {
+          "Tjek før sletning": ["før den gamle", "tjek"],
+          "Arbejdscomputer og IT": ["arbejdscomputer", "it først"],
+          "Sletning efter standard": ["rens data", "standard"],
+          "BitLocker": ["bitlocker", "genoprettelsesnøglen"]
+        }
+      }
+    },
+    "/vejledninger/computer-gaar-ned": {
+      "main": ["går ned"],
+      "nodes": {
+        "Hvad sker der": {
+          "Blå skærm og stopkode": ["blå skærm", "stopkode"],
+          "Sluk uden varsel": ["slukker"],
+          "Frysning": ["fryser", "frysning"]
+        },
+        "Det, du selv kan gøre": {
+          "Historikken": ["perfmon /rel"],
+          "Windows Update og drivere": ["windows update", "drivere"],
+          "Hukommelsestest": ["mdsched", "ram"],
+          "Varme": ["for varm", "varmen"]
+        },
+        "Afgrænsning": {
+          "Ét nedbrud": ["enkelt gang"],
+          "Kopi af data": ["tag en kopi"],
+          "BitLocker ved BIOS-opdatering": ["bitlocker"]
+        }
+      }
+    },
+    "/vejledninger/dansk-tastatur-paa-importeret-computer": {
+      "main": ["dansk tastatur", "importeret"],
+      "nodes": {
+        "Fysisk tastatur": {
+          "Amerikansk tastatur": ["amerikansk"],
+          "Nordisk tastatur": ["nordisk"],
+          "Tysk tastatur": ["tysk", "z og y"],
+          "Enter-tasten": ["enter"]
+        },
+        "Windows": {
+          "Tilføj dansk layout": ["tid og sprog", "sprog og område"],
+          "Skift layout": ["windows-tasten + mellemrum", "windows + mellemrum"],
+          "Visningssprog": ["visningssprog"]
+        },
+        "Tegnene": {
+          "Æ, ø og å": ["æ, ø og å"],
+          "< og >": ["< og >"]
+        },
+        "Varig løsning": {
+          "Klistermærker": ["klistermærker"],
+          "Nyt tastatur": ["nyt nordisk tastatur", "baggrundslys"],
+          "Arbejdscomputer": ["låst af it"]
+        }
+      }
     }
   }
 }

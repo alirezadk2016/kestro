@@ -10,22 +10,27 @@ import { buttonClass } from "@/components/Button";
 import { htmlLang, localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
 import { citationSchema } from "@/lib/sources";
-import { practicalGuideDates, type PracticalGuide } from "@/lib/practical-guides";
+import { practicalDates, type PracticalGuide } from "@/lib/practical-guides";
 import { BatteryCapacityTool, RamUsageTool } from "./CapacityTools";
 import BrowserCheck from "./BrowserCheck";
 import styles from "./practical.module.css";
 
 export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
   const base = metaFor(`/vejledninger/${guide.slug}`, lang);
-  const images = [
-    {
-      url: `${SITE_ORIGIN}${guide.image}`,
-      width: 1200,
-      height: 900,
-      alt: guide.imageAlt[lang],
-      type: "image/webp",
-    },
-  ];
+  const dates = practicalDates(guide);
+  /* A guide without a picture keeps the site's own share image. */
+  const images =
+    guide.image && guide.imageAlt
+      ? [
+          {
+            url: `${SITE_ORIGIN}${guide.image}`,
+            width: 1200,
+            height: 900,
+            alt: guide.imageAlt[lang],
+            type: "image/webp",
+          },
+        ]
+      : undefined;
   return {
     title: guide.metaTitle[lang],
     description: guide.metaDescription[lang],
@@ -36,15 +41,15 @@ export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
       type: "article",
       title: guide.metaTitle[lang],
       description: guide.metaDescription[lang],
-      publishedTime: practicalGuideDates.published,
-      modifiedTime: practicalGuideDates.modified,
-      images,
+      publishedTime: dates.published,
+      modifiedTime: dates.modified,
+      ...(images ? { images } : {}),
     },
     twitter: {
       ...base.twitter,
       title: guide.metaTitle[lang],
       description: guide.metaDescription[lang],
-      images,
+      ...(images ? { images } : {}),
     },
   };
 }
@@ -52,6 +57,7 @@ export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
 export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGuide; lang: Lang }) {
   const pageUrl = `${SITE_ORIGIN}${localePath(`/vejledninger/${guide.slug}`, lang)}`;
   const articleId = `${pageUrl}#article`;
+  const dates = practicalDates(guide);
   const article = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -60,18 +66,22 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     headline: guide.title[lang],
     description: guide.metaDescription[lang],
     inLanguage: htmlLang[lang],
-    datePublished: practicalGuideDates.published,
-    dateModified: practicalGuideDates.modified,
+    datePublished: dates.published,
+    dateModified: dates.modified,
     author: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     publisher: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
-    image: {
-      "@type": "ImageObject",
-      url: `${SITE_ORIGIN}${guide.image}`,
-      width: 1200,
-      height: 900,
-      caption: guide.imageAlt[lang],
-    },
-    citation: citationSchema(guide.sourceIds, lang),
+    ...(guide.image && guide.imageAlt
+      ? {
+          image: {
+            "@type": "ImageObject",
+            url: `${SITE_ORIGIN}${guide.image}`,
+            width: 1200,
+            height: 900,
+            caption: guide.imageAlt[lang],
+          },
+        }
+      : {}),
+    ...(guide.sourceIds.length ? { citation: citationSchema(guide.sourceIds, lang) } : {}),
     mainEntityOfPage: { "@id": pageUrl },
   };
   const hasTool = !!guide.tool || guide.slug === "langsom-computer";
@@ -88,6 +98,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           source: "Kilder og dokumentation",
           image: "Illustration, AI-genereret.",
           stepLink: "Se trinnene",
+          inGuide: "I guiden",
           battery: "Beregn batteriets kapacitet",
           ram: "Beregn dit RAM-forbrug",
         }
@@ -102,6 +113,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           source: "Sources and documentation",
           image: "Illustration, AI-generated.",
           stepLink: "View the steps",
+          inGuide: "In this guide",
           battery: "Calculate battery capacity",
           ram: "Calculate memory usage",
         };
@@ -116,7 +128,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
         description={guide.metaDescription[lang]}
         sources={guide.sourceIds}
         primaryEntityId={articleId}
-        contentDates={practicalGuideDates}
+        contentDates={dates}
       />
       <script
         type="application/ld+json"
@@ -153,18 +165,38 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
                 )}
               </div>
             </div>
-            <figure className={styles.heroFigure}>
-              <Image
-                src={guide.image}
-                alt={guide.imageAlt[lang]}
-                width={1200}
-                height={900}
-                sizes="(min-width: 1024px) 42vw, 100vw"
-                priority
-                fetchPriority="high"
-              />
-              <figcaption>{c.image}</figcaption>
-            </figure>
+            {guide.image && guide.imageAlt ? (
+              <figure className={styles.heroFigure}>
+                <Image
+                  src={guide.image}
+                  alt={guide.imageAlt[lang]}
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  priority
+                  fetchPriority="high"
+                />
+                <figcaption>{c.image}</figcaption>
+              </figure>
+            ) : (
+              /* No picture to show, so the right half carries the guide's
+                 outline. Plain text, not links: a step title that wraps at
+                 390px would be two-line clickable text, and the button
+                 beside it already goes to the steps. */
+              <div className={`plate ${styles.heroSteps}`}>
+                <p id="guide-outline" className={styles.heroStepsLabel}>
+                  {c.inGuide}
+                </p>
+                <ol aria-labelledby="guide-outline">
+                  {guide.steps.map((step, index) => (
+                    <li key={step.title.da}>
+                      <span aria-hidden="true">{index + 1}</span>
+                      {step.title[lang]}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
           </div>
         </Container>
       </section>
@@ -173,7 +205,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           <h2 id="steps-title" className="font-display t-h2 font-bold tracking-display text-paper">
             {c.steps}
           </h2>
-          <ol className={styles.steps}>
+          <ol className={`${styles.steps} ${guide.steps.length === 5 ? styles.stepsFive : ""}`}>
             {guide.steps.map((step, index) => (
               <li className={styles.step} key={step.title.da}>
                 <span className={styles.stepNumber} aria-hidden="true">
@@ -242,10 +274,12 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
               </li>
             </ul>
           </div>
-          <div>
-            <h2 className="font-display t-h3 font-bold text-paper">{c.source}</h2>
-            <SourceList lang={lang} ids={guide.sourceIds} className="mt-5" compact quietHeading />
-          </div>
+          {guide.sourceIds.length > 0 && (
+            <div>
+              <h2 className="font-display t-h3 font-bold text-paper">{c.source}</h2>
+              <SourceList lang={lang} ids={guide.sourceIds} className="mt-5" compact quietHeading />
+            </div>
+          )}
         </Container>
       </section>
     </>

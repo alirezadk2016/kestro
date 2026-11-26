@@ -267,6 +267,13 @@ export const repairs: Repair[] = [
     slug: "tastaturskift-og-nordisk-layout",
     mark: "keyboard",
     name: { da: "Tastaturskift og nordisk layout", en: "Keyboard swap and Nordic layout" },
+    tool: {
+      href: "/vejledninger/dansk-tastatur-paa-importeret-computer",
+      label: {
+        da: "Skriv dansk i Windows, indtil tasterne er skiftet",
+        en: "Type Danish in Windows until the keys are swapped",
+      },
+    },
     h1: {
       da: "Tastaturskift på bærbar og nordisk layout",
       en: "Laptop keyboard swap and Nordic layout",
@@ -360,10 +367,19 @@ export const repairs: Repair[] = [
     slug: "rens-og-koeling",
     mark: "cooling",
     name: { da: "Rens og køling", en: "Cleaning and cooling" },
+    tool: {
+      href: "/vejledninger/baerbar-larmer-eller-bliver-varm",
+      label: {
+        da: "Tjek selv, hvorfor den larmer",
+        en: "Check for yourself why it is loud",
+      },
+    },
     h1: { da: "Rens og køling af bærbar", en: "Laptop cleaning and cooling" },
     metaTitle: {
-      da: "Varm og larmende bærbar? Rens og ny kølepasta | Kestro",
-      en: "Hot, loud laptop? Cleaning and new thermal paste | Kestro",
+      /* The symptom ("larmer", "bliver varm") is the guide's search since
+         2026-11-26; this page keeps its own, the job. Measured: 50 ch, 464 px. */
+      da: "Rens af bærbar og ny kølepasta – værksted | Kestro",
+      en: "Laptop cleaning and new thermal paste at a workshop | Kestro",
     },
     metaDescription: {
       da: "Støv og tør kølepasta gør en computer varm, larmende og langsom, fordi den skruer ned for farten. Vi renser, skifter pasta og måler temperaturen.",
@@ -495,6 +511,13 @@ export const repairs: Repair[] = [
     slug: "ny-opsaetning-og-dataflytning",
     mark: "adjust",
     name: { da: "Ny opsætning og dataflytning", en: "Fresh setup and data migration" },
+    tool: {
+      href: "/vejledninger/overfoer-filer-til-ny-pc",
+      label: {
+        da: "Flyt filerne selv, trin for trin",
+        en: "Move the files yourself, step by step",
+      },
+    },
     h1: {
       da: "Opsætning af ny computer og flytning af data",
       en: "Setting up a new computer and moving your data",
@@ -554,8 +577,10 @@ export const repairs: Repair[] = [
       },
     },
     metaTitle: {
-      da: "Computer starter ikke eller går ned? Fejlfinding | Kestro",
-      en: "Computer won't start or keeps crashing? Diagnosis | Kestro",
+      /* "Computer går ned" is the crash guide's search since 2026-11-26.
+         Measured: 59 ch, 525 px. */
+      da: "Computer starter ikke? Fejlfinding på pc og bærbar | Kestro",
+      en: "Computer won't start? Diagnosis for PCs and laptops | Kestro",
     },
     metaDescription: {
       da: "Fejlfinding: starter computeren ikke, går den ned, eller opfører den sig underligt? Vi finder årsagen og siger, hvad det koster, før vi går i gang.",

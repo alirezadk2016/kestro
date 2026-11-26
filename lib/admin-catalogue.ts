@@ -1,6 +1,6 @@
 import { guideArtwork } from "@/components/GuidePanel";
 import { guides, getCluster } from "@/lib/guides";
-import { practicalGuides, practicalGuideDates } from "@/lib/practical-guides";
+import { practicalGuides, practicalDates } from "@/lib/practical-guides";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
 import media from "@/lib/admin-media.json";
 
@@ -32,15 +32,18 @@ export const contentEntries: ContentEntry[] = [
     metaTitle: guide.metaTitle,
     metaDescription: guide.metaDescription,
     // These are the dates published by PracticalGuidePage, not the admin deploy date.
-    published: practicalGuideDates.published,
-    updated: practicalGuideDates.modified,
+    published: practicalDates(guide).published,
+    updated: practicalDates(guide).modified,
     keyword: null,
     sourceFile: "lib/practical-guides.ts",
     headings: guide.steps.map((step) => step.title),
-    images: {
-      da: { src: guide.image, alt: guide.imageAlt.da },
-      en: { src: guide.image, alt: guide.imageAlt.en },
-    },
+    images:
+      guide.image && guide.imageAlt
+        ? {
+            da: { src: guide.image, alt: guide.imageAlt.da },
+            en: { src: guide.image, alt: guide.imageAlt.en },
+          }
+        : {},
     tool:
       guide.tool === "battery"
         ? "Batteriberegner"
