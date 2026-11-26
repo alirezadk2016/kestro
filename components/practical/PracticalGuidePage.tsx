@@ -70,17 +70,23 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     dateModified: dates.modified,
     author: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     publisher: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
-    ...(guide.image && guide.imageAlt
-      ? {
-          image: {
+    /* Without a picture of its own, the article names the share image its
+       preview uses, so the markup and the preview point at the same file. */
+    image:
+      guide.image && guide.imageAlt
+        ? {
             "@type": "ImageObject",
             url: `${SITE_ORIGIN}${guide.image}`,
             width: 1200,
             height: 900,
             caption: guide.imageAlt[lang],
+          }
+        : {
+            "@type": "ImageObject",
+            url: `${SITE_ORIGIN}/opengraph-image`,
+            width: 1200,
+            height: 630,
           },
-        }
-      : {}),
     ...(guide.sourceIds.length ? { citation: citationSchema(guide.sourceIds, lang) } : {}),
     mainEntityOfPage: { "@id": pageUrl },
   };
