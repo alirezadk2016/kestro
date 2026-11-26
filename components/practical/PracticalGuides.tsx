@@ -8,14 +8,18 @@ import styles from "./practical.module.css";
 
 export default function PracticalGuides({ lang }: { lang: Lang }) {
   const featured = practicalGuides.find((guide) => guide.slug === "langsom-computer")!;
-  const rest = practicalGuides.filter((guide) => guide !== featured);
+  /* The four with a picture keep the directory they were drawn for; the four
+     without one (26 November 2026) are a row of their own below it. */
+  const rest = practicalGuides.filter((guide) => guide !== featured && guide.image);
+  const more = practicalGuides.filter((guide) => !guide.image);
   const c =
     lang === "da"
       ? {
           label: "Praktisk hjælp",
           title: "Praktiske guides",
           intro:
-            "Fire ting, du selv kan tjekke i Windows: batteriet, RAM, drevet og det, der gør computeren langsom.",
+            "Det, du selv kan tjekke og ordne i Windows: batteriet, RAM, drevet, en langsom eller varm maskine, nedbrud, filer til en ny pc og dansk tastatur.",
+          more: "Fejl og opsætning",
           open: "Åbn guiden",
           feature: "Start her, hvis du er i tvivl",
           photo: "Billederne er AI-genererede illustrationer.",
@@ -24,7 +28,8 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
           label: "Practical help",
           title: "Practical guides",
           intro:
-            "Four things you can check yourself in Windows: the battery, the RAM, the drive and what is slowing the computer down.",
+            "What you can check and fix yourself in Windows: the battery, the RAM, the drive, a slow or hot machine, crashes, files for a new PC and a Danish keyboard.",
+          more: "Faults and setup",
           open: "Open the guide",
           feature: "Start here if you are unsure",
           photo: "The pictures are AI-generated illustrations.",
@@ -58,8 +63,8 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
             </div>
             <div className={styles.featurePhoto}>
               <Image
-                src={featured.image}
-                alt={featured.imageAlt[lang]}
+                src={featured.image!}
+                alt={featured.imageAlt![lang]}
                 width={1200}
                 height={900}
                 sizes="(min-width: 1024px) 40vw, (min-width: 640px) 60vw, 100vw"
@@ -74,7 +79,7 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
                   className={styles.quickGuide}
                 >
                   <Image
-                    src={guide.image}
+                    src={guide.image!}
                     alt=""
                     width={1200}
                     height={900}
@@ -92,6 +97,24 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
             ))}
           </ul>
         </div>
+        <h3 className="mt-10 font-display t-h3 font-bold tracking-tight text-ink-900">{c.more}</h3>
+        <ul className={styles.moreList}>
+          {more.map((guide) => (
+            <li key={guide.slug}>
+              <Link
+                href={localePath(`/vejledninger/${guide.slug}`, lang)}
+                className={`${styles.quickGuide} ${styles.quickGuideText}`}
+              >
+                <div className={styles.quickCopy}>
+                  <h4 className="font-display text-base font-bold leading-snug sm:text-lg">
+                    {guide.title[lang]}
+                  </h4>
+                  <p>{guide.summary[lang]}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
         <p className="mt-5 text-xs leading-5 text-ink-600">{c.photo}</p>
       </Container>
     </section>
