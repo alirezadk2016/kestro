@@ -1549,3 +1549,22 @@ Read line by line against CLAUDE.md the day after they shipped. What changed:
   under the row that has no pictures.
 - All four guides show 27 November as updated; the descriptions were
   re-measured (the heat guide's Danish one 906 px, 153 ch).
+
+## Real photographs only on the knowledge pages — 27 November 2026
+
+The owner asked for real photographs in place of the AI images. Six articles
+show a real one (four owner-supplied ThinkPad T480 photographs, the CC0
+ThinkPad T14 and the CC BY-SA ThinkPad T470 in its dock); the other eight and
+the eight practical guides show none, because no licensed photograph of their
+subject exists on the site and Wikimedia Commons is outside this session's
+network. Detail in `docs/media-licenses.md`.
+
+- **Image SEO:** an article's Open Graph image and Article `image` are the
+  photograph it shows, with `creditText`, `license` and `acquireLicensePage`
+  where it is licensed; an article without one names no image, and its
+  preview is the site's share image. Verify checks both directions.
+- **Hub:** the article lists are text panels (title, one sentence, minutes),
+  two across from sm and three from xl; the practical guides are two rows of
+  four, the first led by "Langsom computer".
+- Twelve AI image files were deleted, so their URLs now answer 404 and leave
+  image search; nothing on the site linked to them.

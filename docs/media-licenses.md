@@ -458,3 +458,31 @@ Remaining primary-photo gaps:
 - Lenovo ThinkPad P16s Gen 3
 - Lenovo ThinkPad P1 Gen 7
 - Lenovo ThinkPad P16 Gen 2
+
+## Knowledge articles and practical guides (27 November 2026)
+
+The owner's rule is that a laptop on this site is shown in a real photograph,
+never a generated or rendered one. The knowledge pages carried AI-generated
+plates (`public/viden/*.webp`, `public/images/practical/*.webp`) and three
+Cycles renders; all of them left those pages, and the twelve files only they
+used were deleted. Their prompts remain in `assets/artwork/manifest.json` and
+in git history.
+
+Six articles now show a photograph that was already on the site, unchanged:
+
+| Article | Photograph | Source and licence |
+| --- | --- | --- |
+| `windows-10-support-slutter` | `/thinkpad-t480-6.jpg` | Owner-supplied |
+| `refurbished-eller-ny-baerbar` | `/thinkpad-t480-4.jpg` | Owner-supplied |
+| `tjek-brugt-baerbar-foer-koeb` | `/thinkpad-t480-7.jpg` | Owner-supplied |
+| `refurbished-eller-brugt` | `/thinkpad-t480-3.jpg` | Owner-supplied |
+| `thinkpad-elitebook-latitude` | `/models/t14/gen2-intel-reference.webp` | Edvard10, CC0 (above) |
+| `standardiser-firmacomputere` | `/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp` | Paowee, CC BY-SA 4.0 (resized) |
+
+The article hero names each one under the picture; a licensed file carries
+its author linked to the Commons page and its licence linked with
+`rel="license"`, and the Article schema states `creditText`, `license` and
+`acquireLicensePage`. The other eight articles and all eight practical guides
+have no picture: no real photograph of their subject (RAM, a drive, a battery,
+the inside of a laptop) has been licensed, and a generic laptop standing in
+for one would be decoration. `lib/guide-photos.ts` is the list.

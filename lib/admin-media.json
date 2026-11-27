@@ -119,34 +119,6 @@
     "format": "webp"
   },
   {
-    "src": "/images/practical/battery.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 150588,
-    "format": "webp"
-  },
-  {
-    "src": "/images/practical/performance.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 188136,
-    "format": "webp"
-  },
-  {
-    "src": "/images/practical/ram.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 248998,
-    "format": "webp"
-  },
-  {
-    "src": "/images/practical/ssd.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 196648,
-    "format": "webp"
-  },
-  {
     "src": "/images/repairs/ram-01-cover.webp",
     "width": 1200,
     "height": 900,
@@ -665,27 +637,6 @@
     "format": "jpeg"
   },
   {
-    "src": "/viden/beslutning.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 156038,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/datasikkerhed.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 199530,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/inspektion.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 203398,
-    "format": "webp"
-  },
-  {
     "src": "/viden/k-buying.webp",
     "width": 840,
     "height": 560,
@@ -721,45 +672,10 @@
     "format": "webp"
   },
   {
-    "src": "/viden/kompatibilitet.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 168172,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/levetid.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 144780,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/montering.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 265284,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/stand.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 137614,
-    "format": "webp"
-  },
-  {
     "src": "/viden/viden.webp",
     "width": 1200,
     "height": 800,
     "bytes": 71176,
-    "format": "webp"
-  },
-  {
-    "src": "/viden/ydelse.webp",
-    "width": 1536,
-    "height": 1024,
-    "bytes": 306750,
     "format": "webp"
   },
   {

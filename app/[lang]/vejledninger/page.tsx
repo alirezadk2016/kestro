@@ -6,7 +6,6 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaSection from "@/components/CtaSection";
-import GuidePanel, { GuidePanelStyles, needsPanelChrome } from "@/components/GuidePanel";
 import { guides, clusters } from "@/lib/guides";
 import { localePath, metaFor, type Lang } from "@/lib/i18n";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -138,11 +137,6 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
         }}
       />
 
-      {/* One stylesheet for all eight guide panels. Rendered here rather than
-          inside each panel: eight identical copies of the same keyframes is
-          thirty kilobytes of HTML saying one thing eight times. */}
-      {guides.some((guide) => needsPanelChrome(guide.slug, lang)) && <GuidePanelStyles />}
-
       <section className="border-b border-white/10 bg-brand-950 py-8 sm:py-12">
         <Container>
           <Breadcrumbs lang={lang} trail={[{ name: c.crumb, href: "/vejledninger" }]} />
@@ -256,113 +250,31 @@ export default async function VidenPage(props: { params: Promise<{ lang: Lang }>
             </header>
 
             {/*
-             * A reading column, not the full page.
+             * Panels, not rows (27 November 2026).
              *
-             * The rows ran the whole container while the text was set to a
-             * readable measure, so every row ended with four hundred pixels of
-             * nothing before the minutes. The index above stays full width —
-             * it is a grid of four and wants the room — and everything meant to
-             * be read sits in one narrower column beneath it.
+             * Each row carried a 320px picture beside its title. The pictures were
+             * AI-generated plates and renders, and they went: a laptop on this site
+             * is a real one. Six articles show a real photograph on their own page;
+             * here every article is a title, one sentence and its reading time.
+             * Text rows split by hairlines read as a table, so they stand as panels,
+             * two across from sm and three from xl.
              */}
-            {/* flex flex-col: a list of rows, not a list of text. The
-                reading measure in globals.css caps the li of any list that is
-                not a grid or a flex at 34em, and that cap squeezed each row —
-                picture and all — into 544px, so the titles broke after every
-                word. */}
-            {/* Two columns from 1680 px. At 1920 the container is about
-                1600 px wide and one 1024 px reading column left a third of
-                every topic empty; two rows side by side still keep each row's
-                text to a reading measure. The hairlines go there, because a
-                rule under one cell of a grid row reads as a table. */}
-            <ol className="flex max-w-5xl flex-col min-[1680px]:grid min-[1680px]:max-w-none min-[1680px]:grid-cols-2 min-[1680px]:gap-x-12 min-[1680px]:gap-y-2">
-              {articles.map((guide, index) => (
-                <li
-                  key={guide.slug}
-                  className="border-b border-white/[0.08] last:border-b-0 min-[1680px]:border-b-0"
-                >
-                  {/*
-                   * No number on the guide.
-                   *
-                   * The section above already opens with one, and a second
-                   * count in the same face directly beneath it read as a
-                   * continuation of the first — the file said as much before
-                   * this layout was rewritten, and the rewrite reintroduced
-                   * exactly what the note warned about. The list is ordered in
-                   * the markup, which is where that belongs.
-                   */}
+            <ol className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {articles.map((guide) => (
+                <li key={guide.slug} className="flex">
                   <Link
                     href={localePath(`/vejledninger/${guide.slug}`, lang)}
-                    /* The left edge is the affordance at rest: a rule that is
-                       there but unlit until the row is pointed at, which is
-                       what tells a flat list of headings that it is a list of
-                       links. */
-                    /* The negative margin has to match the gutter it is cancelling.
-                       Container is px-4 on a phone and px-6 from sm, so -mx-5
-                       pulled 20px out of a 16px inset and the whole page
-                       scrolled 4px sideways — measured: scrollWidth 394 in a
-                       390 viewport. */
-                    className="group relative -mx-4 flex flex-col gap-5 py-7 pl-4 pr-4 transition-colors before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-brand-400 before:to-brand-400/0 before:opacity-0 before:transition-opacity hover:bg-white/[0.03] hover:before:opacity-100 sm:-mx-5 sm:flex-row sm:items-center sm:gap-7 sm:py-7 sm:pl-5 sm:pr-5"
+                    className="plate plate-lift group flex w-full flex-col p-6"
                   >
-                    {/*
-                     * The guide's own panel.
-                     *
-                     * The section had pictures of its four topics and none of
-                     * its eight guides, so three articles under "Levetid og
-                     * udskiftning" shared one illustration and the list itself
-                     * had nothing to recognise a row by but its title.
-                     *
-                     * Beside the title, not above it. Stacked full width it
-                     * was 700x470 in a 1280 container, so three links came to
-                     * 2,900px of section — a list you scroll for three screens
-                     * to read three lines, in a column using 55% of the page
-                     * with the rest empty. That is what "the site looks zoomed
-                     * in" means when it stops being a feeling.
-                     *
-                     * 320px is the size to land on. An earlier attempt used a
-                     * 124px thumbnail and at that size a drawing holds one
-                     * shape and nothing else — no reading, no label, no light.
-                     * At 320 it is still a panel, and the row is a row.
-                     *
-                     * Fixed 3:2 box, so nothing shifts as it paints.
-                     */}
-                    <GuidePanel
-                      slug={guide.slug}
-                      lang={lang}
-                      priority={groupIndex === 0 && index === 0}
-                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 100vw"
-                      className="plate-well aspect-[3/2] w-full shrink-0 overflow-hidden sm:w-[17.5rem] lg:w-[20rem]"
-                    />
-
-                    {/* flex-1 and min-w-0 on this block, not only on the
-                        title inside it: with only the inner one set, its basis
-                        of 0 made this block's intrinsic width its longest
-                        word, and from sm the title broke after every word in
-                        a hundred-pixel column beside the picture. */}
-                    {/* Keep reading time under the copy on small tablets: a
-                        third column at 640px leaves only 156px for the title. */}
-                    <div className="flex min-w-0 flex-1 flex-col gap-x-8 gap-y-2 lg:flex-row lg:items-baseline">
-                      <div className="min-w-0 flex-1">
-                        <h3 className="max-w-2xl font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300 sm:text-[1.4375rem]">
-                          {guide.title[lang]}
-                        </h3>
-                        {/* One measure for the whole block: the heading used to
-                          run to the column edge while the summary stopped two
-                          thirds of the way, which left a ragged right side and
-                          a void before the minutes. */}
-                        <p className="mt-2.5 max-w-2xl text-[0.9375rem] leading-7 text-paper/75">
-                          {guide.summary[lang]}
-                        </p>
-                      </div>
-
-                      {/* A duration reads as a duration: "7 min." in the same
-                        case as everything else, not "7 MIN." letterspaced like
-                        a category tag. */}
-                      <span className="flex flex-none items-center gap-3.5 lg:w-24 lg:justify-end">
-                        <span className="whitespace-nowrap text-sm tabular-nums text-paper/65">
-                          {guide.readingMinutes} {c.readingSuffix}
-                        </span>
-                      </span>
-                    </div>
+                    <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-paper transition-colors group-hover:text-brand-300">
+                      {guide.title[lang]}
+                    </h3>
+                    <p className="mt-2.5 text-[0.9375rem] leading-7 text-paper/75">
+                      {guide.summary[lang]}
+                    </p>
+                    <span className="mt-auto pt-4 text-sm tabular-nums text-paper/65">
+                      {guide.readingMinutes} {c.readingSuffix}
+                    </span>
                     <span className="sr-only">{c.read}</span>
                   </Link>
                 </li>

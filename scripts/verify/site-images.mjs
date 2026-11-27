@@ -156,7 +156,7 @@ export async function verifySiteImages(browser, base, fail) {
   }
 
   async function checkGuide(page, cover) {
-    const image = page.locator(".guide-plate img");
+    const image = page.locator(".guide-photo img");
     await imageReady(page, image);
     const rendered = await image.evaluate((element) => {
       const box = element.getBoundingClientRect();
@@ -226,25 +226,28 @@ export async function verifySiteImages(browser, base, fail) {
     );
   }
 
+  /* Real photographs only (27 November 2026): an owner-supplied JPEG and a
+     licensed Commons WebP, each shown whole, in its frame, and named by Open
+     Graph and the Article schema. */
   const covers = [
     {
-      name: "ram",
-      src: "/images/practical/ram.webp",
-      width: 1200,
-      height: 900,
-      paths: [
-        ["da", "/vejledninger/hvorfor-er-ram-blevet-dyrere"],
-        ["en", "/en/knowledge/why-memory-prices-rise"],
-      ],
-    },
-    {
-      name: "grade-a",
-      src: "/graphics/grade-a.webp",
-      width: 720,
-      height: 720,
+      name: "t480",
+      src: "/thinkpad-t480-4.jpg",
+      width: 1179,
+      height: 1142,
       paths: [
         ["da", "/vejledninger/refurbished-eller-ny-baerbar"],
         ["en", "/en/knowledge/refurbished-or-new-laptop"],
+      ],
+    },
+    {
+      name: "t14",
+      src: "/models/t14/gen2-intel-reference.webp",
+      width: 1600,
+      height: 1200,
+      paths: [
+        ["da", "/vejledninger/thinkpad-elitebook-latitude"],
+        ["en", "/en/knowledge/thinkpad-elitebook-latitude"],
       ],
     },
   ];

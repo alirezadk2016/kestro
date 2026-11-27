@@ -1353,12 +1353,15 @@ for (const [hub, title, articlePaths] of [
       webpageDates?.dateModified !== article?.dateModified
     )
       fail("education dates", `WebPage and Article disagree on ${path}`);
-    if (
-      !(await page
-        .locator("main img")
-        .evaluateAll((images) => images.some((img) => img.complete && img.naturalWidth > 0)))
-    )
-      fail("education artwork", `missing article illustration on ${path}`);
+    /* An article shows a real photograph or no picture at all (27 November
+       2026): the schema names an image exactly when one is on the page. */
+    const pictures = await page
+      .locator("main img")
+      .evaluateAll((images) => images.filter((img) => img.complete && img.naturalWidth > 0).length);
+    if (article?.image && !pictures)
+      fail("education artwork", `schema names a photograph the page does not show on ${path}`);
+    if (!article?.image && pictures)
+      fail("education artwork", `a picture the article markup does not describe on ${path}`);
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1))
       fail("education layout", `horizontal overflow on ${path}`);
     await navigate(hub);

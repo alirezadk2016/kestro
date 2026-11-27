@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
@@ -34,19 +33,8 @@ function keepKeys(text: string) {
 export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
   const base = metaFor(`/vejledninger/${guide.slug}`, lang);
   const dates = practicalDates(guide);
-  /* A guide without a picture keeps the site's own share image. */
-  const images =
-    guide.image && guide.imageAlt
-      ? [
-          {
-            url: `${SITE_ORIGIN}${guide.image}`,
-            width: 1200,
-            height: 900,
-            alt: guide.imageAlt[lang],
-            type: "image/webp",
-          },
-        ]
-      : undefined;
+  /* No guide has a picture of its own (the AI-generated ones went on 27
+     November 2026), so the preview is the site's own share image. */
   return {
     title: guide.metaTitle[lang],
     description: guide.metaDescription[lang],
@@ -59,13 +47,11 @@ export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
       description: guide.metaDescription[lang],
       publishedTime: dates.published,
       modifiedTime: dates.modified,
-      ...(images ? { images } : {}),
     },
     twitter: {
       ...base.twitter,
       title: guide.metaTitle[lang],
       description: guide.metaDescription[lang],
-      ...(images ? { images } : {}),
     },
   };
 }
@@ -86,20 +72,9 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
     dateModified: dates.modified,
     author: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
     publisher: { "@type": "Organization", name: "Kestro", url: SITE_ORIGIN },
-    /* An article claims only a picture the reader can see. A guide without
-       one has no image in its markup; its preview keeps the site's share
-       image, which is a preview, not part of the article. */
-    ...(guide.image && guide.imageAlt
-      ? {
-          image: {
-            "@type": "ImageObject",
-            url: `${SITE_ORIGIN}${guide.image}`,
-            width: 1200,
-            height: 900,
-            caption: guide.imageAlt[lang],
-          },
-        }
-      : {}),
+    /* An article claims only a picture the reader can see, and a guide
+       shows none: no image in its markup. The share image is a preview,
+       not part of the article. */
     ...(guide.sourceIds.length ? { citation: citationSchema(guide.sourceIds, lang) } : {}),
     mainEntityOfPage: { "@id": pageUrl },
   };
@@ -115,7 +90,6 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           result: "Hvad betyder det?",
           related: "Dit næste skridt",
           source: "Kilder og dokumentation",
-          image: "Illustration, AI-genereret.",
           stepLink: "Se trinnene",
           inGuide: "I guiden",
           battery: "Beregn batteriets kapacitet",
@@ -130,7 +104,6 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
           result: "What does it mean?",
           related: "Your next step",
           source: "Sources and documentation",
-          image: "Illustration, AI-generated.",
           stepLink: "View the steps",
           inGuide: "In this guide",
           battery: "Calculate battery capacity",
@@ -184,38 +157,23 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
                 )}
               </div>
             </div>
-            {guide.image && guide.imageAlt ? (
-              <figure className={styles.heroFigure}>
-                <Image
-                  src={guide.image}
-                  alt={guide.imageAlt[lang]}
-                  width={1200}
-                  height={900}
-                  sizes="(min-width: 1024px) 42vw, 100vw"
-                  priority
-                  fetchPriority="high"
-                />
-                <figcaption>{c.image}</figcaption>
-              </figure>
-            ) : (
-              /* No picture to show, so the right half carries the guide's
-                 outline. Plain text, not links: a step title that wraps at
-                 390px would be two-line clickable text, and the button
-                 beside it already goes to the steps. */
-              <div className={`plate ${styles.heroSteps}`}>
-                <p id="guide-outline" className={styles.heroStepsLabel}>
-                  {c.inGuide}
-                </p>
-                <ol aria-labelledby="guide-outline">
-                  {guide.steps.map((step, index) => (
-                    <li key={step.title.da}>
-                      <span aria-hidden="true">{index + 1}</span>
-                      {step.title[lang]}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
+            {/* The right half carries the guide's outline. Plain text, not
+                links: a step title that wraps at 390px would be two-line
+                clickable text, and the button beside it already goes to the
+                steps. */}
+            <div className={`plate ${styles.heroSteps}`}>
+              <p id="guide-outline" className={styles.heroStepsLabel}>
+                {c.inGuide}
+              </p>
+              <ol aria-labelledby="guide-outline">
+                {guide.steps.map((step, index) => (
+                  <li key={step.title.da}>
+                    <span aria-hidden="true">{index + 1}</span>
+                    {step.title[lang]}
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </Container>
       </section>

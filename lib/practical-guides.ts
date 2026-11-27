@@ -37,8 +37,6 @@ export type PracticalGuide = {
    * another guide, and the owner wants no more invented pictures. Their hero
    * lists the steps instead.
    */
-  image?: string;
-  imageAlt?: Localized;
   /** Published and modified, where they differ from the first four guides'. */
   dates?: { published: string; modified: string };
   steps: PracticalGuideStep[];
@@ -71,11 +69,6 @@ export const practicalGuides: PracticalGuide[] = [
     intro: {
       da: "Skriv powercfg /batteryreport i Kommandoprompt, og find Design Capacity og Full Charge Capacity i rapporten. Del den anden med den første, og gang med 100: 40.000 mWh ud af 50.000 mWh er 80 % af batteriets kapacitet fra nyt.",
       en: "Run powercfg /batteryreport in Command Prompt and find Design Capacity and Full Charge Capacity in the report. Divide the second by the first and multiply by 100: 40,000 mWh out of 50,000 mWh is 80% of the battery's capacity when new.",
-    },
-    image: "/images/practical/battery.webp",
-    imageAlt: {
-      da: "Illustrativt foto af et intakt batteri ved en åben bærbar",
-      en: "Illustrative photograph of an intact laptop battery beside an open computer",
     },
     steps: [
       {
@@ -181,11 +174,6 @@ export const practicalGuides: PracticalGuide[] = [
       da: "Tryk Ctrl + Shift + Esc, og vælg Ydeevne → Hukommelse i Jobliste for at se RAM-forbruget. Mål, mens du bruger dine almindelige programmer; et øjebliksbillede alene afgør ikke, om du mangler RAM.",
       en: "Press Ctrl + Shift + Esc and select Performance → Memory in Task Manager to see RAM usage. Check while using your normal applications; one snapshot alone does not establish a need for more RAM.",
     },
-    image: "/images/practical/ram.webp",
-    imageAlt: {
-      da: "Illustrativt foto af et SO-DIMM-modul ved hukommelsessoklerne i en bærbar",
-      en: "Illustrative photograph of a SO-DIMM RAM module beside a laptop's memory sockets",
-    },
     steps: [
       {
         title: { da: "Åbn dine almindelige programmer", en: "Open your usual applications" },
@@ -280,11 +268,6 @@ export const practicalGuides: PracticalGuide[] = [
     intro: {
       da: "Se efter drevtype og model under Ydeevne → Disk i Jobliste. Før et skift skal både drevets fysiske format og forbindelsen passe; M.2 beskriver formen og betyder ikke automatisk NVMe.",
       en: "Look for the drive type and model under Performance → Disk in Task Manager. A replacement must match both the physical format and the connection; M.2 describes the shape and does not automatically mean NVMe.",
-    },
-    image: "/images/practical/ssd.webp",
-    imageAlt: {
-      da: "Illustrativt foto af en 2,5-tommer SATA-SSD og et M.2-SSD-modul",
-      en: "Illustrative photograph of a 2.5-inch SATA SSD and an M.2 SSD module",
     },
     steps: [
       {
@@ -387,11 +370,6 @@ export const practicalGuides: PracticalGuide[] = [
     intro: {
       da: "Åbn Jobliste med Ctrl + Shift + Esc, mens computeren føles langsom, og se CPU, hukommelse og disk. Notér, hvilken opgave og proces der falder sammen med ventetiden; mere RAM eller en ny SSD er ikke automatisk løsningen.",
       en: "Open Task Manager with Ctrl + Shift + Esc while the computer feels slow and check CPU, memory and disk. Note which task and process coincide with the delay; more RAM or a new SSD is not automatically the answer.",
-    },
-    image: "/images/practical/performance.webp",
-    imageAlt: {
-      da: "Illustrativt foto af køleblæser, varmerør og processorens køleplade i en bærbar",
-      en: "Illustrative photograph of a laptop cooling fan, heat pipe and processor cooling plate",
     },
     steps: [
       {

@@ -9,11 +9,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Faq from "@/components/Faq";
 import ArticleToc from "@/components/ArticleToc";
 import AuthorByline from "@/components/AuthorByline";
-import GuidePanel, {
-  GuidePanelStyles,
-  needsPanelChrome,
-  guideArtwork,
-} from "@/components/GuidePanel";
+import Image from "next/image";
+import { guidePhoto } from "@/lib/guide-photos";
 import { guides, getGuide, getCluster } from "@/lib/guides";
 import { teamMember } from "@/lib/company";
 import { localePath, metaFor, langs, htmlLang, type Lang } from "@/lib/i18n";
@@ -52,6 +49,7 @@ export function generateStaticParams() {
 const copy = {
   da: {
     breadcrumb: "Viden",
+    photoBy: "Foto:",
     readingSuffix: "min. læsning",
     updated: "Opdateret",
     forWhom: "Til",
@@ -64,6 +62,7 @@ const copy = {
   },
   en: {
     breadcrumb: "Knowledge",
+    photoBy: "Photo:",
     readingSuffix: "min read",
     updated: "Updated",
     forWhom: "For",
@@ -86,15 +85,15 @@ export async function generateMetadata(props: {
   if (!guide) return {};
   const lang = params.lang;
   const base = metaFor(`/vejledninger/${guide.slug}`, lang);
-  const art = guideArtwork(guide.slug, lang);
-  const images = art
+  const photo = guidePhoto(guide.slug);
+  const images = photo
     ? [
         {
-          url: `${SITE_ORIGIN}${art.src}`,
-          width: art.width,
-          height: art.height,
-          type: "image/webp",
-          alt: art.alt[lang],
+          url: `${SITE_ORIGIN}${photo.src}`,
+          width: photo.width,
+          height: photo.height,
+          type: photo.type,
+          alt: photo.alt[lang],
         },
       ]
     : base.openGraph.images;
@@ -183,7 +182,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
   const pagePath = `/vejledninger/${guide.slug}`;
   const pageUrl = `${SITE_ORIGIN}${localePath(pagePath, lang)}`;
   const articleId = `${pageUrl}#article`;
-  const art = guideArtwork(guide.slug, lang);
+  const photo = guidePhoto(guide.slug);
 
   /* Article schema so the guide can win a rich result rather than a bare link. */
   const articleJsonLd = {
@@ -195,15 +194,23 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
     inLanguage: htmlLang[lang],
     dateModified: guide.updated,
     datePublished: guide.published ?? guide.updated,
-    /* The same illustration the reader sees, not the site's generic logo card. */
-    ...(art
+    /* The same photograph the reader sees, with its licence where it has
+       one; an article without a photograph names no image. */
+    ...(photo
       ? {
           image: {
             "@type": "ImageObject",
-            url: `${SITE_ORIGIN}${art.src}`,
-            width: art.width,
-            height: art.height,
-            caption: art.alt[lang],
+            url: `${SITE_ORIGIN}${photo.src}`,
+            width: photo.width,
+            height: photo.height,
+            caption: photo.alt[lang],
+            ...(photo.credit
+              ? {
+                  creditText: photo.credit.author,
+                  license: photo.credit.licenceUrl,
+                  acquireLicensePage: photo.credit.source,
+                }
+              : {}),
           },
         }
       : {}),
@@ -255,97 +262,90 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
         }}
       />
 
-      {/* The header carries depth by layering rather than by ornament: the mark
-          sits behind the type on a wide screen and steps out of the way on a
-          narrow one, where the words are the only thing worth the space. */}
-      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-[65px] sm:py-10 sm:py-20">
-        {/* The guide's own panel, not its cluster's.
-            Three articles sit in "Levetid og udskiftning" and three in "Køb,
-            stand og afhændelse", so the cluster mark put the same drawing
-            behind six of the eight headings. Same corner, same breakpoint —
-            the only thing that changed is that it now says which guide this
-            is, and is large enough to be read. */}
-        {/* Only where a drawn panel is what renders: the three guides with
-            supplied artwork show an image, which needs neither the keyframes
-            nor the shared defs. */}
-        {needsPanelChrome(guide.slug, lang) && <GuidePanelStyles />}
-        {/*
-         * Inside the frame, and fading rather than cut.
-         *
-         * This bled off the right at -right-16 so the drawing would run out of
-         * the page. That works for a transparent line drawing and fails for a
-         * rendered plate: the artwork carries its own frame in the pixels, so
-         * the section's overflow-hidden sliced a border in half and the panel
-         * read as a broken image rather than as a picture running off.
-         *
-         * Now it sits fully inside, and dissolves into the page on its left
-         * with a mask instead of ending on a hard vertical edge. The mask also
-         * does the work opacity used to: the part that passes behind the
-         * heading is the part that is gone.
-         *
-         * xl rather than lg, because at 1024 a 30rem plate and a max-w-3xl
-         * reading column want the same pixels and the column wins.
-         */}
-        {/* On a phone the same panel is the header's ground: in the flow,
-            full width from under the glass bar, fading at its foot where the
-            words' glass panel overlaps it. One element, so a drawn panel's
-            ids are not repeated. From md to xl it is not shown, as before. */}
-        <div className="under-bar pointer-events-none relative aspect-[3/2] w-full md:hidden xl:absolute xl:right-0 xl:top-1/2 xl:block xl:w-[32rem] xl:-translate-y-1/2 2xl:w-[38rem]">
-          <GuidePanel
-            slug={guide.slug}
-            lang={lang}
-            priority
-            className="guide-plate h-full w-full xl:opacity-70"
-          />
-          {/* The bottom edge, softened by painting the section's own colour
-              over it rather than by a second mask layer: two mask layers need
-              mask-composite to intersect, and where that is not supported they
-              union instead — which would remove the fade rather than add one.
-              A gradient in the background colour cannot fail that way. */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-950 to-transparent"
-          />
-        </div>
-
+      {/* The title and the answer, and beside them a photograph where the
+          article has one of a real machine. Eight have none: a generic laptop
+          standing in for RAM, a drive or a repair would only be decoration. */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-[calc(65px+1.5rem)] sm:py-10 sm:py-20">
         <Container className="relative">
-          <div className="glass-card relative z-10 max-w-3xl max-md:-mt-14">
-            <Breadcrumbs
-              lang={lang}
-              trail={[
-                { name: c.breadcrumb, href: "/vejledninger" },
-                { name: guide.title[lang], href: `/vejledninger/${guide.slug}` },
-              ]}
-            />
+          <div className={photo ? "lg:grid lg:grid-cols-12 lg:items-center lg:gap-14" : undefined}>
+            <div className="glass-card relative z-10 max-w-3xl lg:col-span-7">
+              <Breadcrumbs
+                lang={lang}
+                trail={[
+                  { name: c.breadcrumb, href: "/vejledninger" },
+                  { name: guide.title[lang], href: `/vejledninger/${guide.slug}` },
+                ]}
+              />
 
-            <p className="mt-6">
-              <Link
-                href={`${localePath("/vejledninger", lang)}#${cluster.anchor}`}
-                /* No mark at this size: the drawing is a technical diagram and
+              <p className="mt-6">
+                <Link
+                  href={`${localePath("/vejledninger", lang)}#${cluster.anchor}`}
+                  /* No mark at this size: the drawing is a technical diagram and
                    it turns to mud below about 40px. The large one behind the
                    heading already says which cluster this is. */
-                className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
-              >
-                {cluster.name[lang]}
-              </Link>
-            </p>
+                  className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
+                >
+                  {cluster.name[lang]}
+                </Link>
+              </p>
 
-            <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-              {guide.title[lang]}
-            </h1>
+              <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {guide.title[lang]}
+              </h1>
 
-            {/* The answer, before the scroll. Someone who reads only this
+              {/* The answer, before the scroll. Someone who reads only this
                 should still have got what they came for. */}
-            <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
-              {guide.tldr[lang]}
-            </p>
+              <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+                {guide.tldr[lang]}
+              </p>
 
-            <AuthorByline
-              authorId={guide.author}
-              updated={guide.updated}
-              readingMinutes={guide.readingMinutes}
-              lang={lang}
-            />
+              <AuthorByline
+                authorId={guide.author}
+                updated={guide.updated}
+                readingMinutes={guide.readingMinutes}
+                lang={lang}
+              />
+            </div>
+            {/* A photograph of a real machine, framed on white because that is
+              what most of them were taken on, and after the answer on a
+              phone: the words first, the picture under them. */}
+            {photo && (
+              <figure className="mt-10 max-w-xl lg:col-span-5 lg:mt-0 lg:max-w-none">
+                <div className="guide-photo aspect-[4/3] overflow-hidden rounded-2xl bg-white p-4 sm:p-6">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt[lang]}
+                    width={photo.width}
+                    height={photo.height}
+                    quality={85}
+                    priority
+                    fetchPriority="high"
+                    sizes="(min-width: 1024px) 34vw, (min-width: 640px) 576px, 100vw"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <figcaption className="mt-2 flex flex-wrap items-center gap-x-4 text-sm leading-6 text-paper/75">
+                  <span className="py-2.5">{photo.caption[lang]}</span>
+                  {photo.credit && (
+                    <>
+                      <a
+                        href={photo.credit.source}
+                        className="inline-flex min-h-[44px] items-center text-brand-300 underline underline-offset-4 hover:text-paper"
+                      >
+                        {c.photoBy} {photo.credit.author} ↗
+                      </a>
+                      <a
+                        href={photo.credit.licenceUrl}
+                        rel="license"
+                        className="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:text-paper"
+                      >
+                        {photo.credit.licence}
+                      </a>
+                    </>
+                  )}
+                </figcaption>
+              </figure>
+            )}
           </div>
         </Container>
       </section>

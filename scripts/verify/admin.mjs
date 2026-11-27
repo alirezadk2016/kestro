@@ -558,7 +558,7 @@ export async function verifyAdmin(browser, base, fail) {
       .getByRole("link", { name: "Næste", exact: true })
       .click();
     await page.waitForURL((url) => url.searchParams.get("page") === "2");
-    await visit(page, "/admin/medier?q=battery.webp&group=practical");
+    await visit(page, "/admin/medier?q=thinkpad-t480-6.jpg&group=products");
     const asset = page.getByRole("list", { name: "Billedbibliotek", exact: true });
     assert.equal(await asset.locator(":scope > li").count(), 1);
     const image = asset.getByRole("img");
@@ -568,20 +568,25 @@ export async function verifyAdmin(browser, base, fail) {
         .filter((image) => image.getBoundingClientRect().width > 0)
         .every((image) => image.complete && image.naturalWidth > 0),
     );
-    await asset.getByRole("button", { name: "Kopiér link til battery.webp", exact: true }).click();
+    await asset
+      .getByRole("button", { name: "Kopiér link til thinkpad-t480-6.jpg", exact: true })
+      .click();
     assert.equal(
       await asset.getByLabel("Markér og kopiér linket manuelt", { exact: true }).inputValue(),
-      "https://www.kestro.dk/images/practical/battery.webp",
+      "https://www.kestro.dk/thinkpad-t480-6.jpg",
       "copy denial retains a usable original URL",
     );
     assert.equal(
       await asset.getByRole("link", { name: "Hent fil ↓", exact: true }).getAttribute("download"),
-      "battery.webp",
+      "thinkpad-t480-6.jpg",
     );
     await asset.locator("summary").click();
     assert.equal(
       await asset
-        .getByRole("link", { name: "Tjek batterikapacitet i Windows", exact: true })
+        .getByRole("link", {
+          name: "Windows 10: supporten er slut – hvad gør virksomheden nu?",
+          exact: true,
+        })
         .count(),
       1,
     );

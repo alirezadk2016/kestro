@@ -1,4 +1,4 @@
-import { guideArtwork } from "@/components/GuidePanel";
+import { guidePhoto } from "@/lib/guide-photos";
 import { guides, getCluster } from "@/lib/guides";
 import { practicalGuides, practicalDates } from "@/lib/practical-guides";
 import { localePath, type Lang, type Localized } from "@/lib/i18n";
@@ -37,13 +37,7 @@ export const contentEntries: ContentEntry[] = [
     keyword: null,
     sourceFile: "lib/practical-guides.ts",
     headings: guide.steps.map((step) => step.title),
-    images:
-      guide.image && guide.imageAlt
-        ? {
-            da: { src: guide.image, alt: guide.imageAlt.da },
-            en: { src: guide.image, alt: guide.imageAlt.en },
-          }
-        : {},
+    images: {},
     tool:
       guide.tool === "battery"
         ? "Batteriberegner"
@@ -68,7 +62,7 @@ export const contentEntries: ContentEntry[] = [
     headings: guide.sections.map((section) => section.heading),
     images: Object.fromEntries(
       (["da", "en"] as const).flatMap((lang) => {
-        const image = guideArtwork(guide.slug, lang);
+        const image = guidePhoto(guide.slug);
         return image ? [[lang, { src: image.src, alt: image.alt[lang] }]] : [];
       }),
     ),
@@ -87,7 +81,6 @@ export const scalarQuery = (value: string | string[] | undefined) =>
 
 export const mediaGroups = [
   { id: "all", label: "Alle billeder" },
-  { id: "practical", label: "Praktiske guides" },
   { id: "knowledge", label: "Viden" },
   { id: "products", label: "Produkter og hardware" },
   { id: "brand", label: "Forside og team" },
@@ -95,7 +88,6 @@ export const mediaGroups = [
 ] as const;
 export type MediaGroup = (typeof mediaGroups)[number]["id"];
 export function mediaGroup(src: string): Exclude<MediaGroup, "all"> {
-  if (src.startsWith("/images/practical/")) return "practical";
   if (src.startsWith("/viden/")) return "knowledge";
   if (
     /^\/(cards|models|graphics)\//.test(src) ||

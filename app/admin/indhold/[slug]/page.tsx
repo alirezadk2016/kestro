@@ -175,7 +175,7 @@ export default async function AdminContentDetail({
                   </a>
                 </FieldValue>
                 <FieldValue label="Billedtekst (alt)">
-                  {entry.images[lang]?.alt ?? "Indbygget grafik i denne sprogversion."}
+                  {entry.images[lang]?.alt ?? "Intet billede på siden."}
                 </FieldValue>
               </dl>
             </section>

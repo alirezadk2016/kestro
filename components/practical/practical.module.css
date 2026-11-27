@@ -598,3 +598,23 @@
 .keys {
   white-space: nowrap;
 }
+
+/* The guide to start with: the same panel as its row, in the navy the
+   directory's large card used to be, so it leads without a picture. */
+.quickGuideFeatured {
+  border-color: #0b1426;
+  background: #0b1426;
+  color: #fff;
+}
+.quickGuideFeatured:hover {
+  border-color: #1e40ff;
+  background: #101c36;
+}
+.quickGuideFeatured .quickCopy p {
+  color: #e3e6ec;
+}
+.quickGuideFeatured .quickCopy .kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #becffd;
+}
