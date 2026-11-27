@@ -1356,7 +1356,7 @@ for (const [hub, title, articlePaths] of [
     /* An article shows a real photograph or no picture at all (27 November
        2026): the schema names an image exactly when one is on the page. */
     const pictures = await page
-      .locator("main img")
+      .locator("main .guide-photo img")
       .evaluateAll((images) => images.filter((img) => img.complete && img.naturalWidth > 0).length);
     if (article?.image && !pictures)
       fail("education artwork", `schema names a photograph the page does not show on ${path}`);
@@ -1430,7 +1430,8 @@ for (const [hub, prefix, language] of [
       );
       const meta = (key) =>
         document.querySelector(`meta[property='${key}'],meta[name='${key}']`)?.content;
-      const imageSources = [...document.querySelectorAll("main img")].map((img) => {
+      /* The article's own picture, not the author's portrait in the byline. */
+      const imageSources = [...document.querySelectorAll("main .guide-photo img")].map((img) => {
         const src = new URL(img.src);
         return src.searchParams.get("url") ?? src.pathname;
       });
