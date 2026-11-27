@@ -470,7 +470,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "baerbar-larmer-eller-bliver-varm",
-    dates: { published: "2026-11-26", modified: "2026-11-26" },
+    dates: { published: "2026-11-26", modified: "2026-11-27" },
     title: {
       da: "Bærbar larmer eller bliver varm: find årsagen",
       en: "Laptop loud or hot: find the cause",
@@ -480,16 +480,16 @@ export const practicalGuides: PracticalGuide[] = [
       en: "Laptop loud or running hot? Find the cause | Kestro",
     },
     metaDescription: {
-      da: "Bærbar larmer eller bliver varm? Se, hvad der arbejder i Jobliste, giv luften fri vej, og vælg en køligere strømtilstand. Hjælper det ikke, er det støvet.",
-      en: "Laptop loud or hot? See what is working in Task Manager, give the air a free path and pick a cooler power mode. If that fails, it is dust and old paste.",
+      da: "Bærbar larmer eller bliver varm? Se, hvad der arbejder i Jobliste, giv luften fri vej, og vælg en køligere strømtilstand. Hjælper det ikke, tjek køleren.",
+      en: "Laptop loud or hot? See what is working in Task Manager, give the air a free path and pick a cooler power mode. If that fails, look at the cooler.",
     },
     summary: {
       da: "Find ud af, om blæseren arbejder, fordi den skal, eller fordi køleren er stoppet til.",
       en: "Tell whether the fan works because it must, or because the cooler is clogged.",
     },
     intro: {
-      da: "En bærbar larmer, når blæseren skal fjerne varme, og varmen kommer fra det, processoren laver. Se først i Jobliste (Ctrl + Shift + Esc), hvad der bruger CPU, og stil maskinen på et hårdt, plant underlag. Larmer den også, når den ikke laver noget, er det støv i køleren eller udtørret kølepasta, der skal ordnes.",
-      en: "A laptop gets loud when the fan has to remove heat, and the heat comes from what the processor is doing. First check in Task Manager (Ctrl + Shift + Esc) what is using the CPU, and put the machine on a hard, flat surface. If it is loud while doing nothing, it is dust in the cooler or dried-out thermal paste that needs seeing to.",
+      da: "En bærbar larmer, når blæseren skal fjerne varme, og varmen kommer fra det, processoren laver. Se først i Jobliste (Ctrl + Shift + Esc), hvad der bruger CPU, og stil maskinen på et hårdt, plant underlag. Larmer den, selv når Jobliste viser, at intet bruger CPU, er køleren det næste sted at se: støv i ribberne eller udtørret kølepasta.",
+      en: "A laptop gets loud when the fan has to remove heat, and the heat comes from what the processor is doing. First check in Task Manager (Ctrl + Shift + Esc) what is using the CPU, and put the machine on a hard, flat surface. If it stays loud while Task Manager shows nothing using the CPU, the cooler is the next place to look: dust in the fins or dried-out thermal paste.",
     },
     steps: [
       {
@@ -522,12 +522,12 @@ export const practicalGuides: PracticalGuide[] = [
       },
       {
         title: {
-          da: "Larmer den stadig i ro, så skal den renses",
-          en: "Still loud when idle? It needs cleaning",
+          da: "Larmer den stadig i ro, så tjek køleren",
+          en: "Still loud when idle? Check the cooler",
         },
         body: {
-          da: "Så sidder der støv i køleribberne, eller kølepastaen er tør. Det kræver, at maskinen åbnes: kun med strømmen afbrudt og efter modellens servicevejledning.",
-          en: "Then there is dust in the cooling fins, or the thermal paste has dried. That means opening the machine: only with the power disconnected and following the model's service manual.",
+          da: "Så er støv i køleribberne eller tør kølepasta den sandsynlige årsag. At se efter kræver, at maskinen åbnes: kun med strømmen afbrudt og efter modellens servicevejledning.",
+          en: "Then dust in the cooling fins or dried thermal paste is the likely cause. Checking means opening the machine: only with the power disconnected and following the model's service manual.",
         },
       },
     ],
@@ -583,7 +583,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "overfoer-filer-til-ny-pc",
-    dates: { published: "2026-11-26", modified: "2026-11-26" },
+    dates: { published: "2026-11-26", modified: "2026-11-27" },
     title: {
       da: "Overføre filer til ny pc uden at glemme noget",
       en: "Transfer files to a new PC without leaving anything behind",
@@ -645,8 +645,8 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Det, der bliver glemt", en: "What gets forgotten" },
         body: {
-          da: "Det er sjældent dokumenterne. Det er browserens gemte adgangskoder, mailprofilen, genvejene på skrivebordet og det ene program, kun én person bruger.",
-          en: "It is rarely the documents. It is the browser's saved passwords, the mail profile, the desktop shortcuts and the one program only one person uses.",
+          da: "Dokumenterne ligger i mapper, du kan se. Det, der ikke ligger i en mappe, er lettere at glemme: browserens gemte adgangskoder, mailprofilen, genvejene på skrivebordet og det ene program, kun én person bruger.",
+          en: "Documents sit in folders you can see. What is not in a folder is easier to forget: the browser's saved passwords, the mail profile, the desktop shortcuts and the one program only one person uses.",
         },
       },
       {
@@ -682,7 +682,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "computer-gaar-ned",
-    dates: { published: "2026-11-26", modified: "2026-11-26" },
+    dates: { published: "2026-11-26", modified: "2026-11-27" },
     title: {
       da: "Computer går ned: find mønsteret i Windows",
       en: "Computer keeps crashing: find the pattern in Windows",
@@ -696,19 +696,19 @@ export const practicalGuides: PracticalGuide[] = [
       en: "Computer crashing or freezing? Note the stop code, read the history with perfmon /rel, update drivers, and test the memory with Windows' own tool.",
     },
     summary: {
-      da: "Skil en blå skærm, en maskine, der slukker, og en, der fryser, fra hinanden.",
-      en: "Tell a blue screen, a machine that switches off and one that freezes apart.",
+      da: "Skil en fejlskærm, en maskine, der slukker, og en, der fryser, fra hinanden.",
+      en: "Tell an error screen, a machine that switches off and one that freezes apart.",
     },
     intro: {
-      da: "Skriv ned, hvad der sker, når computeren går ned: en blå skærm med en stopkode, en maskine, der bare slukker, eller en skærm, der fryser. Tryk så Windows + R, og skriv perfmon /rel: oversigten viser, hvornår Windows har registreret nedbrud, og det mønster peger på årsagen.",
-      en: "Write down what happens when the computer crashes: a blue screen with a stop code, a machine that simply switches off, or a screen that freezes. Then press Windows + R and type perfmon /rel: the overview shows when Windows recorded crashes, and that pattern points to the cause.",
+      da: "Skriv ned, hvad der sker, når computeren går ned: en fejlskærm med en stopkode, en maskine, der bare slukker, eller en skærm, der fryser. Tryk så Windows + R, og skriv perfmon /rel: oversigten viser, hvornår Windows har registreret nedbrud, og det mønster peger på årsagen.",
+      en: "Write down what happens when the computer crashes: an error screen with a stop code, a machine that simply switches off, or a screen that freezes. Then press Windows + R and type perfmon /rel: the overview shows when Windows recorded crashes, and that pattern points to the cause.",
     },
     steps: [
       {
         title: { da: "Notér, hvad der sker", en: "Note what happens" },
         body: {
-          da: "Blå skærm, sluk uden varsel og frysning er tre forskellige fejl. Tag et billede af en blå skærm; stopkoden og et eventuelt filnavn under den peger på årsagen.",
-          en: "A blue screen, a sudden switch-off and a freeze are three different faults. Take a photo of a blue screen; the stop code, and any file name under it, point to the cause.",
+          da: "Fejlskærm, sluk uden varsel og frysning er tre forskellige fejl. Fejlskærmen er blå i Windows 10 og sort i en opdateret Windows 11; tag et billede af den, for stopkoden og et eventuelt drivernavn peger på årsagen.",
+          en: "An error screen, a sudden switch-off and a freeze are three different faults. The error screen is blue in Windows 10 and black in an up-to-date Windows 11; take a photo of it, because the stop code and any driver name point to the cause.",
         },
       },
       {
@@ -740,8 +740,8 @@ export const practicalGuides: PracticalGuide[] = [
           en: "Switches off under load? Check the heat",
         },
         body: {
-          da: "En maskine, der slukker uden blå skærm, når den arbejder hårdt, kan være for varm. Guiden om en bærbar, der larmer eller bliver varm, viser, hvad du selv kan gøre.",
-          en: "A machine that switches off without a blue screen while working hard may be overheating. The guide on a laptop that is loud or hot shows what you can do yourself.",
+          da: "En maskine, der slukker uden fejlskærm, når den arbejder hårdt, kan være for varm. Guiden om en bærbar, der larmer eller bliver varm, viser, hvad du selv kan gøre.",
+          en: "A machine that switches off without an error screen while working hard may be overheating. The guide on a laptop that is loud or hot shows what you can do yourself.",
         },
       },
     ],
@@ -749,18 +749,18 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Ét nedbrud er ikke et mønster", en: "One crash is not a pattern" },
         body: {
-          da: "Går computeren ned en enkelt gang og kører derefter normalt, er der ikke noget at finde. Det er gentagelsen – samme program, samme tidspunkt, samme stopkode – der viser årsagen.",
-          en: "If the computer crashes once and then runs normally, there is nothing to find. It is the repetition — the same program, the same time, the same stop code — that shows the cause.",
+          da: "Går computeren ned en enkelt gang og kører derefter normalt, er der intet mønster at gå efter endnu. Det er gentagelsen – samme program, samme tidspunkt, samme stopkode – der viser årsagen.",
+          en: "If the computer crashes once and then runs normally, there is no pattern to follow yet. It is the repetition — the same program, the same time, the same stop code — that shows the cause.",
         },
       },
       {
         title: {
-          da: "Blå skærm eller bare sort",
-          en: "A blue screen or just black",
+          da: "Fejlskærm eller ingen besked",
+          en: "An error screen or no message",
         },
         body: {
-          da: "En blå skærm betyder, at Windows selv stoppede og skrev hvorfor. En maskine, der slukker helt uden besked, kan også skyldes strøm, batteri eller varme.",
-          en: "A blue screen means Windows stopped itself and said why. A machine that switches off without any message may also be down to power, the battery or heat.",
+          da: "En fejlskærm med stopkode betyder, at Windows selv stoppede og skrev hvorfor. En maskine, der slukker helt uden besked, kan også skyldes strøm, batteri eller varme.",
+          en: "An error screen with a stop code means Windows stopped itself and said why. A machine that switches off without any message may also be down to power, the battery or heat.",
         },
       },
     ],
@@ -789,7 +789,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "dansk-tastatur-paa-importeret-computer",
-    dates: { published: "2026-11-26", modified: "2026-11-26" },
+    dates: { published: "2026-11-26", modified: "2026-11-27" },
     title: {
       da: "Dansk tastatur på importeret computer: tre løsninger",
       en: "Danish keyboard on an imported computer: three options",
@@ -821,7 +821,7 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Tilføj dansk tastatur i Windows", en: "Add the Danish keyboard in Windows" },
         body: {
-          da: "Gå til Indstillinger → Tid og sprog → Sprog og område. Tilføj dansk, eller tilføj det danske tastatur under det sprog, du allerede bruger; Windows' visningssprog kan blive, som det er.",
+          da: "Gå til Indstillinger → Tid og sprog → Sprog og område (på engelsk Windows: Settings → Time & language → Language & region). Tilføj dansk, eller tilføj det danske tastatur under det sprog, du allerede bruger; Windows' visningssprog kan blive, som det er.",
           en: "Go to Settings → Time & language → Language & region. Add Danish, or add the Danish keyboard under the language you already use; Windows' display language can stay as it is.",
         },
       },
@@ -835,8 +835,8 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Find æ, ø og å", en: "Find æ, ø and å" },
         body: {
-          da: "Med dansk layout på et amerikansk tastatur giver tasten ; et æ, tasten ' et ø og tasten [ et å. Tegnene < og > ligger på den ekstra nordiske tast, som et amerikansk tastatur ikke har.",
-          en: "With the Danish layout on a US keyboard, the ; key types æ, the ' key ø and the [ key å. The < and > characters sit on the extra Nordic key, which a US keyboard does not have.",
+          da: "Med dansk layout skriver et amerikansk tastatur æ på ;-tasten, ø på '-tasten og å på [-tasten; på et tysk er det Ö, Ä og Ü, og Z og Y bytter plads. Tegnene < og > ligger på en tast, et amerikansk tastatur ikke har, så skift tilbage med Windows + mellemrum, når du skal bruge dem.",
+          en: "With the Danish layout, a US keyboard types æ on the ; key, ø on the ' key and å on the [ key; on a German keyboard it is Ö, Ä and Ü, and Z and Y swap places. The < and > characters sit on a key a US keyboard does not have, so switch back with Windows + Space when you need them.",
         },
       },
       {

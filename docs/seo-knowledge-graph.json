@@ -931,7 +931,7 @@
       "main": ["går ned"],
       "nodes": {
         "Hvad sker der": {
-          "Blå skærm og stopkode": ["blå skærm", "stopkode"],
+          "Fejlskærm og stopkode": ["fejlskærm", "stopkode"],
           "Sluk uden varsel": ["slukker"],
           "Frysning": ["fryser", "frysning"]
         },

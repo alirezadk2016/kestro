@@ -1520,3 +1520,32 @@ service that does the job:
   `/ydelser/nordisk-tilpasning` takes "dansk tastatur til bærbar" as its
   primary. Three repair pages link to their guide.
 - **Rule 3 flags: 7 → 0.** mak run: 0 failures.
+
+## Review of the four guides — 27 November 2026
+
+Read line by line against CLAUDE.md the day after they shipped. What changed:
+
+- **The crash screen is not blue any more.** Microsoft replaced the blue
+  stop-code screen on Windows 11 with a black one in 2025; Windows 10 and
+  older Windows 11 builds still show blue. The crash guide said "blue
+  screen" throughout and had a card titled "blue screen or just black",
+  which now reads backwards. It says "error screen" (fejlskærm), names both
+  colours once in step 1, and asks for the driver name the new screen shows.
+  The graph node is "Fejlskærm og stopkode".
+- **Claims made softer where they were universal.** The heat guide said a
+  laptop loud while idle *is* dust; its own first step says a background
+  program does the same. It now says the cooler is the next place to look
+  once Task Manager shows nothing working. The transfer guide's "it is
+  rarely the documents" was a frequency nobody measured; it now gives the
+  reason instead (what is not in a folder is easier to forget).
+- **The keyboard guide keeps its promise.** The summary names US and German
+  keyboards; the steps only mapped the US one. Step 4 adds Ö, Ä and Ü and the
+  Z/Y swap, says how to type < and > on a US keyboard (switch back), and
+  step 2 gives the English Windows path, which an imported machine often has.
+- **Phone:** the hero outline is hidden below 768px, where it stacked
+  straight above the same five step titles. Key combinations and commands
+  ("Windows + R", "perfmon /rel") no longer break across lines.
+- **Hub:** the AI-illustration note sits under the pictured guides, not
+  under the row that has no pictures.
+- All four guides show 27 November as updated; the descriptions were
+  re-measured (the heat guide's Danish one 906 px, 153 ch).
