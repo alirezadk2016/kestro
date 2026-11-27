@@ -97,6 +97,8 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
             ))}
           </ul>
         </div>
+        {/* Under the pictures it is about, not under the row that has none. */}
+        <p className="mt-5 text-xs leading-5 text-ink-600">{c.photo}</p>
         <h3 className="mt-10 font-display t-h3 font-bold tracking-tight text-ink-900">{c.more}</h3>
         <ul className={styles.moreList}>
           {more.map((guide) => (
@@ -115,7 +117,6 @@ export default function PracticalGuides({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
-        <p className="mt-5 text-xs leading-5 text-ink-600">{c.photo}</p>
       </Container>
     </section>
   );

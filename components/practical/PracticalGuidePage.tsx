@@ -15,6 +15,22 @@ import { BatteryCapacityTool, RamUsageTool } from "./CapacityTools";
 import BrowserCheck from "./BrowserCheck";
 import styles from "./practical.module.css";
 
+/* A key combination ("Windows + R") or a command ("perfmon /rel") stays on
+   one line. The words are unchanged, so search and the page's markup read
+   the same text. */
+const KEYS = /(\S+(?: \+ \S+)+|perfmon \/rel)/;
+function keepKeys(text: string) {
+  return text.split(KEYS).map((part, index) =>
+    index % 2 ? (
+      <span className={styles.keys} key={index}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
 export function practicalMetadata(guide: PracticalGuide, lang: Lang): Metadata {
   const base = metaFor(`/vejledninger/${guide.slug}`, lang);
   const dates = practicalDates(guide);
@@ -152,7 +168,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
               <h1 className="mt-4 font-display t-h1 font-extrabold tracking-display text-paper">
                 {guide.title[lang]}
               </h1>
-              <p className={styles.pageIntro}>{guide.intro[lang]}</p>
+              <p className={styles.pageIntro}>{keepKeys(guide.intro[lang])}</p>
               <div className={styles.pageActions}>
                 <a className={buttonClass("primary")} href={guide.tool ? "#vaerktoej" : "#trin"}>
                   {guide.tool ? c.tool : c.stepLink}
@@ -217,7 +233,7 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
                 <h3 className="font-display text-lg font-bold leading-snug text-paper">
                   {step.title[lang]}
                 </h3>
-                <p>{step.body[lang]}</p>
+                <p>{keepKeys(step.body[lang])}</p>
                 {step.command && <code>{step.command}</code>}
               </li>
             ))}
@@ -253,11 +269,11 @@ export default function PracticalGuidePage({ guide, lang }: { guide: PracticalGu
                 <h3 className="font-display text-lg font-bold leading-snug text-paper">
                   {item.title[lang]}
                 </h3>
-                <p>{item.body[lang]}</p>
+                <p>{keepKeys(item.body[lang])}</p>
               </div>
             ))}
           </div>
-          <p className={styles.limits}>{guide.limits[lang]}</p>
+          <p className={styles.limits}>{keepKeys(guide.limits[lang])}</p>
         </Container>
       </section>
       <section className={styles.further}>

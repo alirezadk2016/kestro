@@ -586,4 +586,15 @@
   .moreList {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* One column: the outline would sit straight above the steps it lists,
+     the same five titles twice in a row on a phone. */
+  .heroSteps {
+    display: none;
+  }
+}
+
+/* A key combination or a command is one thing to read: "Windows + R" and
+   "perfmon /rel" do not break across two lines. */
+.keys {
+  white-space: nowrap;
 }
