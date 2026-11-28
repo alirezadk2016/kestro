@@ -1,0 +1,176 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import Container from "./Container";
+import { formatDate, localePath, type Lang } from "@/lib/i18n";
+import type { Model } from "@/lib/models";
+import { emptyChecks, retailLinks, retailers } from "@/lib/retail-links";
+
+/*
+ * "Need it now?" — under a model's header, for a buyer who cannot wait for
+ * Kestro to source one.
+ *
+ * Kestro stocks none of the catalogue yet. The owner asked that each model
+ * say so and point to where it can be bought meanwhile. Each link is a
+ * retailer's own search for the model, kept only where that search showed
+ * the exact model line when it was checked (lib/retail-links.ts, with the
+ * method in docs/retail-links.md).
+ *
+ * Deliberately not here: the retailers' product photos (theirs, not ours to
+ * copy), their prices (they change by the hour, and CLAUDE.md allows no
+ * figure that is not the owner's dated reference), and any "best price"
+ * claim, which nobody here has checked. The buyer compares; the page says so.
+ */
+const copy = {
+  da: {
+    title: "Har I brug for den nu?",
+    lead: (name: string, stores: string) =>
+      `Vi har ikke ${name} på lager endnu. Indtil vi har, kan I finde den hos ${stores} og selv sammenligne pris og stand.`,
+    /* Who was searched and when comes from emptyChecks, not from this
+       sentence. "Ingen af de butikker, vi har tjekket" claimed more shops
+       than were searched. */
+    leadNone: (name: string, stores: string) =>
+      `Vi har ikke ${name} på lager endnu, og ${stores} viste ikke netop den model, da vi søgte efter den`,
+    source: "Skal den hellere komme fra os, klargjort og med nordisk tastatur?",
+    sourceLink: "Bed os skaffe den",
+    search: (name: string, retailer: string) => `Søg efter ${name} hos ${retailer}`,
+    open: "Se udvalget",
+    newWindow: "åbner i et nyt vindue",
+    footnote: (many: boolean) =>
+      `Uafhængige butikker: pris, stand og vilkår er deres, og Kestro får intet for linket. ${many ? "Søgningerne er tjekket" : "Søgningen er tjekket"}`,
+  },
+  en: {
+    title: "Need it now?",
+    lead: (name: string, stores: string) =>
+      `We don't have the ${name} in stock yet. Until we do, you can find it at ${stores} and compare price and condition yourself.`,
+    leadNone: (name: string, stores: string) =>
+      `We don't have the ${name} in stock yet, and ${stores} did not show that exact model when we searched for it on`,
+    source: "Would you rather it came from us, prepared and with a Nordic keyboard?",
+    sourceLink: "Ask us to source it",
+    search: (name: string, retailer: string) => `Search for the ${name} at ${retailer}`,
+    open: "See what they have",
+    newWindow: "opens in a new window",
+    footnote: (many: boolean) =>
+      `Independent retailers: price, condition and terms are theirs, and Kestro earns nothing from the link. ${many ? "Searches checked" : "Search checked"}`,
+  },
+};
+
+export default function RetailLinks({ model, lang }: { model: Model; lang: Lang }) {
+  const c = copy[lang];
+  /* No entry means nobody has looked yet (the 50 Lenovo generations), and
+     "none of the shops we checked" would then be a claim about a check that
+     never happened. An empty array is a real check that found nothing. */
+  const checked = retailLinks[model.slug];
+  if (!checked) return null;
+  const links = checked;
+  const empty = links.length === 0 ? (emptyChecks[model.slug] ?? []) : [];
+  if (links.length === 0 && empty.length === 0) return null;
+  const checkedOn = links
+    .map((link) => link.checkedOn)
+    .sort()
+    .at(-1);
+  const emptyOn = empty
+    .map((check) => check.checkedOn)
+    .sort()
+    .at(-1);
+  const names = (links.length > 0 ? links : empty).map((entry) => retailers[entry.retailer].name);
+  const stores = new Intl.ListFormat(lang === "da" ? "da" : "en-GB", {
+    type: "conjunction",
+  }).format(names);
+  /* One store is one wide card, not a third of a row with two holes beside it. */
+  const grid =
+    links.length === 1
+      ? "grid max-w-xl"
+      : links.length === 2
+        ? "grid gap-3 sm:grid-cols-2"
+        : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3";
+  const sourceHref = localePath(`/tilbud?model=${encodeURIComponent(model.name)}`, lang);
+
+  return (
+    <section
+      aria-labelledby="retail-links-title"
+      className="border-t border-white/10 py-10 sm:py-16"
+      data-retail-links
+    >
+      <Container>
+        <div className="split">
+          <div>
+            <h2
+              id="retail-links-title"
+              className="text-balance font-display t-h2 font-extrabold tracking-display text-paper"
+            >
+              {c.title}
+            </h2>
+            <p className="mt-3 text-base leading-[1.75] text-paper/75">
+              {links.length > 0 ? (
+                c.lead(model.name, stores)
+              ) : (
+                <>
+                  {c.leadNone(model.name, stores)}{" "}
+                  <time dateTime={emptyOn}>{formatDate(emptyOn!, lang)}</time>.
+                </>
+              )}
+            </p>
+          </div>
+
+          {links.length > 0 && (
+            <ul className={grid}>
+              {links.map((link) => {
+                const retailer = retailers[link.retailer];
+                return (
+                  <li key={link.retailer} className="min-w-0">
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      className="plate plate-lift group flex h-full min-h-[44px] flex-col p-4 sm:p-5"
+                    >
+                      <span className="block font-display text-base font-bold text-paper">
+                        {retailer.name}
+                      </span>
+                      <span className="mt-1 block text-sm leading-5 text-paper/75">
+                        {link.note[lang]}
+                      </span>
+                      <span className="mt-auto inline-flex items-center gap-1.5 whitespace-nowrap pt-3 text-sm font-semibold text-brand-300 transition-colors group-hover:text-paper">
+                        {c.open}
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="h-4 w-4 flex-none"
+                          strokeWidth={2}
+                        />
+                      </span>
+                      {/* The name is the card's own words, then the context.
+                          It was an aria-label that replaced them, so a voice
+                          user saying "Se udvalget" or "refurbed" had nothing
+                          to match: Lighthouse's label-in-name on 110 model
+                          pages. */}
+                      <span className="sr-only">
+                        {" – "}
+                        {c.search(model.name, retailer.name)}, {c.newWindow}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          <p className="mt-5 text-sm leading-6 text-paper/75">
+            {c.source}{" "}
+            <Link
+              href={sourceHref}
+              className="whitespace-nowrap font-semibold text-brand-300 underline decoration-brand-400/40 underline-offset-4 transition-colors hover:text-paper"
+            >
+              {c.sourceLink}
+            </Link>
+          </p>
+          {checkedOn && (
+            <p className="mt-2 text-xs leading-5 text-paper/65">
+              {c.footnote(links.length > 1)}{" "}
+              <time dateTime={checkedOn}>{formatDate(checkedOn, lang)}</time>.
+            </p>
+          )}
+        </div>
+      </Container>
+    </section>
+  );
+}

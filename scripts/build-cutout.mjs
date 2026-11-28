@@ -1,7 +1,15 @@
 /*
  * Cuts the white studio background out of the front page's product photo.
  *
- *   node scripts/build-cutout.mjs
+ *   node scripts/build-cutout.mjs [source.jpg] [out.webp]
+ *
+ * With no arguments it builds the front page's photograph,
+ * public/thinkpad-t480-2.jpg — the lid and the ThinkPad mark, which says
+ * "business laptop" without a screen. It used to be -6, the open machine,
+ * whose screen shows a Windows 10 start menu: on a page that says the machines
+ * ship with Windows 11, eighteen months after Windows 10 went out of support,
+ * the photograph contradicted the paragraph beside it. Paths are relative to
+ * the repository root.
  *
  * The photograph is a black laptop shot on white. On a white card that is a
  * catalogue thumbnail — the one image on the page with no depth, on a page
@@ -24,8 +32,8 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const SOURCE = join(root, "public/thinkpad-t480-6.jpg");
-const OUT = join(root, "public/thinkpad-t480-6-cutout.webp");
+const SOURCE = join(root, process.argv[2] ?? "public/thinkpad-t480-2.jpg");
+const OUT = join(root, process.argv[3] ?? "public/thinkpad-t480-2-cutout.webp");
 
 /* A pixel counts as background when it is bright and almost colourless.
    Both tests matter: the screen is bright too, but it is blue. */

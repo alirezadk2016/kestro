@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+
+  <defs>
+    <linearGradient id="field" x1="600" y1="0" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F5F7"/>
+      <stop offset="1" stop-color="#E3E7EC"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 780) scale(430 46)">
+      <stop stop-color="#5B6573" stop-opacity=".42"/>
+      <stop offset=".6" stop-color="#7D8794" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#9AA3AE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#3A424C"/>
+      <stop offset="1" stop-color="#1E252E"/>
+    </linearGradient>
+    <linearGradient id="deck" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#2E363F"/>
+      <stop offset="1" stop-color="#3B444E"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#27313D"/>
+      <stop offset=".55" stop-color="#0D141D"/>
+      <stop offset="1" stop-color="#18212C"/>
+    </linearGradient>
+    <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity=".09"/>
+      <stop offset=".5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#323A44"/>
+      <stop offset="1" stop-color="#1A2028"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4C555F"/>
+      <stop offset="1" stop-color="#343C46"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#C9CFD6"/>
+      <stop offset=".5" stop-color="#E9ECEF"/>
+      <stop offset="1" stop-color="#AEB6BF"/>
+    </linearGradient>
+    
+  </defs>
+  <rect width="1200" height="900" fill="url(#field)"/>
+  <ellipse cx="610" cy="570" rx="360" ry="40" fill="url(#shadow)"/>
+
+    <path d="M437.5 505 C 307.5 510, 227.5 640, 347.5 700 S 517.5 730, 597.5 715" stroke="#1A2028" stroke-width="13" stroke-linecap="round"/>
+    <rect x="589.5" y="706" width="46" height="18" rx="6" fill="#262D36"/>
+    <polygon points="707.5,470 832.5,345 832.5,415 707.5,540" fill="url(#side)"/>
+    <polygon points="367.5,470 492.5,345 832.5,345 707.5,470" fill="url(#top)"/>
+    <polygon points="367.5,470 707.5,470 707.5,540 367.5,540" fill="url(#body)"/>
+    <polygon points="367.5,470 707.5,470 707.5,540 367.5,540" stroke="#6B7580" stroke-opacity=".4" stroke-width="1.5"/>
+    <rect x="557.5" y="498" width="30" height="13" rx="2.5" stroke="#8F99A4" stroke-width="2"/>
+    <rect x="599.5" y="498" width="16" height="12" rx="6" stroke="#8F99A4" stroke-width="2"/>
+    <circle cx="655.5" cy="504" r="10" stroke="#8F99A4" stroke-width="2.5"/>
+    <path d="M655.5 498v6" stroke="#8F99A4" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

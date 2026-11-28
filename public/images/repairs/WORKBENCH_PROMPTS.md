@@ -1,0 +1,73 @@
+# Workbench repair sequence: actual imagegen prompts
+
+27 October 2026. Built-in imagegen mode. This sequence is AI-generated illustrative photography, not photographs of Kestro premises, a customer machine or a completed repair. New generation used a text brief without reference-image parameters; later service states are precise edits of the approved master.
+
+## Open-state master
+
+Generation artifact: `exec-758a74fb-aa8f-45a7-b184-470c1c0c413c.png`.
+Saved task-workspace master: `outputs/repair-workbench-redesign/masters/workbench-open.png`.
+Native size: 1983 × 793 pixels.
+Input images: none. Homepage and product photographs were inspected for brand context, then the material and lighting requirements were described in the text below.
+
+Use case: photorealistic-natural. Asset type: panoramic photographic hero background for Kestro, a Scandinavian business-computer website. Create a BRAND NEW premium commercial editorial photograph, ultra-wide panoramic aspect ratio 2.5:1, approximately 2000 x 800 pixels. The photograph must be composed for real HTML text over the LEFT 40–43 percent: that whole left region is quiet, very dark navy-charcoal architectural wall and dark stone workbench, softly lit and free of objects, patterns, bright edges or lettering. The complete repair subject occupies the RIGHT 55 percent only.
+
+Scene: a refined, orderly service workbench in a restrained Nordic interior at blue hour. A dark charcoal stone benchtop with subtle natural grain, a dark architectural wall, a narrow subdued blue-hour window or glazing at the far right background, and a little warm reflected task light. The room has believable depth and physical scale. Use a thin, fine-textured graphite ESD work pad lying flat over the stone only under the repair area, not a large coarse fuzzy mat. Let the stone remain visible around it. The left quiet region must stay near deep navy #0B1426 and blend naturally with a dark website. No dramatic neon, no showroom display props and no conspicuous waterfront scenery.
+
+Main subject: ONE complete generic unbranded 14-inch repairable business laptop, power off and unplugged, with its lid CLOSED and its underside facing UP. Show the entire laptop chassis and EVERY corner within the photograph, comfortably framed, approximately x=49–94 percent and y=17–73 percent of the complete panoramic canvas. A physically plausible slim but serviceable matte graphite business-laptop chassis, realistic ports and screws, normal proportions and contact shadows. This is a medium-distance photograph of a WHOLE LAPTOP, not a macro photograph of a memory bay. Its base cover is removed and rests FLAT on the pad behind/right of the chassis, visibly belonging to this same laptop. No floating panel. Keep both the whole laptop and removed panel away from the photograph edges.
+
+Open service state: a credible full internal layout with a single black battery pack along the lower interior, blue-green motherboard, one fan and copper heatpipe, and ONE original GREEN laptop SO-DIMM module fully installed FLAT in its correctly sized socket with realistic side retaining clips. The RAM is small relative to the complete laptop, around one fifth of the chassis width; do not enlarge it for emphasis. Connector edge hidden in socket. No other detached RAM module. All components and wires fit inside the chassis naturally; no loose desktop processor, no glowing internals and no invented symmetrical board. A modest precision screwdriver and a small shallow screw tray rest on the pad near the lower-right service area, adding practical scale without clutter. No power cable.
+
+Camera: real commercial photographer's medium shot, 40–50 degrees above the bench, mild three-quarter perspective, natural 50mm-lens proportions, sufficient depth of field to show the whole machine clearly. Camera and composition are calm and deliberate, with the laptop as the focal object. The right repair area must remain intelligible if the empty left 40 percent is cropped away for a mobile 3:2 image. Keep all mechanically relevant objects within that right crop.
+
+Lighting: a large soft NEUTRAL task key illuminates the laptop and internal parts clearly, restrained cool blue-hour fill behind, a small natural warm reflection on stone. Premium believable photographic material textures: satin plastic, machined metal, circuit board, copper, fine ESD pad, restrained imperfections. No overly polished CGI or synthetic plastic appearance. Avoid severe darkness over the laptop: service details must be visible at ordinary website display size.
+
+Constraints: no people, hands, readable text, branding, logos, watermark, labels, arrows, numbered overlays, graphics, user interface, illuminated screen, extra laptops, floating parts, dramatic sparks or smoke. Do not bake website text or controls into the image. Every object rests physically on the bench or belongs inside the laptop. Preserve the whole-device composition and the quiet left region.
+
+## Cover fitted — selected
+
+Generation artifact: `exec-87b30834-f61c-4de9-a4b6-d821a4982f29.png`.
+Saved task-workspace master: `outputs/repair-workbench-redesign/masters/workbench-cover.png`.
+Primary edit target: `outputs/repair-workbench-redesign/masters/workbench-open.png`.
+
+Use case: precise-object-edit. Edit target: this exact approved panoramic whole-laptop service photograph, 1983 x 793. Produce the EARLIER COVER-FITTED state of this same scene. Change only the laptop's base cover: take the matching detached cover that currently rests behind/right of the laptop and fit that SAME cover flush over the laptop's exposed underside. It must cover ALL the internal motherboard, fan, copper pipe, battery and RAM with a single opaque, physically matching matte graphite bottom panel with the same restrained vent pattern and realistic flush screw heads. Keep the entire laptop's chassis outline, all four visible corners, position, perspective, scale and contact shadow exactly unchanged. This is a CLOSED-LID laptop resting UPSIDE DOWN, not an open screen, not a new product, and no parts float.
+
+The place behind/right where the detached cover was becomes uninterrupted original dark stone/ESD-pad surface, matching its surrounding texture and light. There must be NO loose cover elsewhere and NO loose RAM in this earlier state. Preserve everything else EXACTLY: quiet empty LEFT 43 percent, architecture, subdued blue-hour window, small plant at far edge, warm stone reflection, all stone texture, fine ESD pad and its edges, screwdriver, screw tray, camera framing and the whole machine's exterior. Do not move the laptop or tools, do not zoom or crop the panoramic canvas, and do not add labels or objects.
+
+Premium real editorial service photography with believable satin plastic, tiny material imperfections, neutral task lighting and natural contact shadows. No people, hands, readable text, logos, brandmarks, overlays, diagrams, neon, glow, cables, illuminated screen or website UI. Retain the exact 2.5:1 panoramic canvas, full-device visibility and calm navy left region.
+
+## RAM removed — initial placement, not selected
+
+Generation artifact: `exec-bbc4ca62-727b-49b7-a7b4-01bbb7476b0a.png`.
+Primary edit target: `outputs/repair-workbench-redesign/masters/workbench-open.png`. This draft put the detached module across the ESD-pad edge, so it was not exported. The revision below retains the same master and changes placement.
+
+Use case: precise-object-edit. Edit target: this exact approved panoramic whole-laptop workbench photograph, 1983 x 793 pixels. Produce the RAM-REMOVED service state of the SAME photographed scene. Change ONLY the original small GREEN SO-DIMM module: remove it completely from its current motherboard socket, leaving the same empty socket with its original rails, keyed connector and retaining clips. Rest that same green module FLAT on the fine graphite ESD pad just in front of the laptop's lower chassis edge, around image x=1200,y=625, with its chips upward, its connector visible, a natural contact shadow, and realistic scale matching the installed original. Keep the detached module entirely on the pad and fully visible, clear of the chassis, screwdriver, screw tray and image edges. It must remain small relative to the whole laptop, approximately one fifth of the chassis width. Do not enlarge the memory module for emphasis.
+
+Preserve EVERYTHING ELSE EXACTLY: the whole underside-up, closed-lid laptop's size, all four corners, physical shape, camera position, perspective, all screws, port layout, black battery, blue board routing, fan, copper heatpipe, installed storage and cables; the base cover resting flat behind/right; the small screw tray and screwdriver; ESD pad edges, stone grain, quiet left 43 percent, dark architectural wall, subdued right-side blue-hour window, warm reflected light, shadows and depth. The laptop must not shift, rotate or be reframed. All other internal components remain in exactly the same state. The former green module footprint becomes the credible empty socket without redesigning the motherboard.
+
+Premium believable real editorial service photography, consistent neutral task light, matte materials and restrained natural imperfections. No people, hands, floating parts, readable text, logos, labels, overlays, diagrams, glow, extra loose modules, power lead, screen, or website UI. Retain the exact panoramic 2.5:1 canvas and all of its quiet left area.
+
+## RAM removed — selected placement revision
+
+Generation artifact: `exec-ccb65928-2e22-498c-9329-69f0c396dc5a.png`.
+Saved task-workspace master: `outputs/repair-workbench-redesign/masters/workbench-removed.png`.
+Primary edit target: `outputs/repair-workbench-redesign/masters/workbench-open.png`.
+
+Use case: precise-object-edit. Edit target: this exact approved panoramic whole-laptop workbench photograph, 1983 x 793 pixels. Produce the RAM-REMOVED service state of the SAME photographed scene. Change ONLY the original small GREEN SO-DIMM module: remove it completely from its current motherboard socket, leaving the same empty socket with its original rails, keyed connector and retaining clips. Rest that same green module FLAT on the fine graphite ESD pad at the FRONT-RIGHT of the laptop, in the clear space BELOW the laptop's front-right corner and LEFT of the screwdriver handle, approximately centred at x=1680,y=710. Keep its entire footprint well INSIDE the pad's edges, with chips upward, connector visible and a natural contact shadow. Do not place the module over the FRONT EDGE of the pad or half on stone: it must rest on one level uninterrupted antistatic surface. It must stay clear of the chassis and tools. Preserve the original realistic small SO-DIMM scale, about one fifth of the whole laptop's width; do not enlarge it for emphasis.
+
+Preserve EVERYTHING ELSE EXACTLY: the whole underside-up, closed-lid laptop's size, all four corners, physical shape, camera position, perspective, all screws, port layout, black battery, blue board routing, fan, copper heatpipe, installed storage and cables; the base cover resting flat behind/right; the small screw tray and screwdriver; ESD pad edges, stone grain, quiet left 43 percent, dark architectural wall, subdued right-side blue-hour window, warm reflected light, shadows and depth. The laptop must not shift, rotate or be reframed. All other internal components remain in exactly the same state. The former green module footprint becomes the credible empty socket without redesigning the motherboard. Only ONE loose green module.
+
+Premium believable real editorial service photography, consistent neutral task light, matte materials and restrained natural imperfections. No people, hands, floating parts, readable text, logos, labels, overlays, diagrams, glow, extra loose modules, power lead, screen, or website UI. Retain the exact panoramic 2.5:1 canvas and all of its quiet left area.
+
+## Replacement installed — selected
+
+Generation artifact: `exec-782a2d3c-eb83-4e97-acc0-2c6a890374ff.png`.
+Saved task-workspace master: `outputs/repair-workbench-redesign/masters/workbench-installed.png`.
+Input image 1, primary edit target: `outputs/repair-workbench-redesign/masters/workbench-open.png`. Input image 2, placement reference for the removed original module only: `outputs/repair-workbench-redesign/masters/workbench-removed.png`.
+
+Use case: precise-object-edit. Image 1 is the PRIMARY EDIT TARGET: the approved panoramic OPEN-state whole-laptop workbench photograph. Image 2 is a SUPPORTING PLACEMENT REFERENCE ONLY for the removed original green RAM module. Produce the replacement-INSTALLED state from image 1, preserving the whole scene and every object outside the RAM service changes.
+
+Change only these two things. First, replace the small GREEN installed SO-DIMM in image 1 with ONE realistically compatible BLACK-PCB replacement SO-DIMM, the same physical size and form factor, inserted fully FLAT in that SAME socket, correct keyed connector edge hidden, side retaining clips engaged, normal black memory ICs. Do not move or redesign the socket, enlarge the RAM, or modify the surrounding blue motherboard. Second, show the ORIGINAL GREEN module removed from image 1 resting flat on the ESD pad at the front-right of the laptop in EXACTLY the position, rotation, scale, chip layout and contact shadow seen in image 2, below the chassis front-right corner and left of the screwdriver handle. The green module's entire footprint remains inside the ESD pad. Do not add a second detached module or move the screwdriver.
+
+Preserve EVERYTHING ELSE from image 1 EXACTLY: panoramic 1983 x 793 framing, quiet dark LEFT 43 percent, the whole laptop's all-four-corners silhouette, closed lid/underside-up pose, camera position and perspective, ports and screws, battery, fan, copper heatpipe, board topology, storage, cables, base cover resting flat behind/right, ESD pad and all its edges, stone grain, screw tray, tools, subdued blue-hour window and architecture, small plant, warm stone reflection, neutral task key and every natural contact shadow. Do not shift, rotate, zoom or crop the scene, change the room, or add props. The hardware should retain believable small RAM-to-laptop scale, approximately one fifth of the whole chassis width.
+
+This remains premium natural editorial service photography, realistic matte materials with modest imperfections, not a render. No people, hands, floating parts, text, brands, labels, diagrams, UI, glowing internals, powered screen, power lead or effects. Do not imply that the machine is powered on, reassembled or tested: it remains open for service with the new memory seated.

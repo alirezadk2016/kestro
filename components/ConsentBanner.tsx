@@ -21,28 +21,42 @@ import { localePath, type Lang } from "@/lib/i18n";
 const copy = {
   da: {
     title: "Må vi måle, hvordan siden bruges?",
-    body: "Vi bruger Google Analytics til at se, hvilke sider der bliver læst. Ingen annoncer, ingen deling til markedsføring. Siden virker præcis lige så godt, hvis du siger nej.",
+    body: "Google Analytics er valgfrit og uden annoncer. Valget kan ændres nederst på siden.",
     accept: "Accepter statistik",
     reject: "Kun nødvendige",
-    more: "Læs privatlivspolitikken",
+    more: "Privatlivspolitik",
     label: "Samtykke til statistik",
   },
   en: {
     title: "May we measure how the site is used?",
-    body: "We use Google Analytics to see which pages get read. No advertising, no sharing for marketing. The site works exactly as well if you say no.",
+    body: "Google Analytics is optional and carries no advertising. Change your choice in the footer.",
     accept: "Accept statistics",
     reject: "Necessary only",
-    more: "Read the privacy policy",
+    more: "Privacy policy",
     label: "Consent to statistics",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
+/*
+ * Drawn by the server, shown before the first frame (2026-11-24).
+ *
+ * The banner used to exist only after hydration, so on a first visit it was
+ * painted about three seconds in on a throttled phone, and as the largest
+ * text on the screen it was the page's Largest Contentful Paint: 3.5 s on the
+ * laptop category, against Google's 2.5 s. Now the server renders it hidden,
+ * and this script, at the top of <body>, shows it before anything is painted
+ * when no answer is stored. A returning visitor never sees it, and without
+ * JavaScript it stays hidden, because its buttons need JavaScript to work.
+ * The key and the two values are lib/consent.ts's.
+ */
+export const consentAskScript = `try{var v=localStorage.getItem("kestro-consent");if(v!=="granted"&&v!=="denied")document.documentElement.dataset.consentAsk="1"}catch(e){document.documentElement.dataset.consentAsk="1"}`;
+
 export default function ConsentBanner({ lang }: { lang: Lang }) {
   const c = copy[lang];
-  const [asked, setAsked] = useState(true);
+  /* Rendered on the server and on the client's first pass alike, so the two
+     match; the effect below removes it once an answer is known. */
+  const [asked, setAsked] = useState(false);
 
-  /* Only after hydration: the server has no idea what this visitor answered,
-     and rendering the banner on the server would flash it for everyone. */
   useEffect(() => {
     setAsked(readConsent() !== null);
     const onChange = () => setAsked(readConsent() !== null);
@@ -50,19 +64,41 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
     return () => window.removeEventListener(CONSENT_EVENT, onChange);
   }, []);
 
+  /* While the banner is up it covers the foot of a phone's first screen —
+     on the front page, the hero's own quote button. The bar's button is
+     normally held back there until the hero scrolls away; this lets it show
+     while the hero's is covered (globals.css, header-cta-home). */
+  useEffect(() => {
+    const root = document.documentElement;
+    /* Read the answer itself, not the state: on the first pass the state is
+       "not asked" for everyone, and a returning visitor's header must not
+       blink. */
+    if (asked || readConsent() !== null) {
+      delete root.dataset.consentOpen;
+      delete root.dataset.consentAsk;
+    } else {
+      /* Also when the question is asked again from the footer, after the
+         first-paint script last ran: the banner is shown by this mark. */
+      root.dataset.consentOpen = "1";
+      root.dataset.consentAsk = "1";
+    }
+    return () => {
+      delete root.dataset.consentOpen;
+    };
+  }, [asked]);
+
   if (asked) return null;
 
   return (
     <div
       role="dialog"
       aria-label={c.label}
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
+      className="consent-banner fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-brand-950/95 backdrop-blur"
     >
-      <Container className="flex flex-col gap-4 py-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
+      <Container className="flex flex-col gap-3 py-3 sm:gap-4 sm:py-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold text-paper">{c.title}</p>
-          <p className="mt-1 text-sm leading-6 text-paper/65">
-            {c.body}{" "}
+          <p className="text-sm leading-[1.55] text-paper/75">
+            <span className="font-semibold text-paper">{c.title}</span> {c.body}{" "}
             <Link
               href={localePath("/privatlivspolitik", lang)}
               className="font-semibold text-brand-300 underline decoration-brand-400/60 underline-offset-4 hover:text-paper"
@@ -73,18 +109,18 @@ export default function ConsentBanner({ lang }: { lang: Lang }) {
           </p>
         </div>
 
-        <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row lg:ml-auto">
+        <div className="grid flex-shrink-0 grid-cols-2 gap-3 lg:ml-auto">
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-brand-600 px-6 text-sm font-semibold text-white transition hover:bg-brand-500"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
           >
             {c.accept}
           </button>
           <button
             type="button"
             onClick={() => writeConsent("denied")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 px-6 text-sm font-semibold text-paper transition hover:border-white/50"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-white/25 bg-white/5 px-3 text-sm font-semibold text-paper transition hover:border-white/50 sm:px-6"
           >
             {c.reject}
           </button>

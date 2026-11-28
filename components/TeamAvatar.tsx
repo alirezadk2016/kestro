@@ -40,6 +40,8 @@ export default function TeamAvatar({
         alt={`${member.name}, ${member.role[lang]}`}
         width={size * 2}
         height={size * 2}
+        quality={90}
+        sizes={`${size}px`}
         className={`flex-shrink-0 object-cover object-top ${rounded} ${className}`}
       />
     );
