@@ -42,41 +42,6 @@
     "format": "webp"
   },
   {
-    "src": "/graphics/buyback.webp",
-    "width": 1440,
-    "height": 960,
-    "bytes": 148956,
-    "format": "webp"
-  },
-  {
-    "src": "/graphics/grade-a.webp",
-    "width": 720,
-    "height": 720,
-    "bytes": 42804,
-    "format": "webp"
-  },
-  {
-    "src": "/graphics/grade-b.webp",
-    "width": 720,
-    "height": 720,
-    "bytes": 44194,
-    "format": "webp"
-  },
-  {
-    "src": "/graphics/grade-c.webp",
-    "width": 720,
-    "height": 720,
-    "bytes": 46234,
-    "format": "webp"
-  },
-  {
-    "src": "/graphics/smartphones.webp",
-    "width": 1440,
-    "height": 960,
-    "bytes": 117026,
-    "format": "webp"
-  },
-  {
     "src": "/hero/scene-mobile-portrait.avif",
     "width": 820,
     "height": 1458,
@@ -116,62 +81,6 @@
     "width": 1942,
     "height": 800,
     "bytes": 159964,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/ram-01-cover.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 177940,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/ram-02-open.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 189366,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/ram-03-removed.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 186022,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/ram-04-installed.webp",
-    "width": 1200,
-    "height": 900,
-    "bytes": 164714,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/workbench-cover.webp",
-    "width": 1983,
-    "height": 793,
-    "bytes": 137116,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/workbench-installed.webp",
-    "width": 1983,
-    "height": 793,
-    "bytes": 158788,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/workbench-open.webp",
-    "width": 1983,
-    "height": 793,
-    "bytes": 174888,
-    "format": "webp"
-  },
-  {
-    "src": "/images/repairs/workbench-removed.webp",
-    "width": 1983,
-    "height": 793,
-    "bytes": 159916,
     "format": "webp"
   },
   {

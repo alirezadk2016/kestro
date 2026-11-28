@@ -91,20 +91,10 @@ export async function verifyVisualPolish(browser, base, fail) {
       await page.keyboard.press("ArrowLeft");
       if (!(await page.locator('.grade-panel[data-grade="1"]').isVisible()))
         fail(path, "native grade keyboard navigation failed");
-      const button = page.locator('.grade-panel[data-grade="1"] .grade-zoom');
-      await button.click();
-      await page.locator(".grade-lightbox[open]").waitFor();
-      if (!(await page.locator(".grade-lightbox img").getAttribute("src")).includes("grade-b"))
-        fail(path, "zoom image does not match selected grade");
-      await page.keyboard.press("Escape");
-      await page.waitForFunction(() => !document.querySelector(".grade-lightbox").open);
-      if (
-        !(await button.evaluate((el) => el === document.activeElement)) ||
-        (await page.evaluate(() => document.body.style.overflow === "hidden"))
-      )
-        fail(path, "grade dialog did not restore focus and scrolling");
-      await button.click();
-      await page.locator(".grade-lightbox-close").click();
+      /* No pictures since 28 November 2026 (they were AI-generated), so no
+         zoom dialog to test: the grades are read, not looked at. */
+      if (await page.locator(".grade-panel img, .grade-lightbox").count())
+        fail(path, "grade comparison shows an illustrative picture again");
       if (await overflow(page)) fail(path, `grade comparison overflows at ${width}`);
       await context.close();
     }

@@ -4,7 +4,6 @@ import { ArrowDown } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
-import RepairPhotoSequence from "@/components/RepairPhotoSequence";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
@@ -154,24 +153,31 @@ export default async function ReparationPage(props: { params: Promise<{ lang: La
     <>
       <PageSchema lang={lang} route="/reparation" name={c.title} description={c.description} />
 
-      <RepairPhotoSequence lang={lang}>
-        <PageHeader
-          title={c.title}
-          description={c.description}
-          lang={lang}
-          href="/reparation"
-          crumb={lang === "da" ? "Reparation" : "Repairs"}
-        />
-        {/* The form is the page's action and sat 4,100px down a phone;
-                  the header's quote button is for buying machines. */}
-        <Button
-          href="#reparation-formular"
-          className="mt-6 w-full sm:w-auto"
-          icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
-        >
-          {c.formTitle}
-        </Button>
-      </RepairPhotoSequence>
+      {/* A header and the form's button. Beside them stood a four-step
+          sequence of a RAM swap, AI-generated pictures of a laptop that
+          does not exist; they went on 28 November 2026, because a laptop on
+          this site is a real one. The repair is described in words below. */}
+      <section className="py-10 sm:py-20">
+        <Container>
+          <PageHeader
+            title={c.title}
+            description={c.description}
+            lang={lang}
+            href="/reparation"
+            crumb={lang === "da" ? "Reparation" : "Repairs"}
+            wide
+          />
+          {/* The form is the page's action and sat 4,100px down a phone;
+              the header's quote button is for buying machines. */}
+          <Button
+            href="#reparation-formular"
+            className="mt-6 w-full sm:w-auto"
+            icon={<ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
+          >
+            {c.formTitle}
+          </Button>
+        </Container>
+      </section>
 
       <section className="bg-ink-900 py-10 sm:py-20">
         <Container>

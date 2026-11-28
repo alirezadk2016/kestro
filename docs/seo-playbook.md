@@ -1616,3 +1616,12 @@ from Maven Central) and Hunspell, and the front pages were read in full.
   (`lib/credits.ts`); a source title is marked with its own language, English
   by default and Vietnamese for the X1 Nano Gen 2 video, so a screen reader
   does not read it with Danish pronunciation.
+
+## Real photographs on every public page — 28 November 2026
+
+The owner said to continue after the knowledge pages. The front page hero,
+its category cards, /saelg-til-os, /flaadeloesninger, /kvalitet and
+/reparation lost their AI-generated pictures; real photographs replaced them
+where one fits (the owner's ThinkPad T480 set, a ThinkPad T470 in its dock, a
+Dell WD19), and the rest show none. Each picture's alt says what is in it;
+licensed ones carry their credit. Detail in `docs/media-licenses.md`.

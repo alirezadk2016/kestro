@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { LayoutGrid } from "lucide-react";
 import Container from "./Container";
@@ -50,6 +51,7 @@ const copy = {
        section further down; the status line under the buttons already says
        an enquiry is not an order. */
     secondary: "Se produkterne",
+    productAlt: "Modelfoto: Lenovo ThinkPad T480 set bagfra med åbent låg og portene i siden",
   },
   en: {
     headlineTop: ["Refurbished", "business computers."],
@@ -59,6 +61,8 @@ const copy = {
     status: "Pre-launch — not yet a registered business. We take enquiries, not orders.",
     statusLink: "Status and terms",
     secondary: "See the products",
+    productAlt:
+      "Model photo: Lenovo ThinkPad T480 seen from behind with the lid open and the side ports visible",
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
 
@@ -100,13 +104,8 @@ export default function Hero({ lang }: { lang: Lang }) {
 
   return (
     /*
-     * Sized to the photograph from md up.
-     *
-     * The scene fills the section with background-size: cover, and cover
-     * crops whichever axis is proportionally longer. A section whose height
-     * came from its copy was 2.06:1 against a 2.70:1 plate, so cover scaled to
-     * the height and cropped the architectural setting. Giving the section the plate's own ratio
-     * means nothing is cropped and the composition arrives as it was framed.
+     * Sized to a 2.43:1 frame from 1460px up, the proportion the first
+     * screen was composed at; below that the copy sets the height.
      *
      * w-full is not decorative: without it the ratio drives the width as well
      * as the height, and at 1440 the section measured 1456px inside a 1440px
@@ -117,110 +116,16 @@ export default function Hero({ lang }: { lang: Lang }) {
      * be able to grow the section; otherwise overflow-hidden clips the
      * feature strip and the next section appears to cover its labels.
      *
-     * The negative top margin is the header's own height, so the photograph
-     * runs up behind it the way the reference does — the nav is 82% glass, and
-     * a dark ceiling reading faintly through it is the difference between a
-     * picture that starts under a bar and a room the bar is standing in. The
-     * matching padding puts the copy back below it. 81px is what the header
+     * The negative top margin is the header's own height, so the section's
+     * ground runs up behind the glass bar. The matching padding puts the copy
+     * back below it. 81px is what the header
      * measures at every width from 768 up; verify's overflow pass is what
      * catches it if that ever stops being true.
      */
-    <section className="home-hero under-bar grain relative flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:min-h-[calc(100vw*800/1942)]">
-      {/*
-       * The scene.
-       *
-       * The room the product stands in: the glazing, the blue-hour waterfront,
-       * the machine on dark stone. It
-       * carries what three separate decorations used to be asked to carry —
-       * the K watermark, the world map, the cut-out laptop — so all three are
-       * gone. One picture, one story.
-       *
-       * The artwork contains no text or branding. Real headings, actions and
-       * the Kestro logo remain in HTML. scripts/build-artwork.mjs exports the
-       * desktop plate and a separate mobile crop from the same master.
-       */}
-      {/*
-        Told to the browser before the stylesheet is parsed.
-
-        The scene is a CSS background, which is the right call — it is
-        decoration with no alt text to argue about, and it has to behave like
-        cover/center, which an <img> does not do for free. The cost is that the
-        preload scanner cannot see it: it is the largest element on the page,
-        and the browser only learns the URL exists once two stylesheets have
-        downloaded and parsed. Measured on the live site: 910ms of resource
-        load delay against 240ms of actual download.
-
-        This link is in the markup from the first byte, so the fetch starts
-        with the CSS rather than after it. media, because the layer it belongs
-        to is hidden below md — a phone should not spend its first connection
-        on 85kB it will never draw.
-      */}
-      <link
-        rel="preload"
-        as="image"
-        href="/hero/scene.avif"
-        type="image/avif"
-        media="(min-width: 768px)"
-        fetchPriority="high"
-      />
-      {/* A separate portrait plate keeps the product below the mobile copy.
-          Browsers without AVIF take the WebP from image-set(). */}
-      <link
-        rel="preload"
-        as="image"
-        href="/hero/scene-mobile-portrait.avif"
-        type="image/avif"
-        media="(max-width: 767px)"
-        fetchPriority="high"
-      />
-
-      <div
-        aria-hidden="true"
-        className="hero-scene pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
-      />
-
-      {/*
-       * The scrim, over the photograph and under the words.
-       *
-       * Not a taste decision. Verify measures the headline against whatever
-       * the picture is doing behind it, and a photograph has no obligation to
-       * be dark where a sentence lands. The left third of this plate is
-       * already near-black, so this only has to hold that and let go early —
-       * by 66% the window and the machine are untouched.
-       */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden md:block"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(4,7,17,0.82) 0%, rgba(4,7,17,0.90) 11%, rgba(4,7,17,0.88) 34%, rgba(4,7,17,0.60) 45%, rgba(4,7,17,0.20) 55%, rgba(4,7,17,0) 66%)",
-        }}
-      />
-
-      {/*
-       * No words in the room. There were two English stanzas ("People /
-       * Technology / A cleaner tomorrow", "IT today / A brighter tomorrow")
-       * and a "Scroll" cue set into the photograph as HTML, and a book on
-       * the desk with "Circular IT / Stronger businesses" on its spine. On a
-       * Danish page they were the first text a crawler met after the
-       * navigation and they said nothing a buyer could use, so the stanzas
-       * are gone and the book's spine was cleaned out of the plate.
-       */}
-
-      {/* Mobile copy sits directly on the portrait's quiet architectural
-          upper half. From md the wrapper dissolves into the original layout. */}
+    <section className="home-hero under-bar grain relative isolate flex w-full flex-col overflow-hidden bg-brand-950 max-md:-mt-[65px] md:-mt-[81px] md:pt-[81px] min-[1460px]:min-h-[calc(100vw*800/1942)]">
+      {/* On a phone the copy comes first and the machine stands under it.
+          From md the wrapper dissolves into the original layout. */}
       <div className="home-hero-frame relative flex flex-col md:contents">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 md:hidden">
-          <div className="hero-scene-mobile absolute inset-0" />
-          {/* Enough shade under the glass bar for the logo, no more. */}
-          <div
-            className="absolute inset-x-0 top-0 h-28"
-            style={{
-              background: "linear-gradient(180deg, rgba(4,8,18,0.5) 0%, rgba(4,8,18,0) 100%)",
-            }}
-          />
-        </div>
-
         <div /* Centred, but not in the middle. The reference sets the block
                   high in the frame — 87px of air above the eyebrow against 259
                   below the buttons — because the machine and the waterfront
@@ -231,8 +136,32 @@ export default function Hero({ lang }: { lang: Lang }) {
                   photograph's own ratio, which is paid for in cropped sides. */
           className="home-hero-copy-wrap relative z-10 flex items-center pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-24 md:flex-1 md:pb-14 md:pt-14 lg:pb-10 lg:pt-8 2xl:pb-24 2xl:pt-10"
         >
+          {/*
+           * The machine (28 November 2026).
+           *
+           * A photograph of a real Lenovo ThinkPad T480, cut out of its
+           * studio ground (owner-supplied; docs/media-licenses.md). It
+           * replaced an AI-generated room with a brandless laptop at a
+           * window: a laptop on this site is a real one. The rear view keeps
+           * the ThinkPad lid and the ports, and no dated screen. On a phone
+           * it stands under the actions; from md it sits right of the copy,
+           * in the frame the copy shares, so it never meets the feature
+           * strip.
+           */}
+          <div className="hero-product pointer-events-none absolute -z-10">
+            <Image
+              src="/thinkpad-t480-2-cutout.webp"
+              width={1179}
+              height={1120}
+              alt={c.productAlt}
+              priority
+              fetchPriority="high"
+              sizes="(min-width: 768px) 42vw, 86vw"
+              className="relative h-auto w-full"
+            />
+          </div>
           <Container className="home-hero-copy-container">
-            <div className="home-hero-copy max-w-2xl lg:max-w-[54%]">
+            <div className="home-hero-copy max-w-2xl md:max-w-[58%] lg:max-w-[54%]">
               <div className="rise">
                 {/* Sized for the longest word it has to hold rather than for
                   the English: "Erhvervscomputere." is one 18-character word

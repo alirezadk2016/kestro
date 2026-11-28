@@ -221,17 +221,21 @@ export default function FleetJourneyVisual({ lang, stages }: { lang: Lang; stage
   return (
     <figure ref={host} className="fleet-journey-visual" data-scene-state={state}>
       <div className="fleet-journey-stage">
+        {/* The still the stage shows where the 3D scene does not run (a
+            phone, reduced motion, saved data, no script): a real ThinkPad
+            T480, cut out of its studio ground, in place of the AI-generated
+            room it was until 28 November 2026. */}
         <Image
-          src="/cards/fleet-scene.webp"
-          width={1536}
-          height={1024}
+          src="/thinkpad-t480-6-cutout.webp"
+          width={1179}
+          height={1115}
           alt={
             lang === "da"
-              ? "Illustration af ens erhvervscomputere i en flådeleverance"
-              : "Illustrative business computers in a fleet delivery"
+              ? "Modelfoto: Lenovo ThinkPad T480 set forfra med åben skærm"
+              : "Model photo: Lenovo ThinkPad T480 from the front with the screen open"
           }
           sizes="(min-width: 1024px) 55vw, 100vw"
-          className="fleet-journey-poster"
+          className="fleet-journey-poster fleet-journey-photo"
         />
         <canvas ref={canvas} aria-hidden="true" className="fleet-journey-canvas" />
       </div>

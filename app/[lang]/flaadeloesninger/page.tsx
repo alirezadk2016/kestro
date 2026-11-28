@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MarkTile from "@/components/MarkTile";
-import HeaderArt from "@/components/HeaderArt";
+import Image from "next/image";
+import { licenceLabel } from "@/lib/credits";
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/Container";
@@ -406,18 +407,49 @@ export default async function FlaadeloesningerPage(props: { params: Promise<{ la
               </div>
             </div>
 
-            <HeaderArt
-              src="/cards/fleet-scene.webp"
-              width={1536}
-              height={1024}
-              alt={
-                lang === "da"
-                  ? "Et lokale med ens klargjorte bærbare computere stillet op på borde"
-                  : "A room of identical prepared laptops set out on desks"
-              }
-              className="mt-10 aspect-[3/2] lg:col-span-5 lg:mt-12 lg:self-center"
-              bleed
-            />
+            {/* A real ThinkPad in its dock, the thing a fleet standardises:
+                one model and one dock per desk. It replaced an AI-generated
+                room of brandless laptops on 28 November 2026. Licensed CC
+                BY-SA, so the credit stands under it. */}
+            <figure className="mt-10 lg:col-span-5 lg:mt-12 lg:self-center">
+              <div className="aspect-[3/2] overflow-hidden rounded-2xl bg-white">
+                <Image
+                  src="/models/lenovo-thinkpad-ultra-dock/docked-t470-reference.webp"
+                  width={1600}
+                  height={1057}
+                  alt={
+                    lang === "da"
+                      ? "En lukket Lenovo ThinkPad T470 sat i en ThinkPad Ultra Dock, set ovenfra."
+                      : "A closed Lenovo ThinkPad T470 docked in a ThinkPad Ultra Dock, seen from above."
+                  }
+                  quality={88}
+                  priority
+                  fetchPriority="high"
+                  sizes="(min-width: 1024px) 480px, 92vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-2 flex flex-wrap items-center gap-x-4 text-sm leading-6 text-paper/75">
+                <span className="py-2.5">
+                  {lang === "da"
+                    ? "ThinkPad T470 i en ThinkPad Ultra Dock"
+                    : "ThinkPad T470 in a ThinkPad Ultra Dock"}
+                </span>
+                <a
+                  href="https://commons.wikimedia.org/wiki/File:ThinkPad_T470_docked_in_the_Ultra_docking_station.JPG"
+                  className="inline-flex min-h-[44px] items-center text-brand-300 underline underline-offset-4 hover:text-paper"
+                >
+                  {lang === "da" ? "Foto:" : "Photo:"} Paowee ↗
+                </a>
+                <a
+                  href="https://creativecommons.org/licenses/by-sa/4.0/"
+                  rel="license"
+                  className="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:text-paper"
+                >
+                  {licenceLabel("CC BY-SA 4.0 (resized)", lang)}
+                </a>
+              </figcaption>
+            </figure>
           </div>
         </Container>
       </section>

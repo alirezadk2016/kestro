@@ -196,9 +196,22 @@ bodies.
   process section had a spine on desktop and `hidden lg:flex`, so the whole
   argument of the section was invisible to most readers.
 
-## Card artwork
+## Pictures of machines are photographs
 
-`npm run build:cards` makes `public/cards/*.webp`. Two pipelines, one set:
+Since 28 November 2026 no public page shows a generated or rendered machine:
+the owner's rule is that a laptop on this site is a real one. The front page
+hero is the owner's ThinkPad T480 photograph cut out of its studio ground; the
+category cards use `lib/category-media.ts` (real photos, and drawings of a
+format labelled as drawings); articles use `lib/guide-photos.ts`. Where no real
+photograph of the subject exists, the page has no picture. The interactive 3D
+models (/maskinen, the fleet rollout) are models, not photographs, and stay.
+Licences and sources are in `docs/media-licenses.md`.
+
+## Card artwork (retired from public pages)
+
+The renders below no longer appear on a public page; the admin layout still
+uses one as its background. `npm run build:cards` makes `public/cards/*.webp`.
+Two pipelines, one set:
 
 - **cat-laptops** is a crop of `public/hero/scene.webp` (`scripts/build/cards/`).
 - **cat-desktops, cat-monitors, cat-fleet, exploded, fleet-scene** are

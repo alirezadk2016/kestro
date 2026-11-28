@@ -621,12 +621,6 @@ body {
       justify-content: flex-start;
     }
 
-    .home-hero .hero-scene-mobile {
-      background-size: min(100%, 480px) auto;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-    }
-
     .home-hero .home-hero-copy-wrap {
       position: static;
       padding-top: calc(var(--hero-header-height) + 28px);
@@ -667,13 +661,6 @@ body {
       max-width: 24rem;
       font-size: 0.8125rem;
       line-height: 1.5;
-    }
-
-    .home-hero .hero-scene-mobile::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(0deg, rgb(6 11 22 / 0.95), transparent 26%);
     }
 
     .home-hero .home-hero-actions {
@@ -1813,13 +1800,41 @@ html[data-lang-hint="on"] .lang-hint {
   }
 }
 
-/* The portrait uses the same format fallback as the unchanged wide hero. */
-.hero-scene-mobile {
-  background-image: url(/hero/scene-mobile-portrait.webp);
-  background-image: image-set(
-    url(/hero/scene-mobile-portrait.avif) type("image/avif"),
-    url(/hero/scene-mobile-portrait.webp) type("image/webp")
-  );
+/*
+ * The hero's machine (components/Hero.tsx): a real ThinkPad T480 photograph
+ * on the section's navy, with the brand blue as the light it stands in. On a
+ * phone it stands centred under the actions, above the status line; from md
+ * it sits right of the copy.
+ */
+.hero-product {
+  left: 0;
+  right: 0;
+  bottom: 64px;
+  margin-inline: auto;
+  width: min(78%, 340px);
+}
+.hero-product::before {
+  content: "";
+  position: absolute;
+  inset: 8% -12% -4%;
+  background: radial-gradient(closest-side, rgb(30 64 255 / 0.3), rgb(30 64 255 / 0) 100%);
+}
+@media (min-width: 768px) {
+  .hero-product {
+    left: auto;
+    right: 2%;
+    bottom: auto;
+    top: 50%;
+    margin: 0;
+    width: min(38%, 640px);
+    transform: translateY(-50%);
+  }
+}
+@media (min-width: 1280px) {
+  .hero-product {
+    right: 5%;
+    width: min(36%, 680px);
+  }
 }
 
 .fleet-rollout {
@@ -1852,6 +1867,12 @@ html[data-lang-hint="on"] .lang-hint {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* A cut-out photograph stands whole on the stage, with room around it. */
+.fleet-journey-photo {
+  object-fit: contain;
+  padding: 8%;
+  filter: drop-shadow(0 28px 36px rgb(0 0 0 / 0.5));
 }
 .fleet-journey-canvas {
   position: absolute;
@@ -2036,6 +2057,14 @@ main .fleet-rollout-steps > li {
   max-width: 600px;
   margin-left: 0;
 }
+/* A cut-out photograph, not a scene: no fade into the copy, and a machine's
+   width rather than a room's. */
+.buyback-hero-photo {
+  inset: 0 4% 0 auto;
+  width: 44%;
+  mask-image: none;
+  filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.45));
+}
 .buyback-hero > div {
   position: relative;
 }
@@ -2168,30 +2197,11 @@ main .fleet-rollout-steps > li {
 }
 .grade-panels {
   margin-top: 20px;
-  border: 1px solid rgb(255 255 255 / 0.14);
-  border-radius: 8px;
   overflow: hidden;
 }
-.grade-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  background: #060b16;
-}
-.grade-photo {
-  position: relative;
-  min-width: 0;
-}
-.grade-photo > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  object-fit: cover;
-  aspect-ratio: 1;
-}
 .grade-description {
-  padding: 48px 40px;
-  align-self: center;
+  padding: 40px;
+  max-width: 62rem;
 }
 .grade-suits {
   display: flex;
@@ -2205,61 +2215,6 @@ main .fleet-rollout-steps > li {
   flex: none;
   color: #93aefb;
   margin-top: 3px;
-}
-.grade-image-note {
-  margin-top: 16px;
-}
-.grade-zoom,
-.grade-lightbox-close {
-  display: flex;
-  width: 44px;
-  height: 44px;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(255 255 255 / 0.25);
-  border-radius: 6px;
-  color: #fff;
-  background: #060b16;
-}
-.grade-zoom {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-}
-.grade-zoom:focus-visible,
-.grade-lightbox-close:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 4px;
-}
-.grade-lightbox {
-  width: min(900px, calc(100vw - 24px));
-  max-height: calc(100svh - 24px);
-  padding: 48px 16px 16px;
-  border: 1px solid rgb(255 255 255 / 0.2);
-  border-radius: 8px;
-  color: #fff;
-  background: #060b16;
-}
-.grade-lightbox[open] {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.grade-lightbox::backdrop {
-  background: rgb(0 0 0 / 0.85);
-}
-.grade-lightbox > img {
-  min-height: 0;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100svh - 140px);
-  object-fit: contain;
-}
-.grade-lightbox-close {
-  position: absolute;
-  right: 8px;
-  top: 4px;
 }
 @supports selector(:has(*)) {
   .grade-comparison:has(input[value="0"]:checked) .grade-panel:not([data-grade="0"]),
@@ -2330,13 +2285,6 @@ main .fleet-rollout-steps > li {
   .grade-letter {
     font-size: 30px;
   }
-  .grade-panel {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .grade-photo > img {
-    min-height: 0;
-    max-height: 420px;
-  }
   .grade-description {
     padding: 26px 22px;
   }
@@ -2346,15 +2294,6 @@ main .fleet-rollout-steps > li {
   .phone-brand-links a {
     transition: none !important;
   }
-}
-
-/* The same for the wide hero. */
-.hero-scene {
-  background-image: url(/hero/scene.webp);
-  background-image: image-set(
-    url(/hero/scene.avif) type("image/avif"),
-    url(/hero/scene.webp) type("image/webp")
-  );
 }
 
 /* A comparison shortlist must leave the final footer/privacy controls

@@ -144,18 +144,22 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
       <PageSchema lang={lang} route="/saelg-til-os" name={c.title} description={c.description} />
 
       <section className="buyback-hero">
+        {/* A real ThinkPad T480, cut out of its studio ground (owner-supplied;
+            docs/media-licenses.md), in place of an AI-generated workbench
+            (28 November 2026). The Windows 10 screen suits the page: these
+            are the machines a company sells on. */}
         <Image
-          src="/graphics/buyback.webp"
-          width={1440}
-          height={960}
+          src="/thinkpad-t480-6-cutout.webp"
+          width={1179}
+          height={1115}
           priority
           fetchPriority="high"
-          sizes="(min-width: 1024px) 65vw, 100vw"
-          className="buyback-hero-image"
+          sizes="(min-width: 1024px) 40vw, 80vw"
+          className="buyback-hero-image buyback-hero-photo"
           alt={
             lang === "da"
-              ? "Illustration af brugte bærbare computere, en tablet og en smartphone på et arbejdsbord"
-              : "Illustrative used laptops, a tablet and smartphone on a workbench"
+              ? "Modelfoto: Lenovo ThinkPad T480 set forfra med Windows 10 på skærmen"
+              : "Model photo: Lenovo ThinkPad T480 from the front with Windows 10 on screen"
           }
         />
         <Container>

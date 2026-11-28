@@ -1,14 +1,23 @@
 "use client";
 
-import Image from "next/image";
-import { Sparkles, ScanLine, ScanEye, ZoomIn, X } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { Sparkles, ScanLine, ScanEye } from "lucide-react";
+import { useId } from "react";
 import type { Lang } from "@/lib/i18n";
 
 type Grade = { grade: string; label: string; description: string; suits: string };
 const icons = [Sparkles, ScanLine, ScanEye];
-const images = ["/graphics/grade-a.webp", "/graphics/grade-b.webp", "/graphics/grade-c.webp"];
 
+/*
+ * The three grades, chosen with native radios and shown one at a time by CSS,
+ * so it works without script.
+ *
+ * Each grade had a picture: the same closed laptop lid three times with
+ * more wear on each. They were AI-generated, and a picture of wear that no
+ * machine has is the one place a grade must not be illustrated by invention.
+ * They went on 28 November 2026; what each grade means is in the words, and
+ * the photograph that counts is the one of the individual unit, which the
+ * text tells the buyer to ask for.
+ */
 export default function GradeComparison({
   lang,
   grades,
@@ -19,42 +28,7 @@ export default function GradeComparison({
   suitsLabel: string;
 }) {
   const id = useId();
-  const dialog = useRef<HTMLDialogElement>(null);
-  const trigger = useRef<HTMLButtonElement | null>(null);
-  const oldOverflow = useRef("");
-  const [zoom, setZoom] = useState(0);
-  const [enhanced, setEnhanced] = useState(false);
   const label = lang === "da" ? "Sammenlign kosmetisk stand" : "Compare cosmetic condition";
-  const note =
-    lang === "da"
-      ? "Illustrative eksempler, ikke lagerfotos. Bed om billeder af den enkelte enhed."
-      : "Illustrative examples, not photos of available stock. Ask for photos of the individual unit.";
-  const alt = (grade: Grade) =>
-    lang === "da"
-      ? `Illustration af et lukket laptoplåg: ${grade.label.toLowerCase()}`
-      : `Illustrative closed laptop lid: ${grade.label.toLowerCase()}`;
-  const closeLabel = lang === "da" ? "Luk billede" : "Close image";
-  /* Put the page back the moment the dialog starts to close, not when its
-     close event lands: that event is queued after `open` has already gone
-     false, so for a moment the dialog was shut while the page still could
-     not scroll. Escape fires `cancel` synchronously, and the two buttons
-     restore before they close; `close` stays as the backstop for anything
-     else that shuts it. Running twice is harmless. */
-  function restore() {
-    document.body.style.overflow = oldOverflow.current;
-    trigger.current?.focus();
-  }
-  function shut() {
-    restore();
-    dialog.current?.close();
-  }
-  useEffect(() => {
-    const modal = dialog.current;
-    setEnhanced(true);
-    return () => {
-      if (modal?.open) document.body.style.overflow = oldOverflow.current;
-    };
-  }, []);
 
   return (
     <div className="grade-comparison">
@@ -85,7 +59,7 @@ export default function GradeComparison({
           );
         })}
       </fieldset>
-      <div className="grade-panels">
+      <div className="grade-panels plate">
         {grades.map((grade, index) => (
           <section
             key={grade.grade}
@@ -93,32 +67,6 @@ export default function GradeComparison({
             data-grade={index}
             aria-labelledby={`${id}-grade-${index}`}
           >
-            <div className="grade-photo">
-              <Image
-                src={images[index]}
-                width={720}
-                height={720}
-                sizes="(min-width:1024px) 45vw, 100vw"
-                alt={alt(grade)}
-              />
-              {enhanced && (
-                <button
-                  type="button"
-                  className="grade-zoom"
-                  title={lang === "da" ? "Forstør billede" : "Enlarge image"}
-                  aria-label={`${lang === "da" ? "Forstør" : "Enlarge"} ${grade.grade}`}
-                  onClick={(event) => {
-                    trigger.current = event.currentTarget;
-                    oldOverflow.current = document.body.style.overflow;
-                    setZoom(index);
-                    dialog.current?.showModal();
-                    document.body.style.overflow = "hidden";
-                  }}
-                >
-                  <ZoomIn size={20} aria-hidden="true" />
-                </button>
-              )}
-            </div>
             <div className="grade-description">
               <h3
                 id={`${id}-grade-${index}`}
@@ -138,31 +86,6 @@ export default function GradeComparison({
           </section>
         ))}
       </div>
-      <p className="grade-image-note text-sm leading-[1.6] text-paper/75">{note}</p>
-      <dialog
-        ref={dialog}
-        className="grade-lightbox"
-        aria-label={label}
-        onCancel={restore}
-        onClose={restore}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) shut();
-        }}
-      >
-        <button
-          type="button"
-          className="grade-lightbox-close"
-          aria-label={closeLabel}
-          title={closeLabel}
-          onClick={shut}
-        >
-          <X size={22} aria-hidden="true" />
-        </button>
-        <Image src={images[zoom]} width={720} height={720} alt={alt(grades[zoom])} />
-        <p className="mt-3 text-sm leading-[1.6] text-paper/85">
-          {grades[zoom].grade}: {grades[zoom].label}
-        </p>
-      </dialog>
     </div>
   );
 }

@@ -486,3 +486,22 @@ its author linked to the Commons page and its licence linked with
 have no picture: no real photograph of their subject (RAM, a drive, a battery,
 the inside of a laptop) has been licensed, and a generic laptop standing in
 for one would be decoration. `lib/guide-photos.ts` is the list.
+
+## The rest of the site (28 November 2026)
+
+The same rule reached every public page. What replaced what:
+
+| Page | Was | Now |
+| --- | --- | --- |
+| Front page hero | AI-generated room with a brandless laptop (`public/hero/`) | `/thinkpad-t480-2-cutout.webp`, owner-supplied |
+| Front page category cards | AI/rendered scenes (`public/cards/cat-*`) | `lib/category-media.ts`: T480 photo, Dell WD19 photo (Raimond Spekking, CC BY-SA 4.0, credited under the cards), labelled drawings for desktop and monitor |
+| /saelg-til-os | AI workbench (`graphics/buyback.webp`) | `/thinkpad-t480-6-cutout.webp`, owner-supplied |
+| /flaadeloesninger hero | AI room of laptops (`cards/fleet-scene.webp`) | ThinkPad T470 in an Ultra Dock, Paowee, CC BY-SA 4.0, credited in the caption |
+| /flaadeloesninger 3D fallback | the same AI room | `/thinkpad-t480-6-cutout.webp` |
+| /kvalitet | three AI pictures of a lid with more wear on each | none: the grades are described in words |
+| /reparation | four-step AI sequence of a RAM swap | none |
+
+Deleted with them: `public/graphics/*`, `public/images/repairs/*`, and the
+unused `VidenPlate`, `Statement` and `RepairPhotoSequence` components. The hero
+and card files stay in `public/` because the card build scripts and the admin
+background read them; no public page links them.
