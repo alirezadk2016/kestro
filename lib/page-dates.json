@@ -12,7 +12,7 @@
   "/handelsbetingelser": {
     "published": "2026-09-02",
     "modified": "2026-10-14",
-    "files": 4
+    "files": 5
   },
   "/kontakt": {
     "published": "2026-08-23",
@@ -52,7 +52,7 @@
   "/privatlivspolitik": {
     "published": "2026-08-23",
     "modified": "2026-10-21",
-    "files": 3
+    "files": 4
   },
   "/produkter": {
     "published": "2026-08-23",
@@ -77,7 +77,7 @@
   "/saelg-til-os": {
     "published": "2026-08-23",
     "modified": "2026-10-15",
-    "files": 7
+    "files": 8
   },
   "/tilbud": {
     "published": "2026-08-30",
@@ -91,12 +91,12 @@
   },
   "/vejledninger": {
     "published": "2026-08-23",
-    "modified": "2026-11-27",
-    "files": 5
+    "modified": "2026-11-28",
+    "files": 4
   },
   "/vejledninger/[slug]": {
     "published": "2026-08-23",
-    "modified": "2026-11-27",
+    "modified": "2026-11-28",
     "files": 9
   },
   "/ydelser": {
