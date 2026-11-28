@@ -220,18 +220,24 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
               trail={[{ name: lang === "da" ? "Få et tilbud" : "Get a quote", href: "/tilbud" }]}
               className="mb-5"
             />
-            <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-              {c.title}
-            </h1>
-            <p className="mt-5 max-w-3xl text-base leading-[1.65] sm:text-lg sm:leading-[1.65] text-paper/85">
-              {c.lead}
-            </p>
-            <p className="mt-6 text-xs leading-5 text-paper/65">
-              {lang === "da" ? "Opdateret" : "Updated"}{" "}
-              <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/85">
-                {formatDate(pageUpdated("/tilbud"), lang)}
-              </time>
-            </p>
+            {/* The heading left and the lead right from lg, as on the other
+                interior pages and over the form's own two columns below. */}
+            <div className="lg:grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start lg:gap-10">
+              <h1 className="max-w-3xl text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                {c.title}
+              </h1>
+              <div>
+                <p className="mt-5 max-w-3xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65] lg:mt-1.5">
+                  {c.lead}
+                </p>
+                <p className="mt-6 text-xs leading-5 text-paper/65">
+                  {lang === "da" ? "Opdateret" : "Updated"}{" "}
+                  <time dateTime={pageUpdated("/tilbud")} className="tabular-nums text-paper/85">
+                    {formatDate(pageUpdated("/tilbud"), lang)}
+                  </time>
+                </p>
+              </div>
+            </div>
 
             <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
               <div className="plate p-6 sm:p-8">
@@ -278,7 +284,6 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                     className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                   >
                     {c.exampleLink}
-                    <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
 
@@ -294,7 +299,6 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                           className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                         >
                           {link.label}
-                          <span aria-hidden="true">&rarr;</span>
                         </Link>
                       </li>
                     ))}
@@ -311,7 +315,6 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
                     className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
                   >
                     {c.otherLink}
-                    <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
               </div>
@@ -350,7 +353,6 @@ export default async function QuotePage(props: { params: Promise<{ lang: Lang }>
             className="mt-8 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand-300 transition hover:text-paper"
           >
             {c.needLinkLabel}
-            <span aria-hidden="true">&rarr;</span>
           </Link>
         </Container>
       </section>

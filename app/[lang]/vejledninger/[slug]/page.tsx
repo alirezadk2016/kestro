@@ -268,7 +268,7 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
       <section className="relative overflow-hidden border-b border-white/10 bg-brand-950 py-12 text-paper max-md:-mt-[65px] max-md:pt-[calc(65px+1.5rem)] sm:py-10 sm:py-20">
         <Container className="relative">
           <div className={photo ? "lg:grid lg:grid-cols-12 lg:items-center lg:gap-14" : undefined}>
-            <div className="glass-card relative z-10 max-w-3xl lg:col-span-7">
+            <div className={`glass-card relative z-10 lg:col-span-7 ${photo ? "max-w-3xl" : ""}`}>
               <Breadcrumbs
                 lang={lang}
                 trail={[
@@ -277,34 +277,43 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                 ]}
               />
 
-              <p className="mt-6">
-                <Link
-                  href={`${localePath("/vejledninger", lang)}#${cluster.anchor}`}
-                  /* No mark at this size: the drawing is a technical diagram and
+              {/* Without a photograph the title and the answer share the
+                  row from lg, the heading left and the answer right, as on
+                  the other interior pages: one 768px column left the right
+                  half of the hero empty on a wide screen. */}
+              <div className={photo ? undefined : "lg:grid lg:grid-cols-2 lg:gap-12"}>
+                <div>
+                  <p className="mt-6">
+                    <Link
+                      href={`${localePath("/vejledninger", lang)}#${cluster.anchor}`}
+                      /* No mark at this size: the drawing is a technical diagram and
                    it turns to mud below about 40px. The large one behind the
                    heading already says which cluster this is. */
-                  className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
-                >
-                  {cluster.name[lang]}
-                </Link>
-              </p>
+                      className="inline-flex min-h-[44px] items-center gap-2 eyebrow text-brand-300 transition hover:text-paper"
+                    >
+                      {cluster.name[lang]}
+                    </Link>
+                  </p>
 
-              <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-                {guide.title[lang]}
-              </h1>
-
-              {/* The answer, before the scroll. Someone who reads only this
+                  <h1 className="mt-3 text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+                    {guide.title[lang]}
+                  </h1>
+                </div>
+                <div className={photo ? undefined : "lg:pt-[4.25rem]"}>
+                  {/* The answer, before the scroll. Someone who reads only this
                 should still have got what they came for. */}
-              <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
-                {guide.tldr[lang]}
-              </p>
+                  <p className="mt-6 text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+                    {guide.tldr[lang]}
+                  </p>
 
-              <AuthorByline
-                authorId={guide.author}
-                updated={guide.updated}
-                readingMinutes={guide.readingMinutes}
-                lang={lang}
-              />
+                  <AuthorByline
+                    authorId={guide.author}
+                    updated={guide.updated}
+                    readingMinutes={guide.readingMinutes}
+                    lang={lang}
+                  />
+                </div>
+              </div>
             </div>
             {/* A photograph of a real machine, framed on white because that is
               what most of them were taken on, and after the answer on a
@@ -534,7 +543,6 @@ export default async function GuidePage(props: { params: Promise<{ lang: Lang; s
                           className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                         >
                           {link.label[lang]}
-                          <span aria-hidden="true">&rarr;</span>
                         </Link>
                       </li>
                     ))}

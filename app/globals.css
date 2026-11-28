@@ -2048,36 +2048,6 @@ main .fleet-rollout-steps > li {
 .buyback-process {
   padding-block: 64px;
 }
-.buyback-steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 32px;
-  padding: 0;
-  list-style: none;
-}
-.buyback-steps > li {
-  padding: 26px 24px;
-  background: rgb(255 255 255 / 0.035);
-  border: 1px solid rgb(255 255 255 / 0.13);
-  border-radius: 8px;
-}
-.buyback-step-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #93aefb;
-}
-.buyback-step-heading span {
-  font-size: 38px;
-  line-height: 1;
-  font-weight: 600;
-  color: #becffd;
-  font-variant-numeric: tabular-nums;
-}
-.buyback-steps > li:nth-child(3) .buyback-step-heading {
-  color: #7ed8db;
-}
 .phone-brands {
   max-width: none;
 }
@@ -2319,9 +2289,6 @@ main .fleet-rollout-steps > li {
     object-position: center;
     mask-image: linear-gradient(180deg, transparent, #000 14%);
   }
-  .buyback-steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .phone-brand-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2336,9 +2303,6 @@ main .fleet-rollout-steps > li {
 @media (max-width: 639px) {
   .buyback-process {
     padding-block: 40px;
-  }
-  .buyback-steps {
-    grid-template-columns: minmax(0, 1fr);
   }
   .phone-brand-links a {
     gap: 10px;

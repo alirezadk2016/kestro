@@ -180,6 +180,10 @@ bodies.
   empty, page after page; give it `split` (globals.css: heading left, the rest
   right, from lg) or a real second column. Text inside a card is not capped
   at 34em — the card is the measure.
+- **An interior header is split.** `PageHeader wide` puts the heading left
+  and the lead right from lg, as /priser and /produkter do; only a header
+  that shares its row with a picture stays one column. The legal pages carry
+  their clause list in the right-hand column (`LegalContents`).
 - **Chrome is a choice, not a default.** An arrow marks the one forward
   action on a screen (a primary button), and ↗ an external link; text links,
   cards and rows carry none. Labels are in sentence case, never tracked

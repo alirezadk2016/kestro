@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, Check, ClipboardList, BadgeCheck, Truck, Wallet } from "lucide-react";
+import { ArrowDown, Check } from "lucide-react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import { type CraftMarkName } from "@/components/CraftMark";
+import MarkTile from "@/components/MarkTile";
 import RelatedLinks from "@/components/RelatedLinks";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
@@ -90,7 +91,7 @@ export async function generateMetadata(props: {
 const steps = [
   {
     mark: "written" as CraftMarkName,
-    title: { da: "1. Send os en liste", en: "1. Send us a list" },
+    title: { da: "Send os en liste", en: "Send us a list" },
     description: {
       da: "Fortæl os, hvad I har – antal enheder, modeller og cirka alder. Jo mere præcist, jo hurtigere kan vi vurdere.",
       en: "Tell us what you have — quantity, models and rough age. The more precise, the faster we can assess it.",
@@ -98,7 +99,7 @@ const steps = [
   },
   {
     mark: "network" as CraftMarkName,
-    title: { da: "2. I får et tilbud", en: "2. You get an offer" },
+    title: { da: "I får et tilbud", en: "You get an offer" },
     description: {
       da: "Vi vurderer udstyret og vender tilbage med et bud. I er ikke bundet af noget, før I siger ja.",
       en: "We assess the equipment and come back with an offer. Nothing is binding until you say yes.",
@@ -106,7 +107,7 @@ const steps = [
   },
   {
     mark: "tested" as CraftMarkName,
-    title: { da: "3. Afhentning og datasletning", en: "3. Collection and data erasure" },
+    title: { da: "Afhentning og datasletning", en: "Collection and data erasure" },
     description: {
       da: "Vi aftaler afhentning, og er der data på enhederne, slettes lagermedierne, før de klargøres til videresalg.",
       en: "We arrange collection, and if there is data on the units, the storage media are erased before the machines are prepared for resale.",
@@ -114,7 +115,7 @@ const steps = [
   },
   {
     mark: "who" as CraftMarkName,
-    title: { da: "4. Betaling", en: "4. Payment" },
+    title: { da: "Betaling", en: "Payment" },
     description: {
       da: "Betaling sker efter den aftale, vi indgår – vi gennemgår vilkårene på forhånd.",
       en: "Payment follows the agreement we make — we go through the terms in advance.",
@@ -133,8 +134,6 @@ const accepted = [
   { da: "Dockingstationer", en: "Docking stations" },
   { da: "Serverudstyr (efter aftale)", en: "Server equipment (by arrangement)" },
 ];
-
-const stepIcons = [ClipboardList, BadgeCheck, Truck, Wallet];
 
 export default async function SaelgTilOsPage(props: { params: Promise<{ lang: Lang }> }) {
   const params = await props.params;
@@ -189,19 +188,38 @@ export default async function SaelgTilOsPage(props: { params: Promise<{ lang: La
             {c.howTitle}
           </h2>
 
-          <ol className="buyback-steps">
+          {/* A list of steps, so a spine: the same route as the front page's
+              process, the step's mark standing on it and its number a word.
+              It was four boxes lit by nothing, each numbered twice ("01" and
+              "1. Send os en liste") with an icon from another set. */}
+          <ol className="mt-10 grid grid-cols-1 sm:mt-12 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-12">
             {steps.map((step, index) => {
-              const Icon = stepIcons[index];
+              const last = index === steps.length - 1;
               return (
-                <li key={step.title.da}>
-                  <div className="buyback-step-heading" aria-hidden="true">
-                    <Icon size={30} strokeWidth={1.5} />
-                    <span>{String(index + 1).padStart(2, "0")}</span>
+                <li
+                  key={step.title.da}
+                  className="relative flex gap-5 pb-10 last:pb-0 lg:block lg:pb-0"
+                >
+                  <div aria-hidden="true" className="relative flex-none lg:mb-6">
+                    <MarkTile name={step.mark} size="lg" className="relative z-10" />
+                    {!last && (
+                      <>
+                        <span className="absolute left-7 top-[68px] h-[calc(100%-40px)] w-px -translate-x-1/2 bg-gradient-to-b from-brand-400/60 to-paper/10 lg:hidden" />
+                        <span className="absolute left-[68px] top-7 hidden h-px w-[calc(100%+var(--gap)-80px)] bg-gradient-to-r from-brand-400/70 to-paper/15 lg:block [--gap:2rem] xl:[--gap:3rem]" />
+                      </>
+                    )}
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold text-paper">{step.title[lang]}</h3>
-                  <p className="mt-3 text-sm leading-[1.75] text-paper/75">
-                    {step.description[lang]}
-                  </p>
+                  <div className="min-w-0 flex-1 pt-1 lg:pt-0">
+                    <p className="eyebrow text-brand-300">
+                      {lang === "da" ? "Trin" : "Step"} {index + 1}
+                    </p>
+                    <h3 className="mt-2 font-display text-lg font-bold tracking-tight text-paper">
+                      {step.title[lang]}
+                    </h3>
+                    <p className="mt-2 text-sm leading-[1.65] text-paper/75 lg:pr-2">
+                      {step.description[lang]}
+                    </p>
+                  </div>
                 </li>
               );
             })}

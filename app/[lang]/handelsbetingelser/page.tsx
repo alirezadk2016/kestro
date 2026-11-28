@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
+import LegalContents, { legalAnchor } from "@/components/LegalContents";
 import PageHeader from "@/components/PageHeader";
 import { company, postalAddress } from "@/lib/company";
 import { localePath, metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
@@ -249,14 +250,19 @@ const copy = project.prelaunch
         ...commercialCopy.da,
         metaDescription:
           "Kestro er under etablering. Læs om uforpligtende forespørgsler, vejledende budgetpriser og kontakt. Ingen bestilling eller betaling her på siden.",
-        description: projectNotice.da.body,
+        /* What the page covers, not the notice: section 1 is the notice,
+           and the lead repeating it word for word put it on the page twice
+           in a row. */
+        description:
+          "Her står, hvad der gælder for forespørgsler, vejledende priser og kontakt nu, og hvad der skal være på plads, før vi kan handle.",
         detailsTitle: "Projekt og kontakt",
       },
       en: {
         ...commercialCopy.en,
         metaDescription:
           "Kestro is still being set up. Read about non-binding enquiries, indicative budgets and contact. No orders or payments are accepted on the site.",
-        description: projectNotice.en.body,
+        description:
+          "What applies to enquiries, indicative prices and contact now, and what has to be in place before we can trade.",
         detailsTitle: "Project and contact",
       },
     }
@@ -333,6 +339,7 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
             lang={lang}
             href="/handelsbetingelser"
             crumb={lang === "da" ? "Handelsbetingelser" : "Terms of sale"}
+            wide
           />
         </Container>
       </section>
@@ -343,12 +350,13 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
           is what it is, and it joins the FAQs and the quote as the site's
           paper. */}
       <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
-        <Container>
-          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
+        <Container className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-12">
+          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10 lg:col-span-8">
             {clauses.map((clause) => (
               <div
                 key={clause.heading.da}
-                className="border-t border-ink-200 py-8 first:border-t-0"
+                id={legalAnchor(clause.heading.da)}
+                className="scroll-mt-28 border-t border-ink-200 py-8 first:border-t-0"
               >
                 <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {clause.heading[lang]}
@@ -368,7 +376,10 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
                 when lib/company.ts actually holds the value — a legal page is the
                 last place to print a placeholder where a registration number
                 belongs. */}
-            <div className="border-t border-ink-200 py-8 first:border-t-0">
+            <div
+              id="virksomhedsoplysninger"
+              className="scroll-mt-28 border-t border-ink-200 py-8 first:border-t-0"
+            >
               <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                 {c.detailsTitle}
               </h2>
@@ -427,6 +438,18 @@ export default async function TermsPage(props: { params: Promise<{ lang: Lang }>
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </article>
+          <div className="lg:col-span-4">
+            <LegalContents
+              lang={lang}
+              items={[
+                ...clauses.map((clause) => ({
+                  id: legalAnchor(clause.heading.da),
+                  label: clause.heading[lang],
+                })),
+                { id: "virksomhedsoplysninger", label: c.detailsTitle },
+              ]}
+            />
+          </div>
         </Container>
       </section>
     </>

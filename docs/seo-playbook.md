@@ -1568,3 +1568,30 @@ network. Detail in `docs/media-licenses.md`.
   four, the first led by "Langsom computer".
 - Twelve AI image files were deleted, so their URLs now answer 404 and leave
   image search; nothing on the site linked to them.
+
+## Design review — 28 November 2026
+
+The owner asked for an expert pass over the graphics and design. Every
+template was captured at 390, 1440 and 1920 and read against the design
+rules in CLAUDE.md. What changed:
+
+- **Interior headers split from lg.** Om os, Ydelser, Kontakt, Kvalitet,
+  Maskinen, the two legal pages, Få et tilbud and the articles without a
+  photograph had a 768px column on the left and the right half empty at 1440
+  and 1920. They now put the heading left and the lead right, as /priser and
+  /produkter already did.
+- **Legal pages:** the clause list stands beside the document, in view while
+  it scrolls. The terms page lead no longer repeats section 1 word for word.
+- **Sælg til os:** the four steps were boxes lit by nothing, numbered twice
+  ("01" and "1. Send os en liste") with icons from another set. They are a
+  spine with the site's own marks, like the front page's process.
+- **Arrows off text links:** /tilbud's side links, the "Videre herfra" and
+  related chips and the model card's "Specifikationer" carried a → that
+  CLAUDE.md keeps for the one primary action.
+- **/modeller:** the lead was cut at the full stop in "én pr. serie" and read
+  "… én pr.", with "serie, …" opening the details. It splits at a real
+  sentence end now.
+
+Left for the owner: the front page hero, its category cards, /flaadeloesninger,
+/saelg-til-os, /reparation and /kvalitet still show AI-generated or rendered
+machines.

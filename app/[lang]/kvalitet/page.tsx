@@ -221,6 +221,7 @@ export default async function KvalitetPage(props: { params: Promise<{ lang: Lang
             crumb={lang === "da" ? "Stand og kvalitet" : "Condition and quality"}
 
             updated="/kvalitet"
+            wide
           />
 
           <div className="quality-grading-heading mt-12 max-w-3xl">

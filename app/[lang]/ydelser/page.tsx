@@ -186,6 +186,7 @@ export default async function YdelserPage(props: { params: Promise<{ lang: Lang 
             crumb={lang === "da" ? "Ydelser" : "Services"}
 
             updated="/ydelser"
+            wide
           />
 
           {/* Was a hand-rolled Link card with a .plate and an 11px chip. It is

@@ -132,6 +132,7 @@ export default async function OmOsPage(props: { params: Promise<{ lang: Lang }> 
             crumb={lang === "da" ? "Om os" : "About us"}
 
             updated="/om-os"
+            wide
           />
 
           {/* Three statements side by side from lg, mark above the words so

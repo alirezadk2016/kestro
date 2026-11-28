@@ -103,7 +103,6 @@ export default function ModelCard({
             className="inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-brand-300"
           >
             {da ? "Specifikationer" : "Specifications"}
-            <span>&rarr;</span>
           </span>
           <Link
             href={quoteHref}

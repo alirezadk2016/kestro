@@ -38,7 +38,6 @@ export default function RelatedLinks({
                   className="plate-sm inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 text-sm font-semibold text-paper/85 transition hover:text-paper"
                 >
                   {link.label[lang]}
-                  <span aria-hidden="true">&rarr;</span>
                 </Link>
               </li>
             ))}

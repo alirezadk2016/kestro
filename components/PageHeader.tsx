@@ -19,6 +19,7 @@ export default function PageHeader({
   href,
   crumb,
   updated,
+  wide = false,
 }: {
   title: string;
   description: ReactNode;
@@ -37,16 +38,24 @@ export default function PageHeader({
    * form does not have an edition.
    */
   updated?: Route;
+  /**
+   * The heading on the left and the lead on the right, from lg, as on /priser
+   * and /produkter. For a header that is the whole width of its section: a
+   * 768px column there left the right half of a 1440 or 1920 screen empty,
+   * page after page. Off where the header shares its row with a picture.
+   */
+  wide?: boolean;
 }) {
-  return (
-    <div className="max-w-3xl">
-      {lang && href && (
-        <Breadcrumbs lang={lang} trail={[{ name: crumb ?? title, href }]} className="mb-5" />
-      )}
-      <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
-        {title}
-      </h1>
-      <p className="mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65]">
+  const heading = (
+    <h1 className="text-balance font-display t-h1 font-extrabold tracking-display text-paper">
+      {title}
+    </h1>
+  );
+  const lead = (
+    <>
+      <p
+        className={`mt-6 max-w-2xl text-base leading-[1.65] text-paper/85 sm:text-lg sm:leading-[1.65] ${wide ? "lg:mt-1.5" : ""}`}
+      >
         {description}
       </p>
       {updated && (
@@ -61,6 +70,24 @@ export default function PageHeader({
             {formatDate(pageUpdated(updated), lang ?? "da")}
           </time>
         </p>
+      )}
+    </>
+  );
+  return (
+    <div className={wide ? undefined : "max-w-3xl"}>
+      {lang && href && (
+        <Breadcrumbs lang={lang} trail={[{ name: crumb ?? title, href }]} className="mb-5" />
+      )}
+      {wide ? (
+        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-12">
+          {heading}
+          <div>{lead}</div>
+        </div>
+      ) : (
+        <>
+          {heading}
+          {lead}
+        </>
       )}
     </div>
   );

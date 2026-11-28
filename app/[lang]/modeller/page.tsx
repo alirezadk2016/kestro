@@ -82,7 +82,11 @@ export default async function ModellerPage(props: { params: Promise<{ lang: Lang
   const params = await props.params;
   const { lang } = params;
   const c = copy[lang];
-  const introductionEnd = c.description.indexOf(".") + 1;
+  /* The first sentence, ended by a full stop before a capital: "én pr.
+     serie" is an abbreviation, and splitting at its full stop showed the
+     lead as "… én pr." and opened the details with "serie, …". */
+  const sentenceEnd = /\.\s+(?=[A-ZÆØÅ])/.exec(c.description);
+  const introductionEnd = sentenceEnd ? sentenceEnd.index + 1 : c.description.length;
   const introduction = c.description.slice(0, introductionEnd);
   const descriptionDetails = c.description.slice(introductionEnd).trim();
   return (

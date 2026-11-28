@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
+import LegalContents, { legalAnchor } from "@/components/LegalContents";
 import PageHeader from "@/components/PageHeader";
 import { company } from "@/lib/company";
 import { metaFor, type Lang, type Localized, formatDate } from "@/lib/i18n";
@@ -244,6 +245,7 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
             lang={lang}
             href="/privatlivspolitik"
             crumb={lang === "da" ? "Privatlivspolitik" : "Privacy policy"}
+            wide
           />
         </Container>
       </section>
@@ -254,12 +256,13 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
           is what it is, and it joins the FAQs and the quote as the site's
           paper. */}
       <section className="border-y border-ink-200 bg-paper-dim py-10 text-ink-900 sm:py-16">
-        <Container>
-          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10">
+        <Container className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-12">
+          <article className="sheet max-w-3xl px-6 pb-8 sm:px-10 sm:pb-10 lg:col-span-8">
             {sections.map((section) => (
               <div
                 key={section.heading.da}
-                className="border-t border-ink-200 py-8 first:border-t-0"
+                id={legalAnchor(section.heading.da)}
+                className="scroll-mt-28 border-t border-ink-200 py-8 first:border-t-0"
               >
                 <h2 className="font-display t-h3 font-bold tracking-tight text-ink-900">
                   {section.heading[lang]}
@@ -279,6 +282,15 @@ export default async function PrivatlivspolitikPage(props: { params: Promise<{ l
               {c.updated}: <time dateTime={UPDATED}>{formatDate(UPDATED, lang)}</time>
             </p>
           </article>
+          <div className="lg:col-span-4">
+            <LegalContents
+              lang={lang}
+              items={sections.map((section) => ({
+                id: legalAnchor(section.heading.da),
+                label: section.heading[lang],
+              }))}
+            />
+          </div>
         </Container>
       </section>
     </>

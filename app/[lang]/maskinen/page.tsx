@@ -81,6 +81,7 @@ export default async function MaskinenPage(props: { params: Promise<{ lang: Lang
             crumb={lang === "da" ? "Maskinen indeni" : "Inside the machine"}
 
             updated="/maskinen"
+            wide
           />
         </Container>
       </section>

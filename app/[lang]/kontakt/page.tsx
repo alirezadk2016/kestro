@@ -182,6 +182,7 @@ export default async function KontaktPage(props: { params: Promise<{ lang: Lang 
             href="/kontakt"
             crumb={lang === "da" ? "Kontakt" : "Contact"}
             updated="/kontakt"
+            wide
           />
 
           <div className="mt-14 grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16 xl:max-w-none">
