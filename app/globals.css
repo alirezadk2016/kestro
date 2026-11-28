@@ -621,6 +621,12 @@ body {
       justify-content: flex-start;
     }
 
+    .home-hero .hero-scene-mobile {
+      background-size: min(100%, 480px) auto;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+
     .home-hero .home-hero-copy-wrap {
       position: static;
       padding-top: calc(var(--hero-header-height) + 28px);
@@ -661,6 +667,13 @@ body {
       max-width: 24rem;
       font-size: 0.8125rem;
       line-height: 1.5;
+    }
+
+    .home-hero .hero-scene-mobile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgb(6 11 22 / 0.95), transparent 26%);
     }
 
     .home-hero .home-hero-actions {
@@ -1800,41 +1813,13 @@ html[data-lang-hint="on"] .lang-hint {
   }
 }
 
-/*
- * The hero's machine (components/Hero.tsx): a real ThinkPad T480 photograph
- * on the section's navy, with the brand blue as the light it stands in. On a
- * phone it stands centred under the actions, above the status line; from md
- * it sits right of the copy.
- */
-.hero-product {
-  left: 0;
-  right: 0;
-  bottom: 64px;
-  margin-inline: auto;
-  width: min(78%, 340px);
-}
-.hero-product::before {
-  content: "";
-  position: absolute;
-  inset: 8% -12% -4%;
-  background: radial-gradient(closest-side, rgb(30 64 255 / 0.3), rgb(30 64 255 / 0) 100%);
-}
-@media (min-width: 768px) {
-  .hero-product {
-    left: auto;
-    right: 2%;
-    bottom: auto;
-    top: 50%;
-    margin: 0;
-    width: min(38%, 640px);
-    transform: translateY(-50%);
-  }
-}
-@media (min-width: 1280px) {
-  .hero-product {
-    right: 5%;
-    width: min(36%, 680px);
-  }
+/* The portrait uses the same format fallback as the unchanged wide hero. */
+.hero-scene-mobile {
+  background-image: url(/hero/scene-mobile-portrait.webp);
+  background-image: image-set(
+    url(/hero/scene-mobile-portrait.avif) type("image/avif"),
+    url(/hero/scene-mobile-portrait.webp) type("image/webp")
+  );
 }
 
 .fleet-rollout {
@@ -2294,6 +2279,15 @@ main .fleet-rollout-steps > li {
   .phone-brand-links a {
     transition: none !important;
   }
+}
+
+/* The same for the wide hero. */
+.hero-scene {
+  background-image: url(/hero/scene.webp);
+  background-image: image-set(
+    url(/hero/scene.avif) type("image/avif"),
+    url(/hero/scene.webp) type("image/webp")
+  );
 }
 
 /* A comparison shortlist must leave the final footer/privacy controls

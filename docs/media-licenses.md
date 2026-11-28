@@ -489,12 +489,12 @@ for one would be decoration. `lib/guide-photos.ts` is the list.
 
 ## The rest of the site (28 November 2026)
 
-The same rule reached every public page. What replaced what:
+The same rule reached the interior pages. The front page keeps its hero
+scene and its four category cards: the owner asked for the front page's
+pictures to stay as they are. What replaced what elsewhere:
 
 | Page | Was | Now |
 | --- | --- | --- |
-| Front page hero | AI-generated room with a brandless laptop (`public/hero/`) | `/thinkpad-t480-2-cutout.webp`, owner-supplied |
-| Front page category cards | AI/rendered scenes (`public/cards/cat-*`) | `lib/category-media.ts`: T480 photo, Dell WD19 photo (Raimond Spekking, CC BY-SA 4.0, credited under the cards), labelled drawings for desktop and monitor |
 | /saelg-til-os | AI workbench (`graphics/buyback.webp`) | `/thinkpad-t480-6-cutout.webp`, owner-supplied |
 | /flaadeloesninger hero | AI room of laptops (`cards/fleet-scene.webp`) | ThinkPad T470 in an Ultra Dock, Paowee, CC BY-SA 4.0, credited in the caption |
 | /flaadeloesninger 3D fallback | the same AI room | `/thinkpad-t480-6-cutout.webp` |
@@ -502,6 +502,6 @@ The same rule reached every public page. What replaced what:
 | /reparation | four-step AI sequence of a RAM swap | none |
 
 Deleted with them: `public/graphics/*`, `public/images/repairs/*`, and the
-unused `VidenPlate`, `Statement` and `RepairPhotoSequence` components. The hero
-and card files stay in `public/` because the card build scripts and the admin
-background read them; no public page links them.
+unused `VidenPlate`, `Statement` and `RepairPhotoSequence` components. The
+front page still uses the hero scene and the category cards in `public/hero/`
+and `public/cards/`; `fleet-scene.webp` is linked from no public page.

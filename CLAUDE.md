@@ -198,19 +198,21 @@ bodies.
 
 ## Pictures of machines are photographs
 
-Since 28 November 2026 no public page shows a generated or rendered machine:
-the owner's rule is that a laptop on this site is a real one. The front page
-hero is the owner's ThinkPad T480 photograph cut out of its studio ground; the
-category cards use `lib/category-media.ts` (real photos, and drawings of a
-format labelled as drawings); articles use `lib/guide-photos.ts`. Where no real
-photograph of the subject exists, the page has no picture. The interactive 3D
+Since 28 November 2026 no interior page shows a generated or rendered
+machine: the owner's rule is that a laptop on this site is a real one.
+Articles use `lib/guide-photos.ts`; the other pages use the owner's ThinkPad
+T480 set and licensed photographs. Where no real photograph of the subject
+exists, the page has no picture. **The front page is the exception the owner
+made:** its hero scene and its four category cards stay as they are — do not
+change the front page's pictures without the owner asking. The interactive 3D
 models (/maskinen, the fleet rollout) are models, not photographs, and stay.
 Licences and sources are in `docs/media-licenses.md`.
 
-## Card artwork (retired from public pages)
+## Card artwork (the front page only)
 
-The renders below no longer appear on a public page; the admin layout still
-uses one as its background. `npm run build:cards` makes `public/cards/*.webp`.
+The renders below appear on the front page's category cards and nowhere else
+in public; the admin layout uses one as its background. `npm run build:cards`
+makes `public/cards/*.webp`.
 Two pipelines, one set:
 
 - **cat-laptops** is a crop of `public/hero/scene.webp` (`scripts/build/cards/`).
