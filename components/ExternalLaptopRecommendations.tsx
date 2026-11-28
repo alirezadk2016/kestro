@@ -3,6 +3,7 @@ import { ArrowUpRight, ChevronDown } from "lucide-react";
 import Container from "./Container";
 import { buttonClass } from "./Button";
 import { formatDate, type Lang } from "@/lib/i18n";
+import { licenceLabel } from "@/lib/credits";
 import { externalLaptops } from "@/lib/external-laptops";
 import { sources } from "@/lib/sources";
 
@@ -218,7 +219,7 @@ export default function ExternalLaptopRecommendations({ lang }: { lang: Lang }) 
                           rel="license"
                           className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
                         >
-                          {item.photo.licence}
+                          {licenceLabel(item.photo.licence, lang)}
                         </a>
                       </div>
                     </li>

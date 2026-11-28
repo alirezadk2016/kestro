@@ -78,7 +78,7 @@ const BUYING_QUESTIONS: Record<string, FaqItem> = {
     },
     answer: {
       da: "Start med de programmer, medarbejderne bruger, og om maskinen skal med på farten. Sammenlign derefter præcis processor, RAM, skærm, vægt og batteritilstand. Kontrollér, om RAM kan udvides, og om jeres eksisterende dock kan oplade maskinen og drive de ønskede skærme.",
-      en: "Start with the applications staff use and whether the laptop will travel. Then compare the exact processor, RAM, display, weight and battery health. Check whether RAM is upgradeable and whether your existing dock can charge the laptop and drive the required monitors.",
+      en: "Start with the applications staff use and whether the laptop will travel. Then compare the exact processor, RAM, display, weight and battery health. Check whether RAM is upgradable and whether your existing dock can charge the laptop and drive the required monitors.",
     },
   },
   "stationaere-computere": {

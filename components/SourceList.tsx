@@ -32,7 +32,7 @@ export default function SourceList({
   if (!ids.length) return null;
   const items = sourceList(ids);
   const heading = lang === "da" ? "Kilder" : "Sources";
-  const read = lang === "da" ? "Læst" : "Read";
+  const read = lang === "da" ? "Læst" : "Accessed";
 
   return (
     <div className={className}>

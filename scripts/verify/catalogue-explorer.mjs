@@ -1202,9 +1202,11 @@ export async function verifyCatalogueExplorer(
               photo.source,
               "the original source is linked",
             );
+            /* The note after the licence is in the page's language
+               (lib/credits.ts). */
             assert.equal(
               await links.nth(1).innerText(),
-              "CC BY 3.0 (video frame)",
+              language === "da" ? "CC BY 3.0 (stillbillede fra video)" : "CC BY 3.0 (video frame)",
               "the frame's licence is explicit",
             );
             assert.equal(

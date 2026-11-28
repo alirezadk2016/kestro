@@ -96,7 +96,7 @@ export default function PriceOnRequest({
               {lang === "da" ? "ca." : "approx."} {formatDkk(budgetAmount(example), lang)}
             </p>
             <p className="mt-1 text-xs leading-5 text-paper/65">
-              {lang === "da" ? "Prisreference læst" : "Price reference read"}{" "}
+              {lang === "da" ? "Prisreference læst" : "Price checked"}{" "}
               <time dateTime={budgetReadOn}>{formatDate(budgetReadOn, lang)}</time>
             </p>
             <p className="mt-2 text-sm leading-6 text-paper/75">
@@ -116,7 +116,6 @@ export default function PriceOnRequest({
           </div>
         </details>
       )}
-
       <Link
         href={localePath("/tilbud-eksempel", lang)}
         className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-brand-300 underline underline-offset-4 hover:text-paper"
@@ -124,7 +123,7 @@ export default function PriceOnRequest({
         {lang === "da"
           ? "Se et eksempel på oplysningerne i et tilbud"
           : "See the information in a sample quote"}
-      </Link>
+      </Link>{" "}
       {!example && (
         <Link
           href={localePath("/priser", lang)}

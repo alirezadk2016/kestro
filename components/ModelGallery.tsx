@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Lang } from "@/lib/i18n";
+import { licenceLabel, titleLang } from "@/lib/credits";
 import type { Model } from "@/lib/models";
 import styles from "./ModelGallery.module.css";
 
@@ -125,14 +126,19 @@ export default function ModelGallery({
             className="inline-flex min-h-11 items-center text-brand-300 underline underline-offset-4 hover:text-paper"
           >
             {da ? "Referencefoto" : "Reference photo"}: {item.credit.author}
-            {item.credit.title && <span className="sr-only"> — {item.credit.title}</span>}
+            {item.credit.title && (
+              <span className="sr-only" lang={titleLang(item.credit)}>
+                {" "}
+                — {item.credit.title}
+              </span>
+            )}
           </a>
           <a
             href={item.credit.licenceUrl}
             rel="license"
             className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
           >
-            {item.credit.licence}
+            {licenceLabel(item.credit.licence, lang)}
           </a>
         </p>
       )}

@@ -1595,3 +1595,24 @@ rules in CLAUDE.md. What changed:
 Left for the owner: the front page hero, its category cards, /flaadeloesninger,
 /saelg-til-os, /reparation and /kvalitet still show AI-generated or rendered
 machines.
+
+## Language pass — 28 November 2026
+
+The owner asked for the site's language problems to be fixed. All 264 public
+pages were crawled and every unique line (9,885 of them, Danish and English)
+was run through LanguageTool 6.8 (Danish and British English rules, local,
+from Maven Central) and Hunspell, and the front pages were read in full.
+
+- **The text is in good shape.** No untranslated Danish on the English pages;
+  the English is consistently British (enquiry, licence, colour). The checker's
+  flags were almost all product names and compounds.
+- **Fixed:** "frem for for lidt kraft" (heat guide) and "switched on on the
+  old one" (transfer guide); two links whose words ran together in the price
+  box ("tilbudBudgeteksempler"); "Read 14 Oct" → "Accessed" on every English
+  source list, "Price reference read" → "Price checked", "Read also" → "See
+  also"; one "upgradeable" against five "upgradable".
+- **Photo credits:** the note after a licence ("video frame", "resized",
+  "trimmed") read in English on Danish pages and is Danish there now
+  (`lib/credits.ts`); a source title is marked with its own language, English
+  by default and Vietnamese for the X1 Nano Gen 2 video, so a screen reader
+  does not read it with Danish pronunciation.

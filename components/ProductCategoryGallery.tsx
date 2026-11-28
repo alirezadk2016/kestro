@@ -3,6 +3,7 @@ import Link from "next/link";
 import { directoryCategories } from "@/lib/categories";
 import { categoryApplications, categoryMedia } from "@/lib/category-media";
 import { localePath, type Lang } from "@/lib/i18n";
+import { licenceLabel } from "@/lib/credits";
 import { getModelsForCategory } from "@/lib/models";
 import CategoryArtwork from "./CategoryArtwork";
 import styles from "./ProductCategoryGallery.module.css";
@@ -159,7 +160,7 @@ export default function ProductCategoryGallery({ lang }: { lang: Lang }) {
                     rel="license"
                     className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper"
                   >
-                    {credit.licence}
+                    {licenceLabel(credit.licence, lang)}
                   </a>
                 </div>
               </div>

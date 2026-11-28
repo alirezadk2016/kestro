@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { CatalogueEntry } from "@/lib/catalogue-types";
 import { localePath, type Lang } from "@/lib/i18n";
+import { licenceLabel, titleLang } from "@/lib/credits";
 import { buttonClass } from "./Button";
 import CatalogueListingItem from "./CatalogueListingItem";
 
@@ -973,7 +974,11 @@ export default function CatalogueExplorer({
             {photoCredits.map(({ id, name, credit }) => (
               <li key={id} data-catalogue-photo-credit={id} className="py-3">
                 <p className="font-medium text-paper">{name}</p>
-                {credit.title && <p className="text-xs leading-5">{credit.title}</p>}
+                {credit.title && (
+                  <p className="text-xs leading-5" lang={titleLang(credit)}>
+                    {credit.title}
+                  </p>
+                )}
                 <div className="flex flex-wrap items-center gap-x-5">
                   <a
                     href={credit.source}
@@ -989,10 +994,10 @@ export default function CatalogueExplorer({
                     href={credit.licenceUrl}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
-                    aria-label={`${credit.licence} — ${da ? "licens, åbner i en ny fane" : "licence, opens in a new tab"}`}
+                    aria-label={`${licenceLabel(credit.licence, lang)} — ${da ? "licens, åbner i en ny fane" : "licence, opens in a new tab"}`}
                     className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-paper focus-visible:outline-2 focus-visible:outline-brand-300"
                   >
-                    {credit.licence}
+                    {licenceLabel(credit.licence, lang)}
                   </a>
                 </div>
               </li>

@@ -76,6 +76,14 @@ export async function verifyModelReferencePhotos(browser, base, fail) {
     }, expected);
   }
 
+  /* These pages are Danish, and so is the note after the licence name
+     (lib/credits.ts). */
+  const danishLicence = (licence) =>
+    licence
+      .replace("(video frame)", "(stillbillede fra video)")
+      .replace("(resized)", "(formindsket)")
+      .replace("(trimmed)", "(beskåret)");
+
   for (const width of [320, 390, 1440]) {
     for (const model of referencePhotoModels) {
       const context = await browser.newContext({ viewport: { width, height: 900 } });
@@ -120,7 +128,7 @@ export async function verifyModelReferencePhotos(browser, base, fail) {
           (await licence.count()) !== 1 ||
           !(await licence.isVisible()) ||
           (await licence.getAttribute("href")) !== photo.licenceUrl ||
-          (await licence.innerText()) !== photo.licence
+          (await licence.innerText()) !== danishLicence(photo.licence)
         )
           fail(
             "reference photo",

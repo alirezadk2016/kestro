@@ -30,6 +30,7 @@ export type CatalogueEntry = {
       licence: string;
       licenceUrl: string;
       title?: string;
+      titleLang?: string;
     };
   };
   /** Kept verbatim for the four dated budget configurations. */

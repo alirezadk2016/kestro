@@ -82,7 +82,7 @@ const copy = {
     useCases: "Typical uses",
     specs: "Specifications",
     other: "Other categories",
-    readMore: "Read also",
+    readMore: "See also",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

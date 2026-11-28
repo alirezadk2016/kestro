@@ -46,6 +46,8 @@ export type Model = {
       licenceUrl: string;
       /** Original work title, retained when the source supplies one. */
       title?: string;
+      /** The title's language where it is not English, e.g. "vi". */
+      titleLang?: string;
     };
   }[];
 };
