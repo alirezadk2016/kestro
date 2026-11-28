@@ -448,7 +448,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "baerbar-larmer-eller-bliver-varm",
-    dates: { published: "2026-11-26", modified: "2026-11-27" },
+    dates: { published: "2026-11-26", modified: "2026-11-28" },
     title: {
       da: "Bærbar larmer eller bliver varm: find årsagen",
       en: "Laptop loud or hot: find the cause",
@@ -523,7 +523,7 @@ export const practicalGuides: PracticalGuide[] = [
       {
         title: { da: "Varm og langsom hænger sammen", en: "Hot and slow go together" },
         body: {
-          da: "En varm processor skruer selv ned for farten for ikke at tage skade. En maskine, der bliver langsom, når den bliver varm, kan derfor have et køleproblem frem for for lidt kraft.",
+          da: "En varm processor skruer selv ned for farten for ikke at tage skade. En maskine, der bliver langsom, når den bliver varm, kan derfor have et køleproblem snarere end for lidt kraft.",
           en: "A hot processor slows itself down to avoid damage. A machine that slows down as it heats up may therefore have a cooling problem rather than too little power.",
         },
       },
@@ -561,7 +561,7 @@ export const practicalGuides: PracticalGuide[] = [
   },
   {
     slug: "overfoer-filer-til-ny-pc",
-    dates: { published: "2026-11-26", modified: "2026-11-27" },
+    dates: { published: "2026-11-26", modified: "2026-11-28" },
     title: {
       da: "Overføre filer til ny pc uden at glemme noget",
       en: "Transfer files to a new PC without leaving anything behind",
@@ -608,7 +608,7 @@ export const practicalGuides: PracticalGuide[] = [
         title: { da: "Log ind i browseren", en: "Sign in to the browser" },
         body: {
           da: "Logger du ind med samme konto i browseren på den nye pc, følger bogmærker og gemte adgangskoder med, hvis synkronisering var slået til på den gamle.",
-          en: "Sign in with the same account in the browser on the new PC, and bookmarks and saved passwords follow, if sync was switched on on the old one.",
+          en: "Sign in with the same account in the browser on the new PC; if the old one had sync switched on, bookmarks and saved passwords follow.",
         },
       },
       {
